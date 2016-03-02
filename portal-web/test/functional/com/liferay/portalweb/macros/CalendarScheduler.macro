@@ -101,9 +101,8 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
@@ -120,9 +119,8 @@
 			</then>
 		</if>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
@@ -133,9 +131,8 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute function="Type" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitleEdit}" />
@@ -169,9 +166,8 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
@@ -205,24 +201,6 @@
 
 	<command name="selectCalendar">
 		<execute function="Select" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
-	</command>
-
-	<command name="selectEvent">
-		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<if>
-			<equals arg1="${eventType}" arg2="All Day" />
-			<then>
-				<execute macro="CalendarScheduler#selectSpecificEvent">
-					<var name="eventTitle" value="${eventTitle}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="CalendarScheduler#_selectSpecificEventCurrentDay">
-					<var name="eventTitle" value="${eventTitle}" />
-				</execute>
-			</else>
-		</if>
 	</command>
 
 	<command name="selectSpecificEvent">

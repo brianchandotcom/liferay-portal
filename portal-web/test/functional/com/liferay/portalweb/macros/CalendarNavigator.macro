@@ -129,9 +129,8 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
@@ -146,9 +145,8 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />

@@ -46,7 +46,7 @@ public class LayoutCustomizationTemplateContextContributor
 			if (_customizationSettingsProductNavigationControlMenuEntry.isShow(
 					request)) {
 
-				StringBuilder sb = new StringBuilder();
+				StringBuilder sb = new StringBuilder(3);
 
 				sb.append(
 					GetterUtil.getString(contextObjects.get("bodyCssClass")));

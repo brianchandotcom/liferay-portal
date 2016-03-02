@@ -289,6 +289,8 @@ if (showSource) {
 				editorContainer.appendChild(editorNode);
 
 				window['<%= name %>'].initEditor();
+
+				this.instanceReady = true;
 			}
 		},
 
@@ -316,6 +318,14 @@ if (showSource) {
 			if (alloyEditor) {
 				alloyEditor.focus();
 			}
+		},
+
+		getEditor: function () {
+			if (alloyEditor) {
+				return alloyEditor.getEditor();
+			}
+
+			return;
 		},
 
 		getHTML: function() {
@@ -348,11 +358,14 @@ if (showSource) {
 			createInstance();
 		},
 
+		instanceReady: false,
+
 		setHTML: function(value) {
 			if (alloyEditor) {
 				alloyEditor.setHTML(value);
 			}
-		}
+		},
+
 	};
 
 	Liferay.fire(

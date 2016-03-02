@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,6 +47,13 @@ public class UpdateSyncUtil {
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString());
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"insert into DLSync (syncId, companyId, " +
+								"createDate, modifiedDate, fileId, " +
+								"repositoryId, parentFolderId, event, type_) " +
+								"values (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {
@@ -56,37 +64,21 @@ public class UpdateSyncUtil {
 					long parentFolderId = rs.getLong("parentFolderId");
 					String type = rs.getString("type");
 
-					addSync(
-						connection, increment(), companyId, createDate,
-						createDate, fileId, groupId, parentFolderId, "add",
-						type);
+					ps2.setLong(1, increment());
+					ps2.setLong(2, companyId);
+					ps2.setTimestamp(3, createDate);
+					ps2.setTimestamp(4, createDate);
+					ps2.setLong(5, fileId);
+					ps2.setLong(6, groupId);
+					ps2.setLong(7, parentFolderId);
+					ps2.setString(8, "add");
+					ps2.setString(9, type);
+
+					ps2.addBatch();
 				}
+
+				ps2.executeBatch();
 			}
-		}
-	}
-
-	protected static void addSync(
-			Connection connection, long syncId, long companyId,
-			Timestamp createDate, Timestamp modifiedDate, long fileId,
-			long repositoryId, long parentFolderId, String event, String type)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"insert into DLSync (syncId, companyId, createDate, " +
-					"modifiedDate, fileId, repositoryId, parentFolderId, " +
-						"event, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-
-			ps.setLong(1, syncId);
-			ps.setLong(2, companyId);
-			ps.setTimestamp(3, createDate);
-			ps.setTimestamp(4, createDate);
-			ps.setLong(5, fileId);
-			ps.setLong(6, repositoryId);
-			ps.setLong(7, parentFolderId);
-			ps.setString(8, event);
-			ps.setString(9, type);
-
-			ps.executeUpdate();
 		}
 	}
 

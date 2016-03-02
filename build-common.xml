@@ -1735,6 +1735,18 @@ rerun your task.
 		</java>
 	</target>
 
+	<target name="install-portal-snapshot" depends="jar,prepare-artifact-pom">
+		<artifact:install file="${artifact.name}.${artifact.packaging}">
+			<pom file="pom.xml" />
+		</artifact:install>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
+	</target>
+
 	<target name="prepare-artifact-pom">
 		<fail message="Unable to run install-portal-snapshot from the root directory.">
 			<condition>
@@ -1778,16 +1790,8 @@ rerun your task.
 		</copy>
 	</target>
 
-	<target name="install-portal-snapshot" depends="jar,prepare-artifact-pom">
-		<artifact:install file="${artifact.name}.${artifact.packaging}">
-			<pom file="pom.xml" />
-		</artifact:install>
-
-		<delete file="pom.xml" />
-
-		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
-		</propertyfile>
+	<target name="print-properties">
+		<echoproperties />
 	</target>
 
 	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,prepare-artifact-pom">
@@ -1805,10 +1809,6 @@ rerun your task.
 		<propertyfile file="../.gradle/gradle.properties">
 			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
 		</propertyfile>
-	</target>
-
-	<target name="print-properties">
-		<echoproperties />
 	</target>
 
 	<target name="run-cpd">

@@ -733,36 +733,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
-	protected String fixLegacyPrimaryKey(
-		long companyId, String name, String primKey) {
-
-		if (((primKey.length() == 1) && (primKey.charAt(0) == 48)) ||
-			(primKey.equals(String.valueOf(companyId)) &&
-			 !name.equals(Company.class.getName()))) {
-
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(9);
-
-				sb.append("Using ");
-				sb.append(name);
-				sb.append(" as the primary key instead of the legacy primary ");
-				sb.append("key ");
-				sb.append(primKey);
-				sb.append(" that was used for permission checking of ");
-				sb.append(name);
-				sb.append(" in company ");
-				sb.append(companyId);
-
-				_log.warn(
-					sb.toString(), new IllegalArgumentException(sb.toString()));
-			}
-
-			return name;
-		}
-
-		return primKey;
-	}
-
 	protected List<Resource> fixMissingResources(
 			long companyId, long groupId, String name, String primKey,
 			String actionId, List<Resource> resources)
@@ -798,6 +768,41 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		if (primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
 
 			// There are no custom permissions defined for portlet, use defaults
+
+			Resource individualResource = resources.get(0);
+
+			if (individualResource.getScope() !=
+				ResourceConstants.SCOPE_INDIVIDUAL) {
+
+				throw new IllegalArgumentException(
+					"The first resource must be an individual scope");
+			}
+
+			individualResource.setPrimKey(name);
+
+			return resources;
+		}
+
+		if (((primKey.length() == 1) && (primKey.charAt(0) == 48)) ||
+			(primKey.equals(String.valueOf(companyId)) &&
+				!name.equals(Company.class.getName()))) {
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("Using ");
+				sb.append(name);
+				sb.append(" as the primary key instead of the legacy primary ");
+				sb.append("key ");
+				sb.append(primKey);
+				sb.append(" that was used for permission checking of ");
+				sb.append(name);
+				sb.append(" in company ");
+				sb.append(companyId);
+
+				_log.warn(
+					sb.toString(), new IllegalArgumentException(sb.toString()));
+			}
 
 			Resource individualResource = resources.get(0);
 
@@ -938,8 +943,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					resourceBlockIdsBag);
 			}
 
-			primKey = fixLegacyPrimaryKey(companyId, name, primKey);
-
 			List<Resource> resources = getResources(
 				companyId, groupId, name, primKey, actionId);
 
@@ -1006,8 +1009,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			companyId = group.getCompanyId();
 		}
-
-		primKey = fixLegacyPrimaryKey(companyId, name, primKey);
 
 		try {
 			boolean hasPermission = doCheckPermission(

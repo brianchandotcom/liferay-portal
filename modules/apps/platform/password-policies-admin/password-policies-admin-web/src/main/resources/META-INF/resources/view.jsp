@@ -139,7 +139,7 @@ searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
 
 			// Name
 
-			row.addText(HtmlUtil.escape(passwordPolicy.getName()), rowURL);
+			row.addText("<strong>" + HtmlUtil.escape(passwordPolicy.getName()) + "</strong>", rowURL);
 
 			// Description
 

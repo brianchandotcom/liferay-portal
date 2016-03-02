@@ -14,7 +14,6 @@
 
 package com.liferay.notifications.web.upgrade.v2_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -39,15 +38,10 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			return;
 		}
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select userNotificationEventId, actionRequired from " +
 					"Notifications_UserNotificationEvent");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long userNotificationEventId = rs.getLong(
@@ -63,9 +57,6 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				_userNotificationEventLocalService.updateUserNotificationEvent(
 					userNotificationEvent);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

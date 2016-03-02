@@ -768,6 +768,33 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			String actionId, List<Resource> resources)
 		throws Exception {
 
+		int count =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+
+		if (count > 0) {
+			return resources;
+		}
+
+		if ((groupId > 0) && ResourceActionsUtil.isRootModelResource(name)) {
+
+			// There are no custom permissions defined for root model-resource,
+			// use defaults
+
+			Resource individualResource = resources.get(0);
+
+			if (individualResource.getScope() !=
+					ResourceConstants.SCOPE_INDIVIDUAL) {
+
+				throw new IllegalArgumentException(
+					"The first resource must be an individual scope");
+			}
+
+			individualResource.setPrimKey(name);
+
+			return resources;
+		}
+
 		return resources;
 	}
 

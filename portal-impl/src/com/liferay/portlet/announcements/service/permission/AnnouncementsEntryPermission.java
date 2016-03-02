@@ -18,12 +18,10 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 
 /**
@@ -105,23 +103,8 @@ public class AnnouncementsEntryPermission {
 			layout = virtualLayout.getSourceLayout();
 		}
 
-		boolean useDefaultPortletPermissions = false;
-
 		String primKey = PortletPermissionUtil.getPrimaryKey(
 			layout.getPlid(), portletId);
-
-		int count =
-			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				permissionChecker.getCompanyId(), portletId,
-				ResourceConstants.SCOPE_INDIVIDUAL, primKey);
-
-		if (count == 0) {
-			useDefaultPortletPermissions = true;
-		}
-
-		if (useDefaultPortletPermissions) {
-			primKey = portletId;
-		}
 
 		return permissionChecker.hasPermission(
 			layout.getGroupId(), portletId, primKey, actionId);

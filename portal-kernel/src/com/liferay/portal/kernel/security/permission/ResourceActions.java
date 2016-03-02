@@ -116,11 +116,15 @@ public interface ResourceActions {
 	public List<Role> getRoles(
 		long companyId, Group group, String modelResource, int[] roleTypes);
 
+	public String[] getRootModelResources();
+
 	public boolean hasModelResourceActions(String name);
 
 	public boolean isOrganizationModelResource(String modelResource);
 
 	public boolean isPortalModelResource(String modelResource);
+
+	public boolean isRootModelResource(String modelResource);
 
 	public void read(
 			String servletContextName, ClassLoader classLoader, String source)

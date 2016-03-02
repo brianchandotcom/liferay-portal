@@ -85,9 +85,12 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 </portlet:renderURL>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="<%= recordSet.getName(locale) %>" selected="<%= true %>" />
-	</aui:nav>
+
+	<c:if test="<%= ddlDisplayContext.isAdminPortlet() %>">
+		<aui:nav cssClass="navbar-nav">
+			<aui:nav-item label="<%= recordSet.getName(locale) %>" selected="<%= true %>" />
+		</aui:nav>
+	</c:if>
 
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">

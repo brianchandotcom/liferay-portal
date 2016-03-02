@@ -31,6 +31,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurat
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -326,6 +327,12 @@ public class AssetPublisherUtil {
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	public static String encodeName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
 	public static String filterAssetTagNames(
@@ -1688,6 +1695,11 @@ public class AssetPublisherUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
+		_ddmIndexer = ddmIndexer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -1889,6 +1901,7 @@ public class AssetPublisherUtil {
 	private static AssetEntryLocalService _assetEntryLocalService;
 	private static AssetEntryService _assetEntryService;
 	private static AssetTagLocalService _assetTagLocalService;
+	private static DDMIndexer _ddmIndexer;
 	private static GroupLocalService _groupLocalService;
 	private static LayoutLocalService _layoutLocalService;
 	private static PortletPreferencesLocalService

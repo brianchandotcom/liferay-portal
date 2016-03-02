@@ -610,7 +610,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 
 			for (ClassTypeField classTypeField : classTypeFields) {
-				String value = DDMIndexerUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName());
+				String value = AssetPublisherUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
 				String selectedOrderByColumn1 = StringPool.BLANK;
 				String selectedOrderByColumn2 = StringPool.BLANK;
 

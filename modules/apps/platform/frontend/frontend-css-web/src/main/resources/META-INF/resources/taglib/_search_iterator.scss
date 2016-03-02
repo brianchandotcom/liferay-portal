@@ -125,10 +125,12 @@
 // Search Iterator List View
 
 .create-date-column,
-.modified-date-column {
+.modified-date-column,
+.user-name-column {
 	min-width: 115px;
 }
 
+.name-column,
 .title-column {
 	min-width: 200px;
 }

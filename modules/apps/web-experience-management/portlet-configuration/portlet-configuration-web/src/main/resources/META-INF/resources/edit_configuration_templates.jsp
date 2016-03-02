@@ -131,21 +131,25 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 				modelVar="archivedSettings"
 			>
 				<liferay-ui:search-container-column-text
+					cssClass="name-column"
 					name="name"
+					truncate="true"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="user-name-column"
 					name="user-name"
 					property="userName"
 				/>
 
 				<liferay-ui:search-container-column-date
+					cssClass="modified-date-column"
 					name="modified-date"
 					property="modifiedDate"
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="list-group-item-field"
+					cssClass="entry-action-column"
 					path="/configuration_template_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

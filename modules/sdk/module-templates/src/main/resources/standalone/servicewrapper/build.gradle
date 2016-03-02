@@ -13,7 +13,7 @@ buildscript {
 apply plugin: "com.liferay.plugin"
 
 dependencies {
-	compile group: "com.liferay.portal", name: "portal-service", version: "7.0.0-SNAPSHOT"
+	compile group: "com.liferay.portal", name: "com.liferay.portal.service", version: "7.0.0-SNAPSHOT"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 }
 

@@ -14,6 +14,8 @@
 
 package com.liferay.contacts.util;
 
+import com.liferay.contacts.constants.ContactsConstants;
+import com.liferay.contacts.constants.SocialRelationConstants;
 import com.liferay.contacts.model.Entry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

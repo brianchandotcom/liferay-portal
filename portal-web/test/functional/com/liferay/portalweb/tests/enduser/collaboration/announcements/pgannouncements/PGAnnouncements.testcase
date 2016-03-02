@@ -315,6 +315,7 @@
 	</command>
 
 	<command name="ViewPreviousAnnouncementEntries" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGAnnouncements#ViewPreviousAnnouncementEntries" />
 
 		<var name="distributionScope" value="General" />

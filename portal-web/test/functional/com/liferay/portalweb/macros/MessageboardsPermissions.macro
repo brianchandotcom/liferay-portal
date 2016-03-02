@@ -1,6 +1,6 @@
 <definition>
 	<command name="checkReplyToMessageForGuestPG">
-		<execute function="AssertClick" locator1="MessageBoards#PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="AssertClick" locator1="Button#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="AssetPermissions#IFRAME" />
 		<execute function="Check" locator1="AssetPermissions#GUEST_REPLY_TO_MESSAGE_CHECKBOX" />

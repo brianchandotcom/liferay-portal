@@ -170,6 +170,11 @@
 </tr>
 <!--DESCRIPTIVE_VIEW-->
 <tr>
+	<td>DESCRIPTIVE_VIEW_ENTRY_CHECKBOX</td>
+	<td>//input[@type='checkbox' and (@value='${key_wikiPageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>
 	<td>//li[@data-qa-id='row']/div[contains(@class,'content')]/h4[contains(.,'${key_wikiPageTitle}')]/a</td>
 	<td></td>

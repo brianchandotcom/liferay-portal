@@ -358,11 +358,13 @@
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#INFO" />
+
 		<var name="key_wikiPageTitle" value="Wiki Page Title" />
 
-		<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="Wiki Page Title" />
+		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_CHECKBOX" value1="Wiki Page Title" />
 
-		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
+		<execute function="AssertClick" locator1="NavBar#DETAILS" value1="Details" />
 
 		<execute function="AssertAlertNotPresent" />
 	</command>

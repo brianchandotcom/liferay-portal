@@ -427,32 +427,39 @@ AUI.add(
 
 						height *= modal.get('autoHeightRatio');
 
-						modal.set('height', height);
-					}
-
-					if (modal.get('autoWidth')) {
-						var width;
-
-						if (autoSizeNode) {
-							width = autoSizeNode.get('offsetWidth');
+						if (modal.get('height') === 'auto') {
+							modal._fillMaxHeight(height);
 						}
 						else {
-							width = DOM.winWidth();
-						}
-
-						width *= modal.get('autoWidthRatio');
-
-						var widthInitial = modal.get('width');
-
-						if (width != widthInitial) {
-							modal.set('width', width);
-						}
-						else {
-							setWidth(modal, widthInitial);
+							modal.set('height', height);
 						}
 					}
-					else {
-						setWidth(modal, modal.get('width'));
+
+					var widthInitial = modal.get('width');
+
+					if (widthInitial !== 'auto') {
+						if (modal.get('autoWidth')) {
+							var width;
+
+							if (autoSizeNode) {
+								width = autoSizeNode.get('offsetWidth');
+							}
+							else {
+								width = DOM.winWidth();
+							}
+
+							width *= modal.get('autoWidthRatio');
+
+							if (width != widthInitial) {
+								modal.set('width', width);
+							}
+							else {
+								setWidth(modal, widthInitial);
+							}
+						}
+						else {
+							setWidth(modal, modal.get('width'));
+						}
 					}
 				},
 

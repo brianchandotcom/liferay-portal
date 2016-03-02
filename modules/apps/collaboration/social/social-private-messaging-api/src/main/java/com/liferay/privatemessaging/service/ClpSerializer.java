@@ -300,7 +300,7 @@ public class ClpSerializer {
 		return throwable;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
 
 	private static String _servletContextName;
 	private static boolean _useReflectionToTranslateThrowable = true;

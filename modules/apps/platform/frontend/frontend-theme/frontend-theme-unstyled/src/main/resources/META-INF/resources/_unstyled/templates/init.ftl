@@ -297,14 +297,6 @@
 	<#assign nav_css_class = nav_css_class + " hide" />
 </#if>
 
-<#-- ---------- Staging ---------- -->
-
-<#assign show_staging = theme_display.isShowStagingIcon() />
-
-<#if show_staging>
-	<#assign staging_text = languageUtil.get(locale, "staging") />
-</#if>
-
 <#-- ---------- My sites ---------- -->
 
 <#assign show_my_sites = user.hasMySites() />

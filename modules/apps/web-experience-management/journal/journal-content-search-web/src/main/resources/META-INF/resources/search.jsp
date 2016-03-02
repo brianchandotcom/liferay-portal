@@ -71,11 +71,6 @@ List documents = ListUtil.toList(hits.getDocs());
 journalContentSearch.setResults(documents);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="search"
-/>
-
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
 	<portlet:param name="backURL" value="<%= backURL %>" />

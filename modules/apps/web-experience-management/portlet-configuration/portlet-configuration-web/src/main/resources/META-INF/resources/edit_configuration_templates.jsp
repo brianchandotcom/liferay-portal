@@ -133,7 +133,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 				<liferay-ui:search-container-column-text
 					cssClass="name-column"
 					name="name"
-					truncate="true"
+					truncate="<%= true %>"
 				/>
 
 				<liferay-ui:search-container-column-text

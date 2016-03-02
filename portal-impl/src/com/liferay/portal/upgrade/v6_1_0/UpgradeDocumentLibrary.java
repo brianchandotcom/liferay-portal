@@ -56,7 +56,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			updateThumbnails();
 		}
 
-		//updateSyncs();
+		//UpdateSyncUtil.updateSyncs(connection);
 	}
 
 	protected long getFileEntryId(long groupId, long folderId, String name)

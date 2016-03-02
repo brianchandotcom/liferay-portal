@@ -795,6 +795,24 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return resources;
 		}
 
+		if (primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+
+			// There are no custom permissions defined for portlet, use defaults
+
+			Resource individualResource = resources.get(0);
+
+			if (individualResource.getScope() !=
+				ResourceConstants.SCOPE_INDIVIDUAL) {
+
+				throw new IllegalArgumentException(
+					"The first resource must be an individual scope");
+			}
+
+			individualResource.setPrimKey(name);
+
+			return resources;
+		}
+
 		return resources;
 	}
 

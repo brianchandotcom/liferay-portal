@@ -3349,6 +3349,7 @@
 		<exception>GroupInheritContent</exception>
 		<exception>GroupKey</exception>
 		<exception>GroupParent</exception>
+		<exception>ImageResolution</exception>
 		<exception>ImageType</exception>
 		<exception>InvalidRepository</exception>
 		<exception>LayoutBranchName</exception>

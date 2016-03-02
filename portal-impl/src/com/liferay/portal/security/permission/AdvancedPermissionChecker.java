@@ -601,6 +601,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		List<Resource> resources = getResources(
 			companyId, groupId, name, primKey, actionId);
 
+		resources = fixMissingResources(
+			companyId, groupId, name, primKey, actionId, resources);
+
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 3);
 
 		// Check if user has access to perform the action on the given resource
@@ -760,6 +763,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return primKey;
 	}
 
+	protected List<Resource> fixMissingResources(
+			long companyId, long groupId, String name, String primKey,
+			String actionId, List<Resource> resources)
+		throws Exception {
+
+		return resources;
+	}
+
 	/**
 	 * Returns representations of the resource at each scope level.
 	 *
@@ -886,6 +897,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			List<Resource> resources = getResources(
 				companyId, groupId, name, primKey, actionId);
+
+			resources = fixMissingResources(
+				companyId, groupId, name, primKey, actionId, resources);
 
 			return ResourceLocalServiceUtil.hasUserPermissions(
 				defaultUserId, groupId, resources, actionId,

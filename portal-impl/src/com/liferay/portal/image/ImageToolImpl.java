@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
@@ -501,9 +502,19 @@ public class ImageToolImpl implements ImageTool {
 					if ((height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT) ||
 						(width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)) {
 
-						throw new ImageResolutionException(
-							"Image resolution is too high and could not be " +
-								"processed");
+						StringBundler sb = new StringBundler(9);
+
+						sb.append("Image is ");
+						sb.append(height);
+						sb.append("px height and ");
+						sb.append(width);
+						sb.append("px width, larger than max height ");
+						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
+						sb.append("px and max width ");
+						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
+						sb.append("px");
+
+						throw new ImageResolutionException(sb.toString());
 					}
 
 					renderedImage = imageReader.read(0);

@@ -14,18 +14,12 @@
 
 package com.liferay.portal.search.buffer;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Michael C. Han
@@ -73,85 +67,21 @@ public class IndexerRequestBuffer {
 		_indexerRequests.clear();
 	}
 
-	public void execute() {
-		Set<String> searchEngineIds = new HashSet<>();
-
-		for (IndexerRequest indexerRequest : _indexerRequests.values()) {
-			try {
-				indexerRequest.execute();
-
-				searchEngineIds.add(indexerRequest.getSearchEngineId());
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to execute index request: " + indexerRequest,
-						e);
-				}
-			}
-		}
-
-		_indexerRequests.clear();
-
-		commit(searchEngineIds);
-	}
-
-	public void execute(int numRequests) {
-		Set<String> searchEngineIds = new HashSet<>();
-
-		Collection<IndexerRequest> completedIndexerRequests = new ArrayList<>();
-
-		for (IndexerRequest indexerRequest : _indexerRequests.values()) {
-			try {
-				indexerRequest.execute();
-
-				searchEngineIds.add(indexerRequest.getSearchEngineId());
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to execute index request: " + indexerRequest,
-						e);
-				}
-			}
-
-			completedIndexerRequests.add(indexerRequest);
-
-			if (completedIndexerRequests.size() == numRequests) {
-				break;
-			}
-		}
-
-		for (IndexerRequest indexerRequest : completedIndexerRequests) {
-			_indexerRequests.remove(indexerRequest);
-		}
-
-		commit(searchEngineIds);
+	public Collection<IndexerRequest> getIndexerRequests() {
+		return _indexerRequests.values();
 	}
 
 	public boolean isEmpty() {
 		return _indexerRequests.isEmpty();
 	}
 
+	public void remove(IndexerRequest indexerRequest) {
+		_indexerRequests.remove(indexerRequest);
+	}
+
 	public int size() {
 		return _indexerRequests.size();
 	}
-
-	protected void commit(Set<String> searchEngineIds) {
-		for (String searchEngineId : searchEngineIds) {
-			try {
-				IndexWriterHelperUtil.commit(searchEngineId);
-			}
-			catch (SearchException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to commit search engine", se);
-				}
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		IndexerRequestBuffer.class);
 
 	private static final ThreadLocal<List<IndexerRequestBuffer>>
 		_indexerRequestBuffersThreadLocal =

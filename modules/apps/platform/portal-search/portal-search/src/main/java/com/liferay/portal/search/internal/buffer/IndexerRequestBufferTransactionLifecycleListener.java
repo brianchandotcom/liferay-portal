@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
+import com.liferay.portal.search.buffer.IndexerRequestBufferExecutor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -37,7 +39,11 @@ public class IndexerRequestBufferTransactionLifecycleListener
 			IndexerRequestBuffer.remove();
 
 		if ((indexerRequestBuffer != null) && !indexerRequestBuffer.isEmpty()) {
-			indexerRequestBuffer.execute();
+			IndexerRequestBufferExecutor indexerRequestBufferExecutor =
+				_indexerRequestBufferExecutorWatcher.
+					getIndexerRequestBufferExecutor();
+
+			indexerRequestBufferExecutor.execute(indexerRequestBuffer);
 		}
 	}
 
@@ -61,5 +67,9 @@ public class IndexerRequestBufferTransactionLifecycleListener
 			indexerRequestBuffer.clear();
 		}
 	}
+
+	@Reference
+	private IndexerRequestBufferExecutorWatcher
+		_indexerRequestBufferExecutorWatcher;
 
 }

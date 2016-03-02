@@ -15,11 +15,19 @@
 package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
+import com.liferay.portal.search.buffer.IndexerRequestBufferExecutor;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"mode=DEFAULT"},
+	service = IndexerRequestBufferOverflowHandler.class
+)
 public class DefaultIndexerRequestBufferOverflowHandler
 	implements IndexerRequestBufferOverflowHandler {
 
@@ -30,8 +38,17 @@ public class DefaultIndexerRequestBufferOverflowHandler
 		int numRequests = indexerRequestBuffer.size() - maxBufferSize;
 
 		if (numRequests > 0) {
-			indexerRequestBuffer.execute(numRequests);
+			IndexerRequestBufferExecutor indexerRequestBufferExecutor =
+				_indexerRequestBufferExecutorWatcher.
+					getIndexerRequestBufferExecutor();
+
+			indexerRequestBufferExecutor.execute(
+				indexerRequestBuffer, numRequests);
 		}
 	}
+
+	@Reference
+	private IndexerRequestBufferExecutorWatcher
+		_indexerRequestBufferExecutorWatcher;
 
 }

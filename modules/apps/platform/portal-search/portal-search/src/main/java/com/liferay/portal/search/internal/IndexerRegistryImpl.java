@@ -27,7 +27,6 @@ import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 import com.liferay.portal.search.internal.buffer.BufferedIndexerInvocationHandler;
-import com.liferay.portal.search.internal.buffer.DefaultIndexerRequestBufferOverflowHandler;
 
 import java.util.HashSet;
 import java.util.List;
@@ -224,9 +223,11 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	private final Map<String, BufferedIndexerInvocationHandler>
 		_bufferedInvocationHandlers = new ConcurrentHashMap<>();
-	private final IndexerRequestBufferOverflowHandler
-		_defaultIndexerRequestBufferOverflowHandler =
-			new DefaultIndexerRequestBufferOverflowHandler();
+
+	@Reference(target = "(mode=DEFAULT)")
+	private IndexerRequestBufferOverflowHandler
+		_defaultIndexerRequestBufferOverflowHandler;
+
 	private final Indexer<?> _dummyIndexer = new DummyIndexer();
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
 	private volatile IndexerRequestBufferOverflowHandler

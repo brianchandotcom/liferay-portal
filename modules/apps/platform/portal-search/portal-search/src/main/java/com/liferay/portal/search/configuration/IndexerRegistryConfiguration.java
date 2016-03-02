@@ -32,10 +32,7 @@ public interface IndexerRegistryConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean buffered();
 
-	@Meta.AD(
-		deflt = "DEFAULT", optionValues = {"COALESCING", "DEFAULT"},
-		required = false
-	)
+	@Meta.AD(deflt = "DEFAULT", required = false)
 	public String bufferedExecutionMode();
 
 	@Meta.AD(deflt = "200", required = false)

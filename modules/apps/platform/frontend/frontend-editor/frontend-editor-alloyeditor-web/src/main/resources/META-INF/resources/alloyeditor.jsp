@@ -225,6 +225,13 @@ if (showSource) {
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
+		editorConfig = A.merge(
+			{
+				title: '<%= LanguageUtil.get(resourceBundle, "rich-text-editor") %>'
+			},
+			editorConfig
+		);
+
 		var plugins = [];
 
 		<c:if test="<%= Validator.isNotNull(data) && Validator.isNotNull(uploadURL) %>">

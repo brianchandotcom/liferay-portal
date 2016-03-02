@@ -17,13 +17,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@
+<%@ page import="com.liferay.frontend.editor.lang.FrontEndEditorResourceBundleUtil" %><%@
+page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourceConstants" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -40,10 +41,11 @@ page import="com.liferay.util.Encryptor" %>
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletResponse" %><%@
-page import="javax.portlet.PortletURL" %>
+page import="javax.portlet.PortletResponse" %>
 
 <liferay-theme:defineObjects />
+
+<liferay-frontend:defineObjects overrideResourceBundle="<%= FrontEndEditorResourceBundleUtil.getResourceBundle(locale) %>" />
 
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -54,16 +56,5 @@ String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
 
 if (Validator.isNull(namespace)) {
 	namespace = AUIUtil.getNamespace(request);
-}
-
-String currentURL = null;
-
-if ((portletRequest != null) && (portletResponse != null)) {
-	PortletURL currentURLObj = PortletURLUtil.getCurrent(PortalUtil.getLiferayPortletRequest(portletRequest), PortalUtil.getLiferayPortletResponse(portletResponse));
-
-	currentURL = currentURLObj.toString();
-}
-else {
-	currentURL = PortalUtil.getCurrentURL(request);
 }
 %>

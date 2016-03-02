@@ -169,17 +169,17 @@ public class UserThreadPersistenceTest {
 	}
 
 	@Test
-	public void testCountByMBThreadId() throws Exception {
-		_persistence.countByMBThreadId(RandomTestUtil.nextLong());
-
-		_persistence.countByMBThreadId(0L);
-	}
-
-	@Test
 	public void testCountByUserId() throws Exception {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByUserId(0L);
+	}
+
+	@Test
+	public void testCountByMBThreadId() throws Exception {
+		_persistence.countByMBThreadId(RandomTestUtil.nextLong());
+
+		_persistence.countByMBThreadId(0L);
 	}
 
 	@Test

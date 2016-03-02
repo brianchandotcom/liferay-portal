@@ -42,138 +42,6 @@ public interface UserThreadPersistence extends BasePersistence<UserThread> {
 	 */
 
 	/**
-	* Returns all the user threads where mbThreadId = &#63;.
-	*
-	* @param mbThreadId the mb thread ID
-	* @return the matching user threads
-	*/
-	public java.util.List<UserThread> findByMBThreadId(long mbThreadId);
-
-	/**
-	* Returns a range of all the user threads where mbThreadId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param mbThreadId the mb thread ID
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @return the range of matching user threads
-	*/
-	public java.util.List<UserThread> findByMBThreadId(long mbThreadId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the user threads where mbThreadId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param mbThreadId the mb thread ID
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching user threads
-	*/
-	public java.util.List<UserThread> findByMBThreadId(long mbThreadId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the user threads where mbThreadId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param mbThreadId the mb thread ID
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching user threads
-	*/
-	public java.util.List<UserThread> findByMBThreadId(long mbThreadId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first user thread in the ordered set where mbThreadId = &#63;.
-	*
-	* @param mbThreadId the mb thread ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user thread
-	* @throws NoSuchUserThreadException if a matching user thread could not be found
-	*/
-	public UserThread findByMBThreadId_First(long mbThreadId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator)
-		throws NoSuchUserThreadException;
-
-	/**
-	* Returns the first user thread in the ordered set where mbThreadId = &#63;.
-	*
-	* @param mbThreadId the mb thread ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user thread, or <code>null</code> if a matching user thread could not be found
-	*/
-	public UserThread fetchByMBThreadId_First(long mbThreadId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator);
-
-	/**
-	* Returns the last user thread in the ordered set where mbThreadId = &#63;.
-	*
-	* @param mbThreadId the mb thread ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user thread
-	* @throws NoSuchUserThreadException if a matching user thread could not be found
-	*/
-	public UserThread findByMBThreadId_Last(long mbThreadId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator)
-		throws NoSuchUserThreadException;
-
-	/**
-	* Returns the last user thread in the ordered set where mbThreadId = &#63;.
-	*
-	* @param mbThreadId the mb thread ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user thread, or <code>null</code> if a matching user thread could not be found
-	*/
-	public UserThread fetchByMBThreadId_Last(long mbThreadId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator);
-
-	/**
-	* Returns the user threads before and after the current user thread in the ordered set where mbThreadId = &#63;.
-	*
-	* @param userThreadId the primary key of the current user thread
-	* @param mbThreadId the mb thread ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next user thread
-	* @throws NoSuchUserThreadException if a user thread with the primary key could not be found
-	*/
-	public UserThread[] findByMBThreadId_PrevAndNext(long userThreadId,
-		long mbThreadId,
-		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator)
-		throws NoSuchUserThreadException;
-
-	/**
-	* Removes all the user threads where mbThreadId = &#63; from the database.
-	*
-	* @param mbThreadId the mb thread ID
-	*/
-	public void removeByMBThreadId(long mbThreadId);
-
-	/**
-	* Returns the number of user threads where mbThreadId = &#63;.
-	*
-	* @param mbThreadId the mb thread ID
-	* @return the number of matching user threads
-	*/
-	public int countByMBThreadId(long mbThreadId);
-
-	/**
 	* Returns all the user threads where userId = &#63;.
 	*
 	* @param userId the user ID
@@ -304,6 +172,138 @@ public interface UserThreadPersistence extends BasePersistence<UserThread> {
 	* @return the number of matching user threads
 	*/
 	public int countByUserId(long userId);
+
+	/**
+	* Returns all the user threads where mbThreadId = &#63;.
+	*
+	* @param mbThreadId the mb thread ID
+	* @return the matching user threads
+	*/
+	public java.util.List<UserThread> findByMBThreadId(long mbThreadId);
+
+	/**
+	* Returns a range of all the user threads where mbThreadId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param mbThreadId the mb thread ID
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @return the range of matching user threads
+	*/
+	public java.util.List<UserThread> findByMBThreadId(long mbThreadId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the user threads where mbThreadId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param mbThreadId the mb thread ID
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user threads
+	*/
+	public java.util.List<UserThread> findByMBThreadId(long mbThreadId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the user threads where mbThreadId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param mbThreadId the mb thread ID
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user threads
+	*/
+	public java.util.List<UserThread> findByMBThreadId(long mbThreadId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first user thread in the ordered set where mbThreadId = &#63;.
+	*
+	* @param mbThreadId the mb thread ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user thread
+	* @throws NoSuchUserThreadException if a matching user thread could not be found
+	*/
+	public UserThread findByMBThreadId_First(long mbThreadId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator)
+		throws NoSuchUserThreadException;
+
+	/**
+	* Returns the first user thread in the ordered set where mbThreadId = &#63;.
+	*
+	* @param mbThreadId the mb thread ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user thread, or <code>null</code> if a matching user thread could not be found
+	*/
+	public UserThread fetchByMBThreadId_First(long mbThreadId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator);
+
+	/**
+	* Returns the last user thread in the ordered set where mbThreadId = &#63;.
+	*
+	* @param mbThreadId the mb thread ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user thread
+	* @throws NoSuchUserThreadException if a matching user thread could not be found
+	*/
+	public UserThread findByMBThreadId_Last(long mbThreadId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator)
+		throws NoSuchUserThreadException;
+
+	/**
+	* Returns the last user thread in the ordered set where mbThreadId = &#63;.
+	*
+	* @param mbThreadId the mb thread ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user thread, or <code>null</code> if a matching user thread could not be found
+	*/
+	public UserThread fetchByMBThreadId_Last(long mbThreadId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator);
+
+	/**
+	* Returns the user threads before and after the current user thread in the ordered set where mbThreadId = &#63;.
+	*
+	* @param userThreadId the primary key of the current user thread
+	* @param mbThreadId the mb thread ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user thread
+	* @throws NoSuchUserThreadException if a user thread with the primary key could not be found
+	*/
+	public UserThread[] findByMBThreadId_PrevAndNext(long userThreadId,
+		long mbThreadId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserThread> orderByComparator)
+		throws NoSuchUserThreadException;
+
+	/**
+	* Removes all the user threads where mbThreadId = &#63; from the database.
+	*
+	* @param mbThreadId the mb thread ID
+	*/
+	public void removeByMBThreadId(long mbThreadId);
+
+	/**
+	* Returns the number of user threads where mbThreadId = &#63;.
+	*
+	* @param mbThreadId the mb thread ID
+	* @return the number of matching user threads
+	*/
+	public int countByMBThreadId(long mbThreadId);
 
 	/**
 	* Returns the user thread where userId = &#63; and mbThreadId = &#63; or throws a {@link NoSuchUserThreadException} if it could not be found.

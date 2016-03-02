@@ -112,6 +112,161 @@ public class UserThreadUtil {
 	}
 
 	/**
+	* Returns all the user threads where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching user threads
+	*/
+	public static List<UserThread> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	* Returns a range of all the user threads where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @return the range of matching user threads
+	*/
+	public static List<UserThread> findByUserId(long userId, int start, int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the user threads where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching user threads
+	*/
+	public static List<UserThread> findByUserId(long userId, int start,
+		int end, OrderByComparator<UserThread> orderByComparator) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user threads where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of user threads
+	* @param end the upper bound of the range of user threads (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user threads
+	*/
+	public static List<UserThread> findByUserId(long userId, int start,
+		int end, OrderByComparator<UserThread> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first user thread in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user thread
+	* @throws NoSuchUserThreadException if a matching user thread could not be found
+	*/
+	public static UserThread findByUserId_First(long userId,
+		OrderByComparator<UserThread> orderByComparator)
+		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first user thread in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching user thread, or <code>null</code> if a matching user thread could not be found
+	*/
+	public static UserThread fetchByUserId_First(long userId,
+		OrderByComparator<UserThread> orderByComparator) {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user thread in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user thread
+	* @throws NoSuchUserThreadException if a matching user thread could not be found
+	*/
+	public static UserThread findByUserId_Last(long userId,
+		OrderByComparator<UserThread> orderByComparator)
+		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last user thread in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching user thread, or <code>null</code> if a matching user thread could not be found
+	*/
+	public static UserThread fetchByUserId_Last(long userId,
+		OrderByComparator<UserThread> orderByComparator) {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the user threads before and after the current user thread in the ordered set where userId = &#63;.
+	*
+	* @param userThreadId the primary key of the current user thread
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next user thread
+	* @throws NoSuchUserThreadException if a user thread with the primary key could not be found
+	*/
+	public static UserThread[] findByUserId_PrevAndNext(long userThreadId,
+		long userId, OrderByComparator<UserThread> orderByComparator)
+		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(userThreadId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the user threads where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	*/
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	* Returns the number of user threads where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching user threads
+	*/
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	* Returns all the user threads where mbThreadId = &#63;.
 	*
 	* @param mbThreadId the mb thread ID
@@ -269,161 +424,6 @@ public class UserThreadUtil {
 	*/
 	public static int countByMBThreadId(long mbThreadId) {
 		return getPersistence().countByMBThreadId(mbThreadId);
-	}
-
-	/**
-	* Returns all the user threads where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching user threads
-	*/
-	public static List<UserThread> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	* Returns a range of all the user threads where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @return the range of matching user threads
-	*/
-	public static List<UserThread> findByUserId(long userId, int start, int end) {
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the user threads where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching user threads
-	*/
-	public static List<UserThread> findByUserId(long userId, int start,
-		int end, OrderByComparator<UserThread> orderByComparator) {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the user threads where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of user threads
-	* @param end the upper bound of the range of user threads (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching user threads
-	*/
-	public static List<UserThread> findByUserId(long userId, int start,
-		int end, OrderByComparator<UserThread> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator,
-			retrieveFromCache);
-	}
-
-	/**
-	* Returns the first user thread in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user thread
-	* @throws NoSuchUserThreadException if a matching user thread could not be found
-	*/
-	public static UserThread findByUserId_First(long userId,
-		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
-		return getPersistence().findByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the first user thread in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching user thread, or <code>null</code> if a matching user thread could not be found
-	*/
-	public static UserThread fetchByUserId_First(long userId,
-		OrderByComparator<UserThread> orderByComparator) {
-		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last user thread in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user thread
-	* @throws NoSuchUserThreadException if a matching user thread could not be found
-	*/
-	public static UserThread findByUserId_Last(long userId,
-		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last user thread in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching user thread, or <code>null</code> if a matching user thread could not be found
-	*/
-	public static UserThread fetchByUserId_Last(long userId,
-		OrderByComparator<UserThread> orderByComparator) {
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the user threads before and after the current user thread in the ordered set where userId = &#63;.
-	*
-	* @param userThreadId the primary key of the current user thread
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next user thread
-	* @throws NoSuchUserThreadException if a user thread with the primary key could not be found
-	*/
-	public static UserThread[] findByUserId_PrevAndNext(long userThreadId,
-		long userId, OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
-		return getPersistence()
-				   .findByUserId_PrevAndNext(userThreadId, userId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the user threads where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	*/
-	public static void removeByUserId(long userId) {
-		getPersistence().removeByUserId(userId);
-	}
-
-	/**
-	* Returns the number of user threads where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching user threads
-	*/
-	public static int countByUserId(long userId) {
-		return getPersistence().countByUserId(userId);
 	}
 
 	/**

@@ -29,152 +29,176 @@ long recordSetId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortl
 boolean spreadsheet = PrefsParamUtil.getBoolean(PortletPreferencesFactoryUtil.getPortletSetup(renderRequest), renderRequest, "spreadsheet");
 
 DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+String tabsNames = (selRecordSet == null) ? "lists" : "lists,optional-configuration";
 %>
-
-<div class="alert alert-info">
-	<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="please-select-a-list-entry-from-the-list-below" />
-	</span>
-
-	<span class="displaying-record-set-id-holder <%= (selRecordSet == null) ? "hide" : StringPool.BLANK %>">
-		<liferay-ui:message key="displaying-list" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
-	</span>
-</div>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
-
-<aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
-
-	<aui:fieldset label="lists">
-		<liferay-ui:search-container
-			emptyResultsMessage="no-lists-were-found"
-			iteratorURL="<%= configurationRenderURL %>"
-			total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) %>"
-		>
-			<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-				<aui:nav-bar-search>
-					<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
-				</aui:nav-bar-search>
-			</aui:nav-bar>
-
-			<liferay-ui:search-container-results
-				results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
-				escapedModel="<%= true %>"
-				keyProperty="recordSetId"
-				modelVar="recordSet"
-			>
-
-				<%
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("javascript:");
-				sb.append(renderResponse.getNamespace());
-				sb.append("selectRecordSet('");
-				sb.append(recordSet.getRecordSetId());
-				sb.append("','");
-				sb.append(recordSet.getName(locale));
-				sb.append("');");
-
-				String rowURL = sb.toString();
-				%>
-
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="name"
-					orderable="<%= false %>"
-					value="<%= recordSet.getName(locale) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="description"
-					orderable="<%= false %>"
-					value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
-				/>
-
-				<liferay-ui:search-container-column-date
-					href="<%= rowURL %>"
-					name="modified-date"
-					orderable="<%= false %>"
-					value="<%= recordSet.getModifiedDate() %>"
-				/>
-			</liferay-ui:search-container-row>
-
-			<div class="separator"><!-- --></div>
-
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
-	</aui:fieldset>
-</aui:form>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
 	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
 
-	<c:if test="<%= selRecordSet != null %>">
-		<aui:fieldset label="optional-configuration">
-			<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
-				<aui:option label="default" value="<%= 0 %>" />
+	<liferay-ui:tabs
+		names="<%= tabsNames %>"
+		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
+	>
 
-				<%
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+		<liferay-ui:section>
 
-				for (DDMTemplate template : templates) {
-					boolean selected = false;
+			<div class="alert alert-info">
+				<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
+					<liferay-ui:message key="please-select-a-list-entry-from-the-list-below" />
+				</span>
 
-					if (displayDDMTemplateId == template.getTemplateId()) {
-						selected = true;
-					}
-				%>
+				<span class="displaying-record-set-id-holder <%= (selRecordSet == null) ? "hide" : StringPool.BLANK %>">
+					<liferay-ui:message key="displaying-list" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
+				</span>
+			</div>
 
-					<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+			<liferay-frontend:management-bar
+				includeCheckBox="<%= false %>"
+			>
+				<liferay-frontend:management-bar-filters>
+					<liferay-frontend:management-bar-navigation
+						navigationKeys='<%= new String[] {"all"} %>'
+						portletURL="<%= configurationRenderURL %>"
+					/>
 
-				<%
-				}
-				%>
+					<liferay-frontend:management-bar-sort
+						orderByCol="<%= orderByCol %>"
+						orderByType="<%= orderByType %>"
+						orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
+						portletURL="<%= configurationRenderURL %>"
+					/>
+				</liferay-frontend:management-bar-filters>
+			</liferay-frontend:management-bar>
 
-			</aui:select>
+			<liferay-ui:search-container
+				emptyResultsMessage="no-lists-were-found"
+				iteratorURL="<%= configurationRenderURL %>"
+				total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) %>"
+			>
 
-			<aui:select helpMessage="select-the-form-template-used-to-add-records-to-the-list" label="form-template" name="preferences--formDDMTemplateId--">
-				<aui:option label="default" value="<%= 0 %>" />
+				<liferay-ui:search-container-results
+					results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), getDDLRecordSetOrderByComparator(orderByCol, orderByType)) %>"
+				/>
 
-				<%
-				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+				<liferay-ui:search-container-row
+					className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
+					escapedModel="<%= true %>"
+					keyProperty="recordSetId"
+					modelVar="recordSet"
+				>
 
-				for (DDMTemplate template : templates) {
-					boolean selected = false;
+					<%
+					StringBundler sb = new StringBundler(7);
 
-					if (formDDMTemplateId == template.getTemplateId()) {
-						selected = true;
-					}
-				%>
+					sb.append("javascript:");
+					sb.append(renderResponse.getNamespace());
+					sb.append("selectRecordSet('");
+					sb.append(recordSet.getRecordSetId());
+					sb.append("','");
+					sb.append(recordSet.getName(locale));
+					sb.append("');");
 
-					<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+					String rowURL = sb.toString();
+					%>
 
-				<%
-				}
-				%>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="name"
+						orderable="<%= false %>"
+						value="<%= recordSet.getName(locale) %>"
+					/>
 
-			</aui:select>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="description"
+						orderable="<%= false %>"
+						value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
+					/>
 
-			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
+					<liferay-ui:search-container-column-date
+						href="<%= rowURL %>"
+						name="modified-date"
+						orderable="<%= false %>"
+						value="<%= recordSet.getModifiedDate() %>"
+					/>
+				</liferay-ui:search-container-row>
 
-			<aui:input helpMessage="check-to-display-the-form-entry-view" label="form-view" name="preferences--formView--" type="checkbox" value="<%= formView %>" />
+				<liferay-ui:search-iterator markupView="lexicon" />
+			</liferay-ui:search-container>
+		</liferay-ui:section>
 
-			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
-		</aui:fieldset>
-	</c:if>
+		<c:if test="<%= selRecordSet != null %>">
+			<liferay-ui:section>
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
+							<aui:option label="default" value="<%= 0 %>" />
+
+							<%
+							List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+							for (DDMTemplate template : templates) {
+								boolean selected = false;
+
+								if (displayDDMTemplateId == template.getTemplateId()) {
+									selected = true;
+								}
+							%>
+
+								<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<aui:select helpMessage="select-the-form-template-used-to-add-records-to-the-list" label="form-template" name="preferences--formDDMTemplateId--">
+							<aui:option label="default" value="<%= 0 %>" />
+
+							<%
+							List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+
+							for (DDMTemplate template : templates) {
+								boolean selected = false;
+
+								if (formDDMTemplateId == template.getTemplateId()) {
+									selected = true;
+								}
+							%>
+
+								<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
+
+						<aui:input helpMessage="check-to-display-the-form-entry-view" label="form-view" name="preferences--formView--" type="checkbox" value="<%= formView %>" />
+
+						<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</liferay-ui:section>
+		</c:if>
+	</liferay-ui:tabs>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
@@ -198,3 +222,29 @@ DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 		['aui-base']
 	);
 </aui:script>
+
+<%!
+private OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(String orderByCol, String orderByType) {
+	boolean orderByAsc = false;
+
+	if (orderByType.equals("asc")) {
+		orderByAsc = true;
+	}
+
+	OrderByComparator<DDLRecordSet> orderByComparator = null;
+
+	if (orderByCol.equals("create-date")) {
+		orderByComparator = new DDLRecordSetCreateDateComparator(
+			orderByAsc);
+	}
+	else if (orderByCol.equals("modified-date")) {
+		orderByComparator = new DDLRecordSetModifiedDateComparator(
+			orderByAsc);
+	}
+	else if (orderByCol.equals("name")) {
+		orderByComparator = new DDLRecordSetNameComparator(orderByAsc);
+	}
+
+	return orderByComparator;
+}
+%>

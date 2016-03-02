@@ -37,7 +37,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= ddlDisplayContext.getOrderByCol() %>"
 			orderByType="<%= ddlDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"modified-date", "id"} %>'
+			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

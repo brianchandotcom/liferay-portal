@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -84,6 +83,8 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 		}
 	}
 
+	protected abstract String getResourcePermissionClassName();
+
 	protected void updateAccessInControlPanelPermission(
 			String portletFrom, String portletTo)
 		throws Exception {
@@ -112,7 +113,7 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 										"= " + resourcePermissionId);
 
 							resourcePermissionId = increment(
-								ResourcePermission.class.getName());
+								getResourcePermissionClassName());
 
 							long companyId = rs.getLong("companyId");
 							int scope = rs.getInt("scope");

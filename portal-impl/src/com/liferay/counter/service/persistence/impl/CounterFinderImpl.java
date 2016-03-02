@@ -91,7 +91,7 @@ public class CounterFinderImpl
 
 	@Override
 	public long increment() {
-		return increment(_NAME);
+		return increment(CounterClassNameThreadLocal.getCounterClassName());
 	}
 
 	@Override
@@ -273,7 +273,7 @@ public class CounterFinderImpl
 	}
 
 	protected int getRangeSize(String name) {
-		if (name.equals(_NAME)) {
+		if (name.equals(CounterClassNameThreadLocal.getCounterClassName())) {
 			return PropsValues.COUNTER_INCREMENT;
 		}
 
@@ -405,8 +405,6 @@ public class CounterFinderImpl
 	private static final int _DEFAULT_CURRENT_ID = 0;
 
 	private static final int _MINIMUM_INCREMENT_SIZE = 1;
-
-	private static final String _NAME = Counter.class.getName();
 
 	private static final String _SQL_INSERT =
 		"insert into Counter(name, currentId) values (?, ?)";

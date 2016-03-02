@@ -308,8 +308,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			Role role = getRole(companyId, roleName);
 
 			resourceLocalService.addResources(
-				companyId, 0, 0, Role.class.getName(), role.getRoleId(), false,
-				false, false);
+				companyId, 0, 0, RoleClassNameThreadLocal.getRoleClassName(),
+				role.getRoleId(), false, false, false);
 		}
 
 		// All users should be able to view all system roles
@@ -320,7 +320,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			Role role = getRole(companyId, roleName);
 
 			resourcePermissionLocalService.setResourcePermissions(
-				companyId, Role.class.getName(),
+				companyId, RoleClassNameThreadLocal.getRoleClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(role.getRoleId()), userRole.getRoleId(),
 				new String[] {ActionKeys.VIEW});
@@ -389,9 +389,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		String className = role.getClassName();
 		long classNameId = role.getClassNameId();
 
-		if ((classNameId <= 0) || className.equals(Role.class.getName())) {
+		if ((classNameId <= 0) ||
+			className.equals(RoleClassNameThreadLocal.getRoleClassName())) {
+
 			resourceLocalService.deleteResource(
-				role.getCompanyId(), Role.class.getName(),
+				role.getCompanyId(),
+				RoleClassNameThreadLocal.getRoleClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, role.getRoleId());
 		}
 

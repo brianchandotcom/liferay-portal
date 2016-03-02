@@ -746,46 +746,28 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return resources;
 		}
 
+		String newIndividualResourcePrimKey = null;
+
 		if ((groupId > 0) && ResourceActionsUtil.isRootModelResource(name)) {
 
 			// There are no custom permissions defined for root model-resource,
 			// use defaults
 
-			Resource individualResource = resources.get(0);
-
-			if (individualResource.getScope() !=
-					ResourceConstants.SCOPE_INDIVIDUAL) {
-
-				throw new IllegalArgumentException(
-					"The first resource must be an individual scope");
-			}
-
-			individualResource.setPrimKey(name);
-
-			return resources;
+			newIndividualResourcePrimKey = name;
 		}
 
-		if (primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+		else if (primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
 
 			// There are no custom permissions defined for portlet, use defaults
 
-			Resource individualResource = resources.get(0);
-
-			if (individualResource.getScope() !=
-				ResourceConstants.SCOPE_INDIVIDUAL) {
-
-				throw new IllegalArgumentException(
-					"The first resource must be an individual scope");
-			}
-
-			individualResource.setPrimKey(name);
-
-			return resources;
+			newIndividualResourcePrimKey = name;
 		}
 
-		if (((primKey.length() == 1) && (primKey.charAt(0) == 48)) ||
-			(primKey.equals(String.valueOf(companyId)) &&
-				!name.equals(Company.class.getName()))) {
+		else if (((primKey.length() == 1) && (primKey.charAt(0) == 48)) ||
+				 (primKey.equals(String.valueOf(companyId)) &&
+				  !name.equals(Company.class.getName()))) {
+
+			newIndividualResourcePrimKey = name;
 
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(9);
@@ -803,19 +785,19 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				_log.warn(
 					sb.toString(), new IllegalArgumentException(sb.toString()));
 			}
+		}
 
+		if (newIndividualResourcePrimKey != null) {
 			Resource individualResource = resources.get(0);
 
 			if (individualResource.getScope() !=
-				ResourceConstants.SCOPE_INDIVIDUAL) {
+					ResourceConstants.SCOPE_INDIVIDUAL) {
 
 				throw new IllegalArgumentException(
 					"The first resource must be an individual scope");
 			}
 
 			individualResource.setPrimKey(name);
-
-			return resources;
 		}
 
 		return resources;

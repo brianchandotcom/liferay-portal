@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.SearchEngineHelperConfiguration",
 	localization = "content/Language",
-	name = "%search.engine.helper.configuration.name"
+	name = "search.engine.helper.configuration.name"
 )
 public interface SearchEngineHelperConfiguration {
 

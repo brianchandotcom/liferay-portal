@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration",
 	localization = "content/Language",
-	name = "%search.permission.checker.configuration.name"
+	name = "search.permission.checker.configuration.name"
 )
 public interface SearchPermissionCheckerConfiguration {
 

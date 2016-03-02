@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.IndexerRegistryConfiguration",
 	localization = "content/Language",
-	name = "%indexer.registry.configuration.name"
+	name = "indexer.registry.configuration.name"
 )
 public interface IndexerRegistryConfiguration {
 

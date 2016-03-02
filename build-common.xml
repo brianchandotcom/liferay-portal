@@ -1785,7 +1785,7 @@ rerun your task.
 
 		<propertyfile file="../.gradle/gradle.properties">
 			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}-SNAPSHOT" />
-		</propertyfile>s
+		</propertyfile>
 	</target>
 
 	<target name="print-properties">

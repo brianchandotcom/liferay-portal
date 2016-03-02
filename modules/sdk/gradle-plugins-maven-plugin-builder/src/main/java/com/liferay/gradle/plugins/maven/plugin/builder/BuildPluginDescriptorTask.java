@@ -124,6 +124,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_configurationScopeMappings.put(configurationName, scope);
 	}
 
+	@SuppressWarnings("unchecked")
 	public BuildPluginDescriptorTask forcedExclusions(
 		Iterable<String> forcedExclusions) {
 

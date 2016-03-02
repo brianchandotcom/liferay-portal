@@ -302,11 +302,6 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	@Override
-	public boolean isListable(long classPK) {
-		return true;
-	}
-
-	@Override
 	public boolean isSearchable() {
 		return _searchable;
 	}

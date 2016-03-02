@@ -3303,6 +3303,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
+	public boolean isListable(JournalArticle article) {
+		if ((article != null) && article.isIndexable()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRenderable(
 		JournalArticle article, PortletRequestModel portletRequestModel,
 		ThemeDisplay themeDisplay) {
@@ -5550,8 +5559,9 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), article.getCreateDate(),
 				article.getModifiedDate(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
-				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
-				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
+				getClassTypeId(article), assetCategoryIds, assetTagNames,
+				isListable(article), false, null, null, null,
+				ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
 				article.getLayoutUuid(), 0, 0, priority);
 		}
@@ -5565,8 +5575,8 @@ public class JournalArticleLocalServiceImpl
 				article.getModifiedDate(), JournalArticle.class.getName(),
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
-				assetCategoryIds, assetTagNames, visible, null, null, null,
-				ContentTypes.TEXT_HTML, article.getTitle(),
+				assetCategoryIds, assetTagNames, isListable(article), visible,
+				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
 				article.getLayoutUuid(), 0, 0, priority);
 		}
@@ -5752,9 +5762,9 @@ public class JournalArticleLocalServiceImpl
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
 								getClassTypeId(article), assetCategoryIds,
-								assetTagNames, false, null, null, null,
-								ContentTypes.TEXT_HTML, article.getTitle(),
-								article.getDescription(),
+								assetTagNames, isListable(article), false, null,
+								null, null, ContentTypes.TEXT_HTML,
+								article.getTitle(), article.getDescription(),
 								article.getDescription(), null,
 								article.getLayoutUuid(), 0, 0,
 								draftAssetEntry.getPriority());
@@ -5773,7 +5783,7 @@ public class JournalArticleLocalServiceImpl
 					assetEntryLocalService.updateEntry(
 						JournalArticle.class.getName(),
 						article.getResourcePrimKey(), article.getDisplayDate(),
-						article.getExpirationDate(), true);
+						article.getExpirationDate(), isListable(article), true);
 				}
 
 				// Social
@@ -7560,7 +7570,8 @@ public class JournalArticleLocalServiceImpl
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				previousApprovedArticle.getDisplayDate(),
-				previousApprovedArticle.getExpirationDate(), true);
+				previousApprovedArticle.getExpirationDate(),
+				isListable(article), true);
 
 			assetEntry.setModifiedDate(
 				previousApprovedArticle.getModifiedDate());

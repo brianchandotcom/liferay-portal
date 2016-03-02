@@ -2365,6 +2365,11 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public boolean isListable(com.liferay.journal.model.JournalArticle article) {
+		return _journalArticleLocalService.isListable(article);
+	}
+
+	@Override
 	public boolean isRenderable(
 		com.liferay.journal.model.JournalArticle article,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,

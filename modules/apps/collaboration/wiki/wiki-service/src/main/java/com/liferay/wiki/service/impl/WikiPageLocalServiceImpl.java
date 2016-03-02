@@ -1875,15 +1875,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				userId, page.getGroupId(), page.getCreateDate(),
 				page.getModifiedDate(), WikiPage.class.getName(),
 				page.getPrimaryKey(), page.getUuid(), 0, assetCategoryIds,
-				assetTagNames, false, null, null, null, ContentTypes.TEXT_HTML,
-				page.getTitle(), null, null, null, null, 0, 0, priority);
+				assetTagNames, true, false, null, null, null,
+				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
+				0, 0, priority);
 		}
 		else {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, page.getGroupId(), page.getCreateDate(),
 				page.getModifiedDate(), WikiPage.class.getName(),
 				page.getResourcePrimKey(), page.getUuid(), 0, assetCategoryIds,
-				assetTagNames, page.isApproved(), null, null, null,
+				assetTagNames, true, page.isApproved(), null, null, null,
 				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
 				0, 0, priority);
 		}
@@ -2026,9 +2027,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 						userId, page.getGroupId(), page.getCreateDate(),
 						page.getModifiedDate(), WikiPage.class.getName(),
 						page.getResourcePrimKey(), page.getUuid(), 0,
-						assetCategoryIds, assetTagNames, true, null, null, null,
-						ContentTypes.TEXT_HTML, page.getTitle(), null, null,
-						null, null, 0, 0, null);
+						assetCategoryIds, assetTagNames, true, true, null, null,
+						null, ContentTypes.TEXT_HTML, page.getTitle(), null,
+						null, null, null, 0, 0, null);
 
 					// Asset Links
 

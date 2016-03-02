@@ -229,11 +229,6 @@ public class TestAssetRendererFactory
 	}
 
 	@Override
-	public boolean isListable(long classPK) {
-		return false;
-	}
-
-	@Override
 	public boolean isSearchable() {
 		return false;
 	}

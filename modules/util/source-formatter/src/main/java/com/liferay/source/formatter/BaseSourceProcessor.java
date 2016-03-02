@@ -485,6 +485,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
+	protected void checkPropertyUtils(String fileName, String content) {
+		if (content.contains("org.apache.commons.beanutils.PropertyUtils")) {
+			processErrorMessage(
+				fileName,
+				"Do not use org.apache.commons.beanutils.PropertyUtils: " +
+					fileName);
+		}
+	}
+
 	protected void checkResourceUtil(
 		String line, String fileName, int lineCount) {
 

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `09adf28`.*
+*This document has been reviewed through commit `929b6ad`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3972,7 +3972,7 @@ You should change the entry from `site_administration.pages` to
 
 #### Why was this change made?
 
-This change standardizes naming conventions and separates concepts in Product
-Menu
+This change standardizes naming conventions and separates concepts in the
+Product Menu.
 
 ---------------------------------------

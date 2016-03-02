@@ -141,6 +141,8 @@ searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
 
 			row.addText(HtmlUtil.escape(passwordPolicy.getName()), rowURL);
 
+			row.getEntries().get(0).setCssClass("text-strong");
+
 			// Description
 
 			row.addText(HtmlUtil.escape(passwordPolicy.getDescription()), rowURL);

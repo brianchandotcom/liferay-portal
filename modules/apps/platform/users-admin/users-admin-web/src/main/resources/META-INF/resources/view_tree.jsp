@@ -108,6 +108,7 @@ if (organization != null) {
 			</c:if>
 
 			<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
+
 				<%
 				boolean showOrganizations = false;
 				boolean showUsers = true;

@@ -18,32 +18,52 @@
 
 <c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
 	<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content" markupView="lexicon">
-		<ul class="lfr-tree list-unstyled">
+		<ul class="list-unstyled">
 			<li class="tree-item">
+				<aui:select inlineField="<%= true %>" label="" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>">
+					<aui:option id="allContent" label="all-content" selected="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" value="<%= true %>" />
+					<aui:option id="chooseContent" label="choose-content" selected="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" value="<%= false %>" />
+				</aui:select>
+
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
-				<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" disabled="<%= disableInputs %>" helpMessage='<%= type.equals(Constants.EXPORT) ? "all-content-export-help" : "all-content-publish-help" %>' id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type='<%= disableInputs ? "hidden" : "radio" %>' value="<%= true %>" />
-
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
-				<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" disabled="<%= disableInputs %>" helpMessage='<%= type.equals(Constants.EXPORT) ? "choose-content-export-help" : "choose-content-publish-help" %>' id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type='<%= disableInputs ? "hidden" : "radio" %>' value="<%= false %>" />
 
-				<ul class='<%= disableInputs ? "select-options" : "hide select-options" %>' id="<portlet:namespace />selectContents">
+				<ul class='<%= disableInputs ? "" : "hide" %>' id="<portlet:namespace />selectContents">
 					<li>
-						<div class="hide" id="<portlet:namespace />range">
-							<ul class="lfr-tree list-unstyled">
+						<div id="<portlet:namespace />range">
+							<ul class="list-unstyled">
 								<li class="tree-item">
 									<aui:fieldset cssClass="portlet-data-section" label="date-range">
+										<div class="flex-container">
 
-										<%
-										String selectedRange = MapUtil.getString(parameterMap, "range", defaultRange);
-										%>
+											<%
+											String selectedRange = MapUtil.getString(parameterMap, "range", defaultRange);
+											%>
 
-										<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_ALL) %>" disabled="<%= disableInputs %>" id="rangeAll" label="all" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_ALL %>" />
+											<div class="flex-item-center range-options">
+												<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_ALL) %>" disabled="<%= disableInputs %>" id="rangeAll" label="all" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_ALL %>" />
+											</div>
 
-										<c:if test="<%= !type.equals(Constants.EXPORT) %>">
-											<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE) %>" disabled="<%= disableInputs %>" id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE %>" />
-										</c:if>
+											<c:if test="<%= !type.equals(Constants.EXPORT) %>">
+												<div class="flex-item-center range-options">
+													<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE) %>" disabled="<%= disableInputs %>" id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE %>" />
+												</div>
+											</c:if>
 
-										<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>" disabled="<%= disableInputs %>" helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_DATE_RANGE %>" />
+											<div class="flex-item-center range-options">
+												<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>" disabled="<%= disableInputs %>" helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_DATE_RANGE %>" />
+											</div>
+
+											<div class="flex-item-center range-options">
+												<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
+											</div>
+
+											<div class="flex-item-center range-options <%= disableInputs ? "hide" : StringPool.BLANK %>">
+												<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
+													<liferay-ui:message key="apply-filter" />
+												</aui:a>
+											</div>
+										</div>
 
 										<%
 										Calendar endCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -63,72 +83,68 @@
 										%>
 
 										<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
-											<li>
-												<aui:fieldset label="start-date">
-													<liferay-ui:input-date
-														dayParam="startDateDay"
-														dayValue="<%= startCalendar.get(Calendar.DATE) %>"
-														disabled="<%= false %>"
-														firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
-														lastEnabledDate="<%= (!cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? null : new Date() %>"
-														monthParam="startDateMonth"
-														monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
-														name="startDate"
-														yearParam="startDateYear"
-														yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
-													/>
+											<li class="flex-container">
+												<liferay-ui:input-date
+													cssClass="form-group form-group-inline"
+													dayParam="startDateDay"
+													dayValue="<%= startCalendar.get(Calendar.DATE) %>"
+													disabled="<%= false %>"
+													firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
+													lastEnabledDate="<%= (!cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? null : new Date() %>"
+													monthParam="startDateMonth"
+													monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
+													name="startDate"
+													yearParam="startDateYear"
+													yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
+												/>
 
-													&nbsp;
+												<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
-													<liferay-ui:input-time
-														amPmParam='<%= "startDateAmPm" %>'
-														amPmValue="<%= startCalendar.get(Calendar.AM_PM) %>"
-														dateParam="startDateTime"
-														dateValue="<%= startCalendar.getTime() %>"
-														disabled="<%= false %>"
-														hourParam='<%= "startDateHour" %>'
-														hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
-														minuteParam='<%= "startDateMinute" %>'
-														minuteValue="<%= startCalendar.get(Calendar.MINUTE) %>"
-														name="startTime"
-													/>
-												</aui:fieldset>
-											</li>
+												<liferay-ui:input-time
+													amPmParam='<%= "startDateAmPm" %>'
+													amPmValue="<%= startCalendar.get(Calendar.AM_PM) %>"
+													cssClass="form-group form-group-inline range-options"
+													dateParam="startDateTime"
+													dateValue="<%= startCalendar.getTime() %>"
+													disabled="<%= false %>"
+													hourParam='<%= "startDateHour" %>'
+													hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
+													minuteParam='<%= "startDateMinute" %>'
+													minuteValue="<%= startCalendar.get(Calendar.MINUTE) %>"
+													name="startTime"
+												/>
 
-											<li>
-												<aui:fieldset label="end-date">
-													<liferay-ui:input-date
-														dayParam="endDateDay"
-														dayValue="<%= endCalendar.get(Calendar.DATE) %>"
-														disabled="<%= false %>"
-														firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
-														lastEnabledDate="<%= (!cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? null : new Date() %>"
-														monthParam="endDateMonth"
-														monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
-														name="endDate"
-														yearParam="endDateYear"
-														yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
-													/>
+												<liferay-ui:input-date
+													cssClass="form-group form-group-inline"
+													dayParam="endDateDay"
+													dayValue="<%= endCalendar.get(Calendar.DATE) %>"
+													disabled="<%= false %>"
+													firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
+													lastEnabledDate="<%= (!cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? null : new Date() %>"
+													monthParam="endDateMonth"
+													monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
+													name="endDate"
+													yearParam="endDateYear"
+													yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
+												/>
 
-													&nbsp;
+												<liferay-ui:icon icon="calendar" markupView="lexicon" />
 
-													<liferay-ui:input-time
-														amPmParam='<%= "endDateAmPm" %>'
-														amPmValue="<%= endCalendar.get(Calendar.AM_PM) %>"
-														dateParam="endDateTime"
-														dateValue="<%= endCalendar.getTime() %>"
-														disabled="<%= false %>"
-														hourParam='<%= "endDateHour" %>'
-														hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
-														minuteParam='<%= "endDateMinute" %>'
-														minuteValue="<%= endCalendar.get(Calendar.MINUTE) %>"
-														name="endTime"
-													/>
-												</aui:fieldset>
+												<liferay-ui:input-time
+													amPmParam='<%= "endDateAmPm" %>'
+													amPmValue="<%= endCalendar.get(Calendar.AM_PM) %>"
+													cssClass="form-group form-group-inline"
+													dateParam="endDateTime"
+													dateValue="<%= endCalendar.getTime() %>"
+													disabled="<%= false %>"
+													hourParam='<%= "endDateHour" %>'
+													hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
+													minuteParam='<%= "endDateMinute" %>'
+													minuteValue="<%= endCalendar.get(Calendar.MINUTE) %>"
+													name="endTime"
+												/>
 											</li>
 										</ul>
-
-										<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
 
 										<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 											<li>
@@ -149,21 +165,6 @@
 								</li>
 							</ul>
 						</div>
-
-						<liferay-util:buffer var="selectedLabelsHTML">
-							<span class="selected-labels" id="<portlet:namespace />selectedRange"></span>
-
-							<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-								<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
-							</span>
-						</liferay-util:buffer>
-
-						<liferay-ui:icon
-							icon="calendar"
-							label="<%= true %>"
-							markupView="lexicon"
-							message='<%= LanguageUtil.get(request, "date-range") + selectedLabelsHTML %>'
-						/>
 					</li>
 
 					<li class="options">
@@ -177,7 +178,6 @@
 
 <c:if test="<%= !disableInputs %>">
 	<aui:script>
-		Liferay.Util.toggleRadio('<portlet:namespace />chooseContent', '<portlet:namespace />selectContents');
-		Liferay.Util.toggleRadio('<portlet:namespace />allContent', null, ['<portlet:namespace />selectContents']);
+		Liferay.Util.toggleSelectBox('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>', 'false', '<portlet:namespace />selectContents');
 	</aui:script>
 </c:if>

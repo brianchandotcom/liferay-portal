@@ -18,6 +18,11 @@
 
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.PUBLISH_TO_LIVE);
+String originalCmd = ParamUtil.getString(request, "originalCmd", Constants.PUBLISH_TO_LIVE);
+
+if (Validator.isNull(cmd)) {
+	cmd = originalCmd;
+}
 
 long exportImportConfigurationId = 0;
 
@@ -159,6 +164,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 <aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+	<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 	<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="redirect" type="hidden" value="<%= basePortletURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />

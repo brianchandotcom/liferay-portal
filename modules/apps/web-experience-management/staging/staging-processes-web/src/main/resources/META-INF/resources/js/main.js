@@ -80,10 +80,6 @@ AUI.add(
 							instance._globalConfigurationDialog.destroy();
 						}
 
-						if (instance._rangeDialog) {
-							instance._rangeDialog.destroy();
-						}
-
 						if (instance._remoteDialog) {
 							instance._remoteDialog.destroy();
 						}
@@ -179,9 +175,7 @@ AUI.add(
 							rangeLink.on(
 								STR_CLICK,
 								function(event) {
-									var rangeDialog = instance._getRangeDialog();
-
-									rangeDialog.show();
+									instance._updateDateRange();
 								}
 							);
 						}
@@ -440,64 +434,6 @@ AUI.add(
 						return globalConfigurationDialog;
 					},
 
-					_getRangeDialog: function() {
-						var instance = this;
-
-						var rangeDialog = instance._rangeDialog;
-
-						if (!rangeDialog) {
-							var updateDateRange = A.bind('_updateDateRange', instance);
-
-							var rangeNode = instance.byId('range');
-
-							rangeNode.show();
-
-							rangeDialog = Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										bodyContent: rangeNode,
-										centered: true,
-										modal: true,
-										render: instance.get('form'),
-										toolbars: {
-											footer: [
-												{
-													label: Liferay.Language.get('ok'),
-													on: {
-														click: updateDateRange
-													},
-													primary: true
-												},
-												{
-													label: Liferay.Language.get('cancel'),
-													on: {
-														click: function(event) {
-															event.domEvent.preventDefault();
-
-															rangeDialog.hide();
-														}
-													}
-												}
-											]
-										}
-									},
-									title: Liferay.Language.get('date-range')
-								}
-							);
-
-							rangeDialog.get('boundingBox').delegate(
-								'key',
-								updateDateRange,
-								'enter',
-								'input[type="text"]'
-							);
-
-							instance._rangeDialog = rangeDialog;
-						}
-
-						return rangeDialog;
-					},
-
 					_getRemoteDialog: function() {
 						var instance = this;
 
@@ -631,7 +567,6 @@ AUI.add(
 						instance._refreshDeletions();
 						instance._setContentOptionsLabels();
 						instance._setGlobalConfigurationLabels();
-						instance._setRangeLabels();
 						instance._setRemoteLabels();
 					},
 
@@ -944,27 +879,6 @@ AUI.add(
 						return val;
 					},
 
-					_setRangeLabels: function() {
-						var instance = this;
-
-						var selectedRange = STR_EMPTY;
-
-						if (instance._isChecked('rangeAllNode')) {
-							selectedRange = Liferay.Language.get('all');
-						}
-						else if (instance._isChecked('rangeLastPublishNode')) {
-							selectedRange = Liferay.Language.get('from-last-publish-date');
-						}
-						else if (instance._isChecked('rangeDateRangeNode')) {
-							selectedRange = Liferay.Language.get('date-range');
-						}
-						else if (instance._isChecked('rangeLastNode')) {
-							selectedRange = Liferay.Language.get('last');
-						}
-
-						instance._setLabels('rangeLink', 'selectedRange', selectedRange);
-					},
-
 					_setRemoteLabels: function() {
 						var instance = this;
 
@@ -1003,10 +917,6 @@ AUI.add(
 
 					_updateDateRange: function(event) {
 						var instance = this;
-
-						event.preventDefault();
-
-						var rangeDialog = instance._rangeDialog;
 
 						var endsInPast = true;
 						var endsLater = true;
@@ -1057,8 +967,6 @@ AUI.add(
 							instance._reloadForm();
 
 							A.all('.datepicker-popover, .timepicker-popover').hide();
-
-							rangeDialog.hide();
 						}
 						else {
 							var message;

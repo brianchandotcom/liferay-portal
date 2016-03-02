@@ -172,9 +172,9 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 				<liferay-staging:content cmd="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
-					<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" disableInputs="<%= configuredExport %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
-				</aui:fieldset-group>
-			</div>
+				<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" disableInputs="<%= configuredExport %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
+			</aui:fieldset-group>
+		</div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" value="export" />

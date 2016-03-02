@@ -270,7 +270,7 @@
 <#assign site_logo_height = company_logo_height />
 <#assign site_logo_width = company_logo_width />
 
-<#if company.getLogoId() == 0 && use_company_logo>
+<#if (company.getLogoId() == 0) && use_company_logo>
 	<#assign logo_css_class = logo_css_class + " default-logo" />
 <#else>
 	<#assign logo_css_class = logo_css_class + " custom-logo" />

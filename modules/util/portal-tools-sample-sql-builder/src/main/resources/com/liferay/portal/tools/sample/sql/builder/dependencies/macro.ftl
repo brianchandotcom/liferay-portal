@@ -29,7 +29,7 @@
 	_entry
 	_currentIndex = -1
 >
-	<#if (_currentIndex = -1)>
+	<#if _currentIndex = -1>
 		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry)>
 	<#else>
 		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry, _currentIndex)>
@@ -56,7 +56,7 @@
 	_groupId
 	_parentDLFolderId
 >
-	<#if (_dlFolderDepth <= dataFactory.maxDLFolderDepth)>
+	<#if _dlFolderDepth <= dataFactory.maxDLFolderDepth>
 		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
 
 		<#list dlFolderModels as dlFolderModel>

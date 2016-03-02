@@ -471,7 +471,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public ${column.genericizedType} get${column.methodName}() {
-			<#if column.type == "String" && column.isConvertNull()>
+			<#if (column.type == "String") && column.isConvertNull()>
 				if (_${column.name} == null) {
 					return StringPool.BLANK;
 				}
@@ -680,7 +680,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name))>
 			public ${column.type} getOriginal${column.methodName}() {
-				<#if column.type == "String" && column.isConvertNull()>
+				<#if (column.type == "String") && column.isConvertNull()>
 					return GetterUtil.getString(_original${column.methodName});
 				<#else>
 					return _original${column.methodName};

@@ -73,12 +73,12 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
 
 <#list referenceList as tempEntity>
-	<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+	<#if tempEntity.hasColumns() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 		import ${tempEntity.apiPackagePath}.service.persistence.${tempEntity.name}Persistence;
 		import ${tempEntity.apiPackagePath}.service.persistence.${tempEntity.name}Util;
 	</#if>
 
-	<#if tempEntity.hasFinderClass() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+	<#if tempEntity.hasFinderClass() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 		import ${tempEntity.apiPackagePath}.service.persistence.${tempEntity.name}Finder;
 		import ${tempEntity.apiPackagePath}.service.persistence.${tempEntity.name}FinderUtil;
 	</#if>
@@ -995,7 +995,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 		</#if>
 
-		<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+		<#if tempEntity.hasColumns() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 			/**
 			 * Returns the ${tempEntity.humanName} persistence.
 			 *
@@ -1015,7 +1015,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 		</#if>
 
-		<#if tempEntity.hasFinderClass() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+		<#if tempEntity.hasFinderClass() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 			/**
 			 * Returns the ${tempEntity.humanName} finder.
 			 *
@@ -1167,7 +1167,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			protected ${tempEntity.apiPackagePath}.service.${tempEntity.name}Service ${tempEntity.varName}Service;
 		</#if>
 
-		<#if tempEntity.hasColumns() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+		<#if tempEntity.hasColumns() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 			<#if osgiModule && (tempEntity.apiPackagePath != apiPackagePath)>
 				@ServiceReference(type = ${tempEntity.name}Persistence.class)
 			<#else>
@@ -1177,7 +1177,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			protected ${tempEntity.name}Persistence ${tempEntity.varName}Persistence;
 		</#if>
 
-		<#if tempEntity.hasFinderClass() && (entity.name == "Counter" || tempEntity.name != "Counter")>
+		<#if tempEntity.hasFinderClass() && ((entity.name == "Counter") || (tempEntity.name != "Counter"))>
 			<#if osgiModule && (tempEntity.apiPackagePath != apiPackagePath)>
 				@ServiceReference(type = ${tempEntity.name}Finder.class)
 			<#else>

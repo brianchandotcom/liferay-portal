@@ -2350,6 +2350,8 @@
 	</command>
 
 	<command name="DeleteEventRegular"  priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

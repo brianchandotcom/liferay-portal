@@ -147,10 +147,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public AssetEntry updateEntry(
 			long groupId, Date createDate, Date modifiedDate, String className,
 			long classPK, String classUuid, long classTypeId,
-			long[] categoryIds, String[] tagNames, boolean visible,
-			Date startDate, Date endDate, Date expirationDate, String mimeType,
-			String title, String description, String summary, String url,
-			String layoutUuid, int height, int width, Double priority)
+			long[] categoryIds, String[] tagNames, boolean listable,
+			boolean visible, Date startDate, Date endDate, Date expirationDate,
+			String mimeType, String title, String description, String summary,
+			String url, String layoutUuid, int height, int width,
+			Double priority)
 		throws PortalException {
 
 		AssetEntryPermission.check(
@@ -158,16 +159,16 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		return assetEntryLocalService.updateEntry(
 			getUserId(), groupId, createDate, modifiedDate, className, classPK,
-			classUuid, classTypeId, categoryIds, tagNames, visible, startDate,
-			endDate, expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priority);
+			classUuid, classTypeId, categoryIds, tagNames, listable, visible,
+			startDate, endDate, expirationDate, mimeType, title, description,
+			summary, url, layoutUuid, height, width, priority);
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	 *             Date, String, long, String, long, long[], String[], boolean,
-	 *             Date, Date, Date, String, String, String, String, String,
-	 *             String, int, int, Double)}
+	 *             boolean, Date, Date, Date, String, String, String, String,
+	 *             String, String, int, int, Double)}
 	 */
 	@Deprecated
 	@Override

@@ -641,13 +641,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				assetCategory.getCategoryId(),
 				companyAssetCategory.getCategoryId()
 			},
-			new String[] {assetTag.getName()}, assetEntry.isVisible(),
-			assetEntry.getStartDate(), assetEntry.getEndDate(),
-			assetEntry.getExpirationDate(), assetEntry.getMimeType(),
-			assetEntry.getTitle(), assetEntry.getDescription(),
-			assetEntry.getSummary(), assetEntry.getUrl(),
-			assetEntry.getLayoutUuid(), assetEntry.getHeight(),
-			assetEntry.getWidth(), assetPriority);
+			new String[] {assetTag.getName()}, assetEntry.isListable(),
+			assetEntry.isVisible(), assetEntry.getStartDate(),
+			assetEntry.getEndDate(), assetEntry.getExpirationDate(),
+			assetEntry.getMimeType(), assetEntry.getTitle(),
+			assetEntry.getDescription(), assetEntry.getSummary(),
+			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
+			assetEntry.getHeight(), assetEntry.getWidth(), assetPriority);
 
 		return new StagedModelAssets(
 			assetCategory, assetEntry, assetTag, assetVocabulary);

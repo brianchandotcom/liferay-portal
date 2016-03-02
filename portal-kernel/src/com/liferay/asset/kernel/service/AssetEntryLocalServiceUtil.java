@@ -664,6 +664,20 @@ public class AssetEntryLocalServiceUtil {
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		java.lang.String className, long classPK, java.util.Date publishDate,
+		java.util.Date expirationDate, boolean listable, boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(className, classPK, publishDate,
+			expirationDate, listable, visible);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
+	Date, Date, boolean, boolean)}
+	*/
+	@Deprecated
+	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
+		java.lang.String className, long classPK, java.util.Date publishDate,
 		java.util.Date expirationDate, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -671,6 +685,11 @@ public class AssetEntryLocalServiceUtil {
 			expirationDate, visible);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
+	Date, Date, boolean, boolean)}
+	*/
+	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		java.lang.String className, long classPK, java.util.Date publishDate,
 		boolean visible)
@@ -691,25 +710,27 @@ public class AssetEntryLocalServiceUtil {
 		long userId, long groupId, java.util.Date createDate,
 		java.util.Date modifiedDate, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority)
+		java.lang.String[] tagNames, boolean listable, boolean visible,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String layoutUuid, int height, int width,
+		java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, groupId, createDate, modifiedDate,
 			className, classPK, classUuid, classTypeId, categoryIds, tagNames,
-			visible, startDate, endDate, expirationDate, mimeType, title,
-			description, summary, url, layoutUuid, height, width, priority);
+			listable, visible, startDate, endDate, expirationDate, mimeType,
+			title, description, summary, url, layoutUuid, height, width,
+			priority);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
-	boolean, Date, Date, Date, String, String, String, String,
-	String, String, int, int, Double)}
+	boolean, boolean, Date, Date, Date, String, String, String,
+	String, String, String, int, int, Double)}
 	*/
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(

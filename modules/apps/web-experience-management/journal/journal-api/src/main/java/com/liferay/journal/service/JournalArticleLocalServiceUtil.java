@@ -2236,6 +2236,11 @@ public class JournalArticleLocalServiceUtil {
 		return getService().isLatestVersion(groupId, articleId, version, status);
 	}
 
+	public static boolean isListable(
+		com.liferay.journal.model.JournalArticle article) {
+		return getService().isListable(article);
+	}
+
 	public static boolean isRenderable(
 		com.liferay.journal.model.JournalArticle article,
 		com.liferay.portal.kernel.portlet.PortletRequestModel portletRequestModel,

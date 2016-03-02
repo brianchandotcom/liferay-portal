@@ -567,9 +567,12 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey());
 
+						boolean listable =
+							_journalArticleLocalService.isListable(article);
+
 						_assetEntryLocalService.updateEntry(
 							assetEntry.getClassName(), assetEntry.getClassPK(),
-							null, assetEntry.isVisible());
+							null, null, listable, assetEntry.isVisible());
 					}
 
 				});

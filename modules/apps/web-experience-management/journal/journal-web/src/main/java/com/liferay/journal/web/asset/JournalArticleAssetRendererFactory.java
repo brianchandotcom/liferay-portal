@@ -238,18 +238,6 @@ public class JournalArticleAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Override
-	public boolean isListable(long classPK) {
-		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
-			classPK, WorkflowConstants.STATUS_APPROVED, true);
-
-		if ((article != null) && article.isIndexable()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
 	)

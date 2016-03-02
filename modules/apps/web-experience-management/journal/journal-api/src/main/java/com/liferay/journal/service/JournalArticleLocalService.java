@@ -1953,6 +1953,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		double version, int status) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isListable(JournalArticle article);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isRenderable(JournalArticle article,
 		PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay);
 

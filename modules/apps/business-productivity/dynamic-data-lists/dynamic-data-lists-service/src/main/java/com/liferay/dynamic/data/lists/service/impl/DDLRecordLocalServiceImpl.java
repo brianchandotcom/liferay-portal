@@ -520,7 +520,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				record.getModifiedDate(),
 				DDLRecordConstants.getClassName(scope),
 				recordVersion.getRecordVersionId(), record.getUuid(), 0,
-				assetCategoryIds, assetTagNames, false, null, null, null,
+				assetCategoryIds, assetTagNames, true, false, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
 				null, 0, 0, priority);
 		}
@@ -529,8 +529,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				userId, record.getGroupId(), record.getCreateDate(),
 				record.getModifiedDate(),
 				DDLRecordConstants.getClassName(scope), record.getRecordId(),
-				record.getUuid(), 0, assetCategoryIds, assetTagNames, visible,
-				null, null, null, ContentTypes.TEXT_HTML, title, null,
+				record.getUuid(), 0, assetCategoryIds, assetTagNames, true,
+				visible, null, null, null, ContentTypes.TEXT_HTML, title, null,
 				StringPool.BLANK, null, null, 0, 0, priority);
 		}
 	}

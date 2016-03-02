@@ -272,12 +272,13 @@ public class AssetEntryServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, java.util.Date createDate,
 		java.util.Date modifiedDate, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
-		java.util.Date endDate, java.util.Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority)
+		java.lang.String[] tagNames, boolean listable, boolean visible,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date expirationDate, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String layoutUuid, int height, int width,
+		java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetEntryServiceUtil.class,
@@ -285,9 +286,10 @@ public class AssetEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					createDate, modifiedDate, className, classPK, classUuid,
-					classTypeId, categoryIds, tagNames, visible, startDate,
-					endDate, expirationDate, mimeType, title, description,
-					summary, url, layoutUuid, height, width, priority);
+					classTypeId, categoryIds, tagNames, listable, visible,
+					startDate, endDate, expirationDate, mimeType, title,
+					description, summary, url, layoutUuid, height, width,
+					priority);
 
 			Object returnObj = null;
 
@@ -380,8 +382,8 @@ public class AssetEntryServiceHttp {
 			long.class, java.util.Date.class, java.util.Date.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, long[].class, java.lang.String[].class, boolean.class,
-			java.util.Date.class, java.util.Date.class, java.util.Date.class,
-			java.lang.String.class, java.lang.String.class,
+			boolean.class, java.util.Date.class, java.util.Date.class,
+			java.util.Date.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			java.lang.Double.class

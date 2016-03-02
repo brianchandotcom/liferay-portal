@@ -1592,7 +1592,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
 		}
 
-		Matcher matcher = langMergerPluginPattern.matcher(buildGradleContent);
+		Matcher matcher = applyLangMergerPluginPattern.matcher(
+			buildGradleContent);
 
 		if (!matcher.find()) {
 			return null;
@@ -2170,7 +2171,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(
 		"<%=(.+?)%>");
-	protected static Pattern langMergerPluginPattern = Pattern.compile(
+	protected static Pattern applyLangMergerPluginPattern = Pattern.compile(
 		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 		Pattern.MULTILINE);
 	protected static Pattern languageKeyPattern = Pattern.compile(

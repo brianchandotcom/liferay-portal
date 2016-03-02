@@ -1,0 +1,14 @@
+dependencies {
+	compile group: "jline", name: "jline", version: "2.12"
+}
+
+deploy {
+	from ('properties') {
+		include 'portal-ext.properties'
+		include 'server.properties'
+	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/upgrade-tool")
+}

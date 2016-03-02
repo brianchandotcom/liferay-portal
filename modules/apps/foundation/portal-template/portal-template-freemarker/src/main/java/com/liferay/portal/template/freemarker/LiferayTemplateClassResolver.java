@@ -257,6 +257,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		@Override
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
+
+			if (_whiteListedClassloaders.contains(classLoader)) {
+				_whiteListedClassloaders.remove(classLoader);
+			}
 		}
 
 	}

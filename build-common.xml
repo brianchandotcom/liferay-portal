@@ -1736,6 +1736,17 @@ rerun your task.
 	</target>
 
 	<target name="install-portal-snapshot">
+		<fail message="This directory does not produces a valid artifact.">
+			<condition>
+				<not>
+					<or>
+						<isset property="jar.file" />
+						<isset property="war.file" />
+					</or>
+				</not>
+			</condition>
+		</fail>
+
 		<property file="bnd.bnd" />
 
 		<property name="artifact.name" value="${ant.project.name}" />

@@ -206,6 +206,16 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			CKEDITOR.instances['<%= name %>'].focus();
 		},
 
+		getEditor: function () {
+			var editor = CKEDITOR.instances['<%= name %>'];
+
+			if (editor) {
+				return editor;
+			}
+
+			return;
+		},
+
 		getCkData: function() {
 			var data;
 

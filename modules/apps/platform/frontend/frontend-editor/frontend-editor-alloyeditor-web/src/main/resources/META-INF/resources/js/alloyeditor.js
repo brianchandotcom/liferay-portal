@@ -135,6 +135,12 @@ AUI.add(
 						return data;
 					},
 
+					getEditor: function () {
+						var instance = this;
+
+						return instance._alloyEditor;
+					},
+
 					getHTML: function() {
 						var instance = this;
 

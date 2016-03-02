@@ -102,14 +102,13 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	public void setTranslate(boolean translate) {
-
 		String translateClientId = getTranslateClientId();
 
 		if (Validator.isNull(translateClientId)) {
 			_translate = false;
 		}
 
-		else{
+		else {
 			_translate = translate;
 		}
 	}
@@ -147,7 +146,7 @@ public class BuildLangTask extends JavaExec {
 			args.add("lang.translate.client.id=" + translateClientId);
 		}
 
-		else{
+		else {
 			System.out.println(
 				"Warning: Please pass in credentials to translate");
 		}
@@ -155,8 +154,7 @@ public class BuildLangTask extends JavaExec {
 		String translateClientSecret = getTranslateClientSecret();
 
 		if (Validator.isNotNull(translateClientSecret)) {
-			args.add(
-				"lang.translate.client.secret=" + translateClientSecret);
+			args.add("lang.translate.client.secret=" + translateClientSecret);
 		}
 
 		return args;

@@ -265,9 +265,17 @@ if (iteratorURL != null) {
 				else if ((j + 1) == entries.size()) {
 					columnClassName += " last";
 				}
+
+				if (!Validator.isBlank(entry.getAlign())) {
+					columnClassName += " text-" + entry.getAlign();
+				}
+
+				if (!Validator.isBlank(entry.getValign())) {
+					columnClassName += " text-" + entry.getValign();
+				}
 			%>
 
-				<td class="table-cell <%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
+				<td class="table-cell <%= columnClassName %>" colspan="<%= entry.getColspan() %>">
 
 					<%
 					entry.print(pageContext.getOut(), request, response);

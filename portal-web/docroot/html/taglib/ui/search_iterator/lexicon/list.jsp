@@ -38,7 +38,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 %>
 
 <div class="table-responsive">
-	<table class="display-style-list table table-list">
+	<table class="table table-list">
 		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
 			<thead>
 				<tr>
@@ -67,16 +67,27 @@ if (!resultRowSplitterEntries.isEmpty()) {
 
 					String cssClass = StringPool.BLANK;
 
+					boolean truncate = false;
+
 					if (!entries.isEmpty()) {
 						if (rowChecker != null) {
-							if (i == 0) {
-								cssClass = "checkbox-cell checkbox list-group-item-field";
-							}
-							else {
+							if (i != 0) {
 								com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
 
 								if (entry != null) {
+									if (entry.isTruncate()) {
+										truncate = true;
+									}
+
 									cssClass = entry.getCssClass();
+
+									if (!Validator.isBlank(entry.getAlign())) {
+										cssClass += " text-" + entry.getAlign();
+									}
+
+									if (!Validator.isBlank(entry.getValign())) {
+										cssClass += " text-" + entry.getValign();
+									}
 								}
 							}
 						}
@@ -90,7 +101,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 					}
 				%>
 
-					<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>">
+					<th class="<%= cssClass %> <%= truncate ? "clamp-horizontal table-cell-content" : "table-cell-field" %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>">
 
 						<%
 						String headerNameValue = null;
@@ -101,16 +112,25 @@ if (!resultRowSplitterEntries.isEmpty()) {
 						else {
 							headerNameValue = headerName;
 						}
+
+						if (headerNameValue == null) {
+							headerNameValue = StringPool.NBSP;
+						}
 						%>
 
 						<c:choose>
-							<c:when test="<%= Validator.isNull(headerNameValue) %>">
-								<%= StringPool.NBSP %>
+							<c:when test="<%= truncate %>">
+								<div class="clamp-container">
+									<span class="truncate-text">
+										<%= headerNameValue %>
+									</span>
+								</div>
 							</c:when>
 							<c:otherwise>
 								<%= headerNameValue %>
 							</c:otherwise>
 						</c:choose>
+
 					</th>
 
 				<%
@@ -165,7 +185,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 
 						textSearchEntry.setAlign(rowChecker.getAlign());
 						textSearchEntry.setColspan(rowChecker.getColspan());
-						textSearchEntry.setCssClass("checkbox-cell list-group-item-field");
+						textSearchEntry.setCssClass(rowChecker.getCssClass());
 						textSearchEntry.setName(rowChecker.getRowCheckBox(request, rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
 						textSearchEntry.setValign(rowChecker.getValign());
 
@@ -206,9 +226,17 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY, entry);
 
 							String columnClassName = entry.getCssClass();
+
+							if (!Validator.isBlank(entry.getAlign())) {
+								columnClassName += " text-"+ entry.getAlign();
+							}
+
+							if (!Validator.isBlank(entry.getValign())) {
+								columnClassName += " text-" + entry.getValign();
+							}
 						%>
 
-							<td class="<%= columnClassName %> <%= entry.isTruncate() ? "clamp-horizontal table-cell-content" : "table-cell-field" %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %> text-default" colspan="<%= entry.getColspan() %>">
+							<td class="<%= columnClassName %> <%= entry.isTruncate() ? "clamp-horizontal table-cell-content" : "table-cell-field" %>" colspan="<%= entry.getColspan() %>">
 
 							<c:choose>
 								<c:when test="<%= entry.isTruncate() %>">

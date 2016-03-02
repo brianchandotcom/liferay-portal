@@ -11,6 +11,10 @@
 
 #set ($css_class = $css_class + " " + $htmlUtil.escape($theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam")
 
+#if ($layout)
+	#set ($page_group = $layout.getGroup())
+#end
+
 #if ($layoutTypePortlet.hasStateMax())
 	#set ($css_class = $css_class + " page-maximized")
 #end

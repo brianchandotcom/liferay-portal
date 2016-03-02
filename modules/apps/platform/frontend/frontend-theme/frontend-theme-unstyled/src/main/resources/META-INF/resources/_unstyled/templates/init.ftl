@@ -11,6 +11,10 @@
 
 <#assign css_class = css_class + " " + htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
+<#if layout??>
+	<#assign page_group = layout.getGroup() />
+</#if>
+
 <#if layoutTypePortlet.hasStateMax()>
 	<#assign css_class = css_class + " page-maximized" />
 </#if>

@@ -228,13 +228,11 @@ public class VerifyPermission extends VerifyProcess {
 				joinSB.append("cast_text(Layout.plid)) inner join Group_ on ");
 				joinSB.append("Layout.groupId = Group_.groupId");
 
-				StringBundler whereSB = new StringBundler(13);
+				StringBundler whereSB = new StringBundler(11);
 
 				whereSB.append("where ResourcePermission.scope = ");
 				whereSB.append(ResourceConstants.SCOPE_INDIVIDUAL);
-				whereSB.append(" and ResourcePermission.primKey like '%");
-				whereSB.append(PortletConstants.LAYOUT_SEPARATOR);
-				whereSB.append("%' and ResourcePermission.roleId = ");
+				whereSB.append(" and ResourcePermission.roleId = ");
 				whereSB.append(powerUserRole.getRoleId());
 				whereSB.append(" and (Group_.classNameId = ");
 				whereSB.append(userClassNameId);

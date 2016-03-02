@@ -611,17 +611,6 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #notifyPersistedSubscriber(Subscription)}
-	 */
-	@Deprecated
-	protected void notifySubscriber(Subscription subscription)
-		throws Exception {
-
-		notifyPersistedSubscriber(subscription, null, 0);
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #notifyPersistedSubscriber(Subscription)}
 	 */

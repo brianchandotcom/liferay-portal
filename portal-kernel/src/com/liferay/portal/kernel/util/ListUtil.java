@@ -279,26 +279,6 @@ public class ListUtil {
 		return _unmodifiableListClass.isInstance(list);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public static <E> boolean remove(List<? extends E> list, E element) {
-		Iterator<? extends E> itr = list.iterator();
-
-		while (itr.hasNext()) {
-			E curElement = itr.next();
-
-			if ((curElement == element) || curElement.equals(element)) {
-				itr.remove();
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public static <E> List<E> remove(List<E> list, List<? extends E> remove) {
 		if (isEmpty(list) || isEmpty(remove)) {
 			return list;

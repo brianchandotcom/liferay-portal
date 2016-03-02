@@ -154,29 +154,6 @@ public class TextFormatter {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #formatStorageSize(double,
-	 *             Locale)}
-	 */
-	@Deprecated
-	public static String formatKB(double size, Locale locale) {
-		NumberFormat numberFormat = NumberFormat.getInstance(locale);
-
-		numberFormat.setMaximumFractionDigits(1);
-		numberFormat.setMinimumFractionDigits(1);
-
-		return numberFormat.format(size / _STORAGE_SIZE_DENOMINATOR);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #formatStorageSize(int,
-	 *             Locale)}
-	 */
-	@Deprecated
-	public static String formatKB(int size, Locale locale) {
-		return formatKB((double)size, locale);
-	}
-
 	public static String formatName(String name) {
 		if (Validator.isNull(name)) {
 			return name;

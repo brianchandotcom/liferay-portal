@@ -38,14 +38,6 @@ public class PrettyDateFormat extends DateFormat {
 		_yesterdayString = LanguageUtil.get(_locale, "yesterday");
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public PrettyDateFormat(long companyId, Locale locale, TimeZone timeZone) {
-		this(locale, timeZone);
-	}
-
 	@Override
 	public StringBuffer format(Date date, StringBuffer sb, FieldPosition pos) {
 		String dateString = StringPool.NBSP;

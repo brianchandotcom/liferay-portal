@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.contacts.util;
+package com.liferay.contacts.constants;
 
 /**
- * @author Ryan Park
+ * @author Eudaldo Alonso
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class SocialRelationConstants
+	extends com.liferay.social.kernel.model.SocialRelationConstants {
 
-	public static final String CONTACTS_URL = "CONTACTS_URL";
+	public static final int SOCIAL_RELATION_REQUEST = 1001;
 
-	public static final String CONTACTS_USER = "CONTACTS_USER";
-
-	public static final String CONTACTS_USERS = "CONTACTS_USERS";
+	public static final int TYPE_MY_CONTACTS = 101;
 
 }

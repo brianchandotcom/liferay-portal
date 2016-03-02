@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.util;
+package com.liferay.contacts.constants;
 
 /**
  * @author Jonathan Lee

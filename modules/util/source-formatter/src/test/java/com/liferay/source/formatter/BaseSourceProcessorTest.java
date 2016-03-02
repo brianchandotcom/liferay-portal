@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
@@ -27,6 +28,7 @@ import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
+ * @author Hugo Huijser
  */
 public class BaseSourceProcessorTest {
 
@@ -36,7 +38,7 @@ public class BaseSourceProcessorTest {
 	}
 
 	@Test
-	public void testGetModuleLangPath() {
+	public void testGetModuleLangPath() throws Exception {
 		testGetModuleLangPath(
 			"./modules/apps/business-productivity/dynamic-data-mapping" +
 				"/dynamic-data-mapping-web",
@@ -51,6 +53,14 @@ public class BaseSourceProcessorTest {
 				"/portal-workflow-definition-web",
 			"./modules/apps/business-productivity/portal-workflow" +
 				"/portal-workflow-lang/src/main/resources/content");
+		testGetModuleLangPath(
+			"./modules/apps/business-productivity/dynamic-data-lists" +
+				"/dynamic-data-lists-form-web",
+			"./modules/apps/business-productivity/dynamic-data-lists" +
+				"/dynamic-data-lists-form-web/../../dynamic-data-mapping" +
+					"/dynamic-data-mapping-lang/src/main/resources/content",
+			"./modules/apps/business-productivity/dynamic-data-lists" +
+				"/dynamic-data-lists-form-web/src/main/resources/content");
 	}
 
 	protected void setUpBaseSourceProcessor() {
@@ -76,15 +86,28 @@ public class BaseSourceProcessorTest {
 			}
 
 		};
+
+		_baseSourceProcessor.setSourceFormatterArgs(new SourceFormatterArgs());
 	}
 
 	protected void testGetModuleLangPath(
-		String moduleDirName, String... expectedModuleLangDirNames) {
+			String moduleDirName, String... expectedModuleLangDirNames)
+		throws Exception {
+
+		String buildGradleContent = StringPool.BLANK;
+
+		File file = _baseSourceProcessor.getFile(
+			moduleDirName + "/build.gradle",
+			_baseSourceProcessor.PORTAL_MAX_DIR_LEVEL);
+
+		if (file != null) {
+			buildGradleContent = FileUtil.read(file);
+		}
 
 		Assert.assertEquals(
 			Arrays.asList(expectedModuleLangDirNames),
 			_baseSourceProcessor.getModuleLangDirNames(
-				moduleDirName, StringPool.BLANK));
+				moduleDirName, buildGradleContent));
 	}
 
 	private BaseSourceProcessor _baseSourceProcessor;

@@ -21,9 +21,7 @@ Locale[] availableLocales = new Locale[] {LocaleUtil.getSiteDefault()};
 
 if (Validator.isNotNull(script)) {
 	try {
-		if (ddmForm == null) {
-			ddmForm = ddmDisplayContext.deserialize(script);
-		}
+		DDMForm ddmForm = DDMUtil.getDDMForm(script);
 
 		String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 
@@ -52,7 +50,6 @@ if (Validator.isNotNull(script)) {
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-
 			<aui:translation-manager
 				availableLocales="<%= availableLocales %>"
 				changeableDefaultLanguage="<%= changeableDefaultLanguage %>"

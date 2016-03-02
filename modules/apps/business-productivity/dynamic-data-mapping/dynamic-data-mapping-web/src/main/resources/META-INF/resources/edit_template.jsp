@@ -110,7 +110,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 		<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
 
 			<%
-			String[] imageExtensions = ddmGroupServiceConfiguration.smallImageExtensions();
+			String[] imageExtensions = ddmDisplayContext.smallImageExtensions();
 			%>
 
 			<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
@@ -119,7 +119,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 		<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
 
 			<%
-			long imageMaxSize = ddmGroupServiceConfiguration.smallImageMaxSize();
+			long imageMaxSize = ddmDisplayContext.smallImageMaxSize();
 			%>
 
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

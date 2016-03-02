@@ -26,8 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration" %><%@
-page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
@@ -172,16 +171,11 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 
 DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-DDMGroupServiceConfiguration ddmGroupServiceConfiguration = null;
-
 boolean changeableDefaultLanguage = false;
 
 if (ddmDisplayContext != null) {
-	ddmGroupServiceConfiguration = ddmDisplayContext.getDDMGroupServiceConfiguration();
 	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
 }
-
-DDMForm ddmForm = null;
 %>
 
 <%@ include file="/init-ext.jsp" %>

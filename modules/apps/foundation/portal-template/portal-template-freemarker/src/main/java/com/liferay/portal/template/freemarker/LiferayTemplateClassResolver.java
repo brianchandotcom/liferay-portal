@@ -16,6 +16,8 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -127,8 +129,19 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		if (allowed) {
 			try {
+				ClassLoader[] whiteListedClassLoaders =
+					_whiteListedClassloaders.toArray(
+						new ClassLoader[_whiteListedClassloaders.size()]);
+
+				ClassLoader[] classLoaders = ArrayUtil.append(
+					whiteListedClassLoaders,
+					ClassLoaderUtil.getContextClassLoader());
+
+				ClassLoader whiteListedAggregateClassLoader =
+					AggregateClassLoader.getAggregateClassLoader(classLoaders);
+
 				return Class.forName(
-					className, true, ClassLoaderUtil.getContextClassLoader());
+					className, true, whiteListedAggregateClassLoader);
 			}
 			catch (Exception e) {
 				throw new TemplateException(e, environment);

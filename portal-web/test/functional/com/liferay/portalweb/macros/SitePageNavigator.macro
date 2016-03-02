@@ -1,5 +1,13 @@
 <definition>
 	<command name="gotoAddPage">
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Navigation" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandPageTree" />
+
 		<if>
 			<condition function="IsElementNotPresent" locator1="ProductMenu#PUBLIC_PAGES" />
 			<then>
@@ -43,6 +51,8 @@
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Navigation" />
 		</execute>
+
+		<execute macro="ProductMenuHelper#expandPageTree" />
 
 		<if>
 			<equals arg1="${page}" arg2="Private Pages" />

@@ -140,7 +140,7 @@ public class UpgradePermission extends UpgradeProcess {
 
 		ResourceActionsUtil.read(
 			null, upgradePermissionClass.getClassLoader(),
-			"resource-actions/old-portal.xml");
+			"resource-actions/portal-6.1.0.xml");
 
 		// LPS-46141
 

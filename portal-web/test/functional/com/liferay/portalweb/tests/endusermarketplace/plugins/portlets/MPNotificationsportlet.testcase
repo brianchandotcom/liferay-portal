@@ -18,7 +18,7 @@
 
 		<var name="appName" value="Notifications" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
 		</execute>
 

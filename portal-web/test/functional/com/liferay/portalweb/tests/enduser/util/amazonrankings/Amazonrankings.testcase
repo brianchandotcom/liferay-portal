@@ -10,7 +10,7 @@
 			<var name="pageName" value="Amazon Rankings Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Amazon Rankings Page" />
 		</execute>
 
@@ -31,7 +31,7 @@
 	</tear-down>
 
 	<command name="ViewAmazonRankingsPortlet" priority="2">
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Amazon Rankings Page" />
 		</execute>
 

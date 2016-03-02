@@ -19,7 +19,7 @@
 			<var name="portletName" value="Event Consumer" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Event Page" />
 		</execute>
 

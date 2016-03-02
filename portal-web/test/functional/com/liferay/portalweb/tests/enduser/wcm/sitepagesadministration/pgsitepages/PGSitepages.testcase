@@ -30,7 +30,7 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Site Page" />
 		</execute>
 

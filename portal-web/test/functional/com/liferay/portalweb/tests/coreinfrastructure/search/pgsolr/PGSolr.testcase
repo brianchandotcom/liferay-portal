@@ -73,7 +73,7 @@
 			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Solr Page" />
 		</execute>
 
@@ -88,7 +88,7 @@
 			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Solr Page" />
 		</execute>
 

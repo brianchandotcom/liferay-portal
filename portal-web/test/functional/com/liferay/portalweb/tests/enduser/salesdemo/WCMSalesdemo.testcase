@@ -21,10 +21,6 @@
 				<execute macro="Site#tearDownCP" />
 
 				<execute macro="Page#tearDownPG" />
-
-				<execute macro="Portlet#tearDownPG">
-					<var name="portletName" value="Web Content Display" />
-				</execute>
 			</else>
 		</if>
 	</tear-down>
@@ -36,7 +32,7 @@
 			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="IFrame Page" />
 		</execute>
 
@@ -52,7 +48,7 @@
 			<var name="sourceURL" value="http://www.nba.com" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="IFrame Page" />
 		</execute>
 
@@ -89,7 +85,7 @@
 			<var name="columnName" value="2_columns_i" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Welcome" />
 		</execute>
 
@@ -140,7 +136,7 @@
 			<var name="pageName" value="Sales Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Sales Page" />
 		</execute>
 

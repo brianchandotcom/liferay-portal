@@ -242,7 +242,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
+		<execute macro="Portlet#viewEmptyMessage" />
 	</command>
 
 	<command name="viewCP">

@@ -23,7 +23,7 @@
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
@@ -37,7 +37,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
@@ -47,7 +47,7 @@
 
 		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
@@ -57,7 +57,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 

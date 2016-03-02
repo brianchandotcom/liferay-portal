@@ -19,7 +19,7 @@
 
 		<var name="appName" value="YouTube" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
 		</execute>
 

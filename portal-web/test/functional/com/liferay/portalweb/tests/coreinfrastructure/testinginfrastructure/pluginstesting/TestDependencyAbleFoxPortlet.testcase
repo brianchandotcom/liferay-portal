@@ -19,7 +19,7 @@
 			<var name="portletName" value="Test Dependency Able" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
@@ -27,7 +27,7 @@
 			<var name="portletName" value="Test Dependency Baker" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
@@ -35,7 +35,7 @@
 			<var name="portletName" value="Test Dependency Charlie" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
@@ -43,7 +43,7 @@
 			<var name="portletName" value="Test Dependency Dog" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 
@@ -51,7 +51,7 @@
 			<var name="portletName" value="Test Dependency Easy" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>
 

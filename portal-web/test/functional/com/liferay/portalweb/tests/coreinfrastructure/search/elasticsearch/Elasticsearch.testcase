@@ -74,7 +74,7 @@
 			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Elasticsearch Page" />
 		</execute>
 
@@ -89,7 +89,7 @@
 			<var name="searchAssetType2" value="Document" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Elasticsearch Page" />
 		</execute>
 
@@ -118,7 +118,7 @@
 
 		<!-- Verify search functionality after a replica has been removed -->
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Elasticsearch Page" />
 		</execute>
 
@@ -133,7 +133,7 @@
 			<var name="searchAssetType2" value="Document" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Elasticsearch Page" />
 		</execute>
 

@@ -10,7 +10,7 @@
 			<var name="pageName" value="Quick Note Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Quick Note Page" />
 		</execute>
 	</set-up>
@@ -41,7 +41,7 @@
 
 		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="${portletLocator}" value1="Add" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Quick Note Page" />
 		</execute>
 

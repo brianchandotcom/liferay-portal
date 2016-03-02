@@ -27,7 +27,7 @@
 	<command name="addCP">
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
+		<execute macro="Portlet#viewEmptyMessage" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -168,7 +168,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
+		<execute macro="Portlet#viewEmptyMessage" />
 	</command>
 
 	<command name="viewADTviaPortletPG">

@@ -563,7 +563,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="AP Test Page" />
 		</execute>
 
@@ -576,7 +576,7 @@
 			<var name="liferaySiteType" value="Current Site" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="AP Test Page" />
 		</execute>
 
@@ -585,7 +585,7 @@
 			<var name="siteScopeType" value="Site" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="AP Test Page" />
 		</execute>
 

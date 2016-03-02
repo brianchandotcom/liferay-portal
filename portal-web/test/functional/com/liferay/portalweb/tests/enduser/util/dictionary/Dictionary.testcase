@@ -10,7 +10,7 @@
 			<var name="pageName" value="Dictionary Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Dictionary Page" />
 		</execute>
 
@@ -33,7 +33,7 @@
 	<command name="FindDictionaryWord" priority="2">
 		<var name="dictionaryTerm" value="dog" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Dictionary Page" />
 		</execute>
 

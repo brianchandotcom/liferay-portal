@@ -39,7 +39,7 @@
 			<var name="initialURL" value="http://images.google.com/" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Proxy Page" />
 		</execute>
 

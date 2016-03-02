@@ -19,7 +19,7 @@
 			<var name="portletName" value="Publisher Portlet" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Publisher Subscriber Page" />
 		</execute>
 

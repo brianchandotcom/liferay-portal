@@ -65,7 +65,7 @@
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -77,7 +77,7 @@
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -90,7 +90,7 @@
 			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -177,7 +177,7 @@
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -191,7 +191,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -226,7 +226,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -234,7 +234,7 @@
 			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceA}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 

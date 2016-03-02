@@ -24,7 +24,7 @@
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -61,7 +61,7 @@
 		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -70,7 +70,7 @@
 			<var name="commentBody" value="${commentBody}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -90,7 +90,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -110,7 +110,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -135,7 +135,7 @@
 	<command name="DeleteComment" priority="4">
 		<description message="This is a use case for LPS-54707." />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -144,7 +144,7 @@
 			<var name="commentBody" value="Page Comment Comment" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -180,7 +180,7 @@
 		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -189,7 +189,7 @@
 			<var name="commentBody" value="${commentBody}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
@@ -228,7 +228,7 @@
 			<var name="workflowAssetType" value="Comments" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 

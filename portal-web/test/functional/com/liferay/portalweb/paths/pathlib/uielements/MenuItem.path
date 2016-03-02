@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPLY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPROVE</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'Approve')]</td>
 	<td></td>

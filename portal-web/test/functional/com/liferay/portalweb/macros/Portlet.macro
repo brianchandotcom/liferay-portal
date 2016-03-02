@@ -284,22 +284,6 @@
 		</if>
 	</command>
 
-	<command name="tearDownPG">
-		<description message="Delete all ${portletName} portlets from the Welcome Page, except default portlets." />
-
-		<var name="key_portletName" value="${portletName}" />
-
-		<while>
-			<condition function="IsElementPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portletName}" />
-			<then>
-				<execute macro="Portlet#deletePG">
-					<var name="portletLocator" value="${portletLocator}" />
-					<var name="portletName" value="${portletName}" />
-				</execute>
-			</then>
-		</while>
-	</command>
-
 	<command name="viewBody" summary="Assert that the ${portletName} portlet body has the text '${portletBody}'">
 		<var name="key_portletName" value="${portletName}" />
 
@@ -374,6 +358,10 @@
 				<execute function="AssertElementPresent" locator1="xpath=(//h2[contains(.,'${portletName}')])[${i}]" />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewEmptyMessage">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewNoSpecificPG">

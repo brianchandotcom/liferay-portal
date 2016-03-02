@@ -15,7 +15,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Page" />
 		</execute>
 
@@ -67,7 +67,7 @@
 			<var name="virtualHost" value="localhost" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Page" />
 		</execute>
 	</set-up>
@@ -117,7 +117,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Page" />
 		</execute>
 

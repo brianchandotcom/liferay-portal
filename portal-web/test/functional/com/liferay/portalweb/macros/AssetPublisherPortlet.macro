@@ -70,7 +70,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureAnyCategoriesFilterPG">
@@ -386,7 +386,7 @@
 			</then>
 		</if>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -520,7 +520,7 @@
 
 		<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextNotPresent" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
@@ -529,19 +529,20 @@
 	</command>
 
 	<command name="deleteArchivedSetupPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration Templates" />
+		</execute>
 
-		<execute function="AssertClick" locator1="Configuration#ARCHIVE_RESTORE" value1="Archive/Restore Setup" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<var name="key_archiveName" value="${archiveName}" />
+		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="AssertTextEquals" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="Click" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_DROPDOWN" />
+		<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
-
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
@@ -588,33 +589,39 @@
 			<execute function="Click" locator1="APConfiguration#SOURCE_SCOPE_DELETE" />
 		</for>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="restoreArchivedSetupPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+	<command name="restoreConfigurationTemplatePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration Templates" />
+		</execute>
 
-		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="Button#clickSave" />
+		<var name="key_rowEntry" value="${configurationName}" />
 
-		<execute function="AssertClick" locator1="Configuration#ARCHIVE_RESTORE" value1="Archive/Restore Setup" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<var name="key_archiveName" value="${archiveName}" />
+		<execute function="AssertClick" locator1="MenuItem#APPLY" value1="Apply" />
 
-		<execute function="Click" locator1="APConfigurationArchivedsetup#ARCHIVED_SETUPS_TABLE_DROPDOWN" />
-
-		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveConfigurationTemplatePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration Templates" />
+		</execute>
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="Configuration#SAVE_CONFIGURATION_TEMPLATE" value1="Save Current Configuration as Template" />
-
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no archived setups." />
+
+		<execute function="AssertClick" locator1="Configuration#SAVE_CONFIGURATION_TEMPLATE" value1="Save Current Configuration as Template" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${configurationName}" />
 
@@ -866,7 +873,7 @@
 
 	<command name="viewDynamicAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Asset Publisher" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -970,6 +977,10 @@
 		</for>
 
 		<execute macro="IFrame#selectTopFrame" />
+	</command>
+
+	<command name="viewManualNoAssetsMessagePG">
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewMultipleAssetOrderPGViaAP">
@@ -1100,7 +1111,7 @@
 			<var name="panelHeading" value="Asset Entries" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No assets selected." />
+		<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_NONE" value1="none" />
 
 		<execute function="SelectFrameTop" />
 	</command>

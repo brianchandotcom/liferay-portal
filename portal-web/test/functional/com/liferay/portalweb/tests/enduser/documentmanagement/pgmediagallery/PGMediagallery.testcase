@@ -21,7 +21,7 @@
 			<var name="columnName" value="1_column" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -29,7 +29,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -64,7 +64,7 @@
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderName" value="DM Folder Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -87,7 +87,7 @@
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderName" value="DM Folder Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -96,7 +96,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -110,7 +110,7 @@
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -131,7 +131,7 @@
 		<var name="mgFolderName2" value="DM Folder2 Name" />
 		<var name="mgFolderName3" value="DM Folder3 Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -144,7 +144,7 @@
 			<var name="mgFolderName" value="${mgFolderName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -157,7 +157,7 @@
 			<var name="mgFolderName" value="${mgFolderName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -180,7 +180,7 @@
 		<var name="mgSubfolderDescription" value="DM Subfolder Description" />
 		<var name="mgSubfolderName" value="DM Subfolder Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -219,7 +219,7 @@
 		<var name="mgSubfolderName2" value="DM Subfolder2 Name" />
 		<var name="mgSubfolderName3" value="DM Subfolder3 Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -241,7 +241,7 @@
 			<var name="mgFolderName" value="${mgSubfolderName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -258,7 +258,7 @@
 			<var name="mgFolderName" value="${mgSubfolderName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -285,7 +285,7 @@
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderName" value="DM Folder Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -294,7 +294,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -308,7 +308,7 @@
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -329,7 +329,7 @@
 		<var name="mgFolderName" value="DM Folder Name" />
 		<var name="mgFolderNameEdit" value="DM Folder Name Edit" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -338,7 +338,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -349,7 +349,7 @@
 			<var name="mgFolderNameEdit" value="${mgFolderNameEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -369,7 +369,7 @@
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderName" value="DM Folder Name" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -378,7 +378,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -401,7 +401,7 @@
 	</command>
 
 	<command name="SearchFolderDocument" priority="4">
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
@@ -420,7 +420,7 @@
 			<var name="mgDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
@@ -433,7 +433,7 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 
@@ -446,7 +446,7 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Media Gallery Page" />
 		</execute>
 

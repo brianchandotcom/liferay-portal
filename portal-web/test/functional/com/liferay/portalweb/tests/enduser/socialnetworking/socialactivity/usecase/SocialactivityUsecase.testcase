@@ -102,7 +102,7 @@
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -118,7 +118,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -131,7 +131,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -142,7 +142,7 @@
 			<var name="userRank" value="${user1Rank}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -155,7 +155,7 @@
 			<var name="entryComment" value="${entryComment1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -166,7 +166,7 @@
 			<var name="userRank" value="${user1Rank}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -179,7 +179,7 @@
 			<var name="entryComment" value="${entryComment2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -192,7 +192,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -208,7 +208,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -221,7 +221,7 @@
 			<var name="entryComment" value="${entryComment4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -244,7 +244,7 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
@@ -257,7 +257,7 @@
 			<var name="entryComment" value="${entryComment5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -281,7 +281,7 @@
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -301,7 +301,7 @@
 			<var name="portletName" value="Activité sociale" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -315,7 +315,7 @@
 			<var name="portletName" value="ソーシャルアクティビティ" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 
@@ -329,7 +329,7 @@
 			<var name="portletName" value="Atividade Social" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>
 

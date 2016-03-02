@@ -133,7 +133,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsNotVisible" locator1="ProductMenu#PRIVATE_PAGES_SELECTED" />
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRIVATE_PAGES_SELECTED" />
 			<then>
 				<execute function="AssertClick" locator1="ProductMenu#PRIVATE_PAGES" value1="Private Pages" />
 			</then>
@@ -156,7 +156,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsNotVisible" locator1="ProductMenu#PUBLIC_PAGES_SELECTED" />
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PUBLIC_PAGES_SELECTED" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
 			</then>

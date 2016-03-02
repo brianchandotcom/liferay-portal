@@ -66,7 +66,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					extraData);
 
 				try (ResultSet rs = ps.executeQuery()) {
-
 					JSONObject extraDataJSONObject = null;
 
 					while (rs.next()) {
@@ -492,54 +491,54 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private class DLFileEntryExtraDataGenerator implements ExtraDataGenerator {
 
-			@Override
-			public String getActivityClassName() {
-				return "com.liferay.portlet.documentlibrary.model.DLFileEntry";
-			}
+		@Override
+		public String getActivityClassName() {
+			return "com.liferay.portlet.documentlibrary.model.DLFileEntry";
+		}
 
-			@Override
-			public String getActivityQueryWhereClause() {
-				return "classNameId = ?";
-			}
+		@Override
+		public String getActivityQueryWhereClause() {
+			return "classNameId = ?";
+		}
 
-			@Override
-			public String getEntityQuery() {
-				return "select title from DLFileEntry where companyId = ? " +
-					"and groupId = ? and fileEntryId = ?";
-			}
+		@Override
+		public String getEntityQuery() {
+			return "select title from DLFileEntry where companyId = ? " +
+				"and groupId = ? and fileEntryId = ?";
+		}
 
-			@Override
-			public JSONObject getExtraDataJSONObject(
-					ResultSet entityResultSet, String extraData)
-				throws SQLException {
+		@Override
+		public JSONObject getExtraDataJSONObject(
+				ResultSet entityResultSet, String extraData)
+			throws SQLException {
 
-				JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put(
-					"title", entityResultSet.getString("title"));
+			extraDataJSONObject.put(
+				"title", entityResultSet.getString("title"));
 
-				return extraDataJSONObject;
-			}
+			return extraDataJSONObject;
+		}
 
-			@Override
-			public void setActivityQueryParameters(PreparedStatement ps)
-				throws SQLException {
+		@Override
+		public void setActivityQueryParameters(PreparedStatement ps)
+			throws SQLException {
 
-				ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
-			}
+			ps.setLong(1, PortalUtil.getClassNameId(getActivityClassName()));
+		}
 
-			@Override
-			public void setEntityQueryParameters(
-					PreparedStatement ps, long companyId, long groupId, long userId,
-					long classNameId, long classPK, int type, String extraData)
-				throws SQLException {
+		@Override
+		public void setEntityQueryParameters(
+				PreparedStatement ps, long companyId, long groupId, long userId,
+				long classNameId, long classPK, int type, String extraData)
+			throws SQLException {
 
-				ps.setLong(1, companyId);
-				ps.setLong(2, groupId);
-				ps.setLong(3, classPK);
-			}
+			ps.setLong(1, companyId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, classPK);
+		}
 
-		};
+	};
 
 	private class KBArticleExtraDataGenerator implements ExtraDataGenerator {
 
@@ -634,8 +633,8 @@ public class UpgradeSocial extends UpgradeProcess {
 				extraDataGenerator = _kbArticleExtraDataGenerator;
 			}
 			else if (classnameId == PortalUtil.getClassNameId(
-					_kbTemplateExtraDataGenerator.getActivityClassName(
-					))) {
+						_kbTemplateExtraDataGenerator.getActivityClassName(
+							))) {
 
 				extraDataGenerator = _kbTemplateExtraDataGenerator;
 			}
@@ -647,11 +646,10 @@ public class UpgradeSocial extends UpgradeProcess {
 					ps.setLong(1, classpk);
 
 					try (ResultSet rs = ps.executeQuery()) {
-
 						while (rs.next()) {
 							extraDataJSONObject =
-									extraDataGenerator.getExtraDataJSONObject(
-											rs, StringPool.BLANK);
+								extraDataGenerator.getExtraDataJSONObject(
+									rs, StringPool.BLANK);
 						}
 					}
 				}
@@ -803,4 +801,5 @@ public class UpgradeSocial extends UpgradeProcess {
 		private static final int _UPDATE_PAGE = 2;
 
 	};
+
 }

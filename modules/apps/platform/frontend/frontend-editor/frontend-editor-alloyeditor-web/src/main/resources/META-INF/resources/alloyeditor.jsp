@@ -289,8 +289,6 @@ if (showSource) {
 				editorContainer.appendChild(editorNode);
 
 				window['<%= name %>'].initEditor();
-
-				this.instanceReady = true;
 			}
 		},
 

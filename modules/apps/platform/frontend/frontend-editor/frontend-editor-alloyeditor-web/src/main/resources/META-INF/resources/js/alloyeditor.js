@@ -115,6 +115,8 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 
 						instance.instanceReady = false;
+
+						window[instance.get('namespace')].instanceReady = false;
 					},
 
 					focus: function() {
@@ -234,6 +236,8 @@ AUI.add(
 						}
 
 						instance.instanceReady = true;
+
+						window[instance.get('namespace')].instanceReady = true;
 					},
 
 					_onKey: function(event) {

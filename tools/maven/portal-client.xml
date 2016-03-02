@@ -2,14 +2,27 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.liferay.portal</groupId>
-		<artifactId>com.liferay.portal.parent</artifactId>
-		<version>@version@</version>
-	</parent>
 	<groupId>com.liferay.portal</groupId>
 	<artifactId>com.liferay.portal.client</artifactId>
 	<name>Liferay Portal Client</name>
 	<version>@version@</version>
 	<description>Provides access to the portal services through SOAP.</description>
+	<licenses>
+		<license>
+			<name>${ivy.pom.license.name}</name>
+			<url>${ivy.pom.license.url}</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>${ivy.pom.developer.name}</name>
+			<organization>${ivy.pom.developer.organization}</organization>
+			<organizationUrl>${ivy.pom.developer.organizationUrl}</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>${ivy.pom.scm.connection}</connection>
+		<developerConnection>${ivy.pom.scm.developerConnection}</developerConnection>
+		<url>${ivy.pom.scm.url}</url>
+	</scm>
 </project>

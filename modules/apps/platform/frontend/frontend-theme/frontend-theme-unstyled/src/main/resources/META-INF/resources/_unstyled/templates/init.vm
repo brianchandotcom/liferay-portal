@@ -11,22 +11,6 @@
 
 #set ($css_class = $css_class + " " + $htmlUtil.escape($theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam")
 
-#set ($liferay_toggle_controls = $sessionClicks.get($request, "com.liferay.frontend.js.web_toggleControls", "visible"))
-
-#if ($layout)
-	#set ($page_group = $layout.getGroup())
-
-	#if ($page_group.isControlPanel())
-		#set ($liferay_toggle_controls = "visible")
-	#end
-#end
-
-#if ($liferay_toggle_controls == "visible")
-	#set ($css_class = $css_class + " controls-visible")
-#else
-	#set ($css_class = $css_class + " controls-hidden")
-#end
-
 #if ($layoutTypePortlet.hasStateMax())
 	#set ($css_class = $css_class + " page-maximized")
 #end
@@ -117,13 +101,6 @@
 #if ($show_sign_out)
 	#set ($sign_out_text = $languageUtil.get($locale, "sign-out"))
 	#set ($sign_out_url = $htmlUtil.escape($theme_display.getURLSignOut()))
-#end
-
-#set ($show_toggle_controls = $theme_display.isSignedIn())
-
-#if ($show_toggle_controls)
-	#set ($toggle_controls_text = $languageUtil.get($locale, "toggle-edit-controls"))
-	#set ($toggle_controls_url = "javascript:;")
 #end
 
 ## ---------- Page ---------- ##

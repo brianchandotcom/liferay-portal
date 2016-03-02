@@ -11,22 +11,6 @@
 
 <#assign css_class = css_class + " " + htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
-<#assign liferay_toggle_controls = sessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible") />
-
-<#if layout??>
-	<#assign page_group = layout.getGroup() />
-
-	<#if page_group.isControlPanel()>
-		<#assign liferay_toggle_controls = "visible" />
-	</#if>
-</#if>
-
-<#if liferay_toggle_controls = "visible">
-	<#assign css_class = css_class + " controls-visible" />
-<#else>
-	<#assign css_class = css_class + " controls-hidden" />
-</#if>
-
 <#if layoutTypePortlet.hasStateMax()>
 	<#assign css_class = css_class + " page-maximized" />
 </#if>
@@ -120,13 +104,6 @@
 <#if show_sign_out>
 	<#assign sign_out_text = languageUtil.get(locale, "sign-out") />
 	<#assign sign_out_url = htmlUtil.escape(theme_display.getURLSignOut()) />
-</#if>
-
-<#assign show_toggle_controls = theme_display.isSignedIn() />
-
-<#if show_toggle_controls>
-	<#assign toggle_controls_text = languageUtil.get(locale, "toggle-edit-controls") />
-	<#assign toggle_controls_url = "javascript:;" />
 </#if>
 
 <#-- ---------- Page ---------- -->

@@ -830,6 +830,23 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getCalendarBookingId(), calendarBooking,
 			serviceContext);
 
+		if (calendarBooking.isMasterRecurringBooking()) {
+			List<CalendarBooking> relatedCalendarBookings =
+				getRelatedCalendarBookings(calendarBooking);
+
+			for (CalendarBooking relatedCalendarBooking :
+					relatedCalendarBookings) {
+
+				if (relatedCalendarBooking.equals(calendarBooking)) {
+					continue;
+				}
+
+				calendarBookingLocalService.updateStatus(
+					userId, relatedCalendarBooking, trashEntry.getStatus(),
+					serviceContext);
+			}
+		}
+
 		return calendarBooking;
 	}
 
@@ -1317,26 +1334,28 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		if (status == CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
-			if (calendarBooking.isMasterBooking()) {
-				trashEntryLocalService.addTrashEntry(
-					userId, calendarBooking.getGroupId(),
-					CalendarBooking.class.getName(),
-					calendarBooking.getCalendarBookingId(),
-					calendarBooking.getUuid(), null, oldStatus, null, null);
-			}
-			else {
-				trashEntryLocalService.addTrashEntry(
-					userId, calendarBooking.getGroupId(),
-					CalendarBooking.class.getName(),
-					calendarBooking.getCalendarBookingId(),
-					calendarBooking.getUuid(), null,
-					CalendarBookingWorkflowConstants.STATUS_PENDING, null,
-					null);
-			}
+			if (calendarBooking.isMasterRecurringBooking()) {
+				if (calendarBooking.isMasterBooking()) {
+					trashEntryLocalService.addTrashEntry(
+						userId, calendarBooking.getGroupId(),
+						CalendarBooking.class.getName(),
+						calendarBooking.getCalendarBookingId(),
+						calendarBooking.getUuid(), null, oldStatus, null, null);
+				}
+				else {
+					trashEntryLocalService.addTrashEntry(
+						userId, calendarBooking.getGroupId(),
+						CalendarBooking.class.getName(),
+						calendarBooking.getCalendarBookingId(),
+						calendarBooking.getUuid(), null,
+						CalendarBookingWorkflowConstants.STATUS_PENDING, null,
+						null);
+				}
 
-			sendNotification(
-				calendarBooking, NotificationTemplateType.MOVED_TO_TRASH,
-				serviceContext);
+				sendNotification(
+					calendarBooking, NotificationTemplateType.MOVED_TO_TRASH,
+					serviceContext);
+			}
 		}
 
 		return calendarBooking;

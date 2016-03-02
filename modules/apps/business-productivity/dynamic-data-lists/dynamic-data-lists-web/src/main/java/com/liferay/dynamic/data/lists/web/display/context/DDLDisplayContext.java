@@ -401,6 +401,17 @@ public class DDLDisplayContext {
 		return true;
 	}
 
+	public boolean isShowEditRecordSetIcon() {
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet != null) {
+			return DDLRecordSetPermission.contains(
+				getPermissionChecker(), recordSet, ActionKeys.UPDATE);
+		}
+
+		return false;
+	}
+
 	public boolean isShowIconsActions() throws PortalException {
 		if (_hasShowIconsActionPermission != null) {
 			return _hasShowIconsActionPermission;

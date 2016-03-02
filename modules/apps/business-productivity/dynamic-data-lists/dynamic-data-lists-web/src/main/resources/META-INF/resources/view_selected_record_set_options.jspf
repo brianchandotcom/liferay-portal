@@ -178,6 +178,29 @@
 					url="<%= taglibAddRecordSetURL %>"
 				/>
 			</c:if>
+
+			<c:if test="<%= ddlDisplayContext.isShowEditRecordSetIcon() %>">
+				<liferay-portlet:renderURL portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
+					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
+					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getFormDDMTemplateId()) %>" />
+					<portlet:param name="recordSetId" value="<%= String.valueOf(ddlDisplayContext.getRecordSetId()) %>" />
+				</liferay-portlet:renderURL>
+
+				<%
+				String taglibEditRecordSetURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + LanguageUtil.get(request, "edit-list") + "', uri:'" + HtmlUtil.escapeJS(editRecordSetURL.toString()) + "'});";
+				%>
+
+				<liferay-ui:icon
+					cssClass="lfr-icon-action"
+					icon="pencil"
+					label="<%= true %>"
+					markupView="lexicon"
+					message="edit-list"
+					url="<%= taglibEditRecordSetURL %>"
+				/>
+			</c:if>
 		</div>
 	</div>
 </c:if>

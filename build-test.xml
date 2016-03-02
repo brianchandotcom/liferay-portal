@@ -1717,11 +1717,11 @@ tell application "Safari" to quit
 
 							<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
-							<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
-							<install-portal-snapshot artifact.dir="portal-kernel" artifact.name="portal-kernel" />
-							<install-portal-snapshot artifact.dir="portal-test" artifact.name="portal-test" />
-							<install-portal-snapshot artifact.dir="portal-test-internal" artifact.name="portal-test-internal" />
-							<install-portal-snapshot artifact.dir="util-java" artifact.name="util-java" />
+							<ant dir="portal-impl" target="install-portal-snapshot" inheritAll="false" />
+							<ant dir="portal-kernel" target="install-portal-snapshot" inheritAll="false" />
+							<ant dir="portal-test" target="install-portal-snapshot" inheritAll="false" />
+							<ant dir="portal-test-internal" target="install-portal-snapshot" inheritAll="false" />
+							<ant dir="util-java" target="install-portal-snapshot" inheritAll="false" />
 
 							<gradle-execute dir="${project.dir}/modules/core" task="deploy">
 								<arg value="-Dportal.build=true" />

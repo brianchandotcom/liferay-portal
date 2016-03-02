@@ -656,7 +656,6 @@
 	</command>
 
 	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
-		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

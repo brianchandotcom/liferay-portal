@@ -18,7 +18,7 @@ import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,14 +40,7 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.asset.publisher.web", "0.0.1", "1.0.0",
 			new UpgradePortletId(),
 			new UpgradePortletPreferences(
-				_dateFormatFactoryUtil, _ddmStructureLocalService));
-	}
-
-	@Reference(unbind = "-")
-	protected void setDateFormatFactoryUtil(
-		DateFormatFactoryUtil dateFormatFactoryUtil) {
-
-		_dateFormatFactoryUtil = dateFormatFactoryUtil;
+				_ddmStructureLocalService, _saxReader));
 	}
 
 	@Reference(unbind = "-")
@@ -57,7 +50,12 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	private DateFormatFactoryUtil _dateFormatFactoryUtil;
+	@Reference(unbind = "-")
+	protected void setSAXReader(SAXReader saxReader) {
+		_saxReader = saxReader;
+	}
+
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private SAXReader _saxReader;
 
 }

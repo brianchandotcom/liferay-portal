@@ -14,8 +14,11 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -34,23 +37,20 @@ public class BaseSourceProcessorTest {
 
 	@Test
 	public void testGetModuleLangPath() {
-		Assert.assertEquals(
+		testGetModuleLangPath(
 			"./modules/apps/business-productivity/dynamic-data-mapping" +
-				"/dynamic-data-mapping-lang",
-			_baseSourceProcessor.getModuleLangDirName(
-				"./modules/apps/business-productivity/dynamic-data-mapping" +
-					"/dynamic-data-mapping-web"));
-		Assert.assertEquals(
-			"./modules/apps/web-experience-management/staging/staging-lang",
-			_baseSourceProcessor.getModuleLangDirName(
-				"./modules/apps/web-experience-management/staging" +
-					"/staging-bar-web"));
-		Assert.assertEquals(
+				"/dynamic-data-mapping-web",
+			"./modules/apps/business-productivity/dynamic-data-mapping" +
+				"/dynamic-data-mapping-lang/src/main/resources/content");
+		testGetModuleLangPath(
+			"./modules/apps/web-experience-management/staging/staging-bar-web",
+			"./modules/apps/web-experience-management/staging/staging-lang/" +
+				"src/main/resources/content");
+		testGetModuleLangPath(
 			"./modules/apps/business-productivity/portal-workflow" +
-				"/portal-workflow-lang",
-			_baseSourceProcessor.getModuleLangDirName(
-				"./modules/apps/business-productivity/portal-workflow" +
-					"/portal-workflow-definition-web"));
+				"/portal-workflow-definition-web",
+			"./modules/apps/business-productivity/portal-workflow" +
+				"/portal-workflow-lang/src/main/resources/content");
 	}
 
 	protected void setUpBaseSourceProcessor() {
@@ -76,6 +76,15 @@ public class BaseSourceProcessorTest {
 			}
 
 		};
+	}
+
+	protected void testGetModuleLangPath(
+		String moduleDirName, String... expectedModuleLangDirNames) {
+
+		Assert.assertEquals(
+			Arrays.asList(expectedModuleLangDirNames),
+			_baseSourceProcessor.getModuleLangDirNames(
+				moduleDirName, StringPool.BLANK));
 	}
 
 	private BaseSourceProcessor _baseSourceProcessor;

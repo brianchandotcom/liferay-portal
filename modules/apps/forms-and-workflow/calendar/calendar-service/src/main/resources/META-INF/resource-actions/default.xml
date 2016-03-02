@@ -7,6 +7,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_calendar_web_portlet_CalendarPortlet</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<permissions>
 			<supports>
 				<action-key>ADD_RESOURCE</action-key>

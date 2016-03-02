@@ -25,6 +25,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>

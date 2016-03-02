@@ -23,6 +23,7 @@
 			<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsPortlet</portlet-name>
 			<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<permissions>
 			<supports>
 				<action-key>ADD_ENTRY</action-key>

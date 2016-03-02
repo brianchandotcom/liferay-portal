@@ -23,6 +23,8 @@ if (Validator.isNotNull(redirect)) {
 	portletDisplay.setURLBack(redirect);
 }
 
+portletDisplay.setShowBackIcon(false);
+
 long groupId = ParamUtil.getLong(request, SearchPortletParameterNames.GROUP_ID);
 
 String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT);

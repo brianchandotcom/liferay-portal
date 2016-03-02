@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.upgrade.v6_1_0.util.UpdateSyncUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -324,10 +325,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 		migrateImageFiles();
 
-		UpgradeDocumentLibrary upgradeDocumentLibrary =
-			new UpgradeDocumentLibrary();
-
-		upgradeDocumentLibrary.updateSyncs();
+		UpdateSyncUtil.updateSyncs(connection);
 	}
 
 	protected long getBitwiseValue(

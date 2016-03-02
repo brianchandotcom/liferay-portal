@@ -77,24 +77,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			_freemarkerEngineConfiguration.restrictedClasses());
 
 		for (String restrictedClassName : restrictedClassNames) {
-			if (restrictedClassName.equals(StringPool.STAR)) {
-				throw new TemplateException(
-					"Instantiating " + className + " is not allowed in the " +
-						"template for security reasons",
-					environment);
-			}
-			else if (restrictedClassName.endsWith(StringPool.STAR)) {
-				restrictedClassName = restrictedClassName.substring(
-					0, restrictedClassName.length() -1);
-
-				if (className.startsWith(restrictedClassName)) {
-					throw new TemplateException(
-						"Instantiating " + className + " is not allowed in " +
-							"the template for security reasons",
-						environment);
-				}
-			}
-			else if (className.equals(restrictedClassName)) {
+			if (_matchesClassName(restrictedClassName, className)) {
 				throw new TemplateException(
 					"Instantiating " + className + " is not allowed in the " +
 						"template for security reasons",
@@ -108,21 +91,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			_freemarkerEngineConfiguration.allowedClasses());
 
 		for (String allowedClassName : allowedClasseNames) {
-			if (allowedClassName.equals(StringPool.STAR)) {
+			if (_matchesClassName(allowedClassName, className)) {
 				allowed = true;
-				break;
-			}
-			else if (allowedClassName.endsWith(StringPool.STAR)) {
-				allowedClassName = allowedClassName.substring(
-					0, allowedClassName.length() - 1);
 
-				if (className.startsWith(allowedClassName)) {
-					allowed = true;
-					break;
-				}
-			}
-			else if (allowedClassName.equals(className)) {
-				allowed = true;
 				break;
 			}
 		}

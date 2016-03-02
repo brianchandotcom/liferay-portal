@@ -724,6 +724,7 @@
 		<execute function="Click" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Click" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />
 
 		<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />

@@ -175,7 +175,7 @@
 	</command>
 
 	<command name="addJavaScript">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${sitePageName}" />
 		</execute>
 
@@ -211,7 +211,7 @@
 	</command>
 
 	<command name="addPageTranslations">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
 		</execute>
 
@@ -238,7 +238,7 @@
 	<command name="assertCannotDeleteOnlyPage">
 		<var name="key_page" value="${pageName}" />
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -260,7 +260,7 @@
 	</command>
 
 	<command name="changeLogoViaPageCP">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
 		</execute>
 
@@ -310,7 +310,7 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -357,7 +357,7 @@
 	</command>
 
 	<command name="editSelectPageType">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
 		</execute>
 
@@ -384,7 +384,7 @@
 	</command>
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${sitePageName}" />
 		</execute>
 
@@ -750,7 +750,7 @@
 	</command>
 
 	<command name="viewFriendlyURL">
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${sitePageName}" />
 		</execute>
 
@@ -925,7 +925,7 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
 		</execute>
 
@@ -959,7 +959,7 @@
 	<command name="viewPanelPortletListCP">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${sitePageName}" />
 		</execute>
 

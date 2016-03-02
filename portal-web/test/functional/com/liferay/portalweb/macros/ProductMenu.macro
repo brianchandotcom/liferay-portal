@@ -47,21 +47,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoEditPage" summary="Navigate to Product Menu > Sites > Navigation > Public Pages > ${page}">
-
-		<execute macro="ProductMenuHelper#expandPanelSites" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandPageTree" />
-
-		<var name="key_page" value="${page}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
-	</command>
-
 	<command name="gotoLiveSite" summary="Navigate to the Live site">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 

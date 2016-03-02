@@ -38,7 +38,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Message Boards Page" />
 		</execute>
 
@@ -210,7 +210,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -265,7 +265,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -341,7 +341,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -361,7 +361,7 @@
 			<var name="pageName" value="Message Boards Page 2" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Message Boards Page 2" />
 		</execute>
 
@@ -393,7 +393,7 @@
 			<var name="pageName" value="Message Boards Page 3" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Message Boards Page 3" />
 		</execute>
 
@@ -981,7 +981,7 @@
 			<var name="siteName" value="Blank Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page Name" />
 		</execute>
 
@@ -1048,7 +1048,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -1225,7 +1225,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -1339,7 +1339,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -1382,7 +1382,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -1476,7 +1476,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 
@@ -1560,7 +1560,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
 		</execute>
 

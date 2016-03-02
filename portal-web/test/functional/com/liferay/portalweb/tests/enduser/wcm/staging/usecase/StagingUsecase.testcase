@@ -1320,7 +1320,7 @@
 			<var name="site" value="Community Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Home" />
 		</execute>
 
@@ -1332,7 +1332,7 @@
 			<var name="site" value="Community Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Home" />
 		</execute>
 
@@ -2628,7 +2628,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Staging Test Page" />
 		</execute>
 
@@ -3778,7 +3778,7 @@
 			<var name="sitePagesVariationName" value="Main Variation" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage" >
+		<execute macro="SitePageNavigator#gotoEditPage" >
 			<var name="page" value="Test Page Name" />
 		</execute>
 

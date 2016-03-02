@@ -337,7 +337,7 @@
 			<var name="pageLayout" value="2 Column (30/70)" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page Name" />
 		</execute>
 
@@ -387,7 +387,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Blog Page" />
 		</execute>
 
@@ -444,7 +444,7 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page" />
 		</execute>
 
@@ -486,7 +486,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page" />
 		</execute>
 

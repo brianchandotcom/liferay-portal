@@ -90,3 +90,8 @@ index 775c147..ca2f28a 100644
      }
  
      /** inspect manifest for sure incompatibilities */
+@@ -285,3 +218,4 @@
+         }
+     }
+ }
++/* @generated */

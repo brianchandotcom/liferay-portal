@@ -56,12 +56,12 @@ import ${import};
 	@Deprecated
 </#if>
 
-<#if entity.hasRemoteService() && sessionTypeName != "Local">
+<#if entity.hasRemoteService() && (sessionTypeName != "Local")>
 	@AccessControlled
 	@JSONWebService
 </#if>
 
-<#if entity.hasRemoteService() && sessionTypeName != "Local" && osgiModule>
+<#if entity.hasRemoteService() && (sessionTypeName != "Local") && osgiModule>
 	@OSGiBeanProperties(
 		property = {
 			"json.web.service.context.name=${portletShortName?lower_case}",

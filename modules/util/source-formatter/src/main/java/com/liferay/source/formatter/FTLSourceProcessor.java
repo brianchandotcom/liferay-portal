@@ -25,7 +25,6 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,10 +39,29 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	protected void checkIfStatement(
+		String line, String fileName, int lineCount) {
+
+		if ((!line.startsWith("<#elseif ") && !line.startsWith("<#if ")) ||
+			!line.endsWith(">") || line.contains("?")) {
+
+			return;
+		}
+
+		int pos = line.indexOf(StringPool.SPACE);
+
+		String ifClause =
+			"if (" + line.substring(pos + 1, line.length() - 1) + ") {";
+
+		checkIfClauseParentheses(ifClause, fileName, lineCount);
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
+
+		content = StringUtil.replace(content, " >\n", ">\n");
 
 		content = sortLiferayVariables(content);
 
@@ -124,7 +142,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return formatFTL(content);
+		return formatFTL(fileName, content);
 	}
 
 	@Override
@@ -137,15 +155,21 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(excludes, getIncludes());
 	}
 
-	protected String formatFTL(String content) throws Exception {
+	protected String formatFTL(String fileName, String content)
+		throws Exception {
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
+			int lineCount = 0;
+
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineCount++;
+
 				line = trimLine(line, false);
 
 				String trimmedLine = StringUtil.trimLeading(line);
@@ -156,6 +180,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 					line = formatIncorrectSyntax(line, "=[", "= [", false);
 					line = formatIncorrectSyntax(line, "+[", "+ [", false);
 				}
+
+				checkIfStatement(trimmedLine, fileName, lineCount);
 
 				sb.append(line);
 				sb.append("\n");

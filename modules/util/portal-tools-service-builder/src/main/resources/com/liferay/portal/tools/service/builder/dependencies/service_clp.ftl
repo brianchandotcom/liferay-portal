@@ -23,7 +23,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 		_invokable${sessionTypeName}Service = invokable${sessionTypeName}Service;
 
 		<#list methods as method>
-			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && method.name != "invokeMethod">
+			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
 				<#assign parameters = method.parameters>
 
 				_methodName${method_index} = "${method.name}";
@@ -157,7 +157,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 	private Invokable${sessionTypeName}Service _invokable${sessionTypeName}Service;
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && method.name != "invokeMethod">
+		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
 			<#assign parameters = method.parameters>
 
 			private String _methodName${method_index};

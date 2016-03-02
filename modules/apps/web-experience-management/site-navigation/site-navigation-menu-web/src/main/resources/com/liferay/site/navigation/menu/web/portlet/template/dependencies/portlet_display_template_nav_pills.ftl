@@ -53,7 +53,7 @@
 									<#assign nav_child_attr_selected = "" />
 									<#assign nav_child_css_class = "" />
 
-									<#if childNavigationItem.isSelected() >
+									<#if childNavigationItem.isSelected()>
 										<#assign nav_child_attr_selected = "aria-selected='true'" />
 										<#assign nav_child_css_class = "active selected" />
 									</#if>

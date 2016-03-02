@@ -51,6 +51,8 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -207,8 +209,16 @@ public class VerifyPermission extends VerifyProcess {
 	protected void fixUserDefaultRolePermissions() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		if (db.getDBType() == DBType.MYSQL) {
+		DBType dbType = db.getDBType();
+
+		if (dbType == DBType.MYSQL) {
 			fixUserDefaultRolePermissionsMySQL();
+
+			return;
+		}
+
+		if (dbType == DBType.ORACLE) {
+			fixUserDefaultRolePermissionsOracle();
 
 			return;
 		}
@@ -295,6 +305,75 @@ public class VerifyPermission extends VerifyProcess {
 
 				runSQL(sb.toString());
 			}
+
+			EntityCacheUtil.clearCache();
+			FinderCacheUtil.clearCache();
+		}
+	}
+
+	protected void fixUserDefaultRolePermissionsOracle() throws Exception {
+		String insertSQL =
+			"insert into ResourcePermissionPlid(" +
+				"select ResourcePermission.resourcePermissionId, " +
+					"SUBSTR(ResourcePermission.primKey, 0, " +
+						"INSTR(ResourcePermission.primKey, '_LAYOUT_') -1) " +
+							"as plid from ResourcePermission where " +
+								"ResourcePermission.primKey like '%_LAYOUT_%')";
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try {
+				runSQL(
+					"create table ResourcePermissionPlid" +
+						"(resourcePermissionId LONG null, plid LONG null)");
+			}
+			catch (SQLException sqle) {
+				runSQL("delete from ResourcePermissionPlid");
+			}
+
+			runSQL(insertSQL);
+
+			long userClassNameId = PortalUtil.getClassNameId(User.class);
+			long userGroupClassNameId = PortalUtil.getClassNameId(
+				UserGroup.class);
+
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+			for (long companyId : companyIds) {
+				Role powerUserRole = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.POWER_USER);
+				Role userRole = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.USER);
+
+				StringBundler sb = new StringBundler(23);
+
+				sb.append("update ResourcePermission set roleId = ");
+				sb.append(userRole.getRoleId());
+				sb.append(" where resourcePermissionId in (select ");
+				sb.append("ResourcePermission.resourcePermissionId from ");
+				sb.append("ResourcePermission inner join ");
+				sb.append("ResourcePermissionPlid on ");
+				sb.append("ResourcePermission.resourcePermissionId = ");
+				sb.append("ResourcePermissionPlid.resourcePermissionId ");
+				sb.append("inner join Layout on ");
+				sb.append("ResourcePermissionPlid.plid = Layout.plid ");
+				sb.append("inner join Group_ on ");
+				sb.append("Layout.groupId = Group_.groupId");
+				sb.append(" where ResourcePermission.scope = ");
+				sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+				sb.append(" and ResourcePermission.roleId = ");
+				sb.append(powerUserRole.getRoleId());
+				sb.append(" and (Group_.classNameId = ");
+				sb.append(userClassNameId);
+				sb.append(" or Group_.classNameId = ");
+				sb.append(userGroupClassNameId);
+				sb.append(") and Layout.type_ = '");
+				sb.append(LayoutConstants.TYPE_PORTLET);
+				sb.append("')");
+
+				runSQL(sb.toString());
+			}
+
+			runSQL("drop table ResourcePermissionPlid");
 
 			EntityCacheUtil.clearCache();
 			FinderCacheUtil.clearCache();

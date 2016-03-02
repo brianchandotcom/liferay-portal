@@ -41,8 +41,6 @@ PortletURL editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, life
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
 String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
-
-request.setAttribute("view.jsp-showIconLabel", false);
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">

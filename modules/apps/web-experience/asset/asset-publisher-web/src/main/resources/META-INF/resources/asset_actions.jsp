@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean showIconLabel = ((Boolean)request.getAttribute("view.jsp-showIconLabel")).booleanValue();
-
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("view.jsp-assetRenderer");
 
 boolean showEditURL = ParamUtil.getBoolean(request, "showEditURL", true);
@@ -65,7 +63,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 			icon="pencil"
 			label="<%= false %>"
 			markupView="lexicon"
-			message='<%= showIconLabel ? LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) : LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
+			message='<%= LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
 			method="get"
 			url="<%= editPortletURL.toString() %>"
 			useDialog="<%= true %>"

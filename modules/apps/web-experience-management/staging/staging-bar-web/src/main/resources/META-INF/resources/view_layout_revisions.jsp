@@ -150,6 +150,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
+								align="right"
 								cssClass="entry-action"
 								path="/layout_revision_action.jsp"
 							/>

@@ -136,7 +136,9 @@ else {
 				</c:otherwise>
 			</c:choose>
 
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				align="right"
+			>
 				<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 					<portlet:renderURL var="deleteScheduledPublicationRedirectURL">
 						<portlet:param name="mvcPath" value="/view.jsp" />

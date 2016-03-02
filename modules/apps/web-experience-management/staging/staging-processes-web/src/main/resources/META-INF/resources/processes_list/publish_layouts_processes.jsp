@@ -263,7 +263,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				</c:when>
 			</c:choose>
 
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				align="right"
+			>
 				<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 					<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
 						<portlet:actionURL name="editPublishConfiguration" var="relaunchURL">

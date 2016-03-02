@@ -120,6 +120,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				align="right"
 				cssClass="entry-action"
 				path="/publish_configuration_actions.jsp"
 			/>

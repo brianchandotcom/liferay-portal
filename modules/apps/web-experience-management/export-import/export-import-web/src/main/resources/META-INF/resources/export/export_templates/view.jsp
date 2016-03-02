@@ -136,6 +136,7 @@ if (liveGroup == null) {
 				%>
 
 				<liferay-ui:search-container-column-jsp
+					align="right"
 					cssClass="entry-action"
 					path="/export/export_templates/actions.jsp"
 				/>

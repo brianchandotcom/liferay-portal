@@ -83,6 +83,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 				/>
 
 				<liferay-ui:search-container-column-jsp
+					align="right"
 					cssClass="entry-action"
 					path="/layout_set_branch_action.jsp"
 				/>

@@ -119,6 +119,7 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 				%>
 
 				<liferay-ui:search-container-column-jsp
+					align="right"
 					cssClass="entry-action"
 					path="/publish_templates/actions.jsp"
 				/>

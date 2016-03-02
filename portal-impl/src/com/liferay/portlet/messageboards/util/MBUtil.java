@@ -845,7 +845,8 @@ public class MBUtil {
 
 		if (!message.isApproved() &&
 			!Validator.equals(message.getUserId(), themeDisplay.getUserId()) &&
-			!permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
+			!permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return false;
 		}

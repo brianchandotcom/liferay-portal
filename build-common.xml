@@ -1777,9 +1777,9 @@ rerun your task.
 
 		<artifact:writepom pomRefId="prepare-${artifact.name}" file="pom.xml" />
 
-		<artifact:pom file="pom.xml" id="${artifact.name}" />
-
-		<artifact:install pomRefId="${artifact.name}" file="${artifact.name}.${artifact.packaging}" />
+		<artifact:install file="${artifact.name}.${artifact.packaging}">
+			<artifact:pom file="pom.xml" />
+		</artifact:install>
 
 		<delete file="pom.xml" />
 

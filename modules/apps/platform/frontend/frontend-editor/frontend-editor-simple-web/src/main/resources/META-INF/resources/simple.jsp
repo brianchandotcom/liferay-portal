@@ -100,18 +100,12 @@ if (resizable) {
 			return document.getElementById('<%= name %>').focus();
 		},
 
-		getEditor: function() {
-			var editorEl = document.getElementById('<%= name %>');
-
-			if (editorEl) {
-				return editorEl;
-			}
-
-			return null;
-		},
-
 		getHTML: function() {
 			return document.getElementById('<%= name %>').value;
+		},
+
+		getNativeEditor: function() {
+			return document.getElementById('<%= name %>');
 		},
 
 		getText: function() {

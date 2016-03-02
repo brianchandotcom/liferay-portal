@@ -222,18 +222,12 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			return data;
 		},
 
-		getEditor: function() {
-			var editor = CKEDITOR.instances['<%= name %>'];
-
-			if (editor) {
-				return editor;
-			}
-
-			return null;
-		},
-
 		getHTML: function() {
 			return window['<%= name %>'].getCkData();
+		},
+
+		getNativeEditor: function() {
+			return CKEDITOR.instances['<%= name %>'];
 		},
 
 		getText: function() {

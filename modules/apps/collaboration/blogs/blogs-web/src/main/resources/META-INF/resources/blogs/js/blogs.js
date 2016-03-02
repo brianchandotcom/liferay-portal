@@ -156,7 +156,7 @@ AUI.add(
 					_checkEmptyData: function() {
 						var instance = this;
 
-						var editor = window[instance.ns('descriptionEditor')].getEditor();
+						var editor = window[instance.ns('descriptionEditor')].getNativeEditor();
 
 						editor = editor && editor._editor ? editor._editor : null;
 						if (editor && editor.plugins && editor.plugins.ae_placeholder) {

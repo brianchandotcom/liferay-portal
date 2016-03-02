@@ -320,14 +320,6 @@ if (showSource) {
 			}
 		},
 
-		getEditor: function() {
-			if (alloyEditor) {
-				return alloyEditor.getEditor();
-			}
-
-			return null;
-		},
-
 		getHTML: function() {
 			var data = '';
 
@@ -339,6 +331,16 @@ if (showSource) {
 			}
 
 			return data;
+		},
+
+		getNativeEditor: function() {
+			var nativeEditor;
+
+			if (alloyEditor) {
+				nativeEditor = alloyEditor.getEditor();
+			}
+
+			return nativeEditor;
 		},
 
 		getText: function() {

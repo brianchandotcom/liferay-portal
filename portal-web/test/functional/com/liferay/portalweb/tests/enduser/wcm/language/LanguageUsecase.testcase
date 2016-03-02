@@ -119,7 +119,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Webcontent-Anzeige" />
+			<var name="portletName" value="Webcontentanzeige" />
 			<var name="portletOption" value="Webcontent bearbeiten" />
 		</execute>
 
@@ -148,7 +148,7 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Web-sisällön esitys" />
-			<var name="portletOption" value="Muokkaa web-sisällön esitys" />
+			<var name="portletOption" value="Muokkaa web-sisältöä" />
 		</execute>
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">

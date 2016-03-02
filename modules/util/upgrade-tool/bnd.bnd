@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Upgrade Tool
+Bundle-SymbolicName: com.liferay.upgrade.tool
+Bundle-Version: 1.0.0
+Include-Resource: @lib/jline.jar
+Main-Class: com.liferay.upgrade.tool.UpgradeTool

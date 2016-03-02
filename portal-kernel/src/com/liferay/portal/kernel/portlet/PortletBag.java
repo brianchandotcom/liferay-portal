@@ -91,8 +91,6 @@ public interface PortletBag extends Cloneable {
 
 	public ResourceBundle getResourceBundle(Locale locale);
 
-	public ResourceBundleTracker getResourceBundleTracker();
-
 	public List<SchedulerEventMessageListener>
 		getSchedulerEventMessageListeners();
 

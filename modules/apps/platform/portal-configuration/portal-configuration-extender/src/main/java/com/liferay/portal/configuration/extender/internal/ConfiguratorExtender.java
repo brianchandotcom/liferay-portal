@@ -156,7 +156,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
+		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s);
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

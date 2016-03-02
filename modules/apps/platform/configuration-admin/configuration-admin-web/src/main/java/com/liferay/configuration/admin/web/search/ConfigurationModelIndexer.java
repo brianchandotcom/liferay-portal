@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web.search;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -268,5 +269,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

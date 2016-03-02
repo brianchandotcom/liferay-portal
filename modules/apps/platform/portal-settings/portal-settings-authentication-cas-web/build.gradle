@@ -9,7 +9,6 @@ dependencies {
 	provided project(":apps:platform:portal-security-sso:portal-security-sso-cas")
 	provided project(":apps:platform:portal-settings:portal-settings-api")
 	provided project(":apps:platform:portal-settings:portal-settings-web")
-	provided project(":apps:platform:portal:portal-language-resource-bundle")
 }
 
 liferay {

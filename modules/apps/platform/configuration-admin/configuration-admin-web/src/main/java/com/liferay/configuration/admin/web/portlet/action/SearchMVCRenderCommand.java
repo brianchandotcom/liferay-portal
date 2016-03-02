@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.search.FieldNames;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
@@ -107,6 +108,10 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 				configurationModelIterator);
+
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
+				_resourceBundleLoaderProvider);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
@@ -120,5 +125,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

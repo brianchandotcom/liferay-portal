@@ -19,6 +19,7 @@ import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,6 +80,10 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
 				factoryConfigurationModel);
 
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
+				_resourceBundleLoaderProvider);
+
 			return "/view_factory_instances.jsp";
 		}
 		catch (IOException ioe) {
@@ -88,5 +93,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

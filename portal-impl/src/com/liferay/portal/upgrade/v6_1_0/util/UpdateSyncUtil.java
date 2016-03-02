@@ -48,12 +48,12 @@ public class UpdateSyncUtil {
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString());
 				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"insert into DLSync (syncId, companyId, " +
-								"createDate, modifiedDate, fileId, " +
-								"repositoryId, parentFolderId, event, type_) " +
-								"values (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"insert into DLSync (syncId, companyId, createDate, " +
+							"modifiedDate, fileId, repositoryId, " +
+							"parentFolderId, event, type_) " +
+							"values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {

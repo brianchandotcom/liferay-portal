@@ -164,7 +164,7 @@
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[3]/a)</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[3])</td>
 	<td></td>
 </tr>
 <tr>

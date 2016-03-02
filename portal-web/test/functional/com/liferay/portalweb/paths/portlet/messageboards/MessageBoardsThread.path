@@ -186,7 +186,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_WORKFLOW_STATUS_1</td>
-	<td>xpath=(//span[@class='taglib-workflow-status']/span/strong)[1]</td>
+	<td>//span[@class='taglib-workflow-status']/span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
 <tr>

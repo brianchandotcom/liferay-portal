@@ -1534,8 +1534,8 @@
 
 		<execute macro="DDLRecord#populateFieldLinkToPage">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
+			<var name="pagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -1554,6 +1554,10 @@
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
+
+		<execute macro="DDLRecord#viewLinkToPageLink">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		</execute>
 	</command>
 

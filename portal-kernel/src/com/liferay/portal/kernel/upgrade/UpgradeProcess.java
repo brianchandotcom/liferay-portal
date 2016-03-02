@@ -312,16 +312,22 @@ public abstract class UpgradeProcess
 
 				runSQL(alterable.getSQL(tableName));
 
-				for (ObjectValuePair<String, IndexMetadata> objectValuePair :
-						getIndexesSQL(tableClass.getClassLoader(), tableName)) {
+				List<ObjectValuePair<String, IndexMetadata>> indexesSQL =
+					getIndexesSQL(tableClass.getClassLoader(), tableName);
 
-					IndexMetadata indexMetadata = objectValuePair.getValue();
+				if (indexesSQL != null) {
+					for (ObjectValuePair<String, IndexMetadata>
+							objectValuePair : indexesSQL) {
 
-					if (ArrayUtil.contains(
-							indexMetadata.getColumnNames(), columnName)) {
+						IndexMetadata indexMetadata =
+							objectValuePair.getValue();
 
-						runSQLTemplateString(
-							objectValuePair.getKey(), false, true);
+						if (ArrayUtil.contains(
+								indexMetadata.getColumnNames(), columnName)) {
+
+							runSQLTemplateString(
+								objectValuePair.getKey(), false, true);
+						}
 					}
 				}
 			}

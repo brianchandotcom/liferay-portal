@@ -17,7 +17,6 @@ package com.liferay.staging.bar.web.theme.contributor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -90,7 +89,6 @@ public class StagingBarTemplateContextContributor
 		if (themeDisplay.isShowStagingIcon()) {
 			contextObjects.put(
 				"staging_text", LanguageUtil.get(request, "staging"));
-
 		}
 	}
 

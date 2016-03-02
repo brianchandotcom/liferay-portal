@@ -1,4 +1,18 @@
 <definition>
+	<command name="addFirstPage">
+		<execute function="Click" locator1="SitePages#PAGES_ELLIPSIS" />
+
+		<if>
+			<equals arg1="${sitePagePrivacy}" arg2="Private" />
+			<then>
+				<execute function="Click" locator1="SitePages#ADD_PRIVATE_PAGE_MENUITEM" />
+			</then>
+			<else>
+				<execute function="Click" locator1="SitePages#ADD_PUBLIC_PAGE_MENUITEM" />
+			</else>
+		</if>
+	</command>
+
 	<command name="expandCategory">
 		<var name="key_category" value="${category}" />
 

@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.lang.builder;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.lang.builder.LangBuilderArgs;
 
 import java.io.File;
@@ -61,11 +62,13 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	@Input
+	@Optional
 	public String getTranslateClientId() {
 		return GradleUtil.toString(_translateClientId);
 	}
 
 	@Input
+	@Optional
 	public String getTranslateClientSecret() {
 		return GradleUtil.toString(_translateClientSecret);
 	}
@@ -128,8 +131,19 @@ public class BuildLangTask extends JavaExec {
 		}
 
 		args.add("lang.translate=" + isTranslate());
-		args.add("lang.translate.client.id=" + getTranslateClientId());
-		args.add("lang.translate.client.secret=" + getTranslateClientSecret());
+
+		String translateClientId = getTranslateClientId();
+
+		if (Validator.isNotNull(translateClientId)) {
+			args.add("lang.translate.client.id=" + translateClientId);
+		}
+
+		String translateClientSecret = getTranslateClientSecret();
+
+		if (Validator.isNotNull(translateClientSecret)) {
+			args.add(
+				"lang.translate.client.secret=" + translateClientSecret);
+		}
 
 		return args;
 	}

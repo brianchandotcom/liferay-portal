@@ -2319,6 +2319,7 @@
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
@@ -2337,6 +2338,7 @@
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">
@@ -2565,6 +2567,7 @@
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
@@ -5409,6 +5412,7 @@
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="menuListOption" value="RSS" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">

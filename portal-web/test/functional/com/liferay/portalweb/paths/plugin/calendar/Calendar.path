@@ -405,7 +405,7 @@
 	<td></td>
 	<td></td>
 </tr>
-!--SCHEDULER_VIEW_DAY-->
+<!--SCHEDULER_VIEW_DAY-->
 <tr>
 	<td>SCHEDULER_VIEW_DAY</td>
 	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]</td>

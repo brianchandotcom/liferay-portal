@@ -1735,7 +1735,7 @@ rerun your task.
 		</java>
 	</target>
 
-	<target name="install-portal-snapshot">
+	<target name="prepare-artifact-pom">
 		<fail message="Unable to run install-portal-snapshot from the root directory.">
 			<condition>
 				<not>
@@ -1764,27 +1764,46 @@ rerun your task.
 
 		<property file="bnd.bnd" />
 
-		<condition property="artifact.version" value="${Bundle-Version}" else="${release.info.version}">
+		<condition property="artifact.version" value="${Bundle-Version}-SNAPSHOT" else="${release.info.version}-SNAPSHOT">
 			<isset property="Bundle-Version" />
 		</condition>
 
-		<artifact:pom
-			artifactId="com.liferay.${processed.artifact.name}"
-			groupId="com.liferay.portal"
-			id="prepare-${artifact.name}"
-			version="${artifact.version}-SNAPSHOT"
-		/>
+		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+			<filterset>
+				<filter token="version" value="${artifact.version}" />
+			</filterset>
+		</copy>
+	</target>
 
-		<artifact:writepom pomRefId="prepare-${artifact.name}" file="pom.xml" />
-
-		<artifact:pom file="pom.xml" id="${artifact.name}" />
-
-		<artifact:install pomRefId="${artifact.name}" file="${artifact.name}.${artifact.packaging}" />
+	<target name="install-portal-snapshot" depends="jar,prepare-artifact-pom">
+		<artifact:install file="${artifact.name}.${artifact.packaging}">
+			<pom file="pom.xml" />
+		</artifact:install>
 
 		<delete file="pom.xml" />
 
 		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}-SNAPSHOT" />
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
+	</target>
+
+	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,prepare-artifact-pom">
+		<artifact:deploy file="${artifact.name}.${artifact.packaging}">
+			<attach classifier="javadoc" file="${artifact.name}-javadoc.${artifact.packaging}" />
+			<attach classifier="sources" file="${artifact.name}-sources.${artifact.packaging}" />
+			<pom file="pom.xml" />
+			<remoteRepository url="${sonatype.snapshot.url}">
+				<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
 		</propertyfile>
 	</target>
 

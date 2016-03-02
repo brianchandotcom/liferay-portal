@@ -260,6 +260,34 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		return classLoaders;
 	}
 
+	private boolean _matchesClassName(
+		String className, String matchedClassName) {
+
+		if (className.equals(StringPool.STAR)) {
+			return true;
+		}
+		else if (className.endsWith(StringPool.STAR)) {
+			className = className.substring(0, className.length() - 1);
+
+			if (matchedClassName.startsWith(className)) {
+				return true;
+			}
+		}
+		else if (className.equals(matchedClassName)) {
+			return true;
+		}
+		else {
+			String classNamePackage = matchedClassName.substring(
+				0, matchedClassName.lastIndexOf("."));
+
+			if (classNamePackage.equals(className)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private BundleTracker<ClassLoader> _classResolverBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;

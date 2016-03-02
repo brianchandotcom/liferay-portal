@@ -58,9 +58,7 @@ public class StagingBarTemplateContextContributor
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-				Layout layout = themeDisplay.getLayout();
-
-				Group group = layout.getGroup();
+				Group group = themeDisplay.getScopeGroup();
 
 				if (group.isStagingGroup()) {
 					sb.append(StringPool.SPACE);

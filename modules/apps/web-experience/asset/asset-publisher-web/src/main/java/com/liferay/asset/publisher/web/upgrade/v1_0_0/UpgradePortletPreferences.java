@@ -35,13 +35,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.text.DateFormat;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,15 +52,16 @@ import javax.portlet.PortletPreferences;
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	public UpgradePortletPreferences(
-		DateFormatFactoryUtil dateFormatFactoryUtil,
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_newDateFormat = dateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd");
-		_oldDateFormat = dateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
+		DDMStructureLocalService ddmStructureLocalService,
+		SAXReader saxReader) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_saxReader = saxReader;
+
+		_newDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+		_oldDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
 	}
 
 	protected JSONObject getDDMStructureJSONObject(long structureId)
@@ -78,21 +77,18 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			structureId);
 
-		if (Validator.isNotNull(ddmStructure)) {
-			String definition = ddmStructure.getDefinition();
-
-			ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
-				definition);
-			_ddmSructureJSONObjects.put(structureId, ddmStructureJSONObject);
-
-					ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
-						definition);
-
-			return ddmStructureJSONObject;
+		if (ddmStructure == null) {
+			throw new UpgradeException(
+				"Unable to find dynamic data mapping structure " + structureId);
 		}
 
-		throw new UpgradeException(
-			"Unable to find dynamic data mapping structure " + structureId);
+		ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
+			ddmStructure.getDefinition());
+
+		_ddmSructureJSONObjects.put(structureId, ddmStructureJSONObject);
+						definition);
+
+		return ddmStructureJSONObject;
 	}
 
 	protected JSONObject getFieldJSONObject(
@@ -185,6 +181,14 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue(key, Boolean.FALSE.toString()));
 	}
 
+	protected boolean isOldDDMPreferenceValueFormat(String value) {
+		if (value.startsWith(_DDM_FIELD_OLD_PREFIX)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void transformDateFieldValue(
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -269,25 +273,26 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		String value = GetterUtil.getString(
 			portletPreferences.getValue(column, null));
 
-		if (Validator.isNotNull(value) &&
-			(value.startsWith(DDM_FIELD_OLD_PREFIX) ||
-			 value.startsWith(DDM_FIELD_PREFIX))) {
+		if (Validator.isNull(value)) {
+			return;
+		}
+
+		if (value.startsWith(_DDM_FIELD_OLD_PREFIX) ||
+			value.startsWith(_DDM_FIELD_PREFIX)) {
 
 			String[] values = new String[0];
 
-			boolean isOldFormat = false;
+			boolean oldDDMPreferenceValueFormat = isOldDDMPreferenceValueFormat(
+				value);
 
-			if (value.startsWith(DDM_FIELD_OLD_PREFIX)) {
-				isOldFormat = true;
-				values = StringUtil.split(value, DDM_FIELD_OLD_SEPARATOR);
-			} else {
-				values = StringUtil.split(value, DDM_FIELD_SEPARATOR);
+			if (oldDDMPreferenceValueFormat) {
+				values = StringUtil.split(value, _DDM_FIELD_OLD_SEPARATOR);
+			}
+			else {
+				values = StringUtil.split(value, _DDM_FIELD_SEPARATOR);
 			}
 
-			if (values.length == 4 && isOldFormat) {
-				value = StringUtil.replace(
-					value, DDM_FIELD_OLD_SEPARATOR, DDM_FIELD_SEPARATOR);
-			} else if (values.length == 3) {
+			if (values.length == 3) {
 				long structureId = GetterUtil.getLong(values[1]);
 
 				JSONObject ddmStructureJSONObject = getDDMStructureJSONObject(
@@ -299,21 +304,25 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				JSONObject fieldJSONObject = getFieldJSONObject(
 					fieldsJSONArray, values[2]);
 
-				if (fieldJSONObject != null &&
+				if ((fieldJSONObject != null) &&
 					Validator.isNotNull(
 						fieldJSONObject.getString("indexType"))) {
 
 					StringBundler sb = new StringBundler(7);
 					sb.append(values[0]);
-					sb.append(DDM_FIELD_SEPARATOR);
+					sb.append(_DDM_FIELD_SEPARATOR);
 					sb.append(fieldJSONObject.getString("indexType"));
-					sb.append(DDM_FIELD_SEPARATOR);
+					sb.append(_DDM_FIELD_SEPARATOR);
 					sb.append(values[1]);
-					sb.append(DDM_FIELD_SEPARATOR);
+					sb.append(_DDM_FIELD_SEPARATOR);
 					sb.append(values[2]);
 
 					value = sb.toString();
 				}
+			}
+			else if ((values.length == 4) && oldDDMPreferenceValueFormat) {
+				value = StringUtil.replace(
+					value, _DDM_FIELD_OLD_SEPARATOR, _DDM_FIELD_SEPARATOR);
 			}
 
 			portletPreferences.setValue(column, value);
@@ -324,7 +333,6 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		throws Exception {
 
 		upgradeOrderByColumn(portletPreferences, _ORDER_BY_COLUMN_1);
-
 		upgradeOrderByColumn(portletPreferences, _ORDER_BY_COLUMN_2);
 	}
 
@@ -374,7 +382,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		for (int i = 0; i < assetEntryXmls.length; i++) {
 			String assetEntry = assetEntryXmls[i];
 
-			Document document = SAXReaderUtil.read(assetEntry);
+			Document document = _saxReader.read(assetEntry);
 
 			Element rootElement = document.getRootElement();
 
@@ -400,22 +408,22 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		}
 	}
 
-	private static final String DDM_FIELD_NAMESPACE = "ddm";
+	private static final String _DDM_FIELD_NAMESPACE = "ddm";
 
-	private static final String DDM_FIELD_OLD_PREFIX =
-		DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH;
+	private static final String _DDM_FIELD_OLD_PREFIX =
+		_DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH;
 
-	private static final String DDM_FIELD_OLD_SEPARATOR =
+	private static final String _DDM_FIELD_OLD_SEPARATOR =
 		StringPool.FORWARD_SLASH;
 
-	private static final String DDM_FIELD_PREFIX =
-		DDM_FIELD_NAMESPACE + StringPool.DOUBLE_UNDERLINE;
+	private static final String _DDM_FIELD_PREFIX =
+		_DDM_FIELD_NAMESPACE + StringPool.DOUBLE_UNDERLINE;
 
-	private static final String DDM_FIELD_SEPARATOR =
+	private static final String _DDM_FIELD_SEPARATOR =
 		StringPool.DOUBLE_UNDERLINE;
 
 	private static final String DDM_FIELD_PREFIX =
-		DDM_FIELD_NAMESPACE + DDM_FIELD_SEPARATOR;
+		_DDM_FIELD_NAMESPACE + _DDM_FIELD_SEPARATOR;
 
 	private static final String _DDM_STRUCTURE_FIELD_NAME =
 		"ddmStructureFieldName";
@@ -445,5 +453,6 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DateFormat _newDateFormat;
 	private final DateFormat _oldDateFormat;
+	private final SAXReader _saxReader;
 
 }

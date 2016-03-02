@@ -16,6 +16,18 @@
 
 <c:if test="<%= ddlDisplayContext.isShowIconsActions() %>">
 	<div class="container-fluid-1280 icons-container lfr-meta-actions">
+		<div class="add-record-button-container">
+			<c:if test="<%= ddlDisplayContext.isShowAddRecordButton() %>">
+				<portlet:renderURL var="addRecordURL">
+					<portlet:param name="mvcPath" value="/edit_record.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="recordSetId" value="<%= String.valueOf(ddlDisplayContext.getRecordSetId()) %>" />
+					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getFormDDMTemplateId()) %>" />
+				</portlet:renderURL>
+
+				<aui:button href="<%= addRecordURL %>" icon="icon-plus" value="<%= ddlDisplayContext.getAddRecordLabel() %>" />
+			</c:if>
+		</div>
 		<div class="lfr-icon-actions">
 			<liferay-portlet:renderURL varImpl="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcPath" value="/update_redirect.jsp" />

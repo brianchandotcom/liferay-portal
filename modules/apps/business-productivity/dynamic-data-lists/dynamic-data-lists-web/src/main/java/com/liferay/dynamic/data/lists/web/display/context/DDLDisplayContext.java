@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.display.context.util.DDLRequestHelper;
 import com.liferay.dynamic.data.lists.web.search.RecordSetSearch;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -108,6 +110,22 @@ public class DDLDisplayContext {
 
 		return ddmDisplay.getEditTemplateTitle(
 			_recordSet.getDDMStructure(), null, getLocale());
+	}
+
+	public String getAddRecordLabel() throws PortalException {
+		DDLRecordSet recordSet = getRecordSet();
+
+		String structureName = StringPool.BLANK;
+
+		if (recordSet != null) {
+			DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+			structureName = ddmStructure.getName(_ddlRequestHelper.getLocale());
+		}
+
+		return LanguageUtil.format(
+			_ddlRequestHelper.getRequest(), "add-x",
+			HtmlUtil.escape(structureName), false);
 	}
 
 	public String getDDLRecordSetDisplayStyle() {
@@ -324,6 +342,18 @@ public class DDLDisplayContext {
 
 	public boolean isShowAddDDMFormTemplateIcon() throws PortalException {
 		return isShowAddDDMTemplateIcon();
+	}
+
+	public boolean isShowAddRecordButton() {
+		if (isFormView() || isSpreadsheet()) {
+			return false;
+		}
+
+		if (isEditable() && hasAddRecordPermission()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowAddRecordSetIcon() {

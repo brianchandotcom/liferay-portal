@@ -89,12 +89,6 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 		<aui:nav-item label="<%= recordSet.getName(locale) %>" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isDisplayPortlet() %>">
-		<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
-			<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
-		</aui:nav>
-	</c:if>
-
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
 			<portlet:param name="mvcPath" value="<%= mvcPath %>" />

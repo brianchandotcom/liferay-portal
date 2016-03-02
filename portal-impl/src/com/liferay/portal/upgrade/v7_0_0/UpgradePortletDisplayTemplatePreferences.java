@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
@@ -38,27 +37,20 @@ public class UpgradePortletDisplayTemplatePreferences
 
 		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select templateKey from DDMTemplate where groupId = ?" +
-					" and uuid_ = ?");
+					" and uuid_ = ?")) {
 
 			ps.setLong(1, displayStyleGroupId);
 			ps.setString(2, uuid);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					return rs.getString("templateKey");
+				}
 
-			while (rs.next()) {
-				return rs.getString("templateKey");
+				return null;
 			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

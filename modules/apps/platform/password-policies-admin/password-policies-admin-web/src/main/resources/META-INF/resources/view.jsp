@@ -31,6 +31,10 @@ PasswordPolicySearch searchContainer = new PasswordPolicySearch(renderRequest, p
 
 searchContainer.setId("passwordPolicy");
 searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
+
+String description = LanguageUtil.get(request, "javax.portlet.description.com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet") + " " + LanguageUtil.get(request, "when-no-password-policy-is-assigned-to-a-user,-either-explicitly-or-through-an-organization,-the-default-password-policy-is-used");
+
+portletDisplay.setDescription(description);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -98,10 +102,6 @@ searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
 
 	headerNames.add(StringPool.BLANK);
 	%>
-
-	<div class="alert alert-info">
-		<liferay-ui:message key="when-no-password-policy-is-assigned-to-a-user,-either-explicitly-or-through-an-organization,-the-default-password-policy-is-used" />
-	</div>
 
 	<c:if test="<%= !passwordPolicyEnabled && windowState.equals(WindowState.MAXIMIZED) %>">
 

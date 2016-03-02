@@ -1751,7 +1751,7 @@ rerun your task.
 
 		<property name="artifact.name" value="${ant.project.name}" />
 
-		<condition property="artifact.version" value="${Bundle-Version}" else="${release.info.version}">
+		<condition property="artifact.version" value="${Bundle-Version}-SNAPSHOT" else="${release.info.version}-SNAPSHOT">
 			<isset property="Bundle-Version" />
 		</condition>
 
@@ -1768,18 +1768,15 @@ rerun your task.
 			replace="."
 		/>
 
-		<artifact:pom
-			artifactId="com.liferay.${processed.artifact.name}"
-			groupId="com.liferay.portal"
-			id="prepare-${artifact.name}"
-			version="${artifact.version}-SNAPSHOT"
-		/>
+		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
+			<filterset>
+				<filter token="version" value="${artifact.version}" />
+			</filterset>
+		</copy>
 
-		<artifact:writepom pomRefId="prepare-${artifact.name}" file="pom.xml" />
-
-		<artifact:pom file="pom.xml" id="${artifact.name}" />
-
-		<artifact:install pomRefId="${artifact.name}" file="${artifact.name}.${artifact.packaging}" />
+		<artifact:install file="${artifact.name}.${artifact.packaging}">
+			<artifact:pom file="pom.xml" />
+		</artifact:install>
 
 		<delete file="pom.xml" />
 

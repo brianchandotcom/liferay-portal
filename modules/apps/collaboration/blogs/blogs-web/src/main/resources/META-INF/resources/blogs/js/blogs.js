@@ -101,6 +101,9 @@ AUI.add(
 						}
 
 						window[instance.ns('descriptionEditor')].setHTML(description);
+
+						instance._checkEmptyData();
+
 					},
 
 					_bindUI: function() {
@@ -147,8 +150,25 @@ AUI.add(
 
 						instance._editSection = instance.one('#editSection');
 						instance._settingsSection = instance.one('#settingsSection');
-
 						instance._eventHandles = eventHandles;
+					},
+
+					_checkEmptyData: function () {
+						var instance = this;
+
+						var editor = window[instance.ns('descriptionEditor')].getEditor();
+
+						editor = editor && editor._editor ? editor._editor : null;
+						if (editor && editor.plugins && editor.plugins.ae_placeholder) {
+
+							var objEditor = {
+								editor: editor
+							};
+
+							editor.plugins.ae_placeholder._checkEmptyData(objEditor);
+						}
+
+
 					},
 
 					_checkImagesBeforeSave: function(draft, ajax) {
@@ -386,7 +406,6 @@ AUI.add(
 						var instance = this;
 
 						var descriptionEditorNode = instance.one('#descriptionEditor');
-
 						descriptionEditorNode.attr('contenteditable', !readOnly);
 						descriptionEditorNode.toggleClass('readonly', readOnly);
 					},
@@ -422,11 +441,17 @@ AUI.add(
 					_switchView: function() {
 						var instance = this;
 
+						var descriptionEditor = window[instance.ns('descriptionEditor')];
+
 						instance._editSection.toggle();
 						instance._settingsSection.toggle();
 
 						instance._editIcon.toggle();
 						instance._settingsIcon.toggle();
+
+						if (!descriptionEditor.instanceReady) {
+							descriptionEditor.create();
+						}
 					},
 
 					_updateImages: function(persistentImages) {

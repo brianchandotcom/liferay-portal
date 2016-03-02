@@ -16,15 +16,13 @@ package com.liferay.asset.publisher.web.upgrade.v1_0_0;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,63 +62,28 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			"yyyyMMddHHmmss");
 	}
 
-	protected JSONObject getDDMStructureJSONObject(long structureId)
-		throws Exception {
+	protected DDMForm getDDMForm(long structureId) throws Exception {
+		DDMForm ddmForm = _ddmSructureDDMForms.get(structureId);
 
-		JSONObject ddmStructureJSONObject = _ddmSructureJSONObjects.get(
-			structureId);
-
-		if (ddmStructureJSONObject != null) {
-			return ddmStructureJSONObject;
+		if (ddmForm != null) {
+			return ddmForm;
 		}
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			structureId);
 
-		if (ddmStructure == null) {
-			throw new UpgradeException(
-				"Unable to find dynamic data mapping structure " + structureId);
-		}
+		ddmForm = ddmStructure.getDDMForm();
 
-		ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
-			ddmStructure.getDefinition());
+		_ddmSructureDDMForms.put(structureId, ddmForm);
 
-		_ddmSructureJSONObjects.put(structureId, ddmStructureJSONObject);
-						definition);
-
-		return ddmStructureJSONObject;
+		return ddmForm;
 	}
 
-	protected JSONObject getFieldJSONObject(
-		JSONArray fieldsJSONArray, String selectedFieldName) {
+	protected DDMFormField getDDMFormField(DDMForm ddmForm, String fieldName) {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
+		return ddmFormFieldsMap.get(fieldName);
 
-		JSONObject fieldJSONObject = null;
-
-		for (int i = 0; i < fieldsJSONArray.length(); i++) {
-			JSONObject curFieldJSONObject = fieldsJSONArray.getJSONObject(i);
-
-			String fieldName = curFieldJSONObject.getString("name");
-
-			if (fieldName.equals(selectedFieldName)) {
-				fieldJSONObject = curFieldJSONObject;
-
-				break;
-			}
-
-			if (curFieldJSONObject.has("nestedFields")) {
-				JSONArray nestedFieldsJSONArray =
-					curFieldJSONObject.getJSONArray("nestedFields");
-
-				fieldJSONObject = getFieldJSONObject(
-					nestedFieldsJSONArray, selectedFieldName);
-
-				if (fieldJSONObject != null) {
-					break;
-				}
-			}
-		}
-
-		return fieldJSONObject;
 	}
 
 	protected String getJournalArticleResourceUuid(String journalArticleUuid)
@@ -156,18 +119,14 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		};
 	}
 
-	protected boolean isDateField(
-		JSONObject ddmStructureJSONObject, String selectedFieldName) {
+	protected boolean isDateField(DDMForm ddmForm, String fieldName) {
+		DDMFormField ddmFormField = getDDMFormField(ddmForm, fieldName);
 
-		JSONArray fieldsJSONArray = ddmStructureJSONObject.getJSONArray(
-			"fields");
+		if (ddmFormField == null) {
+			return false;
+		}
 
-		JSONObject fieldJSONObject = getFieldJSONObject(
-			fieldsJSONArray, selectedFieldName);
-
-		if ((fieldJSONObject != null) &&
-			Validator.equals(fieldJSONObject.getString("type"), "ddm-date")) {
-
+		if (Validator.equals("ddm-date", ddmFormField.getType())) {
 			return true;
 		}
 
@@ -230,12 +189,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 					while (rs.next()) {
 						long structureId = rs.getLong("structureId");
 
-						JSONObject ddmStructureJSONObject =
-							getDDMStructureJSONObject(structureId);
+						DDMForm ddmForm = getDDMForm(structureId);
 
-						if (isDateField(
-								ddmStructureJSONObject, selectedFieldName)) {
-
+					if (isDateField(ddmForm, selectedFieldName)) {
 							transformDateFieldValue(portletPreferences);
 
 							break;
@@ -257,10 +213,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			String selectedFieldName = GetterUtil.getString(
 				portletPreferences.getValue(_DDM_STRUCTURE_FIELD_NAME, null));
 
-			JSONObject ddmStructureJSONObject = getDDMStructureJSONObject(
-				structureId);
+			DDMForm ddmForm = getDDMForm(structureId);
 
-			if (isDateField(ddmStructureJSONObject, selectedFieldName)) {
+			if (isDateField(ddmForm, selectedFieldName)) {
 				transformDateFieldValue(portletPreferences);
 			}
 		}
@@ -295,23 +250,17 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			if (values.length == 3) {
 				long structureId = GetterUtil.getLong(values[1]);
 
-				JSONObject ddmStructureJSONObject = getDDMStructureJSONObject(
-					structureId);
+				DDMForm ddmForm = getDDMForm(structureId);
 
-				JSONArray fieldsJSONArray = ddmStructureJSONObject.getJSONArray(
-					"fields");
+				DDMFormField ddmFormField = getDDMFormField(ddmForm, values[2]);
 
-				JSONObject fieldJSONObject = getFieldJSONObject(
-					fieldsJSONArray, values[2]);
-
-				if ((fieldJSONObject != null) &&
-					Validator.isNotNull(
-						fieldJSONObject.getString("indexType"))) {
+				if ((ddmFormField != null) &&
+					Validator.isNotNull(ddmFormField.getIndexType())) {
 
 					StringBundler sb = new StringBundler(7);
 					sb.append(values[0]);
 					sb.append(_DDM_FIELD_SEPARATOR);
-					sb.append(fieldJSONObject.getString("indexType"));
+					sb.append(ddmFormField.getIndexType());
 					sb.append(_DDM_FIELD_SEPARATOR);
 					sb.append(values[1]);
 					sb.append(_DDM_FIELD_SEPARATOR);
@@ -447,7 +396,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	private static final String _ORDER_BY_COLUMN_2 = "orderByColumn2";
 
-	private static final Map<Long, JSONObject> _ddmSructureJSONObjects =
+	private static final Map<Long, DDMForm> _ddmSructureDDMForms =
 		new HashMap<>();
 
 	private final DDMStructureLocalService _ddmStructureLocalService;

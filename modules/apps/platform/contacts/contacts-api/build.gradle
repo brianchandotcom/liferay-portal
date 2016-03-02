@@ -3,7 +3,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.8"
 
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.4"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 

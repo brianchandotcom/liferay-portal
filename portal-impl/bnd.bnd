@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 7.0.0
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\
@@ -13,7 +13,6 @@ Export-Package:\
 	com.liferay.portal.events,\
 	com.liferay.portal.freemarker,\
 	com.liferay.portal.increment,\
-	com.liferay.portal.kernel.util,\
 	com.liferay.portal.messaging.async,\
 	com.liferay.portal.monitoring.statistics.service,\
 	com.liferay.portal.plugin,\

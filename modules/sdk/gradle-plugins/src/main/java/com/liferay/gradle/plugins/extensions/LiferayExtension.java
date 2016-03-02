@@ -15,13 +15,18 @@
 package com.liferay.gradle.plugins.extensions;
 
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.ModuleVersionSelector;
 
 /**
  * @author Andrea Di Giorgi
@@ -37,6 +42,14 @@ public class LiferayExtension {
 
 	public void appServers(Closure<?> closure) {
 		_appServers.configure(closure);
+	}
+
+	public void defaultDependencyNotation(
+		String group, String name, Object version) {
+
+		String dependencyNotation = getDependencyNotation(group, name);
+
+		_defaultVersions.put(dependencyNotation, version);
 	}
 
 	public AppServer getAppServer() {
@@ -83,6 +96,40 @@ public class LiferayExtension {
 		return _appServerType;
 	}
 
+	public String getDefaultVersion(
+		ModuleVersionSelector moduleVersionSelector) {
+
+		return getDefaultVersion(
+			moduleVersionSelector.getGroup(), moduleVersionSelector.getName());
+	}
+
+	public String getDefaultVersion(String group, String name) {
+		return getDefaultVersion(group, name, "latest.release");
+	}
+
+	public String getDefaultVersion(
+		String group, String name, String defaultVersion) {
+
+		String dependencyNotation = getDependencyNotation(group, name);
+
+		String version = GradleUtil.toString(
+			_defaultVersions.get(dependencyNotation));
+
+		if (Validator.isNull(version)) {
+			version = GradleUtil.getProperty(
+				project, group + "." + name + ".version", (String)null);
+
+			if (Validator.isNull(version)) {
+				version = GradleUtil.getProperty(
+					project, name + ".version", defaultVersion);
+			}
+
+			_defaultVersions.put(dependencyNotation, version);
+		}
+
+		return version;
+	}
+
 	public File getDeployDir() {
 		return project.file(_deployDir);
 	}
@@ -99,22 +146,6 @@ public class LiferayExtension {
 
 	public File getLiferayHome() {
 		return project.file(_liferayHome);
-	}
-
-	public String getPortalVersion() {
-		return _portalVersion;
-	}
-
-	public String getVersionPrefix() {
-		String version = getPortalVersion();
-
-		int index = version.indexOf("-");
-
-		if (index != -1) {
-			version = version.substring(0, index);
-		}
-
-		return version;
 	}
 
 	public void setAppServerParentDir(Object appServerParentDir) {
@@ -137,8 +168,8 @@ public class LiferayExtension {
 		_liferayHome = liferayHome;
 	}
 
-	public void setPortalVersion(String portalVersion) {
-		_portalVersion = portalVersion;
+	protected String getDependencyNotation(String group, String name) {
+		return group + ":" + name;
 	}
 
 	protected final Project project;
@@ -146,9 +177,9 @@ public class LiferayExtension {
 	private Object _appServerParentDir;
 	private final NamedDomainObjectContainer<AppServer> _appServers;
 	private String _appServerType;
+	private final Map<String, Object> _defaultVersions = new HashMap<>();
 	private Object _deployDir;
 	private Object _jmxRemotePort;
 	private Object _liferayHome;
-	private String _portalVersion;
 
 }

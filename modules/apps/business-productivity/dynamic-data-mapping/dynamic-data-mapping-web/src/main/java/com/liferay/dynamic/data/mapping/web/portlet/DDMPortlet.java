@@ -168,49 +168,40 @@ public class DDMPortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response)
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		try {
-			DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
-				request, _ddmFormJSONDeserializer, ddmWebConfiguration);
+			setDDMDisplayContextRequestAttribute(renderRequest);
 
-			request.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
+			setDDMTemplateRequestAttribute(renderRequest);
 
-			setDDMTemplateRequestAttribute(request);
-
-			setDDMStructureRequestAttribute(request);
+			setDDMStructureRequestAttribute(renderRequest);
 		}
-		catch (NoSuchStructureException nsse) {
+		catch (NoSuchStructureException | NoSuchTemplateException e) {
 
 			// Let this slide because the user can manually input a structure
-			// key for a new structure that does not yet exist
-
-		}
-		catch (NoSuchTemplateException nste) {
-
-			// Let this slide because the user can manually input a template key
-			// for a new template that does not yet exist
+			// or template key for a new model that does not yet exist
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nste, nste);
+				_log.debug(e, e);
 			}
 		}
 		catch (Exception e) {
 			if (e instanceof PortletPreferencesException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(renderRequest, e.getClass());
 
-				include("/error.jsp", request, response);
+				include("/error.jsp", renderRequest, renderResponse);
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		super.render(request, response);
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Activate
@@ -218,6 +209,17 @@ public class DDMPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		this.ddmWebConfiguration = Configurable.createConfigurable(
 			DDMWebConfiguration.class, properties);
+	}
+
+	protected void setDDMDisplayContextRequestAttribute(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
+			renderRequest, _ddmFormJSONDeserializer, ddmWebConfiguration);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
 	}
 
 	@Reference(unbind = "-")

@@ -480,7 +480,7 @@ public class HookHotDeployListener
 
 		Element rootElement = document.getRootElement();
 
-		ClassLoader portletClassLoader = hotDeployEvent.getContextClassLoader();
+		ClassLoader portletClassLoader = servletContext.getClassLoader();
 
 		initPortalProperties(
 			servletContextName, portletClassLoader, rootElement);
@@ -498,8 +498,7 @@ public class HookHotDeployListener
 				_log.warn(servletContextName + " will be undeployed");
 			}
 
-			HotDeployUtil.fireUndeployEvent(
-				new HotDeployEvent(servletContext, portletClassLoader));
+			HotDeployUtil.fireUndeployEvent(new HotDeployEvent(servletContext));
 
 			DeployManagerUtil.undeploy(servletContextName);
 

@@ -576,6 +576,12 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	@Override
+	public String[] getRootModelResources() {
+		return _rootModelResources.toArray(
+			new String[_rootModelResources.size()]);
+	}
+
+	@Override
 	public boolean hasModelResourceActions(String name) {
 		ModelResourceActionsBag modelResourceActionsBag =
 			getModelResourceActionsBag(name);
@@ -603,6 +609,16 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Override
 	public boolean isPortalModelResource(String modelResource) {
 		if (_portalModelResources.contains(modelResource)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isRootModelResource(String modelResource) {
+		if (_rootModelResources.contains(modelResource)) {
 			return true;
 		}
 		else {
@@ -1099,6 +1115,8 @@ public class ResourceActionsImpl implements ResourceActions {
 				modelResourceElement.elementText("root"));
 
 			if (root) {
+				_rootModelResources.add(name);
+
 				Map<String, String> portletRootModelResource =
 					portletResourceActionsBag.getPortletRootModelResources();
 
@@ -1260,5 +1278,6 @@ public class ResourceActionsImpl implements ResourceActions {
 	private Map<String, PortletResourceActionsBag> _portletResourceActionsBags;
 	private final ServiceTrackerList<ResourceBundleLoader>
 		_resourceBundleLoaders;
+	private final Set<String> _rootModelResources = new HashSet<>();
 
 }

@@ -15,5 +15,3 @@ buildService {
 	sqlFileName = "tables.sql"
 	testDirName = "src/it"
 }
-
-version = "1.0.0"

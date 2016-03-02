@@ -405,13 +405,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_PAGE</td>
-	<td>//*[@data-qa-id='editPage']</td>
+	<td>EDIT_SPECIFIC_PAGE</td>
+	<td>//li[contains(.,'${key_pageName}')]/*[@data-qa-id='editPage']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_PAGE</td>
-	<td>//*[@data-qa-id='deletePage']</td>
+	<td>DELETE_SPECIFIC_PAGE</td>
+	<td>//li[contains(.,'${key_pageName}')]/*[@data-qa-id='deletePage']</td>
 	<td></td>
 </tr>
 <!--ELLIPSIS-->

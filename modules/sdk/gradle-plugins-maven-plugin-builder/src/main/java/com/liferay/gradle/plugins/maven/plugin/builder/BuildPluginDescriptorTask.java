@@ -40,6 +40,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -51,12 +52,15 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.ResolvedConfiguration;
+import org.gradle.api.artifacts.ResolvedDependency;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
@@ -302,23 +306,59 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			return;
 		}
 
-		Set<Dependency> dependencies = configuration.getDependencies();
-
 		Set<String> forcedExclusions = getForcedExclusions();
 
-		for (Dependency dependency : dependencies) {
+		ResolvedConfiguration resolvedConfiguration =
+			configuration.getResolvedConfiguration();
+
+		for (Dependency dependency : configuration.getDependencies()) {
 			Element dependencyElement = document.createElement("dependency");
 
 			dependenciesElement.appendChild(dependencyElement);
 
+			final String dependencyGroup = dependency.getGroup();
+			final String dependencyName = dependency.getName();
+
 			XMLUtil.appendElement(
-				document, dependencyElement, "groupId", dependency.getGroup());
+				document, dependencyElement, "groupId", dependencyGroup);
 			XMLUtil.appendElement(
-				document, dependencyElement, "artifactId",
-				dependency.getName());
+				document, dependencyElement, "artifactId", dependencyName);
+
+			String dependencyVersion = dependency.getVersion();
+
+			Set<ResolvedDependency> resolvedDependencies =
+				resolvedConfiguration.getFirstLevelModuleDependencies(
+					new Spec<Dependency>() {
+
+						@Override
+						public boolean isSatisfiedBy(Dependency dependency) {
+							if (dependencyGroup.equals(dependency.getGroup()) &&
+								dependencyName.equals(dependency.getName())) {
+
+								return true;
+							}
+
+							return false;
+						}
+
+					});
+
+			if (!resolvedDependencies.isEmpty()) {
+				Iterator<ResolvedDependency> iterator =
+					resolvedDependencies.iterator();
+
+				ResolvedDependency resolvedDependency = iterator.next();
+
+				dependencyVersion = resolvedDependency.getModuleVersion();
+			}
+			else if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Unable to find resolved module version for " + dependency);
+			}
+
 			XMLUtil.appendElement(
-				document, dependencyElement, "version",
-				dependency.getVersion());
+				document, dependencyElement, "version", dependencyVersion);
+
 			XMLUtil.appendElement(document, dependencyElement, "scope", scope);
 
 			if (!forcedExclusions.isEmpty()) {

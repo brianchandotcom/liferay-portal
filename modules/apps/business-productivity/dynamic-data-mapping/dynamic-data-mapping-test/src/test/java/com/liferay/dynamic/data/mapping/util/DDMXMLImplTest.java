@@ -19,11 +19,13 @@ import com.liferay.dynamic.data.mapping.util.impl.DDMXMLImpl;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.util.List;
 import java.util.Locale;
@@ -45,6 +47,7 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpDDMXML();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}
@@ -115,6 +118,13 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 		}
 
 		return checkElementLocale(rootElement, newLocaleId);
+	}
+
+	protected void setUpDDMXML() throws Exception {
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+			DDMXMLImpl.class, "_saxReader");
+
+		field.set(_ddmXML, new SAXReaderImpl());
 	}
 
 	protected void updateContentDefaultLocale(

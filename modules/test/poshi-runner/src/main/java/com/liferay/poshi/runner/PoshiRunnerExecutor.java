@@ -447,12 +447,13 @@ public class PoshiRunnerExecutor {
 
 		XMLLoggerHandler.updateStatus(executeElement, "pending");
 
-		List<String> arguments = new ArrayList<>();
 		List<Element> executeArgElements = executeElement.elements("arg");
 
 		Binding binding = new Binding();
 
 		if (!executeArgElements.isEmpty()) {
+			List<String> arguments = new ArrayList<>();
+
 			for (Element executeArgElement : executeArgElements) {
 				arguments.add(executeArgElement.attributeValue("value"));
 			}
@@ -460,6 +461,8 @@ public class PoshiRunnerExecutor {
 			binding.setVariable(
 				"args", arguments.toArray(new String[arguments.size()]));
 		}
+
+		String status = "fail";
 
 		try {
 			String fileName = PoshiRunnerVariablesUtil.replaceCommandVars(
@@ -480,14 +483,12 @@ public class PoshiRunnerExecutor {
 				PoshiRunnerVariablesUtil.putIntoCommandMap(
 					returnVariable, result.toString());
 			}
-		}
-		catch (Exception e) {
-			XMLLoggerHandler.updateStatus(executeElement, "fail");
 
-			throw e;
+			status = "pass";
 		}
-
-		XMLLoggerHandler.updateStatus(executeElement, "pass");
+		finally {
+			XMLLoggerHandler.updateStatus(executeElement, status);
+		}
 	}
 
 	public static void runIfElement(Element element) throws Exception {

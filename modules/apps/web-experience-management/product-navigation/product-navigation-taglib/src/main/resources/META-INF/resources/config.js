@@ -35,6 +35,7 @@
 								'aui-base',
 								'liferay-layout',
 								'liferay-layout-column',
+								'liferay-notification',
 								'liferay-product-navigation-control-menu',
 								'transition'
 							]

@@ -69,10 +69,6 @@ AUI.add(
 							}
 						}
 
-						instance._addedMessage = instance.byId('addedMessage');
-
-						instance._hideAddedMessageTask = A.debounce(A.bind('_hideAddedMessage', instance), 2000);
-
 						instance._eventHandles = [];
 
 						instance._bindUIDABase();
@@ -126,16 +122,7 @@ AUI.add(
 							if (Util.isPhone() || Util.isTablet()) {
 								placeHolder.guid();
 
-								instance._syncContentLink(placeHolder);
-
 								instance._portletFeedback(portletId, portlet);
-
-								Liferay.once(
-									'addPortlet',
-									function(event) {
-										instance._syncContentLink(event.portlet);
-									}
-								);
 							}
 
 							Portlet.add(
@@ -224,35 +211,21 @@ AUI.add(
 						return portletMetaData;
 					},
 
-					_hideAddedMessage: function() {
-						var instance = this;
-
-						instance._addedMessage.hide(true);
-
-						instance._skipToContentHandle.detach();
-					},
-
 					_portletFeedback: function(portletId, portlet) {
 						var instance = this;
 
-						var addedMessagePortlet = instance.byId('portletName');
-
-						var portletNameNode = portlet.ancestor('[data-portlet-id=' + portletId + ']', true);
-
-						if (portletNameNode) {
-							var portletName = portletNameNode.attr('data-title');
-
-							addedMessagePortlet.setHTML(portletName);
-
-							instance._skipToContentHandle = instance._contentLink.on('tap', A.bind('_skipToContent', instance));
-
-							instance._addedMessage.show(
-								true,
-								function() {
-									instance._hideAddedMessageTask();
-								}
-							);
-						}
+						new Liferay.Notification(
+							{
+								closeable: true,
+								delay: {
+									hide: 5000,
+									show: 0
+								},
+								duration: 500,
+								message: Liferay.Language.get('the-application-has-been-added-to-the-page'),
+								type: 'success'
+							}
+						).render('body');
 					},
 
 					_showTab: function(event) {
@@ -263,56 +236,6 @@ AUI.add(
 						if (focusItem && event.tabSection && event.tabSection.contains(focusItem)) {
 							focusItem.focus();
 						}
-					},
-
-					_skipToContent: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var portletXY = instance._lastAddedPortlet.getXY();
-						var scrollAnim = instance._scrollAnim;
-
-						if (!scrollAnim) {
-							scrollAnim = new A.Anim(
-								{
-									duration: 0.3,
-									easing: 'easeOut',
-									node: 'win'
-								}
-							);
-
-							instance._scrollAnim = scrollAnim;
-						}
-
-						scrollAnim.set(
-							'to',
-							{
-								scroll: [portletXY[0], (portletXY[1] - 40)]
-							}
-						).run();
-
-						instance._hideAddedMessage();
-					},
-
-					_syncContentLink: function(node) {
-						var instance = this;
-
-						var href = '#' + node.attr('id');
-
-						var contentLink = instance._contentLink;
-
-						if (!contentLink) {
-							contentLink = instance.byId('contentLink');
-
-							contentLink.swallowEvent('click', true);
-
-							instance._contentLink = contentLink;
-						}
-
-						contentLink.attr('href', href);
-
-						instance._lastAddedPortlet = node;
 					}
 				}
 			}
@@ -457,6 +380,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['anim', 'aui-base', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'transition']
+		requires: ['anim', 'aui-base', 'liferay-notification', 'liferay-product-navigation-control-menu', 'liferay-layout', 'liferay-layout-column', 'transition']
 	}
 );

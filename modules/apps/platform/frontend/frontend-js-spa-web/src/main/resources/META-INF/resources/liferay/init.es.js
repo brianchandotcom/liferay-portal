@@ -60,8 +60,8 @@ Liferay.Util.submitForm = function(form) {
 	);
 };
 
-Liferay.SPA = {
-	app: app
-};
+Liferay.SPA = Liferay.SPA || {};
+
+Liferay.SPA.app = app;
 
 export default Liferay.SPA;

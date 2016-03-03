@@ -34,7 +34,7 @@ class LiferayApp extends App {
 	}
 
 	onBeforeNavigate(event) {
-		if (event.form) {
+		if (Liferay.SPA.clearScreensCache || event.form) {
 			this.clearScreensCache();
 		}
 

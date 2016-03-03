@@ -116,26 +116,14 @@ public class LanguageImpl implements Language, Serializable {
 
 				@Override
 				public void dependenciesFulfilled() {
-					Registry registry = RegistryUtil.getRegistry();
-
-					MultiVMPool multiVMPool = registry.getService(
-						MultiVMPool.class);
-
-					_portalCache =
-						(PortalCache<Long, Serializable>)
-							multiVMPool.getPortalCache(
-								LanguageImpl.class.getName());
-
-					PortalCacheMapSynchronizeUtil.synchronize(
-						_portalCache, _companyLocalesBags,
-						new Synchronizer<Long, Serializable>() {
+					_portalCache = _createAndSynchronizeCache(
+						_PORTAL_CACHE_NAME, _companyLocalesBags,
+						new Function<Long, Void>() {
 
 							@Override
-							public void onSynchronize(
-								Map<? extends Long, ? extends Serializable> map,
-								Long key, Serializable value, int timeToLive) {
-
+							public Void apply(Long key) {
 								_companyLocalesBags.remove(key);
+								return null;
 							}
 
 						});
@@ -1855,13 +1843,16 @@ public class LanguageImpl implements Language, Serializable {
 	private static final String _GROUP_CACHE_NAME =
 		LanguageImpl.class.getName() + "_groupLanguageCache";
 
+	private static final String _PORTAL_CACHE_NAME =
+		LanguageImpl.class.getName();
+
 	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static final Map<Long, CompanyLocalesBag> _companyLocalesBags =
 		new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-	private static PortalCache<Long, Serializable> _portalCache;
+	private static PortalCache<Long, ? extends Serializable> _portalCache;
 
 	private final Map<Long, HashMap<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();

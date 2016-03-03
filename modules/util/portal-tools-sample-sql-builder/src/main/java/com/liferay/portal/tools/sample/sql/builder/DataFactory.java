@@ -2187,11 +2187,30 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		DDMStructureModel ddmStructureModel) {
 
-		return Collections.singletonList(
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(getClassName(ddmStructureModel.getClassNameId()));
+		sb.append(StringPool.DASH);
+		sb.append(DDMStructure.class.getName());
+
+		String name = sb.toString();
+		String primKey = String.valueOf(ddmStructureModel.getStructureId());
+
+		List<ResourcePermissionModel> resourcePermissionModels =
+			new ArrayList<>(3);
+
+		resourcePermissionModels.add(
 			newResourcePermissionModel(
-				DDMStructure.class.getName(),
-				String.valueOf(ddmStructureModel.getStructureId()),
-				_ownerRoleModel.getRoleId(), _defaultUserId));
+				name, primKey, _guestRoleModel.getRoleId(), 0));
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _ownerRoleModel.getRoleId(),
+				ddmStructureModel.getUserId()));
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _userRoleModel.getRoleId(), 0));
+
+		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

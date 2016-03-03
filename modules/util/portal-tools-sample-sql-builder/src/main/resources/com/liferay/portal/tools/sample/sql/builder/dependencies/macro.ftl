@@ -52,6 +52,10 @@
 	insert into DDMStructureVersion values (${_ddmStructureVersionModel.structureVersionId}, ${_ddmStructureVersionModel.groupId}, ${_ddmStructureVersionModel.companyId}, ${_ddmStructureVersionModel.userId}, '${_ddmStructureVersionModel.userName}', '${dataFactory.getDateString(_ddmStructureVersionModel.createDate)}',  ${_ddmStructureVersionModel.structureId}, '${_ddmStructureVersionModel.version}', ${_ddmStructureVersionModel.parentStructureId}, '${_ddmStructureVersionModel.name}', '${_ddmStructureVersionModel.description}', '${_ddmStructureVersionModel.definition}', '${_ddmStructureVersionModel.storageType}', ${_ddmStructureVersionModel.type}, ${_ddmStructureVersionModel.status}, ${_ddmStructureVersionModel.statusByUserId}, '${_ddmStructureVersionModel.statusByUserName}', '${dataFactory.getDateString(_ddmStructureVersionModel.statusDate)}');
 
 	insert into DDMStructureLayout values ('${_ddmStructureLayoutModel.uuid}', ${_ddmStructureLayoutModel.structureLayoutId}, ${_ddmStructureLayoutModel.groupId}, ${_ddmStructureLayoutModel.companyId}, ${_ddmStructureLayoutModel.userId}, '${_ddmStructureLayoutModel.userName}', '${dataFactory.getDateString(_ddmStructureLayoutModel.createDate)}', '${dataFactory.getDateString(_ddmStructureLayoutModel.modifiedDate)}', ${_ddmStructureLayoutModel.structureVersionId},'${_ddmStructureLayoutModel.definition}');
+
+	<@insertResourcePermissions
+		_entry = _ddmStructureModel
+	/>
 </#macro>
 
 <#macro insertDDMStructureLink

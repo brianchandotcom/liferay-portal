@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
@@ -266,6 +267,18 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public boolean isFieldTransient(String fieldName) throws PortalException {
 		return _ddmStructure.isFieldTransient(fieldName);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		_ddmStructure.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		_ddmStructure.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override

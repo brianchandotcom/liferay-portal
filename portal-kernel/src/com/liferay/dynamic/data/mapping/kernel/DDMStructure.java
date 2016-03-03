@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -87,6 +88,11 @@ public interface DDMStructure extends StagedGroupedModel {
 	public boolean hasField(String fieldName);
 
 	public boolean isFieldTransient(String fieldName) throws PortalException;
+
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	public void setDefinition(String definition);
 

@@ -40,6 +40,72 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
+	<macrodef name="apply-portal-ext-properties">
+		<sequential>
+			<if>
+				<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
+				<then>
+					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
+				</then>
+				<elseif>
+					<equals arg1="${app.server.type}" arg2="glassfish" />
+					<then>
+						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.glassfish.portal.war.name}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${tcat.enabled}" arg2="true" />
+					<then>
+						<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<isset property="test.build.liferay.portal.zip.file.name" />
+				<then>
+					<tstamp>
+						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					</tstamp>
+
+					<mkdir dir="${tstamp.value}" />
+
+					<unzip
+						dest="${tstamp.value}"
+						src="${test.build.liferay.portal.zip.file.name}"
+					/>
+
+					<copy
+						file="portal-impl/src/portal-ext.properties"
+						tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
+					/>
+
+					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
+
+	module.framework.properties.osgi.console=11312</echo>
+
+					<zip
+						basedir="${tstamp.value}"
+						destfile="${test.build.liferay.portal.zip.file.name}"
+						update="yes"
+					/>
+
+					<delete dir="${tstamp.value}" />
+				</then>
+				<else>
+					<copy
+						file="portal-impl/src/portal-ext.properties"
+						tofile="${app.server.classes.portal.dir}/portal-ext.properties"
+					/>
+
+					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
+
+	module.framework.properties.osgi.console=11312</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="check-config">
 		<sequential>
 			<if>
@@ -4684,6 +4750,15 @@ axis.servlet.hosts.allowed=
 
 tunnel.servlet.hosts.allowed=</echo>
 
+		<get-testcase-property property.name="captcha.max.challenges" />
+
+		<if>
+			<isset property="captcha.max.challenges" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="captcha.max.challenges=-1" value="captcha.max.challenges=${captcha.max.challenges}" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="cluster.enabled" />
 
 		<if>
@@ -4713,6 +4788,29 @@ web.server.display.node=true</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="custom.properties" />
+
+		<if>
+			<isset property="custom.properties" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+${custom.properties}</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="database.jndi.enabled" />
+
+		<if>
+			<equals arg1="${database.jndi.enabled}" arg2="true" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties">
+					<replacetoken>jdbc.default.jndi.name=</replacetoken>
+					<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
+				</replace>
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${database.type}" arg2="db2" />
 			<then>
@@ -4734,26 +4832,12 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</elseif>
 		</if>
 
-		<get-testcase-property property.name="custom.properties" />
-
 		<if>
-			<isset property="custom.properties" />
+			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-${custom.properties}</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="database.jndi.enabled" />
-
-		<if>
-			<equals arg1="${database.jndi.enabled}" arg2="true" />
-			<then>
-				<replace file="portal-impl/src/portal-ext.properties">
-					<replacetoken>jdbc.default.jndi.name=</replacetoken>
-					<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
-				</replace>
+hot.deploy.dependency.management.enabled=false</echo>
 			</then>
 		</if>
 
@@ -4842,43 +4926,6 @@ upgrade.processes=${upgrade.processes.master}</echo>
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-6.1.0.27" />
-				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-7.0.0.7" />
-				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-8.0.0.0" />
-			</or>
-			<then>
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-					token="liferay.home=${liferay.home}"
-					value="liferay.home=C:/WINDOWS/system32/config/systemprofile/liferay"
-				/>
-
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="captcha.max.challenges" />
-
-		<if>
-			<isset property="captcha.max.challenges" />
-			<then>
-				<replace file="portal-impl/src/portal-ext.properties" token="captcha.max.challenges=-1" value="captcha.max.challenges=${captcha.max.challenges}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
-			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-hot.deploy.dependency.management.enabled=false</echo>
-			</then>
-		</if>
-
-		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />
@@ -4891,17 +4938,6 @@ hot.deploy.dependency.management.enabled=false</echo>
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value="" />
 				<replace file="portal-impl/src/portal-ext.properties" token="permissions.view.dynamic.inheritance=false" value="" />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="test.smtp.server.enabled" />
-
-		<if>
-			<isset property="test.smtp.server.enabled" />
-			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-mail.session.mail.smtp.port=25000</echo>
 			</then>
 		</if>
 
@@ -4925,67 +4961,37 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
 		<if>
-			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
+			<isset property="test.smtp.server.enabled" />
 			<then>
-				<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+mail.session.mail.smtp.port=25000</echo>
 			</then>
-			<elseif>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<then>
-					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.glassfish.portal.war.name}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${tcat.enabled}" arg2="true" />
-				<then>
-					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}/ROOT.war" />
-				</then>
-			</elseif>
 		</if>
 
 		<if>
-			<isset property="test.build.liferay.portal.zip.file.name" />
+			<or>
+				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-6.1.0.27" />
+				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-7.0.0.7" />
+				<equals arg1="${vm.vmdk.suffix}" arg2="websphere-8.0.0.0" />
+			</or>
 			<then>
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<mkdir dir="${tstamp.value}" />
-
-				<unzip
-					dest="${tstamp.value}"
-					src="${test.build.liferay.portal.zip.file.name}"
-				/>
-
-				<copy
+				<replace
 					file="portal-impl/src/portal-ext.properties"
-					tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
+					token="liferay.home=${liferay.home}"
+					value="liferay.home=C:/WINDOWS/system32/config/systemprofile/liferay"
 				/>
 
-				<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
-module.framework.properties.osgi.console=11312</echo>
-
-				<zip
-					basedir="${tstamp.value}"
-					destfile="${test.build.liferay.portal.zip.file.name}"
-					update="yes"
-				/>
-
-				<delete dir="${tstamp.value}" />
+auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy</echo>
 			</then>
-			<else>
-				<copy
-					file="portal-impl/src/portal-ext.properties"
-					tofile="${app.server.classes.portal.dir}/portal-ext.properties"
-				/>
-
-				<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
-
-module.framework.properties.osgi.console=11312</echo>
-			</else>
 		</if>
+
+		<apply-portal-ext-properties />
 	</target>
 
 	<target name="prepare-portal-properties">
@@ -5159,8 +5165,6 @@ module.framework.properties.osgi.console=11312</echo>
 
 		<delete file="${test.ext.properties.file}" />
 
-		<get-testcase-property property.name="browser.type" />
-
 		<if>
 			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
@@ -5297,6 +5301,23 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<equals arg1="${test.batch.run.type}" arg2="sequential" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.skip.tear.down=false
+				</echo>
+			</then>
+			<elseif>
+				<isset property="test.skip.tear.down" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						test.skip.tear.down=${test.skip.tear.down}
+					</echo>
+				</then>
+			</elseif>
+		</if>
+
+		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -5331,23 +5352,6 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 		</if>
-
-		<if>
-			<equals arg1="${test.batch.run.type}" arg2="sequential" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.skip.tear.down=false
-				</echo>
-			</then>
-			<elseif>
-				<isset property="test.skip.tear.down" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						test.skip.tear.down=${test.skip.tear.down}
-					</echo>
-				</then>
-			</elseif>
-		</if>
 	</target>
 
 	<target name="prepare-selenium-app-server-properties">
@@ -5362,6 +5366,8 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-browser">
+		<get-testcase-property property.name="browser.type" />
+
 		<echo append="true" file="${test.ext.properties.file}">
 			browser.type=${browser.type}
 			browser.version=${browser.version}

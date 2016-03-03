@@ -101,6 +101,8 @@ AUI.add(
 						}
 
 						window[instance.ns('descriptionEditor')].setHTML(description);
+
+						instance._syncDescriptionEditorUI();
 					},
 
 					_bindUI: function() {
@@ -147,7 +149,6 @@ AUI.add(
 
 						instance._editSection = instance.one('#editSection');
 						instance._settingsSection = instance.one('#settingsSection');
-
 						instance._eventHandles = eventHandles;
 					},
 
@@ -422,11 +423,37 @@ AUI.add(
 					_switchView: function() {
 						var instance = this;
 
+						var descriptionEditor = window[instance.ns('descriptionEditor')];
+
 						instance._editSection.toggle();
 						instance._settingsSection.toggle();
 
 						instance._editIcon.toggle();
 						instance._settingsIcon.toggle();
+
+						if (!descriptionEditor.instanceReady) {
+							descriptionEditor.create();
+
+							instance.setDescription(window[instance.ns('contentEditor')].getText());
+						}
+					},
+
+					_syncDescriptionEditorUI: function() {
+						var instance = this;
+
+						var liferayDescriptionEditor = window[instance.ns('descriptionEditor')];
+
+						if (liferayDescriptionEditor.instanceReady) {
+							var nativeDescriptionEditor = liferayDescriptionEditor.getNativeEditor().get('nativeEditor');
+
+							if (nativeDescriptionEditor && nativeDescriptionEditor.plugins && nativeDescriptionEditor.plugins.ae_placeholder) {
+								var editorEvent = {
+									editor: nativeDescriptionEditor
+								};
+
+								nativeDescriptionEditor.plugins.ae_placeholder._checkEmptyData(editorEvent);
+							}
+						}
 					},
 
 					_updateImages: function(persistentImages) {

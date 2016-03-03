@@ -104,6 +104,10 @@ if (resizable) {
 			return document.getElementById('<%= name %>').value;
 		},
 
+		getNativeEditor: function() {
+			return document.getElementById('<%= name %>');
+		},
+
 		getText: function() {
 			return document.getElementById('<%= name %>').value;
 		},

@@ -156,6 +156,10 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			return data;
 		},
 
+		getNativeEditor: function() {
+			return tinyMCE.editors['<%= name %>'];
+		},
+
 		getText: function() {
 			var data;
 

@@ -155,6 +155,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			return data;
 		},
 
+		getNativeEditor: function() {
+			return tinyMCE.editors['<%= name %>'];
+		},
+
 		getText: function() {
 			var data;
 

@@ -331,6 +331,16 @@ if (showSource) {
 			return data;
 		},
 
+		getNativeEditor: function() {
+			var nativeEditor;
+
+			if (alloyEditor) {
+				nativeEditor = alloyEditor.getEditor();
+			}
+
+			return nativeEditor;
+		},
+
 		getText: function() {
 			var data = '';
 
@@ -348,11 +358,14 @@ if (showSource) {
 			createInstance();
 		},
 
+		instanceReady: false,
+
 		setHTML: function(value) {
 			if (alloyEditor) {
 				alloyEditor.setHTML(value);
 			}
 		}
+
 	};
 
 	Liferay.fire(

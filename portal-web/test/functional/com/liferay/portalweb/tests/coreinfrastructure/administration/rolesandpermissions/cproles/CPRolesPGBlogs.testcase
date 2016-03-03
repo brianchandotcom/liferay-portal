@@ -1517,6 +1517,10 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
 		<execute macro="BlogsEntry#editTitleViaCardViewPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />

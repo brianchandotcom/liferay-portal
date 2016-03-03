@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type.paragraph;
+package com.liferay.dynamic.data.mapping.type.paragraph;
 
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTest;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.type.paragraph.ParagraphDDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldTypeSettingsTest;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

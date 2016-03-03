@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type.select;
+package com.liferay.dynamic.data.mapping.type.select;
 
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.type.select.SelectDDMFormFieldValueAccessor;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

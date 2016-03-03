@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="build-common-web" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="build-common-web" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
 	<macrodef name="manifest-macro">
@@ -144,6 +144,22 @@
 				</replace>
 			</then>
 		</if>
+	</target>
+
+	<target name="install-portal-release" depends="war">
+		<install-portal-artifact packaging="war" />
+	</target>
+
+	<target name="install-portal-snapshot" depends="war">
+		<install-portal-artifact packaging="war" snapshot="true" />
+	</target>
+
+	<target name="publish-portal-release" depends="war">
+		<publish-portal-artifact packaging="war" />
+	</target>
+
+	<target name="publish-portal-snapshot" depends="war">
+		<publish-portal-artifact packaging="war" snapshot="true" />
 	</target>
 
 	<target name="war">

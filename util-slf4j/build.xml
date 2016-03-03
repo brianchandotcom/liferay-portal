@@ -3,11 +3,11 @@
 <project name="util-slf4j" basedir="." default="compile">
 	<import file="../build-common-java.xml" />
 
+	<property name="artifact.version" value="1.0.0" />
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util SLF4J" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.slf4j" />
-	<property name="release.info.version" value="1.0.0" />
 
 	<macrodef name="jar-macro">
 		<sequential>

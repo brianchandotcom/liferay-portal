@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
 	<macrodef name="clean">
@@ -233,6 +233,14 @@
 		/>
 	</target>
 
+	<target name="install-portal-release" depends="jar">
+		<install-portal-artifact />
+	</target>
+
+	<target name="install-portal-snapshot" depends="jar">
+		<install-portal-artifact snapshot="true" />
+	</target>
+
 	<target name="jar">
 		<jar-macro />
 	</target>
@@ -303,7 +311,7 @@
 					<attribute name="Liferay-Portal-Parent-Build-Number" value="${release.info.parent.build.number}" />
 					<attribute name="Liferay-Portal-Release-Info" value="${release.info.release.info}" />
 					<attribute name="Liferay-Portal-Server-Info" value="${release.info.server.info}" />
-					<attribute name="Liferay-Portal-Version" value="${release.info.version}" />
+					<attribute name="Liferay-Portal-Version" value="${artifact.version}" />
 				</manifest>
 
 				<if>
@@ -331,6 +339,20 @@
 				</if>
 			</then>
 		</if>
+	</target>
+
+	<target name="publish-portal-release" depends="jar,jar-javadoc,jar-sources">
+		<publish-portal-artifact >
+			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</publish-portal-artifact>
+	</target>
+
+	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources">
+		<publish-portal-artifact snapshot="true">
+			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</publish-portal-artifact>
 	</target>
 
 	<target name="release" depends="jar">

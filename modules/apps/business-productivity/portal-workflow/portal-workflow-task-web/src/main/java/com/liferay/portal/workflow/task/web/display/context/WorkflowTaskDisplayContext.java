@@ -752,8 +752,6 @@ public class WorkflowTaskDisplayContext {
 	public Map<String, Object> getWorkflowTaskActionLinkData() {
 		Map<String, Object> data = new HashMap<>();
 
-		data.put("navigation", Boolean.TRUE);
-
 		return data;
 	}
 

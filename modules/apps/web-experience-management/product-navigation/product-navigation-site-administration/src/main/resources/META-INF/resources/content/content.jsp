@@ -59,8 +59,6 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 								<%
 								Map<String, Object> data = new HashMap<String, Object>();
 
-								data.put("navigation", Boolean.TRUE.toString());
-
 								String portletId = themeDisplay.getPpid();
 
 								if (Validator.isNull(portletId) || !panelCategoryHelper.containsPortlet(portletId, PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT, permissionChecker, curSite)) {

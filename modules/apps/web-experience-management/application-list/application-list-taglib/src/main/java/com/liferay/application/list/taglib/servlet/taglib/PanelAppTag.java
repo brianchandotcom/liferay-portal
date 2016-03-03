@@ -131,8 +131,6 @@ public class PanelAppTag extends BasePanelTag {
 
 		if (_data == null) {
 			_data = new HashMap<>();
-
-			_data.put("navigation", true);
 		}
 
 		if (Validator.isNull(_label) && (_panelApp != null)) {

@@ -178,14 +178,6 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return layoutSetBranchURL.toString();
 	}
 
-	public Map<String, Object> getLayoutSetBranchURLData() {
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("navigation", Boolean.TRUE.toString());
-
-		return data;
-	}
-
 	public Map<String, PortletURL> getPortletURLs() {
 		Map<String, PortletURL> portletURLs = new HashMap<>();
 

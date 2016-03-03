@@ -19,7 +19,7 @@
 <%
 String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:content:cmd"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:content:disableInputs"));
-Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:content:parameterMap"), Collections.emptyMap());
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:content:exportImportConfigurationId"));
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:content:type"));
 
 DateRange dateRange = null;
@@ -47,4 +47,15 @@ Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
 
 List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
+
+Map<String, Serializable> settingsMap = Collections.emptyMap();
+Map<String, String[]> parameterMap = Collections.emptyMap();
+
+ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.fetchExportImportConfiguration(exportImportConfigurationId);
+
+if (exportImportConfiguration != null) {
+	settingsMap = exportImportConfiguration.getSettingsMap();
+
+	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+}
 %>

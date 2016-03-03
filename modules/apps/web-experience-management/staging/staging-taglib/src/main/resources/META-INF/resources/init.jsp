@@ -38,6 +38,7 @@ page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerControl" %><%
 page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.exportimport.kernel.lar.StagedModelType" %><%@
 page import="com.liferay.exportimport.kernel.model.ExportImportConfiguration" %><%@
+page import="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -71,6 +72,8 @@ page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.staging.processes.web.constants.StagingProcessesWebKeys" %>
+
+<%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@

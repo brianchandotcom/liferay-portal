@@ -315,7 +315,7 @@
 					<attribute name="Liferay-Portal-Parent-Build-Number" value="${release.info.parent.build.number}" />
 					<attribute name="Liferay-Portal-Release-Info" value="${release.info.release.info}" />
 					<attribute name="Liferay-Portal-Server-Info" value="${release.info.server.info}" />
-					<attribute name="Liferay-Portal-Version" value="${release.info.version}" />
+					<attribute name="Liferay-Portal-Version" value="${artifact.version}" />
 				</manifest>
 
 				<if>
@@ -359,9 +359,7 @@
 
 		<property file="bnd.bnd" />
 
-		<condition property="artifact.version" value="${Bundle-Version}-SNAPSHOT" else="${release.info.version}-SNAPSHOT">
-			<isset property="Bundle-Version" />
-		</condition>
+		<property name="artifact.version" value="${Bundle-Version}" />
 
 		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
 			<filterchain>
@@ -386,7 +384,7 @@
 		<delete file="pom.xml" />
 
 		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}-SNAPSHOT" />
 		</propertyfile>
 	</target>
 

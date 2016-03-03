@@ -191,6 +191,9 @@ public class ImageToolUtil {
 	 *
 	 * @param  bytes the bytes to read
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
+	 * @throws ImageResolutionException if image height or width is larger than
+	 *         specified in portal properties image.tool.image.max.height and
+	 *         image.tool.image.max.width
 	 * @throws IOException if an IO exception occurred
 	 */
 	public static ImageBag read(byte[] bytes)
@@ -206,6 +209,9 @@ public class ImageToolUtil {
 	 *
 	 * @param  file the file to read
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
+	 * @throws ImageResolutionException if image height or width is larger than
+	 *         specified in portal properties image.tool.image.max.height and
+	 *         image.tool.image.max.width
 	 * @throws IOException if an IO exception occurred
 	 */
 	public static ImageBag read(File file)

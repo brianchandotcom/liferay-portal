@@ -25,8 +25,7 @@ import freemarker.core.TemplateClassResolver;
 import freemarker.template.TemplateException;
 
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Hashtable;
 
 import org.junit.After;
 import org.junit.Before;
@@ -96,14 +95,13 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test()
 	public void testResolveAllowedClass1() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
 			"allowedClasses", "freemarker.template.utility.ClassUtil");
 		properties.put("restrictedClasses", "");
 
-		_liferayTemplateClassResolver.activate(
-			_bundle.getBundleContext(), properties);
+		_freemarkerTemplateConfiguration.update(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ClassUtil", null, null);
@@ -111,13 +109,12 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test()
 	public void testResolveAllowedClass2() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put("allowedClasses", "freemarker.template.utility.*");
 		properties.put("restrictedClasses", "");
 
-		_liferayTemplateClassResolver.activate(
-			_bundle.getBundleContext(), properties);
+		_freemarkerTemplateConfiguration.update(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ClassUtil", null, null);
@@ -137,13 +134,12 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test(expected = TemplateException.class)
 	public void testResolveRestrictedClass2() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put("allowedClasses", "freemarker.template.utility.*");
 		properties.put("restrictedClasses", "");
 
-		_liferayTemplateClassResolver.activate(
-			_bundle.getBundleContext(), properties);
+		_freemarkerTemplateConfiguration.update(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.Execute", null, null);
@@ -151,15 +147,14 @@ public class LiferayTemplateClassResolverTest {
 
 	@Test(expected = TemplateException.class)
 	public void testResolveRestrictedClass3() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
 			"allowedClasses", "com.liferay.portal.kernel.model.User");
 		properties.put(
 			"restrictedClasses", "com.liferay.portal.kernel.model.*");
 
-		_liferayTemplateClassResolver.activate(
-			_bundle.getBundleContext(), properties);
+		_freemarkerTemplateConfiguration.update(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);

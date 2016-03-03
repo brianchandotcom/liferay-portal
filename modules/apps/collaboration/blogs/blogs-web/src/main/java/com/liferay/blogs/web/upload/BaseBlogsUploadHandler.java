@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.PortletRequest;
@@ -117,7 +118,7 @@ public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 	}
 
 	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
+		return PropsValues.BLOGS_IMAGE_MAX_SIZE;
 	}
 
 	@Override

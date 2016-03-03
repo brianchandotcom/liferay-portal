@@ -35,6 +35,7 @@ public class IndexerRequest {
 
 		_method = method;
 		_classedModel = classedModel;
+		_forceSync = ProxyModeThreadLocal.isForceSync();
 		_indexer = new NoAutoCommitIndexer<>(indexer);
 
 		_modelClassName = classedModel.getModelClassName();
@@ -47,6 +48,7 @@ public class IndexerRequest {
 
 		_method = method;
 		_indexer = new NoAutoCommitIndexer<>(indexer);
+		_forceSync = ProxyModeThreadLocal.isForceSync();
 		_modelClassName = modelClassName;
 		_modelPrimaryKey = modelPrimaryKey;
 
@@ -126,7 +128,7 @@ public class IndexerRequest {
 	}
 
 	private final ClassedModel _classedModel;
-	private final boolean _forceSync = ProxyModeThreadLocal.isForceSync();
+	private final boolean _forceSync;
 	private final Indexer<?> _indexer;
 	private final Method _method;
 	private final String _modelClassName;

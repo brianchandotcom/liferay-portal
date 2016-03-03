@@ -216,7 +216,9 @@ public class AutoBatchPreparedStatementUtil {
 								preparedStatement.executeBatch();
 							}
 							finally {
-								preparedStatement.close();
+								synchronized (_connection) {
+									preparedStatement.close();
+								}
 							}
 
 							return null;
@@ -325,7 +327,9 @@ public class AutoBatchPreparedStatementUtil {
 								preparedStatement.executeUpdate();
 							}
 							finally {
-								preparedStatement.close();
+								synchronized (_connection) {
+									preparedStatement.close();
+								}
 							}
 
 							return null;

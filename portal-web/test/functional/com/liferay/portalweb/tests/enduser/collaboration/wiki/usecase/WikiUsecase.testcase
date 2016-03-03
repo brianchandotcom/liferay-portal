@@ -119,6 +119,7 @@
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="Site Name" />
+			<var name="uncheckContent" value="Wiki" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

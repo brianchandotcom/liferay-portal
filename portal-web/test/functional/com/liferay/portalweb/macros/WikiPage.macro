@@ -14,6 +14,8 @@
 			<var name="panelHeading" value="Attachments" />
 		</execute>
 
+		<execute function="AssertVisible" locator1="Button#SELECT_FILES" />
+
 		<execute function="Click" locator1="Button#SELECT_FILES" />
 
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
@@ -1062,6 +1064,8 @@
 	<command name="viewAttachmentPG">
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertVisible" locator1="Link#EDIT" value1="Edit" />
 
 		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 

@@ -8,6 +8,8 @@
 				<condition function="IsVisible" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
 			</and>
 			<then>
+				<execute function="AssertVisible" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+
 				<execute function="AssertClick" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
 
 				<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_EXPANDED" value1="${panelHeading}" />

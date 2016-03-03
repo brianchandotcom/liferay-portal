@@ -92,8 +92,6 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${structureName}" />
-
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_ddlDatadefinitionName" value="${structureName}" />
@@ -105,10 +103,6 @@
 		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 
 		<execute function="SelectFrameTop" />
-
-		<execute macro="WebContentNavigator#showTemplateDetails" />
-
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#STRUCTURE" value1="${structureName}" />
 
 		<if>
 			<equals arg1="${templateLanguage}" arg2="ftl" />

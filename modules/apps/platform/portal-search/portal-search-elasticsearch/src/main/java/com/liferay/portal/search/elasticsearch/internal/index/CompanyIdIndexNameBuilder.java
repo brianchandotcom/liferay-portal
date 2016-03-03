@@ -61,6 +61,6 @@ public class CompanyIdIndexNameBuilder implements IndexNameBuilder {
 		}
 	}
 
-	private String _indexNamePrefix;
+	private volatile String _indexNamePrefix;
 
 }

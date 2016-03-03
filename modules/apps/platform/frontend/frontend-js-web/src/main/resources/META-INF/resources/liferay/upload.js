@@ -227,7 +227,7 @@ AUI.add(
 							dropFileText: Liferay.Language.get('drop-file-here-to-upload'),
 							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
-							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x', [instance.formatStorage(instance.get('maxFileSize'))]),
+							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
 							invalidUploadRequestSizeText: Liferay.Language.get('request-is-larger-than-x-and-could-not-be-processed'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),

@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal;
+package com.liferay.portal.osgi.web.servlet.context.helper;
 
-import java.util.Dictionary;
+import javax.servlet.ServletContext;
 
-import org.osgi.framework.Bundle;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.http.context.ServletContextHelper;
 
 /**
  * @author Raymond Augé
  */
-public class WabUtil {
+public interface ServletContextHelperRegistration {
 
-	public static String getWebContextPath(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+	public ServiceReference<ServletContextHelper> getServiceReference();
 
-		return headers.get("Web-ContextPath");
-	}
+	public ServiceRegistration<ServletContextHelper> getServiceRegistration();
+
+	public ServletContext getServletContext();
 
 }

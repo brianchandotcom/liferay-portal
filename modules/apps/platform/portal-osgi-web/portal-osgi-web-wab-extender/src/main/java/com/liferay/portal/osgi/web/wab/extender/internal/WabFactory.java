@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
 
@@ -161,6 +162,10 @@ public class WabFactory extends AbstractExtender {
 	private EventUtil _eventUtil;
 	private Logger _logger;
 	private SAXParserFactory _saxParserFactory;
+
+	@Reference
+	private ServletContextHelperFactory _servletContextHelperFactory;
+
 	private WabExtenderConfiguration _wabExtenderConfiguration;
 	private WebBundleDeployer _webBundleDeployer;
 

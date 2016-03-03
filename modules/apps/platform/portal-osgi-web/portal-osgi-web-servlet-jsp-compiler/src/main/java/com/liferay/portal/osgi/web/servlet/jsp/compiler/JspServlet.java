@@ -231,7 +231,7 @@ public class JspServlet extends HttpServlet {
 
 				@Override
 				public ServletContext getServletContext() {
-					return getServletContextWrapper(servletContext);
+					return _jspServletContext;
 				}
 
 				@Override
@@ -249,6 +249,11 @@ public class JspServlet extends HttpServlet {
 
 					return value;
 				}
+
+				private final ServletContext _jspServletContext =
+					(ServletContext)Proxy.newProxyInstance(
+						_jspBundleClassloader, _INTERFACES,
+						new JspServletContextInvocationHandler(servletContext));
 
 			}
 		);
@@ -302,8 +307,7 @@ public class JspServlet extends HttpServlet {
 					}
 				}
 
-				_jspServletContext.log(
-					"[JSP DEBUG] " + _bundle + " invoking " + path);
+				_jspServlet.log("[JSP DEBUG] " + _bundle + " invoking " + path);
 			}
 
 			_jspServlet.service(request, response);
@@ -413,22 +417,6 @@ public class JspServlet extends HttpServlet {
 		return classNames.toArray(new String[classNames.size()]);
 	}
 
-	protected ServletContext getServletContextWrapper(
-		ServletContext servletContext) {
-
-		if (_jspServletContext == null) {
-			synchronized (this) {
-				if (_jspServletContext == null) {
-					_jspServletContext = (ServletContext)Proxy.newProxyInstance(
-						_jspBundleClassloader, _INTERFACES,
-						new JspServletContextInvocationHandler(servletContext));
-				}
-			}
-		}
-
-		return _jspServletContext;
-	}
-
 	protected void scanTLDs(ServletContext servletContext) {
 		Enumeration<URL> urls = _bundle.findEntries("META-INF/", "*.tld", true);
 
@@ -492,7 +480,6 @@ public class JspServlet extends HttpServlet {
 	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
-	private volatile ServletContext _jspServletContext;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 

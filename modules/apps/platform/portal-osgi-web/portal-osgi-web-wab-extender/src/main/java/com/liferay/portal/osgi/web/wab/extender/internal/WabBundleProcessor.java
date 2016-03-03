@@ -14,7 +14,9 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.FilterExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptionAdapter;
@@ -42,7 +44,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -60,6 +61,7 @@ import org.apache.felix.utils.log.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
@@ -69,51 +71,16 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * @author Raymond Augé
  * @author Miguel Pastor
  */
-public class WabBundleProcessor implements ServletContextListener {
+public class WabBundleProcessor {
 
-	public WabBundleProcessor(
-		Bundle bundle, String contextPath, Logger logger) {
-
+	public WabBundleProcessor(Bundle bundle, Logger logger) {
 		_bundle = bundle;
-		_contextPath = contextPath;
-
-		if (_contextPath.indexOf('/') != 0) {
-			throw new IllegalArgumentException(
-				"Context path must start with /");
-		}
-
 		_logger = logger;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		_bundleClassLoader = bundleWiring.getClassLoader();
-
-		_contextName = _contextPath.substring(1);
-
 		_bundleContext = _bundle.getBundleContext();
-	}
-
-	@Override
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		_servletContextRegistration.unregister();
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext = servletContextEvent.getServletContext();
-
-		servletContext.setAttribute("jsp.taglib.mappings", _jspTaglibMappings);
-		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
-		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("osgi.web.symbolicname", _bundle.getSymbolicName());
-		properties.put("osgi.web.version", _bundle.getVersion());
-		properties.put("osgi.web.contextpath", servletContext.getContextPath());
-
-		_servletContextRegistration = _bundleContext.registerService(
-			ServletContext.class, servletContext, properties);
 	}
 
 	public void destroy() throws Exception {
@@ -136,9 +103,9 @@ public class WabBundleProcessor implements ServletContextListener {
 
 			destroyListeners();
 
-			_thisEventListenerRegistration.unregister();
+			_servletContextRegistration.unregister();
 
-			destroyContext();
+			_bundleContext.ungetService(_serviceReference);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -166,8 +133,6 @@ public class WabBundleProcessor implements ServletContextListener {
 			_jspTaglibMappings = webXMLDefinition.getJspTaglibMappings();
 
 			initContext(webXMLDefinition.getContextParameters());
-
-			registerThisAsEventListener();
 
 			initListeners(webXMLDefinition.getListenerDefinitions());
 
@@ -302,10 +267,6 @@ public class WabBundleProcessor implements ServletContextListener {
 			Servlet.class, new JspServletWrapper(), jspProperties);
 	}
 
-	protected void destroyContext() {
-		_serviceRegistration.unregister();
-	}
-
 	protected void destroyFilters() {
 		for (ServiceRegistration<?> serviceRegistration :
 				_filterRegistrations) {
@@ -387,30 +348,58 @@ public class WabBundleProcessor implements ServletContextListener {
 	}
 
 	protected void initContext(Map<String, String> contextParameters) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
+		_serviceReference = _bundleContext.getServiceReference(
+			ServletContextHelperRegistration.class);
 
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, _contextName);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, _contextPath);
-		properties.put(Constants.SERVICE_RANKING, 1000);
-		properties.put("rtl.required", Boolean.TRUE.toString());
+		ServletContextHelperRegistration registration =
+			_bundleContext.getService(_serviceReference);
 
-		for (Entry<String, String> contextParametersEntry :
-				contextParameters.entrySet()) {
+		ServiceRegistration<ServletContextHelper> serviceRegistration =
+			registration.getServiceRegistration();
 
-			String key = contextParametersEntry.getKey();
-			String value = contextParametersEntry.getValue();
+		ServiceReference<ServletContextHelper> serviceReference =
+			serviceRegistration.getReference();
 
-			properties.put(
-				HttpWhiteboardConstants.
-					HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + key,
-				value);
+		_contextName = GetterUtil.getString(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME));
+
+		if (!contextParameters.isEmpty()) {
+			Dictionary<String, Object> properties = new Hashtable<>();
+
+			for (String key : serviceReference.getPropertyKeys()) {
+				properties.put(key, serviceReference.getProperty(key));
+			}
+
+			for (Entry<String, String> contextParametersEntry :
+					contextParameters.entrySet()) {
+
+				String key = contextParametersEntry.getKey();
+				String value = contextParametersEntry.getValue();
+
+				properties.put(
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + key,
+					value);
+			}
+
+			serviceRegistration.setProperties(properties);
 		}
 
-		_serviceRegistration = _bundleContext.registerService(
-			ServletContextHelper.class, new WabServletContextHelper(_bundle),
-			properties);
+		ServletContext servletContext = registration.getServletContext();
+
+		servletContext.setAttribute("jsp.taglib.mappings", _jspTaglibMappings);
+		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
+		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("osgi.web.symbolicname", _bundle.getSymbolicName());
+		properties.put("osgi.web.version", _bundle.getVersion());
+		properties.put("osgi.web.contextpath", servletContext.getContextPath());
+
+		_servletContextRegistration = _bundleContext.registerService(
+			ServletContext.class, servletContext, properties);
 	}
 
 	protected void initFilters(Map<String, FilterDefinition> filterDefinitions)
@@ -605,20 +594,6 @@ public class WabBundleProcessor implements ServletContextListener {
 		}
 	}
 
-	protected void registerThisAsEventListener() {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			_contextName);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
-			Boolean.TRUE.toString());
-
-		_thisEventListenerRegistration = _bundleContext.registerService(
-			ServletContextListener.class, this, properties);
-	}
-
 	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
 		"jsp.servlet.init.param.";
 
@@ -630,8 +605,7 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final Bundle _bundle;
 	private final ClassLoader _bundleClassLoader;
 	private final BundleContext _bundleContext;
-	private final String _contextName;
-	private final String _contextPath;
+	private String _contextName;
 	private ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
@@ -640,11 +614,10 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final Set<ServiceRegistration<?>> _listenerRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final Logger _logger;
-	private ServiceRegistration<ServletContextHelper> _serviceRegistration;
+	private ServiceReference<ServletContextHelperRegistration>
+		_serviceReference;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final Set<ServiceRegistration<Servlet>> _servletRegistrations =
 		new ConcurrentSkipListSet<>();
-	private ServiceRegistration<ServletContextListener>
-		_thisEventListenerRegistration;
 
 }

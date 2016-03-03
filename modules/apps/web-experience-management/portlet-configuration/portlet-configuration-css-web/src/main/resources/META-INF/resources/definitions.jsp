@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <script>
-	var PATH_PORTLET_CONFIGURATION_CSS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayportletconfigurationcssweb';
+	var PATH_PORTLET_CONFIGURATION_CSS_WEB = '<%= application.getContextPath() %>';
 
 	AUI().applyConfig(
 		{

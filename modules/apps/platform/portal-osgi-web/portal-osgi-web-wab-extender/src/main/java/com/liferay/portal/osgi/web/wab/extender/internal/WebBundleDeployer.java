@@ -26,6 +26,7 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.wiring.BundleRevision;
 
 /**
  * @author Raymond Augé
@@ -71,7 +72,7 @@ public class WebBundleDeployer {
 
 		try {
 			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
-				bundle, contextPath, _logger);
+				bundle, _logger);
 
 			WabBundleProcessor oldWabBundleProcessor =
 				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
@@ -111,12 +112,23 @@ public class WebBundleDeployer {
 		}
 	}
 
+	public boolean isFragmentBundle(Bundle bundle) {
+		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
+
+		if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) ==
+				BundleRevision.TYPE_FRAGMENT) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	protected void handleCollidedWABs(Bundle bundle) {
 		String contextPath = WabUtil.getWebContextPath(bundle);
 
 		for (Bundle curBundle : _bundleContext.getBundles()) {
-			if (bundle.equals(curBundle) ||
-				WabUtil.isFragmentBundle(curBundle) ||
+			if (bundle.equals(curBundle) || isFragmentBundle(curBundle) ||
 				_wabBundleProcessors.containsKey(curBundle)) {
 
 				continue;

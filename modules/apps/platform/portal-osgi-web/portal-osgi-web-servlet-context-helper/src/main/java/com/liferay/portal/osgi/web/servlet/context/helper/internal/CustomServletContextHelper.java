@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
 import com.liferay.osgi.util.BundleUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -25,6 +25,8 @@ import java.net.URL;
 import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,9 +36,10 @@ import org.osgi.service.http.context.ServletContextHelper;
 /**
  * @author Raymond Augé
  */
-public class WabServletContextHelper extends ServletContextHelper {
+public class CustomServletContextHelper
+	extends ServletContextHelper implements ServletContextListener {
 
-	public WabServletContextHelper(Bundle bundle) {
+	public CustomServletContextHelper(Bundle bundle) {
 		super(bundle);
 
 		_bundle = bundle;
@@ -53,6 +56,16 @@ public class WabServletContextHelper extends ServletContextHelper {
 		Class<?> clazz = getClass();
 
 		_string = clazz.getSimpleName() + '[' + bundle + ']';
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+		_servletContext = null;
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		_servletContext = servletContextEvent.getServletContext();
 	}
 
 	@Override
@@ -79,12 +92,18 @@ public class WabServletContextHelper extends ServletContextHelper {
 			name = StringPool.SLASH.concat(name);
 		}
 
-		if (!_wabShapedBundle && !name.startsWith("/META-INF/resources")) {
+		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
+
+		if ((url == null) && !_wabShapedBundle) {
 			return BundleUtil.getResourceInBundleOrFragments(
 				_bundle, "/META-INF/resources" + name);
 		}
 
-		return BundleUtil.getResourceInBundleOrFragments(_bundle, name);
+		return url;
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -144,6 +163,7 @@ public class WabServletContextHelper extends ServletContextHelper {
 	}
 
 	private final Bundle _bundle;
+	private ServletContext _servletContext;
 	private final String _string;
 	private final boolean _wabShapedBundle;
 

@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.validator;
 
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -38,8 +37,6 @@ import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -48,24 +45,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(DDMFormFieldTypeServicesTrackerUtil.class)
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil"
-)
 public class DDMFormValidatorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
 		setUpBeanPropertiesUtil();
-		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormValidator();
 	}
 
@@ -388,20 +378,6 @@ public class DDMFormValidatorTest extends PowerMockito {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
-	}
-
-	protected void setUpDDMFormFieldTypeServicesTrackerUtil() {
-		PowerMockito.mockStatic(DDMFormFieldTypeServicesTrackerUtil.class);
-
-		when(
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypeNames()
-		).thenReturn(
-			new HashSet<String>(
-				Arrays.asList(
-					new String[] {
-						DDMFormFieldType.TEXT, DDMFormFieldType.SELECT
-					}))
-		);
 	}
 
 	protected void setUpDDMFormValidator() throws Exception {

@@ -34,7 +34,6 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandles.push(
-					instance.after(instance._afterModalRender, instance, '_afterRender'),
 					instance.after(instance._bindModalUI, instance, 'bindUI')
 				);
 			},
@@ -57,6 +56,16 @@ AUI.add(
 				}
 			},
 
+			_afterModalVisibleChange: function(event) {
+				var instance = this;
+
+				console.log(event);
+
+				if (event.newVal && instance.get('dynamicContentHeight')) {
+					instance.syncHeight();
+				}
+			},
+
 			_afterTopFixedChange: function() {
 				var instance = this;
 
@@ -66,12 +75,14 @@ AUI.add(
 			_afterWindowResize: function() {
 				var instance = this;
 
-				if (instance.get('dynamicContentHeight')) {
-					instance.syncHeight();
-				}
+				if (instance.get('visible')) {
+					if (instance.get('dynamicContentHeight')) {
+						instance.syncHeight();
+					}
 
-				if (instance.get('centered')) {
-					instance.align();
+					if (instance.get('centered')) {
+						instance.align();
+					}
 				}
 			},
 
@@ -79,7 +90,9 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandles.push(
+					instance.after('render', instance._afterModalRender),
 					instance.after('topFixedChange', instance._afterTopFixedChange),
+					instance.after('visibleChange', instance._afterModalVisibleChange),
 					instance.on('xyChange', instance._onModalXYChange)
 				);
 			},

@@ -32,8 +32,6 @@ public class ClpMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		String command = message.getString("command");
-		String servletContextName = message.getString("servletContextName");
 	}
 
 }

@@ -211,24 +211,26 @@ public class VerifyPermission extends VerifyProcess {
 
 		DBType dbType = db.getDBType();
 
-		if (dbType == DBType.MYSQL) {
-			fixUserDefaultRolePermissionsMySQL();
-
-			return;
-		}
-
-		if (dbType == DBType.ORACLE) {
-			fixUserDefaultRolePermissionsOracle();
-
-			return;
-		}
-
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long userClassNameId = PortalUtil.getClassNameId(User.class);
 			long userGroupClassNameId = PortalUtil.getClassNameId(
 				UserGroup.class);
 
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+			if (dbType == DBType.MYSQL) {
+				fixUserDefaultRolePermissionsMySQL(
+					userClassNameId, userGroupClassNameId, companyIds);
+
+				return;
+			}
+
+			if (dbType == DBType.ORACLE) {
+				fixUserDefaultRolePermissionsOracle(
+					userClassNameId, userGroupClassNameId, companyIds);
+
+				return;
+			}
 
 			for (long companyId : companyIds) {
 				Role powerUserRole = RoleLocalServiceUtil.getRole(
@@ -261,57 +263,53 @@ public class VerifyPermission extends VerifyProcess {
 
 				runSQL(sb.toString());
 			}
-
+		}
+		finally {
 			EntityCacheUtil.clearCache();
 			FinderCacheUtil.clearCache();
 		}
 	}
 
-	protected void fixUserDefaultRolePermissionsMySQL() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long userClassNameId = PortalUtil.getClassNameId(User.class);
-			long userGroupClassNameId = PortalUtil.getClassNameId(
-				UserGroup.class);
+	protected void fixUserDefaultRolePermissionsMySQL(
+			long userClassNameId, long userGroupClassNameId, long[] companyIds)
+		throws Exception {
 
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		for (long companyId : companyIds) {
+			Role powerUserRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.POWER_USER);
+			Role userRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.USER);
 
-			for (long companyId : companyIds) {
-				Role powerUserRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.POWER_USER);
-				Role userRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.USER);
+			StringBundler sb = new StringBundler(19);
 
-				StringBundler sb = new StringBundler(19);
+			sb.append("update ResourcePermission ");
+			sb.append("inner join Layout on ");
+			sb.append("ResourcePermission.primKey like ");
+			sb.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
+			sb.append("cast_text(Layout.plid)) inner join Group_ on ");
+			sb.append("Layout.groupId = Group_.groupId");
+			sb.append(" set ResourcePermission.roleId = ");
+			sb.append(userRole.getRoleId());
+			sb.append(" where ResourcePermission.scope = ");
+			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+			sb.append(" and ResourcePermission.roleId = ");
+			sb.append(powerUserRole.getRoleId());
+			sb.append(" and (Group_.classNameId = ");
+			sb.append(userClassNameId);
+			sb.append(" or Group_.classNameId = ");
+			sb.append(userGroupClassNameId);
+			sb.append(") and Layout.type_ = '");
+			sb.append(LayoutConstants.TYPE_PORTLET);
+			sb.append(StringPool.APOSTROPHE);
 
-				sb.append("update ResourcePermission ");
-				sb.append("inner join Layout on ");
-				sb.append("ResourcePermission.primKey like ");
-				sb.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
-				sb.append("cast_text(Layout.plid)) inner join Group_ on ");
-				sb.append("Layout.groupId = Group_.groupId");
-				sb.append(" set ResourcePermission.roleId = ");
-				sb.append(userRole.getRoleId());
-				sb.append(" where ResourcePermission.scope = ");
-				sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-				sb.append(" and ResourcePermission.roleId = ");
-				sb.append(powerUserRole.getRoleId());
-				sb.append(" and (Group_.classNameId = ");
-				sb.append(userClassNameId);
-				sb.append(" or Group_.classNameId = ");
-				sb.append(userGroupClassNameId);
-				sb.append(") and Layout.type_ = '");
-				sb.append(LayoutConstants.TYPE_PORTLET);
-				sb.append(StringPool.APOSTROPHE);
-
-				runSQL(sb.toString());
-			}
-
-			EntityCacheUtil.clearCache();
-			FinderCacheUtil.clearCache();
+			runSQL(sb.toString());
 		}
 	}
 
-	protected void fixUserDefaultRolePermissionsOracle() throws Exception {
+	protected void fixUserDefaultRolePermissionsOracle(
+			long userClassNameId, long userGroupClassNameId, long[] companyIds)
+		throws Exception {
+
 		String insertSQL =
 			"insert into ResourcePermissionPlid(" +
 				"select ResourcePermission.resourcePermissionId, " +
@@ -320,64 +318,53 @@ public class VerifyPermission extends VerifyProcess {
 							"as plid from ResourcePermission where " +
 								"ResourcePermission.primKey like '%_LAYOUT_%')";
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			try {
-				runSQL(
-					"create table ResourcePermissionPlid" +
-						"(resourcePermissionId LONG null, plid LONG null)");
-			}
-			catch (SQLException sqle) {
-				runSQL("delete from ResourcePermissionPlid");
-			}
-
-			runSQL(insertSQL);
-
-			long userClassNameId = PortalUtil.getClassNameId(User.class);
-			long userGroupClassNameId = PortalUtil.getClassNameId(
-				UserGroup.class);
-
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				Role powerUserRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.POWER_USER);
-				Role userRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.USER);
-
-				StringBundler sb = new StringBundler(23);
-
-				sb.append("update ResourcePermission set roleId = ");
-				sb.append(userRole.getRoleId());
-				sb.append(" where resourcePermissionId in (select ");
-				sb.append("ResourcePermission.resourcePermissionId from ");
-				sb.append("ResourcePermission inner join ");
-				sb.append("ResourcePermissionPlid on ");
-				sb.append("ResourcePermission.resourcePermissionId = ");
-				sb.append("ResourcePermissionPlid.resourcePermissionId ");
-				sb.append("inner join Layout on ");
-				sb.append("ResourcePermissionPlid.plid = Layout.plid ");
-				sb.append("inner join Group_ on ");
-				sb.append("Layout.groupId = Group_.groupId");
-				sb.append(" where ResourcePermission.scope = ");
-				sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-				sb.append(" and ResourcePermission.roleId = ");
-				sb.append(powerUserRole.getRoleId());
-				sb.append(" and (Group_.classNameId = ");
-				sb.append(userClassNameId);
-				sb.append(" or Group_.classNameId = ");
-				sb.append(userGroupClassNameId);
-				sb.append(") and Layout.type_ = '");
-				sb.append(LayoutConstants.TYPE_PORTLET);
-				sb.append("')");
-
-				runSQL(sb.toString());
-			}
-
-			runSQL("drop table ResourcePermissionPlid");
-
-			EntityCacheUtil.clearCache();
-			FinderCacheUtil.clearCache();
+		try {
+			runSQL(
+				"create table ResourcePermissionPlid" +
+					"(resourcePermissionId LONG null, plid LONG null)");
 		}
+		catch (SQLException sqle) {
+			runSQL("delete from ResourcePermissionPlid");
+		}
+
+		runSQL(insertSQL);
+
+		for (long companyId : companyIds) {
+			Role powerUserRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.POWER_USER);
+			Role userRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.USER);
+
+			StringBundler sb = new StringBundler(23);
+
+			sb.append("update ResourcePermission set roleId = ");
+			sb.append(userRole.getRoleId());
+			sb.append(" where resourcePermissionId in (select ");
+			sb.append("ResourcePermission.resourcePermissionId from ");
+			sb.append("ResourcePermission inner join ");
+			sb.append("ResourcePermissionPlid on ");
+			sb.append("ResourcePermission.resourcePermissionId = ");
+			sb.append("ResourcePermissionPlid.resourcePermissionId ");
+			sb.append("inner join Layout on ");
+			sb.append("ResourcePermissionPlid.plid = Layout.plid ");
+			sb.append("inner join Group_ on ");
+			sb.append("Layout.groupId = Group_.groupId");
+			sb.append(" where ResourcePermission.scope = ");
+			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+			sb.append(" and ResourcePermission.roleId = ");
+			sb.append(powerUserRole.getRoleId());
+			sb.append(" and (Group_.classNameId = ");
+			sb.append(userClassNameId);
+			sb.append(" or Group_.classNameId = ");
+			sb.append(userGroupClassNameId);
+			sb.append(") and Layout.type_ = '");
+			sb.append(LayoutConstants.TYPE_PORTLET);
+			sb.append("')");
+
+			runSQL(sb.toString());
+		}
+
+		runSQL("drop table ResourcePermissionPlid");
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)

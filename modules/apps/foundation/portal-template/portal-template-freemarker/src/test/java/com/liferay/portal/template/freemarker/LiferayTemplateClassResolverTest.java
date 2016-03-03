@@ -178,6 +178,17 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test(expected = TemplateException.class)
+	public void testResolveClassClass() throws Exception {
+		_liferayTemplateClassResolver.resolve("java.lang.Class", null, null);
+	}
+
+	@Test(expected = TemplateException.class)
+	public void testResolveClassLoaderClass() throws Exception {
+		_liferayTemplateClassResolver.resolve(
+			"java.lang.ClassLoader", null, null);
+	}
+
+	@Test(expected = TemplateException.class)
 	public void testResolveExecuteClass() throws Exception {
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.Execute", null, null);
@@ -193,6 +204,11 @@ public class LiferayTemplateClassResolverTest {
 	public void testResolveObjectConstructorClass() throws Exception {
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ObjectConstructor", null, null);
+	}
+
+	@Test(expected = TemplateException.class)
+	public void testResolveThreadClass() throws Exception {
+		_liferayTemplateClassResolver.resolve("java.lang.Thread", null, null);
 	}
 
 	private static TemplateClassResolver _liferayTemplateClassResolver;

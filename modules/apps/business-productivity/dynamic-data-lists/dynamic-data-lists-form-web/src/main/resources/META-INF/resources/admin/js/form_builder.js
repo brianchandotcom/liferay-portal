@@ -204,17 +204,6 @@ AUI.add(
 						instance._syncRequiredFieldsWarning();
 					},
 
-					_afterFormBuilderRender: function() {
-						var instance = this;
-
-						instance._renderFields();
-						instance._renderPages();
-						instance._renderRequiredFieldsWarning();
-						instance._syncRequiredFieldsWarning();
-						instance._syncRowsLastColumnUI();
-						instance._syncRowIcons();
-					},
-
 					_afterFieldSettingsModalSave: function(event) {
 						var instance = this;
 
@@ -227,6 +216,17 @@ AUI.add(
 						var row = instance.getFieldRow(field);
 
 						instance.getActiveLayout().normalizeColsHeight(new A.NodeList(row));
+					},
+
+					_afterFormBuilderRender: function() {
+						var instance = this;
+
+						instance._renderFields();
+						instance._renderPages();
+						instance._renderRequiredFieldsWarning();
+						instance._syncRequiredFieldsWarning();
+						instance._syncRowsLastColumnUI();
+						instance._syncRowIcons();
 					},
 
 					_afterLayoutColsChange: function(event) {

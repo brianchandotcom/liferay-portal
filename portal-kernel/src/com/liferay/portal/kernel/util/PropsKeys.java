@@ -841,6 +841,10 @@ public interface PropsKeys {
 
 	public static final String IMAGE_IO_USE_DISK_CACHE = "image.io.use.disk.cache";
 
+	public static final String IMAGE_TOOL_IMAGE_MAX_HEIGHT = "image.tool.image.max.height";
+
+	public static final String IMAGE_TOOL_IMAGE_MAX_WIDTH = "image.tool.image.max.width";
+
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH = "imagemagick.global.search.path";

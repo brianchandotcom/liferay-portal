@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
@@ -57,7 +58,9 @@ public class ImageSelectorProcessor {
 		return _bytes;
 	}
 
-	public byte[] scaleImage(int width) throws IOException {
+	public byte[] scaleImage(int width)
+		throws ImageResolutionException, IOException {
+
 		ImageBag imageBag = ImageToolUtil.read(_bytes);
 
 		RenderedImage renderedImage = imageBag.getRenderedImage();

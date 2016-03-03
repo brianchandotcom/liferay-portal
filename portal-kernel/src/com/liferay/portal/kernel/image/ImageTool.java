@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.image;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.model.Image;
 
 import java.awt.image.BufferedImage;
@@ -75,22 +76,28 @@ public interface ImageTool {
 
 	public Image getDefaultUserMalePortrait();
 
-	public Image getImage(byte[] bytes) throws IOException;
+	public Image getImage(byte[] bytes)
+		throws ImageResolutionException, IOException;
 
-	public Image getImage(File file) throws IOException;
+	public Image getImage(File file)
+		throws ImageResolutionException, IOException;
 
-	public Image getImage(InputStream is) throws IOException;
+	public Image getImage(InputStream is)
+		throws ImageResolutionException, IOException;
 
 	public Image getImage(InputStream is, boolean cleanUpStream)
-		throws IOException;
+		throws ImageResolutionException, IOException;
 
 	public boolean isNullOrDefaultSpacer(byte[] bytes);
 
-	public ImageBag read(byte[] bytes) throws IOException;
+	public ImageBag read(byte[] bytes)
+		throws ImageResolutionException, IOException;
 
-	public ImageBag read(File file) throws IOException;
+	public ImageBag read(File file)
+		throws ImageResolutionException, IOException;
 
-	public ImageBag read(InputStream inputStream) throws IOException;
+	public ImageBag read(InputStream inputStream)
+		throws ImageResolutionException, IOException;
 
 	public RenderedImage scale(RenderedImage renderedImage, int width);
 

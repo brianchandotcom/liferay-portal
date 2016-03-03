@@ -15,6 +15,7 @@
 package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.concurrent.FutureConverter;
+import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
@@ -215,9 +217,9 @@ public class ImageToolImpl implements ImageTool {
 
 							renderedImage = imageBag.getRenderedImage();
 						}
-						catch (IOException ioe) {
+						catch (IOException | ImageResolutionException e) {
 							if (_log.isDebugEnabled()) {
-								_log.debug("Unable to convert " + type, ioe);
+								_log.debug("Unable to convert " + type, e);
 							}
 						}
 
@@ -399,7 +401,9 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public Image getImage(byte[] bytes) throws IOException {
+	public Image getImage(byte[] bytes)
+		throws ImageResolutionException, IOException {
+
 		if (bytes == null) {
 			return null;
 		}
@@ -430,14 +434,18 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public Image getImage(File file) throws IOException {
+	public Image getImage(File file)
+		throws ImageResolutionException, IOException {
+
 		byte[] bytes = _fileUtil.getBytes(file);
 
 		return getImage(bytes);
 	}
 
 	@Override
-	public Image getImage(InputStream is) throws IOException {
+	public Image getImage(InputStream is)
+		throws ImageResolutionException, IOException {
+
 		byte[] bytes = _fileUtil.getBytes(is, -1, true);
 
 		return getImage(bytes);
@@ -445,7 +453,7 @@ public class ImageToolImpl implements ImageTool {
 
 	@Override
 	public Image getImage(InputStream is, boolean cleanUpStream)
-		throws IOException {
+		throws ImageResolutionException, IOException {
 
 		byte[] bytes = _fileUtil.getBytes(is, -1, cleanUpStream);
 
@@ -465,7 +473,9 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public ImageBag read(byte[] bytes) throws IOException {
+	public ImageBag read(byte[] bytes)
+		throws ImageResolutionException, IOException {
+
 		String formatName = null;
 		ImageInputStream imageInputStream = null;
 		Queue<ImageReader> imageReaders = new LinkedList<>();
@@ -485,6 +495,27 @@ public class ImageToolImpl implements ImageTool {
 
 				try {
 					imageReader.setInput(imageInputStream);
+
+					int height = imageReader.getHeight(0);
+					int width = imageReader.getWidth(0);
+
+					if ((height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT) ||
+						(width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)) {
+
+						StringBundler sb = new StringBundler(9);
+
+						sb.append("Image is ");
+						sb.append(height);
+						sb.append("px height and ");
+						sb.append(width);
+						sb.append("px width, larger than max height ");
+						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
+						sb.append("px and max width ");
+						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
+						sb.append("px");
+
+						throw new ImageResolutionException(sb.toString());
+					}
 
 					renderedImage = imageReader.read(0);
 				}
@@ -539,12 +570,16 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public ImageBag read(File file) throws IOException {
+	public ImageBag read(File file)
+		throws ImageResolutionException, IOException {
+
 		return read(_fileUtil.getBytes(file));
 	}
 
 	@Override
-	public ImageBag read(InputStream inputStream) throws IOException {
+	public ImageBag read(InputStream inputStream)
+		throws ImageResolutionException, IOException {
+
 		return read(_fileUtil.getBytes(inputStream));
 	}
 

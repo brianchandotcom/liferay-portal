@@ -21,7 +21,9 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -164,27 +166,37 @@ public class VerifyMessageBoards extends VerifyProcess {
 
 	protected void verifyStatisticsForThreads() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<MBThread> threads = MBThreadLocalServiceUtil.getMBThreads(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + threads.size() +
-						" threads for statistics accuracy");
+				_log.debug("Processing threads for statistics accuracy");
 			}
 
-			for (MBThread thread : threads) {
-				int messageCount =
-					MBMessageLocalServiceUtil.getThreadMessagesCount(
-						thread.getThreadId(),
-						WorkflowConstants.STATUS_APPROVED);
+			ActionableDynamicQuery actionableDynamicQuery =
+				MBThreadLocalServiceUtil.getActionableDynamicQuery();
 
-				if (thread.getMessageCount() != messageCount) {
-					thread.setMessageCount(messageCount);
+			actionableDynamicQuery.setParallel(true);
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod<MBThread>() {
 
-					MBThreadLocalServiceUtil.updateMBThread(thread);
+					@Override
+					public void performAction(MBThread thread)
+						throws PortalException {
+
+						int messageCount =
+							MBMessageLocalServiceUtil.getThreadMessagesCount(
+								thread.getThreadId(),
+								WorkflowConstants.STATUS_APPROVED);
+
+						if (thread.getMessageCount() != messageCount) {
+							thread.setMessageCount(messageCount);
+
+							MBThreadLocalServiceUtil.updateMBThread(thread);
+						}
+					}
+
 				}
-			}
+			);
+
+			actionableDynamicQuery.performActions();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Statistics verified for threads");

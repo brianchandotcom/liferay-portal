@@ -15,7 +15,7 @@ class ActionURLScreen extends EventScreen {
 		var request = this.getRequest();
 
 		if (request) {
-			let uri = new Uri(request.responseURL);
+			let uri = new Uri(super.getRequestPath());
 
 			if (uri.getParameterValue('p_p_lifecycle') === '1') {
 				uri.setParameterValue('p_p_lifecycle', '0');

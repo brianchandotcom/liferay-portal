@@ -20,7 +20,6 @@
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
-long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 
@@ -33,25 +32,6 @@ if (ddlDisplayContext.isEditable()) {
 DDLDisplayTemplateTransformer ddlDisplayTemplateTransformer = new DDLDisplayTemplateTransformer(displayDDMTemplateId, recordSet, themeDisplay, renderRequest);
 %>
 
-<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="addRecord" var="addRecordURL">
-	<portlet:param name="mvcPath" value="/edit_record.jsp" />
-</portlet:actionURL>
-
-<aui:form action="<%= addRecordURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
-	<c:if test="<%= showAddRecordButton %>">
-		<aui:nav-bar>
-			<aui:nav>
-				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-					<portlet:param name="mvcPath" value="/edit_record.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= editRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' />
-			</aui:nav>
-		</aui:nav-bar>
-	</c:if>
-
+<div class="main-content-body">
 	<%= ddlDisplayTemplateTransformer.transform() %>
-</aui:form>
+</div>

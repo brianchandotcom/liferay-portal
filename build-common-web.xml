@@ -146,57 +146,20 @@
 		</if>
 	</target>
 
-	<target name="install-portal-snapshot" depends="war,prepare-portal-pom">
-		<artifact:install file="${artifact.name}.war">
-			<pom file="pom.xml" />
-		</artifact:install>
-
-		<delete file="pom.xml" />
-
-		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}-SNAPSHOT" />
-		</propertyfile>
+	<target name="install-portal-release" depends="war">
+		<install-portal-artifact packaging="war" />
 	</target>
 
-	<target name="prepare-portal-pom">
-		<property name="artifact.name" value="${ant.project.name}" />
-
-		<propertyregex
-			global="true"
-			input="${artifact.name}"
-			override="true"
-			property="processed.artifact.name"
-			regexp="-"
-			replace="."
-		/>
-
-		<property file="bnd.bnd" />
-
-		<property name="artifact.version" value="${Bundle-Version}" />
-
-		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-			<filterset>
-				<filter token="version" value="${artifact.version}-SNAPSHOT" />
-			</filterset>
-		</copy>
+	<target name="install-portal-snapshot" depends="war">
+		<install-portal-artifact packaging="war" snapshot="true" />
 	</target>
 
-	<target name="publish-portal-snapshot" depends="war,prepare-portal-pom">
-		<artifact:deploy file="${artifact.name}.war">
-			<pom file="pom.xml" />
-			<remoteRepository url="${sonatype.snapshot.url}">
-				<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
-			</remoteRepository>
-		</artifact:deploy>
+	<target name="publish-portal-release" depends="war">
+		<publish-portal-artifact packaging="war" />
+	</target>
 
-		<delete file="pom.xml" />
-
-		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}-SNAPSHOT" />
-		</propertyfile>
+	<target name="publish-portal-snapshot" depends="war">
+		<publish-portal-artifact packaging="war" snapshot="true" />
 	</target>
 
 	<target name="war">

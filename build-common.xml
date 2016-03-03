@@ -886,6 +886,88 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="install-portal-artifact">
+		<attribute name="packaging" default="jar" />
+		<attribute name="snapshot" default="false" />
+
+		<sequential>
+			<condition property="snapshot.version.suffix" value="-SNAPSHOT" else="">
+				<istrue value="@{snapshot}" />
+			</condition>
+
+			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
+
+			<artifact:install file="${artifact.name}.@{packaging}">
+				<pom file="pom.xml" />
+			</artifact:install>
+
+			<delete file="pom.xml" />
+
+			<propertyfile file="../.gradle/gradle.properties">
+				<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
+			</propertyfile>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="publish-portal-artifact">
+		<attribute name="packaging" default="jar" />
+		<attribute name="snapshot" default="false" />
+
+		<element name="attach-files" implicit="true" optional="true" />
+
+		<sequential>
+			<condition property="snapshot.version.suffix" value="-SNAPSHOT" else="">
+				<istrue value="@{snapshot}" />
+			</condition>
+
+			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
+
+			<artifact:deploy file="${artifact.name}.@{packaging}">
+				<attach-files />
+				<pom file="pom.xml" />
+				<remoteRepository url="${sonatype.snapshot.url}">
+					<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
+				</remoteRepository>
+			</artifact:deploy>
+
+			<delete file="pom.xml" />
+
+			<propertyfile file="../.gradle/gradle.properties">
+				<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />
+			</propertyfile>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-portal-artifact-pom">
+		<attribute name="snapshot.version.suffix" default="false" />
+
+		<sequential>
+			<property name="artifact.name" value="${ant.project.name}" />
+
+			<propertyregex
+				global="true"
+				input="${artifact.name}"
+				override="true"
+				property="processed.artifact.name"
+				regexp="-"
+				replace="."
+			/>
+
+			<property file="bnd.bnd" />
+
+			<property name="artifact.version" value="${Bundle-Version}" />
+
+			<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
+				<filterchain>
+					<expandproperties />
+				</filterchain>
+				<filterset>
+					<filter token="version" value="${artifact.version}@{snapshot.version.suffix}" />
+				</filterset>
+			</copy>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute name="test.type" />

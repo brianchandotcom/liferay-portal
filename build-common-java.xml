@@ -233,16 +233,12 @@
 		/>
 	</target>
 
-	<target name="install-portal-snapshot" depends="jar,prepare-portal-pom">
-		<artifact:install file="${artifact.name}.jar">
-			<pom file="pom.xml" />
-		</artifact:install>
+	<target name="install-portal-release" depends="jar">
+		<install-portal-artifact />
+	</target>
 
-		<delete file="pom.xml" />
-
-		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
-		</propertyfile>
+	<target name="install-portal-snapshot" depends="jar">
+		<install-portal-artifact snapshot="true" />
 	</target>
 
 	<target name="jar">
@@ -345,47 +341,18 @@
 		</if>
 	</target>
 
-	<target name="prepare-portal-pom">
-		<property name="artifact.name" value="${ant.project.name}" />
-
-		<propertyregex
-			global="true"
-			input="${artifact.name}"
-			override="true"
-			property="processed.artifact.name"
-			regexp="-"
-			replace="."
-		/>
-
-		<property file="bnd.bnd" />
-
-		<property name="artifact.version" value="${Bundle-Version}" />
-
-		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-			<filterset>
-				<filter token="version" value="${artifact.version}" />
-			</filterset>
-		</copy>
-	</target>
-
-	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,prepare-portal-pom">
-		<artifact:deploy file="${artifact.name}.jar">
+	<target name="publish-portal-release" depends="jar,jar-javadoc,jar-sources">
+		<publish-portal-artifact >
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
-			<pom file="pom.xml" />
-			<remoteRepository url="${sonatype.snapshot.url}">
-				<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
-			</remoteRepository>
-		</artifact:deploy>
+		</publish-portal-artifact>
+	</target>
 
-		<delete file="pom.xml" />
-
-		<propertyfile file="../.gradle/gradle.properties">
-			<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}-SNAPSHOT" />
-		</propertyfile>
+	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources">
+		<publish-portal-artifact snapshot="true">
+			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</publish-portal-artifact>
 	</target>
 
 	<target name="release" depends="jar">

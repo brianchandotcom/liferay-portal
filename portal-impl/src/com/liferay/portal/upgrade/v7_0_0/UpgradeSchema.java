@@ -28,7 +28,9 @@ public class UpgradeSchema extends UpgradeProcess {
 		ParallelUpgradeSchemaExecutor parallelUpgradeSchemaExecutor =
 			new ParallelUpgradeSchemaExecutor(
 				"update-6.2.0-7.0.0.sql", "update-6.2.0-7.0.0-asset.sql",
-				"update-6.2.0-7.0.0-group.sql");
+				"update-6.2.0-7.0.0-group.sql",
+				"update-6.2.0-7.0.0-layoutset.sql",
+				"update-6.2.0-7.0.0-layoutsetbranch.sql");
 
 		parallelUpgradeSchemaExecutor.execute();
 

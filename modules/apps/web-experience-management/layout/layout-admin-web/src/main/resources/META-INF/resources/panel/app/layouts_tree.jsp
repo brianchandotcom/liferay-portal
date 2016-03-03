@@ -190,6 +190,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	</liferay-util:buffer>
 
 	<liferay-ui:success key="layoutAdded" message='<%= LanguageUtil.get(resourceBundle, "the-page-has-been-created-succesfully") %>' targetNode="#controlMenuAlertsContainer" />
+	<liferay-ui:success key="layoutDeleted" message='<%= LanguageUtil.get(resourceBundle, "the-page-has-been-deleted-succesfully") %>' targetNode="#controlMenuAlertsContainer" />
 
 	<c:if test="<%= layoutsTreeDisplayContext.isShowStagingProcessMessage() %>">
 		<div class="alert alert-default alert-dismissible" data-dismiss="alert" role="alert">

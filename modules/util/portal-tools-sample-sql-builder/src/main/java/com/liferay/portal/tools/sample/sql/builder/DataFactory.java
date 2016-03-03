@@ -62,6 +62,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
@@ -2191,6 +2192,35 @@ public class DataFactory {
 				DDMStructure.class.getName(),
 				String.valueOf(ddmStructureModel.getStructureId()),
 				_ownerRoleModel.getRoleId(), _defaultUserId));
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		DDMTemplateModel ddmTemplateModel) {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(getClassName(ddmTemplateModel.getResourceClassNameId()));
+		sb.append(StringPool.DASH);
+		sb.append(DDMTemplate.class.getName());
+
+		String name = sb.toString();
+		String primKey = String.valueOf(ddmTemplateModel.getTemplateId());
+
+		List<ResourcePermissionModel> resourcePermissionModels =
+			new ArrayList<>(3);
+
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _guestRoleModel.getRoleId(), 0));
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _ownerRoleModel.getRoleId(),
+				ddmTemplateModel.getUserId()));
+		resourcePermissionModels.add(
+			newResourcePermissionModel(
+				name, primKey, _userRoleModel.getRoleId(), 0));
+
+		return resourcePermissionModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -38,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(immediate = true, service = DDMStructurePermission.class)
-public class DDMStructurePermission {
+public class DDMStructurePermission extends BaseResourcePermissionChecker{
 
 	public static void check(
 			PermissionChecker permissionChecker, DDMStructure structure,
@@ -175,10 +176,12 @@ public class DDMStructurePermission {
 				_ddmPermissionSupportTracker.
 					getDDMStructurePermissionSupportServiceWrapper(classNameId);
 
-		return permissionChecker.hasPermission(
-			groupId, getResourceName(structurePermissionSupportServiceWrapper),
-			groupId,
-			getAddStructureActionId(structurePermissionSupportServiceWrapper));
+		return contains(
+				permissionChecker, 
+				getResourceName(structurePermissionSupportServiceWrapper),
+				groupId,
+				getAddStructureActionId(
+						structurePermissionSupportServiceWrapper));
 	}
 
 	public static String getStructureModelResourceName(long classNameId)
@@ -208,6 +211,17 @@ public class DDMStructurePermission {
 		return sb.toString();
 	}
 
+	@Override
+	public Boolean checkResource(
+			PermissionChecker permissionChecker, long classPK,
+			String actionId) {
+		try{
+			return contains(permissionChecker, classPK, actionId);
+		}catch(PortalException e){
+			return false;
+		}
+	}
+	
 	protected static String getAddStructureActionId(
 		ServiceWrapper<DDMStructurePermissionSupport>
 			structurePermissionSupportServiceWrapper) {

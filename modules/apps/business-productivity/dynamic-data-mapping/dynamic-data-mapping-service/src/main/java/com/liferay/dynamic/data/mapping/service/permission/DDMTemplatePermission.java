@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -41,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  */
 @Component(immediate = true, service = DDMTemplatePermission.class)
-public class DDMTemplatePermission {
+public class DDMTemplatePermission extends BaseResourcePermissionChecker{
 
 	public static void check(
 			PermissionChecker permissionChecker, DDMTemplate template,
@@ -236,9 +237,10 @@ public class DDMTemplatePermission {
 					templatePermissionSupportServiceWrapper));
 		}
 
-		return permissionChecker.hasPermission(
-			groupId, resourceName, groupId,
-			getAddTemplateActionId(templatePermissionSupportServiceWrapper));
+		return contains(
+				permissionChecker, resourceName, groupId,
+				getAddTemplateActionId(
+						templatePermissionSupportServiceWrapper));
 	}
 
 	public static String getTemplateModelResourceName(long resourceClassNameId)
@@ -269,6 +271,17 @@ public class DDMTemplatePermission {
 		return sb.toString();
 	}
 
+	@Override
+	public Boolean checkResource(
+			PermissionChecker permissionChecker, long classPK,
+			String actionId) {
+		try{
+			return contains(permissionChecker, classPK, actionId);
+		}catch(PortalException e){
+			return false;
+		}
+	}
+	
 	protected static String getAddTemplateActionId(
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper) {

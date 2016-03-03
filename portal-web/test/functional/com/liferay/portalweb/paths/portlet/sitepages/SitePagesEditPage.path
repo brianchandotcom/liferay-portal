@@ -254,7 +254,7 @@
 </tr>
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>
-	<td>//div[@class='customization-settings']/button[contains(@id,'manageCustomization')]</td>
+	<td>//input[contains(@id,'CUSTOMIZABLE_LAYOUT')]</td>
 	<td></td>
 </tr>
 <tr>

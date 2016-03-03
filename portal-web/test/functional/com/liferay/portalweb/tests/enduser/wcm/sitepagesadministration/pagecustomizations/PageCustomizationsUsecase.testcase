@@ -194,8 +194,6 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Wiki" />
 		</execute>

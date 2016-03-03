@@ -104,26 +104,31 @@
 
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
-		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
-
 		<if>
-			<equals arg1="${browserType}" arg2="internetexplorer" />
+			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
 			<then>
-				<execute function="MouseDown#javaScriptMouseDown" locator1="ControlMenu#ADD" />
+				<var method="TestPropsUtil#get('browser.type')" name="browserType" />
 
-				<execute function="MouseUp#javaScriptMouseUp" locator1="ControlMenu#ADD" />
+				<if>
+					<equals arg1="${browserType}" arg2="internetexplorer" />
+					<then>
+						<execute function="MouseDown#javaScriptMouseDown" locator1="ControlMenu#ADD" />
+
+						<execute function="MouseUp#javaScriptMouseUp" locator1="ControlMenu#ADD" />
+					</then>
+					<elseif>
+						<equals arg1="${browserType}" arg2="safari" />
+						<then>
+							<execute function="Pause" locator1="10000" />
+
+							<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+						</then>
+					</elseif>
+					<else>
+						<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
+					</else>
+				</if>
 			</then>
-			<elseif>
-				<equals arg1="${browserType}" arg2="safari" />
-				<then>
-					<execute function="Pause" locator1="10000" />
-
-					<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-			</else>
 		</if>
 
 		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE" />

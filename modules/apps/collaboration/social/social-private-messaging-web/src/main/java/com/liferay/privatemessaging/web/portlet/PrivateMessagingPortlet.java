@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
@@ -34,7 +34,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CharPool;
@@ -52,7 +53,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.privatemessaging.service.UserThreadLocalService;
 import com.liferay.privatemessaging.util.PortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingUtil;
 
@@ -77,6 +78,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -126,7 +128,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			actionRequest, "mbThreadIds");
 
 		for (long mbThreadId : mbThreadIds) {
-			UserThreadLocalServiceUtil.deleteUserThread(
+			_userThreadLocalService.deleteUserThread(
 				themeDisplay.getUserId(), mbThreadId);
 		}
 	}
@@ -141,7 +143,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 		long messageId = ParamUtil.getLong(resourceRequest, "messageId");
 		String fileName = ParamUtil.getString(resourceRequest, "attachment");
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		MBMessage message = _mBMessageLocalService.getMessage(messageId);
 
 		if (!PrivateMessagingUtil.isUserPartOfThread(
 				themeDisplay.getUserId(), message.getThreadId())) {
@@ -169,7 +171,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			actionRequest, "mbThreadIds");
 
 		for (long mbThreadId : mbThreadIds) {
-			UserThreadLocalServiceUtil.markUserThreadAsRead(
+			_userThreadLocalService.markUserThreadAsRead(
 				themeDisplay.getUserId(), mbThreadId);
 		}
 	}
@@ -185,7 +187,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 			actionRequest, "mbThreadIds");
 
 		for (long mbThreadId : mbThreadIds) {
-			UserThreadLocalServiceUtil.markUserThreadAsUnread(
+			_userThreadLocalService.markUserThreadAsUnread(
 				themeDisplay.getUserId(), mbThreadId);
 		}
 	}
@@ -265,7 +267,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 				}
 			}
 
-			UserThreadLocalServiceUtil.addPrivateMessage(
+			_userThreadLocalService.addPrivateMessage(
 				userId, mbThreadId, to, subject, body, inputStreamOVPs,
 				themeDisplay);
 
@@ -471,7 +473,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 					recipient = recipient.substring(x + 1, y);
 				}
 
-				UserLocalServiceUtil.getUserByScreenName(
+				_userLocalService.getUserByScreenName(
 					themeDisplay.getCompanyId(), recipient);
 			}
 			catch (NoSuchUserException nsue) {
@@ -506,6 +508,19 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrivateMessagingPortlet.class);
 
+	@Reference
+	private MBMessageLocalService _mBMessageLocalService;
+
 	private PrivateMessagingConfiguration _privateMessagingConfiguration;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
+
+	@Reference
+	private UserThreadLocalService _userThreadLocalService;
 
 }

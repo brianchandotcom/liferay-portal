@@ -79,7 +79,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			_freemarkerEngineConfiguration.restrictedClasses());
 
 		for (String restrictedClassName : restrictedClassNames) {
-			if (_matchesClassName(restrictedClassName, className)) {
+			if (_match(restrictedClassName, className)) {
 				throw new TemplateException(
 					"Instantiating " + className + " is not allowed in the " +
 						"template for security reasons",
@@ -93,7 +93,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			_freemarkerEngineConfiguration.allowedClasses());
 
 		for (String allowedClassName : allowedClasseNames) {
-			if (_matchesClassName(allowedClassName, className)) {
+			if (_match(allowedClassName, className)) {
 				allowed = true;
 
 				break;
@@ -155,45 +155,44 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	}
 
 	private Set<ClassLoader> _findAllowedClassLoaders(
-		String allowedClass, BundleContext bundleContext) {
+		String clazz, BundleContext bundleContext) {
 
 		Bundle bundle = bundleContext.getBundle();
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
 		Set<ClassLoader> classLoaders = new HashSet<>();
 
-		List<BundleCapability> capabilities = bundleWiring.getCapabilities(
-			BundleRevision.PACKAGE_NAMESPACE);
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		for (BundleCapability capability : capabilities) {
-			Map<String, Object> attributes = capability.getAttributes();
+		List<BundleCapability> bundleCapabilities =
+			bundleWiring.getCapabilities(BundleRevision.PACKAGE_NAMESPACE);
+
+		for (BundleCapability bundleCapability : bundleCapabilities) {
+			Map<String, Object> attributes = bundleCapability.getAttributes();
 
 			String exportPackage = (String)attributes.get(
 				BundleRevision.PACKAGE_NAMESPACE);
 
-			if (allowedClass.equals(StringPool.STAR)) {
+			if (clazz.equals(StringPool.STAR)) {
 				continue;
 			}
-			else if (allowedClass.endsWith(StringPool.STAR)) {
-				allowedClass = allowedClass.substring(
-					0, allowedClass.length() - 1);
+			else if (clazz.endsWith(StringPool.STAR)) {
+				clazz = clazz.substring(0, clazz.length() - 1);
 
-				if (exportPackage.startsWith(allowedClass)) {
-					BundleRevision provider = capability.getRevision();
+				if (exportPackage.startsWith(clazz)) {
+					BundleRevision provider = bundleCapability.getRevision();
 
 					Bundle providerBundle = provider.getBundle();
 
-					BundleWiring providerBundleWiring =
-						providerBundle.adapt(BundleWiring.class);
+					BundleWiring providerBundleWiring = providerBundle.adapt(
+						BundleWiring.class);
 
 					classLoaders.add(providerBundleWiring.getClassLoader());
 				}
 			}
-			else if (allowedClass.equals(exportPackage)) {
-				BundleRevision revision = capability.getRevision();
+			else if (clazz.equals(exportPackage)) {
+				BundleRevision bundleRevision = bundleCapability.getRevision();
 
-				Bundle revisionBundle = revision.getBundle();
+				Bundle revisionBundle = bundleRevision.getBundle();
 
 				BundleWiring providerBundleWiring = revisionBundle.adapt(
 					BundleWiring.class);
@@ -201,13 +200,14 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				classLoaders.add(providerBundleWiring.getClassLoader());
 			}
 			else {
-				String allowedClassPackage = allowedClass.substring(
-					0, allowedClass.lastIndexOf("."));
+				String allowedClassPackage = clazz.substring(
+					0, clazz.lastIndexOf("."));
 
 				if (allowedClassPackage.equals(exportPackage)) {
-					BundleRevision revision = capability.getRevision();
+					BundleRevision bundleRevision =
+						bundleCapability.getRevision();
 
-					Bundle revisionBundle = revision.getBundle();
+					Bundle revisionBundle = bundleRevision.getBundle();
 
 					BundleWiring providerBundleWiring = revisionBundle.adapt(
 						BundleWiring.class);
@@ -218,7 +218,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		if (classLoaders.isEmpty() && _log.isWarnEnabled()) {
-			_log.warn("No bundle exports " + allowedClass);
+			_log.warn("No bundle exports " + clazz);
 		}
 
 		return classLoaders;
@@ -241,9 +241,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		return classLoaders;
 	}
 
-	private boolean _matchesClassName(
-		String className, String matchedClassName) {
-
+	private boolean _match(String className, String matchedClassName) {
 		if (className.equals(StringPool.STAR)) {
 			return true;
 		}

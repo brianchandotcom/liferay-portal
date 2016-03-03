@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
@@ -503,15 +504,15 @@ public class ImageToolImpl implements ImageTool {
 
 						StringBundler sb = new StringBundler(9);
 
-						sb.append("Image is ");
+						sb.append("Image's dimensions (");
 						sb.append(height);
-						sb.append("px height and ");
+						sb.append(" px high and ");
 						sb.append(width);
-						sb.append("px width, larger than max height ");
+						sb.append(" px wide) exceed max dimensions (");
 						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
-						sb.append("px and max width ");
+						sb.append(" px high and ");
 						sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
-						sb.append("px");
+						sb.append(" px wide).");
 
 						throw new ImageResolutionException(sb.toString());
 					}

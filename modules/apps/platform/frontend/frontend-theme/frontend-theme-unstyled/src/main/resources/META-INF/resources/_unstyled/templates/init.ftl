@@ -11,28 +11,8 @@
 
 <#assign css_class = css_class + " " + htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
-<#assign liferay_toggle_controls = sessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible") />
-
 <#if layout??>
 	<#assign page_group = layout.getGroup() />
-
-	<#if page_group.isStagingGroup()>
-		<#assign css_class = css_class + " staging local-staging" />
-	<#elseif theme_display.isShowStagingIcon() && page_group.hasStagingGroup()>
-		<#assign css_class = css_class + " live-view" />
-	<#elseif theme_display.isShowStagingIcon() && page_group.isStagedRemotely()>
-		<#assign css_class = css_class + " staging remote-staging" />
-	</#if>
-
-	<#if page_group.isControlPanel()>
-		<#assign liferay_toggle_controls = "visible" />
-	</#if>
-</#if>
-
-<#if liferay_toggle_controls = "visible">
-	<#assign css_class = css_class + " controls-visible" />
-<#else>
-	<#assign css_class = css_class + " controls-hidden" />
 </#if>
 
 <#if layoutTypePortlet.hasStateMax()>
@@ -128,13 +108,6 @@
 <#if show_sign_out>
 	<#assign sign_out_text = languageUtil.get(locale, "sign-out") />
 	<#assign sign_out_url = htmlUtil.escape(theme_display.getURLSignOut()) />
-</#if>
-
-<#assign show_toggle_controls = theme_display.isSignedIn() />
-
-<#if show_toggle_controls>
-	<#assign toggle_controls_text = languageUtil.get(locale, "toggle-edit-controls") />
-	<#assign toggle_controls_url = "javascript:;" />
 </#if>
 
 <#-- ---------- Page ---------- -->
@@ -303,14 +276,6 @@
 
 <#if !has_navigation>
 	<#assign nav_css_class = nav_css_class + " hide" />
-</#if>
-
-<#-- ---------- Staging ---------- -->
-
-<#assign show_staging = theme_display.isShowStagingIcon() />
-
-<#if show_staging>
-	<#assign staging_text = languageUtil.get(locale, "staging") />
 </#if>
 
 <#-- ---------- My sites ---------- -->

@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"service.ranking:Integer=400"
 	},
-	service = ProductNavigationControlMenuEntry.class
+	service = {CustomizationSettingsProductNavigationControlMenuEntry.class, ProductNavigationControlMenuEntry.class}
 )
 public class CustomizationSettingsProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry

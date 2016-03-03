@@ -55,6 +55,12 @@ public class DDMUtil {
 		return getDDM().getDDMForm(portletRequest);
 	}
 
+	public static DDMForm getDDMForm(String serializedJSONDDMForm)
+		throws PortalException {
+
+		return getDDM().getDDMForm(serializedJSONDDMForm);
+	}
+
 	public static JSONArray getDDMFormFieldsJSONArray(
 		DDMStructure ddmStructure, String script) {
 
@@ -72,10 +78,10 @@ public class DDMUtil {
 	}
 
 	public static DDMFormValues getDDMFormValues(
-			DDMForm ddmForm, String serializedDDMFormValues)
+			DDMForm ddmForm, String serializedJSONDDMFormValues)
 		throws PortalException {
 
-		return getDDM().getDDMFormValues(ddmForm, serializedDDMFormValues);
+		return getDDM().getDDMFormValues(ddmForm, serializedJSONDDMFormValues);
 	}
 
 	public static DDMFormValues getDDMFormValues(

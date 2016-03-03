@@ -176,6 +176,13 @@ public class DDMImpl implements DDM {
 	}
 
 	@Override
+	public DDMForm getDDMForm(String serializedJSONDDMForm)
+		throws PortalException {
+
+		return _ddmFormJSONDeserializer.deserialize(serializedJSONDDMForm);
+	}
+
+	@Override
 	public JSONArray getDDMFormFieldsJSONArray(
 		DDMStructure ddmStructure, String script) {
 

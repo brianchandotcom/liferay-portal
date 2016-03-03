@@ -45,6 +45,9 @@ public interface DDM {
 	public DDMForm getDDMForm(PortletRequest portletRequest)
 		throws PortalException;
 
+	public DDMForm getDDMForm(String serializedJSONDDMForm)
+		throws PortalException;
+
 	public JSONArray getDDMFormFieldsJSONArray(
 		DDMStructure ddmStructure, String script);
 

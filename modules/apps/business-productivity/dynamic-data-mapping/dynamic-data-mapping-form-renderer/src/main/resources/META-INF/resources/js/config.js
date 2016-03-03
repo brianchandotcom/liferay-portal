@@ -20,17 +20,11 @@
 								'liferay-ddm-form-renderer-pagination',
 								'liferay-ddm-form-renderer-tabs',
 								'liferay-ddm-form-renderer-template',
-								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-type',
+								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util',
 								'liferay-ddm-form-renderer-validation',
 								'liferay-ddm-form-soy'
-							]
-						},
-						'liferay-ddm-form-renderer-type': {
-							path: 'type.js',
-							requires: [
-								'aui-form-builder-field-type'
 							]
 						},
 						'liferay-ddm-form-renderer-definition': {
@@ -124,6 +118,12 @@
 							path: 'form_template_support.js',
 							requires: [
 								'aui-base'
+							]
+						},
+						'liferay-ddm-form-renderer-type': {
+							path: 'type.js',
+							requires: [
+								'aui-form-builder-field-type'
 							]
 						},
 						'liferay-ddm-form-renderer-types': {

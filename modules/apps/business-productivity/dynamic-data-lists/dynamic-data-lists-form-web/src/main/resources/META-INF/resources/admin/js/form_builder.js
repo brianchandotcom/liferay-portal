@@ -175,16 +175,18 @@ AUI.add(
 					},
 
 					_addFieldsChangeListener: function(layouts) {
-						var i;
+						var instance = this;
 
-						for (i = 0; i < layouts.length; i++) {
-							this._fieldsChangeHandles.push(
-								layouts[i].after(
-									'liferay-ddl-form-builder-field-list:fieldsChange',
-									A.bind(this._afterFieldsChange, this)
-								)
-							);
-						}
+						layouts.forEach(
+							function(layout) {
+								instance._fieldsChangeHandles.push(
+									layout.after(
+										'liferay-ddl-form-builder-field-list:fieldsChange',
+										A.bind(instance._afterFieldsChange, instance)
+									)
+								);
+							}
+						);
 					},
 
 					_afterActivePageNumberChange: function() {

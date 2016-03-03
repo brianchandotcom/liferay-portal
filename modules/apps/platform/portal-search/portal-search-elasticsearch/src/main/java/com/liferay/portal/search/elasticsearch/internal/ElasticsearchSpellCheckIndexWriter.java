@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.suggest.BaseGenericSpellCheckIndexWriter
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 
 import java.util.Collection;
@@ -79,7 +80,7 @@ public class ElasticsearchSpellCheckIndexWriter
 			String documentType, SearchContext searchContext, Document document)
 		throws SearchException {
 
-		_elasticsearchUpdateDocumentCommand.updateDocument(
+		elasticsearchUpdateDocumentCommand.updateDocument(
 			documentType, searchContext, document, false);
 	}
 
@@ -89,7 +90,7 @@ public class ElasticsearchSpellCheckIndexWriter
 			Collection<Document> documents)
 		throws SearchException {
 
-		_elasticsearchUpdateDocumentCommand.updateDocuments(
+		elasticsearchUpdateDocumentCommand.updateDocuments(
 			documentType, searchContext, documents, false);
 	}
 
@@ -126,13 +127,13 @@ public class ElasticsearchSpellCheckIndexWriter
 		SearchResponseScroller searchResponseScroller = null;
 
 		try {
-			Client client = _elasticsearchConnectionManager.getClient();
+			Client client = elasticsearchConnectionManager.getClient();
 
 			MatchAllQueryBuilder matchAllQueryBuilder =
 				QueryBuilders.matchAllQuery();
 
 			searchResponseScroller = new SearchResponseScroller(
-				client, searchContext, matchAllQueryBuilder,
+				client, searchContext, indexNameBuilder, matchAllQueryBuilder,
 				TimeValue.timeValueSeconds(30), indexType);
 
 			searchResponseScroller.prepare();
@@ -144,21 +145,6 @@ public class ElasticsearchSpellCheckIndexWriter
 				searchResponseScroller.close();
 			}
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchUpdateDocumentCommand(
-		ElasticsearchUpdateDocumentCommand elasticsearchUpdateDocumentCommand) {
-
-		_elasticsearchUpdateDocumentCommand =
-			elasticsearchUpdateDocumentCommand;
 	}
 
 	@Reference(
@@ -176,9 +162,16 @@ public class ElasticsearchSpellCheckIndexWriter
 		_searchHitsProcessor = null;
 	}
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private ElasticsearchUpdateDocumentCommand
-		_elasticsearchUpdateDocumentCommand;
+	@Reference(unbind = "-")
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference(unbind = "-")
+	protected ElasticsearchUpdateDocumentCommand
+		elasticsearchUpdateDocumentCommand;
+
+	@Reference(unbind = "-")
+	protected IndexNameBuilder indexNameBuilder;
+
 	private volatile SearchHitsProcessor _searchHitsProcessor;
 
 }

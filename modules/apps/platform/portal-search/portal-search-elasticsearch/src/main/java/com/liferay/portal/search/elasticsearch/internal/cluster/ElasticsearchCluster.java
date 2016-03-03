@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 
 import java.util.List;
 
@@ -61,31 +62,11 @@ public class ElasticsearchCluster {
 		_replicasClusterListener = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
-		_clusterExecutor = clusterExecutor;
-	}
+	@Reference
+	protected CompanyLocalService companyLocalService;
 
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
 
 	protected class ReplicasClusterContextImpl
 		implements ReplicasClusterContext {
@@ -111,18 +92,19 @@ public class ElasticsearchCluster {
 
 		@Override
 		public String[] getTargetIndexNames() {
-			List<Company> companies = _companyLocalService.getCompanies();
+			List<Company> companies = companyLocalService.getCompanies();
 
 			String[] targetIndexNames = new String[companies.size() + 1];
 
 			for (int i = 0; i < targetIndexNames.length - 1; i++) {
 				Company company = companies.get(i);
 
-				targetIndexNames[i] = String.valueOf(company.getCompanyId());
+				targetIndexNames[i] = indexNameBuilder.getIndexName(
+					company.getCompanyId());
 			}
 
 			targetIndexNames[targetIndexNames.length - 1] =
-				CompanyConstants.SYSTEM_STRING;
+				indexNameBuilder.getIndexName(CompanyConstants.SYSTEM);
 
 			return targetIndexNames;
 		}
@@ -149,10 +131,15 @@ public class ElasticsearchCluster {
 
 	}
 
+	@Reference
 	private ClusterExecutor _clusterExecutor;
+
+	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+
 	private ReplicasClusterListener _replicasClusterListener;
 
 }

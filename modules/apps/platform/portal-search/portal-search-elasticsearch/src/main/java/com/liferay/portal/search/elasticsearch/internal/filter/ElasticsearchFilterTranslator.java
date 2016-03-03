@@ -67,173 +67,107 @@ public class ElasticsearchFilterTranslator
 
 	@Override
 	public QueryBuilder visit(BooleanFilter booleanFilter) {
-		return _booleanFilterTranslator.translate(booleanFilter, this);
+		return booleanFilterTranslator.translate(booleanFilter, this);
 	}
 
 	@Override
 	public QueryBuilder visit(DateRangeTermFilter dateRangeTermFilter) {
-		return _dateRangeTermFilterTranslator.translate(dateRangeTermFilter);
+		return dateRangeTermFilterTranslator.translate(dateRangeTermFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(ExistsFilter existsFilter) {
-		return _existsFilterTranslator.translate(existsFilter);
+		return existsFilterTranslator.translate(existsFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
-		return _geoBoundingBoxFilterTranslator.translate(geoBoundingBoxFilter);
+		return geoBoundingBoxFilterTranslator.translate(geoBoundingBoxFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(GeoDistanceFilter geoDistanceFilter) {
-		return _geoDistanceFilterTranslator.translate(geoDistanceFilter);
+		return geoDistanceFilterTranslator.translate(geoDistanceFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
-		return _geoDistanceRangeFilterTranslator.translate(
+		return geoDistanceRangeFilterTranslator.translate(
 			geoDistanceRangeFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(GeoPolygonFilter geoPolygonFilter) {
-		return _geoPolygonFilterTranslator.translate(geoPolygonFilter);
+		return geoPolygonFilterTranslator.translate(geoPolygonFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(MissingFilter missingFilter) {
-		return _missingFilterTranslator.translate(missingFilter);
+		return missingFilterTranslator.translate(missingFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(PrefixFilter prefixFilter) {
-		return _prefixFilterTranslator.translate(prefixFilter);
+		return prefixFilterTranslator.translate(prefixFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(QueryFilter queryFilter) {
-		return _queryFilterTranslator.translate(queryFilter);
+		return queryFilterTranslator.translate(queryFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(RangeTermFilter rangeTermFilter) {
-		return _rangeTermFilterTranslator.translate(rangeTermFilter);
+		return rangeTermFilterTranslator.translate(rangeTermFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(TermFilter termFilter) {
-		return _termFilterTranslator.translate(termFilter);
+		return termFilterTranslator.translate(termFilter);
 	}
 
 	@Override
 	public QueryBuilder visit(TermsFilter termsFilter) {
-		return _termsFilterTranslator.translate(termsFilter);
+		return termsFilterTranslator.translate(termsFilter);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBooleanFilterTranslator(
-		BooleanFilterTranslator booleanFilterTranslator) {
+	@Reference
+	protected BooleanFilterTranslator booleanFilterTranslator;
 
-		_booleanFilterTranslator = booleanFilterTranslator;
-	}
+	@Reference
+	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;
 
-	@Reference(unbind = "-")
-	protected void setDateRangeTermFilterTranslator(
-		DateRangeTermFilterTranslator dateRangeTermFilterTranslator) {
+	@Reference
+	protected ExistsFilterTranslator existsFilterTranslator;
 
-		_dateRangeTermFilterTranslator = dateRangeTermFilterTranslator;
-	}
+	@Reference
+	protected GeoBoundingBoxFilterTranslator geoBoundingBoxFilterTranslator;
 
-	@Reference(unbind = "-")
-	protected void setExistsFilterTranslator(
-		ExistsFilterTranslator existsFilterTranslator) {
+	@Reference
+	protected GeoDistanceFilterTranslator geoDistanceFilterTranslator;
 
-		_existsFilterTranslator = existsFilterTranslator;
-	}
+	@Reference
+	protected GeoDistanceRangeFilterTranslator geoDistanceRangeFilterTranslator;
 
-	@Reference(unbind = "-")
-	protected void setGeoBoundingBoxFilterTranslator(
-		GeoBoundingBoxFilterTranslator geoBoundingBoxFilterTranslator) {
+	@Reference
+	protected GeoPolygonFilterTranslator geoPolygonFilterTranslator;
 
-		_geoBoundingBoxFilterTranslator = geoBoundingBoxFilterTranslator;
-	}
+	@Reference
+	protected MissingFilterTranslator missingFilterTranslator;
 
-	@Reference(unbind = "-")
-	protected void setGeoDistanceFilterTranslator(
-		GeoDistanceFilterTranslator geoDistanceFilterTranslator) {
+	@Reference
+	protected PrefixFilterTranslator prefixFilterTranslator;
 
-		_geoDistanceFilterTranslator = geoDistanceFilterTranslator;
-	}
+	@Reference
+	protected QueryFilterTranslator queryFilterTranslator;
 
-	@Reference(unbind = "-")
-	protected void setGeoDistanceRangeFilterTranslator(
-		GeoDistanceRangeFilterTranslator geoDistanceRangeFilterTranslator) {
+	@Reference
+	protected RangeTermFilterTranslator rangeTermFilterTranslator;
 
-		_geoDistanceRangeFilterTranslator = geoDistanceRangeFilterTranslator;
-	}
+	@Reference
+	protected TermFilterTranslator termFilterTranslator;
 
-	@Reference(unbind = "-")
-	protected void setGeoPolygonFilterTranslator(
-		GeoPolygonFilterTranslator geoPolygonFilterTranslator) {
-
-		_geoPolygonFilterTranslator = geoPolygonFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMissingFilterTranslator(
-		MissingFilterTranslator missingFilterTranslator) {
-
-		_missingFilterTranslator = missingFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPrefixFilterTranslator(
-		PrefixFilterTranslator prefixFilterTranslator) {
-
-		_prefixFilterTranslator = prefixFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setQueryFilterTranslator(
-		QueryFilterTranslator queryFilterTranslator) {
-
-		_queryFilterTranslator = queryFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRangeTermFilterTranslator(
-		RangeTermFilterTranslator rangeTermFilterTranslator) {
-
-		_rangeTermFilterTranslator = rangeTermFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermFilterTranslator(
-		TermFilterTranslator termFilterTranslator) {
-
-		_termFilterTranslator = termFilterTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTermsFilterTranslator(
-		TermsFilterTranslator termsFilterTranslator) {
-
-		_termsFilterTranslator = termsFilterTranslator;
-	}
-
-	private BooleanFilterTranslator _booleanFilterTranslator;
-	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
-	private ExistsFilterTranslator _existsFilterTranslator;
-	private GeoBoundingBoxFilterTranslator _geoBoundingBoxFilterTranslator;
-	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
-	private GeoDistanceRangeFilterTranslator _geoDistanceRangeFilterTranslator;
-	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
-	private MissingFilterTranslator _missingFilterTranslator;
-	private PrefixFilterTranslator _prefixFilterTranslator;
-	private QueryFilterTranslator _queryFilterTranslator;
-	private RangeTermFilterTranslator _rangeTermFilterTranslator;
-	private TermFilterTranslator _termFilterTranslator;
-	private TermsFilterTranslator _termsFilterTranslator;
+	@Reference
+	protected TermsFilterTranslator termsFilterTranslator;
 
 }

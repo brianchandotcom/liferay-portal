@@ -18,13 +18,17 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
 
 import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -57,13 +61,14 @@ public class ReplicasManagerImplTest {
 
 		ElasticsearchFixture elasticsearchFixture0 = createNode(0);
 
-		elasticsearchFixture0.createIndex(CompanyConstants.SYSTEM_STRING);
+		elasticsearchFixture0.createIndex(
+			getTestIndexName(CompanyConstants.SYSTEM));
 
 		ElasticsearchFixture elasticsearchFixture1 = createNode(1);
 
 		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture0);
 
-		elasticsearchFixture1.createIndex(String.valueOf(companyId));
+		elasticsearchFixture1.createIndex(getTestIndexName(companyId));
 
 		ClusterAssert.assert2PrimaryShardsAnd2Nodes(elasticsearchFixture1);
 
@@ -82,6 +87,9 @@ public class ReplicasManagerImplTest {
 			elasticsearchFixture1);
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	protected ElasticsearchFixture createNode(int index) throws Exception {
 		_testCluster.createNode(index);
 
@@ -91,9 +99,25 @@ public class ReplicasManagerImplTest {
 	protected ReplicasClusterContext createReplicasClusterContext() {
 		ElasticsearchCluster elasticsearchCluster = new ElasticsearchCluster();
 
-		elasticsearchCluster.setCompanyLocalService(_companyLocalService);
+		elasticsearchCluster.companyLocalService =_companyLocalService;
+
+		elasticsearchCluster.indexNameBuilder = new IndexNameBuilder() {
+
+			@Override
+			public String getIndexName(long companyId) {
+				return getTestIndexName(companyId);
+			}
+
+		};
 
 		return elasticsearchCluster.new ReplicasClusterContextImpl();
+	}
+
+	protected String getTestIndexName(long companyId) {
+		IndexName indexName = new IndexName(
+			testName.getMethodName() + "-" + companyId);
+
+		return indexName.getName();
 	}
 
 	protected void setUpCompanyLocalService(long companyId) {

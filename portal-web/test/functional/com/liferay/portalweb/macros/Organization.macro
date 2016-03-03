@@ -670,19 +670,6 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
-	<command name="viewCommentCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#MISCELLANEOUS_COMMENTS" value1="Comments" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
-	</command>
-
 	<command name="viewCP">
 		<var name="key_orgName" value="${orgName}" />
 

@@ -51,7 +51,7 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 
 				while (rs.next()) {
 					long articleId = rs.getLong(1);
-					String elName = rs.getString(3);
+					String elName = rs.getString(2);
 
 					ps2.setString(1, StringUtil.randomString(4));
 					ps2.setLong(2, articleId);

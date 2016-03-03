@@ -387,6 +387,66 @@
 		<execute function="AssertTextNotPresent" value1="${orgName}" />
 	</command>
 
+	<command name="editIdentificationCP">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+	</command>
+
+	<command name="editMiscellaneousCP">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Organization#gotoMiscellaneousCP">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+	</command>
+
+	<command name="editOrganizationInformationCP">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Organization#gotoOrganizationInformationCP">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+	</command>
+
 	<command name="editSiteCP">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />

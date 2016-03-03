@@ -2507,6 +2507,17 @@ public class DataFactory {
 		};
 	}
 
+	protected String getClassName(long classNameId) {
+		for (ClassNameModel classNameModel : _classNameModels.values()) {
+			if (classNameModel.getClassNameId() == classNameId) {
+				return classNameModel.getValue();
+			}
+		}
+
+		throw new RuntimeException(
+			"Unable to find class name for id " + classNameId);
+	}
+
 	protected InputStream getResourceInputStream(String resourceName) {
 		Class<?> clazz = getClass();
 

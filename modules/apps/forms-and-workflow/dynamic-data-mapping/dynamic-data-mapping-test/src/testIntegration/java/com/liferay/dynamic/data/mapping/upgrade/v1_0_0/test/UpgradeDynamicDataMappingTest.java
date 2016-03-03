@@ -1010,21 +1010,17 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	protected void addContent(long contentId, String data) throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		StringBundler sb = new StringBundler(4);
 
-		PreparedStatement ps = null;
+		sb.append("insert into DDMContent (contentId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, ");
+		sb.append("modifiedDate, name, description, data_) values (?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		String sql = sb.toString();
 
-			sb.append("insert into DDMContent (contentId, groupId, ");
-			sb.append("companyId, userId, userName, createDate, ");
-			sb.append("modifiedDate, name, description, data_) values (?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, contentId);
 			ps.setLong(2, _group.getGroupId());
@@ -1039,30 +1035,23 @@ public class UpgradeDynamicDataMappingTest {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
 	}
 
 	protected void addResourcePermission(
 			long resourcePermissionId, long structureId, String name)
 		throws Exception {
 
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		StringBundler sb = new StringBundler(4);
 
-		PreparedStatement ps = null;
+		sb.append("insert into ResourcePermission (mvccVersion, ");
+		sb.append("resourcePermissionId, companyId, name, scope,  ");
+		sb.append("primKey, primKeyId, roleId, ownerId, actionIds ) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		String sql = sb.toString();
 
-			sb.append("insert into ResourcePermission (mvccVersion, ");
-			sb.append("resourcePermissionId, companyId, name, scope,  ");
-			sb.append("primKey, primKeyId, roleId, ownerId, actionIds ) ");
-			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, 0);
 			ps.setLong(2, resourcePermissionId);
@@ -1077,29 +1066,22 @@ public class UpgradeDynamicDataMappingTest {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
 	}
 
 	protected void addStorageLink(
 			long storageLinkId, long classPK, long structureId)
 		throws Exception {
 
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		StringBundler sb = new StringBundler(3);
 
-		PreparedStatement ps = null;
+		sb.append("insert into DDMStorageLink (storageLinkId, companyId, ");
+		sb.append("classNameId, classPK, structureId) values (?, ?, ?, ");
+		sb.append("?, ?)");
 
-		try {
-			StringBundler sb = new StringBundler(3);
+		String sql = sb.toString();
 
-			sb.append("insert into DDMStorageLink (storageLinkId, companyId, ");
-			sb.append("classNameId, classPK, structureId) values (?, ?, ?, ");
-			sb.append("?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, storageLinkId);
 			ps.setLong(2, _group.getCompanyId());
@@ -1109,9 +1091,6 @@ public class UpgradeDynamicDataMappingTest {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
 	}
 
 	protected void addStructure(
@@ -1119,24 +1098,20 @@ public class UpgradeDynamicDataMappingTest {
 			String definition, String storageType)
 		throws Exception {
 
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		StringBundler sb = new StringBundler(6);
 
-		PreparedStatement ps = null;
+		sb.append("insert into DDMStructure (structureId, groupId, ");
+		sb.append("companyId, userId, userName, versionUserId, ");
+		sb.append("versionUserName, createDate, modifiedDate, ");
+		sb.append("parentStructureId, classNameId, structureKey, ");
+		sb.append("version, name, description, definition, storageType, ");
+		sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?)");
 
-		try {
-			StringBundler sb = new StringBundler(6);
+		String sql = sb.toString();
 
-			sb.append("insert into DDMStructure (structureId, groupId, ");
-			sb.append("companyId, userId, userName, versionUserId, ");
-			sb.append("versionUserName, createDate, modifiedDate, ");
-			sb.append("parentStructureId, classNameId, structureKey, ");
-			sb.append("version, name, description, definition, storageType, ");
-			sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, structureId);
 			ps.setLong(2, _group.getGroupId());
@@ -1159,9 +1134,6 @@ public class UpgradeDynamicDataMappingTest {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
 	}
 
 	protected void addTemplate(
@@ -1169,24 +1141,20 @@ public class UpgradeDynamicDataMappingTest {
 			String language, String type)
 		throws Exception {
 
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		StringBundler sb = new StringBundler(7);
 
-		PreparedStatement ps = null;
+		sb.append("insert into DDMTemplate (templateId, groupId, ");
+		sb.append("companyId, userId, userName, versionUserId, ");
+		sb.append("versionUserName, createDate, modifiedDate, ");
+		sb.append("classNameId, classPK, resourceClassNameId, ");
+		sb.append("templateKey, version, name, mode_, language, script, ");
+		sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?)");
 
-		try {
-			StringBundler sb = new StringBundler(7);
+		String sql = sb.toString();
 
-			sb.append("insert into DDMTemplate (templateId, groupId, ");
-			sb.append("companyId, userId, userName, versionUserId, ");
-			sb.append("versionUserName, createDate, modifiedDate, ");
-			sb.append("classNameId, classPK, resourceClassNameId, ");
-			sb.append("templateKey, version, name, mode_, language, script, ");
-			sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, templateId);
 			ps.setLong(2, _group.getGroupId());
@@ -1209,9 +1177,6 @@ public class UpgradeDynamicDataMappingTest {
 			ps.setString(19, type);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 

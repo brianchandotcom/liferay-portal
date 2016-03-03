@@ -1851,7 +1851,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditOrganization#BACK" />
+		<execute function="AssertElementPresent" locator1="Icon#BACK" />
 
 		<take-screenshot />
 	</command>

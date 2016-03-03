@@ -28,12 +28,12 @@ body {
 	}
 
 	.sidenav-container {
-		&.closed .sidenav-content {
-			margin-right: 0;
-		}
-
 		.sidenav-content {
 			margin-right: -15px;
+		}
+
+		&.closed .sidenav-content {
+			margin-right: 0;
 		}
 	}
 

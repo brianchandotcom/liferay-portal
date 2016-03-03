@@ -61,6 +61,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
 
+	public void setMaxFileSize(long maxFileSize) {
+		_maxFileSize = maxFileSize;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -104,6 +108,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_emptyResultsMessage = null;
 		_displayStyle = null;
 		_itemSelectedEventName = null;
+		_maxFileSize = 0;
 		_portletURL = null;
 		_repositoryEntries = new ArrayList<>();
 		_repositoryEntriesCount = 0;
@@ -171,6 +176,9 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 				"itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:maxFileSize",
+			_maxFileSize);
+		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:portletURL",
 			_portletURL);
 		request.setAttribute(
@@ -206,6 +214,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private String _displayStyle;
 	private String _emptyResultsMessage;
 	private String _itemSelectedEventName;
+	private long _maxFileSize;
 	private PortletURL _portletURL;
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
 	private int _repositoryEntriesCount = 0;

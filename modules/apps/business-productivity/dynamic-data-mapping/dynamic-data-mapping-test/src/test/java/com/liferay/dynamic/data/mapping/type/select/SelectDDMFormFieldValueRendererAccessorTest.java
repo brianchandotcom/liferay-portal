@@ -24,27 +24,16 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Renato Rego
  */
-@RunWith(PowerMockRunner.class)
-public class SelectDDMFormFieldValueRendererAccessorTest extends PowerMockito {
-
-	@Before
-	public void setUp() {
-		setUpJSONFactoryUtil();
-	}
+public class SelectDDMFormFieldValueRendererAccessorTest {
 
 	@Test
 	public void testRenderMultipleValues() throws Exception {
@@ -136,13 +125,24 @@ public class SelectDDMFormFieldValueRendererAccessorTest extends PowerMockito {
 	}
 
 	protected JSONArray createOptionsValuesJSONArray(int numberOfOptions) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (int i = 1; i <= numberOfOptions; i++) {
 			jsonArray.put("value " + i);
 		}
 
 		return jsonArray;
+	}
+
+	protected SelectDDMFormFieldValueAccessor
+		createSelectDDMFormFieldValueAccessor() {
+
+		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor =
+			new SelectDDMFormFieldValueAccessor();
+
+		selectDDMFormFieldValueAccessor.jsonFactory = _jsonFactory;
+
+		return selectDDMFormFieldValueAccessor;
 	}
 
 	protected SelectDDMFormFieldValueRenderer
@@ -152,21 +152,12 @@ public class SelectDDMFormFieldValueRendererAccessorTest extends PowerMockito {
 		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
 			new SelectDDMFormFieldValueRenderer();
 
-		field(
-			SelectDDMFormFieldValueRenderer.class,
-			"_selectDDMFormFieldValueAccessor"
-		).set(
-			selectDDMFormFieldValueRenderer,
-			new SelectDDMFormFieldValueAccessor()
-		);
+		selectDDMFormFieldValueRenderer.selectDDMFormFieldValueAccessor =
+			createSelectDDMFormFieldValueAccessor();
 
 		return selectDDMFormFieldValueRenderer;
 	}
 
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

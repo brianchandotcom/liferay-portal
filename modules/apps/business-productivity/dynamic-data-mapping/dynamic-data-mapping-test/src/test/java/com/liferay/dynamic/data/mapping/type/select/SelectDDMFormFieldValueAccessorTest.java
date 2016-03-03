@@ -19,28 +19,16 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Renato Rego
  */
 public class SelectDDMFormFieldValueAccessorTest {
-
-	@Before
-	public void setUp() {
-		setUpJSONFactoryUtil();
-	}
-
-	public void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
 	@Test
 	public void testGetSelectValue() throws Exception {
@@ -53,6 +41,8 @@ public class SelectDDMFormFieldValueAccessorTest {
 		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor =
 			new SelectDDMFormFieldValueAccessor();
 
+		selectDDMFormFieldValueAccessor.jsonFactory = _jsonFactory;
+
 		JSONArray actualJSONArray = selectDDMFormFieldValueAccessor.getValue(
 			ddmFormFieldValue, LocaleUtil.US);
 
@@ -61,7 +51,7 @@ public class SelectDDMFormFieldValueAccessorTest {
 	}
 
 	protected JSONArray createJSONArray(String... strings) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (String string : strings) {
 			jsonArray.put(string);
@@ -69,5 +59,7 @@ public class SelectDDMFormFieldValueAccessorTest {
 
 		return jsonArray;
 	}
+
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

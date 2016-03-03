@@ -23,27 +23,15 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Renato Rego
  */
-@RunWith(PowerMockRunner.class)
-public class RadioDDMFormFieldValueRendererTest extends PowerMockito {
-
-	@Before
-	public void setUp() {
-		setUpJSONFactoryUtil();
-	}
+public class RadioDDMFormFieldValueRendererTest {
 
 	@Test
 	public void testRender() throws Exception {
@@ -80,6 +68,17 @@ public class RadioDDMFormFieldValueRendererTest extends PowerMockito {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
+	protected RadioDDMFormFieldValueAccessor
+		createRadioDDMFormFieldValueAccessor() {
+
+		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor =
+			new RadioDDMFormFieldValueAccessor();
+
+		radioDDMFormFieldValueAccessor.jsonFactory = new JSONFactoryImpl();
+
+		return radioDDMFormFieldValueAccessor;
+	}
+
 	protected RadioDDMFormFieldValueRenderer
 			createRadioDDMFormFieldValueRenderer()
 		throws Exception {
@@ -87,20 +86,10 @@ public class RadioDDMFormFieldValueRendererTest extends PowerMockito {
 		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
 			new RadioDDMFormFieldValueRenderer();
 
-		field(
-			RadioDDMFormFieldValueRenderer.class,
-			"_radioDDMFormFieldValueAccessor"
-		).set(
-			radioDDMFormFieldValueRenderer, new RadioDDMFormFieldValueAccessor()
-		);
+		radioDDMFormFieldValueRenderer.radioDDMFormFieldValueAccessor =
+			createRadioDDMFormFieldValueAccessor();
 
 		return radioDDMFormFieldValueRenderer;
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 }

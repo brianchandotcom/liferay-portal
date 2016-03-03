@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.type.radio;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -28,18 +27,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
  */
 public class RadioDDMFormFieldContextHelperTest {
-
-	@Before
-	public void setUp() {
-		setUpJSONFactoryUtil();
-	}
 
 	@Test
 	public void testGetOptionsWithNoCheckedValueAndOnePredefinedValue() {
@@ -73,12 +66,6 @@ public class RadioDDMFormFieldContextHelperTest {
 			LocaleUtil.US);
 
 		Assert.assertEquals(expectedOptions, actualOptions);
-	}
-
-	protected static void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	protected Map<String, String> createCheckedOption(
@@ -129,7 +116,8 @@ public class RadioDDMFormFieldContextHelperTest {
 
 		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
 			new RadioDDMFormFieldContextHelper(
-				ddmFormFieldOptions, value, predefinedValue, locale);
+				new JSONFactoryImpl(), ddmFormFieldOptions, value,
+				predefinedValue, locale);
 
 		return radioDDMFormFieldContextHelper.getOptions();
 	}

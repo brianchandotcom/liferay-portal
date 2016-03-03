@@ -18,22 +18,15 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Renato Rego
  */
 public class RadioDDMFormFieldValueAccessorTest {
-
-	@Before
-	public void setUp() {
-		setUpJSONFactoryUtil();
-	}
 
 	@Test
 	public void testGetRadioValue() {
@@ -44,16 +37,12 @@ public class RadioDDMFormFieldValueAccessorTest {
 		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor =
 			new RadioDDMFormFieldValueAccessor();
 
+		radioDDMFormFieldValueAccessor.jsonFactory = new JSONFactoryImpl();
+
 		Assert.assertEquals(
 			"value 1",
 			radioDDMFormFieldValueAccessor.getValue(
 				ddmFormFieldValue, LocaleUtil.US));
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 }

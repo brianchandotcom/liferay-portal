@@ -81,13 +81,8 @@ public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 		CheckboxDDMFormFieldValueRenderer checkboxDDMFormFieldValueRenderer =
 			new CheckboxDDMFormFieldValueRenderer();
 
-		field(
-			CheckboxDDMFormFieldValueRenderer.class,
-			"_checkboxDDMFormFieldValueAccessor"
-		).set(
-			checkboxDDMFormFieldValueRenderer,
-			new CheckboxDDMFormFieldValueAccessor()
-		);
+		checkboxDDMFormFieldValueRenderer.checkboxDDMFormFieldValueAccessor =
+			new CheckboxDDMFormFieldValueAccessor();
 
 		return checkboxDDMFormFieldValueRenderer;
 	}

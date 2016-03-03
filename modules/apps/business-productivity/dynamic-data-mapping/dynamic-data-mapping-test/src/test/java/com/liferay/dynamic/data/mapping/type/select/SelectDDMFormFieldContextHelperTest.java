@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -29,18 +29,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
  */
 public class SelectDDMFormFieldContextHelperTest {
-
-	@Before
-	public void setUp() {
-		setUpJSONFactoryUtil();
-	}
 
 	@Test
 	public void testGetOptionsWithAllSelectedValuesAndNoPredefinedValue() {
@@ -110,12 +104,6 @@ public class SelectDDMFormFieldContextHelperTest {
 		Assert.assertEquals(expectedOptions, actualOptions);
 	}
 
-	protected static void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
 	protected DDMFormFieldOptions createDDMFormFieldOptions() {
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
@@ -172,13 +160,14 @@ public class SelectDDMFormFieldContextHelperTest {
 
 		SelectDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
 			new SelectDDMFormFieldContextHelper(
-				ddmFormFieldOptions, value, predefinedValue, locale);
+				_jsonFactory, ddmFormFieldOptions, value, predefinedValue,
+				locale);
 
 		return selectDDMFormFieldContextHelper.getOptions();
 	}
 
 	protected JSONArray toJSONArray(String... strings) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (String string : strings) {
 			jsonArray.put(string);
@@ -186,5 +175,7 @@ public class SelectDDMFormFieldContextHelperTest {
 
 		return jsonArray;
 	}
+
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

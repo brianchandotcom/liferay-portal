@@ -23,6 +23,32 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--EDIT_TABS-->
+<tr>
+	<td>IDENTIFICATION</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Identification')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MISCELLANEOUS</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Miscellaneous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_INFORMATION</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'Organization Information')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_INFORMATION</td>
+	<td>//li[contains(@class,'tab')]/a[contains(.,'User Information')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>

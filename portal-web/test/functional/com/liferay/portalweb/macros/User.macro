@@ -1253,7 +1253,7 @@
 	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->
 
 	<command name="editUserDisplaySettingsTimeZonePacific">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
+		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Display Settings" />
@@ -1273,7 +1273,7 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
+		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Display Settings" />
@@ -1916,7 +1916,7 @@
 	</command>
 
 	<command name="viewUserMiscellaneousCustomFieldsCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#MISCELLANEOUS" value1="Miscellaneous" />
+		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Custom Fields" />

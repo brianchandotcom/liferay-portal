@@ -373,6 +373,68 @@
 	<td>//label[contains(@for,'javascript')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENUITEM-->
+<tr>
+	<td>ADD_PUBLIC_PAGE_MENUITEM</td>
+	<td>//*[@data-qa-id='addPublicPage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_PUBLIC_PAGE_MENUITEM</td>
+	<td>//*[@data-qa-id='editPublicPage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PRIVATE_PAGE_MENUITEM</td>
+	<td>//*[@data-qa-id='addPrivatePage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_PUBLIC_PAGE_MENUITEM</td>
+	<td>//*[@data-qa-id='editPrivatePage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CHILD_PAGE</td>
+	<td>//*[@data-qa-id='addChildPage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SPECIFIC_PAGE</td>
+	<td>//li[contains(.,'${key_pageName}')]/*[@data-qa-id='editPage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_SPECIFIC_PAGE</td>
+	<td>//li[contains(.,'${key_pageName}')]/*[@data-qa-id='deletePage']</td>
+	<td></td>
+</tr>
+<!--ELLIPSIS-->
+<tr>
+	<td>PUBLIC_PAGE_ELLIPSIS</td>
+	<td>//*[@data-qa-id='publicPagesOptions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_PAGE_ELLIPSIS</td>
+	<td>//*[@data-qa-id='privatePagesOptions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_ELLIPSIS</td>
+	<td>//*[@data-qa-id='pagesOptions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_PAGE_ELLIPSIS</td>
+	<td>//div[contains(.,'${key_pageName}')]/*[@data-qa-id='pageOptions']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

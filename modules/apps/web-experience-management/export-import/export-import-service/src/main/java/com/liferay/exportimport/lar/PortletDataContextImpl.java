@@ -37,8 +37,6 @@ import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.exportimport.xstream.ConverterAdapter;
 import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
-import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
-import com.liferay.exportimport.xstream.configurator.XStreamConfiguratorRegistryUtil;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
@@ -104,6 +102,8 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.xstream.configurator.XStreamConfigurator;
+import com.liferay.xstream.configurator.XStreamConfiguratorRegistryUtil;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.ClassLoaderReference;

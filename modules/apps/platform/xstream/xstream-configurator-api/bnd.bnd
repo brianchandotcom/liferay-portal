@@ -1,0 +1,6 @@
+Bundle-Name: Liferay XStream Configurator API
+Bundle-SymbolicName: com.liferay.xstream.configurator.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.xstream.configurator
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

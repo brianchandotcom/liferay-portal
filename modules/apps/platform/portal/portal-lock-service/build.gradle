@@ -12,6 +12,7 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	provided project(":apps:platform:portal:portal-lock-api")
 	provided project(":apps:platform:portal:portal-upgrade")
+	provided project(":apps:platform:xstream:xstream-configurator-api")
 }
 
 liferay {

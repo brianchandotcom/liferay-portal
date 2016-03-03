@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.ParallelUpgradeSchemaExecutor;
+import com.liferay.portal.upgrade.util.ParallelUpgradeSchemaUtil;
 import com.liferay.portal.upgrade.util.UpgradeMVCCVersion;
 
 /**
@@ -25,14 +25,10 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		ParallelUpgradeSchemaExecutor parallelUpgradeSchemaExecutor =
-			new ParallelUpgradeSchemaExecutor(
-				"update-6.2.0-7.0.0.sql", "update-6.2.0-7.0.0-asset.sql",
-				"update-6.2.0-7.0.0-group.sql",
-				"update-6.2.0-7.0.0-layoutset.sql",
-				"update-6.2.0-7.0.0-layoutsetbranch.sql");
-
-		parallelUpgradeSchemaExecutor.execute();
+		ParallelUpgradeSchemaUtil.execute(
+			"update-6.2.0-7.0.0.sql", "update-6.2.0-7.0.0-asset.sql",
+			"update-6.2.0-7.0.0-group.sql", "update-6.2.0-7.0.0-layoutset.sql",
+			"update-6.2.0-7.0.0-layoutsetbranch.sql");
 
 		upgrade(UpgradeMVCCVersion.class);
 	}

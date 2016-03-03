@@ -14,54 +14,46 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
  * @author Miguel Pastor
  */
-public class ParallelUpgradeSchemaExecutor {
+public class ParallelUpgradeSchemaUtil {
 
-	public ParallelUpgradeSchemaExecutor(String... sqlFileNames) {
-		_sqlFileNames = sqlFileNames;
-	}
+	public static void execute(String... sqlFileNames) throws Exception {
+		ThreadPoolExecutor threadPoolExecutor =
+			PortalExecutorManagerUtil.getPortalExecutor(
+				ParallelUpgradeSchemaUtil.class.getName());
 
-	public void execute() throws Exception {
-		ExecutorService executorService = Executors.newFixedThreadPool(3);
-
-		List<Future<Void>> futures = new ArrayList<>();
+		List<Future<Void>> futures = new ArrayList<>(sqlFileNames.length);
 
 		try {
-			for (int i = 0; i < _sqlFileNames.length; i++) {
+			for (String sqlFileName : sqlFileNames) {
 				futures.add(
-					executorService.submit(
-						new CallableSQLExecutor(_sqlFileNames[i])));
+					threadPoolExecutor.submit(
+						new CallableSQLExecutor(sqlFileName)));
+			}
+
+			for (Future<Void> future : futures) {
+				future.get();
 			}
 		}
 		finally {
-			executorService.shutdown();
-		}
-
-		for (Future<Void> future : futures) {
-			future.get();
+			threadPoolExecutor.shutdown();
 		}
 	}
 
-	private final String[] _sqlFileNames;
-
-	private class CallableSQLExecutor implements Callable<Void> {
-
-		public CallableSQLExecutor(String sqlFile) {
-			_sqlFileName = sqlFile;
-		}
+	private static class CallableSQLExecutor implements Callable<Void> {
 
 		@Override
 		public Void call() throws Exception {
@@ -72,6 +64,10 @@ public class ParallelUpgradeSchemaExecutor {
 			}
 
 			return null;
+		}
+
+		private CallableSQLExecutor(String sqlFileName) {
+			_sqlFileName = sqlFileName;
 		}
 
 		private final String _sqlFileName;

@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.ParallelUpgradeSchemaExecutor;
+import com.liferay.portal.upgrade.util.ParallelUpgradeSchemaUtil;
 
 /**
  * @author Raymond Augé
@@ -24,14 +24,10 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		ParallelUpgradeSchemaExecutor parallelUpgradeSchemaExecutor =
-			new ParallelUpgradeSchemaExecutor(
-				"update-6.1.1-6.2.0.sql", "update-6.1.1-6.2.0-dl.sql",
-				"update-6.1.1-6.2.0-expando.sql",
-				"update-6.1.1-6.2.0-group.sql", "update-6.1.1-6.2.0-user.sql",
-				"update-6.1.1-6.2.0-wiki.sql");
-
-		parallelUpgradeSchemaExecutor.execute();
+		ParallelUpgradeSchemaUtil.execute(
+			"update-6.1.1-6.2.0.sql", "update-6.1.1-6.2.0-dl.sql",
+			"update-6.1.1-6.2.0-expando.sql", "update-6.1.1-6.2.0-group.sql",
+			"update-6.1.1-6.2.0-user.sql", "update-6.1.1-6.2.0-wiki.sql");
 
 		upgrade(UpgradeMVCCVersion.class);
 	}

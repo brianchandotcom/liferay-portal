@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_OPENED</td>
-	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed'))]</td>
+	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed')) and not(contains(@class,'transition'))]</td>
 	<td></td>
 </tr>
 <tr>

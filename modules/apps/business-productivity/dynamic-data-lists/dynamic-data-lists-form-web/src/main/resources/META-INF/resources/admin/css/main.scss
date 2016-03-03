@@ -570,6 +570,10 @@ $horizontal-spacing: 35px;
 		word-break: break-all;
 	}
 
+	.form-builder-field-list {
+		padding: 25px 0;
+	}
+
 	.form-builder-field-list-container {
 		hyphens: auto;
 		padding: 0;
@@ -607,7 +611,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.lfr-ddm-form-field-container {
-		padding: 23px 0;
+		padding: 21px 0;
 	}
 
 	.lfr-ddm-form-page-title {
@@ -711,7 +715,7 @@ $horizontal-spacing: 35px;
 		}
 
 		.form-builder-field-list-container {
-			padding: 23px 0;
+			padding: 0;
 		}
 
 		.form-builder-field-move-target {

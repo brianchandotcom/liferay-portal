@@ -116,7 +116,7 @@ public class IndexerRequestBufferExecutorWatcher {
 	private IndexerRequestBufferExecutor _defaultIndexerRequestBufferExecutor;
 
 	private IndexerRegistryConfiguration _indexerRegistryConfiguration;
-	private Map<String, IndexerRequestBufferExecutor>
+	private final Map<String, IndexerRequestBufferExecutor>
 		_indexerRequestBufferExecutors = new ConcurrentHashMap<>();
 
 }

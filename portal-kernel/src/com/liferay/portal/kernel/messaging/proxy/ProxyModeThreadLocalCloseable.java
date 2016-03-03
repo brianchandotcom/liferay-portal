@@ -30,5 +30,6 @@ public class ProxyModeThreadLocalCloseable implements Closeable {
 		ProxyModeThreadLocal.setForceSync(_forceSync);
 	}
 
-	private boolean _forceSync;
+	private final boolean _forceSync;
+
 }

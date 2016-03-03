@@ -42,6 +42,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Tomas Polesovsky
+ * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
 public class LiferayTemplateClassResolverTest {

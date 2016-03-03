@@ -260,27 +260,27 @@ public class DDMFormValidationException extends PortalException {
 		extends DDMFormValidationException {
 
 		public MustSetValidVisibilityExpression(
-			String fieldName, String expression) {
+			String fieldName, String visibilityExpression) {
 
 			super(
 				String.format(
 					"Invalid visibility expression set for field %s: %s",
-					fieldName, expression));
+					fieldName, visibilityExpression));
 
 			_fieldName = fieldName;
-			_expression = expression;
-		}
-
-		public String getExpression() {
-			return _expression;
+			_visibilityExpression = visibilityExpression;
 		}
 
 		public String getFieldName() {
 			return _fieldName;
 		}
 
-		private final String _expression;
+		public String getVisibilityExpression() {
+			return _visibilityExpression;
+		}
+
 		private String _fieldName;
+		private final String _visibilityExpression;
 
 	}
 

@@ -235,18 +235,19 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			DDMFormField ddmFormField)
 		throws DDMFormValidationException {
 
-		String expressionString = ddmFormField.getVisibilityExpression();
+		String visibilityExpression = ddmFormField.getVisibilityExpression();
 
-		if (Validator.isNull(expressionString)) {
+		if (Validator.isNull(visibilityExpression)) {
 			return;
 		}
 
 		try {
-			_ddmExpressionFactory.createBooleanDDMExpression(expressionString);
+			_ddmExpressionFactory.createBooleanDDMExpression(
+				visibilityExpression);
 		}
 		catch (DDMExpressionException ddmee) {
 			throw new MustSetValidVisibilityExpression(
-				ddmFormField.getName(), expressionString);
+				ddmFormField.getName(), visibilityExpression);
 		}
 	}
 

@@ -7,7 +7,9 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoSettings" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<var name="key_tagName" value="${tagName}" />
 
@@ -71,7 +73,9 @@
 			<var name="entryContent" value="${entryContent}" />
 		</execute>
 
-		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Type#clickAtSendKeys" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
@@ -203,7 +207,9 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoSettings" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<var name="key_tagName" value="${tagName1}" />
 

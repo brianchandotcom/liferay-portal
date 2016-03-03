@@ -210,7 +210,7 @@
 	<command name="autoSaveDraft">
 		<execute function="Pause" locator1="30000" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SAVE_STATUS" value1="Draft saved at" />
+		<execute function="AssertElementPresent" locator1="Message#DRAFT_AUTO_SAVE" />
 	</command>
 
 	<command name="editContent">

@@ -28,10 +28,6 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="set-the-display-styles-used-to-display-blogs-when-viewed-via-as-a-regular-page-or-as-an-rss" />
-	</div>
-
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset collapsible="<%= true %>" label="display-settings">
 			<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">

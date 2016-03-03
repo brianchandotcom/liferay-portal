@@ -15,6 +15,7 @@
 package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Ambrín Chaudhary
@@ -25,7 +26,9 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public UploadItemSelectorCriterion(String url, String repositoryName) {
-		this(url, repositoryName, 0);
+		this(
+			url, repositoryName,
+			PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
 	}
 
 	public UploadItemSelectorCriterion(

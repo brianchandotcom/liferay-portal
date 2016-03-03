@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -108,7 +109,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_emptyResultsMessage = null;
 		_displayStyle = null;
 		_itemSelectedEventName = null;
-		_maxFileSize = 0;
+		_maxFileSize = PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 		_portletURL = null;
 		_repositoryEntries = new ArrayList<>();
 		_repositoryEntriesCount = 0;
@@ -217,7 +218,8 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private long _maxFileSize;
 	private PortletURL _portletURL;
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
-	private int _repositoryEntriesCount = 0;
+	private long _repositoryEntriesCount =
+		PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 	private boolean _showBreadcrumb;
 	private boolean _showDragAndDropZone = true;
 	private String _tabName;

@@ -241,11 +241,14 @@ public class PHPPortlet extends GenericPortlet {
 
 			String contentType = bufferCacheServletResponse.getContentType();
 
-			if (contentType.startsWith("text/")) {
-				result = rewriteURLs(result, renderResponse.createRenderURL());
-			}
+			if (contentType != null) {
+				if (contentType.startsWith("text/")) {
+					result = rewriteURLs(
+						result, renderResponse.createRenderURL());
+				}
 
-			renderResponse.setContentType(contentType);
+				renderResponse.setContentType(contentType);
+			}
 
 			PrintWriter writer = renderResponse.getWriter();
 

@@ -15,6 +15,8 @@ AUI.add(
 
 		var CSS_PAGES = A.getClassName('form', 'builder', 'pages', 'lexicon');
 
+		var CSS_ROW_CONTAINER_ROW = A.getClassName('layout', 'row', 'container', 'row');
+
 		var TPL_REQURIED_FIELDS = '<label class="hide required-warning">{message}</label>';
 
 		var FormBuilder = A.Component.create(
@@ -90,14 +92,6 @@ AUI.add(
 						];
 
 						instance._overwriteFieldToolbar();
-					},
-
-					_overwriteFieldToolbar: function() {
-						var instance = this;
-
-						instance._fieldToolbar.destroy();
-
-						instance._fieldToolbar = new Liferay.DDL.FormBuilderFieldToolbar(instance.get('fieldToolbarConfig'));
 					},
 
 					destructor: function() {
@@ -216,6 +210,7 @@ AUI.add(
 						instance._renderRequiredFieldsWarning();
 						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
+						instance._syncRowIcons();
 					},
 
 					_afterFieldSettingsModalSave: function(event) {
@@ -315,6 +310,27 @@ AUI.add(
 						return visitor;
 					},
 
+					_insertCutRowIcon: function(row) {
+						var instance = this;
+
+						var cutButton = row.ancestor('.' + CSS_ROW_CONTAINER_ROW).one('.layout-builder-move-cut-button');
+
+						if (cutButton) {
+							cutButton.insert(Liferay.Util.getLexiconIconTpl('cut'));
+						}
+					},
+
+					_insertRemoveRowButton: function(layoutRow, row) {
+						var instance = this;
+
+						var deleteButton = row.ancestor('.' + CSS_ROW_CONTAINER_ROW).all('.layout-builder-remove-row-button');
+
+						if (deleteButton) {
+							deleteButton.empty();
+							deleteButton.insert(Liferay.Util.getLexiconIconTpl('trash'));
+						}
+					},
+
 					_makeEmptyFieldList: function(col) {
 						col.set('value', new Liferay.DDL.FormBuilderFieldList());
 					},
@@ -323,6 +339,14 @@ AUI.add(
 						var instance = this;
 
 						event.halt();
+					},
+
+					_overwriteFieldToolbar: function() {
+						var instance = this;
+
+						instance._fieldToolbar.destroy();
+
+						instance._fieldToolbar = new Liferay.DDL.FormBuilderFieldToolbar(instance.get('fieldToolbarConfig'));
 					},
 
 					_renderContentBox: function() {
@@ -399,6 +423,19 @@ AUI.add(
 						instance._requiredFieldsWarningNode.appendTo(pageManager.get('pageHeader'));
 					},
 
+					_renderRowIcons: function() {
+						var instance = this;
+
+						var rows = A.all('.layout-row');
+
+						rows.each(
+							function(row) {
+								instance._insertCutRowIcon(row);
+								instance._insertRemoveRowButton(null, row);
+							}
+						);
+					},
+
 					_setFieldToolbarConfig: function() {
 						var instance = this;
 
@@ -451,6 +488,16 @@ AUI.add(
 						visitor.visit();
 
 						instance._requiredFieldsWarningNode.toggle(hasRequiredField);
+					},
+
+					_syncRowIcons: function() {
+						var instance = this;
+
+						instance._renderRowIcons();
+
+						instance._layoutBuilder.after(instance._insertCutRowIcon, instance._layoutBuilder, '_insertCutButtonOnRow');
+
+						instance._layoutBuilder.after(instance._insertRemoveRowButton, instance._layoutBuilder, '_insertRemoveButtonBeforeRow');
 					},
 
 					_syncRowLastColumnUI: function(row) {

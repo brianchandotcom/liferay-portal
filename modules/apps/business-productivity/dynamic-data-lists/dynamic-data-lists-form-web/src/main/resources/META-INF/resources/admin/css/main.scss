@@ -628,8 +628,6 @@ $horizontal-spacing: 35px;
 .portlet-forms-admin {
 	@import "form-builder-field-toolbar";
 
-	$side-spacing: 34px;
-
 	.aspect-ratio img {
 		top: 0;
 	}
@@ -861,6 +859,38 @@ $horizontal-spacing: 35px;
 
 	.form-control[readonly] {
 		background-color: transparent;
+	}
+
+	.layout-builder-move-cut-button.layout-builder-move-cut-row-button,
+	.layout-builder-remove-row-button {
+		background: #FFF;
+		border: 1px solid #65B6F0;
+		height: auto;
+		padding: 0;
+		top: -22px;
+		width: auto;
+		z-index: 10;
+
+		.lexicon-icon {
+			color: #65B6F0;
+			margin: 10px;
+		}
+
+		&:hover {
+			background: #65B6F0;
+
+			.lexicon-icon {
+				color: #FFF;
+			}
+		}
+	}
+
+	.layout-builder-move-cut-button.layout-builder-move-cut-row-button {
+		right: 30px;
+	}
+
+	.layout-builder-remove-row-button {
+		right: -20px;
 	}
 
 	.lfr-ddm-repeatable-add-button {

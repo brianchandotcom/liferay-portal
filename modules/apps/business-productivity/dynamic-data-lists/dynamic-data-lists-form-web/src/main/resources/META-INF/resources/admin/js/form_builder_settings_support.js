@@ -121,13 +121,7 @@ AUI.add(
 			saveSettings: function() {
 				var instance = this;
 
-				var builder = instance.get('builder');
-
 				instance.setAttrs(instance.getSettings());
-
-				instance.render();
-
-				builder.appendChild(instance);
 
 				instance.fire(
 					'field:saveSettings',

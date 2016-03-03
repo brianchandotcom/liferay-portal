@@ -192,8 +192,11 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 						var fieldTypes = <%= ddlFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>;
 
-						var fieldModules = _.map(
-							fieldTypes,
+						var systemFieldModules = fieldTypes.filter(
+							function(item) {
+								return item.system;
+							}
+						).map(
 							function(item) {
 								return item.javaScriptModule;
 							}
@@ -222,7 +225,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 									)
 								);
 							},
-							['liferay-ddl-portlet'].concat(fieldModules)
+							['liferay-ddl-portlet'].concat(systemFieldModules)
 						);
 
 						<portlet:namespace />init();

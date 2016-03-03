@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.paragraph;
+package com.liferay.dynamic.data.mapping.type.editor;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
@@ -37,7 +36,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value = {"label", "text", "tip", "required"}
+							value = {"label", "tip", "required"}
 						)
 					}
 				)
@@ -51,10 +50,11 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"validation", "showLabel", "repeatable",
-								"predefinedValue", "visibilityExpression",
+								"predefinedValue", "placeholder",
+								"visibilityExpression", "validation",
 								"fieldNamespace", "indexType", "localizable",
-								"readOnly", "dataType", "type", "name"
+								"readOnly", "dataType", "type", "name",
+								"showLabel", "repeatable"
 							}
 						)
 					}
@@ -63,48 +63,17 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		)
 	}
 )
-public interface ParagraphDDMFormFieldTypeSettings
+public interface EditorDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		label = "%title", properties = {"placeholder=%enter-a-title"},
-		required = true, type = "key-value"
+		dataType = "string", label = "%placeholder-text",
+		properties = {
+			"placeholder=%enter-placeholder-text",
+			"tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-value"
+		},
+		type = "text"
 	)
-	@Override
-	public LocalizedValue label();
-
-	@DDMFormField(visibilityExpression = "FALSE")
-	@Override
-	public LocalizedValue predefinedValue();
-
-	@DDMFormField(visibilityExpression = "FALSE")
-	@Override
-	public boolean repeatable();
-
-	@DDMFormField(visibilityExpression = "FALSE")
-	@Override
-	public boolean required();
-
-	@DDMFormField(visibilityExpression = "FALSE")
-	@Override
-	public boolean showLabel();
-
-	@DDMFormField(
-		dataType = "string", label = "%body-text",
-		properties = {"placeholder=%enter-body-text"}, required = true,
-		type = "editor"
-	)
-	public String text();
-
-	@DDMFormField(visibilityExpression = "FALSE")
-	@Override
-	public LocalizedValue tip();
-
-	@DDMFormField(
-		dataType = "ddm-validation", type = "validation",
-		visibilityExpression = "FALSE"
-	)
-	@Override
-	public DDMFormFieldValidation validation();
+	public LocalizedValue placeholder();
 
 }

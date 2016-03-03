@@ -50,6 +50,18 @@ AUI.add(
 						return footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE);
 					},
 
+					render: function() {
+						var instance = this;
+
+						var bodyNode = instance._getModalStdModeNode(A.WidgetStdMod.BODY);
+
+						var container = instance.get('container');
+
+						container.appendTo(bodyNode);
+
+						return FormBuilderSettingsForm.superclass.render.apply(instance, arguments);
+					},
+
 					submit: function(callback) {
 						var instance = this;
 
@@ -155,10 +167,6 @@ AUI.add(
 								id: formName
 							}
 						);
-
-						var bodyNode = instance._getModalStdModeNode(A.WidgetStdMod.BODY);
-
-						container.appendTo(bodyNode);
 
 						instance._eventHandlers.push(
 							container.on('submit', A.bind('_onDOMSubmitForm', instance))

@@ -75,18 +75,6 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		}
 	}
 
-	protected boolean isAddAlternateURLs(Map<Locale, String> alternateURLs) {
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
-			return false;
-		}
-
-		if (alternateURLs.size() == 1) {
-			return false;
-		}
-
-		return true;
-	}
-
 	protected void visitLayout(
 			Element element, Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {

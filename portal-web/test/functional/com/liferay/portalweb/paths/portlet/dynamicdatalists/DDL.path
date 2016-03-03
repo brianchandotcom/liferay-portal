@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_COLUMN_NAME</td>
+	<td>//div[contains(@id,'ddlRecordSearchContainer')]//th[contains(.,'${key_fieldFieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECORD_TABLE_COLUMN_ONE_NAME</td>
 	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//thead/tr/th[2])</td>
 	<td></td>

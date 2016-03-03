@@ -509,14 +509,31 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			URL resourceURL, String resourcePath)
 		throws IOException {
 
+		ServletContext cssServletContext = null;
+
+		String requestURI = request.getRequestURI();
+
+		String resourcePathRoot = null;
+
+		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
+			cssServletContext = PortalWebResourcesUtil.getPathServletContext(
+				requestURI);
+
+			resourcePathRoot = "/";
+		}
+
+		if (cssServletContext == null) {
+			cssServletContext = _servletContext;
+
+			resourcePathRoot = ServletPaths.getParentPath(resourcePath);
+		}
+
 		URLConnection urlConnection = resourceURL.openConnection();
 
 		String content = StringUtil.read(urlConnection.getInputStream());
 
 		content = aggregateCss(
-			new ServletPaths(
-				_servletContext, ServletPaths.getParentPath(resourcePath)),
-			content);
+			new ServletPaths(cssServletContext, resourcePathRoot), content);
 
 		return getCssContent(request, response, resourcePath, content);
 	}

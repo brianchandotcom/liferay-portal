@@ -78,10 +78,15 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
+						var settingsModal = instance.getFieldSettingModal();
+
 						instance._eventHandlers = [
 							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),
 							instance.after('form-builder-field-list:fieldsChange', instance._afterFieldListChange, instance),
-							instance.after('render', instance._afterFormBuilderRender, instance)
+							instance.after('render', instance._afterFormBuilderRender, instance),
+							instance.after(instance._afterRemoveField, instance, 'removeField'),
+							settingsModal.after('hide', A.bind(instance._afterFieldSettingsModalHide, instance)),
+							settingsModal.after('save', A.bind(instance._afterFieldSettingsModalSave, instance))
 						];
 					},
 
@@ -143,7 +148,7 @@ AUI.add(
 						return FieldTypes.get(field.get('type'));
 					},
 
-					showFieldSettingsPanel: function(field, typeName) {
+					getFieldSettingModal: function() {
 						var instance = this;
 
 						if (!instance._fieldSettingsModal) {
@@ -152,14 +157,17 @@ AUI.add(
 									portletNamespace: instance.get('portletNamespace')
 								}
 							);
-
-							instance._eventHandlers.push(
-								instance._fieldSettingsModal.after('hide', A.bind(instance._afterFieldSettingsModalHide, instance)),
-								instance._fieldSettingsModal.after('save', A.bind(instance._afterFieldSettingsModalSave, instance))
-							);
 						}
 
-						instance._fieldSettingsModal.show(field, typeName);
+						return instance._fieldSettingsModal;
+					},
+
+					showFieldSettingsPanel: function(field, typeName) {
+						var instance = this;
+
+						var settingsModal = instance.getFieldSettingModal();
+
+						settingsModal.show(field, typeName);
 					},
 
 					_afterActivePageNumberChange: function() {
@@ -187,6 +195,20 @@ AUI.add(
 						instance._syncRowsLastColumnUI();
 					},
 
+					_afterFieldSettingsModalSave: function(event) {
+						var instance = this;
+
+						FormBuilder.superclass._afterFieldSettingsModalSave.apply(instance, arguments);
+
+						var field = event.field;
+
+						instance.appendChild(field);
+
+						var row = instance.getFieldRow(field);
+
+						instance.getActiveLayout().normalizeColsHeight(new A.NodeList(row));
+					},
+
 					_afterLayoutColsChange: function(event) {
 						var instance = this;
 
@@ -210,6 +232,12 @@ AUI.add(
 
 						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
+					},
+
+					_afterRemoveField: function(field) {
+						var instance = this;
+
+						instance.removeChild(field);
 					},
 
 					_afterSelectFieldType: function(event) {

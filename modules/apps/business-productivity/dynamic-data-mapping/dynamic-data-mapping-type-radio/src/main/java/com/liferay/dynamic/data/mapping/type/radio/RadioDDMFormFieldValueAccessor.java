@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
@@ -45,7 +46,7 @@ public class RadioDDMFormFieldValueAccessor
 		try {
 			Value value = ddmFormFieldValue.getValue();
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			JSONArray jsonArray = jsonFactory.createJSONArray(
 				value.getString(locale));
 
 			return jsonArray.getString(0);
@@ -56,6 +57,9 @@ public class RadioDDMFormFieldValueAccessor
 			return StringPool.BLANK;
 		}
 	}
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RadioDDMFormFieldValueAccessor.class);

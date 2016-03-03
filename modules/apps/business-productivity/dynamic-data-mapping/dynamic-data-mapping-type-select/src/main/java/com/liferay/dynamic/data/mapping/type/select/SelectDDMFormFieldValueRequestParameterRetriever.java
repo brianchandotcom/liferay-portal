@@ -15,13 +15,14 @@
 package com.liferay.dynamic.data.mapping.type.select;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -39,7 +40,10 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 			httpServletRequest, ddmFormFieldParameterName,
 			GetterUtil.DEFAULT_STRING_VALUES);
 
-		return JSONFactoryUtil.serialize(parameterValues);
+		return jsonFactory.serialize(parameterValues);
 	}
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 }

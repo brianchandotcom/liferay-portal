@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
@@ -83,7 +85,7 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 		SelectDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
 			new SelectDDMFormFieldContextHelper(
-				getDDMFormFieldOptions(ddmFormField),
+				jsonFactory, getDDMFormFieldOptions(ddmFormField),
 				ddmFormFieldRenderingContext.getValue(),
 				ddmFormField.getPredefinedValue(),
 				ddmFormFieldRenderingContext.getLocale());
@@ -115,6 +117,9 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		template.put("strings", stringsMap);
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 	}
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	private TemplateResource _templateResource;
 

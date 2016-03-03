@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,9 +36,10 @@ import java.util.Map;
 public class OptionsDDMFormFieldContextHelper {
 
 	public OptionsDDMFormFieldContextHelper(
-		DDMFormFieldOptions ddmFormFieldOptions, String value,
-		LocalizedValue predefinedValue, Locale locale) {
+		JSONFactory jsonFactory, DDMFormFieldOptions ddmFormFieldOptions,
+		String value, LocalizedValue predefinedValue, Locale locale) {
 
+		_jsonFactory = jsonFactory;
 		_ddmFormFieldOptions = ddmFormFieldOptions;
 		_value = toString(value);
 		_predefinedValue = toString(predefinedValue.getString(locale));
@@ -80,7 +81,7 @@ public class OptionsDDMFormFieldContextHelper {
 		}
 
 		try {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(value);
+			JSONArray jsonArray = _jsonFactory.createJSONArray(value);
 
 			return jsonArray.getString(0);
 		}
@@ -95,6 +96,7 @@ public class OptionsDDMFormFieldContextHelper {
 		OptionsDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
+	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final String _predefinedValue;
 	private final String _value;

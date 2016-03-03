@@ -19,13 +19,11 @@ String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.getSiteDefault()};
 
-boolean changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
-
 if (Validator.isNotNull(script)) {
 	try {
-		DDMForm ddmForm = ddmDisplayContext.deserialize(script);
+		JSONObject ddmFormJSONObject = JSONFactoryUtil.createJSONObject(script);
 
-		String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+		String ddmFormDefaultLanguageId = ddmFormJSONObject.getString("defaultLanguageId");
 
 		if (!Validator.equals(defaultLanguageId, ddmFormDefaultLanguageId)) {
 			changeableDefaultLanguage = true;
@@ -33,9 +31,13 @@ if (Validator.isNotNull(script)) {
 
 		defaultLanguageId = ddmFormDefaultLanguageId;
 
-		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
+		JSONArray ddmFormAvailableLocalesJSONArray = ddmFormJSONObject.getJSONArray("availableLanguageIds");
 
-		availableLocales = ddmFormAvailableLocales.toArray(new Locale[ddmFormAvailableLocales.size()]);
+		availableLocales = new Locale[ddmFormAvailableLocalesJSONArray.length()];
+
+		for (int i = 0; i < ddmFormAvailableLocalesJSONArray.length(); i++) {
+			availableLocales[i] = LocaleUtil.fromLanguageId(ddmFormAvailableLocalesJSONArray.getString(i));
+		}
 	}
 	catch (Exception e) {
 	}
@@ -52,7 +54,6 @@ if (Validator.isNotNull(script)) {
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
-
 			<aui:translation-manager
 				availableLocales="<%= availableLocales %>"
 				changeableDefaultLanguage="<%= changeableDefaultLanguage %>"

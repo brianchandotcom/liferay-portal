@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -177,7 +176,7 @@ public class DDMPortlet extends MVCPortlet {
 			setDDMStructureRequestAttribute(request);
 
 			DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
-				request, _ddmFormJSONDeserializer, ddmWebConfiguration);
+				request, ddmWebConfiguration);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
@@ -218,13 +217,6 @@ public class DDMPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		this.ddmWebConfiguration = Configurable.createConfigurable(
 			DDMWebConfiguration.class, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
-
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
 	@Reference(unbind = "-")
@@ -281,7 +273,5 @@ public class DDMPortlet extends MVCPortlet {
 	protected volatile DDMWebConfiguration ddmWebConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
-
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 
 }

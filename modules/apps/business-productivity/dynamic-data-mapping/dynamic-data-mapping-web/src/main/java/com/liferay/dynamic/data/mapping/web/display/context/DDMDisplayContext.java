@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.mapping.web.display.context;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.web.context.util.DDMWebRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,12 +36,10 @@ public class DDMDisplayContext {
 
 	public DDMDisplayContext(
 			RenderRequest renderRequest,
-			DDMFormJSONDeserializer ddmFormJSONDeserializer,
 			DDMWebConfiguration ddmWebConfiguration)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 		_ddmWebConfiguration = ddmWebConfiguration;
 
 		HttpServletRequest httpServletRequest =
@@ -62,12 +58,6 @@ public class DDMDisplayContext {
 
 	public boolean changeableDefaultLanguage() {
 		return _ddmWebConfiguration.changeableDefaultLanguage();
-	}
-
-	public DDMForm deserialize(String serializedDDMForm)
-		throws PortalException {
-
-		return _ddmFormJSONDeserializer.deserialize(serializedDDMForm);
 	}
 
 	public DDMGroupServiceConfiguration getDDMGroupServiceConfiguration() {
@@ -114,7 +104,20 @@ public class DDMDisplayContext {
 		return orderByType;
 	}
 
-	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	public String[] smallImageExtensions() {
+		DDMGroupServiceConfiguration ddmGroupServiceConfiguration =
+			_ddmWebRequestHelper.getDDMGroupServiceConfiguration();
+
+		return ddmGroupServiceConfiguration.smallImageExtensions();
+	}
+
+	public int smallImageMaxSize() {
+		DDMGroupServiceConfiguration ddmGroupServiceConfiguration =
+			_ddmWebRequestHelper.getDDMGroupServiceConfiguration();
+
+		return ddmGroupServiceConfiguration.smallImageMaxSize();
+	}
+
 	private final DDMWebConfiguration _ddmWebConfiguration;
 	private final DDMWebRequestHelper _ddmWebRequestHelper;
 	private final RenderRequest _renderRequest;

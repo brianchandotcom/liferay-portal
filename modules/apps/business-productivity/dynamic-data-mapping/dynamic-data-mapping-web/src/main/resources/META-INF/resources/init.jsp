@@ -26,8 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMGroupServiceConfiguration" %><%@
-page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
@@ -40,7 +39,6 @@ page import="com.liferay.dynamic.data.mapping.exception.TemplateNameException" %
 page import="com.liferay.dynamic.data.mapping.exception.TemplateScriptException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException" %><%@
-page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructureConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructureVersion" %><%@
@@ -172,7 +170,11 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 
 DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-DDMGroupServiceConfiguration ddmGroupServiceConfiguration = ddmDisplayContext.getDDMGroupServiceConfiguration();
+boolean changeableDefaultLanguage = false;
+
+if (ddmDisplayContext != null) {
+	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -230,7 +230,7 @@ public class UserThreadPersistenceTest {
 	}
 
 	protected OrderByComparator<UserThread> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("UserThread",
+		return OrderByComparatorFactoryUtil.create("PM_UserThread",
 			"userThreadId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"mbThreadId", true, "topMBMessageId", true, "read", true,

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +134,8 @@ public class BlogsContentEditorConfigContributor
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"));
+				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
+				PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE));
 
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();

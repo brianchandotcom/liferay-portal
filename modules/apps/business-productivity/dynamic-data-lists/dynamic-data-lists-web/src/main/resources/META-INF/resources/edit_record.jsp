@@ -87,6 +87,8 @@ if (ddlDisplayContext.isAdminPortlet()) {
 	renderResponse.setTitle((record != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.format(request, "new-x", ddmStructure.getName(locale), false));
 }
 else {
+	portletDisplay.setShowBackIcon(false);
+
 	renderResponse.setTitle(recordSet.getName(locale));
 }
 %>

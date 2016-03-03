@@ -171,6 +171,26 @@ public class JenkinsResultsParserUtil {
 		return json;
 	}
 
+	public static String fixMarkdown(String markdown) {
+		markdown = markdown.replace("\\", "\\\\");
+		markdown = markdown.replace("`", "\\`");
+		markdown = markdown.replace("*", "\\*");
+		markdown = markdown.replace("_", "\\_");
+		markdown = markdown.replace("{", "\\{");
+		markdown = markdown.replace("}", "\\}");
+		markdown = markdown.replace("[", "\\[");
+		markdown = markdown.replace("]", "\\]");
+		markdown = markdown.replace("(", "\\(");
+		markdown = markdown.replace(")", "\\)");
+		markdown = markdown.replace("#", "\\#");
+		markdown = markdown.replace("+", "\\+");
+		markdown = markdown.replace("-", "\\-");
+		markdown = markdown.replace(".", "\\.");
+		markdown = markdown.replace("!", "\\!");
+
+		return markdown;
+	}
+
 	public static String fixURL(String url) {
 		url = url.replace("(", "%28");
 		url = url.replace(")", "%29");

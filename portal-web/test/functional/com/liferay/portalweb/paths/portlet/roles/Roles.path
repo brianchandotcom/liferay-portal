@@ -44,7 +44,12 @@
 	<td>//tr[contains(.,'${key_roleName}')]/td[4]//span[contains(.,'Define Permissions')]</td>
 	<td></td>
 </tr>
-<!---->
+<!--SEARCH-->
+<tr>
+	<td>ROLE_SEARCH_BUTTON</td>
+	<td>//*[@data-qa-id='searchButton']</td>
+	<td></td>
+</tr>
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB</td>

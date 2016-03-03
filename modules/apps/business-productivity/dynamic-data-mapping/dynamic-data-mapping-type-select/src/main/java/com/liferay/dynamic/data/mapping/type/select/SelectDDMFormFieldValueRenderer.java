@@ -40,8 +40,7 @@ public class SelectDDMFormFieldValueRenderer
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		JSONArray optionsValuesJSONArray =
-			_selectDDMFormFieldValueAccessor.getValue(
-				ddmFormFieldValue, locale);
+			selectDDMFormFieldValueAccessor.getValue(ddmFormFieldValue, locale);
 
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
 			ddmFormFieldValue);
@@ -93,13 +92,7 @@ public class SelectDDMFormFieldValueRenderer
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSelectDDMFormFieldValueAccessor(
-		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor) {
-
-		_selectDDMFormFieldValueAccessor = selectDDMFormFieldValueAccessor;
-	}
-
-	private SelectDDMFormFieldValueAccessor _selectDDMFormFieldValueAccessor;
+	@Reference
+	protected SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor;
 
 }

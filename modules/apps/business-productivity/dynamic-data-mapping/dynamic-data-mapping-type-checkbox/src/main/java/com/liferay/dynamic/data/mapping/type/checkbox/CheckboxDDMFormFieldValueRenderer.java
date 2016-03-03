@@ -32,7 +32,7 @@ public class CheckboxDDMFormFieldValueRenderer
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		Boolean valueBoolean = _checkboxDDMFormFieldValueAccessor.getValue(
+		Boolean valueBoolean = checkboxDDMFormFieldValueAccessor.getValue(
 			ddmFormFieldValue, locale);
 
 		if (valueBoolean == Boolean.TRUE) {
@@ -43,14 +43,8 @@ public class CheckboxDDMFormFieldValueRenderer
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCheckboxDDMFormFieldValueAccessor(
-		CheckboxDDMFormFieldValueAccessor checkBoxDDMFormFieldValueAccessor) {
-
-		_checkboxDDMFormFieldValueAccessor = checkBoxDDMFormFieldValueAccessor;
-	}
-
-	private CheckboxDDMFormFieldValueAccessor
-		_checkboxDDMFormFieldValueAccessor;
+	@Reference
+	protected CheckboxDDMFormFieldValueAccessor
+		checkboxDDMFormFieldValueAccessor;
 
 }

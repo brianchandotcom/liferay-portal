@@ -35,7 +35,7 @@ public class RadioDDMFormFieldValueRenderer
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		String optionValue = _radioDDMFormFieldValueAccessor.getValue(
+		String optionValue = radioDDMFormFieldValueAccessor.getValue(
 			ddmFormFieldValue, locale);
 
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
@@ -59,13 +59,7 @@ public class RadioDDMFormFieldValueRenderer
 		return ddmFormField.getDDMFormFieldOptions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setRadioDDMFormFieldValueAccessor(
-		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor) {
-
-		_radioDDMFormFieldValueAccessor = radioDDMFormFieldValueAccessor;
-	}
-
-	private RadioDDMFormFieldValueAccessor _radioDDMFormFieldValueAccessor;
+	@Reference
+	protected RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor;
 
 }

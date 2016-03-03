@@ -46,6 +46,40 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
+	public static JSONObject createJSONObject(String jsonString)
+		throws Exception {
+
+		JSONObject jsonObject = new JSONObject(jsonString);
+
+		if (jsonObject.isNull("duration") ||
+			jsonObject.isNull("result") || jsonObject.isNull("url")) {
+
+			return jsonObject;
+		}
+
+		String url = jsonObject.getString("url");
+
+		if (!url.contains("AXIS_VARIABLE")) {
+			return jsonObject;
+		}
+
+		Object result = jsonObject.get("result");
+
+		if (result instanceof JSONObject) {
+			return jsonObject;
+		}
+
+		if ((jsonObject.getInt("duration") == 0) && result.equals("FAILURE")) {
+			String actualResult = getActualResult(url);
+
+			jsonObject.put(
+				"result",
+				actualResult == null ? JSONObject.NULL : actualResult);
+		}
+
+		return jsonObject;
+	}
+
 	public static URL createURL(String urlString) throws Exception {
 		URL url = new URL(urlString);
 
@@ -155,6 +189,27 @@ public class JenkinsResultsParserUtil {
 		xmlWriter.write(element);
 
 		return writer.toString();
+	}
+
+	public static String getActualResult(String buildURL) throws Exception {
+		String progressiveText = toString(
+			getLocalURL(buildURL + "/logText/progressiveText"), false);
+
+		if (progressiveText.contains("Finished:")) {
+			if (progressiveText.contains("Finished: SUCCESS")) {
+				return "SUCCESS";
+			}
+
+			if (progressiveText.contains("Finished: UNSTABLE")) {
+				return "UNSTABLE";
+			}
+
+			if (progressiveText.contains("Finished: FAILURE")) {
+				return "FAILURE";
+			}
+		}
+
+		return null;
 	}
 
 	public static String getAxisVariable(JSONObject jsonObject)
@@ -281,14 +336,14 @@ public class JenkinsResultsParserUtil {
 	public static JSONObject toJSONObject(String url, boolean checkCache)
 		throws Exception {
 
-		return new JSONObject(toString(url, checkCache, 0));
+		return createJSONObject(toString(url, checkCache, 0));
 	}
 
 	public static JSONObject toJSONObject(
 			String url, boolean checkCache, int timeout)
 		throws Exception {
 
-		return new JSONObject(toString(url, checkCache, timeout));
+		return createJSONObject(toString(url, checkCache, timeout));
 	}
 
 	public static String toString(String url) throws Exception {

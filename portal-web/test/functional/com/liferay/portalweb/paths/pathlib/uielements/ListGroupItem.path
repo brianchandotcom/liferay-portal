@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>ITEM_NAME</td>
-	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_NAME_LINK</td>
-	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'${key_itemName}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>

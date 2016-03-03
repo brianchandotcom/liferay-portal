@@ -201,8 +201,6 @@ body {
 	/* Layouts Tree */
 
 	li.tree-node .tree-node-content {
-		z-index: 1;
-
 		&.lfr-root-node {
 			display: none;
 		}
@@ -218,162 +216,36 @@ body {
 				position: absolute;
 				right: -40px;
 				top: 0;
-				z-index: -1;
-			}
-		}
-	}
-
-	.tree-container {
-		.layout-tree-delete {
-			left: -40px;
-		}
-
-		.tree-container {
-			.layout-tree-delete {
-				left: -60px;
-			}
-
-			.tree-container {
-				.layout-tree-delete {
-					left: -80px;
-				}
-
-				.tree-container {
-					.layout-tree-delete {
-						left: -100px;
-					}
-
-					.tree-container {
-						.layout-tree-delete {
-							left: -120px;
-						}
-
-						.tree-container {
-							.layout-tree-delete {
-								left: -140px;
-							}
-
-							.tree-container {
-								.layout-tree-delete {
-									left: -160px;
-								}
-
-								.tree-container {
-									.layout-tree-delete {
-										left: -180px;
-									}
-
-									.tree-container {
-										.layout-tree-delete {
-											left: -200px;
-										}
-
-										.tree-container {
-											.layout-tree-delete {
-												left: -220px;
-											}
-
-											.tree-container {
-												.layout-tree-delete {
-													left: -240px;
-												}
-
-												.tree-container {
-													.layout-tree-delete {
-														left: -260px;
-													}
-
-													.tree-container {
-														.layout-tree-delete {
-															left: -280px;
-														}
-
-														.tree-container {
-															.layout-tree-delete {
-																left: -300px;
-															}
-
-															.tree-container {
-																.layout-tree-delete {
-																	left: -320px;
-																}
-
-																.tree-container {
-																	.layout-tree-delete {
-																		left: -340px;
-																	}
-
-																	.tree-container {
-																		.layout-tree-delete {
-																			left: -360px;
-																		}
-
-																		.tree-container {
-																			.layout-tree-delete {
-																				left: -380px;
-																			}
-
-																			.tree-container {
-																				.layout-tree-delete {
-																					left: -400px;
-																				}
-
-																				.tree-container {
-																					.layout-tree-delete {
-																						left: -420px;
-																					}
-
-																					.tree-container {
-																						.layout-tree-delete {
-																							left: -440px;
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
 			}
 		}
 	}
 
 	.tree-node-content {
-		.layout-tree-add, .layout-tree-delete, .layout-tree-edit, .layout-set-tree-add, .layout-set-tree-edit {
+		.layout-tree-options {
 			opacity: 0;
+			position: absolute;
+			right: 0;
+			top: 4px;
 
 			&:focus {
 				opacity: 1;
 			}
-		}
 
-		.layout-tree-delete {
-			position: absolute;
+			&[data-deleteable="false"][data-parentable="false"][data-updateable="false"] {
+				display: none;
+			}
 		}
 
 		&.tree-node-selected, &:active, &.active, &:hover {
 			.tree-label {
-				> .layout-tree-add, > .layout-tree-delete, > .layout-tree-edit {
+				> .layout-tree-options {
 					opacity: 1;
 				}
 			}
 		}
 
-		.layout-tree:focus, .layout-tree-add:focus, .layout-tree-delete:focus, .layout-tree-edit:focus {
-			~ .layout-tree-add, ~ .layout-tree-delete, ~ .layout-tree-edit {
-				opacity: 1;
-			}
+		.layout-tree:focus ~ .layout-tree-options, .layout-tree-options:hover{
+			opacity: 1;
 		}
 
 		.layout-tree-add[data-parentable="false"], .layout-tree-delete[data-deleteable="false"], .layout-tree-edit[data-updateable="false"] {
@@ -387,21 +259,15 @@ body {
 		padding: 0 0 2em 0;
 		width: 100%;
 
-		.layout-set-tree-add, .layout-set-tree-edit {
-			opacity: 0;
-
-			&:focus {
-				opacity: 1;
-			}
-		}
-
 		.layout-set-tab {
-			a {
+			.layout-set-link {
 				&:hover {
 					text-decoration: none;
 				}
 
 				@include ellipsis(87px);
+
+				padding-top: 8px;
 			}
 
 			display: table-cell;
@@ -427,21 +293,8 @@ body {
 		.selected-layout-set {
 			border-bottom: 1px solid;
 
-			a {
+			.layout-set-link {
 				max-width: 108px;
-			}
-		}
-
-		.selected-layout-set, .layout-set-tab:hover {
-			.layout-set-tree-add, .layout-set-tree-edit {
-				margin-left: 10px;
-				opacity: 1;
-			}
-		}
-
-		.layout-set-link:focus, .layout-set-tree-add:focus, .layout-set-tree-edit:focus {
-			~ .layout-set-tree-add, ~ .layout-set-tree-edit {
-				opacity: 1;
 			}
 		}
 	}

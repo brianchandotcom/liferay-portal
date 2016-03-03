@@ -568,7 +568,9 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-field-list-container {
+		hyphens: auto;
 		padding: 0;
+		word-break: break-all;
 	}
 
 	.form-builder-page-header {

@@ -20,7 +20,7 @@
 SitesItemSelectorViewDisplayContext siteItemSelectorViewDisplayContext = (SitesItemSelectorViewDisplayContext)request.getAttribute(SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT);
 GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String displayStyle = siteItemSelectorViewDisplayContext.getDisplayStyle();
 String target = ParamUtil.getString(request, "target");
 
 PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();

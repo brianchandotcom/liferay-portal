@@ -29,6 +29,8 @@ import javax.portlet.PortletURL;
  */
 public interface SitesItemSelectorViewDisplayContext {
 
+	public String getDisplayStyle();
+
 	public String getGroupName(Group group) throws PortalException;
 
 	public GroupSearch getGroupSearch() throws Exception;

@@ -19,6 +19,8 @@ package com.liferay.site.item.selector.web.constants;
  */
 public class SitesItemSelectorWebKeys {
 
+	public static final String SITES_ITEM_SELECTOR = "SITES_ITEM_SELECTOR";
+
 	public static final String SITES_ITEM_SELECTOR_DISPLAY_CONTEXT =
 		"SITES_ITEM_SELECTOR_DISPLAY_CONTEXT";
 

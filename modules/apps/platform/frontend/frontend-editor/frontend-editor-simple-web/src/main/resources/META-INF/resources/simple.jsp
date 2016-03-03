@@ -124,7 +124,8 @@ if (resizable) {
 
 			if (this.instanceReady) {
 				value = document.getElementById('<%= name %>').value;
-			} else {
+			}
+			else {
 				value = getInitialContent();
 			}
 
@@ -140,7 +141,8 @@ if (resizable) {
 
 			if (this.instanceReady) {
 				value = document.getElementById('<%= name %>').value;
-			} else {
+			}
+			else {
 				value = getInitialContent();
 			}
 

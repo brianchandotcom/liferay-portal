@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(immediate = true, service = DDMStructurePermission.class)
-public class DDMStructurePermission extends BaseResourcePermissionChecker{
+public class DDMStructurePermission extends BaseResourcePermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, DDMStructure structure,
@@ -177,11 +177,9 @@ public class DDMStructurePermission extends BaseResourcePermissionChecker{
 					getDDMStructurePermissionSupportServiceWrapper(classNameId);
 
 		return contains(
-				permissionChecker, 
-				getResourceName(structurePermissionSupportServiceWrapper),
-				groupId,
-				getAddStructureActionId(
-						structurePermissionSupportServiceWrapper));
+			permissionChecker,
+			getResourceName(structurePermissionSupportServiceWrapper), groupId,
+			getAddStructureActionId(structurePermissionSupportServiceWrapper));
 	}
 
 	public static String getStructureModelResourceName(long classNameId)
@@ -213,15 +211,16 @@ public class DDMStructurePermission extends BaseResourcePermissionChecker{
 
 	@Override
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK,
-			String actionId) {
-		try{
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
+		try {
 			return contains(permissionChecker, classPK, actionId);
-		}catch(PortalException e){
+		}
+		catch (PortalException pe) {
 			return false;
 		}
 	}
-	
+
 	protected static String getAddStructureActionId(
 		ServiceWrapper<DDMStructurePermissionSupport>
 			structurePermissionSupportServiceWrapper) {

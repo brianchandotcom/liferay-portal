@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  */
 @Component(immediate = true, service = DDMTemplatePermission.class)
-public class DDMTemplatePermission extends BaseResourcePermissionChecker{
+public class DDMTemplatePermission extends BaseResourcePermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, DDMTemplate template,
@@ -238,9 +238,8 @@ public class DDMTemplatePermission extends BaseResourcePermissionChecker{
 		}
 
 		return contains(
-				permissionChecker, resourceName, groupId,
-				getAddTemplateActionId(
-						templatePermissionSupportServiceWrapper));
+			permissionChecker, resourceName, groupId,
+			getAddTemplateActionId(templatePermissionSupportServiceWrapper));
 	}
 
 	public static String getTemplateModelResourceName(long resourceClassNameId)
@@ -273,15 +272,16 @@ public class DDMTemplatePermission extends BaseResourcePermissionChecker{
 
 	@Override
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK,
-			String actionId) {
-		try{
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
+		try {
 			return contains(permissionChecker, classPK, actionId);
-		}catch(PortalException e){
+		}
+		catch (PortalException pe) {
 			return false;
 		}
 	}
-	
+
 	protected static String getAddTemplateActionId(
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper) {

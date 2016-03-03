@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAdminPortlets;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAsset;
@@ -48,7 +47,7 @@ import com.liferay.portal.upgrade.v6_1_0.UpgradeWorkflow;
  * @author Juan Fernández
  * @author Miguel Pastor
  */
-public class UpgradeProcess_6_1_0 extends UpgradeProcess {
+public class UpgradeProcess_6_1_0 extends Pre7UpgradeProcess {
 
 	@Override
 	public int getThreshold() {

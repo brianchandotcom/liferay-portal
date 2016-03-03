@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,16 +24,27 @@ import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.RoleWrapper;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalServiceWrapper;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceWrapper;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceWrapper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.upgrade.ServiceWrapperProxyUtil;
+
+import java.io.Closeable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,31 +139,52 @@ public class UpgradePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		try (Closeable closeable1 = ServiceWrapperProxyUtil.createProxy(
+				PortalBeanLocatorUtil.locate(RoleLocalService.class.getName()),
+				SwitchClassNameRoleLocalServiceWrapper.class);
+			Closeable closeable2 = ServiceWrapperProxyUtil.createProxy(
+				PortalBeanLocatorUtil.locate(
+					ResourceLocalService.class.getName()),
+				SwitchClassNameResourceLocalServiceWrapper.class);
+			Closeable closeable3 = ServiceWrapperProxyUtil.createProxy(
+				PortalBeanLocatorUtil.locate(
+					ResourcePermissionLocalService.class.getName()),
+				SwitchClassNameResourcePermissionLocalServiceWrapper.class)) {
 
-		// LPS-46141
+			Class<? extends UpgradePermission> upgradePermissionClass =
+				this.getClass();
 
-		List<String> modelActions = ResourceActionsUtil.getModelResourceActions(
-			"com.liferay.portal.model.Role");
+			ResourceActionsUtil.read(
+				null, upgradePermissionClass.getClassLoader(),
+				"resource-actions/portal-6.1.0.xml");
 
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			"com.liferay.portal.model.Role", modelActions);
+			// LPS-46141
 
-		// LPS-14202 and LPS-17841
+			List<String> modelActions =
+				ResourceActionsUtil.getModelResourceActions(
+					"com.liferay.portal.model.Role");
 
-		RoleLocalServiceUtil.checkSystemRoles();
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				"com.liferay.portal.model.Role", modelActions);
 
-		updatePermissions("com.liferay.portlet.bookmarks", true, true);
-		updatePermissions("com.liferay.portlet.documentlibrary", false, true);
-		updatePermissions("com.liferay.portlet.imagegallery", true, true);
-		updatePermissions("com.liferay.portlet.messageboards", true, true);
-		updatePermissions("com.liferay.portlet.shopping", true, true);
+			// LPS-14202 and LPS-17841
 
-		convertResourcePermissions(
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
-			"BookmarksEntry", "entryId");
-		convertResourcePermissions(
-			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
-			"BookmarksFolder", "folderId");
+			RoleLocalServiceUtil.checkSystemRoles();
+
+			updatePermissions("com.liferay.portlet.bookmarks", true, true);
+			updatePermissions(
+				"com.liferay.portlet.documentlibrary", false, true);
+			updatePermissions("com.liferay.portlet.imagegallery", true, true);
+			updatePermissions("com.liferay.portlet.messageboards", true, true);
+			updatePermissions("com.liferay.portlet.shopping", true, true);
+
+			convertResourcePermissions(
+				"com.liferay.portlet.bookmarks.model.BookmarksEntry",
+				"BookmarksEntry", "entryId");
+			convertResourcePermissions(
+				"com.liferay.portlet.bookmarks.model.BookmarksFolder",
+				"BookmarksFolder", "folderId");
+		}
 	}
 
 	protected ResourceBlockPermissionsContainer
@@ -212,6 +246,93 @@ public class UpgradePermission extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePermission.class);
+
+	private static class SwitchClassNameResourceLocalServiceWrapper
+		extends ResourceLocalServiceWrapper {
+
+		@Override
+		public void addResources(
+				long companyId, long groupId, long userId, String name,
+				long primKey, boolean portletActions,
+				boolean addGroupPermissions, boolean addGuestPermissions)
+			throws PortalException {
+
+			if (name.equals(Role.class.getName())) {
+				name = "com.liferay.portal.model.Role";
+			}
+
+			super.addResources(
+				companyId, groupId, userId, name, primKey, portletActions,
+				addGroupPermissions, addGuestPermissions);
+		}
+
+		private SwitchClassNameResourceLocalServiceWrapper(
+			ResourceLocalService resourceLocalService) {
+
+			super(resourceLocalService);
+		}
+
+	}
+
+	private static class SwitchClassNameResourcePermissionLocalServiceWrapper
+		extends ResourcePermissionLocalServiceWrapper {
+
+		@Override
+		public void setResourcePermissions(
+				long companyId, String name, int scope, String primKey,
+				long roleId, String[] actionIds)
+			throws PortalException {
+
+			if (name.equals(Role.class.getName())) {
+				name = "com.liferay.portal.model.Role";
+			}
+
+			super.setResourcePermissions(
+				companyId, name, scope, primKey, roleId, actionIds);
+		}
+
+		private SwitchClassNameResourcePermissionLocalServiceWrapper(
+			ResourcePermissionLocalService resourcePermissionLocalService) {
+
+			super(resourcePermissionLocalService);
+		}
+
+	}
+
+	private static class SwitchClassNameRoleLocalServiceWrapper
+		extends RoleLocalServiceWrapper {
+
+		@Override
+		public Role deleteRole(Role role) throws PortalException {
+			String className = role.getClassName();
+
+			if (className.equals(Role.class.getName())) {
+				return new RoleWrapper(role) {
+
+					@Override
+					public String getClassName() {
+						String className = super.getClassName();
+
+						if (className.equals(Role.class.getName())) {
+							className = "com.liferay.portal.model.Role";
+						}
+
+						return className;
+					}
+
+				};
+			}
+
+			return super.deleteRole(role);
+		}
+
+		private SwitchClassNameRoleLocalServiceWrapper(
+			RoleLocalService roleLocalService) {
+
+			super(roleLocalService);
+		}
+
+	}
 
 	private class UpgradePermissionedModel implements PermissionedModel {
 

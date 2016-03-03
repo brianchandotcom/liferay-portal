@@ -19,6 +19,22 @@
 	<td>//div[@class='title' and contains(.,'${key_appName}')]/../../div[@class='app-actions']/div/a/span</td>
 	<td></td>
 </tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_1_LINK</td>
+	<td>//ul[contains(@class,'breadcrumb-horizontal')]/li[1]/a[contains(.,'${key_breadCrumb}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_2_LINK</td>
+	<td>//ul[contains(@class,'breadcrumb-horizontal')]/li[2]/a[contains(.,'${key_breadCrumb}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_3_LINK</td>
+	<td>//ul[contains(@class,'breadcrumb-horizontal')]/li[3]/a[contains(.,'${key_breadCrumb}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

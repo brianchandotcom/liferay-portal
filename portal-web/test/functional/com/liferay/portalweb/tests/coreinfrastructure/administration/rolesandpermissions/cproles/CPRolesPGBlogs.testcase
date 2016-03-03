@@ -1521,12 +1521,12 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#editTitleViaCardViewPG">
+		<execute macro="BlogsEntry#editTitle">
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 		</execute>
 
-		<execute macro="BlogsEntry#editContentViaCardViewPG">
+		<execute macro="BlogsEntry#editContent">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		</execute>

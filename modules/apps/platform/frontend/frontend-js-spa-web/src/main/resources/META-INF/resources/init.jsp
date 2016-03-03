@@ -22,6 +22,15 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-theme:defineObjects />
 
 <aui:script position="inline" require="frontend-js-spa-web@1.0.0/liferay/init.es">
+
+	<%
+	String portletId = request.getParameter("p_p_id");
+	boolean singlePageApplicationClearCache = GetterUtil.getBoolean(request.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
+	String singlePageApplicationLastPortletId = (String)session.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
+	%>
+
+	Liferay.SPA.clearScreensCache = <%= singlePageApplicationClearCache || ((Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId))) %>;
+
 	Liferay.SPA.app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
 	Liferay.SPA.app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
 </aui:script>

@@ -83,7 +83,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 		};
 
 		LiferayApp.prototype.onBeforeNavigate = function onBeforeNavigate(event) {
-			if (event.form) {
+			if (Liferay.SPA.clearScreensCache || event.form) {
 				this.clearScreensCache();
 			}
 

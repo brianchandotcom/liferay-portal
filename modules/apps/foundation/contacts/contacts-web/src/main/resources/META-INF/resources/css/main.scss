@@ -1,0 +1,876 @@
+@import "bourbon";
+@import "mixins";
+
+$border-color: #C9C9C9;
+$section-header-bg: #CCE6F7;
+
+#wrapper .contacts-portlet .panel-page-body {
+	padding: 0;
+}
+
+.contacts-portlet {
+	.clear {
+		clear: both;
+	}
+
+	.alert {
+		display: block;
+	}
+
+	.btn-hidden {
+		display: none;
+	}
+
+	.column-content, .column-content-center {
+		padding: 0;
+	}
+
+	#_1_WAR_contactsportlet_fm,
+	.portlet .portlet-content .control-group {
+		margin-bottom: 0;
+	}
+
+	.toolbar-content .filter-container {
+		float: left;
+	}
+
+	.contact-group-filter {
+		font-size: 14px;
+		min-height: 31px;
+
+		.contact-group-filter-select {
+			width: 224px;
+		}
+
+		.contact-group-filter-content {
+			padding: 5px;
+		}
+
+		input[type="checkbox"] {
+			margin: 0;
+		}
+
+		.control-group, select {
+			margin-bottom: 0;
+		}
+	}
+
+	.lfr-contact {
+		border-bottom: 1px solid $border-color;
+
+		.lfr-contact-checkbox {
+			float: left;
+			padding: 5px;
+		}
+	}
+
+	.lfr-contact-grid-item, .lfr-detail-info {
+		display: block;
+		overflow: hidden;
+
+		.comments {
+			margin-left: 10px;
+		}
+
+		.lfr-contact-thumb {
+			float: left;
+		}
+
+		.lfr-contact-thumb img {
+			width: 100px;
+		}
+
+		.lfr-contact-info {
+			margin-left: 100px;
+
+			&.no-icon {
+				margin-left: 0;
+			}
+
+			.lfr-contact-name {
+				font-weight: bold;
+			}
+
+			.lfr-contact-extra {
+				color: #777;
+			}
+
+			.lfr-social-relations {
+				margin-top: 5px;
+
+				span {
+					margin-right: 10px;
+				}
+			}
+		}
+
+		.lfr-contact-extra, .lfr-contact-job-title, .lfr-contact-name {
+			overflow-x: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.contacts-container {
+		.lfr-contact-grid-item {
+			margin-bottom: 5px;
+			padding-left: 5px;
+			padding-top: 5px;
+
+			.lfr-contact-thumb img {
+				width: 80px;
+			}
+		}
+
+		.lfr-selected-user {
+			cursor: pointer;
+
+			&.alt {
+				background-color: #F5F8FB;
+			}
+
+			&:hover {
+				background-color: #E8EFF4;
+			}
+		}
+
+		.alert.alert-success {
+			border-width: 0 0 1px;
+			margin: 0;
+		}
+	}
+
+	.toggle-user {
+		display: none;
+	}
+
+	.contacts-result, .my-contacts {
+		.lfr-contact-grid-item {
+			cursor: pointer;
+			height: 35px;
+			padding: 5px;
+
+			.lfr-contact-thumb {
+				height: 35px;
+				overflow: hidden;
+
+				img {
+					width: 35px;
+				}
+			}
+		}
+	}
+
+	.contacts-result {
+		border-right: 1px solid #C9C9C9;
+		width: 30%;
+
+		.contacts-result-content {
+			bottom: 0;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			position: absolute;
+			top: 40px;
+			width: 250px;
+
+			.more-results a {
+				border: 1px solid #CCC;
+				display: block;
+				margin: 5px;
+				padding: 2px;
+				text-align: center;
+
+				&:hover {
+					background-color: #CCE6F7;
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.lfr-contact-grid-item .lfr-contact-info {
+			font-size: 1em;
+			margin-left: 0;
+			overflow-x: hidden;
+			padding-left: 10px;
+		}
+
+		.lfr-contact-grid-item:hover, .more-results a {
+			background-color: #E8EFF4;
+		}
+
+		.empty {
+			margin: 5px;
+
+			.icon-warning-sign {
+				margin-right: 10px
+			}
+		}
+
+		.last-name-anchor a {
+			background: $section-header-bg;
+			border-bottom: 1px solid $border-color;
+			cursor: default;
+			display: block;
+			padding: 1px 5px;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+	}
+
+	.personal-contact-list .contacts-result-content {
+		top: 38px;
+	}
+
+	.my-contacts {
+		padding-left: 8px;
+
+		.lfr-contact-grid-item .lfr-contact-info {
+			margin-left: 40px;
+		}
+	}
+
+	.contacts-home {
+		padding: 5px;
+	}
+
+	.contacts-profile {
+		.lfr-detail-info {
+			border-bottom-width: 0;
+			width: 100%;
+		}
+
+		.lfr-contact-thumb, .lfr-contact-info {
+			padding: 10px 10px 5px;
+		}
+
+		.lfr-contact-name {
+			font-size: 2em;
+			height: 1.25em;
+			line-height: 1em;
+			overflow: hidden;
+			position: relative;
+			text-overflow: ellipsis;
+		}
+
+		.lfr-contact-name a {
+			position: absolute;
+		}
+
+		.lfr-contact-job-title {
+			color: #777;
+			font-size: 1.25em;
+			font-weight: bold;
+		}
+
+		.column-content {
+			padding: 10px;
+		}
+
+		.column:before {
+			border-width: 0;
+		}
+
+		.social-relations .lfr-asset-metadata {
+			display: none;
+		}
+
+		.field-group .icon-edit {
+			display: none;
+		}
+	}
+
+	.contacts-result-container-content {
+		padding-left: 250px;
+		position: relative;
+
+		.contacts-list {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 250px;
+
+			.contacts-search {
+				border-bottom: 1px solid $border-color;
+				height: 31px;
+				padding: 4px 5px;
+
+				.search-input {
+					padding-right: 25px;
+					width: 208px;
+				}
+
+				.icon-search {
+					color: $border-color;
+					position: absolute;
+					right: 11px;
+					top: 11px;
+				}
+			}
+		}
+
+		.contacts-container {
+			float: none;
+			min-height: 600px;
+			width: 100%;
+
+			.contacts-container-content {
+				border-left: 1px solid $border-color;
+			}
+
+			.lfr-button-column {
+				border-bottom: 1px solid $border-color;
+				overflow: hidden;
+				padding: 4px 6px 5px;
+
+				.edit-toolbar {
+					margin: 0;
+					overflow: visible;
+				}
+			}
+
+			.view-more-button {
+				display: none;
+			}
+		}
+
+		.contacts-action-content .action {
+			padding: 5px 4px;
+		}
+
+		.contacts-profile .lfr-contact-info {
+			padding: 8px;
+		}
+	}
+
+	.social-relations {
+		width: auto;
+
+		a {
+			display: inline-block;
+			margin: 4px 0;
+			padding: 3px 4px;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.contacts-action-content {
+		margin-left: 10px;
+
+		.action {
+			display: inline-block;
+		}
+	}
+
+	.search-column {
+		width: 240px;
+	}
+
+	.section {
+		border-bottom: 1px solid #E7E7E7;
+		clear: both;
+		float: none;
+		padding: 10px;
+		width: auto;
+		zoom: 1;
+
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+		}
+
+		h3 {
+			color: #B4BEC8;
+			float: left;
+			font-size: 1em;
+			line-height: 20px;
+			margin: 0;
+			text-align: right;
+			width: 100px;
+		}
+
+		.property-list {
+			margin: 0 0 0 105px;
+			padding: 0;
+		}
+	}
+
+	.layout.toolbar {
+		border-bottom: 1px solid $border-color;
+		min-height: 31px;
+
+		.add-contact {
+			float: right;
+			margin: 5px;
+		}
+	}
+
+	.portlet .portlet-content {
+		padding: 0;
+
+		.portlet-body {
+			form {
+				margin: 0;
+			}
+
+			.lfr-app-column-view {
+				border-width: 0;
+			}
+		}
+	}
+
+	.property-type {
+		font-weight: bold;
+	}
+
+	.property-list li {
+		list-style: none;
+	}
+
+	.user-information-title {
+		color: #666;
+		font-size: 1.5em;
+		text-align: right;
+		width: 110px;
+	}
+
+	.lfr-user-info-container {
+		margin-bottom: 10px;
+	}
+
+	.lfr-user-comments {
+		float: none;
+	}
+
+	.contacts-center-home {
+		.contacts-center-home-content {
+			padding: 10px;
+		}
+
+		.header-title {
+			margin: 0;
+		}
+
+		.contacts-count {
+			font-weight: bold;
+
+			&, .contacts-center-introduction {
+				margin: 5px 0;
+			}
+		}
+	}
+
+	.export-group {
+		margin-top: 1em;
+	}
+
+	.lfr-user-profile-preferences {
+		margin-left: 20px;
+	}
+
+	.lfr-user-action-confirm a {
+		background: url(@theme_image_path@/common/activate.png) no-repeat;
+	}
+
+	.lfr-user-action-ignore a {
+		background: url(@theme_image_path@/common/deactivate.png) no-repeat;
+	}
+
+	.lfr-asset-metadata {
+		margin-bottom: 5px;
+
+		.lfr-asset-coworker, .lfr-asset-follower, .lfr-asset-following {
+			padding: 0 20px
+		}
+	}
+
+	.members-container {
+		clear: both;
+		margin: 1em 0;
+	}
+
+	.lfr-members-grid-item {
+		float: left;
+		height: 50px;
+		margin-bottom: 10px;
+		max-width: 300px;
+		min-width: 200px;
+		overflow: hidden;
+		width: 25%;
+
+		.lfr-members-thumb {
+			float: left;
+			margin: 0 5px;
+
+			a {
+				clip: rect(0 50px 50px 0);
+				position: absolute;
+			}
+
+			img {
+				width: 50px;
+			}
+		}
+
+		.lfr-user-data-info {
+			margin-left: 60px;
+		}
+
+		.lfr-user-data-name {
+			font-weight: bold;
+		}
+
+		.lfr-user-data-extra, .lfr-user-data-job-title, .lfr-user-data-name a {
+			overflow: hidden;
+			text-overflow: hidden;
+			word-wrap: nowrap;
+		}
+	}
+
+	.edit-profile {
+		cursor: pointer;
+	}
+
+	.lfr-panel, .taglib-header {
+		margin-bottom: 1em;
+	}
+
+	.lfr-search-container {
+		margin-top: 1em;
+	}
+
+	.contacts-profile {
+		overflow: hidden;
+	}
+
+	.my-profile .field-group {
+		position: relative;
+
+		.icon-edit {
+			position: absolute;
+			right: 5px;
+			top: 5px;
+		}
+
+		&:hover {
+			background: #E9E8E8;
+			cursor: pointer;
+
+			.icon-edit {
+				display: block;
+			}
+		}
+	}
+
+	.profile-actions {
+		background: #EEE;
+		border: 1px solid #C7D0DA;
+		margin: 20px 65px;
+		padding: 4px 4px 0;
+
+		.alert.alert-info {
+			background-color: transparent;
+			border-width: 0;
+			margin: 0;
+		}
+
+		h3 {
+			color: #B4BEC8;
+			float: left;
+			font-size: 1em;
+			margin: 0;
+			text-align: right;
+			width: 100px;
+		}
+
+		.field-actions-toolbar {
+			.actions-conjunction {
+				display: inline-block;
+				font-weight: bold;
+				list-style: none;
+				padding: 10px 5px;
+			}
+
+			.settings-actions {
+				display: inline-block;
+				margin: 0;
+				padding-left: 24px;
+			}
+
+			.settings-header-label {
+				font-weight: bold;
+				padding: 0 5px;
+			}
+
+			.action-field {
+				float: left;
+				margin: 2px;
+			}
+
+			.lfr-token {
+				background-color: #FFF;
+				border-width: 0;
+
+				&:hover {
+					background-color: #E9E8E8;
+				}
+			}
+		}
+	}
+
+	.profile-actions-title {
+		color: #929292;
+		font-weight: bold;
+		padding: 6px 0 0;
+	}
+}
+
+.contact-dialog {
+	input[type="text"], textarea {
+		width: 90%;
+	}
+
+	.field-text {
+		display: block;
+		margin-bottom: 10px;
+	}
+}
+
+.profile-dialog {
+	input[type="text"], select {
+		padding: 5px 1px;
+	}
+
+	.addresses .field {
+		float: none;
+		width: auto;
+	}
+
+	.field.primary-ctrl {
+		margin: 1.8em 0;
+	}
+
+	.field-select .field-content {
+		margin: 10px 0;
+	}
+
+	.form-section h3 {
+		display: none;
+	}
+
+	.lfr-textarea {
+		height: 60px !important;
+		width: 350px !important;
+	}
+
+	.social-network {
+		clear: both;
+		overflow: hidden;
+
+		.field {
+			float: left;
+		}
+
+		img {
+			margin-left: 1.5em;
+			margin-top: 2.4em;
+		}
+	}
+
+	.user-profile-image {
+		padding-top: 20px;
+
+		.lfr-change-logo {
+			background: none;
+		}
+	}
+}
+
+.portlet-configuration .contacts-portlet {
+	.lfr-user-profile-preferences, .toggler-content {
+		margin: 0;
+		overflow: hidden;
+	}
+
+	.lfr-user-profile-preferences .column {
+		margin-right: 1em;
+	}
+}
+
+/* ---------- Extras ---------- */
+
+.contacts-portlet {
+	.contacts-container .alert.alert-success {
+		border-radius: 0;
+	}
+
+	.profile-actions {
+		border-radius: 4px;
+	}
+}
+
+.private-messaging-portlet {
+	.message-to input, .message-subject input {
+		width: 300px;
+	}
+
+	.message-body {
+		width: 90%;
+	}
+}
+
+/* ---------- Responsive ---------- */
+
+@include respond-to(phone) {
+	.contacts-portlet {
+		.layout .toolbar-content {
+			.filter-container {
+				width: 58%;
+
+				.contact-group-filter-content {
+					padding: 7px 7px 8px;
+
+					input[type="checkbox"] {
+						display: none;
+					}
+
+					> .control-group {
+						margin-left: 4px;
+						width: 85%;
+					}
+				}
+
+				.contact-group-filter-select {
+					height: 31px;
+					width: 100%;
+				}
+			}
+
+			.add-contact {
+				font-size: 14px;
+				margin: 4px 2%;
+				max-width: 38%;
+				padding: 8px 10px;
+			}
+		}
+
+		.contacts-result-container-content {
+			overflow: hidden;
+			padding-left: 100%;
+
+			.contacts-list, .contacts-result, .contacts-result-content {
+				width: 100%;
+			}
+
+			.contacts-list .contacts-search .search-input {
+				margin: 0;
+				padding-left: 0;
+				padding-right: 0;
+				text-indent: 5px;
+				width: 100%;
+			}
+		}
+
+		.form {
+			left: 0;
+			position: relative;
+
+			@include transition-duration(0.3s);
+			@include transition-property(left);
+
+			z-index: 1;
+		}
+
+		.contacts-list {
+			background: #FFF;
+			margin-left: 0;
+
+			@include transition-duration(0.3s);
+			@include transition-property(margin-left);
+
+			z-index: 1;
+
+			.lfr-contact-checkbox {
+				display: none;
+			}
+		}
+
+		&.show-user {
+			.form {
+				left: -100%;
+				position: absolute;
+				width: 100%;
+				z-index: 1;
+			}
+
+			.contacts-result-container-content {
+				overflow: visible;
+				padding-left: 0;
+
+				.contacts-list {
+					margin-left: -100%;
+					top: 47px;
+				}
+			}
+
+			.toggle-user {
+				background-color: #EEE;
+				background-color: rgba(0, 0, 0, 0.4);
+
+				border-radius: 0 8px 8px 0;
+
+				cursor: pointer;
+				display: inline-block;
+				left: 100%;
+				position: absolute;
+				top: -43px;
+
+				i {
+					color: #FFF;
+					display: block;
+					font-size: 2em;
+					padding: 16px 11px;
+				}
+			}
+
+			.contacts-container {
+				.lfr-button-column {
+					padding-bottom: 0;
+					padding-left: 3.2em;
+				}
+
+				.view-more-button {
+					display: block;
+					margin-right: 0;
+				}
+			}
+
+			.edit-toolbar {
+				float: left;
+				width: auto;
+
+				&.hide-more-buttons .more {
+					display: none;
+				}
+			}
+		}
+
+		.contacts-container .btn {
+			float: left;
+			font-size: 14px;
+			margin: 0 5px 4px 0;
+			padding: 10px;
+			width: auto;
+
+			i {
+				display: block;
+			}
+		}
+	}
+}

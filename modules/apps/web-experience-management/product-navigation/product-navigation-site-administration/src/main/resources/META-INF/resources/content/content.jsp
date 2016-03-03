@@ -54,7 +54,7 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 						</span>
 
 						<span class="nav-equal-height-heading-field">
-							<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+							<liferay-ui:icon-menu direction="left" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
 								<%
 								Map<String, Object> data = new HashMap<String, Object>();

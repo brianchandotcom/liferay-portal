@@ -153,7 +153,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<span class="scope-name"><%= HtmlUtil.escape(layoutsTreeDisplayContext.getLayoutSetBranchName()) %></span>
 
 					<span class="nav-equal-height-heading-field">
-						<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+						<liferay-ui:icon-menu direction="left" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
 							<%
 							for (LayoutSetBranch curLayoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {

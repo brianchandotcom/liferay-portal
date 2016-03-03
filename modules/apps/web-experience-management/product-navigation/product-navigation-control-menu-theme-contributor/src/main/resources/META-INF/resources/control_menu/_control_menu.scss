@@ -42,10 +42,12 @@ body.open {
 	color: $control-menu-level-1-color;
 
 	> .container-fluid-1280 {
-		padding: 6px 5px 7px;
+		padding: 6px 16px 7px 5px;
 
 		@include sm() {
-			padding: 15px 5px 14px;
+			padding-bottom: 14px;
+			padding-right: 17px;
+			padding-top: 15px;
 		}
 	}
 
@@ -248,5 +250,11 @@ body.open {
 		margin-top: 1px;
 		min-width: 32px;
 		text-align: center;
+	}
+}
+
+.user-control-group {
+	.portlet-options {
+		margin-right: -1px;
 	}
 }

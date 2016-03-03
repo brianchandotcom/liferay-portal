@@ -16,6 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="toolbar-group-content" data-qa-id="headerOptions">
+<li class="control-menu-nav-item" data-qa-id="headerOptions">
 	<liferay-portlet:icon-options direction="right" markupView="lexicon" />
-</div>
+</li>

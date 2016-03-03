@@ -510,21 +510,18 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		throws IOException {
 
 		ServletContext cssServletContext = null;
+		String resourcePathRoot = null;
 
 		String requestURI = request.getRequestURI();
-
-		String resourcePathRoot = null;
 
 		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
 			cssServletContext = PortalWebResourcesUtil.getPathServletContext(
 				requestURI);
-
 			resourcePathRoot = "/";
 		}
 
 		if (cssServletContext == null) {
 			cssServletContext = _servletContext;
-
 			resourcePathRoot = ServletPaths.getParentPath(resourcePath);
 		}
 

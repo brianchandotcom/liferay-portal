@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.privatemessaging">
+<service-builder package-path="com.liferay.privatemessaging" auto-namespace-tables="true">
 	<namespace>PM</namespace>
 	<entity name="UserThread" local-service="true" remote-service="true">
 
@@ -60,6 +60,5 @@
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="UserNotificationEvent" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
-
 	</entity>
 </service-builder>

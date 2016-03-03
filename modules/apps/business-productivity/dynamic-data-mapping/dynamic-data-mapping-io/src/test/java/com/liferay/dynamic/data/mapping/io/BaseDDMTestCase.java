@@ -14,12 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -50,7 +46,6 @@ import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
@@ -58,19 +53,14 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(
 	{
-		DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class,
-		PortalClassLoaderUtil.class, ResourceBundleUtil.class
+		LocaleUtil.class, PortalClassLoaderUtil.class, ResourceBundleUtil.class
 	}
 )
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil"
-)
 public class BaseDDMTestCase extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
@@ -124,37 +114,6 @@ public class BaseDDMTestCase extends PowerMockito {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
-	}
-
-	protected void setUpDDMFormFieldTypeServicesTrackerUtil() {
-		setUpDefaultDDMFormFieldType();
-
-		mockStatic(DDMFormFieldTypeServicesTrackerUtil.class);
-
-		when(
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(
-				Matchers.anyString())
-		).thenReturn(
-			_defaultDDMFormFieldType
-		);
-	}
-
-	protected void setUpDefaultDDMFormFieldType() {
-		when (
-			_defaultDDMFormFieldType.getDDMFormFieldTypeSettings()
-		).then(
-			new Answer<Class<? extends DDMFormFieldTypeSettings>>() {
-
-				@Override
-				public Class<? extends DDMFormFieldTypeSettings> answer(
-						InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return DDMFormFieldTypeSettingsTestUtil.getSettings();
-				}
-
-			}
-		);
 	}
 
 	protected void setUpJSONFactoryUtil() {
@@ -287,9 +246,6 @@ public class BaseDDMTestCase extends PowerMockito {
 
 	@Mock
 	private ClassLoader _classLoader;
-
-	@Mock
-	private DDMFormFieldType _defaultDDMFormFieldType;
 
 	@Mock
 	private ResourceBundle _resourceBundle;

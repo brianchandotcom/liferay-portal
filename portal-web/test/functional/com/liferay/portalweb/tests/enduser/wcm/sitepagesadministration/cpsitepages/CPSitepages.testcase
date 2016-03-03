@@ -337,7 +337,7 @@
 			<var name="pageLayout" value="2 Column (30/70)" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page Name" />
 		</execute>
 
@@ -387,7 +387,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Blog Page" />
 		</execute>
 
@@ -422,11 +422,6 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoSitesPages" >
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
-		</execute>
-
 		<execute macro="Page#deletePG">
 			<var name="pageName" value="Site Page 2" />
 		</execute>
@@ -435,7 +430,7 @@
 	<command name="EditSitePage" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="ProductMenu#gotoSitesPages" >
+		<execute macro="SitePageNavigator#gotoPages" >
 			<var name="page" value="Public Pages" />
 		</execute>
 
@@ -444,7 +439,7 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page" />
 		</execute>
 
@@ -452,7 +447,7 @@
 			<var name="pageNameEdit" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages" >
+		<execute macro="SitePageNavigator#gotoPages" >
 			<var name="page" value="Public Pages" />
 		</execute>
 
@@ -486,7 +481,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Site Page" />
 		</execute>
 

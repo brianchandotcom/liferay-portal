@@ -1,4 +1,18 @@
 <definition>
+	<command name="addFirstPage">
+		<execute function="Click" locator1="SitePages#PAGES_ELLIPSIS" />
+
+		<if>
+			<equals arg1="${sitePagePrivacy}" arg2="Private" />
+			<then>
+				<execute function="Click" locator1="SitePages#ADD_PRIVATE_PAGE_MENUITEM" />
+			</then>
+			<else>
+				<execute function="Click" locator1="SitePages#ADD_PUBLIC_PAGE_MENUITEM" />
+			</else>
+		</if>
+	</command>
+
 	<command name="expandCategory">
 		<var name="key_category" value="${category}" />
 
@@ -83,14 +97,6 @@
 		<var name="key_panelId" value="user" />
 
 		<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_TABS_EXPANDED_PANEL" />
-	</command>
-
-	<command name="gotoAddPage">
-		<var name="key_page" value="${page}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PAGES" value1="${page}" />
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>
 
 	<command name="gotoPortlet">

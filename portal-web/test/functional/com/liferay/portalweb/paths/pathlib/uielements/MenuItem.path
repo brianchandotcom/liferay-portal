@@ -609,9 +609,9 @@
 	<td></td>
 </tr>
 <tr>
- 	<td>PUBLISH</td>
- 	<td>//a[@role='menuitem']//span[contains(.,'Publish')]</td>
- 	<td></td>
+	<td>PUBLISH</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Publish')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_TO_LIVE</td>

@@ -178,7 +178,7 @@
 
 	.list-group-item {
 		border-width: $product-menu-list-group-item-border-width;
-		padding: 8px 24px;
+		padding: 8px 8px 8px 24px;
 	}
 
 	.collapse, .collapsing {
@@ -314,20 +314,11 @@
 	}
 
 	.layout-set-tabs {
-		.selected-layout-set a {
-			color: $product-menu-nav-link-active-color;
+		.selected-layout-set {
+			.layout-set-link, .icon-monospaced {
+				color: $product-menu-nav-link-active-color;
+			}
 		}
-	}
-
-	.layout-tree-add {
-		position: absolute;
-		right: 10px;
-	}
-
-	.layout-tree-edit {
-		padding-left: 10px;
-		position: absolute;
-		right: -25px;
 	}
 
 	.lfr-tree {
@@ -340,7 +331,7 @@
 
 			display: inline-block;
 			max-width: 100%;
-			overflow: hidden;
+			overflow: visible;
 			padding-right: 20px;
 			width: 100%;
 		}
@@ -422,9 +413,11 @@
 		background-color: $product-menu-tree-active-hitarea-bg;
 	}
 
-	.tree-pages .tree-node-selected .tree-label a {
-		color: $product-menu-tree-active-color;
-		cursor: pointer;
+	.tree-pages .tree-node-selected .tree-label {
+		.layout-tree, .icon-monospaced {
+			color: $product-menu-tree-active-color;
+			cursor: pointer;
+		}
 	}
 
 	.tree-root-container {
@@ -433,18 +426,6 @@
 
 	.tree-view {
 		overflow: visible;
-		padding: 0 16px;
-	}
-
-	.expand-pages-link {
-		position: absolute;
-		right: 50px;
-		top: -35px;
-		z-index: 1;
-
-		a {
-			padding: 5px;
-		}
 	}
 }
 

@@ -226,16 +226,72 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return selGroup.getDisplayURL(themeDisplay, false);
 	}
 
+	@Override
+	public String getRootNodeName(boolean privateLayout) {
+		if (isShowEmptyLayoutsTree()) {
+			return "pages";
+		}
+
+		return super.getRootNodeName(privateLayout);
+	}
+
+	public boolean isShowAddBothRootLayoutButtons() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.hasPublicLayouts() && selGroup.hasPrivateLayouts()) {
+			return false;
+		}
+
+		if (!selGroup.hasPublicLayouts() && !selGroup.hasPrivateLayouts()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isShowAddLayoutButton() throws PortalException {
 		return LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), getSelLayout(),
 			ActionKeys.ADD_LAYOUT);
 	}
 
+	@Override
+	public boolean isShowAddRootLayoutButton() throws PortalException {
+		if (isShowAddBothRootLayoutButtons()) {
+			return false;
+		}
+
+		return super.isShowAddRootLayoutButton();
+	}
+
 	public boolean isShowEditLayoutSetButton() throws PortalException {
 		return GroupPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), getSelGroup(),
 			ActionKeys.MANAGE_LAYOUTS);
+	}
+
+	public boolean isShowEmptyLayoutsTree() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.hasPrivateLayouts() || selGroup.hasPublicLayouts()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowExpandLayoutSetButton(boolean privateLayout) {
+		Group selGroup = getSelGroup();
+
+		if (privateLayout && selGroup.hasPrivateLayouts()) {
+			return true;
+		}
+
+		if (!privateLayout && selGroup.hasPublicLayouts()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowLayoutSetBranchesSelector() {
@@ -263,27 +319,28 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			return false;
 		}
 
-		return true;
+		return ParamUtil.getBoolean(
+			liferayPortletRequest, "showLayoutTabs", true);
 	}
 
-	public boolean isShowPrivateLayoutsTree() throws PortalException {
+	public boolean isShowPrivateLayoutsTree() {
 		Group selGroup = getSelGroup();
 
-		if (!selGroup.hasPrivateLayouts() && !isShowAddRootLayoutButton()) {
+		if (!selGroup.hasPrivateLayouts()) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public boolean isShowPublicLayoutsTree() throws PortalException {
+	public boolean isShowPublicLayoutsTree() {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
 			return false;
 		}
 
-		if (!selGroup.hasPublicLayouts() && !isShowAddRootLayoutButton()) {
+		if (!selGroup.hasPublicLayouts()) {
 			return false;
 		}
 

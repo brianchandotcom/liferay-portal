@@ -71,6 +71,10 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 		}
 	);
 
+	if (Liferay.Util.isPhone() && ($('body').hasClass('open'))) {
+		sidenavToggle.sideNavigation('hide');
+	}
+
 	<c:if test="<%= productMenuDisplayContext.hasUserPanelCategory() %>">
 		Liferay.on(
 			'ProductMenu:openUserMenu',

@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Social Private Messaging API
+Bundle-SymbolicName: com.liferay.privatemessaging.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.privatemessaging.configuration,\
+	com.liferay.privatemessaging.exception,\
+	com.liferay.privatemessaging.model,\
+	com.liferay.privatemessaging.service,\
+	com.liferay.privatemessaging.service.messaging,\
+	com.liferay.privatemessaging.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social Private Messaging
+-include: ../../../../../marketplace/collaboration/bnd.bnd

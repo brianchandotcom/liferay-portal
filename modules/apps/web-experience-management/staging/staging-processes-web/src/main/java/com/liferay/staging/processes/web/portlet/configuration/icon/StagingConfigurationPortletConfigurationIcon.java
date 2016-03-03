@@ -14,11 +14,15 @@
 
 package com.liferay.staging.processes.web.portlet.configuration.icon;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -102,7 +106,16 @@ public class StagingConfigurationPortletConfigurationIcon
 			return false;
 		}
 
-		return true;
+		Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+
+		try {
+			return GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), liveGroup,
+				ActionKeys.MANAGE_STAGING);
+		}
+		catch (PortalException pe) {
+			return false;
+		}
 	}
 
 	@Override

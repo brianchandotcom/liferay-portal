@@ -184,21 +184,20 @@ else {
 				/>
 			</c:if>
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
+			<%
+			long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
-					<%
-					long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+			long classPK = recordSet.getDDMStructureId();
 
-					long classPK = recordSet.getDDMStructureId();
+			if (formDDMTemplateId > 0) {
+				classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
 
-					if (formDDMTemplateId > 0) {
-						classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+				classPK = formDDMTemplateId;
+			}
+			%>
 
-						classPK = formDDMTemplateId;
-					}
-					%>
-
+			<c:choose>
+				<c:when test="<%= ddlDisplayContext.isFormView() %>">
 					<liferay-ddm:html
 						classNameId="<%= classNameId %>"
 						classPK="<%= classPK %>"
@@ -206,8 +205,21 @@ else {
 						repeatable="<%= translating ? false : true %>"
 						requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"
 					/>
-				</aui:fieldset>
-			</aui:fieldset-group>
+				</c:when>
+				<c:otherwise>
+					<aui:fieldset-group markupView="lexicon">
+						<aui:fieldset>
+							<liferay-ddm:html
+								classNameId="<%= classNameId %>"
+								classPK="<%= classPK %>"
+								ddmFormValues="<%= ddmFormValues %>"
+								repeatable="<%= translating ? false : true %>"
+								requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"
+							/>
+						</aui:fieldset>
+					</aui:fieldset-group>
+				</c:otherwise>
+			</c:choose>
 
 			<%
 			boolean pending = false;

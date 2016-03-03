@@ -54,20 +54,15 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 	@Override
 	public String getDisplayStyle() {
-		String displayStyle = ParamUtil.getString(
-			request, "displayStyle", "");
+		String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-		String currentDisplayStyle = portalPreferences.getValue(
-			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR, "display-style",
-			"icon");
-
-		if (Validator.isBlank(displayStyle) ||
-				displayStyle.equals(currentDisplayStyle)) {
-
-			return currentDisplayStyle;
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR, "display-style",
+				"icon");
 		}
 		else {
 			portalPreferences.setValue(
@@ -76,9 +71,9 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 			request.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-
-			return displayStyle;
 		}
+
+		return displayStyle;
 	}
 
 	@Override

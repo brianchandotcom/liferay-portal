@@ -66,6 +66,12 @@ AUI.add(
 
 						instance._processesResourceURL = config.processesResourceURL;
 
+						var eventHandles = [
+							Liferay.on(instance.ns('viewBackgroundTaskDetails'), instance._onViewBackgroundTaskDetails, instance)
+						];
+
+						instance._eventHandles = eventHandles;
+
 						A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderProcesses);
 					},
 
@@ -586,6 +592,35 @@ AUI.add(
 						return (node && node.attr(STR_CHECKED));
 					},
 
+					_onViewBackgroundTaskDetails: function(config) {
+						var instance = this;
+
+						var node = instance.byId(instance.ns(config.nodeId));
+
+						var bodyNode = node.cloneNode(true);
+
+						bodyNode.show();
+
+						var title = config.title;
+
+						if (title) {
+							title = title.trim();
+						}
+
+						if (!title) {
+							title = Liferay.Language.get("process-details");
+						}
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									bodyContent: bodyNode
+								},
+								title: title
+							}
+						);
+					},
+
 					_refreshDeletions: function() {
 						var instance = this;
 
@@ -676,35 +711,6 @@ AUI.add(
 						}
 
 						var processesNode = instance.get('processesNode');
-
-						if (processesNode) {
-							new A.TogglerDelegate(
-								{
-									animated: true,
-									closeAllOnExpand: true,
-									container: processesNode,
-									content: '.background-task-status-message',
-									expanded: false,
-									header: '.details-link',
-									on: {
-										'toggler:expandedChange': function(event) {
-											var header = event.target.get('header');
-
-											var persistId = 0;
-
-											if (!header.hasClass('toggler-header-collapsed')) {
-												persistId = header.getData('persist-id');
-											}
-
-											Liferay.Store('com.liferay.exportimport.web_backgroundTaskIds', persistId);
-										}
-									},
-									transition: {
-										duration: 0.3
-									}
-								}
-							);
-						}
 
 						if (processesNode && instance._processesResourceURL) {
 							A.io.request(

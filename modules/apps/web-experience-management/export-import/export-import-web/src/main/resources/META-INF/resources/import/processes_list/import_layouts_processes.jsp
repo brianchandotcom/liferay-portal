@@ -114,7 +114,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(backgroundTaskUser.getFullName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 						</h6>
 
-						<h5>
+						<h5 id="<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>">
 
 							<%= HtmlUtil.escape(backgroundTask.getName()) %>
 
@@ -165,24 +165,21 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							</c:if>
 						</c:if>
 
+						<h6 class="background-task-status-row background-task-status-<%= BackgroundTaskConstants.getStatusLabel(backgroundTask.getStatus()) %> <%= BackgroundTaskConstants.getStatusCssClass(backgroundTask.getStatus()) %>">
+							<liferay-ui:message key="<%= backgroundTask.getStatusLabel() %>" />
+						</h6>
+
 						<c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">
+							<h6 class="background-task-status-row">
+								<a class="details-link" href="javascript:Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {nodeId: 'backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>', title: $('#<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>').text()}); void(0);"><liferay-ui:message key="see-more-details" /></a>
+							</h6>
 
-							<%
-							long[] expandedBackgroundTaskIds = StringUtil.split(GetterUtil.getString(SessionClicks.get(request, "com.liferay.exportimport.web_backgroundTaskIds", null)), 0L);
-							%>
-
-							<a class="details-link toggler-header-<%= ArrayUtil.contains(expandedBackgroundTaskIds, backgroundTask.getBackgroundTaskId()) ? "expanded" : "collapsed" %>" data-persist-id="<%= backgroundTask.getBackgroundTaskId() %>" href="#"><liferay-ui:message key="details" /></a>
-
-							<div class="background-task-status-message toggler-content-<%= ArrayUtil.contains(expandedBackgroundTaskIds, backgroundTask.getBackgroundTaskId()) ? "expanded" : "collapsed" %>">
+							<div class="background-task-status-message hide" id="<portlet:namespace />backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>">
 								<liferay-util:include page="/publish_process_message_task_details.jsp" servletContext="<%= application %>">
 									<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 								</liferay-util:include>
 							</div>
 						</c:if>
-
-						<h6 class="background-task-status-<%= BackgroundTaskConstants.getStatusLabel(backgroundTask.getStatus()) %> <%= BackgroundTaskConstants.getStatusCssClass(backgroundTask.getStatus()) %>">
-							<liferay-ui:message key="<%= backgroundTask.getStatusLabel() %>" />
-						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>

@@ -800,6 +800,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.template.URLResourceParser">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.theme.ThemeLoader">
 		<priority value="INFO" />
 	</category>

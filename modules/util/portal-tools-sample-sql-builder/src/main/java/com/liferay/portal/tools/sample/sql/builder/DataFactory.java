@@ -1284,6 +1284,32 @@ public class DataFactory {
 		return counterModels;
 	}
 
+	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
+		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
+
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
+
+		sb.append("{\"pages\":[{\"rows\":[");
+
+		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
+			sb.append("{\"columns\":[{\"size\":12,\"fieldNames\":[\"");
+			sb.append(nextDDLCustomFieldName(groupId, i));
+			sb.append("\"]}]}");
+			sb.append(",");
+		}
+
+		if (_maxDDLCustomFieldCount > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		sb.append("],\"title\":{\"en_US\":\"\"}}],\"paginationMode\":");
+		sb.append("\"single-page\",\"defaultLanguageId\":\"en_US\"}");
+
+		return newDDMStructureLayoutModel(
+			_globalGroupId, _defaultUserId,
+			ddmStructureVersionModel.getStructureVersionId(), sb.toString());
+	}
+
 	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
 		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 9);
 

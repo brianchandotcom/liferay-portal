@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.portal.search.configuration.*;version=${plugin.full.version}
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Search
+-dsannotations-options: inherit
 -include: ../../../../../marketplace/platform/bnd.bnd

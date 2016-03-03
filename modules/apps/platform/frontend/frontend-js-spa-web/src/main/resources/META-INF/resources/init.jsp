@@ -17,26 +17,19 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil" %>
 
 <liferay-theme:defineObjects />
 
 <aui:script position="inline" require="frontend-js-spa-web@1.0.0/liferay/init.es">
-	Liferay.SPA.app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
-	Liferay.SPA.app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
+	var app = Liferay.SPA.app;
+
+	app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
+	app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
 </aui:script>
 
 <aui:script>
-	<%
-	String portletId = request.getParameter("p_p_id");
-	boolean singlePageApplicationClearCache = GetterUtil.getBoolean(request.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
-	String singlePageApplicationLastPortletId = (String)session.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
-	%>
-
 	Liferay.SPA = Liferay.SPA || {};
 
-	Liferay.SPA.clearScreensCache = <%= singlePageApplicationClearCache || ((Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId))) %>;
+	Liferay.SPA.clearScreensCache = <%= SPAUtil.getClearScreensCache(request, session) %>;
 </aui:script>

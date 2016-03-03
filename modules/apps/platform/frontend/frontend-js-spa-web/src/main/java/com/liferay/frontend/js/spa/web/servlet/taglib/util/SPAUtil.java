@@ -21,15 +21,47 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.lang.reflect.Field;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Bruno Basto
  */
 public class SPAUtil {
+
+	public static boolean getClearScreensCache(
+		HttpServletRequest request, HttpSession session) {
+
+		boolean singlePageApplicationClearCache = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE));
+
+		if (singlePageApplicationClearCache) {
+			return true;
+		}
+
+		String portletId = request.getParameter("p_p_id");
+
+		String singlePageApplicationLastPortletId =
+			(String)session.getAttribute(
+				WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
+
+		if (Validator.isNotNull(portletId) &&
+			Validator.isNotNull(singlePageApplicationLastPortletId) &&
+			!Validator.equals(portletId, singlePageApplicationLastPortletId)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	public static String getPortletsBlacklist(ThemeDisplay themeDisplay) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

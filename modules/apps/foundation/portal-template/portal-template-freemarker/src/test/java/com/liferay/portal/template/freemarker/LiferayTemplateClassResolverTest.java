@@ -122,18 +122,6 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test(expected = TemplateException.class)
-	public void testResolveNotAllowedPortalClass() throws Exception {
-		_liferayTemplateClassResolver.resolve(
-			"com.liferay.portal.kernel.model.User", null, null);
-	}
-
-	@Test(expected = TemplateException.class)
-	public void testResolveExecuteClass() throws Exception {
-		_liferayTemplateClassResolver.resolve(
-			"freemarker.template.utility.Execute", null, null);
-	}
-
-	@Test(expected = TemplateException.class)
 	public void testResolveAllowedExecuteClass() throws Exception {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -159,6 +147,18 @@ public class LiferayTemplateClassResolverTest {
 
 		_freemarkerTemplateConfiguration.update(properties);
 
+		_liferayTemplateClassResolver.resolve(
+			"com.liferay.portal.kernel.model.User", null, null);
+	}
+
+	@Test(expected = TemplateException.class)
+	public void testResolveExecuteClass() throws Exception {
+		_liferayTemplateClassResolver.resolve(
+			"freemarker.template.utility.Execute", null, null);
+	}
+
+	@Test(expected = TemplateException.class)
+	public void testResolveNotAllowedPortalClass() throws Exception {
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);
 	}

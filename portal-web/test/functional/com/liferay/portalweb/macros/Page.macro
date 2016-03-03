@@ -154,7 +154,7 @@
 			<var name="page" value="${page}" />
 		</execute>
 
-		<execute function="Click" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS">
+		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS">
 			<var name="key_pageName" value="${sitePageName}" />
 		</execute>
 
@@ -664,6 +664,14 @@
 	</command>
 
 	<command name="viewChildPage">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Navigation" />
+		</execute>
+
 		<var name="key_page" value="${pageName}" />
 
 		<execute macro="ProductMenuHelper#expandPageTree" />

@@ -332,10 +332,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ResultSet rs = ps1.executeQuery()) {
 
 			try (PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update AssetEntry set classTypeId = ? where " +
-								"classPK = ?"))) {
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update AssetEntry set classTypeId = ? where " +
+							"classPK = ?")) {
 
 				while (rs.next()) {
 					long groupId = rs.getLong("groupId");

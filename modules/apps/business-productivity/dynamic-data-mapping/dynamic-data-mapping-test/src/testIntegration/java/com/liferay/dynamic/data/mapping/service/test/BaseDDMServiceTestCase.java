@@ -26,7 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
+import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -63,6 +63,7 @@ public class BaseDDMServiceTestCase {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormXSDDeserializer();
+		setUpDDMXML();
 
 		group = GroupTestUtil.addGroup();
 
@@ -279,8 +280,14 @@ public class BaseDDMServiceTestCase {
 			DDMFormXSDDeserializer.class);
 	}
 
+	protected void setUpDDMXML() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ddmXML = registry.getService(DDMXML.class);
+	}
+
 	protected DDMForm toDDMForm(String definition) throws Exception {
-		DDMXMLUtil.validateXML(definition);
+		ddmXML.validateXML(definition);
 
 		return _ddmFormXSDDeserializer.deserialize(definition);
 	}
@@ -293,6 +300,7 @@ public class BaseDDMServiceTestCase {
 
 	protected DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper;
 	protected DDMStructureTestHelper ddmStructureTestHelper;
+	protected DDMXML ddmXML;
 
 	@DeleteAfterTestRun
 	protected Group group;

@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBas
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
@@ -222,7 +221,7 @@ public class DDMStructureLocalServiceImpl
 			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMXMLUtil.validateXML(definition);
+		ddmXML.validateXML(definition);
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
@@ -345,7 +344,7 @@ public class DDMStructureLocalServiceImpl
 			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMXMLUtil.validateXML(definition);
+		ddmXML.validateXML(definition);
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
@@ -1338,7 +1337,7 @@ public class DDMStructureLocalServiceImpl
 		long userId = PortalUtil.getValidUserId(
 			structure.getCompanyId(), serviceContext.getUserId());
 
-		DDMXMLUtil.validateXML(definition);
+		ddmXML.validateXML(definition);
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
@@ -1381,7 +1380,7 @@ public class DDMStructureLocalServiceImpl
 		long userId = PortalUtil.getValidUserId(
 			structure.getCompanyId(), serviceContext.getUserId());
 
-		DDMXMLUtil.validateXML(definition);
+		ddmXML.validateXML(definition);
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 
@@ -1426,7 +1425,7 @@ public class DDMStructureLocalServiceImpl
 		long userId = PortalUtil.getValidUserId(
 			structure.getCompanyId(), serviceContext.getUserId());
 
-		DDMXMLUtil.validateXML(definition);
+		ddmXML.validateXML(definition);
 
 		DDMForm ddmForm = ddmFormXSDDeserializer.deserialize(definition);
 

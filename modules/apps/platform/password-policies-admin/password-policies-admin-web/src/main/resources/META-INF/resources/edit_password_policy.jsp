@@ -54,10 +54,10 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 		<liferay-ui:panel-container extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyPasswordPanel" markupView="lexicon" persistState="<%= true %>" title="password-changes">
 				<aui:fieldset>
-					<aui:input helpMessage="changeable-help" name="changeable" />
+					<aui:input helpMessage="changeable-help" name="changeable" type="toggle-switch" />
 
 					<div class="password-policy-options" id="<portlet:namespace />changeableSettings">
-						<aui:input helpMessage="change-required-help" name="changeRequired" />
+						<aui:input helpMessage="change-required-help" name="changeRequired" type="toggle-switch" />
 
 						<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
 							<aui:option label="none" value="0" />
@@ -94,10 +94,10 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" markupView="lexicon" persistState="<%= true %>" title="password-syntax-checking">
 				<aui:fieldset>
-					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" />
+					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" type="toggle-switch" />
 
 					<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
-						<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" />
+						<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" type="toggle-switch" />
 
 						<aui:input helpMessage="minimum-alpha-numeric-help" label="minimum-alpha-numeric" name="minAlphanumeric" />
 
@@ -122,7 +122,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" markupView="lexicon" persistState="<%= true %>" title="password-history">
 				<aui:fieldset>
-					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
+					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" type="toggle-switch" />
 
 					<div class="password-policy-options" id="<portlet:namespace />historySettings">
 						<aui:select helpMessage="history-count-help" name="historyCount">
@@ -144,7 +144,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" markupView="lexicon" persistState="<%= true %>" title="password-expiration">
 				<aui:fieldset>
-					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" />
+					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" type="toggle-switch" />
 
 					<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
 						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
@@ -183,7 +183,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" markupView="lexicon" persistState="<%= true %>" title="lockout">
 				<aui:fieldset>
-					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" />
+					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" type="toggle-switch" />
 
 					<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
 						<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />

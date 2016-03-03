@@ -63,7 +63,7 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/ActionURLScreen.es", ['exports'
 			var request = this.getRequest();
 
 			if (request) {
-				var uri = new _Uri2.default(request.responseURL);
+				var uri = new _Uri2.default(_EventScreen.prototype.getRequestPath.call(this));
 
 				if (uri.getParameterValue('p_p_lifecycle') === '1') {
 					uri.setParameterValue('p_p_lifecycle', '0');

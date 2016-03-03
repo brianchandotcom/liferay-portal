@@ -67,10 +67,8 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.DependencyResolveDetails;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
-import org.gradle.api.artifacts.ModuleVersionSelector;
-import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
@@ -573,63 +571,51 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			bundleDefaultInstructions);
 	}
 
+	protected void configureConfiguration(Configuration configuration) {
+		DependencySet dependencySet = configuration.getDependencies();
+
+		dependencySet.whenObjectAdded(
+			new Action<Dependency>() {
+
+				@Override
+				public void execute(Dependency dependency) {
+					if (!(dependency instanceof ModuleDependency)) {
+						return;
+					}
+
+					ModuleDependency moduleDependency =
+						(ModuleDependency)dependency;
+
+					String group = moduleDependency.getGroup();
+					String name = moduleDependency.getName();
+
+					if (group.equals("com.liferay") &&
+						(name.equals(
+							"com.liferay.arquillian.extension.junit.bridge") ||
+						 name.equals("com.liferay.jasper.jspc"))) {
+
+						moduleDependency.exclude(
+							Collections.singletonMap(
+								"group", "com.liferay.portal"));
+					}
+				}
+
+			});
+	}
+
 	protected void configureConfigurations(Project project) {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+		configurationContainer.all(
+			new Action<Configuration>() {
 
-		Action<Configuration> action = new Action<Configuration>() {
+				@Override
+				public void execute(Configuration configuration) {
+					configureConfiguration(configuration);
+				}
 
-			@Override
-			public void execute(Configuration configuration) {
-				ResolutionStrategy resolutionStrategy =
-					configuration.getResolutionStrategy();
-
-				resolutionStrategy.eachDependency(
-					new Action<DependencyResolveDetails>() {
-
-						@Override
-						public void execute(
-							DependencyResolveDetails dependencyResolveDetails) {
-
-							ModuleVersionSelector moduleVersionSelector =
-								dependencyResolveDetails.getRequested();
-
-							String group = moduleVersionSelector.getGroup();
-
-							if (!group.equals("com.liferay.portal")) {
-								return;
-							}
-
-							String name = moduleVersionSelector.getName();
-
-							if (name.equals("portal-service")) {
-								name = "com.liferay.portal.kernel";
-							}
-							else if (!name.startsWith("com.liferay.")) {
-								name = "com.liferay." + name.replace('-', '.');
-							}
-
-							String version = liferayExtension.getDefaultVersion(
-								group, name, "latest.integration");
-
-							if (!name.equals(moduleVersionSelector.getName())) {
-								dependencyResolveDetails.useTarget(
-									group + ":" + name + ":" + version);
-							}
-							else {
-								dependencyResolveDetails.useVersion(version);
-							}
-						}
-
-					});
-			}
-
-		};
-
-		configurationContainer.all(action);
+			});
 	}
 
 	@Override

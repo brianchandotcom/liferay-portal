@@ -2,6 +2,7 @@ AUI.add(
 	'document-library-upload',
 	function(A) {
 		var AArray = A.Array;
+		var ANode = A.Node;
 		var HistoryManager = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var LString = Lang.String;
@@ -126,12 +127,16 @@ AUI.add(
 
 		var STR_THUMBNAIL_PATH = PATH_THEME_IMAGES + '/file_system/large/';
 
+		var TPL_ENTRIES_CONTAINER = '<ul class="{cssClass}"></ul>';
+
 		var TPL_ENTRY_ROW_TITLE = '<span class="' + CSS_APP_VIEW_ENTRY + STR_SPACE + CSS_ENTRY_DISPLAY_STYLE + '">' +
 				'<a class="' + CSS_TAGLIB_ICON + '">' +
 					'<img alt="" class="' + CSS_ICON + '" src="' + PATH_THEME_IMAGES + '/file_system/small/page.png" />' +
 					'<span class="' + CSS_TAGLIB_TEXT + '">{0}</span>' +
 				'</a>' +
 			'</span>';
+
+		var TPL_ENTRY_WRAPPER = '<li class="col-md-2 col-sm-4 col-xs-6" data-title="{title}"></li>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',
@@ -450,6 +455,27 @@ AUI.add(
 						}
 					},
 
+					_createEntriesContainer: function(searchContainer, displayStyle) {
+						var containerClasses = 'display-style-descriptive tabular-list-group';
+
+						if (displayStyle === CSS_ICON) {
+							containerClasses = 'display-style-icon list-unstyled row';
+						}
+
+						var entriesContainer = ANode.create(
+							Lang.sub(
+								TPL_ENTRIES_CONTAINER,
+								{
+									cssClass: containerClasses
+								}
+							)
+						);
+
+						searchContainer.one('.searchcontainer-content').prepend(entriesContainer);
+
+						return entriesContainer;
+					},
+
 					_createEntryNode: function(name, size, displayStyle) {
 						var instance = this;
 
@@ -457,9 +483,9 @@ AUI.add(
 
 						var entriesContainer = instance.get('entriesContainer');
 
-						if (displayStyle === STR_LIST) {
-							var searchContainer = entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
+						var searchContainer = entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
+						if (displayStyle === STR_LIST) {
 							entriesContainer = searchContainer.one('tbody');
 
 							entryNode = instance._createEntryRow(name, size);
@@ -471,7 +497,7 @@ AUI.add(
 								entriesContainerSelector = 'ul.list-unstyled:last-of-type';
 							}
 
-							entriesContainer = entriesContainer.one(entriesContainerSelector) || entriesContainer.one('.taglib-empty-result-message');
+							entriesContainer = entriesContainer.one(entriesContainerSelector) || instance._createEntriesContainer(entriesContainer, displayStyle);
 
 							var invisibleEntry = instance._invisibleDescriptiveEntry;
 
@@ -496,6 +522,14 @@ AUI.add(
 							entryLink.attr('title', name);
 
 							entryTitle.setContent(name);
+
+							instance._removeEmptyResultsMessage(searchContainer);
+
+							var searchContainerWrapper = A.one('div.lfr-search-container-wrapper.main-content-body');
+
+							if (searchContainerWrapper) {
+								searchContainerWrapper.show();
+							}
 						}
 
 						entryNode.attr(
@@ -506,11 +540,9 @@ AUI.add(
 						);
 
 						if (displayStyle == CSS_ICON) {
-							wrapperTpl = '<li class="col-md-2 col-sm-4 col-xs-6" data-title="{title}"></li>';
-
-							var entryNodeWrapper = A.Node.create(
+							var entryNodeWrapper = ANode.create(
 								Lang.sub(
-									wrapperTpl,
+									TPL_ENTRY_WRAPPER,
 									{
 										title: name
 									}
@@ -1083,6 +1115,18 @@ AUI.add(
 						}
 					},
 
+					_removeEmptyResultsMessage: function(searchContainer) {
+						var instance = this;
+
+						var id = searchContainer.getAttribute('id');
+
+						var emptyResultsMessage = A.one('#' + id + 'EmptyResultsMessage');
+
+						if (emptyResultsMessage) {
+							emptyResultsMessage.hide();
+						}
+					},
+
 					_showFileUploadComplete: function(event, displayStyle) {
 						var instance = this;
 
@@ -1317,7 +1361,7 @@ AUI.add(
 						imageNode.attr('src', thumbnailPath);
 
 						if (instance._getDisplayStyle() === CSS_ICON) {
-							imageNode.ancestor('div').setStyle('backgroundImage', "url('" + thumbnailPath + "')");
+							imageNode.ancestor('div').setStyle('backgroundImage', 'url("' + thumbnailPath + '")');
 						}
 					},
 

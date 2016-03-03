@@ -68,9 +68,9 @@ AUI.add(
 						'</a>',
 
 					TPL_PAGE_HEADER: '<div class="' + CSS_PAGE_HEADER + ' form-inline">' +
-						'<textarea rows="1" placeholder="{untitledPage}" tabindex="1" class="' + CSS_PAGE_HEADER_TITLE + ' ' +
+						'<textarea rows="1" placeholder="{untitledPage}" class="' + CSS_PAGE_HEADER_TITLE + ' ' +
 						CSS_PAGE_HEADER_TITLE_HIDE_BORDER + ' form-control"></textarea>' +
-						'<textarea rows="1" placeholder="{aditionalInfo}" tabindex="2" class="' + CSS_PAGE_HEADER_DESCRIPTION + ' ' +
+						'<textarea rows="1" placeholder="{aditionalInfo}" class="' + CSS_PAGE_HEADER_DESCRIPTION + ' ' +
 						CSS_PAGE_HEADER_DESCRIPTION_HIDE_BORDER + ' form-control"></textarea>' +
 					'</div>',
 

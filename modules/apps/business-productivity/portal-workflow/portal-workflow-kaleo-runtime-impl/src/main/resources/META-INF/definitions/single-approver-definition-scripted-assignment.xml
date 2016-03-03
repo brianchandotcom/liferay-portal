@@ -56,7 +56,7 @@
 		<actions>
 			<notification>
 				<name>Review Completion Notification</name>
-				<template>Your submission was reviewed&lt;#if taskComments?has_content&gt; and the reviewer has applied the following ${taskComments}&lt;/#if&gt;.</template>
+				<template><![CDATA[Your submission has been reviewed<#if taskComments?has_content > and the reviewer has applied the following ${taskComments}</#if>.]]></template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>

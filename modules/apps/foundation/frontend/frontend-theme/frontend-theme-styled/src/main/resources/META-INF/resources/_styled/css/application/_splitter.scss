@@ -1,8 +1,10 @@
 .splitter {
 	background-color: $splitter-bg;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-	padding: $splitter-padding;
 	color: $splitter-text-color;
+	padding: $splitter-padding;
+	position: relative;
+	z-index: 1;
 
 	&.splitter-spaced {
 		margin-bottom: $splitter-footer-margin;

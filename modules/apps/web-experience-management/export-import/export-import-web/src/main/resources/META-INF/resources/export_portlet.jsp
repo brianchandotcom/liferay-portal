@@ -100,7 +100,7 @@ portletURL.setParameter("portletResource", portletResource);
 					%>
 
 					<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
-						<aui:fieldset cssClass="options-group" label="application">
+						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="application">
 							<ul class="lfr-tree list-unstyled select-options">
 								<li class="options">
 									<ul class="portlet-list">
@@ -172,125 +172,122 @@ portletURL.setParameter("portletResource", portletResource);
 						%>
 
 						<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) || (startDate != null) || (endDate != null) %>">
-							<aui:fieldset cssClass="options-group" label="content">
+							<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content">
 								<ul class="lfr-tree list-unstyled select-options">
 									<li class="tree-item">
-										<div class="hide" id="<portlet:namespace />range">
-											<aui:fieldset cssClass="portlet-data-section" label="date-range">
-												<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
+										<div id="<portlet:namespace />range">
+											<div class="flex-container">
+												<div class="flex-item-center range-options">
+													<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(request, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
+												</div>
 
-												<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
+												<div class="flex-item-center range-options">
+													<aui:input data-name='<%= LanguageUtil.get(request, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
+												</div>
 
-												<%
-												Calendar endCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+												<div class="flex-item-center range-options">
+													<aui:input id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
+												</div>
 
-												if (endDate != null) {
-													endCalendar.setTime(endDate);
-												}
+												<div class="flex-item-center range-options">
+													<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
+														<liferay-ui:message key="apply-filter" />
+													</aui:a>
+												</div>
+											</div>
 
-												Calendar startCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+											<%
+											Calendar endCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-												if (startDate != null) {
-													startCalendar.setTime(startDate);
-												}
-												else {
-													startCalendar.add(Calendar.DATE, -1);
-												}
-												%>
+											if (endDate != null) {
+												endCalendar.setTime(endDate);
+											}
 
-												<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
-													<li>
-														<aui:fieldset label="start-date">
-															<liferay-ui:input-date
-																dayParam="startDateDay"
-																dayValue="<%= startCalendar.get(Calendar.DATE) %>"
-																disabled="<%= false %>"
-																firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
-																lastEnabledDate="<%= new Date() %>"
-																monthParam="startDateMonth"
-																monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
-																name="startDate"
-																yearParam="startDateYear"
-																yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
-															/>
+											Calendar startCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-															&nbsp;
+											if (startDate != null) {
+												startCalendar.setTime(startDate);
+											}
+											else {
+												startCalendar.add(Calendar.DATE, -1);
+											}
+											%>
 
-															<liferay-ui:input-time
-																amPmParam='<%= "startDateAmPm" %>'
-																amPmValue="<%= startCalendar.get(Calendar.AM_PM) %>"
-																dateParam="startDateTime"
-																dateValue="<%= startCalendar.getTime() %>"
-																disabled="<%= false %>"
-																hourParam='<%= "startDateHour" %>'
-																hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
-																minuteParam='<%= "startDateMinute" %>'
-																minuteValue="<%= startCalendar.get(Calendar.MINUTE) %>"
-																name="startTime"
-															/>
-														</aui:fieldset>
-													</li>
+											<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
+												<li class="flex-container">
+													<aui:fieldset label="start-date">
+														<liferay-ui:input-date
+															cssClass="form-group form-group-inline"
+															dayParam="startDateDay"
+															dayValue="<%= startCalendar.get(Calendar.DATE) %>"
+															disabled="<%= false %>"
+															firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
+															lastEnabledDate="<%= new Date() %>"
+															monthParam="startDateMonth"
+															monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
+															name="startDate"
+															yearParam="startDateYear"
+															yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
+														/>
 
-													<li>
-														<aui:fieldset label="end-date">
-															<liferay-ui:input-date
-																dayParam="endDateDay"
-																dayValue="<%= endCalendar.get(Calendar.DATE) %>"
-																disabled="<%= false %>"
-																firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
-																lastEnabledDate="<%= new Date() %>"
-																monthParam="endDateMonth"
-																monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
-																name="endDate"
-																yearParam="endDateYear"
-																yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
-															/>
+														<liferay-ui:input-time
+															amPmParam='<%= "startDateAmPm" %>'
+															amPmValue="<%= startCalendar.get(Calendar.AM_PM) %>"
+															cssClass="form-group form-group-inline"
+															dateParam="startDateTime"
+															dateValue="<%= startCalendar.getTime() %>"
+															disabled="<%= false %>"
+															hourParam='<%= "startDateHour" %>'
+															hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
+															minuteParam='<%= "startDateMinute" %>'
+															minuteValue="<%= startCalendar.get(Calendar.MINUTE) %>"
+															name="startTime"
+														/>
+													</aui:fieldset>
 
-															&nbsp;
+													<aui:fieldset label="end-date">
+														<liferay-ui:input-date
+															cssClass="form-group form-group-inline"
+															dayParam="endDateDay"
+															dayValue="<%= endCalendar.get(Calendar.DATE) %>"
+															disabled="<%= false %>"
+															firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
+															lastEnabledDate="<%= new Date() %>"
+															monthParam="endDateMonth"
+															monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
+															name="endDate"
+															yearParam="endDateYear"
+															yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
+														/>
 
-															<liferay-ui:input-time
-																amPmParam='<%= "endDateAmPm" %>'
-																amPmValue="<%= endCalendar.get(Calendar.AM_PM) %>"
-																dateParam="startDateTime"
-																dateValue="<%= endCalendar.getTime() %>"
-																disabled="<%= false %>"
-																hourParam='<%= "endDateHour" %>'
-																hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
-																minuteParam='<%= "endDateMinute" %>'
-																minuteValue="<%= endCalendar.get(Calendar.MINUTE) %>"
-																name="endTime"
-															/>
-														</aui:fieldset>
-													</li>
-												</ul>
+														<liferay-ui:input-time
+															amPmParam='<%= "endDateAmPm" %>'
+															amPmValue="<%= endCalendar.get(Calendar.AM_PM) %>"
+															cssClass="form-group form-group-inline"
+															dateParam="startDateTime"
+															dateValue="<%= endCalendar.getTime() %>"
+															disabled="<%= false %>"
+															hourParam='<%= "endDateHour" %>'
+															hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
+															minuteParam='<%= "endDateMinute" %>'
+															minuteValue="<%= endCalendar.get(Calendar.MINUTE) %>"
+															name="endTime"
+														/>
+													</aui:fieldset>
+												</li>
+											</ul>
 
-												<aui:input id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
-
-												<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
-													<li>
-														<aui:select cssClass="relative-range" label="" name="last">
-															<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' value="12" />
-															<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="24" />
-															<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' value="48" />
-															<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' value="168" />
-														</aui:select>
-													</li>
-												</ul>
-											</aui:fieldset>
+											<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
+												<li>
+													<aui:select cssClass="relative-range" label="" name="last">
+														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "12", false) %>' value="12" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "24", false) %>' value="24" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-hours", "48", false) %>' value="48" />
+														<aui:option label='<%= LanguageUtil.format(request, "x-days", "7", false) %>' value="168" />
+													</aui:select>
+												</li>
+											</ul>
 										</div>
-
-										<liferay-util:buffer var="selectedLabelsHTML">
-											<span class="selected-labels" id="<portlet:namespace />selectedRange"></span>
-
-											<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
-										</liferay-util:buffer>
-
-										<liferay-ui:icon
-											icon="calendar"
-											label="<%= true %>"
-											markupView="lexicon"
-											message='<%= LanguageUtil.get(request, "date-range") + selectedLabelsHTML %>'
-										/>
 									</li>
 
 									<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) %>">

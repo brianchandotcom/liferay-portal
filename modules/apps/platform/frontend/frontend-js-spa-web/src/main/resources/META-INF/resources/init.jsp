@@ -22,6 +22,14 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-theme:defineObjects />
 
 <aui:script position="inline" require="frontend-js-spa-web@1.0.0/liferay/init.es">
-	Liferay.SPA.app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
-	Liferay.SPA.app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
+	var app = Liferay.SPA.app;
+
+	app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
+	app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
+</aui:script>
+
+<aui:script>
+	Liferay.SPA = Liferay.SPA || {};
+
+	Liferay.SPA.clearScreensCache = <%= SPAUtil.getClearScreensCache(request, session) %>;
 </aui:script>

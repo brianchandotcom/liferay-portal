@@ -433,10 +433,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"select fileVersionId, extension, title from " +
 						"DLFileVersion");
 				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update DLFileVersion set fileName = ? where " +
-								"fileVersionId = ?"));
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DLFileVersion set fileName = ? where " +
+							"fileVersionId = ?");
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {

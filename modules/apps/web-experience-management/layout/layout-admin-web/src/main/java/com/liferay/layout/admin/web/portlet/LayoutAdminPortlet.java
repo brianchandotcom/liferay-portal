@@ -405,6 +405,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				redirect, actionResponse.getNamespace() + "selPlid", 0);
 		}
 
+		MultiSessionMessages.add(actionRequest, "layoutDeleted", selPlid);
+
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 

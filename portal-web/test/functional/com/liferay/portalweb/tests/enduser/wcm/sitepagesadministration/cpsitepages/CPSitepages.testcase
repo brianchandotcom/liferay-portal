@@ -422,11 +422,6 @@
 			</execute>
 		</for>
 
-		<execute macro="SitePageNavigator#gotoPages" >
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
-		</execute>
-
 		<execute macro="Page#deletePG">
 			<var name="pageName" value="Site Page 2" />
 		</execute>

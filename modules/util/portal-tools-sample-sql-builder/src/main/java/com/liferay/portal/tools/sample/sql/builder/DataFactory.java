@@ -1500,6 +1500,43 @@ public class DataFactory {
 			dLFileEntryMetadataModel.getDDMStructureId());
 	}
 
+	public DDMStructureVersionModel newDDMStructureVersionModel(
+		DDMStructureModel ddmStructureModel) {
+
+		DDMStructureVersionModel ddmStructureVersionModel =
+			new DDMStructureVersionModelImpl();
+
+		ddmStructureVersionModel.setStructureVersionId(_counter.get());
+		ddmStructureVersionModel.setGroupId(ddmStructureModel.getGroupId());
+		ddmStructureVersionModel.setCompanyId(_companyId);
+		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
+		ddmStructureVersionModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setCreateDate(nextFutureDate());
+		ddmStructureVersionModel.setStructureId(
+			ddmStructureModel.getStructureId());
+		ddmStructureVersionModel.setVersion(
+			DDMStructureConstants.VERSION_DEFAULT);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
+		sb.append(ddmStructureModel.getStructureKey());
+		sb.append("</name></root>");
+
+		ddmStructureVersionModel.setName(sb.toString());
+
+		ddmStructureVersionModel.setDefinition(
+			ddmStructureModel.getDefinition());
+		ddmStructureVersionModel.setStorageType(StorageType.JSON.toString());
+		ddmStructureVersionModel.setStatusByUserId(
+			ddmStructureModel.getUserId());
+		ddmStructureVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
+		ddmStructureVersionModel.setStatusDate(nextFutureDate());
+
+		return ddmStructureVersionModel;
+	}
+
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
 		long ddmStorageLinkId, long ddmStructureId,
 		DLFileVersionModel dlFileVersionModel) {
@@ -2680,43 +2717,6 @@ public class DataFactory {
 		ddmStructureModel.setLastPublishDate(nextFutureDate());
 
 		return ddmStructureModel;
-	}
-
-	public DDMStructureVersionModel newDDMStructureVersionModel(
-		DDMStructureModel ddmStructureModel) {
-
-		DDMStructureVersionModel ddmStructureVersionModel =
-			new DDMStructureVersionModelImpl();
-
-		ddmStructureVersionModel.setStructureVersionId(_counter.get());
-		ddmStructureVersionModel.setGroupId(ddmStructureModel.getGroupId());
-		ddmStructureVersionModel.setCompanyId(_companyId);
-		ddmStructureVersionModel.setUserId(ddmStructureModel.getUserId());
-		ddmStructureVersionModel.setUserName(_SAMPLE_USER_NAME);
-		ddmStructureVersionModel.setCreateDate(nextFutureDate());
-		ddmStructureVersionModel.setStructureId(
-			ddmStructureModel.getStructureId());
-		ddmStructureVersionModel.setVersion(
-			DDMStructureConstants.VERSION_DEFAULT);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><name language-id=\"en_US\">");
-		sb.append(ddmStructureModel.getStructureKey());
-		sb.append("</name></root>");
-
-		ddmStructureVersionModel.setName(sb.toString());
-
-		ddmStructureVersionModel.setDefinition(
-			ddmStructureModel.getDefinition());
-		ddmStructureVersionModel.setStorageType(StorageType.JSON.toString());
-		ddmStructureVersionModel.setStatusByUserId(
-			ddmStructureModel.getUserId());
-		ddmStructureVersionModel.setStatusByUserName(_SAMPLE_USER_NAME);
-		ddmStructureVersionModel.setStatusDate(nextFutureDate());
-
-		return ddmStructureVersionModel;
 	}
 
 	protected DDMTemplateModel newDDMTemplateModel(

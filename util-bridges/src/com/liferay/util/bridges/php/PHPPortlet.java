@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletObjectsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.bridges.common.ScriptPostProcess;
 
 import java.io.IOException;
@@ -74,6 +76,8 @@ public class PHPPortlet extends GenericPortlet {
 		String phpUri = renderRequest.getParameter(_PHP_URI_PARAM);
 
 		if (phpUri != null) {
+			checkPHPUri(phpUri);
+
 			processPHP(phpUri, renderRequest, renderResponse);
 		}
 		else {
@@ -144,6 +148,16 @@ public class PHPPortlet extends GenericPortlet {
 
 		if (phpURI != null) {
 			actionResponse.setRenderParameter(_PHP_URI_PARAM, phpURI);
+		}
+	}
+
+	protected void checkPHPUri(String phpUri) throws PortletException {
+		if (Validator.isNotNull(phpUri) &&
+			(!PortalUtil.isValidResourceId(phpUri) ||
+			 !Validator.isFilePath(phpUri, false))) {
+
+			throw new PortletException(
+				"URI " + phpUri + " is not accessible by this portlet");
 		}
 	}
 
@@ -227,11 +241,14 @@ public class PHPPortlet extends GenericPortlet {
 
 			String contentType = bufferCacheServletResponse.getContentType();
 
-			if (contentType.startsWith("text/")) {
-				result = rewriteURLs(result, renderResponse.createRenderURL());
-			}
+			if (contentType != null) {
+				if (contentType.startsWith("text/")) {
+					result = rewriteURLs(
+						result, renderResponse.createRenderURL());
+				}
 
-			renderResponse.setContentType(contentType);
+				renderResponse.setContentType(contentType);
+			}
 
 			PrintWriter writer = renderResponse.getWriter();
 

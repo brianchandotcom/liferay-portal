@@ -155,9 +155,7 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen", ['exports', '
 
 		RequestScreen.prototype.formatLoadPath = function formatLoadPath(path) {
 			if (_UA2.default.isIeOrEdge && this.httpMethod === RequestScreen.GET) {
-				var uri = new _Uri2.default(path);
-				uri.makeUnique();
-				return uri.toString();
+				return new _Uri2.default(path).makeUnique().toString();
 			}
 			return path;
 		};
@@ -173,7 +171,15 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen", ['exports', '
 		RequestScreen.prototype.getRequestPath = function getRequestPath() {
 			var request = this.getRequest();
 			if (request) {
-				return _utils2.default.getUrlPath(request.responseURL);
+				var requestPath = request.requestPath;
+				var responseUrl = this.maybeExtractResponseUrlFromRequest(request);
+				if (responseUrl) {
+					requestPath = responseUrl;
+				}
+				if (_UA2.default.isIeOrEdge && this.httpMethod === RequestScreen.GET) {
+					requestPath = new _Uri2.default(requestPath).removeUnique().toString();
+				}
+				return _utils2.default.getUrlPath(requestPath);
 			}
 			return null;
 		};
@@ -211,12 +217,14 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen", ['exports', '
 				return headers.add(header, _this2.httpHeaders[header]);
 			});
 
-			return _Ajax2.default.request(this.formatLoadPath(path), httpMethod, body, headers, null, this.timeout).then(function (xhr) {
+			var requestPath = this.formatLoadPath(path);
+			return _Ajax2.default.request(requestPath, httpMethod, body, headers, null, this.timeout).then(function (xhr) {
 				_this2.setRequest(xhr);
 				_this2.assertValidResponseStatusCode(xhr.status);
 				if (httpMethod === RequestScreen.GET && _this2.isCacheable()) {
 					_this2.addCache(xhr.responseText);
 				}
+				xhr.requestPath = requestPath;
 				return xhr.responseText;
 			}).catch(function (reason) {
 				switch (reason.message) {
@@ -229,6 +237,14 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen", ['exports', '
 				}
 				throw reason;
 			});
+		};
+
+		RequestScreen.prototype.maybeExtractResponseUrlFromRequest = function maybeExtractResponseUrlFromRequest(request) {
+			var responseUrl = request.responseURL;
+			if (responseUrl) {
+				return responseUrl;
+			}
+			return request.getResponseHeader(RequestScreen.X_REQUEST_URL_HEADER);
 		};
 
 		RequestScreen.prototype.setHttpHeaders = function setHttpHeaders(httpHeaders) {
@@ -268,6 +284,14 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/RequestScreen", ['exports', '
   * @static
   */
 	RequestScreen.POST = 'post';
+
+	/**
+  * Fallback http header to retrieve response request url.
+  * @type {string}
+  * @default 'X-Request-URL'
+  * @static
+  */
+	RequestScreen.X_REQUEST_URL_HEADER = 'X-Request-URL';
 
 	exports.default = RequestScreen;
 });

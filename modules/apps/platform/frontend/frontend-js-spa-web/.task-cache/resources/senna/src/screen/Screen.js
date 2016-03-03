@@ -86,11 +86,11 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/Screen", ['exports', 'metal/s
 
 
 		Screen.prototype.activate = function activate() {
-			console.log('Screen [' + this + '] activate');
+			void 0;
 		};
 
 		Screen.prototype.beforeDeactivate = function beforeDeactivate() {
-			console.log('Screen [' + this + '] beforeDeactivate');
+			void 0;
 		};
 
 		Screen.prototype.beforeUpdateHistoryPath = function beforeUpdateHistoryPath(path) {
@@ -102,12 +102,12 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/Screen", ['exports', 'metal/s
 		};
 
 		Screen.prototype.deactivate = function deactivate() {
-			console.log('Screen [' + this + '] deactivate');
+			void 0;
 		};
 
 		Screen.prototype.disposeInternal = function disposeInternal() {
 			_Cacheable.prototype.disposeInternal.call(this);
-			console.log('Screen [' + this + '] dispose');
+			void 0;
 		};
 
 		Screen.prototype.evaluateScripts = function evaluateScripts(surfaces) {
@@ -126,7 +126,7 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/Screen", ['exports', 'metal/s
 		Screen.prototype.flip = function flip(surfaces) {
 			var _this2 = this;
 
-			console.log('Screen [' + this + '] flip');
+			void 0;
 
 			var transitions = [];
 
@@ -144,7 +144,7 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/Screen", ['exports', 'metal/s
 		};
 
 		Screen.prototype.getSurfaceContent = function getSurfaceContent() {
-			console.log('Screen [' + this + '] getSurfaceContent');
+			void 0;
 		};
 
 		Screen.prototype.getTitle = function getTitle() {
@@ -152,7 +152,7 @@ define("frontend-js-spa-web@1.0.0/senna/src/screen/Screen", ['exports', 'metal/s
 		};
 
 		Screen.prototype.load = function load() {
-			console.log('Screen [' + this + '] load');
+			void 0;
 			return _Promise2.default.resolve();
 		};
 

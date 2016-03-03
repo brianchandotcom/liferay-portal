@@ -8,7 +8,7 @@ configurations {
 
 task buildSenna(type: Copy)
 
-String sennaVersion = "1.0.0-alpha.5.2"
+String sennaVersion = "1.0.0"
 
 buildSenna {
 	eachFile new StripPathSegmentsAction(7)
@@ -46,7 +46,7 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 
-	senna group: "com.liferay.webjars", name: "senna.js", transitive: false, version: sennaVersion
+	senna group: "com.liferay.webjars", name: "com.liferay.webjars.senna.js", transitive: false, version: sennaVersion
 }
 
 liferay {

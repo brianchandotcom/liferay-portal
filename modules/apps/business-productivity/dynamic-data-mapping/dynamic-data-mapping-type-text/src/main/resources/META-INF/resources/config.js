@@ -7,6 +7,7 @@
 				'field-text': {
 					base: PATH_DDM_TYPE_TEXT + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-text': {
 							condition: {
@@ -14,6 +15,7 @@
 							},
 							path: 'text_field.js',
 							requires: [
+								'aui-autosize-deprecated',
 								'aui-tooltip',
 								'liferay-ddm-form-renderer-field'
 							]

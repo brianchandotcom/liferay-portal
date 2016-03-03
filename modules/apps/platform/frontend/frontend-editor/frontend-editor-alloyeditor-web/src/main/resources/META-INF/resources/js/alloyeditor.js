@@ -68,8 +68,14 @@ AUI.add(
 
 						var editorConfig = instance.get('editorConfig');
 
-						instance._alloyEditor = AlloyEditor.editable(editorConfig.srcNode, editorConfig);
-						instance._srcNode = A.one('#' + editorConfig.srcNode);
+						var srcNode = editorConfig.srcNode;
+
+						if (Lang.isString(srcNode)) {
+							srcNode = A.one('#' + srcNode);
+						}
+
+						instance._alloyEditor = AlloyEditor.editable(srcNode.attr('id'), editorConfig);
+						instance._srcNode = srcNode;
 					},
 
 					bindUI: function() {

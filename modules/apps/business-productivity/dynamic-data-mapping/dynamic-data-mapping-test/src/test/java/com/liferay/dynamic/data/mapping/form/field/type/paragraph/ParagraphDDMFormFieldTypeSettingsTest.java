@@ -92,13 +92,11 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		properties = textDDMFormField.getProperties();
 
-		Assert.assertTrue(properties.containsKey("displayStyle"));
-		Assert.assertEquals("multiline", properties.get("displayStyle"));
 		Assert.assertTrue(properties.containsKey("placeholder"));
 
 		Assert.assertTrue(textDDMFormField.isRequired());
 
-		Assert.assertEquals("text", textDDMFormField.getType());
+		Assert.assertEquals("editor", textDDMFormField.getType());
 
 		DDMFormField tipDDMFormField = ddmFormFieldsMap.get("tip");
 

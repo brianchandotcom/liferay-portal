@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.layout.set.prototype.instance.lifecycle;
 
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.List;
 
@@ -79,24 +82,51 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 
 		// Home layout
 
-		Layout layout = DefaultLayoutPrototypesUtil.addLayout(
+		Layout homeLayout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "home", "/home", "2_columns_iii");
 		String portletId = PortletProviderUtil.getPortletId(
 			MBMessage.class.getName(), PortletProvider.Action.EDIT);
 
-		DefaultLayoutPrototypesUtil.addPortletId(layout, portletId, "column-1");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			homeLayout, portletId, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PollsPortletKeys.POLLS_DISPLAY, "column-2");
+			homeLayout, PollsPortletKeys.POLLS_DISPLAY, "column-2");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
+			homeLayout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
 			"column-2");
 
 		// Wiki layout
 
-		DefaultLayoutPrototypesUtil.addLayout(
+		Layout wikiLayout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "wiki", "/wiki", "2_columns_iii");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			wikiLayout, WikiPortletKeys.WIKI, "column-1");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			wikiLayout,
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
+			"column-2");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			wikiLayout, AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD,
+			"column-2");
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")",
+		unbind = "-"
+	)
+	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")",
+		unbind = "-"
+	)
+	protected void setAssetTagsNavigationPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")
@@ -139,6 +169,13 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")",
+		unbind = "-"
+	)
+	protected void setWikiPortlet(Portlet portlet) {
 	}
 
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

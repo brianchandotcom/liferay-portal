@@ -225,6 +225,19 @@
 		<execute macro="WikiPage#submitForPublication" />
 	</command>
 
+	<command name="addInlineImageViaEdit">
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="${navTab}" />
+			<var name="uploadFileName" value="${uploadFileName}" />
+		</execute>
+	</command>
+
 	<command name="addLocalizedFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="${emptyPageMessage}" />
 
@@ -1061,7 +1074,7 @@
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY_ASSET" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="viewAttachmentPG">
+	<command name="viewAttachmentPGViaEdit">
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -1278,6 +1291,21 @@
 				<execute function="AssertTextEquals" locator1="Wiki#CUSTOM_FIELD_CONTENT" value1="${customFieldText}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewPageWithAttachment">
+		<var name="key_attachmentFileName" value="${attachmentFileName}" />
+		<var name="key_wikiPageContent" value="${wikiPageContent}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="WikiEntry#ATTACHMENTS_LABEL" />
+
+		<execute function="AssertTextEquals" locator1="WikiEntry#ATTACHMENT_FILE_NAME" value1="${attachmentFileName}" />
 	</command>
 
 	<command name="viewPageWithWorkflowPG">

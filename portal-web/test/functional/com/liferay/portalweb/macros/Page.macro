@@ -444,6 +444,8 @@
 		<execute macro="ProductMenu#gotoUserMyAccount">
 			<var name="portlet" value="${portletName}" />
 		</execute>
+
+		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Account Settings" />
 	</command>
 
 	<command name="gotoPagePanelPortlet">

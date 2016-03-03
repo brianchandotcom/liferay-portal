@@ -160,6 +160,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_MENULIST_PERMISSIONS</td>
+	<td>//a[contains(@id,'_menu_permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTION_MENULIST_REMOVE</td>
 	<td>//a[contains(@id,'_menu_remove')]</td>
 	<td></td>

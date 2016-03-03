@@ -3,13 +3,15 @@
 /**
  * Prints the DDM form paragraph field.
  *
- * @param dir
+ * @param label
  * @param name
  * @param text
  * @param visible
  */
 {template .paragraph}
 	<div class="form-group form-inline{$visible ? '' : ' hide'} liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
-		<p dir="{$dir}">{print $text|changeNewlineToBr}</p>
+		<label class="control-label" for="{$name}">{$label}</label>
+
+		<div>{$text|noAutoescape}</div>
 	</div>
 {/template}

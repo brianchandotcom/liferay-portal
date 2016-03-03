@@ -112,7 +112,7 @@ if (resizable) {
 		focus: function() {
 			var focus;
 
-			if (this.instanceReady) {
+			if (window['<%= name %>'].instanceReady) {
 				focus = document.getElementById('<%= name %>').focus();
 			}
 
@@ -120,16 +120,7 @@ if (resizable) {
 		},
 
 		getHTML: function() {
-			var value;
-
-			if (this.instanceReady) {
-				value = document.getElementById('<%= name %>').value;
-			}
-			else {
-				value = getInitialContent();
-			}
-
-			return value;
+			window['<%= name %>'].getText();
 		},
 
 		getNativeEditor: function() {
@@ -139,7 +130,7 @@ if (resizable) {
 		getText: function() {
 			var value;
 
-			if (this.instanceReady) {
+			if (window['<%= name %>'].instanceReady) {
 				value = document.getElementById('<%= name %>').value;
 			}
 			else {
@@ -183,11 +174,9 @@ if (resizable) {
 		instanceReady: false,
 
 		setHTML: function(value) {
-
-			if (this.instanceReady) {
+			if (window['<%= name %>'].instanceReady) {
 				document.getElementById('<%= name %>').value = value || '';
 			}
-
 		}
 	};
 

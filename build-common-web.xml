@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="build-common-web" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="build-common-web" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
 	<macrodef name="manifest-macro">
@@ -144,6 +144,61 @@
 				</replace>
 			</then>
 		</if>
+	</target>
+
+	<target name="install-portal-snapshot" depends="war,prepare-portal-pom">
+		<artifact:install file="${artifact.name}.war">
+			<pom file="pom.xml" />
+		</artifact:install>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
+	</target>
+
+	<target name="prepare-portal-pom">
+		<property name="artifact.name" value="${ant.project.name}" />
+
+		<propertyregex
+			global="true"
+			input="${artifact.name}"
+			override="true"
+			property="processed.artifact.name"
+			regexp="-"
+			replace="."
+		/>
+
+		<property file="bnd.bnd" />
+
+		<condition property="artifact.version" value="${Bundle-Version}-SNAPSHOT" else="${release.info.version}-SNAPSHOT">
+			<isset property="Bundle-Version" />
+		</condition>
+
+		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+			<filterset>
+				<filter token="version" value="${artifact.version}" />
+			</filterset>
+		</copy>
+	</target>
+
+	<target name="publish-portal-snapshot" depends="war,prepare-portal-pom">
+		<artifact:deploy file="${artifact.name}.war">
+			<pom file="pom.xml" />
+			<remoteRepository url="${sonatype.snapshot.url}">
+				<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
 	</target>
 
 	<target name="war">

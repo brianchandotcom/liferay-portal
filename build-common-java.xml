@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
 	<macrodef name="clean">
@@ -233,6 +233,18 @@
 		/>
 	</target>
 
+	<target name="install-portal-snapshot" depends="jar,prepare-portal-pom">
+		<artifact:install file="${artifact.name}.jar">
+			<pom file="pom.xml" />
+		</artifact:install>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
+	</target>
+
 	<target name="jar">
 		<jar-macro />
 	</target>
@@ -331,6 +343,51 @@
 				</if>
 			</then>
 		</if>
+	</target>
+
+	<target name="prepare-portal-pom">
+		<property name="artifact.name" value="${ant.project.name}" />
+
+		<propertyregex
+			global="true"
+			input="${artifact.name}"
+			override="true"
+			property="processed.artifact.name"
+			regexp="-"
+			replace="."
+		/>
+
+		<property file="bnd.bnd" />
+
+		<condition property="artifact.version" value="${Bundle-Version}-SNAPSHOT" else="${release.info.version}-SNAPSHOT">
+			<isset property="Bundle-Version" />
+		</condition>
+
+		<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+			<filterset>
+				<filter token="version" value="${artifact.version}" />
+			</filterset>
+		</copy>
+	</target>
+
+	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,prepare-portal-pom">
+		<artifact:deploy file="${artifact.name}.jar">
+			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+			<pom file="pom.xml" />
+			<remoteRepository url="${sonatype.snapshot.url}">
+				<authentication password="${sonatype.snapshot.password}" username="${sonatype.snapshot.username}" />
+			</remoteRepository>
+		</artifact:deploy>
+
+		<delete file="pom.xml" />
+
+		<propertyfile file="../.gradle/gradle.properties">
+			<entry key="com.liferay.${processed.artifact.name}.version" value="${Bundle-Version}-SNAPSHOT" />
+		</propertyfile>
 	</target>
 
 	<target name="release" depends="jar">

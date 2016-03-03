@@ -63,6 +63,19 @@ if (resizable) {
 		<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
 	};
 
+	var getInitialContent = function() {
+		var data;
+
+		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		}
+		else {
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
+
+		return data;
+	};
+
 	window['<%= name %>'] = {
 		create: function() {
 			if (!window['<%= name %>'].instanceReady) {
@@ -83,7 +96,7 @@ if (resizable) {
 		},
 
 		dispose: function() {
-			var editorEl = document.getElementById('<%= name %>');
+			var editorEl = document.getElementById('<%= name %>Container');
 
 			if (editorEl) {
 				editorEl.parentNode.removeChild(editorEl);
@@ -97,11 +110,17 @@ if (resizable) {
 		},
 
 		focus: function() {
-			return document.getElementById('<%= name %>').focus();
+			var focus;
+
+			if (window['<%= name %>'].instanceReady) {
+				focus = document.getElementById('<%= name %>').focus();
+			}
+
+			return focus;
 		},
 
 		getHTML: function() {
-			return document.getElementById('<%= name %>').value;
+			window['<%= name %>'].getText();
 		},
 
 		getNativeEditor: function() {
@@ -109,7 +128,16 @@ if (resizable) {
 		},
 
 		getText: function() {
-			return document.getElementById('<%= name %>').value;
+			var value;
+
+			if (window['<%= name %>'].instanceReady) {
+				value = document.getElementById('<%= name %>').value;
+			}
+			else {
+				value = getInitialContent();
+			}
+
+			return value;
 		},
 
 		initEditor: function() {
@@ -146,7 +174,9 @@ if (resizable) {
 		instanceReady: false,
 
 		setHTML: function(value) {
-			document.getElementById('<%= name %>').value = value || '';
+			if (window['<%= name %>'].instanceReady) {
+				document.getElementById('<%= name %>').value = value || '';
+			}
 		}
 	};
 

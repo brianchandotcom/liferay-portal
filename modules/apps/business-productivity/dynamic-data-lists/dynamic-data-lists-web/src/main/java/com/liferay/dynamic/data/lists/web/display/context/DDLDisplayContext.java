@@ -427,22 +427,22 @@ public class DDLDisplayContext {
 		return _hasEditFormDDMTemplatePermission;
 	}
 
-	public boolean isShowEditRecordIcon() {
-		return true;
-	}
-
 	public boolean isShowEditRecordSetIcon() {
 		DDLRecordSet recordSet = getRecordSet();
 
-		if (recordSet != null) {
-			return DDLRecordSetPermission.contains(
-				getPermissionChecker(), recordSet, ActionKeys.UPDATE);
+		if (recordSet == null) {
+			return false;
 		}
 
-		return false;
+		return DDLRecordSetPermission.contains(
+			getPermissionChecker(), recordSet, ActionKeys.UPDATE);
 	}
 
 	public boolean isShowIconsActions() throws PortalException {
+		if (isSpreadsheet()) {
+			return false;
+		}
+
 		if (_hasShowIconsActionPermission != null) {
 			return _hasShowIconsActionPermission;
 		}

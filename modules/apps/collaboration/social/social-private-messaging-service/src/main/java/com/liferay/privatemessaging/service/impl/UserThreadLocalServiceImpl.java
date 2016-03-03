@@ -329,7 +329,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		return mbMessage;
 	}
 
-	protected PrivateMessagingConfiguration getPortletConfiguration(
+	protected PrivateMessagingConfiguration getPrivateMessagingConfiguration(
 		long companyId) {
 
 		if (_privateMessagingConfiguration == null) {
@@ -344,7 +344,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			}
 			catch (ConfigurationException ce) {
 				_log.error(
-					"Unable to retrieve Private Message Configuration:", ce);
+					"Unable to get private message configuration", ce);
 			}
 		}
 
@@ -414,7 +414,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		InternetAddress from = new InternetAddress(company.getEmailAddress());
 
 		PrivateMessagingConfiguration privateMessagingConfiguration =
-			getPortletConfiguration(themeDisplay.getCompanyId());
+			getPrivateMessagingConfiguration(themeDisplay.getCompanyId());
 
 		String subject = ContentUtil.get(
 			UserThreadLocalServiceImpl.class.getClassLoader(),

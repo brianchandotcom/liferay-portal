@@ -26,8 +26,14 @@ body {
 		z-index: 1;
 	}
 
+	.navbar-collapse {
+		@include sm {
+			padding-right: 4px;
+		}
+	}
+
 	.navbar-toggle {
-		margin: 12px 6px;
+		margin: 12px 0 12px 6px;
 	}
 
 	#heading .site-name {
@@ -171,7 +177,7 @@ body {
 			padding: 18px 4px;
 
 			@include sm {
-				padding: 8px 4px 8px 14px;
+				padding: 8px 0 8px 14px;
 			}
 		}
 

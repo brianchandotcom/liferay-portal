@@ -16,8 +16,10 @@ package com.liferay.privatemessaging.util;
 
 /**
  * @author Eudaldo Alonso
+ * @author Peter Fellwock
  */
-public class PortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
+public class PrivateMessagingPortletKeys
+	extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String PRIVATE_MESSAGING =
 		"com_liferay_privatemessaging_web_portlet_PrivateMessagingPortlet";

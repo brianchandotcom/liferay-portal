@@ -95,7 +95,7 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test()
-	public void testResolveAllowedClass1() throws Exception {
+	public void testResolveAllowedClassByClassName() throws Exception {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
@@ -109,7 +109,7 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test()
-	public void testResolveAllowedClass2() throws Exception {
+	public void testResolveAllowedClassByStar() throws Exception {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put("allowedClasses", "freemarker.template.utility.*");
@@ -122,19 +122,19 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test(expected = TemplateException.class)
-	public void testResolvePortalClass() throws Exception {
+	public void testResolveNotAllowedPortalClass() throws Exception {
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);
 	}
 
 	@Test(expected = TemplateException.class)
-	public void testResolveRestrictedClass1() throws Exception {
+	public void testResolveExecuteClass() throws Exception {
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.Execute", null, null);
 	}
 
 	@Test(expected = TemplateException.class)
-	public void testResolveRestrictedClass2() throws Exception {
+	public void testResolveAllowedExecuteClass() throws Exception {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put("allowedClasses", "freemarker.template.utility.*");
@@ -147,7 +147,9 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test(expected = TemplateException.class)
-	public void testResolveRestrictedClass3() throws Exception {
+	public void testResolveAllowedPortalClassExplicitlyRestricted()
+		throws Exception {
+
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(

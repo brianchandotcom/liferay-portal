@@ -139,7 +139,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcPath", "/edit_password_policy.jsp");
+			rowURL.setParameter("mvcPath", "/edit_password_policy_assignments.jsp");
 			rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
 			rowURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId()));
 

@@ -4,12 +4,11 @@ buildService {
 }
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile project(":apps:platform:contacts:contacts-api")
-
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.4"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	provided project(":apps:platform:contacts:contacts-api")
 	provided project(":apps:platform:portal:portal-upgrade")
 }
 

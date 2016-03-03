@@ -35,6 +35,38 @@ public interface UserGroupFinder {
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
+	public int filterCountByKeywords(long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+
+	public int filterCountByC_N_D(long companyId, java.lang.String name,
+		java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator);
+
+	public int filterCountByC_N_D(long companyId, java.lang.String[] names,
+		java.lang.String[] descriptions,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator);
+
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> filterFindByKeywords(
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> filterFindByC_N_D(
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+
+	public java.util.List<com.liferay.portal.kernel.model.UserGroup> filterFindByC_N_D(
+		long companyId, java.lang.String[] names,
+		java.lang.String[] descriptions,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc);
+
 	public java.util.List<com.liferay.portal.kernel.model.UserGroup> findByKeywords(
 		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,

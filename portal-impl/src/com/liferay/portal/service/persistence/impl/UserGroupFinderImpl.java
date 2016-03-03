@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -68,20 +69,7 @@ public class UserGroupFinderImpl
 	public int countByKeywords(
 		long companyId, String keywords, LinkedHashMap<String, Object> params) {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return countByC_N_D(
-			companyId, names, descriptions, params, andOperator);
+		return doCountByKeywords(companyId, keywords, params, false);
 	}
 
 	@Override
@@ -101,55 +89,70 @@ public class UserGroupFinderImpl
 		long companyId, String[] names, String[] descriptions,
 		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions);
+		return doCountByC_N_D(
+			companyId, names, descriptions, params, andOperator, false);
+	}
 
-		Session session = null;
+	@Override
+	public int filterCountByKeywords(
+		long companyId, String keywords, LinkedHashMap<String, Object> params) {
 
-		try {
-			session = openSession();
+		return doCountByKeywords(companyId, keywords, params, true);
+	}
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_N_D);
+	@Override
+	public int filterCountByC_N_D(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(UserGroup.name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(UserGroup.description)", StringPool.LIKE, true,
-				descriptions);
-			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
-			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+		return filterCountByC_N_D(
+			companyId, names, descriptions, params, andOperator);
+	}
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+	@Override
+	public int filterCountByC_N_D(
+		long companyId, String[] names, String[] descriptions,
+		LinkedHashMap<String, Object> params, boolean andOperator) {
 
-			QueryPos qPos = QueryPos.getInstance(q);
+		return doCountByC_N_D(
+			companyId, names, descriptions, params, andOperator, true);
+	}
 
-			setJoin(qPos, params);
+	@Override
+	public List<UserGroup> filterFindByKeywords(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<UserGroup> obc) {
 
-			qPos.add(companyId);
-			qPos.add(names, 2);
-			qPos.add(descriptions, 2);
+		return doFindByKeywords(
+			companyId, keywords, params, start, end, obc, true);
+	}
 
-			Iterator<Long> itr = q.iterate();
+	@Override
+	public List<UserGroup> filterFindByC_N_D(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<UserGroup> obc) {
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description);
 
-				if (count != null) {
-					return count.intValue();
-				}
-			}
+		return filterFindByC_N_D(
+			companyId, names, descriptions, params, andOperator, start, end,
+			obc);
+	}
 
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+	@Override
+	public List<UserGroup> filterFindByC_N_D(
+		long companyId, String[] names, String[] descriptions,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<UserGroup> obc) {
+
+		return doFindByC_N_D(
+			companyId, names, descriptions, params, andOperator, start, end,
+			obc, true);
 	}
 
 	@Override
@@ -157,21 +160,8 @@ public class UserGroupFinderImpl
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end, OrderByComparator<UserGroup> obc) {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return findByC_N_D(
-			companyId, names, descriptions, params, andOperator, start, end,
-			obc);
+		return doFindByKeywords(
+			companyId, keywords, params, start, end, obc, false);
 	}
 
 	/**
@@ -205,6 +195,121 @@ public class UserGroupFinderImpl
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
 		int end, OrderByComparator<UserGroup> obc) {
 
+		return doFindByC_N_D(
+			companyId, names, descriptions, params, andOperator, start, end,
+			obc, false);
+	}
+
+	protected int doCountByKeywords(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		boolean inlineSQLHelper) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_N_D(
+			companyId, names, descriptions, params, andOperator,
+			inlineSQLHelper);
+	}
+
+	protected int doCountByC_N_D(
+		long companyId, String[] names, String[] descriptions,
+		LinkedHashMap<String, Object> params, boolean andOperator,
+		boolean inlineSQLHelper) {
+
+		names = CustomSQLUtil.keywords(names);
+		descriptions = CustomSQLUtil.keywords(descriptions);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_C_N_D);
+
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(UserGroup.name)", StringPool.LIKE, false, names);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(UserGroup.description)", StringPool.LIKE, true,
+				descriptions);
+			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
+			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, UserGroup.class.getName(), "UserGroup.userGroupId",
+					null, null, new long[] {0}, null);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			setJoin(qPos, params);
+
+			qPos.add(companyId);
+			qPos.add(names, 2);
+			qPos.add(descriptions, 2);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<UserGroup> doFindByKeywords(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<UserGroup> obc,
+		boolean inlineSQLHelper) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doFindByC_N_D(
+			companyId, names, descriptions, params, andOperator, start, end,
+			obc, inlineSQLHelper);
+	}
+
+	protected List<UserGroup> doFindByC_N_D(
+		long companyId, String[] names, String[] descriptions,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<UserGroup> obc, boolean inlineSQLHelper) {
+
 		names = CustomSQLUtil.keywords(names);
 		descriptions = CustomSQLUtil.keywords(descriptions);
 
@@ -225,6 +330,12 @@ public class UserGroupFinderImpl
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, UserGroup.class.getName(), "UserGroup.userGroupId",
+					null, null, new long[] {0}, null);
+			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

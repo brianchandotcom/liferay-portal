@@ -498,7 +498,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end, OrderByComparator<UserGroup> obc) {
 
-		return userGroupFinder.findByKeywords(
+		return userGroupFinder.filterFindByKeywords(
 			companyId, keywords, params, start, end, obc);
 	}
 
@@ -592,7 +592,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
 		int end, OrderByComparator<UserGroup> obc) {
 
-		return userGroupFinder.findByC_N_D(
+		return userGroupFinder.filterFindByC_N_D(
 			companyId, name, description, params, andOperator, start, end, obc);
 	}
 
@@ -671,7 +671,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
 			isUseCustomSQL(params)) {
 
-			return userGroupFinder.countByKeywords(companyId, keywords, params);
+			return userGroupFinder.filterCountByKeywords(
+				companyId, keywords, params);
 		}
 
 		String name = null;
@@ -729,7 +730,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
 			isUseCustomSQL(params)) {
 
-			return userGroupFinder.countByC_N_D(
+			return userGroupFinder.filterCountByC_N_D(
 				companyId, name, description, params, andOperator);
 		}
 

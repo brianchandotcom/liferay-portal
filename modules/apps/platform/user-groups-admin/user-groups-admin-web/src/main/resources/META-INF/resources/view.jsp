@@ -44,12 +44,6 @@ String portletURLString = portletURL.toString();
 SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, portletURL);
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
-
-LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-if (filterManageableUserGroups) {
-	userGroupParams.put("userGroupsUsers", Long.valueOf(user.getUserId()));
-}
 %>
 
 <liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="you-cannot-delete-user-groups-that-have-users" />
@@ -66,7 +60,7 @@ if (filterManageableUserGroups) {
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:if test="<%= UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams) > 0 %>">
+<c:if test="<%= UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), new LinkedHashMap<String, Object>()) > 0 %>">
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
 		searchContainerId="userGroups"

@@ -21,7 +21,7 @@
 >
 	<liferay-ui:user-group-search-container-results
 		searchTerms="<%= searchTerms %>"
-		userGroupParams="<%= userGroupParams %>"
+		userGroupParams="<%= new LinkedHashMap<String, Object>() %>"
 	/>
 
 	<liferay-ui:search-container-row

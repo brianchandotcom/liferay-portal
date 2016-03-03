@@ -431,6 +431,45 @@
 		<execute function="AssertVisible" locator1="UsersAndOrganizations#BREADCRUMB" />
 	</command>
 
+	<command name="gotoIdentificationCP">
+		<execute function="AssertClick" locator1="UsersAndOrganizations#IDENTIFICATION" value1="Identification" />
+
+		<if>
+			<isset var="panelHeading" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="${panelHeading}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoMiscellaneousCP">
+		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
+
+		<if>
+			<isset var="panelHeading" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="${panelHeading}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoOrganizationInformationCP">
+		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_INFORMATION" value1="Organization Information" />
+
+		<if>
+			<isset var="panelHeading" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="${panelHeading}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="manageMembershipOptionsInSites">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />

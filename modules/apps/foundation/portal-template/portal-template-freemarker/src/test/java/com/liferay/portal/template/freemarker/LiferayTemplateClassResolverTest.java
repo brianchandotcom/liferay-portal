@@ -147,6 +147,19 @@ public class LiferayTemplateClassResolverTest {
 			"freemarker.template.utility.ObjectConstructor", null, null);
 	}
 
+	@Test
+	public void testResolveAllowedPortalClass() throws Exception {
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put(
+			"allowedClasses", "com.liferay.portal.kernel.model.User");
+
+		_freemarkerTemplateConfiguration.update(properties);
+
+		_liferayTemplateClassResolver.resolve(
+			"com.liferay.portal.kernel.model.User", null, null);
+	}
+
 	@Test(expected = TemplateException.class)
 	public void testResolveAllowedPortalClassExplicitlyRestricted()
 		throws Exception {

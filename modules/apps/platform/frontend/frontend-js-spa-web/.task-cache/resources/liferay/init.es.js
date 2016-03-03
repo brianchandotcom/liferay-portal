@@ -67,9 +67,9 @@ define("frontend-js-spa-web@1.0.0/liferay/init.es", ['exports', './screen/Action
 		});
 	};
 
-	Liferay.SPA = {
-		app: app
-	};
+	Liferay.SPA = Liferay.SPA || {};
+
+	Liferay.SPA.app = app;
 
 	exports.default = Liferay.SPA;
 });

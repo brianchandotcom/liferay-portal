@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
@@ -75,7 +76,7 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
 			new LiferayDocumentTypeFactory(
-				String.valueOf(companyId), indicesAdminClient);
+				indexNameBuilder.getIndexName(companyId), indicesAdminClient);
 
 		createIndex(companyId, indicesAdminClient, liferayDocumentTypeFactory);
 
@@ -93,7 +94,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 
 		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-			indicesAdminClient.prepareDelete(String.valueOf(companyId));
+			indicesAdminClient.prepareDelete(
+				indexNameBuilder.getIndexName(companyId));
 
 		DeleteIndexResponse deleteIndexResponse =
 			deleteIndexRequestBuilder.get();
@@ -153,7 +155,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		throws Exception {
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
-			indicesAdminClient.prepareCreate(String.valueOf(companyId));
+			indicesAdminClient.prepareCreate(
+				indexNameBuilder.getIndexName(companyId));
 
 		addMappings(createIndexRequestBuilder);
 		setSettings(createIndexRequestBuilder, liferayDocumentTypeFactory);
@@ -189,7 +192,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		throws Exception {
 
 		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
-			indicesAdminClient.prepareExists(String.valueOf(companyId));
+			indicesAdminClient.prepareExists(
+				indexNameBuilder.getIndexName(companyId));
 
 		IndicesExistsResponse indicesExistsResponse =
 			indicesExistsRequestBuilder.get();
@@ -273,6 +277,9 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings();
 	}
+
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
 
 	private static final String _TYPE_MAPPINGS_PREFIX = "typeMappings.";
 

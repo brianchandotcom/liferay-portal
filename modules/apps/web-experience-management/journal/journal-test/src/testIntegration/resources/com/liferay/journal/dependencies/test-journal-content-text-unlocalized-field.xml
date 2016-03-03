@@ -2,6 +2,6 @@
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
 	<dynamic-element instance-id="Okhyj7Ni" name="text" type="text" index-type="keyword">
-		<dynamic-content ><![CDATA[one]]></dynamic-content>
+		<dynamic-content><![CDATA[one]]></dynamic-content>
 	</dynamic-element>
 </root>

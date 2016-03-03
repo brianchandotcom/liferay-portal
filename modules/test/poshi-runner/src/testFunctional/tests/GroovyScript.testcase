@@ -1,0 +1,52 @@
+<definition component-name="portal-smoke">
+	<property name="poshi.runner.acceptance" value="true" />
+	<property name="testray.main.component.name" value="Smoke" />
+
+	<command name="ExecuteScript" priority="5">
+		<execute groovy-script="test.groovy" />
+	</command>
+
+	<command name="ExecuteWithArgumentsAndReturn" priority="5">
+		<execute groovy-script="test4.groovy" return="test">
+			<arg value="Hello" />
+		</execute>
+
+		<if>
+			<equals arg1="${test}" arg2="Hello and Goodbye" />
+			<then>
+				<echo>PASS</echo>
+			</then>
+			<else>
+				<fail>Expected 'Hello and Goodbye' but found ${test}</fail>
+			</else>
+		</if>
+	</command>
+
+	<command name="ExecuteWithMultipleArguments" priority="5">
+		<execute groovy-script="test2.groovy">
+			<arg value="test1" />
+			<arg value="test2" />
+			<arg value="test3" />
+		</execute>
+	</command>
+
+	<command name="ExecuteWithOneArgument" priority="5">
+		<execute groovy-script="test1.groovy">
+			<arg value="Hello World" />
+		</execute>
+	</command>
+
+	<command name="ExecuteWithReturn" priority="5">
+		<execute groovy-script="test3.groovy" return="test" />
+
+		<if>
+			<equals arg1="${test}" arg2="Hello World" />
+			<then>
+				<echo>PASS</echo>
+			</then>
+			<else>
+				<fail>Expected 'Hello World' but found ${test}</fail>
+			</else>
+		</if>
+	</command>
+</definition>

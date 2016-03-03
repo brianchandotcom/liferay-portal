@@ -1,0 +1,1 @@
+return args[0] + " and Goodbye"

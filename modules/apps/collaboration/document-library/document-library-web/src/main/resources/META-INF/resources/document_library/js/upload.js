@@ -200,7 +200,7 @@ AUI.add(
 						validator: function(val) {
 							return isNumber(val) && val > 0;
 						},
-						value: 0
+						value: Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
 					},
 
 					redirect: {
@@ -253,7 +253,7 @@ AUI.add(
 						instance._invisibleIconEntry = appViewEntryTemplates.one(SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_ICON);
 
 						instance._strings = {
-							invalidFileSize: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
+							invalidFileSize: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x', [instance.formatStorage(instance.get('maxFileSize'))]),
 							zeroByteFile: Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader')
 						};
 

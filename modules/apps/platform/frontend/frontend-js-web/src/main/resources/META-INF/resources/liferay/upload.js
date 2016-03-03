@@ -184,7 +184,7 @@ AUI.add(
 
 					maxFileSize: {
 						setter: Lang.toInt,
-						value: 0
+						value: Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
 					},
 
 					metadataContainer: {
@@ -227,7 +227,7 @@ AUI.add(
 							dropFileText: Liferay.Language.get('drop-file-here-to-upload'),
 							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
-							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
+							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x', [instance.formatStorage(instance.get('maxFileSize'))]),
 							invalidUploadRequestSizeText: Liferay.Language.get('request-is-larger-than-x-and-could-not-be-processed'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),

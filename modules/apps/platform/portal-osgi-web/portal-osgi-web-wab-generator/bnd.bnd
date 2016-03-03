@@ -8,7 +8,7 @@ Import-Package:\
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class,\
 	@lib/biz.aQute.bndlib.jar,\
-	@lib/com.liferay.ant.bnd.jar!/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin.class
+	@lib/com.liferay.ant.bnd.jar!/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin*.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB
 -include: ../../../../../marketplace/platform/bnd.bnd

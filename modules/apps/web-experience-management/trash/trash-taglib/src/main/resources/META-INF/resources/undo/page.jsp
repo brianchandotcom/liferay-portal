@@ -36,10 +36,6 @@ for (String key : keys) {
 
 	trashedEntriesCount = primaryKeys.length;
 }
-
-Map<String, Object> trashData = new HashMap<String, Object>();
-
-trashData.put("navigation", Boolean.TRUE.toString());
 %>
 
 <liferay-util:buffer var="alertMessage">
@@ -52,7 +48,7 @@ trashData.put("navigation", Boolean.TRUE.toString());
 					PortletURL trashURL = TrashUtil.getViewURL(request);
 					%>
 
-					<aui:a cssClass="alert-link" data="<%= trashData %>" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
+					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:message key="the-recycle-bin" />

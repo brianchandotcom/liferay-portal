@@ -42,7 +42,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 				<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
 
 					<%
-					data.put("navigation", Boolean.TRUE.toString());
 					data.put("qa-id", "goToPublicPages");
 					%>
 
@@ -108,7 +107,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								<%
 								PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, true);
 
-								data.put("navigation", Boolean.TRUE.toString());
 								data.put("qa-id", "addPrivatePage");
 								%>
 
@@ -155,7 +153,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<span class="scope-name"><%= HtmlUtil.escape(layoutsTreeDisplayContext.getLayoutSetBranchName()) %></span>
 
 					<span class="nav-equal-height-heading-field">
-						<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+						<liferay-ui:icon-menu direction="left" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
 							<%
 							for (LayoutSetBranch curLayoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {
@@ -163,7 +161,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<liferay-ui:icon
 									cssClass="<%= layoutsTreeDisplayContext.getLayoutSetBranchCssClass(curLayoutSetBranch) %>"
-									data="<%= layoutsTreeDisplayContext.getLayoutSetBranchURLData() %>"
 									message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
 									url="<%= layoutsTreeDisplayContext.getLayoutSetBranchURL(curLayoutSetBranch) %>"
 								/>

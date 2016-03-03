@@ -67,8 +67,6 @@
 					<%
 					Map<String, Object> anchorData = new HashMap<>();
 
-					anchorData.put("navigation", Boolean.TRUE.toString());
-
 					PortletURL manageSiteTemplateURL = PortletProviderUtil.getPortletURL(request, LayoutSetPrototype.class.getName(), PortletProvider.Action.VIEW);
 
 					manageSiteTemplateURL.setParameter("redirect", viewSitesURL);

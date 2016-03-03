@@ -154,12 +154,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		_classResolverBundleTracker.close();
 	}
 
-	private Set<ClassLoader> _findAllowedClassLoaders(
+	private ClassLoader _findClassLoader(
 		String clazz, BundleContext bundleContext) {
 
 		Bundle bundle = bundleContext.getBundle();
-
-		Set<ClassLoader> classLoaders = new HashSet<>();
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -186,7 +184,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 					BundleWiring providerBundleWiring = providerBundle.adapt(
 						BundleWiring.class);
 
-					classLoaders.add(providerBundleWiring.getClassLoader());
+					return providerBundleWiring.getClassLoader();
 				}
 			}
 			else if (clazz.equals(exportPackage)) {
@@ -197,7 +195,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				BundleWiring providerBundleWiring = revisionBundle.adapt(
 					BundleWiring.class);
 
-				classLoaders.add(providerBundleWiring.getClassLoader());
+				return providerBundleWiring.getClassLoader();
 			}
 			else {
 				String allowedClassPackage = clazz.substring(
@@ -212,33 +210,38 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 					BundleWiring providerBundleWiring = revisionBundle.adapt(
 						BundleWiring.class);
 
-					classLoaders.add(providerBundleWiring.getClassLoader());
+					return providerBundleWiring.getClassLoader();
 				}
 			}
 		}
 
-		if (classLoaders.isEmpty() && _log.isWarnEnabled()) {
-			_log.warn("No bundle exports " + clazz);
-		}
-
-		return classLoaders;
+		return null;
 	}
 
-	private Set<ClassLoader> _findAllowedClassLoaders(
+	private ClassLoader _findClassLoader(
 		String[] allowedClasses, BundleContext bundleContext) {
 
 		if (allowedClasses == null) {
-			allowedClasses = new String[] {};
+			allowedClasses = new String[0];
 		}
-
-		Set<ClassLoader> classLoaders = new HashSet<>();
 
 		for (String allowedClass : allowedClasses) {
-			classLoaders.addAll(
-				_findAllowedClassLoaders(allowedClass, bundleContext));
+			ClassLoader classLoader = _findClassLoader(
+				allowedClass, bundleContext);
+
+			if (classLoader != null) {
+				return classLoader;
+			}
+
+			if (_log.isWarnEnabled()) {
+				Bundle bundle = bundleContext.getBundle();
+				_log.warn(
+					"Bundle " + bundle.getSymbolicName() +
+						" does not export " + allowedClass);
+			}
 		}
 
-		return classLoaders;
+		return null;
 	}
 
 	private boolean _match(String className, String matchedClassName) {
@@ -282,11 +285,13 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		public ClassLoader addingBundle(
 			Bundle bundle, BundleEvent bundleEvent) {
 
-			Set<ClassLoader> allowedClassLoaders = _findAllowedClassLoaders(
+			ClassLoader classLoader = _findClassLoader(
 				_freemarkerEngineConfiguration.allowedClasses(),
 				bundle.getBundleContext());
 
-			_whiteListedClassloaders.addAll(allowedClassLoaders);
+			if (classLoader != null) {
+				_whiteListedClassloaders.add(classLoader);
+			}
 
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -295,16 +300,14 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
+			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoaders) {
 		}
 
 		@Override
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
 
-			if (_whiteListedClassloaders.contains(classLoader)) {
-				_whiteListedClassloaders.remove(classLoader);
-			}
+			_whiteListedClassloaders.remove(classLoader);
 		}
 
 	}

@@ -295,7 +295,7 @@
 					<attribute name="Bundle-ManifestVersion" value="2" />
 					<attribute name="Bundle-RequiredExecutionEnvironment" value="J2SE-1.5" />
 					<attribute name="Bundle-Vendor" value="${release.info.vendor}" />
-					<attribute name="Bundle-Version" value="${release.info.version}" />
+					<attribute name="Bundle-Version" value="${artifact.version}" />
 					<attribute name="Export-Package" value="${export.packages}" />
 					<attribute name="Import-Package" value="${import.packages}" />
 					<attribute name="Javac-Compiler" value="${javac.compiler}" />
@@ -311,7 +311,7 @@
 					<attribute name="Liferay-Portal-Parent-Build-Number" value="${release.info.parent.build.number}" />
 					<attribute name="Liferay-Portal-Release-Info" value="${release.info.release.info}" />
 					<attribute name="Liferay-Portal-Server-Info" value="${release.info.server.info}" />
-					<attribute name="Liferay-Portal-Version" value="${artifact.version}" />
+					<attribute name="Liferay-Portal-Version" value="${release.info.version}" />
 				</manifest>
 
 				<if>

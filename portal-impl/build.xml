@@ -67,6 +67,10 @@
 			<copy todir="${portal-impl.classes.dir}" preservelastmodified="true">
 				<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
 			</copy>
+
+			<copy todir="${portal-impl.classes.dir}/upgrade" preservelastmodified="true">
+				<fileset dir="${project.dir}/upgrade" />
+			</copy>
 		</sequential>
 	</macrodef>
 

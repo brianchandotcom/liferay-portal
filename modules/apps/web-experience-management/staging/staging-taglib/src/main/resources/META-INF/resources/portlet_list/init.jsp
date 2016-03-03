@@ -18,7 +18,7 @@
 
 <%
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:portlet-list:disableInputs"));
-Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:content:parameterMap"), Collections.emptyMap());
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:content:exportImportConfigurationId"));
 List<Portlet> portlets = (List<Portlet>)GetterUtil.getObject(request.getAttribute("liferay-staging:portlet-list:portlets"), Collections.emptyList());
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:portlet-list:type"));
 
@@ -41,5 +41,16 @@ else {
 	if (stagingGroupId > 0) {
 		exportGroupId = stagingGroupId;
 	}
+}
+
+Map<String, Serializable> settingsMap = Collections.emptyMap();
+Map<String, String[]> parameterMap = Collections.emptyMap();
+
+ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.fetchExportImportConfiguration(exportImportConfigurationId);
+
+if (exportImportConfiguration != null) {
+	settingsMap = exportImportConfiguration.getSettingsMap();
+
+	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 }
 %>

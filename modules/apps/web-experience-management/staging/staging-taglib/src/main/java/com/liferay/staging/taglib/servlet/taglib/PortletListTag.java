@@ -19,7 +19,6 @@ import com.liferay.staging.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -33,15 +32,17 @@ public class PortletListTag extends IncludeTag {
 		_disableInputs = disableInputs;
 	}
 
+	public void setExportImportConfigurationId(
+		long exportImportConfigurationId) {
+
+		_exportImportConfigurationId = exportImportConfigurationId;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
 		servletContext = ServletContextUtil.getServletContext();
-	}
-
-	public void setParameterMap(Map<String, String[]> parameterMap) {
-		_parameterMap = parameterMap;
 	}
 
 	public void setPortlets(List<Portlet> portlets) {
@@ -55,7 +56,7 @@ public class PortletListTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_disableInputs = false;
-		_parameterMap = null;
+		_exportImportConfigurationId = 0;
 		_portlets = null;
 		_type = null;
 	}
@@ -70,7 +71,8 @@ public class PortletListTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:portlet-list:disableInputs", _disableInputs);
 		request.setAttribute(
-			"liferay-staging:portlet-list:parameterMap", _parameterMap);
+			"liferay-staging:portlet-list:exportImportConfigurationId",
+			_exportImportConfigurationId);
 		request.setAttribute(
 			"liferay-staging:portlet-list:portlets", _portlets);
 		request.setAttribute("liferay-staging:portlet-list:type", _type);
@@ -79,7 +81,7 @@ public class PortletListTag extends IncludeTag {
 	private static final String _PAGE = "/portlet_list/page.jsp";
 
 	private boolean _disableInputs;
-	private Map<String, String[]> _parameterMap;
+	private long _exportImportConfigurationId = 0;
 	private List<Portlet> _portlets;
 	private String _type;
 

@@ -188,9 +188,10 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>parameterMap</name>
-			<required>true</required>
+			<name>exportImportConfigurationId</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
 		</attribute>
 		<attribute>
 			<name>portlets</name>

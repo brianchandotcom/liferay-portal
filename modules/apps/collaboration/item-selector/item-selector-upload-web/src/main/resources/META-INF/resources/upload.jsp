@@ -42,6 +42,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 	new Liferay.ItemSelectorRepositoryEntryBrowser(
 		{
 			closeCaption: '<%= itemSelectorUploadViewDisplayContext.getTitle(locale) %>',
+			maxFileSize: '<%= itemSelectorUploadViewDisplayContext.getMaxFileSize() %>',
 			on: {
 				selectedItem: function(event) {
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>', event);

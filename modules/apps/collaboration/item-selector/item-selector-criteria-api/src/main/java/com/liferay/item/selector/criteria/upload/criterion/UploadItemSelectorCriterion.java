@@ -15,6 +15,7 @@
 package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Ambrín Chaudhary
@@ -25,8 +26,21 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public UploadItemSelectorCriterion(String url, String repositoryName) {
+		this(
+			url, repositoryName,
+			PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+	}
+
+	public UploadItemSelectorCriterion(
+		String url, String repositoryName, long maxFileSize) {
+
 		_url = url;
 		_repositoryName = repositoryName;
+		_maxFileSize = maxFileSize;
+	}
+
+	public long getMaxFileSize() {
+		return _maxFileSize;
 	}
 
 	public String getRepositoryName() {
@@ -37,6 +51,10 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _url;
 	}
 
+	public void setMaxFileSize(long maxFileSize) {
+		_maxFileSize = maxFileSize;
+	}
+
 	public void setRepositoryName(String repositoryName) {
 		_repositoryName = repositoryName;
 	}
@@ -45,6 +63,7 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_url = url;
 	}
 
+	private long _maxFileSize;
 	private String _repositoryName;
 	private String _url;
 

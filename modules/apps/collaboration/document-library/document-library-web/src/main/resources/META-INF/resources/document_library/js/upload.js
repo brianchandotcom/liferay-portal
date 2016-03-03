@@ -205,7 +205,7 @@ AUI.add(
 						validator: function(val) {
 							return isNumber(val) && val > 0;
 						},
-						value: 0
+						value: Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
 					},
 
 					redirect: {

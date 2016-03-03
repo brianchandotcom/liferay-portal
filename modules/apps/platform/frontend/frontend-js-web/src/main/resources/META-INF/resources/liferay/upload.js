@@ -184,7 +184,7 @@ AUI.add(
 
 					maxFileSize: {
 						setter: Lang.toInt,
-						value: 0
+						value: Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
 					},
 
 					metadataContainer: {

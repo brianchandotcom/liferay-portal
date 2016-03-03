@@ -27,6 +27,16 @@ body {
 		min-height: 200px;
 	}
 
+	.sidenav-container {
+		&.closed .sidenav-content {
+			margin-right: 0;
+		}
+
+		.sidenav-content {
+			margin-right: -15px;
+		}
+	}
+
 	.taglib-empty-result-message-compact {
 		min-height: auto;
 	}

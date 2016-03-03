@@ -147,20 +147,20 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"select fileEntryId, groupId, folderId, extension, title," +
 						" version from DLFileEntry");
 				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update DLFileEntry set fileName = ? where " +
-								"fileEntryId = ?"));
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DLFileEntry set fileName = ? where " +
+							"fileEntryId = ?");
 				PreparedStatement ps3 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update DLFileEntry set title = ? where " +
-								"fileEntryId = ?"));
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DLFileEntry set title = ? where " +
+							"fileEntryId = ?");
 				PreparedStatement ps4 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update DLFileVersion set title = ? where " +
-								"fileEntryId = " + "? and version = ?"));
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DLFileVersion set title = ? where " +
+							"fileEntryId = " + "? and version = ?");
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {

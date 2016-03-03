@@ -601,6 +601,12 @@ create table SocialActivitySetting (
 	value VARCHAR(1024) null
 );
 
+alter table Role_ add uuid_ VARCHAR(75) null;
+alter table Role_ add userId LONG;
+alter table Role_ add userName VARCHAR(75) null;
+alter table Role_ add createDate DATE null;
+alter table Role_ add modifiedDate DATE null;
+
 update Role_ set name = 'Site Administrator' where name = 'Community Administrator';
 update Role_ set name = 'Site Content Reviewer' where name = 'Community Content Reviewer';
 update Role_ set name = 'Site Member' where name = 'Community Member';

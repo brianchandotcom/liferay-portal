@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>Microblogs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Microblogs</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACTIVE_TAB</td>
+	<td>//li[contains(@class,'tab active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COUNTDOWN_HOLDER</td>
+	<td>//span[contains(@class,'countdown')]/span</td>
+	<td></td>
+</tr>	
+<tr>
+	<td>FOOTER</td>
+	<td>//div[@class='footer']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_FIELD</td>
+	<td>//div[contains(@class,'autocomplete')]//span[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_AREA</td>
+	<td>//textarea[contains(@class,'field-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'microblogs')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TIMELINE_ENTRY-->
+<tr>
+	<td>TIMELINE_ENTRY_ACTION</td>
+	<td>//div[contains(@class,'entry-bubble') and contains(.,'${key_entryContent}')]//span[contains(@class,'action')]/a[contains(.,'${key_actionType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMELINE_ENTRY_CONTENT</td>
+	<td>//div[@class='microblogs-entry']//div[contains(@class,'content')]/span[contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMELINE_ENTRY_USER_NAME</td>
+	<td>//div[@class='microblogs-entry']//div[contains(@class,'user-name')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TIMELINE_ENTRY_COMMENT-->
+<tr>
+	<td>TIMELINE_ENTRY_COMMENT_ACTION</td>
+	<td>//div[contains(.,'${key_entryContent}')]/..//div[contains(@class,'comments-container')]//span[contains(@class,'action')]/a[contains(.,'${key_actionType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMELINE_ENTRY_COMMENT_CONTENT</td>
+	<td>//div[contains(.,'${key_entryContent}')]/../div[contains(@class,'comments-container')]//div[@class='content']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMELINE_ENTRY_COMMENT_USER_THUMBNAIL</td>
+	<td>//div[contains(.,'${key_entryContent}')]/../div[contains(@class,'comments-container')]//span[contains(@class,'thumbnail')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

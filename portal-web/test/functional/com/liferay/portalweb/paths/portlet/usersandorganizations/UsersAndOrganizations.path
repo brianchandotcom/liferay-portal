@@ -14,8 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGN_USERS</td>
-	<td>//tr[contains(.,'${key_orgName}')]//a[@role='menuitem' and contains(.,'Assign Users')]</td>
+	<td>BREADCRUMB</td>
+	<td>//ul[contains(@class,'breadcrumb')]//a</td>
 	<td></td>
 </tr>
 <tr>

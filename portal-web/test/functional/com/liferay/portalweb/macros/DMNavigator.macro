@@ -21,6 +21,12 @@
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
+	<command name="gotoDocumentDetails">
+		<execute function="Click" locator1="Button#INFO" />
+
+		<execute function="AssertClick" locator1="NavBar#DETAILS" value1="Details" />
+	</command>
+
 	<command name="gotoDocumentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -30,6 +36,12 @@
 	<command name="gotoDocumentType">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
+	</command>
+
+	<command name="gotoDocumentVersion">
+		<execute macro="DMNavigator#gotoDocumentDetails" />
+
+		<execute function="AssertClick" locator1="MenuItem#VERSIONS" value1="Versions" />
 	</command>
 
 	<command name="gotoEditDocument">

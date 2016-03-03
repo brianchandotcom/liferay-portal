@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENTIONS</td>
+	<td>//li[contains(@id,'microblogs')]/a[contains(.,'Mentions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NTLM</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'NTLM')]</td>
 	<td></td>
@@ -226,6 +231,11 @@
 <tr>
 	<td>SYSTEM_PROPERTIES</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'System Properties')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMELINE</td>
+	<td>//li[contains(@id,'microblogs')]/a[contains(.,'Timeline')]</td>
 	<td></td>
 </tr>
 <tr>

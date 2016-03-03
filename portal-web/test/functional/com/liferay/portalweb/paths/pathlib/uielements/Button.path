@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>CANCEL_CHECKOUT</td>
-	<td>//button[contains(.,'Cancel Checkout')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Cancel Checkout')] | //button[contains(.,'Cancel Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>CHECKIN</td>
-	<td>//button[contains(.,'Checkin')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Checkin')] | //button[contains(.,'Checkin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -384,6 +384,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MORE_MESSAGES</td>
+	<td>//a[contains(@class,'btn') and contains(.,'More Messages')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE</td>
 	<td>//a[contains(@class,'btn') and contains(.,'Move')] | //button[contains(.,'Move')]</td>
 	<td></td>
@@ -445,7 +450,7 @@
 </tr>
 <tr>
 	<td>POST</td>
-	<td>//button[contains(.,'Post')]</td>
+	<td>//button[contains(.,'Post') and not(contains(@class,'disabled'))]</td>
 	<td></td>
 </tr>
 <tr>

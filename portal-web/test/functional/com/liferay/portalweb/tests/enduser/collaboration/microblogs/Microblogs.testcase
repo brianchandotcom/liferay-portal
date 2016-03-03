@@ -1,0 +1,88 @@
+<definition component-name="portal-collaboration">
+	<property name="custom.properties" value="default.layout.template.id=1_column" />
+	<property name="testray.main.component.name" value="Microblogs" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Microblogs Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Microblogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs Page" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="Microblogs" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="AddEntry" priority="3">
+		<execute macro="Microblogs#updateStatus">
+			<var name="entryContent" value="Microblog Entry Content" />
+		</execute>
+
+		<execute macro="Microblogs#gotoTimelineTab" />
+
+		<execute macro="Microblogs#viewEntry">
+			<var name="entryContent" value="Microblog Entry Content" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="DeleteEntry" priority="3">
+		<execute macro="Microblogs#updateStatus">
+			<var name="entryContent" value="Microblog Entry Content" />
+		</execute>
+
+		<execute macro="Microblogs#gotoTimelineTab" />
+
+		<execute macro="Microblogs#deleteStatus">
+			<var name="entryContent" value="Microblog Entry Content" />
+		</execute>
+
+		<execute macro="Microblogs#gotoTimelineTab" />
+
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no microblog entries." />
+	</command>
+
+	<command name="EditEntry" priority="3">
+		<execute macro="Microblogs#updateStatus">
+			<var name="entryContent" value="Microblog Entry Content" />
+		</execute>
+
+		<execute macro="Microblogs#gotoTimelineTab" />
+
+		<execute macro="Microblogs#editStatus">
+			<var name="entryContent" value="Microblog Entry Content" />
+			<var name="entryContentEdit" value="Edited Microblogs Content" />
+		</execute>
+
+		<execute macro="Microblogs#gotoTimelineTab" />
+
+		<execute macro="Microblogs#viewEntry">
+			<var name="entryContent" value="Edited Microblogs Content" />
+			<var name="userName" value="Test Test" />
+		</execute>
+	</command>
+</definition>

@@ -117,9 +117,7 @@
 			<var name="orgName" value="${orgName}" />
 		</execute>
 
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ASSIGN_USERS" value1="Assign Users" />
+		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#AVAILABLE_TAB" value1="Available" />
 
@@ -424,6 +422,8 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+
+		<execute function="AssertVisible" locator1="UsersAndOrganizations#BREADCRUMB" />
 	</command>
 
 	<command name="manageMembershipOptionsInSites">
@@ -597,7 +597,7 @@
 	</command>
 
 	<command name="viewMembersNotFoundCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This organization does not have any users." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="This organization does not have any users." />
 	</command>
 
 	<command name="viewNoOrganizationsFoundCP">

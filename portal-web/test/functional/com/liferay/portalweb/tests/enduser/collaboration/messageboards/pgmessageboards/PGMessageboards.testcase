@@ -1207,6 +1207,70 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
+	<command name="ViewMBThreadReplyViaMoreMessages" priority="4">
+		<property name="custom.properties" value="discussion.comments.delta.value=5" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="Message Boards Thread Body" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="mbThreadReplyCounter" value="1,2,3,4,5,6,7" />
+
+		<for list="${mbThreadReplyCounter}" param="replyCount">
+			<execute macro="MessageboardsThread#replyPG">
+				<var name="threadReplyBody" value="Message Boards Thread Reply ${replyCount}" />
+				<var name="threadSubject" value="Message Boards Thread Subject" />
+			</execute>
+
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+		</for>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="lastPostUserName" value="Test Test" />
+			<var name="postCount" value="8" />
+			<var name="threadSubject" value="Message Boards Thread Subject" />
+		</execute>
+
+		<var name="mbThreadReplyCounter" value="1,2,3,4" />
+
+		<for list="${mbThreadReplyCounter}" param="replyCount">
+			<var name="key_threadBody" value="Message Boards Thread Reply ${replyCount}" />
+
+			<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="Message Boards Thread Reply ${replyCount}" />
+		</for>
+
+		<execute function="AssertVisible" locator1="Button#MORE_MESSAGES" />
+
+		<var name="mbThreadReplyNotVisible" value="5,6,7" />
+
+		<for list="${mbThreadReplyNotVisible}" param="replyNotVisible">
+			<var name="key_threadBody" value="Message Boards Thread Reply ${replyNotVisible}" />
+
+			<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#THREAD_BODY" value1="Message Boards Thread Reply ${replyNotVisible}" />
+		</for>
+
+		<execute function="AssertClick" locator1="Button#MORE_MESSAGES" value1="More Messages" />
+
+		<var name="mbThreadReplyCounter" value="1,2,3,4,5,6,7" />
+
+		<for list="${mbThreadReplyCounter}" param="replyCount">
+			<var name="key_threadBody" value="Message Boards Thread Reply ${replyCount}" />
+
+			<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="Message Boards Thread Reply ${replyCount}" />
+		</for>
+	</command>
+
 	<command name="ViewSubcategorySubscriptionViaMySubscriptionsPage" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />

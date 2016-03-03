@@ -26,13 +26,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -40,8 +40,8 @@ import java.util.Set;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.plugins.Plugin;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,32 +95,35 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		super.addSettingsContributor(settingsContributor);
 	}
 
+	protected void addTransportAddress(
+			TransportClient transportClient, String transportAddress)
+		throws UnknownHostException {
+
+		String[] transportAddressParts = StringUtil.split(
+			transportAddress, StringPool.COLON);
+
+		String host = transportAddressParts[0];
+
+		int port = GetterUtil.getInteger(transportAddressParts[1]);
+
+		InetAddress inetAddress = InetAddress.getByName(host);
+
+		transportClient.addTransportAddress(
+			new InetSocketTransportAddress(inetAddress, port));
+	}
+
 	@Override
-	protected Client createClient(Settings.Builder builder) {
+	protected Client createClient() {
 		if (_transportAddresses.isEmpty()) {
 			throw new IllegalStateException(
 				"There must be at least one transport address");
 		}
 
-		TransportClient.Builder transportClientBuilder =
-			TransportClient.builder();
-
-		transportClientBuilder.settings(builder);
-
-		TransportClient transportClient = transportClientBuilder.build();
+		TransportClient transportClient = createTransportClient();
 
 		for (String transportAddress : _transportAddresses) {
-			String[] transportAddressParts = StringUtil.split(
-				transportAddress, StringPool.COLON);
-
 			try {
-				InetAddress inetAddress = InetAddress.getByName(
-					transportAddressParts[0]);
-
-				int port = GetterUtil.getInteger(transportAddressParts[1]);
-
-				transportClient.addTransportAddress(
-					new InetSocketTransportAddress(inetAddress, port));
+				addTransportAddress(transportClient, transportAddress);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -134,28 +137,54 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		return transportClient;
 	}
 
+	protected TransportClient createTransportClient() {
+		TransportClient.Builder transportClientBuilder =
+			TransportClient.builder();
+
+		transportClientBuilder.settings(settingsBuilder);
+
+		for (String plugin : transportClientPlugins) {
+			transportClientBuilder.addPlugin(getPluginClass(plugin));
+		}
+
+		return transportClientBuilder.build();
+	}
+
 	@Deactivate
 	protected void deactivate(Map<String, Object> properties) {
 		close();
 	}
 
+	@SuppressWarnings("unchecked")
+	protected Class<? extends Plugin> getPluginClass(String plugin) {
+		try {
+			return (Class<? extends Plugin>)Class.forName(plugin);
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new IllegalArgumentException(
+				"Elasticsearch plugin class not found: " + plugin, cnfe);
+		}
+	}
+
 	@Override
-	protected void loadRequiredDefaultConfigurations(Settings.Builder builder) {
-		builder.put(
+	protected void loadRequiredDefaultConfigurations() {
+		settingsBuilder.put(
 			"client.transport.ignore_cluster_name",
 			elasticsearchConfiguration.clientTransportIgnoreClusterName());
-		builder.put(
+		settingsBuilder.put(
 			"client.transport.nodes_sampler_interval",
 			elasticsearchConfiguration.clientTransportNodesSamplerInterval());
-		builder.put(
+		settingsBuilder.put(
 			"client.transport.sniff",
 			elasticsearchConfiguration.clientTransportSniff());
-		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
-		builder.put("http.enabled", false);
-		builder.put("node.client", true);
-		builder.put("node.data", false);
-		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
-		builder.put(
+		settingsBuilder.put(
+			"cluster.name", elasticsearchConfiguration.clusterName());
+		settingsBuilder.put("http.enabled", false);
+		settingsBuilder.put("node.client", true);
+		settingsBuilder.put("node.data", false);
+		settingsBuilder.put(
+			"path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
+		settingsBuilder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 

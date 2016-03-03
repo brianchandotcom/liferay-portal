@@ -25,12 +25,13 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+
+import java.io.IOException;
 
 import java.net.InetAddress;
 
@@ -38,15 +39,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.elasticsearch.Version;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
-import org.elasticsearch.plugin.analysis.icu.AnalysisICUPlugin;
-import org.elasticsearch.plugin.analysis.kuromoji.AnalysisKuromojiPlugin;
-import org.elasticsearch.plugin.analysis.smartcn.AnalysisSmartChinesePlugin;
-import org.elasticsearch.plugin.analysis.stempel.AnalysisStempelPlugin;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -116,26 +112,28 @@ public class EmbeddedElasticsearchConnection
 		super.addSettingsContributor(settingsContributor);
 	}
 
-	protected void configureClustering(Settings.Builder builder) {
-		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
-		builder.put("discovery.zen.ping.multicast.enabled", false);
+	protected void configureClustering() {
+		settingsBuilder.put(
+			"cluster.name", elasticsearchConfiguration.clusterName());
+		settingsBuilder.put("discovery.zen.ping.multicast.enabled", false);
 	}
 
-	protected void configureHttp(Settings.Builder builder) {
-		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
+	protected void configureHttp() {
+		settingsBuilder.put(
+			"http.enabled", elasticsearchConfiguration.httpEnabled());
 
 		if (!elasticsearchConfiguration.httpEnabled()) {
 			return;
 		}
 
-		builder.put(
+		settingsBuilder.put(
 			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
 
 		if (!elasticsearchConfiguration.httpCORSEnabled()) {
 			return;
 		}
 
-		builder.put(
+		settingsBuilder.put(
 			"http.cors.allow-origin",
 			elasticsearchConfiguration.httpCORSAllowOrigin());
 
@@ -143,38 +141,97 @@ public class EmbeddedElasticsearchConnection
 			elasticsearchConfiguration.httpCORSConfigurations();
 
 		if (Validator.isNotNull(httpCORSConfigurations)) {
-			builder.loadFromSource(httpCORSConfigurations);
+			settingsBuilder.loadFromSource(httpCORSConfigurations);
 		}
 	}
 
-	protected void configurePaths(Settings.Builder builder) {
-		builder.put(
+	protected void configureNetworking() {
+		String networkBindHost = elasticsearchConfiguration.networkBindHost();
+
+		if (Validator.isNotNull(networkBindHost)) {
+			settingsBuilder.put("network.bind.host", networkBindHost);
+		}
+
+		String networkHost = elasticsearchConfiguration.networkHost();
+
+		if (Validator.isNull(networkBindHost) &&
+			Validator.isNull(networkHost) &&
+			Validator.isNull(elasticsearchConfiguration.networkPublishHost())) {
+
+			InetAddress localBindInetAddress =
+				_clusterSettingsContext.getLocalBindInetAddress();
+
+			if (localBindInetAddress != null) {
+				networkHost = localBindInetAddress.getHostAddress();
+			}
+		}
+
+		if (Validator.isNotNull(networkHost)) {
+			settingsBuilder.put("network.host", networkHost);
+		}
+
+		String networkPublishHost =
+			elasticsearchConfiguration.networkPublishHost();
+
+		if (Validator.isNotNull(networkPublishHost)) {
+			settingsBuilder.put("network.publish.host", networkPublishHost);
+		}
+
+		String transportTcpPort = elasticsearchConfiguration.transportTcpPort();
+
+		if (Validator.isNotNull(transportTcpPort)) {
+			settingsBuilder.put("transport.tcp.port", transportTcpPort);
+		}
+	}
+
+	protected void configurePaths() {
+		settingsBuilder.put(
 			"path.data",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
-		builder.put(
+		settingsBuilder.put(
 			"path.home",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
-		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
-		builder.put(
+		settingsBuilder.put(
+			"path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
+		settingsBuilder.put(
 			"path.plugins",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/plugins");
-		builder.put(
+		settingsBuilder.put(
 			"path.repo",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
-		builder.put(
+		settingsBuilder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 
-	protected void configurePlugins(Builder builder) {
-		builder.putArray(
-			"plugin.types", AnalysisICUPlugin.class.getName(),
-			AnalysisKuromojiPlugin.class.getName(),
-			AnalysisSmartChinesePlugin.class.getName(),
-			AnalysisStempelPlugin.class.getName());
+	protected void configurePlugin(String name, Settings settings) {
+		String version = Version.CURRENT.toString();
+
+		String zip = "/plugins/" + name + "-" + version + ".zip";
+
+		try {
+			EmbeddedElasticsearchPluginManager.installPlugin(
+				name, zip, getClass(), settings);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to install " + name + " plugin from " + zip, ioe);
+		}
+	}
+
+	protected void configurePlugins() {
+		String[] plugins = {
+			"analysis-icu", "analysis-kuromoji", "analysis-smartcn",
+			"analysis-stempel" };
+
+		Settings settings = settingsBuilder.build();
+
+		for (String plugin : plugins) {
+			configurePlugin(plugin, settings);
+		}
 	}
 
 	@Override
-	protected Client createClient(Settings.Builder builder) {
+	protected Client createClient() {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -198,11 +255,7 @@ public class EmbeddedElasticsearchConnection
 					elasticsearchConfiguration.clusterName());
 		}
 
-		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
-
-		nodeBuilder.settings(builder);
-
-		_node = nodeBuilder.node();
+		_node = new Node(settingsBuilder.build());
 
 		_node.start();
 
@@ -226,33 +279,34 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
-	protected void loadRequiredDefaultConfigurations(Settings.Builder builder) {
-		builder.put("action.auto_create_index", false);
-		builder.put(
+	protected void loadRequiredDefaultConfigurations() {
+		settingsBuilder.put("action.auto_create_index", false);
+		settingsBuilder.put(
 			"bootstrap.mlockall",
 			elasticsearchConfiguration.bootstrapMlockAll());
 
-		configureClustering(builder);
+		configureClustering();
 
-		configureHttp(builder);
+		configureHttp();
 
-		builder.put("index.number_of_replicas", 0);
-		builder.put("index.number_of_shards", 1);
+		settingsBuilder.put("index.number_of_replicas", 0);
+		settingsBuilder.put("index.number_of_shards", 1);
 
-		configureNetworking(builder);
+		configureNetworking();
 
-		builder.put("node.client", false);
-		builder.put("node.data", true);
-		builder.put("node.local", true);
+		settingsBuilder.put("node.client", false);
+		settingsBuilder.put("node.data", true);
+		settingsBuilder.put("node.local", true);
 
-		configurePaths(builder);
+		configurePaths();
 
-		configurePlugins(builder);
+		configurePlugins();
 
 		if (PortalRunMode.isTestMode()) {
-			builder.put("index.refresh_interval", "1ms");
-			builder.put("index.translog.flush_threshold_ops", "1");
-			builder.put("index.translog.interval", "1ms");
+			settingsBuilder.put("index.refresh_interval", "1ms");
+			settingsBuilder.put(
+				"index.translog.flush_threshold_ops", "1");
+			settingsBuilder.put("index.translog.interval", "1ms");
 		}
 	}
 
@@ -273,45 +327,6 @@ public class EmbeddedElasticsearchConnection
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
-	}
-
-	private void configureNetworking(Settings.Builder builder) {
-		String networkBindHost = elasticsearchConfiguration.networkBindHost();
-
-		if (Validator.isNotNull(networkBindHost)) {
-			builder.put("network.bind.host", networkBindHost);
-		}
-
-		String networkHost = elasticsearchConfiguration.networkHost();
-
-		if (Validator.isNull(networkBindHost) &&
-			Validator.isNull(networkHost) &&
-			Validator.isNull(elasticsearchConfiguration.networkPublishHost())) {
-
-			InetAddress localBindInetAddress =
-				_clusterSettingsContext.getLocalBindInetAddress();
-
-			if (localBindInetAddress != null) {
-				networkHost = localBindInetAddress.getHostAddress();
-			}
-		}
-
-		if (Validator.isNotNull(networkHost)) {
-			builder.put("network.host", networkHost);
-		}
-
-		String networkPublishHost =
-			elasticsearchConfiguration.networkPublishHost();
-
-		if (Validator.isNotNull(networkPublishHost)) {
-			builder.put("network.publish.host", networkPublishHost);
-		}
-
-		String transportTcpPort = elasticsearchConfiguration.transportTcpPort();
-
-		if (Validator.isNotNull(transportTcpPort)) {
-			builder.put("transport.tcp.port", transportTcpPort);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

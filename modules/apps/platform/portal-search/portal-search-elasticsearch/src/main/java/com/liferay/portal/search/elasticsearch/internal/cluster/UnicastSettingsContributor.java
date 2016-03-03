@@ -19,11 +19,10 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.util.Map;
-
-import org.elasticsearch.common.settings.Settings;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,14 +44,15 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 	}
 
 	@Override
-	public void populate(Settings.Builder builder) {
+	public void populate(ClientSettingsHelper clientSettingsHelper) {
 		if (!_clusterSettingsContext.isClusterEnabled()) {
 			return;
 		}
 
-		builder.putArray("discovery.zen.ping.unicast.hosts", _getHosts());
+		clientSettingsHelper.putArray(
+			"discovery.zen.ping.unicast.hosts", _getHosts());
 
-		builder.put("node.local", false);
+		clientSettingsHelper.put("node.local", "false");
 	}
 
 	@Activate

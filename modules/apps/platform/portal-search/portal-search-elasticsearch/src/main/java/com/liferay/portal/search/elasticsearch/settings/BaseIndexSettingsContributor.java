@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch.settings;
 
-import org.elasticsearch.common.settings.Settings;
-
 /**
  * @author André de Oliveira
  */
@@ -47,7 +45,7 @@ public class BaseIndexSettingsContributor implements IndexSettingsContributor {
 	}
 
 	@Override
-	public void populate(Settings.Builder builder) {
+	public void populate(IndexSettingsHelper indexSettingsHelper) {
 	}
 
 	private final int _priority;

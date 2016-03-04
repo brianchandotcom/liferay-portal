@@ -27,7 +27,7 @@ if (userId > 0) {
 	user2 = UserLocalServiceUtil.getUser(userId);
 }
 else {
-	user2 = (User)request.getAttribute(WebKeys.CONTACTS_USER);
+	user2 = (User)request.getAttribute(ContactsWebKeys.CONTACTS_USER);
 }
 
 user2 = user2.toEscapedModel();

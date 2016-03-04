@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -169,6 +170,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Element rootElement = document.getRootElement();
 
+		String[] availableLanguageIds = StringUtil.split(
+			rootElement.attributeValue("available-locales"));
+
 		String defaultLanguageId = rootElement.attributeValue("default-locale");
 
 		List<Element> dynamicElementElements = rootElement.elements(
@@ -177,7 +181,7 @@ public class JournalConverterImpl implements JournalConverter {
 		for (Element dynamicElementElement : dynamicElementElements) {
 			addDDMFields(
 				dynamicElementElement, ddmStructure, ddmFields,
-				defaultLanguageId);
+				availableLanguageIds, defaultLanguageId);
 		}
 
 		return ddmFields;
@@ -248,7 +252,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected void addDDMFields(
 			Element dynamicElementElement, DDMStructure ddmStructure,
-			Fields ddmFields, String defaultLanguageId)
+			Fields ddmFields, String[] availableLanguageIds,
+			String defaultLanguageId)
 		throws PortalException {
 
 		String name = dynamicElementElement.attributeValue("name");
@@ -260,7 +265,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 		if (!ddmStructure.isFieldTransient(name)) {
 			Field ddmField = getField(
-				dynamicElementElement, ddmStructure, defaultLanguageId);
+				dynamicElementElement, ddmStructure, availableLanguageIds,
+				defaultLanguageId);
 
 			String fieldName = ddmField.getName();
 
@@ -287,7 +293,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			addDDMFields(
 				childrenDynamicElementElement, ddmStructure, ddmFields,
-				defaultLanguageId);
+				availableLanguageIds, defaultLanguageId);
 		}
 	}
 
@@ -298,6 +304,25 @@ public class JournalConverterImpl implements JournalConverter {
 
 		entryElement.addAttribute("name", name);
 		entryElement.addCDATA(value);
+	}
+
+	protected void addMissingFieldValues(
+		Field ddmField, String defaultLanguageId,
+		Set<String> missingLanguageIds) {
+
+		if (missingLanguageIds.isEmpty()) {
+			return;
+		}
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		Serializable fieldValue = ddmField.getValue(defaultLocale);
+
+		for (String missingLanguageId : missingLanguageIds) {
+			Locale missingLocale = LocaleUtil.fromLanguageId(missingLanguageId);
+
+			ddmField.setValue(missingLocale, fieldValue);
+		}
 	}
 
 	protected int countFieldRepetition(
@@ -409,7 +434,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected Field getField(
 			Element dynamicElementElement, DDMStructure ddmStructure,
-			String defaultLanguageId)
+			String[] availableLanguageIds, String defaultLanguageId)
 		throws PortalException {
 
 		Field ddmField = new Field();
@@ -424,6 +449,11 @@ public class JournalConverterImpl implements JournalConverter {
 		String dataType = ddmStructure.getFieldDataType(name);
 		String type = ddmStructure.getFieldType(name);
 
+		Set<String> missingLanguageIds = SetUtil.fromArray(
+			availableLanguageIds);
+
+		missingLanguageIds.remove(defaultLanguageId);
+
 		List<Element> dynamicContentElements = dynamicElementElement.elements(
 			"dynamic-content");
 
@@ -435,6 +465,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			if (Validator.isNotNull(languageId)) {
 				locale = LocaleUtil.fromLanguageId(languageId);
+
+				missingLanguageIds.remove(languageId);
 			}
 
 			Serializable serializable = getFieldValue(
@@ -442,6 +474,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			ddmField.addValue(locale, serializable);
 		}
+
+		addMissingFieldValues(ddmField, defaultLanguageId, missingLanguageIds);
 
 		return ddmField;
 	}

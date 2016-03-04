@@ -183,6 +183,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 		int max = ParamUtil.getInteger(
 			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+		String tabs1 = ParamUtil.getString(resourceRequest, "tabs1", "all");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -190,8 +191,12 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
+		SocialActivityQueryHelper.Scope scope =
+			SocialActivityQueryHelper.Scope.fromValue(tabs1);
+
 		List<SocialActivity> socialActivities =
-			_socialActivityQueryHelper.getSocialActivities(group, 0, max);
+			_socialActivityQueryHelper.getSocialActivities(
+				group, themeDisplay.getLayout(), scope, 0, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			resourceRequest);

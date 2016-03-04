@@ -41,6 +41,31 @@ public class BNDImportsFormatter extends BaseImportsFormatter {
 	}
 
 	@Override
+	protected ImportPackage createImportPackage(String line) {
+		if (line.endsWith(StringPool.BACK_SLASH)) {
+			line = line.substring(0, line.length() - 1);
+		}
+
+		if (line.endsWith(StringPool.COMMA)) {
+			line = line.substring(0, line.length() - 1);
+		}
+
+		String importString = StringUtil.trim(line);
+
+		if (Validator.isNull(importString)) {
+			return null;
+		}
+
+		int pos = importString.indexOf(StringPool.SEMICOLON);
+
+		if (pos != -1) {
+			importString = importString.substring(0, pos);
+		}
+
+		return new ImportPackage(importString, false, line, true);
+	}
+
+	@Override
 	protected String doFormat(
 			String content, Pattern importPattern, String packageDir,
 			String className)
@@ -66,31 +91,6 @@ public class BNDImportsFormatter extends BaseImportsFormatter {
 		}
 
 		return content;
-	}
-
-	@Override
-	protected ImportPackage createImportPackage(String line) {
-		if (line.endsWith(StringPool.BACK_SLASH)) {
-			line = line.substring(0, line.length() - 1);
-		}
-
-		if (line.endsWith(StringPool.COMMA)) {
-			line = line.substring(0, line.length() - 1);
-		}
-
-		String importString = StringUtil.trim(line);
-
-		if (Validator.isNull(importString)) {
-			return null;
-		}
-
-		int pos = importString.indexOf(StringPool.SEMICOLON);
-
-		if (pos != -1) {
-			importString = importString.substring(0, pos);
-		}
-
-		return new ImportPackage(importString, false, line, true);
 	}
 
 }

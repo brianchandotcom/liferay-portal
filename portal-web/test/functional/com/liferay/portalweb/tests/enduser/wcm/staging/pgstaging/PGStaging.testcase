@@ -390,8 +390,6 @@
 	</command>
 
 	<command name="AddPageWithPageVersioningEnabled" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

@@ -145,10 +145,6 @@ for (long curGroupId : selectedGroupIds) {
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
 
 			<%
 			String label = StringPool.BLANK;
@@ -164,7 +160,6 @@ for (long curGroupId : selectedGroupIds) {
 			%>
 
 			<liferay-frontend:management-bar-filter
-				label="my-sites"
 				managementBarFilterItems="<%= managementBarFilterItems %>"
 				value="<%= label %>"
 			/>

@@ -5,6 +5,7 @@ import aQute.bnd.annotation.ProviderType;
 <#if osgiModule>
 import com.liferay.osgi.util.ServiceTrackerFactory;
 </#if>
+
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.service.Invokable${sessionTypeName}Service;

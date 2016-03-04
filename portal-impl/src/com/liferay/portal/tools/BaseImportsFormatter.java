@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  * @author André de Oliveira
  * @author Hugo Huijser
  */
-public abstract class BaseImportsFormatter {
+public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 	public String format(String content, Pattern importPattern)
 		throws IOException {

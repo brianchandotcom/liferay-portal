@@ -17,15 +17,21 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCompletionDateComparator;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskNameComparator;
+import com.liferay.portal.background.task.internal.messaging.BackgroundTaskMessageListener;
+import com.liferay.portal.background.task.internal.messaging.BackgroundTaskQueuingMessageListener;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -553,12 +559,28 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		registerDestination(
+		Destination backgroundTaskDestination = registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK);
-		registerDestination(
+
+		BackgroundTaskMessageListener backgroundTaskMessageListener =
+			new BackgroundTaskMessageListener(
+				_backgroundTaskExecutorRegistry, this,
+				_backgroundTaskStatusRegistry,
+				_backgroundTaskThreadLocalManager, _messageBus);
+
+		backgroundTaskDestination.register(backgroundTaskMessageListener);
+
+		Destination backgroundTaskStatusDestination = registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 			DestinationNames.BACKGROUND_TASK_STATUS);
+
+		BackgroundTaskQueuingMessageListener
+			backgroundTaskQueuingMessageListener =
+				new BackgroundTaskQueuingMessageListener(this);
+
+		backgroundTaskStatusDestination.register(
+			backgroundTaskQueuingMessageListener);
 	}
 
 	@Deactivate
@@ -577,7 +599,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		_bundleContext = null;
 	}
 
-	protected ServiceRegistration<Destination> registerDestination(
+	protected Destination registerDestination(
 		BundleContext bundleContext, String destinationType,
 		String destinationName) {
 
@@ -597,21 +619,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 		_serviceRegistrations.add(serviceRegistration);
 
-		return serviceRegistration;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskLocalService(
-		BackgroundTaskLocalService backgroundTaskLocalService) {
-
-		_backgroundTaskLocalService = backgroundTaskLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDestinationFactory(
-		DestinationFactory destinationFactory) {
-
-		_destinationFactory = destinationFactory;
+		return destination;
 	}
 
 	@Reference(unbind = "-")
@@ -666,9 +674,26 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 			"Invalid class " + ClassUtil.getClassName(orderByComparator));
 	}
 
+	@Reference
+	private BackgroundTaskExecutorRegistry _backgroundTaskExecutorRegistry;
+
+	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Reference
+	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
+
+	@Reference
+	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
+
 	private volatile BundleContext _bundleContext;
+
+	@Reference
 	private DestinationFactory _destinationFactory;
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
 		new HashSet<>();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service;
+package com.liferay.social.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -64,7 +64,7 @@ public class UserThreadServiceWrapper implements UserThreadService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
+	public java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
 		boolean deleted)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 		return _userThreadService.getUserUserThreads(deleted);

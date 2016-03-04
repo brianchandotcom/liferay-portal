@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.util;
+package com.liferay.social.privatemessaging.util;
 
 /**
  * @author Scott Lee

@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>UserModelListener</name>
-		<type>com.liferay.privatemessaging.hook.listeners.UserModelListener</type>
+		<type>com.liferay.social.privatemessaging.hook.listeners.UserModelListener</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<method>
 			<name>onAfterUpdate</name>
@@ -27,7 +27,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradeProcess_1_0_0</name>
-		<type>com.liferay.privatemessaging.hook.upgrade.UpgradeProcess_1_0_0</type>
+		<type>com.liferay.social.privatemessaging.hook.upgrade.UpgradeProcess_1_0_0</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<method>
 			<name>getThreshold</name>
@@ -46,7 +46,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradeProcess_1_0_1</name>
-		<type>com.liferay.privatemessaging.hook.upgrade.UpgradeProcess_1_0_1</type>
+		<type>com.liferay.social.privatemessaging.hook.upgrade.UpgradeProcess_1_0_1</type>
 		<author><![CDATA[Sherry Yang]]></author>
 		<method>
 			<name>getThreshold</name>
@@ -65,7 +65,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradePrivateMessaging</name>
-		<type>com.liferay.privatemessaging.hook.upgrade.v1_0_0.UpgradePrivateMessaging</type>
+		<type>com.liferay.social.privatemessaging.hook.upgrade.v1_0_0.UpgradePrivateMessaging</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<method>
 			<name>doUpgrade</name>
@@ -78,7 +78,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradeResourcePermission</name>
-		<type>com.liferay.privatemessaging.hook.upgrade.v1_0_1.UpgradeResourcePermission</type>
+		<type>com.liferay.social.privatemessaging.hook.upgrade.v1_0_1.UpgradeResourcePermission</type>
 		<author><![CDATA[Sherry Yang]]></author>
 		<method>
 			<name>doUpgrade</name>
@@ -130,7 +130,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UserThreadImpl</name>
-		<type>com.liferay.privatemessaging.model.impl.UserThreadImpl</type>
+		<type>com.liferay.social.privatemessaging.model.impl.UserThreadImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>UserThreadImpl</name>
@@ -138,7 +138,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PrivateMessagingUserNotificationHandler</name>
-		<type>com.liferay.privatemessaging.notifications.PrivateMessagingUserNotificationHandler</type>
+		<type>com.liferay.social.privatemessaging.notifications.PrivateMessagingUserNotificationHandler</type>
 		<author><![CDATA[Jonathan Lee]]></author>
 		<method>
 			<name>PrivateMessagingUserNotificationHandler</name>
@@ -188,7 +188,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PrivateMessagingPortlet</name>
-		<type>com.liferay.privatemessaging.portlet.PrivateMessagingPortlet</type>
+		<type>com.liferay.social.privatemessaging.portlet.PrivateMessagingPortlet</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<author><![CDATA[Eudaldo Alonso]]></author>
 		<method>
@@ -432,7 +432,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UserThreadLocalServiceImpl</name>
-		<type>com.liferay.privatemessaging.service.impl.UserThreadLocalServiceImpl</type>
+		<type>com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<author><![CDATA[Jonathan Lee]]></author>
 		<method>
@@ -910,7 +910,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UserThreadServiceImpl</name>
-		<type>com.liferay.privatemessaging.service.impl.UserThreadServiceImpl</type>
+		<type>com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl</type>
 		<author><![CDATA[Bruno Farache]]></author>
 		<method>
 			<name>getLastThreadMessage</name>
@@ -994,7 +994,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsKeys</name>
-		<type>com.liferay.privatemessaging.util.PortletPropsKeys</type>
+		<type>com.liferay.social.privatemessaging.util.PortletPropsKeys</type>
 		<author><![CDATA[Jonathan Lee]]></author>
 		<field>
 			<name>AUTOCOMPLETE_RECIPIENT_MAX</name>
@@ -1008,7 +1008,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsValues</name>
-		<type>com.liferay.privatemessaging.util.PortletPropsValues</type>
+		<type>com.liferay.social.privatemessaging.util.PortletPropsValues</type>
 		<author><![CDATA[Jonathan Lee]]></author>
 		<field>
 			<name>AUTOCOMPLETE_RECIPIENT_MAX</name>
@@ -1022,7 +1022,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PrivateMessagingConstants</name>
-		<type>com.liferay.privatemessaging.util.PrivateMessagingConstants</type>
+		<type>com.liferay.social.privatemessaging.util.PrivateMessagingConstants</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<field>
 			<name>NEW_MESSAGE</name>
@@ -1033,7 +1033,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PrivateMessagingUtil</name>
-		<type>com.liferay.privatemessaging.util.PrivateMessagingUtil</type>
+		<type>com.liferay.social.privatemessaging.util.PrivateMessagingUtil</type>
 		<author><![CDATA[Scott Lee]]></author>
 		<author><![CDATA[Eudaldo Alonso]]></author>
 		<method>
@@ -1145,7 +1145,7 @@
 	</javadoc>
 	<javadoc>
 		<name>RoleConstants</name>
-		<type>com.liferay.privatemessaging.util.RoleConstants</type>
+		<type>com.liferay.social.privatemessaging.util.RoleConstants</type>
 		<author><![CDATA[Eudaldo Alonso]]></author>
 		<field>
 			<name>SOCIAL_OFFICE_USER</name>

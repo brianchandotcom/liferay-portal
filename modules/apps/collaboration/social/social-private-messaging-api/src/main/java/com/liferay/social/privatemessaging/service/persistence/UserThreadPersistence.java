@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.persistence;
+package com.liferay.social.privatemessaging.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
-import com.liferay.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.exception.NoSuchUserThreadException;
+import com.liferay.social.privatemessaging.model.UserThread;
 
 /**
  * The persistence interface for the user thread service.
@@ -29,7 +29,7 @@ import com.liferay.privatemessaging.model.UserThread;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl
+ * @see com.liferay.social.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl
  * @see UserThreadUtil
  * @generated
  */

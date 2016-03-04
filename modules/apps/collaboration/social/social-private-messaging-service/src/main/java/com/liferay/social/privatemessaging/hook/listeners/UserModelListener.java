@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.privatemessaging.hook.listeners;
+package com.liferay.social.privatemessaging.hook.listeners;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.privatemessaging.service.UserThreadLocalService;
+import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

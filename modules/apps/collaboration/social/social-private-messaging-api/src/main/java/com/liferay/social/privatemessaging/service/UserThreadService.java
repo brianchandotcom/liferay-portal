@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service;
+package com.liferay.social.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import com.liferay.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.model.UserThread;
 
 import java.util.List;
 
@@ -40,8 +40,8 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see UserThreadServiceUtil
- * @see com.liferay.privatemessaging.service.base.UserThreadServiceBaseImpl
- * @see com.liferay.privatemessaging.service.impl.UserThreadServiceImpl
+ * @see com.liferay.social.privatemessaging.service.base.UserThreadServiceBaseImpl
+ * @see com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl
  * @generated
  */
 @AccessControlled
@@ -55,7 +55,7 @@ public interface UserThreadService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link UserThreadServiceUtil} to access the user thread remote service. Add custom service methods to {@link com.liferay.privatemessaging.service.impl.UserThreadServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link UserThreadServiceUtil} to access the user thread remote service. Add custom service methods to {@link com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage getLastThreadMessage(long mbThreadId)

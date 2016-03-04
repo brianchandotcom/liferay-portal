@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.persistence;
+package com.liferay.social.privatemessaging.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,14 +22,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.model.UserThread;
 
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the user thread service. This utility wraps {@link com.liferay.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the user thread service. This utility wraps {@link com.liferay.social.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see UserThreadPersistence
- * @see com.liferay.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl
+ * @see com.liferay.social.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -188,7 +188,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByUserId_First(long userId,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -214,7 +214,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByUserId_Last(long userId,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -241,7 +241,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread[] findByUserId_PrevAndNext(long userThreadId,
 		long userId, OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userThreadId, userId,
 			orderByComparator);
@@ -344,7 +344,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByMBThreadId_First(long mbThreadId,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByMBThreadId_First(mbThreadId, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByMBThreadId_Last(long mbThreadId,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByMBThreadId_Last(mbThreadId, orderByComparator);
 	}
@@ -401,7 +401,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread[] findByMBThreadId_PrevAndNext(long userThreadId,
 		long mbThreadId, OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByMBThreadId_PrevAndNext(userThreadId, mbThreadId,
 			orderByComparator);
@@ -435,7 +435,7 @@ public class UserThreadUtil {
 	* @throws NoSuchUserThreadException if a matching user thread could not be found
 	*/
 	public static UserThread findByU_M(long userId, long mbThreadId)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence().findByU_M(userId, mbThreadId);
 	}
 
@@ -471,7 +471,7 @@ public class UserThreadUtil {
 	* @return the user thread that was removed
 	*/
 	public static UserThread removeByU_M(long userId, long mbThreadId)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence().removeByU_M(userId, mbThreadId);
 	}
 
@@ -569,7 +569,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByU_D_First(long userId, boolean deleted,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByU_D_First(userId, deleted, orderByComparator);
 	}
@@ -599,7 +599,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByU_D_Last(long userId, boolean deleted,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByU_D_Last(userId, deleted, orderByComparator);
 	}
@@ -631,7 +631,7 @@ public class UserThreadUtil {
 	public static UserThread[] findByU_D_PrevAndNext(long userThreadId,
 		long userId, boolean deleted,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByU_D_PrevAndNext(userThreadId, userId, deleted,
 			orderByComparator);
@@ -750,7 +750,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByU_R_D_First(long userId, boolean read,
 		boolean deleted, OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByU_R_D_First(userId, read, deleted, orderByComparator);
 	}
@@ -782,7 +782,7 @@ public class UserThreadUtil {
 	*/
 	public static UserThread findByU_R_D_Last(long userId, boolean read,
 		boolean deleted, OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByU_R_D_Last(userId, read, deleted, orderByComparator);
 	}
@@ -816,7 +816,7 @@ public class UserThreadUtil {
 	public static UserThread[] findByU_R_D_PrevAndNext(long userThreadId,
 		long userId, boolean read, boolean deleted,
 		OrderByComparator<UserThread> orderByComparator)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence()
 				   .findByU_R_D_PrevAndNext(userThreadId, userId, read,
 			deleted, orderByComparator);
@@ -881,7 +881,7 @@ public class UserThreadUtil {
 	* @throws NoSuchUserThreadException if a user thread with the primary key could not be found
 	*/
 	public static UserThread remove(long userThreadId)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence().remove(userThreadId);
 	}
 
@@ -897,7 +897,7 @@ public class UserThreadUtil {
 	* @throws NoSuchUserThreadException if a user thread with the primary key could not be found
 	*/
 	public static UserThread findByPrimaryKey(long userThreadId)
-		throws com.liferay.privatemessaging.exception.NoSuchUserThreadException {
+		throws com.liferay.social.privatemessaging.exception.NoSuchUserThreadException {
 		return getPersistence().findByPrimaryKey(userThreadId);
 	}
 

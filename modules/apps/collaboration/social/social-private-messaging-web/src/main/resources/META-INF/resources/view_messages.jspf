@@ -37,7 +37,7 @@
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.privatemessaging.model.UserThread"
+		className="com.liferay.social.privatemessaging.model.UserThread"
 		modelVar="userThread"
 	>
 

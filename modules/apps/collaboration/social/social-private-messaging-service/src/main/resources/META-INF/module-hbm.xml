@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.privatemessaging.model.UserThread" />
-	<class name="com.liferay.privatemessaging.model.impl.UserThreadImpl" table="PM_UserThread">
+	<import class="com.liferay.social.privatemessaging.model.UserThread" />
+	<class name="com.liferay.social.privatemessaging.model.impl.UserThreadImpl" table="PM_UserThread">
 		<id name="userThreadId" type="long">
 			<generator class="assigned" />
 		</id>

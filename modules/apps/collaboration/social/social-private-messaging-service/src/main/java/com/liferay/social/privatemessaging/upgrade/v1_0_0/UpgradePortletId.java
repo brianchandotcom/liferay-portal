@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.privatemessaging.upgrade.v1_0_0;
+package com.liferay.social.privatemessaging.upgrade.v1_0_0;
 
-import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
+import com.liferay.social.privatemessaging.util.PrivateMessagingPortletKeys;
 
 /**
  * @author Peter Fellwock

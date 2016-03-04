@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.util;
+package com.liferay.social.privatemessaging.util;
 
 /**
  * @author Eudaldo Alonso
@@ -22,6 +22,7 @@ public class PrivateMessagingPortletKeys
 	extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String PRIVATE_MESSAGING =
-		"com_liferay_privatemessaging_web_portlet_PrivateMessagingPortlet";
+		"com_liferay_social_privatemessaging_web_portlet_" +
+			"PrivateMessagingPortlet";
 
 }

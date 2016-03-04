@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.util;
+package com.liferay.social.privatemessaging.util;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
@@ -44,13 +44,13 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
-import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
-import com.liferay.privatemessaging.service.UserThreadServiceUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.social.kernel.model.SocialRelationConstants;
+import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
+import com.liferay.social.privatemessaging.exception.NoSuchUserThreadException;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.social.privatemessaging.service.UserThreadServiceUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -291,7 +291,7 @@ public class PrivateMessagingUtil {
 				PrivateMessagingConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId,
-					"com.liferay.privatemessaging.configuration." +
+					"com.liferay.social.privatemessaging.configuration." +
 						"PrivateMessagingConfiguration"));
 		}
 		catch (ConfigurationException ce) {

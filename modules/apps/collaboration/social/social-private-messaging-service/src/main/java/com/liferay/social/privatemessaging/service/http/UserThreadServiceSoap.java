@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.http;
+package com.liferay.social.privatemessaging.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import com.liferay.privatemessaging.service.UserThreadServiceUtil;
+import com.liferay.social.privatemessaging.service.UserThreadServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.privatemessaging.model.UserThreadSoap}.
+ * is translated to an array of {@link com.liferay.social.privatemessaging.model.UserThreadSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.privatemessaging.model.UserThread}, that is translated to a
- * {@link com.liferay.privatemessaging.model.UserThreadSoap}. Methods that SOAP cannot
+ * {@link com.liferay.social.privatemessaging.model.UserThread}, that is translated to a
+ * {@link com.liferay.social.privatemessaging.model.UserThreadSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,7 +59,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see UserThreadServiceHttp
- * @see com.liferay.privatemessaging.model.UserThreadSoap
+ * @see com.liferay.social.privatemessaging.model.UserThreadSoap
  * @see UserThreadServiceUtil
  * @generated
  */
@@ -110,13 +110,13 @@ public class UserThreadServiceSoap {
 		}
 	}
 
-	public static com.liferay.privatemessaging.model.UserThreadSoap[] getUserUserThreads(
+	public static com.liferay.social.privatemessaging.model.UserThreadSoap[] getUserUserThreads(
 		boolean deleted) throws RemoteException {
 		try {
-			java.util.List<com.liferay.privatemessaging.model.UserThread> returnValue =
+			java.util.List<com.liferay.social.privatemessaging.model.UserThread> returnValue =
 				UserThreadServiceUtil.getUserUserThreads(deleted);
 
-			return com.liferay.privatemessaging.model.UserThreadSoap.toSoapModels(returnValue);
+			return com.liferay.social.privatemessaging.model.UserThreadSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

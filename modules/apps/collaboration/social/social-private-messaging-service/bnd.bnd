@@ -1,16 +1,16 @@
 Bundle-Name: Liferay Social Private Messaging Service
-Bundle-SymbolicName: com.liferay.privatemessaging.service
+Bundle-SymbolicName: com.liferay.social.privatemessaging.service
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.privatemessaging.hook,\
-	com.liferay.privatemessaging.hook.listeners,\
-	com.liferay.privatemessaging.model.impl,\
-	com.liferay.privatemessaging.notifications,\
-	com.liferay.privatemessaging.service.base,\
-	com.liferay.privatemessaging.service.http,\
-	com.liferay.privatemessaging.service.impl,\
-	com.liferay.privatemessaging.service.persistance.impl,\
-	com.liferay.privatemessaging.util
+	com.liferay.social.privatemessaging.hook,\
+	com.liferay.social.privatemessaging.hook.listeners,\
+	com.liferay.social.privatemessaging.model.impl,\
+	com.liferay.social.privatemessaging.notifications,\
+	com.liferay.social.privatemessaging.service.base,\
+	com.liferay.social.privatemessaging.service.http,\
+	com.liferay.social.privatemessaging.service.impl,\
+	com.liferay.social.privatemessaging.service.persistance.impl,\
+	com.liferay.social.privatemessaging.util
 Include-Resource:\
 @../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 @../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\

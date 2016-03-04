@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.model;
+package com.liferay.social.privatemessaging.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.privatemessaging.service.http.UserThreadServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.social.privatemessaging.service.http.UserThreadServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.privatemessaging.service.http.UserThreadServiceSoap
+ * @see com.liferay.social.privatemessaging.service.http.UserThreadServiceSoap
  * @generated
  */
 @ProviderType

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.model.impl;
+package com.liferay.social.privatemessaging.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.model.UserThreadModel;
-import com.liferay.privatemessaging.model.UserThreadSoap;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.model.UserThreadModel;
+import com.liferay.social.privatemessaging.model.UserThreadSoap;
 
 import java.io.Serializable;
 
@@ -104,14 +104,14 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.privatemessaging.service.util.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.privatemessaging.model.UserThread"),
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.social.privatemessaging.service.util.ServiceProps.get(
+				"value.object.entity.cache.enabled.com.liferay.social.privatemessaging.model.UserThread"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.privatemessaging.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.privatemessaging.model.UserThread"),
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.social.privatemessaging.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.com.liferay.social.privatemessaging.model.UserThread"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.privatemessaging.service.util.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.privatemessaging.model.UserThread"),
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.social.privatemessaging.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.social.privatemessaging.model.UserThread"),
 			true);
 	public static final long DELETED_COLUMN_BITMASK = 1L;
 	public static final long MBTHREADID_COLUMN_BITMASK = 2L;
@@ -166,8 +166,8 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.privatemessaging.service.util.ServiceProps.get(
-				"lock.expiration.time.com.liferay.privatemessaging.model.UserThread"));
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.social.privatemessaging.service.util.ServiceProps.get(
+				"lock.expiration.time.com.liferay.social.privatemessaging.model.UserThread"));
 
 	public UserThreadModelImpl() {
 	}
@@ -689,7 +689,7 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.privatemessaging.model.UserThread");
+		sb.append("com.liferay.social.privatemessaging.model.UserThread");
 		sb.append("</model-name>");
 
 		sb.append(

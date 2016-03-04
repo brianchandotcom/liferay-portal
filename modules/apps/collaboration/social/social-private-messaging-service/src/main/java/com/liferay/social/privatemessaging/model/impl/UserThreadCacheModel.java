@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.model.impl;
+package com.liferay.social.privatemessaging.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import com.liferay.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.model.UserThread;
 
 import java.io.Externalizable;
 import java.io.IOException;

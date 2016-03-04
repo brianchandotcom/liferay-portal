@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Social Private Messaging Web
-Bundle-SymbolicName: com.liferay.privatemessaging.web
+Bundle-SymbolicName: com.liferay.social.privatemessaging.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Private Messaging

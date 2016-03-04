@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.util;
+package com.liferay.social.privatemessaging.service.util;
 
 import aQute.bnd.annotation.ProviderType;
 

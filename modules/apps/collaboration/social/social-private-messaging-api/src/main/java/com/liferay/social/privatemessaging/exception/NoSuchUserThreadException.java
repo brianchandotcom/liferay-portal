@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.exception;
+package com.liferay.social.privatemessaging.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 

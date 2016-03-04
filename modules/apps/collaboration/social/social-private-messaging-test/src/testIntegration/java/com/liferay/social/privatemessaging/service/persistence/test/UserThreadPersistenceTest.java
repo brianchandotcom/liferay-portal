@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.persistence.test;
+package com.liferay.social.privatemessaging.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -34,11 +34,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
-import com.liferay.privatemessaging.service.persistence.UserThreadPersistence;
-import com.liferay.privatemessaging.service.persistence.UserThreadUtil;
+import com.liferay.social.privatemessaging.exception.NoSuchUserThreadException;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.social.privatemessaging.service.persistence.UserThreadPersistence;
+import com.liferay.social.privatemessaging.service.persistence.UserThreadUtil;
 
 import org.junit.After;
 import org.junit.Assert;

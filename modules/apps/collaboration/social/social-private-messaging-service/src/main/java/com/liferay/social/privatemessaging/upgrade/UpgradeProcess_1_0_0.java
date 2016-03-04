@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.privatemessaging.upgrade;
+package com.liferay.social.privatemessaging.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
+import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
 
 /**
  * @author Scott Lee

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.model.impl;
+package com.liferay.social.privatemessaging.model.impl;
 
 /**
  * @author Brian Wing Shun Chan

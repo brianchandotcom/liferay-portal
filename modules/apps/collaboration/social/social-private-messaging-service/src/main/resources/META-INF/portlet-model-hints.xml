@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.privatemessaging.model.UserThread">
+	<model name="com.liferay.social.privatemessaging.model.UserThread">
 		<field name="userThreadId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

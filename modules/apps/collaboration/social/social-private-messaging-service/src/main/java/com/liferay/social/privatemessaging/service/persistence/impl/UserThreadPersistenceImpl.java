@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.persistence.impl;
+package com.liferay.social.privatemessaging.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -38,11 +38,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import com.liferay.privatemessaging.exception.NoSuchUserThreadException;
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.model.impl.UserThreadImpl;
-import com.liferay.privatemessaging.model.impl.UserThreadModelImpl;
-import com.liferay.privatemessaging.service.persistence.UserThreadPersistence;
+import com.liferay.social.privatemessaging.exception.NoSuchUserThreadException;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.model.impl.UserThreadImpl;
+import com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl;
+import com.liferay.social.privatemessaging.service.persistence.UserThreadPersistence;
 
 import java.io.Serializable;
 
@@ -64,7 +64,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see UserThreadPersistence
- * @see com.liferay.privatemessaging.service.persistence.UserThreadUtil
+ * @see com.liferay.social.privatemessaging.service.persistence.UserThreadUtil
  * @generated
  */
 @ProviderType

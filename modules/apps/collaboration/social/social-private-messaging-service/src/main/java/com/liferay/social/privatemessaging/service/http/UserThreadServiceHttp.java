@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.http;
+package com.liferay.social.privatemessaging.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import com.liferay.privatemessaging.service.UserThreadServiceUtil;
+import com.liferay.social.privatemessaging.service.UserThreadServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -153,7 +153,7 @@ public class UserThreadServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
 		HttpPrincipal httpPrincipal, boolean deleted)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 		try {
@@ -175,7 +175,7 @@ public class UserThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.privatemessaging.model.UserThread>)returnObj;
+			return (java.util.List<com.liferay.social.privatemessaging.model.UserThread>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

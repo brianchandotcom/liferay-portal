@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service.impl;
+package com.liferay.social.privatemessaging.service.impl;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
@@ -46,11 +46,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
-import com.liferay.privatemessaging.util.PrivateMessagingConstants;
-import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
+import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
+import com.liferay.social.privatemessaging.util.PrivateMessagingConstants;
+import com.liferay.social.privatemessaging.util.PrivateMessagingPortletKeys;
 import com.liferay.util.ContentUtil;
 
 import java.io.InputStream;
@@ -339,8 +339,9 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 						PrivateMessagingConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
-							"com.liferay.privatemessaging.configuration." +
-								"PrivateMessagingConfiguration"));
+							"com.liferay.social.privatemessaging" +
+								".configuration." +
+									"PrivateMessagingConfiguration"));
 			}
 			catch (ConfigurationException ce) {
 				_log.error("Unable to get private message configuration", ce);

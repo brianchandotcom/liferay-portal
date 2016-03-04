@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.model;
+package com.liferay.social.privatemessaging.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -141,7 +141,7 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 
 	@Override
 	public int compareTo(
-		com.liferay.privatemessaging.model.UserThread userThread) {
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
 		return _userThread.compareTo(userThread);
 	}
 
@@ -472,12 +472,12 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.privatemessaging.model.UserThread> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.privatemessaging.model.UserThread> toCacheModel() {
 		return _userThread.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.privatemessaging.model.UserThread toEscapedModel() {
+	public com.liferay.social.privatemessaging.model.UserThread toEscapedModel() {
 		return new UserThreadWrapper(_userThread.toEscapedModel());
 	}
 
@@ -487,7 +487,7 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	}
 
 	@Override
-	public com.liferay.privatemessaging.model.UserThread toUnescapedModel() {
+	public com.liferay.social.privatemessaging.model.UserThread toUnescapedModel() {
 		return new UserThreadWrapper(_userThread.toUnescapedModel());
 	}
 

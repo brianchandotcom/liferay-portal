@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.web.portlet;
+package com.liferay.social.privatemessaging.web.portlet;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -52,10 +52,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
-import com.liferay.privatemessaging.service.UserThreadLocalService;
-import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
-import com.liferay.privatemessaging.util.PrivateMessagingUtil;
+import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
+import com.liferay.social.privatemessaging.service.UserThreadLocalService;
+import com.liferay.social.privatemessaging.util.PrivateMessagingPortletKeys;
+import com.liferay.social.privatemessaging.util.PrivateMessagingUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration",
+	configurationPid = "com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",

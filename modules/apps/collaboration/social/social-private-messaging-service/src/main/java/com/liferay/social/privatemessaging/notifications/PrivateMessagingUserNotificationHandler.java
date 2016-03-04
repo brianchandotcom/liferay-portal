@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.notifications;
+package com.liferay.social.privatemessaging.notifications;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
-import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.social.privatemessaging.util.PrivateMessagingPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

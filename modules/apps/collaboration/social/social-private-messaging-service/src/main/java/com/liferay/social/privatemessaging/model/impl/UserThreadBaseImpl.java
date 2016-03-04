@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.privatemessaging.model.impl;
+package com.liferay.social.privatemessaging.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.privatemessaging.model.UserThread;
-import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.social.privatemessaging.model.UserThread;
+import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
 
 /**
  * The extended model base implementation for the UserThread service. Represents a row in the &quot;PM_UserThread&quot; database table, with each column mapped to a property of this class.

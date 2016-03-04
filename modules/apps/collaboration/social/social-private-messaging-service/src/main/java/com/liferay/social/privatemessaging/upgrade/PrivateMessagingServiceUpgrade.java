@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.privatemessaging.upgrade;
+package com.liferay.social.privatemessaging.upgrade;
 
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.privatemessaging.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
-import com.liferay.privatemessaging.upgrade.v1_0_1.UpgradeResourcePermission;
+import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
+import com.liferay.social.privatemessaging.upgrade.v1_0_1.UpgradeResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,11 +35,11 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.privatemessaging.service", "0.0.1", "1.0.0",
+			"com.liferay.social.privatemessaging.service", "0.0.1", "1.0.0",
 			new UpgradePrivateMessaging(), new UpgradePortletId());
 
 		registry.register(
-			"com.liferay.privatemessaging.web", "1.0.0", "1.0.1",
+			"com.liferay.social.privatemessaging.web", "1.0.0", "1.0.1",
 			new UpgradeResourcePermission());
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service;
+package com.liferay.social.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,7 +22,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for UserThread. This utility wraps
- * {@link com.liferay.privatemessaging.service.impl.UserThreadLocalServiceImpl} and is the
+ * {@link com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -30,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see UserThreadLocalService
- * @see com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl
- * @see com.liferay.privatemessaging.service.impl.UserThreadLocalServiceImpl
+ * @see com.liferay.social.privatemessaging.service.base.UserThreadLocalServiceBaseImpl
+ * @see com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,7 +39,7 @@ public class UserThreadLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.privatemessaging.service.impl.UserThreadLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.message.boards.kernel.model.MBMessage addPrivateMessage(
 		long userId, long mbThreadId, java.lang.String to,
@@ -75,8 +75,8 @@ public class UserThreadLocalServiceUtil {
 	* @param userThread the user thread
 	* @return the user thread that was added
 	*/
-	public static com.liferay.privatemessaging.model.UserThread addUserThread(
-		com.liferay.privatemessaging.model.UserThread userThread) {
+	public static com.liferay.social.privatemessaging.model.UserThread addUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
 		return getService().addUserThread(userThread);
 	}
 
@@ -86,7 +86,7 @@ public class UserThreadLocalServiceUtil {
 	* @param userThreadId the primary key for the new user thread
 	* @return the new user thread
 	*/
-	public static com.liferay.privatemessaging.model.UserThread createUserThread(
+	public static com.liferay.social.privatemessaging.model.UserThread createUserThread(
 		long userThreadId) {
 		return getService().createUserThread(userThreadId);
 	}
@@ -116,8 +116,8 @@ public class UserThreadLocalServiceUtil {
 	* @param userThread the user thread
 	* @return the user thread that was removed
 	*/
-	public static com.liferay.privatemessaging.model.UserThread deleteUserThread(
-		com.liferay.privatemessaging.model.UserThread userThread) {
+	public static com.liferay.social.privatemessaging.model.UserThread deleteUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
 		return getService().deleteUserThread(userThread);
 	}
 
@@ -128,7 +128,7 @@ public class UserThreadLocalServiceUtil {
 	* @return the user thread that was removed
 	* @throws PortalException if a user thread with the primary key could not be found
 	*/
-	public static com.liferay.privatemessaging.model.UserThread deleteUserThread(
+	public static com.liferay.social.privatemessaging.model.UserThread deleteUserThread(
 		long userThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteUserThread(userThreadId);
@@ -153,7 +153,7 @@ public class UserThreadLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -171,7 +171,7 @@ public class UserThreadLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -212,13 +212,13 @@ public class UserThreadLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.privatemessaging.model.UserThread fetchUserThread(
+	public static com.liferay.social.privatemessaging.model.UserThread fetchUserThread(
 		long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchUserThread(userId, mbThreadId);
 	}
 
-	public static com.liferay.privatemessaging.model.UserThread fetchUserThread(
+	public static com.liferay.social.privatemessaging.model.UserThread fetchUserThread(
 		long userThreadId) {
 		return getService().fetchUserThread(userThreadId);
 	}
@@ -231,7 +231,7 @@ public class UserThreadLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getMBThreadUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getMBThreadUserThreads(
 		long mbThreadId) {
 		return getService().getMBThreadUserThreads(mbThreadId);
 	}
@@ -251,7 +251,7 @@ public class UserThreadLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.privatemessaging.model.UserThread getUserThread(
+	public static com.liferay.social.privatemessaging.model.UserThread getUserThread(
 		long userId, long mbThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserThread(userId, mbThreadId);
@@ -264,7 +264,7 @@ public class UserThreadLocalServiceUtil {
 	* @return the user thread
 	* @throws PortalException if a user thread with the primary key could not be found
 	*/
-	public static com.liferay.privatemessaging.model.UserThread getUserThread(
+	public static com.liferay.social.privatemessaging.model.UserThread getUserThread(
 		long userThreadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserThread(userThreadId);
@@ -274,14 +274,14 @@ public class UserThreadLocalServiceUtil {
 	* Returns a range of all the user threads.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.privatemessaging.model.impl.UserThreadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user threads
 	* @param end the upper bound of the range of user threads (not inclusive)
 	* @return the range of user threads
 	*/
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserThreads(
 		int start, int end) {
 		return getService().getUserThreads(start, end);
 	}
@@ -304,17 +304,17 @@ public class UserThreadLocalServiceUtil {
 		return getService().getUserUserThreadCount(userId, read, deleted);
 	}
 
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
 		long userId, boolean deleted) {
 		return getService().getUserUserThreads(userId, deleted);
 	}
 
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
 		long userId, boolean deleted, int start, int end) {
 		return getService().getUserUserThreads(userId, deleted, start, end);
 	}
 
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
 		long userId, boolean read, boolean deleted) {
 		return getService().getUserUserThreads(userId, read, deleted);
 	}
@@ -339,8 +339,8 @@ public class UserThreadLocalServiceUtil {
 	* @param userThread the user thread
 	* @return the user thread that was updated
 	*/
-	public static com.liferay.privatemessaging.model.UserThread updateUserThread(
-		com.liferay.privatemessaging.model.UserThread userThread) {
+	public static com.liferay.social.privatemessaging.model.UserThread updateUserThread(
+		com.liferay.social.privatemessaging.model.UserThread userThread) {
 		return getService().updateUserThread(userThread);
 	}
 

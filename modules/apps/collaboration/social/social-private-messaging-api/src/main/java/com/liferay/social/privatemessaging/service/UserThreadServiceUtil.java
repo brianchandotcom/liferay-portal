@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.service;
+package com.liferay.social.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,7 +22,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for UserThread. This utility wraps
- * {@link com.liferay.privatemessaging.service.impl.UserThreadServiceImpl} and is the
+ * {@link com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -30,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see UserThreadService
- * @see com.liferay.privatemessaging.service.base.UserThreadServiceBaseImpl
- * @see com.liferay.privatemessaging.service.impl.UserThreadServiceImpl
+ * @see com.liferay.social.privatemessaging.service.base.UserThreadServiceBaseImpl
+ * @see com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,7 +39,7 @@ public class UserThreadServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.privatemessaging.service.impl.UserThreadServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.message.boards.kernel.model.MBMessage getLastThreadMessage(
 		long mbThreadId)
@@ -67,7 +67,7 @@ public class UserThreadServiceUtil {
 		return getService().getThreadMessagesCount(mbThreadId);
 	}
 
-	public static java.util.List<com.liferay.privatemessaging.model.UserThread> getUserUserThreads(
+	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(
 		boolean deleted)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 		return getService().getUserUserThreads(deleted);

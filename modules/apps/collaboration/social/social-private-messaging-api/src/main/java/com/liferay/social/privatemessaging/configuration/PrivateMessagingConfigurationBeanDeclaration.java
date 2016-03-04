@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.privatemessaging.configuration;
+package com.liferay.social.privatemessaging.configuration;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 

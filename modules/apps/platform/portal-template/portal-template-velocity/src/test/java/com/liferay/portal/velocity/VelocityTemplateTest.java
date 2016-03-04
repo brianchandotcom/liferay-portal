@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.FastExtendedProperties;
@@ -34,6 +35,7 @@ import com.liferay.portal.template.velocity.VelocityTemplate;
 import com.liferay.portal.template.velocity.VelocityTemplateResourceLoader;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -72,6 +74,8 @@ public class VelocityTemplateTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
+
+		new FileUtil().setFile(new FileImpl());
 
 		_templateResourceLoader = new MockTemplateResourceLoader();
 

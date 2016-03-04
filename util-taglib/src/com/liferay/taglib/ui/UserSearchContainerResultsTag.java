@@ -42,10 +42,6 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public void setUseIndexer(boolean useIndexer) {
-		_useIndexer = useIndexer;
-	}
-
 	public void setUserParams(LinkedHashMap<String, Object> userParams) {
 		_userParams = userParams;
 	}
@@ -54,7 +50,6 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 	protected void cleanUp() {
 		_searchContainer = null;
 		_searchTerms = null;
-		_useIndexer = false;
 		_userParams = null;
 	}
 
@@ -74,8 +69,6 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 		_searchTerms = _searchContainer.getSearchTerms();
 
 		request.setAttribute(
-			"liferay-ui:user-search-container-results:useIndexer", _useIndexer);
-		request.setAttribute(
 			"liferay-ui:user-search-container-results:searchContainer",
 			_searchContainer);
 		request.setAttribute(
@@ -90,7 +83,6 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 
 	private SearchContainer<R> _searchContainer;
 	private DisplayTerms _searchTerms;
-	private boolean _useIndexer;
 	private LinkedHashMap<String, Object> _userParams;
 
 }

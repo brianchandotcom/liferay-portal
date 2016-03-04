@@ -25,7 +25,6 @@ configurations {
 	}
 
 	portalToolsCssBuilder
-	portalToolsJasperJspc
 	portalToolsJavadocFormatter
 	portalToolsLangBuilder
 	portalToolsPortalToolsServiceBuilder
@@ -39,7 +38,6 @@ configurations {
 
 dependencies {
 	portalToolsCssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "default"
-	portalToolsJasperJspc group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
 	portalToolsJavadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
 	portalToolsLangBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
 	portalToolsPortalToolsServiceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"

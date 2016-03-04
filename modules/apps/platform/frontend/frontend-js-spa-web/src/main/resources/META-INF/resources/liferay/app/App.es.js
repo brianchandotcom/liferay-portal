@@ -50,19 +50,12 @@ class LiferayApp extends App {
 	onDocClickDelegate_(event) {
 		var inBlacklist = false;
 
-		Object.keys(this.blacklist).map(
+		Object.keys(this.blacklist).forEach(
 			(portletId) => {
 				var boundaryId = Utils.getPortletBoundaryId(portletId);
-				var portlets = document.querySelectorAll('[id^="' + boundaryId +  '"]');
+				var portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
 
-				Array.prototype.slice.call(portlets).forEach(
-					(portlet) => {
-						if (dom.contains(portlet, event.delegateTarget)) {
-							inBlacklist = true;
-							return;
-						}
-					}
-				);
+				inBlacklist = Array.prototype.slice.call(portlets).some(portlet => dom.contains(portlet, event.delegateTarget));
 			}
 		);
 

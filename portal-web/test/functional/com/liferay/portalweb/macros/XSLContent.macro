@@ -34,6 +34,8 @@
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+
 		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="ClickNoError" locator1="Link#URL" />

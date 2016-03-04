@@ -37,7 +37,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -104,7 +103,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -140,7 +138,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -197,7 +194,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -281,7 +277,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -335,7 +330,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -599,7 +593,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -696,7 +689,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -782,7 +774,6 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>

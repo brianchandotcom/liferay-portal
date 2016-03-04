@@ -15,13 +15,13 @@
 package com.liferay.contacts.web.portlet;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
-import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.contacts.constants.ContactsConstants;
 import com.liferay.contacts.constants.SocialRelationConstants;
 import com.liferay.contacts.exception.DuplicateEntryEmailAddressException;
 import com.liferay.contacts.exception.EntryEmailAddressException;
 import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalServiceUtil;
+import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.util.ContactsUtil;
 import com.liferay.contacts.web.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -67,12 +67,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -89,8 +89,8 @@ import com.liferay.social.kernel.exception.NoSuchRelationException;
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestConstants;
-import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
-import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialRelationLocalService;
+import com.liferay.social.kernel.service.SocialRequestLocalService;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -111,6 +111,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -163,26 +164,26 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				continue;
 			}
 
-			boolean blocked = SocialRelationLocalServiceUtil.hasRelation(
+			boolean blocked = socialRelationLocalService.hasRelation(
 				userId, themeDisplay.getUserId(),
 				SocialRelationConstants.TYPE_UNI_ENEMY);
 
 			if (type == SocialRelationConstants.TYPE_UNI_ENEMY) {
-				SocialRelationLocalServiceUtil.deleteRelations(
+				socialRelationLocalService.deleteRelations(
 					themeDisplay.getUserId(), userId);
 
-				SocialRelationLocalServiceUtil.deleteRelations(
+				socialRelationLocalService.deleteRelations(
 					userId, themeDisplay.getUserId());
 			}
 			else if (blocked) {
 				continue;
 			}
 
-			SocialRelationLocalServiceUtil.addRelation(
+			socialRelationLocalService.addRelation(
 				themeDisplay.getUserId(), userId, type);
 
 			if (blocked) {
-				SocialRelationLocalServiceUtil.addRelation(
+				socialRelationLocalService.addRelation(
 					userId, themeDisplay.getUserId(), type);
 			}
 		}
@@ -205,7 +206,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			}
 
 			try {
-				SocialRelationLocalServiceUtil.deleteRelation(
+				socialRelationLocalService.deleteRelation(
 					themeDisplay.getUserId(), userId, type);
 			}
 			catch (NoSuchRelationException nsre) {
@@ -219,7 +220,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		long userId = ParamUtil.getLong(resourceRequest, "userId");
 
-		User user = UserServiceUtil.getUserById(userId);
+		User user = userService.getUserById(userId);
 
 		String vCard = ContactsUtil.getVCard(user);
 
@@ -238,7 +239,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		List<User> users = new ArrayList<>(userIds.length);
 
 		for (long userId : userIds) {
-			User user = UserServiceUtil.getUserById(userId);
+			User user = userService.getUserById(userId);
 
 			users.add(user);
 		}
@@ -387,10 +388,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				continue;
 			}
 
-			if (SocialRelationLocalServiceUtil.hasRelation(
+			if (socialRelationLocalService.hasRelation(
 					userId, themeDisplay.getUserId(),
 					SocialRelationConstants.TYPE_UNI_ENEMY) ||
-				SocialRequestLocalServiceUtil.hasRequest(
+				socialRequestLocalService.hasRequest(
 					themeDisplay.getUserId(), User.class.getName(),
 					themeDisplay.getUserId(), type, userId,
 					SocialRequestConstants.STATUS_PENDING)) {
@@ -405,11 +406,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			extraDataJSONObject.put(
 				"portletId", PortletConstants.getRootPortletId(portletId));
 
-			SocialRequest socialRequest =
-				SocialRequestLocalServiceUtil.addRequest(
-					themeDisplay.getUserId(), 0, User.class.getName(),
-					themeDisplay.getUserId(), type,
-					extraDataJSONObject.toString(), userId);
+			SocialRequest socialRequest = socialRequestLocalService.addRequest(
+				themeDisplay.getUserId(), 0, User.class.getName(),
+				themeDisplay.getUserId(), type, extraDataJSONObject.toString(),
+				userId);
 
 			sendNotificationEvent(socialRequest);
 		}
@@ -471,17 +471,17 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			Entry entry = null;
 
 			if (entryId > 0) {
-				entry = EntryLocalServiceUtil.getEntry(entryId);
+				entry = entryLocalService.getEntry(entryId);
 
 				if (entry.getUserId() == themeDisplay.getUserId()) {
-					entry = EntryLocalServiceUtil.updateEntry(
+					entry = entryLocalService.updateEntry(
 						entryId, fullName, emailAddress, comments);
 
 					message = "you-have-successfully-updated-the-contact";
 				}
 			}
 			else {
-				entry = EntryLocalServiceUtil.addEntry(
+				entry = entryLocalService.addEntry(
 					themeDisplay.getUserId(), fullName, emailAddress, comments);
 
 				message = "you-have-successfully-added-a-new-contact";
@@ -649,9 +649,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		try {
 			SocialRequest socialRequest =
-				SocialRequestLocalServiceUtil.getSocialRequest(socialRequestId);
+				socialRequestLocalService.getSocialRequest(socialRequestId);
 
-			if (SocialRelationLocalServiceUtil.hasRelation(
+			if (socialRelationLocalService.hasRelation(
 					socialRequest.getReceiverUserId(),
 					socialRequest.getUserId(),
 					SocialRelationConstants.TYPE_UNI_ENEMY)) {
@@ -659,11 +659,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				status = SocialRequestConstants.STATUS_IGNORE;
 			}
 
-			SocialRequestLocalServiceUtil.updateRequest(
+			socialRequestLocalService.updateRequest(
 				socialRequestId, status, themeDisplay);
 
 			if (status == SocialRequestConstants.STATUS_CONFIRM) {
-				SocialRelationLocalServiceUtil.addRelation(
+				socialRelationLocalService.addRelation(
 					socialRequest.getUserId(),
 					socialRequest.getReceiverUserId(), socialRequest.getType());
 			}
@@ -687,10 +687,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		if (entryId > 0) {
-			Entry entry = EntryLocalServiceUtil.getEntry(entryId);
+			Entry entry = entryLocalService.getEntry(entryId);
 
 			if (entry.getUserId() == themeDisplay.getUserId()) {
-				EntryLocalServiceUtil.deleteEntry(entryId);
+				entryLocalService.deleteEntry(entryId);
 			}
 		}
 	}
@@ -769,14 +769,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			!portletId.equals(ContactsPortletKeys.MEMBERS)) {
 
 			List<BaseModel<?>> contacts =
-				EntryLocalServiceUtil.searchUsersAndContacts(
+				entryLocalService.searchUsersAndContacts(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					keywords, start, end);
 
-			int contactsCount =
-				EntryLocalServiceUtil.searchUsersAndContactsCount(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					keywords);
+			int contactsCount = entryLocalService.searchUsersAndContactsCount(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				keywords);
 
 			jsonObject.put("count", contactsCount);
 
@@ -801,7 +800,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				 !portletId.equals(ContactsPortletKeys.MEMBERS)) {
 
 			List<SocialRelation> socialRelations =
-				SocialRelationLocalServiceUtil.getInverseRelations(
+				socialRelationLocalService.getInverseRelations(
 					themeDisplay.getUserId(),
 					SocialRelationConstants.TYPE_UNI_FOLLOWER, start, end);
 
@@ -816,10 +815,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 					ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) &&
 				 !portletId.equals(ContactsPortletKeys.MEMBERS)) {
 
-			List<Entry> entries = EntryLocalServiceUtil.search(
+			List<Entry> entries = entryLocalService.search(
 				themeDisplay.getUserId(), keywords, start, end);
 
-			int entriesCount = EntryLocalServiceUtil.searchCount(
+			int entriesCount = entryLocalService.searchCount(
 				themeDisplay.getUserId(), keywords);
 
 			jsonObject.put("count", entriesCount);
@@ -866,7 +865,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			List<User> usersList = null;
 
 			if (filterBy.equals(ContactsConstants.FILTER_BY_ADMINS)) {
-				Role siteAdministratorRole = RoleLocalServiceUtil.getRole(
+				Role siteAdministratorRole = roleLocalService.getRole(
 					group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
 				params.put(
@@ -878,13 +877,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				Set<User> users = new HashSet<>();
 
 				users.addAll(
-					UserLocalServiceUtil.search(
+					userLocalService.search(
 						themeDisplay.getCompanyId(), keywords,
 						WorkflowConstants.STATUS_APPROVED, params,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 						(OrderByComparator)null));
 
-				Role siteOwnerRole = RoleLocalServiceUtil.getRole(
+				Role siteOwnerRole = roleLocalService.getRole(
 					group.getCompanyId(), RoleConstants.SITE_OWNER);
 
 				params.put(
@@ -892,7 +891,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 					new Long[] {group.getGroupId(), siteOwnerRole.getRoleId()});
 
 				users.addAll(
-					UserLocalServiceUtil.search(
+					userLocalService.search(
 						themeDisplay.getCompanyId(), keywords,
 						WorkflowConstants.STATUS_APPROVED, params,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -903,13 +902,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				ListUtil.sort(usersList, new UserLastNameComparator(true));
 			}
 			else {
-				int usersCount = UserLocalServiceUtil.searchCount(
+				int usersCount = userLocalService.searchCount(
 					themeDisplay.getCompanyId(), keywords,
 					WorkflowConstants.STATUS_APPROVED, params);
 
 				jsonObject.put("count", usersCount);
 
-				usersList = UserLocalServiceUtil.search(
+				usersList = userLocalService.search(
 					themeDisplay.getCompanyId(), keywords,
 					WorkflowConstants.STATUS_APPROVED, params, start, end,
 					new UserLastNameComparator(true));
@@ -1020,7 +1019,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			long userId)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		return getUserJSONObject(portletResponse, themeDisplay, user);
 	}
@@ -1069,7 +1068,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			notificationEventJSONObject.put(
 				"userId", socialRequest.getUserId());
 
-			UserNotificationEventLocalServiceUtil.sendUserNotificationEvents(
+			userNotificationEventLocalService.sendUserNotificationEvents(
 				socialRequest.getReceiverUserId(),
 				ContactsPortletKeys.CONTACTS_CENTER,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
@@ -1115,7 +1114,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		UserLocalServiceUtil.updateAsset(
+		userLocalService.updateAsset(
 			user.getUserId(), user, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames());
 	}
@@ -1143,7 +1142,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
 		if (deleteLogo) {
-			UserServiceUtil.deletePortrait(user.getUserId());
+			userService.deletePortrait(user.getUserId());
 		}
 
 		String comments = BeanParamUtil.getString(
@@ -1182,10 +1181,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		int birthdayYear = cal.get(Calendar.YEAR);
 
 		List<AnnouncementsDelivery> announcementsDeliveries =
-			AnnouncementsDeliveryLocalServiceUtil.getUserDeliveries(
+			announcementsDeliveryLocalService.getUserDeliveries(
 				user.getUserId());
 
-		UserServiceUtil.updateUser(
+		userService.updateUser(
 			user.getUserId(), user.getPasswordUnencrypted(),
 			user.getPasswordUnencrypted(), user.getPasswordUnencrypted(),
 			user.getPasswordReset(), user.getReminderQueryQuestion(),
@@ -1214,5 +1213,31 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		UsersAdminUtil.updateWebsites(
 			Contact.class.getName(), user.getContactId(), websites);
 	}
+
+	@Reference
+	protected AnnouncementsDeliveryLocalService
+		announcementsDeliveryLocalService;
+
+	@Reference
+	protected EntryLocalService entryLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	@Reference
+	protected SocialRelationLocalService socialRelationLocalService;
+
+	@Reference
+	protected SocialRequestLocalService socialRequestLocalService;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
+	@Reference
+	protected UserNotificationEventLocalService
+		userNotificationEventLocalService;
+
+	@Reference
+	protected UserService userService;
 
 }

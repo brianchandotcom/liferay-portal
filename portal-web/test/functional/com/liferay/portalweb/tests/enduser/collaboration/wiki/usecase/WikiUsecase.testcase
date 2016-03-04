@@ -131,7 +131,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="Document_1.jpg" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
@@ -147,7 +147,7 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="Document_1.jpg" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>

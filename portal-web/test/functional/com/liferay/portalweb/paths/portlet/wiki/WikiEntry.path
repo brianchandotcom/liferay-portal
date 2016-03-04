@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>ATTACHMENTS_LABEL</td>
+	<td>//div[contains(@class,'page-attachments')]/h5[contains(.,'Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENT_FILE_NAME</td>
+	<td>//div[contains(@class,'clamp-container')]/span[contains(@title,'${key_attachmentFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY</td>
 	<td>//div[@class='wiki-body']//p</td>
 	<td></td>

@@ -80,7 +80,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${attachmentFileName}" />
 			<var name="attachmentFileSize" value="${attachmentFileSize}" />
 			<var name="wikiPageTitle" value="FrontPage" />
@@ -156,7 +156,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${attachmentFileName1}" />
 			<var name="attachmentFileSize" value="${attachmentFileSize1}" />
 			<var name="numberOfAttachments" value="3" />
@@ -172,7 +172,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${attachmentFileName2}" />
 			<var name="attachmentFileSize" value="${attachmentFileSize2}" />
 			<var name="numberOfAttachments" value="3" />
@@ -188,7 +188,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${attachmentFileName3}" />
 			<var name="attachmentFileSize" value="${attachmentFileSize3}" />
 			<var name="numberOfAttachments" value="3" />
@@ -1876,7 +1876,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${documentName1}" />
 			<var name="numberOfAttachments" value="2" />
 			<var name="wikiPageTitle" value="FrontPage" />
@@ -1891,7 +1891,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${documentName2}" />
 			<var name="numberOfAttachments" value="2" />
 			<var name="wikiPageTitle" value="FrontPage" />
@@ -1906,7 +1906,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#viewAttachmentPG">
+		<execute macro="WikiPage#viewAttachmentPGViaEdit">
 			<var name="attachmentFileName" value="${documentName3}" />
 			<var name="numberOfAttachments" value="1" />
 			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />

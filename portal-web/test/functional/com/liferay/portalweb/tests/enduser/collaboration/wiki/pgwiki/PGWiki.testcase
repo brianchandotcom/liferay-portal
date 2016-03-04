@@ -702,6 +702,65 @@
 		</for>
 	</command>
 
+	<command name="AddWikiPageWithInlineImage" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageRevision" value="1.0" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageUsername" value="Test Test" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#addInlineImageViaEdit">
+			<var name="navTab" value="Page Attachments" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WikiNavigator#gotoPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageRevision" value="1.0" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiPageUsername" value="Test Test" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageWithAttachment">
+			<var name="attachmentFileName" value="Document_1.jpg" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+	</command>
+
 	<command name="CancelAddPage" priority="5">
 		<property name="portal.acceptance" value="true" />
 

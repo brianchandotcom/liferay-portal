@@ -906,24 +906,27 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel1}" />
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData1}" />
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel2}" />
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_TWO_RECORD_1" value1="${ddlRecordFieldData2}" />
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
+			<var name="ddlRecordFieldDataTableDisplay" value="${ddlRecordFieldData1}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
+			<var name="userRole" value="Guest" />
+		</execute>
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		<execute macro="Portlet#viewCannotEdit" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
-		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+		<execute macro="DDLRecord#viewSecondRecordViaDDLDisplayTemplate">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
+			<var name="ddlRecordFieldDataTableDisplay" value="${ddlRecordFieldData2}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
+			<var name="userRole" value="Guest" />
+		</execute>
 
-		<execute function="Open" locator1="${adminViewURL}" />
-
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel1} ${ddlRecordFieldData1}" />
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel2} ${ddlRecordFieldData2}" />
-		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+		<execute macro="Portlet#viewCannotEdit" />
 
 		<execute function="Open" locator1="${adminEditURL}" />
 

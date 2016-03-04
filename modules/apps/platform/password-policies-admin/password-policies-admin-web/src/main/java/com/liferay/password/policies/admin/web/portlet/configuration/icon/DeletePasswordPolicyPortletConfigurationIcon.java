@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -37,6 +37,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -102,7 +103,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			long passwordPolicyId = getPasswordPolicyId(portletRequest);
 
 			PasswordPolicy passwordPolicy =
-				PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(
+				_passwordPolicyLocalService.fetchPasswordPolicy(
 					passwordPolicyId);
 
 			if (!passwordPolicy.getDefaultPolicy() &&
@@ -119,11 +120,20 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPasswordPolicyLocalService(
+		PasswordPolicyLocalService passwordPolicyLocalService) {
+
+		_passwordPolicyLocalService = passwordPolicyLocalService;
+	}
+
 	private long getPasswordPolicyId(PortletRequest portletRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
 		return ParamUtil.getLong(request, "passwordPolicyId");
 	}
+
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
 
 }

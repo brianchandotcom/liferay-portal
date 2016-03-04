@@ -10,10 +10,6 @@
 			_ddmStructureLayoutModel = dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
 			_ddmStructureVersionModel = ddmStructureVersionModel
 		/>
-
-		<@insertResourcePermissions
-			_entry = ddmStructureModel
-		/>
 	</#if>
 
 	<#assign layoutName = "dynamic_data_list_display_" + ddlRecordSetCount>

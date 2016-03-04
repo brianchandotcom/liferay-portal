@@ -18,6 +18,7 @@
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -34,6 +35,13 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol='<%= "last-request" %>'
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"last-request"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -56,7 +64,7 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 
 			List<UserTracker> userTrackers = new ArrayList<UserTracker>(sessionUsers.values());
 
-			userTrackers = ListUtil.sort(userTrackers, new UserTrackerModifiedDateComparator());
+			userTrackers = ListUtil.sort(userTrackers, new UserTrackerModifiedDateComparator(orderByType.equals("asc")));
 			%>
 
 			<liferay-ui:search-container

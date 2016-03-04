@@ -53,7 +53,8 @@ public interface FlagsEntryService extends BaseService {
 	public void addEntry(java.lang.String className, long classPK,
 		java.lang.String reporterEmailAddress, long reportedUserId,
 		java.lang.String contentTitle, java.lang.String contentURL,
-		java.lang.String reason, ServiceContext serviceContext);
+		java.lang.String reason, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

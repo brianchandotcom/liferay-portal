@@ -2047,9 +2047,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (Validator.isNull(ifClause) &&
-						!previousLine.endsWith(")") &&
-						!previousLine.endsWith(") {") &&
-						!previousLine.endsWith(") +") &&
 						!previousLine.contains("\tthrows ") &&
 						!previousLine.contains(" throws ") &&
 						(previousLineLeadingTabCount ==
@@ -2080,6 +2077,27 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							int lessThanCount = StringUtil.count(
 								linePart, StringPool.LESS_THAN);
 							int openParenthesesCount = StringUtil.count(
+								linePart, StringPool.OPEN_PARENTHESIS);
+
+							if ((closeParenthesesCount !=
+									openParenthesesCount) ||
+								(greaterThanCount != lessThanCount)) {
+
+								continue;
+							}
+
+							linePart = previousLine.substring(x);
+
+							linePart = BaseSourceProcessor.stripQuotes(
+								linePart, CharPool.QUOTE);
+
+							closeParenthesesCount = StringUtil.count(
+								linePart, StringPool.CLOSE_PARENTHESIS);
+							greaterThanCount = StringUtil.count(
+								linePart, StringPool.GREATER_THAN);
+							lessThanCount = StringUtil.count(
+								linePart, StringPool.LESS_THAN);
+							openParenthesesCount = StringUtil.count(
 								linePart, StringPool.OPEN_PARENTHESIS);
 
 							if ((closeParenthesesCount !=

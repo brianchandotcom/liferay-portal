@@ -42,6 +42,18 @@
 	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, '${ddmStorageLinkModel.companyId}', ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
 </#macro>
 
+<#macro insertDDMStructure
+	_ddmStructureModel
+	_ddmStructureLayoutModel
+	_ddmStructureVersionModel
+>
+	insert into DDMStructure values ('${_ddmStructureModel.uuid}', ${_ddmStructureModel.structureId}, ${_ddmStructureModel.groupId}, ${_ddmStructureModel.companyId}, ${_ddmStructureModel.userId}, '${_ddmStructureModel.userName}', ${_ddmStructureModel.versionUserId}, '${_ddmStructureModel.versionUserName}', '${dataFactory.getDateString(_ddmStructureModel.createDate)}', '${dataFactory.getDateString(_ddmStructureModel.modifiedDate)}', ${_ddmStructureModel.parentStructureId}, ${_ddmStructureModel.classNameId}, '${_ddmStructureModel.structureKey}', '${_ddmStructureModel.version}', '${_ddmStructureModel.name}', '${_ddmStructureModel.description}', '${_ddmStructureModel.definition}', '${_ddmStructureModel.storageType}', ${_ddmStructureModel.type}, '${dataFactory.getDateString(_ddmStructureModel.lastPublishDate)}');
+
+	insert into DDMStructureLayout values ('${_ddmStructureLayoutModel.uuid}', ${_ddmStructureLayoutModel.structureLayoutId}, ${_ddmStructureLayoutModel.groupId}, ${_ddmStructureLayoutModel.companyId}, ${_ddmStructureLayoutModel.userId}, '${_ddmStructureLayoutModel.userName}', '${dataFactory.getDateString(_ddmStructureLayoutModel.createDate)}', '${dataFactory.getDateString(_ddmStructureLayoutModel.modifiedDate)}', ${_ddmStructureLayoutModel.structureVersionId},'${_ddmStructureLayoutModel.definition}');
+
+	insert into DDMStructureVersion values (${_ddmStructureVersionModel.structureVersionId}, ${_ddmStructureVersionModel.groupId}, ${_ddmStructureVersionModel.companyId}, ${_ddmStructureVersionModel.userId}, '${_ddmStructureVersionModel.userName}', '${dataFactory.getDateString(_ddmStructureVersionModel.createDate)}',  ${_ddmStructureVersionModel.structureId}, '${_ddmStructureVersionModel.version}', ${_ddmStructureVersionModel.parentStructureId}, '${_ddmStructureVersionModel.name}', '${_ddmStructureVersionModel.description}', '${_ddmStructureVersionModel.definition}', '${_ddmStructureVersionModel.storageType}', ${_ddmStructureVersionModel.type}, ${_ddmStructureVersionModel.status}, ${_ddmStructureVersionModel.statusByUserId}, '${_ddmStructureVersionModel.statusByUserName}', '${dataFactory.getDateString(_ddmStructureVersionModel.statusDate)}');
+</#macro>
+
 <#macro insertDDMStructureLink
 	_entry
 >

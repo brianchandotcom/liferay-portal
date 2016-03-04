@@ -312,7 +312,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 						<c:when test="<%= userPublicPage %>">
 
 							<%
-							request.setAttribute(WebKeys.CONTACTS_USER, contacts.get(0));
+							request.setAttribute(ContactsWebKeys.CONTACTS_USER, contacts.get(0));
 							%>
 
 							<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />

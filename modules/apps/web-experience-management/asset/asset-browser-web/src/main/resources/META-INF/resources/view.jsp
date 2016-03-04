@@ -61,11 +61,11 @@ AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.
 int assetEntriesTotal = 0;
 
 if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
+	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(new long[]{groupId}, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
 
 	assetBrowserSearch.setTotal(assetEntriesTotal);
 
-	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
+	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(new long[]{groupId}, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
 
 	assetBrowserSearch.setResults(assetEntries);
 }
@@ -76,7 +76,7 @@ else {
 		statuses = new int[] {WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_SCHEDULED};
 	}
 
-	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), ArrayUtil.clone(selectedGroupIds), themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
+	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[]{groupId}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
 
 	assetEntriesTotal = hits.getLength();
 

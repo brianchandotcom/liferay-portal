@@ -89,7 +89,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

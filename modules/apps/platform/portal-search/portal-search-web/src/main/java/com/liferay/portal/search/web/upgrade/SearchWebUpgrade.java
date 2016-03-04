@@ -15,9 +15,9 @@
 package com.liferay.portal.search.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.search.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 

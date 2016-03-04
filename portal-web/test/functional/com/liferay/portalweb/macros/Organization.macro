@@ -79,6 +79,8 @@
 	</command>
 
 	<command name="addCP">
+		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<if>

@@ -59,10 +59,7 @@ public class FTLImportsFormatter extends BaseImportsFormatter {
 			return content;
 		}
 
-		String newImports = stripUnusedImports(
-			imports, content, packageDir, className, "Date|.*\\$.*");
-
-		newImports = sortAndGroupImports(newImports);
+		String newImports = sortAndGroupImports(imports);
 
 		if (!imports.equals(newImports)) {
 			content = StringUtil.replaceFirst(content, imports, newImports);

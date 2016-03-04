@@ -193,8 +193,6 @@
 	</command>
 
 	<command name="resetPageChanges">
-		<execute function="Refresh" />
-
 		<execute function="Click" locator1="ControlMenu#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page has been changed since the last update from the site template." />

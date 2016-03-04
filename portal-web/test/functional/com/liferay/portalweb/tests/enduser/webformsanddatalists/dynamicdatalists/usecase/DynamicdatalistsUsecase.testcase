@@ -930,13 +930,11 @@
 
 		<execute function="Open" locator1="${adminEditURL}" />
 
-		<execute function="AssertClick" locator1="Translation#ADD" value1="Add Translation" />
+		<execute macro="DDLRecord#editTranslation">
+			<var name="localizedLanguage" value="Catalan (Spain)" />
+		</execute>
 
-		<var name="key_localizedLanguage" value="${localizedLanguage}" />
-
-		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="Catalan (Spain)" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute macro="Portlet#viewCannotPublish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

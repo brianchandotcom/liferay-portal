@@ -81,6 +81,10 @@
 	<command name="addCP">
 		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 
+		<var name="key_navItem" value="${orgType}" />
+
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<if>

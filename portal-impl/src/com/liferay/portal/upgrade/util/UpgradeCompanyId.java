@@ -44,12 +44,10 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		List<Callable<Void>> callables = new ArrayList<>();
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Skipping table " + tableUpdater.getTableName());
-				}
+			tableUpdater.setSkipAddColumnToTable(false);
 
-				continue;
+			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
+				tableUpdater.setSkipAddColumnToTable(true);
 			}
 
 			callables.add(tableUpdater);
@@ -97,16 +95,27 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		@Override
 		public final Void call() throws Exception {
-			if (_log.isInfoEnabled()) {
-				_log.info("Adding column companyId to table " + getTableName());
-			}
-
 			try {
 				_con = DataAccess.getUpgradeOptimizedConnection();
 
-				runSQL(
-					_con,
-					"alter table " + getTableName() + " add companyId LONG");
+				if (_skipAddColumnToTable) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Skipping add companyId for table " + _tableName);
+					}
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Adding column companyId to table " +
+								getTableName());
+					}
+
+					runSQL(
+						_con,
+						"alter table " + getTableName() +
+							" add companyId LONG");
+				}
 
 				update();
 			}
@@ -119,6 +128,10 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		public String getTableName() {
 			return _tableName;
+		}
+
+		public void setSkipAddColumnToTable(boolean skipAddColumnToTable) {
+			_skipAddColumnToTable = skipAddColumnToTable;
 		}
 
 		public void update() throws IOException, SQLException {
@@ -193,6 +206,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		private final String _columnName;
 		private Connection _con;
 		private final String[][] _foreignNamesArray;
+		private boolean _skipAddColumnToTable;
 		private final String _tableName;
 
 	}

@@ -29,6 +29,18 @@ import java.util.regex.Pattern;
  */
 public abstract class ImportsFormatter {
 
+	public String format(String content, Pattern importPattern)
+		throws IOException {
+
+		return doFormat(content, importPattern, null, null);
+	}
+
+	public String format(String content, String packageDir, String className)
+		throws IOException {
+
+		return doFormat(content, null, packageDir, className);
+	}
+
 	protected abstract ImportPackage createImportPackage(String line);
 
 	protected abstract String doFormat(

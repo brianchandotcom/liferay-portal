@@ -94,7 +94,8 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	protected String stripUnusedImports(
-			String imports, String content, String packageDir, String className)
+			String imports, String content, String packageDir, String className,
+			String classNameExceptionRegex)
 		throws IOException {
 
 		Set<String> classes = ClassUtil.getClasses(
@@ -126,7 +127,9 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 			String importClass = line.substring(y + 1, line.length() - 1);
 
-			if (importClass.equals("*") || classes.contains(importClass)) {
+			if (importClass.matches(classNameExceptionRegex) ||
+				classes.contains(importClass)) {
+
 				sb.append(line);
 				sb.append("\n");
 			}

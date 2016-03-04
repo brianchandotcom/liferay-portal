@@ -38,7 +38,7 @@ public interface SocialActivitiesDisplayContext {
 
 	public String getSelectedTabName();
 
-	public List<SocialActivity> getSocialActivities() throws Exception;
+	public List<SocialActivity> getSocialActivities();
 
 	public String getTabsNames();
 

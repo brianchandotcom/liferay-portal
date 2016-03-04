@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SocialActivityQueryHelper {
 
 	public List<SocialActivity> getSocialActivities(
-			Group group, Layout layout, Scope scope, int start, int end)
-		throws Exception {
+		Group group, Layout layout, Scope scope, int start, int end) {
 
 		if (scope == Scope.ALL) {
 			if (!group.isUser()) {

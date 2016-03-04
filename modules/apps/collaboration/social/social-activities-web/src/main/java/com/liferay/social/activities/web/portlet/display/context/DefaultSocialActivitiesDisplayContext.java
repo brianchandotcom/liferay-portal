@@ -96,7 +96,7 @@ public class DefaultSocialActivitiesDisplayContext
 	}
 
 	@Override
-	public List<SocialActivity> getSocialActivities() throws Exception {
+	public List<SocialActivity> getSocialActivities() {
 		Group group = _socialActivitiesRequestHelper.getScopeGroup();
 		Layout layout = _socialActivitiesRequestHelper.getLayout();
 

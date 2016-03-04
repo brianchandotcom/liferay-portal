@@ -10,7 +10,6 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
-	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	@com.liferay.portal.impl-${portalImplVersion}.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-${portalImplVersion}.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-${portalImplVersion}.jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\

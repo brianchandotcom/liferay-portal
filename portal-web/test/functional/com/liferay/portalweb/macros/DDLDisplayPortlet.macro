@@ -11,6 +11,8 @@
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+
 		<if>
 			<equals arg1="${configureChecked}" arg2="false" />
 			<then>
@@ -22,6 +24,7 @@
 		</if>
 
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 

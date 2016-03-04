@@ -314,13 +314,14 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="SitePageNavigator#gotoEditPage">
+		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<var name="key_pageName" value="${pageName}" />
+		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
 
-		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
+		<execute function="ClickNoError" locator1="SitePages#DELETE_SPECIFIC_PAGE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 
 		<execute macro="Alert#viewSuccessMessage" />

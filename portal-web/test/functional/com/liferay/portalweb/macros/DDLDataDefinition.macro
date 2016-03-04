@@ -222,14 +222,7 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<if>
-			<not>
-				<isset var="ddlDataDefinitionName" />
-			</not>
-			<then>
-				<var name="ddlDataDefinitionName" value="Data Definition" />
-			</then>
-		</if>
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />

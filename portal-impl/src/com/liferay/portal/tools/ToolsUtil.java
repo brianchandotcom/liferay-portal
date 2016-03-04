@@ -318,8 +318,9 @@ public class ToolsUtil {
 
 		className = className.substring(0, className.length() - 5);
 
-		content = JavaImportsFormatter.stripJavaImports(
-			content, packagePath, className);
+		ImportsFormatter importsFormatter = new JavaImportsFormatter();
+
+		content = importsFormatter.format(content, packagePath, className);
 
 		content = stripFullyQualifiedClassNames(content);
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -551,7 +552,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
-		newContent = JavaImportsFormatter.stripJavaImports(
+		ImportsFormatter importsFormatter = new JavaImportsFormatter();
+
+		newContent = importsFormatter.format(
 			newContent, packagePath, className);
 
 		newContent = StringUtil.replace(

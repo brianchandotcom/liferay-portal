@@ -87,14 +87,6 @@
 							</div>
 						</c:if>
 					</div>
-
-					<span class="added-message hide" id="<portlet:namespace />addedMessage">
-						<span class="alert-success message">
-							<aui:icon image="check" markupView="lexicon" /> <span id="<portlet:namespace />portletName"></span> <liferay-ui:message key="added" />
-
-							<a class="content-link" href="javascript:;" id="<portlet:namespace />contentLink"><liferay-ui:message key="skip-to-content" /></a>
-						</span>
-					</span>
 				</div>
 			</c:if>
 		</c:if>

@@ -3,16 +3,17 @@
 <#list ddlRecordSetCounts as ddlRecordSetCount>
 	<#if ddlRecordSetCount = 1>
 		<#assign ddmStructureModel = dataFactory.newDDLDDMStructureModel(groupId)>
+		<#assign ddmStructureVersionModel = dataFactory.newDDMStructureVersionModel(ddmStructureModel)>
 
-		insert into DDMStructure values ('${ddmStructureModel.uuid}', ${ddmStructureModel.structureId}, ${ddmStructureModel.groupId}, ${ddmStructureModel.companyId}, ${ddmStructureModel.userId}, '${ddmStructureModel.userName}', ${ddmStructureModel.versionUserId}, '${ddmStructureModel.versionUserName}', '${dataFactory.getDateString(ddmStructureModel.createDate)}', '${dataFactory.getDateString(ddmStructureModel.modifiedDate)}', ${ddmStructureModel.parentStructureId}, ${ddmStructureModel.classNameId}, '${ddmStructureModel.structureKey}', '${ddmStructureModel.version}', '${ddmStructureModel.name}', '${ddmStructureModel.description}', '${ddmStructureModel.definition}', '${ddmStructureModel.storageType}', ${ddmStructureModel.type}, '${dataFactory.getDateString(ddmStructureModel.lastPublishDate)}');
-
-		<@insertResourcePermissions
-			_entry = ddmStructureModel
+		<@insertDDMStructure
+			_ddmStructureModel = ddmStructureModel
+			_ddmStructureLayoutModel = dataFactory.newDDLDDMStructureLayoutModel(groupId, ddmStructureVersionModel)
+			_ddmStructureVersionModel = ddmStructureVersionModel
 		/>
 	</#if>
 
 	<#assign layoutName = "dynamic_data_list_display_" + ddlRecordSetCount>
-	<#assign portletId = "169_INSTANCE_TEST" + ddlRecordSetCount>
+	<#assign portletId = "com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet_INSTANCE_TEST" + ddlRecordSetCount>
 
 	<#assign layoutModel = dataFactory.newLayoutModel(groupId, layoutName, "", portletId)>
 

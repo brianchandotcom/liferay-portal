@@ -26,7 +26,7 @@ Group group = themeDisplay.getScopeGroup();
 		<%
 		User user2 = UserLocalServiceUtil.getUserById(group.getClassPK());
 
-		request.setAttribute(WebKeys.CONTACTS_USER, user2);
+		request.setAttribute(ContactsWebKeys.CONTACTS_USER, user2);
 		%>
 
 		<aui:row>

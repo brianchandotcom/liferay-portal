@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-editor-alloyeditor-web';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				alloyeditor: {
-					base: PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB + '/js/',
+					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-alloy-editor': {
@@ -25,7 +23,7 @@
 							]
 						}
 					},
-					root: PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB + '/js/'
+					root: MODULE_PATH + '/js/'
 				}
 			}
 		}

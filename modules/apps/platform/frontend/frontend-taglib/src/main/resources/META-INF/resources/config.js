@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_FRONTEND_TAGLIB = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-taglib';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'frontend-taglib': {
-					base: PATH_FRONTEND_TAGLIB + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-diff-version-comparator': {
@@ -34,7 +32,7 @@
 							]
 						}
 					},
-					root: PATH_FRONTEND_TAGLIB + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

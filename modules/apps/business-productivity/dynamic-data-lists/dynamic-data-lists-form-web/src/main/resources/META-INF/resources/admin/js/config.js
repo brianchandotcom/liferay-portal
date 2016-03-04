@@ -1,13 +1,11 @@
 ;(function() {
 	var LiferayAUI = Liferay.AUI;
 
-	var PATH_DDL_FORM_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-lists-form-web';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				ddl: {
-					base: PATH_DDL_FORM_WEB + '/admin/js/',
+					base: MODULE_PATH + '/admin/js/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -121,7 +119,7 @@
 							]
 						}
 					},
-					root: PATH_DDL_FORM_WEB + '/admin/js/'
+					root: MODULE_PATH + '/admin/js/'
 				}
 			}
 		}

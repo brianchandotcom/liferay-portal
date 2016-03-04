@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_JOURNAL_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/journal-web';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				journal: {
-					base: PATH_JOURNAL_WEB + '/js/',
+					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-journal-content': {
@@ -34,7 +32,7 @@
 							]
 						}
 					},
-					root: PATH_JOURNAL_WEB + '/js/'
+					root: MODULE_PATH + '/js/'
 				}
 			}
 		}

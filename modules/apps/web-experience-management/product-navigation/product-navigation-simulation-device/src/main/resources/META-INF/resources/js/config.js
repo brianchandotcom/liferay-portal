@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_NAVIGATION_SIMULATION_DEVICE = Liferay.ThemeDisplay.getPathContext() + '/o/product-navigation-simulation-device';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'navigation-simulation-device': {
-					base: PATH_NAVIGATION_SIMULATION_DEVICE + '/js/',
+					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-product-navigation-simulation-device': {
@@ -21,7 +19,7 @@
 							]
 						}
 					},
-					root: PATH_NAVIGATION_SIMULATION_DEVICE + '/js/'
+					root: MODULE_PATH + '/js/'
 				}
 			}
 		}

@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_DDM_TYPE_TEXT = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-text';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'field-text': {
-					base: PATH_DDM_TYPE_TEXT + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
@@ -30,7 +28,7 @@
 							]
 						}
 					},
-					root: PATH_DDM_TYPE_TEXT + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_FRONTEND_MAP_COMMON_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/map-common';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				mapbase: {
-					base: PATH_FRONTEND_MAP_COMMON_WEB + '/js/',
+					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-map-common': {
@@ -15,7 +13,7 @@
 							]
 						}
 					},
-					root: PATH_FRONTEND_MAP_COMMON_WEB + '/js/'
+					root: MODULE_PATH + '/js/'
 				}
 			}
 		}

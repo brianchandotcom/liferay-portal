@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ImportsFormatter;
 
 import java.io.File;
 
@@ -69,10 +70,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				content, matcher.group(1), StringPool.SPACE, matcher.start());
 		}
 
-		content = BNDImportsFormatter.formatBNDImports(
-			content, _exportsPattern);
-		content = BNDImportsFormatter.formatBNDImports(
-			content, _importsPattern);
+		ImportsFormatter importsFormatter = new BNDImportsFormatter();
+
+		content = importsFormatter.format(content, _exportsPattern);
+		content = importsFormatter.format(content, _importsPattern);
 
 		return sortDefinitions(content);
 	}

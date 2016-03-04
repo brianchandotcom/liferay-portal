@@ -40,18 +40,19 @@ public class BNDImportsFormatter extends ImportsFormatter {
 		return null;
 	}
 
-	public static String formatBNDImports(String content, Pattern pattern)
+	@Override
+	protected String doFormat(
+			String content, Pattern importPattern, String packageDir,
+			String className)
 		throws IOException {
 
-		String imports = getImports(content, pattern);
+		String imports = getImports(content, importPattern);
 
 		if (Validator.isNull(imports)) {
 			return content;
 		}
 
-		ImportsFormatter importsFormatter = new BNDImportsFormatter();
-
-		String newImports = importsFormatter.sortAndGroupImports(imports);
+		String newImports = sortAndGroupImports(imports);
 
 		newImports = StringUtil.replace(
 			newImports, new String[] {"\n", "\n,\\"},

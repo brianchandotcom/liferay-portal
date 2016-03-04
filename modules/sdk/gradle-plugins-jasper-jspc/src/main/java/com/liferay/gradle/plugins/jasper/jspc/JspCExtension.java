@@ -41,14 +41,6 @@ public class JspCExtension implements CompileJSPSpec {
 		}
 	}
 
-	public String getAntVersion() {
-		return _antVersion;
-	}
-
-	public String getJspCVersion() {
-		return _jspCVersion;
-	}
-
 	@Override
 	public File getPortalDir() {
 		return GradleUtil.toFile(_project, _portalDir);
@@ -62,14 +54,6 @@ public class JspCExtension implements CompileJSPSpec {
 	@Override
 	public boolean isModuleWeb() {
 		return _moduleWeb;
-	}
-
-	public void setAntVersion(String antVersion) {
-		_antVersion = antVersion;
-	}
-
-	public void setJspCVersion(String jspCVersion) {
-		_jspCVersion = jspCVersion;
 	}
 
 	@Override
@@ -87,8 +71,6 @@ public class JspCExtension implements CompileJSPSpec {
 		_webAppDir = webAppDir;
 	}
 
-	private String _antVersion = "1.9.4";
-	private String _jspCVersion = "latest.release";
 	private boolean _moduleWeb;
 	private Object _portalDir;
 	private final Project _project;

@@ -149,7 +149,9 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Portlet#viewTitle">
 			<var name="portletName" value="Asset Publisher" />

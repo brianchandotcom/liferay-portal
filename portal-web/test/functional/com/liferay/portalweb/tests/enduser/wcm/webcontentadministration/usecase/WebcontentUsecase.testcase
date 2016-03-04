@@ -407,7 +407,13 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateDescription" value="WC Template Description" />
@@ -439,7 +445,9 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
 
 		<execute macro="WebContent#addStructuredPGViaWCD">
 			<var name="structureName" value="WC Structure Name" />
@@ -490,7 +498,13 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateDescription" value="WC Template Description" />
@@ -517,7 +531,9 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
 
 		<execute macro="WebContent#addStructuredPGViaWCD">
 			<var name="structureName" value="WC Structure Name" />
@@ -643,6 +659,12 @@
 			<var name="key_roleName" value="${key_roleName}" />
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -792,6 +814,8 @@
 			<var name="structureName" value="Global Structure" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -816,6 +840,8 @@
 			<var name="roles" value="Power User" />
 			<var name="templateName" value="Template Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />

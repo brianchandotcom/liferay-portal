@@ -223,6 +223,10 @@
 			<var name="portletName" value="User Statistics" />
 		</execute>
 
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="SiteTemplates#resetPageChanges">
 			<var name="columnNumberTo" value="1" />
 			<var name="portletName" value="User Statistics" />

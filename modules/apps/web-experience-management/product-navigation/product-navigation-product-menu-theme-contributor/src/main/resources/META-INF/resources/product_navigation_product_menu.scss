@@ -308,6 +308,12 @@
 }
 
 .product-menu {
+	.text-muted {
+		opacity: 0.3;
+	}
+}
+
+.product-menu {
 	li.tree-node .tree-node-content {
 		overflow: visible;
 		width: 100%;

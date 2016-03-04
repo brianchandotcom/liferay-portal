@@ -103,13 +103,13 @@
 		</java>
 	</target>
 
-	<target name="jar-taglibs" depends="build-taglibs">
+	<target name="jar-tlddoc" depends="taglibdoc">
 		<zip destfile="util-taglib-tlddoc.jar">
 			<zipfileset dir="${doc.dir}/taglibs" />
 		</zip>
 	</target>
 
-	<target name="publish-portal-release" depends="jar,jar-javadoc,jar-sources,jar-taglibs">
+	<target name="publish-portal-release" depends="jar,jar-javadoc,jar-sources,jar-tlddoc">
 		<publish-portal-artifact >
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
@@ -117,7 +117,7 @@
 		</publish-portal-artifact>
 	</target>
 
-	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,jar-taglibs">
+	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,jar-tlddoc">
 		<publish-portal-artifact snapshot="true">
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />

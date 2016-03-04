@@ -23,21 +23,22 @@ import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.model.SocialRequestConstants;
-import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialRequestLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
@@ -67,10 +68,10 @@ public class ContactsCenterUserNotificationHandler
 		long socialRequestId = jsonObject.getLong("classPK");
 
 		SocialRequest socialRequest =
-			SocialRequestLocalServiceUtil.fetchSocialRequest(socialRequestId);
+			_socialRequestLocalService.fetchSocialRequest(socialRequestId);
 
 		if (socialRequest == null) {
-			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
 			return null;
@@ -151,7 +152,7 @@ public class ContactsCenterUserNotificationHandler
 				return StringPool.BLANK;
 			}
 
-			User user = UserLocalServiceUtil.getUserById(userId);
+			User user = _userLocalService.getUserById(userId);
 
 			String userName = user.getFullName();
 
@@ -165,5 +166,15 @@ public class ContactsCenterUserNotificationHandler
 			return StringPool.BLANK;
 		}
 	}
+
+	@Reference
+	private SocialRequestLocalService _socialRequestLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

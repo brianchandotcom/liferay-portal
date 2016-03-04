@@ -45,8 +45,10 @@ public class JavaImportsFormatter extends ImportsFormatter {
 		return null;
 	}
 
-	public static String stripJavaImports(
-			String content, String packageDir, String className)
+	@Override
+	protected String doFormat(
+			String content, Pattern importPattern, String packageDir,
+			String className)
 		throws IOException {
 
 		String imports = getImports(content);

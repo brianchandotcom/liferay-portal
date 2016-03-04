@@ -14,8 +14,12 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
-import com.liferay.portal.tools.ImportsFormatter;
+
+import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,8 +27,9 @@ import java.util.regex.Pattern;
 /**
  * @author Carlos Sierra Andrés
  * @author André de Oliveira
+ * @author Hugo Huijser
  */
-public class JSPImportsFormatter extends ImportsFormatter {
+public class JSPImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
@@ -38,6 +43,35 @@ public class JSPImportsFormatter extends ImportsFormatter {
 
 		if (matcher.find()) {
 			return new ImportPackage(matcher.group(1), false, line);
+		}
+
+		return null;
+	}
+
+	@Override
+	protected String doFormat(
+			String content, Pattern importPattern, String packageDir,
+			String className)
+		throws IOException {
+
+		String imports = getImports(content, importPattern);
+
+		if (Validator.isNull(imports)) {
+			return content;
+		}
+
+		String newImports = sortAndGroupImports(imports);
+
+		content = StringUtil.replaceFirst(content, imports, newImports + "\n"); 
+
+		return StringUtil.trimTrailing(content);
+	}
+
+	protected String getImports(String content, Pattern importPattern) {
+		Matcher matcher = importPattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group();
 		}
 
 		return null;

@@ -17,8 +17,8 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
-import com.liferay.portal.tools.ImportsFormatter;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class BNDImportsFormatter extends ImportsFormatter {
+public class BNDImportsFormatter extends BaseImportsFormatter {
 
 	public static String getImports(String content, Pattern pattern) {
 		Matcher matcher = pattern.matcher(content);
@@ -38,33 +38,6 @@ public class BNDImportsFormatter extends ImportsFormatter {
 		}
 
 		return null;
-	}
-
-	public static String formatBNDImports(String content, Pattern pattern)
-		throws IOException {
-
-		String imports = getImports(content, pattern);
-
-		if (Validator.isNull(imports)) {
-			return content;
-		}
-
-		ImportsFormatter importsFormatter = new BNDImportsFormatter();
-
-		String newImports = importsFormatter.format(imports);
-
-		newImports = StringUtil.replace(
-			newImports, new String[] {"\n", "\n,\\"},
-			new String[] {",\\\n", "\n\t\\"});
-
-		newImports = StringUtil.replaceLast(
-			newImports, ",\\", StringPool.BLANK);
-
-		if (!imports.equals(newImports)) {
-			content = StringUtil.replaceFirst(content, imports, newImports);
-		}
-
-		return content;
 	}
 
 	@Override
@@ -90,6 +63,34 @@ public class BNDImportsFormatter extends ImportsFormatter {
 		}
 
 		return new ImportPackage(importString, false, line, true);
+	}
+
+	@Override
+	protected String doFormat(
+			String content, Pattern importPattern, String packageDir,
+			String className)
+		throws IOException {
+
+		String imports = getImports(content, importPattern);
+
+		if (Validator.isNull(imports)) {
+			return content;
+		}
+
+		String newImports = sortAndGroupImports(imports);
+
+		newImports = StringUtil.replace(
+			newImports, new String[] {"\n", "\n,\\"},
+			new String[] {",\\\n", "\n\t\\"});
+
+		newImports = StringUtil.replaceLast(
+			newImports, ",\\", StringPool.BLANK);
+
+		if (!imports.equals(newImports)) {
+			content = StringUtil.replaceFirst(content, imports, newImports);
+		}
+
+		return content;
 	}
 
 }

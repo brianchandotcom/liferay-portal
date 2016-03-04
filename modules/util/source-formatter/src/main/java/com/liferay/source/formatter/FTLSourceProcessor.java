@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
@@ -141,6 +142,10 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 				content = StringUtil.replace(content, match, replacement);
 			}
 		}
+
+		ImportsFormatter importsFormatter = new FTLImportsFormatter();
+
+		content = importsFormatter.format(content, null, null);
 
 		return formatFTL(fileName, content);
 	}

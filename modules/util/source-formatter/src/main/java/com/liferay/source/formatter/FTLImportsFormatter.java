@@ -12,33 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.BaseImportsFormatter;
+import com.liferay.portal.tools.ImportPackage;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author Carlos Sierra Andrés
- * @author André de Oliveira
- * @author Raymond Augé
  * @author Hugo Huijser
  */
-public class JavaImportsFormatter extends BaseImportsFormatter {
-
-	public static String getImports(String content) {
-		Matcher matcher = _importsPattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group();
-		}
-
-		return null;
-	}
+public class FTLImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
@@ -51,32 +42,52 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 			String className)
 		throws IOException {
 
-		String imports = getImports(content);
+		List<String> importsList = getImportsList(content);
+
+		for (String imports : importsList) {
+			content = doFormat(content, packageDir, className, imports);
+		}
+
+		return content;
+	}
+
+	protected String doFormat(
+			String content, String packageDir, String className, String imports)
+		throws IOException {
 
 		if (Validator.isNull(imports)) {
 			return content;
 		}
 
-		String newImports = stripUnusedImports(
-			imports, content, packageDir, className, "\\*");
-
-		newImports = sortAndGroupImports(newImports);
+		String newImports = sortAndGroupImports(imports);
 
 		if (!imports.equals(newImports)) {
 			content = StringUtil.replaceFirst(content, imports, newImports);
 		}
 
-		content = content.replaceFirst(
-			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
+		content = content.replaceAll(
+			"(?m)^([ \t]*package .*;|</#.*>)\\s*^([ \t]*import)", "$1\n\n$2");
 
-		content = content.replaceFirst(
-			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
-			"$1\n\n/**");
+		content = content.replaceAll(
+			"(?m)^([ \t]*(?:package|import) .*;)\\s*^([ \t]*/\\*\\*|@|<#)",
+			"$1\n\n$2");
 
 		return content;
 	}
 
+	protected static List<String> getImportsList(String content) {
+		List<String> importsList = new ArrayList<>();
+
+		Matcher matcher = _importsPattern.matcher(content);
+
+		while (matcher.find()) {
+			importsList.add(matcher.group());
+		}
+
+		return importsList;
+	}
+
 	private static final Pattern _importsPattern = Pattern.compile(
-		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
+		"(^[ \t]*import\\s+[^$].*;\n+)+", Pattern.MULTILINE);
 
 }

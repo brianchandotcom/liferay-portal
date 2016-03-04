@@ -574,7 +574,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureConfiguration(Configuration configuration) {
 		DependencySet dependencySet = configuration.getDependencies();
 
-		dependencySet.whenObjectAdded(
+		dependencySet.all(
 			new Action<Dependency>() {
 
 				@Override

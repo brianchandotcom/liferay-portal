@@ -44,10 +44,8 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		List<Callable<Void>> callables = new ArrayList<>();
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			tableUpdater.setSkipAddColumnToTable(false);
-
 			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
-				tableUpdater.setSkipAddColumnToTable(true);
+				tableUpdater.setCreateCompanyIdColumn(true);
 			}
 
 			callables.add(tableUpdater);
@@ -98,23 +96,22 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			try {
 				_con = DataAccess.getUpgradeOptimizedConnection();
 
-				if (_skipAddColumnToTable) {
+				if (_createCompanyIdColumn) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Skipping add companyId for table " + _tableName);
-					}
-				}
-				else {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Adding column companyId to table " +
-								getTableName());
+							"Adding column companyId to table " + _tableName);
 					}
 
 					runSQL(
 						_con,
-						"alter table " + getTableName() +
-							" add companyId LONG");
+						"alter table " + _tableName +" add companyId LONG");
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Skipping the creation of companyId column for " +
+								"table " + _tableName);
+					}
 				}
 
 				update();
@@ -130,8 +127,8 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			return _tableName;
 		}
 
-		public void setSkipAddColumnToTable(boolean skipAddColumnToTable) {
-			_skipAddColumnToTable = skipAddColumnToTable;
+		public void setCreateCompanyIdColumn(boolean createCompanyIdColumn) {
+			_createCompanyIdColumn = createCompanyIdColumn;
 		}
 
 		public void update() throws IOException, SQLException {
@@ -205,8 +202,8 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		private final String _columnName;
 		private Connection _con;
+		private boolean _createCompanyIdColumn;
 		private final String[][] _foreignNamesArray;
-		private boolean _skipAddColumnToTable;
 		private final String _tableName;
 
 	}

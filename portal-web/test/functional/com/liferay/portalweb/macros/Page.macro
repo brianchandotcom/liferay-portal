@@ -430,11 +430,13 @@
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE" />
 
 		<var name="key_childPageName" value="${childPageName}" />
 
-		<execute function="AssertClick" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
+		<execute function="AssertVisible" locator1="Home#PAGE_CHILD_PAGE" />
+
+		<execute function="Click" locator1="Home#PAGE_CHILD_PAGE" />
 	</command>
 
 	<command name="gotoEditTemplatePages">

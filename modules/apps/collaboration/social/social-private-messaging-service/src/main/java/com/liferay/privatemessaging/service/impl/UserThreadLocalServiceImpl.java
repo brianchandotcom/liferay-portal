@@ -49,8 +49,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.model.UserThread;
 import com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
-import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingConstants;
+import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
 import com.liferay.util.ContentUtil;
 
 import java.io.InputStream;
@@ -343,8 +343,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 								"PrivateMessagingConfiguration"));
 			}
 			catch (ConfigurationException ce) {
-				_log.error(
-					"Unable to get private message configuration", ce);
+				_log.error("Unable to get private message configuration", ce);
 			}
 		}
 
@@ -491,7 +490,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			MailMessage mailMessage = new MailMessage(
 				from, to, subject, userThreadBody, true);
 
-			mailService.sendEmail(mailMessage);
+			_mailService.sendEmail(mailMessage);
 		}
 	}
 
@@ -528,11 +527,11 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = MailService.class)
-	protected MailService mailService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserThreadLocalServiceImpl.class);
+
+	@BeanReference(type = MailService.class)
+	private MailService _mailService;
 
 	private PrivateMessagingConfiguration _privateMessagingConfiguration;
 

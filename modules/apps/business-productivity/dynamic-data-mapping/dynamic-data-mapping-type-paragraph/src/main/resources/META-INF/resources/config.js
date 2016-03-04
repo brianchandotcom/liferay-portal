@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_DDM_TYPE_PARAGRAPH = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-paragraph';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'field-paragraph': {
-					base: PATH_DDM_TYPE_PARAGRAPH + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-paragraph': {
@@ -27,7 +25,7 @@
 							]
 						}
 					},
-					root: PATH_DDM_TYPE_PARAGRAPH + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

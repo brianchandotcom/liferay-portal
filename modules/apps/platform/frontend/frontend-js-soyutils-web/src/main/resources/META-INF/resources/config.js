@@ -1,18 +1,16 @@
 ;(function() {
-	var PATH_SOYUTILS = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-js-soyutils-web';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'soyutils': {
-					base: PATH_SOYUTILS + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'soyutils': {
 							path: 'soyutils.js'
 						}
 					},
-					root: PATH_SOYUTILS + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}
@@ -23,7 +21,7 @@
 			dependencies: [],
 			exports: 'soy',
 			name: 'soyutils',
-			path: PATH_SOYUTILS + '/soyutils.js'
+			path: MODULE_PATH + '/soyutils.js'
 		}
 	);
 })();

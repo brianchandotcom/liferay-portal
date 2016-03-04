@@ -14,7 +14,9 @@
 
 package com.liferay.frontend.js.bundle.config.extender;
 
+import com.liferay.frontend.js.bundle.config.extender.JSBundleConfigTracker.JSConfig;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,14 +82,24 @@ public class JSBundleConfigServlet extends HttpServlet {
 
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
-		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJSConfigURLs();
+		Collection<JSConfig> jsConfigs = _jsBundleConfigTracker.getJSConfigs();
 
-		if (!jsConfigURLs.isEmpty()) {
+		if (!jsConfigs.isEmpty()) {
 			printWriter.println("(function() {");
 
-			for (URL jsConfigURL : jsConfigURLs) {
-				try (InputStream inputStream = jsConfigURL.openStream()) {
+			for (JSConfig jsConfig : jsConfigs) {
+				URL url = jsConfig.getUrl();
+
+				try (InputStream inputStream = url.openStream()) {
 					servletOutputStream.println("try {");
+
+					ServletContext servletContext =
+						jsConfig.getServletContext();
+
+					servletOutputStream.println(
+						"var MODULE_PATH = '" +
+							PortalUtil.getPathContext() +
+								servletContext.getContextPath() + "/';");
 
 					StreamUtil.transfer(
 						inputStream, servletOutputStream, false);

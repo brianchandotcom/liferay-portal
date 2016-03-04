@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_ITEM_SELECTOR_TAGLIB = Liferay.ThemeDisplay.getPathContext() + '/o/item-selector-taglib';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'item-selector-taglib': {
-					base: PATH_ITEM_SELECTOR_TAGLIB + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-image-selector': {
@@ -18,7 +16,7 @@
 							]
 						}
 					},
-					root: PATH_ITEM_SELECTOR_TAGLIB + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

@@ -1,13 +1,11 @@
 ;(function() {
 	var LiferayAUI = Liferay.AUI;
 
-	var PATH_DDM_TYPE_KEYVALUE = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-key-value';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'field-key-value': {
-					base: PATH_DDM_TYPE_KEYVALUE + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -32,7 +30,7 @@
 							]
 						}
 					},
-					root: PATH_DDM_TYPE_KEYVALUE + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

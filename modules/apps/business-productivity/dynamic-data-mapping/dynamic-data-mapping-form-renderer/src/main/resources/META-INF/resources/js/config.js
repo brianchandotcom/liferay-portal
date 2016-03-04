@@ -1,13 +1,11 @@
 ;(function() {
 	var LiferayAUI = Liferay.AUI;
 
-	var PATH_FORM_RENDERER = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-form-renderer';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'form': {
-					base: PATH_FORM_RENDERER + '/js/',
+					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -152,10 +150,10 @@
 							]
 						}
 					},
-					root: PATH_FORM_RENDERER + '/js/'
+					root: MODULE_PATH + '/js/'
 				},
 				'templates': {
-					base: PATH_FORM_RENDERER + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-soy': {
@@ -165,7 +163,7 @@
 							]
 						}
 					},
-					root: PATH_FORM_RENDERER + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

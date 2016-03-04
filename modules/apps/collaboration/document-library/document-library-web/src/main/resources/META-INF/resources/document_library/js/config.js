@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_DL_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/document-library-web';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				dl: {
-					base: PATH_DL_WEB + '/document_library/js/',
+					base: MODULE_PATH + '/document_library/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'document-library-checkin': {
@@ -42,7 +40,7 @@
 							]
 						}
 					},
-					root: PATH_DL_WEB + '/document_library/js/'
+					root: MODULE_PATH + '/document_library/js/'
 				}
 			}
 		}

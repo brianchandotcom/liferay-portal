@@ -1,11 +1,9 @@
 ;(function() {
-	var PATH_DDM_TYPE_CHECKBOX = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-checkbox';
-
 	AUI().applyConfig(
 		{
 			groups: {
 				'field-checkbox': {
-					base: PATH_DDM_TYPE_CHECKBOX + '/',
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-ddm-form-field-checkbox': {
@@ -27,7 +25,7 @@
 							]
 						}
 					},
-					root: PATH_DDM_TYPE_CHECKBOX + '/'
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

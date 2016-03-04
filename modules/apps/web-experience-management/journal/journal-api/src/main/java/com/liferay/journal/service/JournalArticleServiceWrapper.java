@@ -837,6 +837,12 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			ddmStructureKey, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.journal.model.JournalArticle> getArticlesWithLayouts(
+		long groupId) {
+		return _journalArticleService.getArticlesWithLayouts(groupId);
+	}
+
 	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.

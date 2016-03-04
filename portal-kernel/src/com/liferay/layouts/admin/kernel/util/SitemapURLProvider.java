@@ -17,7 +17,7 @@ package com.liferay.layouts.admin.kernel.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -29,8 +29,8 @@ public interface SitemapURLProvider {
 
 	public String getClassName();
 
-	public void visitLayout(
-			Element element, Layout layout, ThemeDisplay themeDisplay)
+	public void visitLayoutSet(
+			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 }

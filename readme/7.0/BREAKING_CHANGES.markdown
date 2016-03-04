@@ -3976,3 +3976,33 @@ This change standardizes naming conventions and separates concepts in the
 Product Menu.
 
 ---------------------------------------
+
+### Added Exception in FlagsEntryService method
+- **Date:** 2016-Mar-4
+- **JIRA Ticket:** LPS-63109
+
+#### What changed?
+
+A `PortalException` was added to `addEntry` method in `FlagsEntryService`
+
+Previously, the method didn't thrown any exception.
+
+#### Who is affected?
+
+Any caller of the `addEntry` methods in `FlagsEntryService` remote services is
+affected.
+
+#### How should I update my code?
+
+Add the `PortalException` exception type in `try-catch` blocks surrounding
+calls to Flags services.
+
+#### Why was this change made?
+
+To avoid use not valid emails when creating flag entries.
+
+Now, when the reporterEmailAddress passed to `addEntry` method in
+`FlagsEntryService` is not a valid email, an `EmailAddressException` will be
+thrown.
+
+---------------------------------------

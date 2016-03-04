@@ -98,6 +98,7 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="text-strong"
 			href="<%= rowURL %>"
 			name="title"
 			orderable="<%= false %>"

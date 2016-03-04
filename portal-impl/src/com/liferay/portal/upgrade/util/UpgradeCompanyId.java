@@ -45,11 +45,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
 			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Skipping table " + tableUpdater.getTableName());
-				}
-
-				continue;
+				tableUpdater.setCreateCompanyIdColumn(true);
 			}
 
 			callables.add(tableUpdater);
@@ -97,16 +93,26 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		@Override
 		public final Void call() throws Exception {
-			if (_log.isInfoEnabled()) {
-				_log.info("Adding column companyId to table " + getTableName());
-			}
-
 			try {
 				_con = DataAccess.getUpgradeOptimizedConnection();
 
-				runSQL(
-					_con,
-					"alter table " + getTableName() + " add companyId LONG");
+				if (_createCompanyIdColumn) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Adding column companyId to table " + _tableName);
+					}
+
+					runSQL(
+						_con,
+						"alter table " + _tableName +" add companyId LONG");
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Skipping the creation of companyId column for " +
+								"table " + _tableName);
+					}
+				}
 
 				update();
 			}
@@ -119,6 +125,10 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		public String getTableName() {
 			return _tableName;
+		}
+
+		public void setCreateCompanyIdColumn(boolean createCompanyIdColumn) {
+			_createCompanyIdColumn = createCompanyIdColumn;
 		}
 
 		public void update() throws IOException, SQLException {
@@ -192,6 +202,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		private final String _columnName;
 		private Connection _con;
+		private boolean _createCompanyIdColumn;
 		private final String[][] _foreignNamesArray;
 		private final String _tableName;
 

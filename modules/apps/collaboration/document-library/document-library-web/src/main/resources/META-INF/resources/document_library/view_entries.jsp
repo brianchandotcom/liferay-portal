@@ -378,7 +378,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								%>
 
 								<liferay-ui:search-container-column-text
-									cssClass="title-column"
+									cssClass="text-strong title-column"
 									name="title"
 									truncate="<%= true %>"
 								>
@@ -534,7 +534,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								%>
 
 								<liferay-ui:search-container-column-text
-									cssClass="title-column"
+									cssClass="text-strong title-column"
 									href="<%= rowURL %>"
 									name="title"
 									truncate="<%= true %>"

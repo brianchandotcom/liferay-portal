@@ -57,7 +57,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 			keyProperty="fileEntryTypeId"
 			modelVar="fileEntryType"
 		>
+
+			<%
+			PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+			rowURL.setParameter("mvcRenderCommandName", "/document_library/edit_file_entry_type");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryType.getFileEntryTypeId()));
+			%>
+
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
+				href="<%= rowURL %>"
 				name="name"
 				value="<%= fileEntryType.getName(locale) %>"
 			/>

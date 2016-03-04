@@ -52,6 +52,12 @@ portletURL.setParameter("eventName", eventName);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
+long[] filterGroupIds = selectedGroupIds;
+
+if (groupId > 0) {
+	filterGroupIds = new long[] {groupId};
+}
+
 AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse));
 
 AssetBrowserSearchTerms searchTerms = (AssetBrowserSearchTerms)assetBrowserSearch.getSearchTerms();
@@ -61,11 +67,11 @@ AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.
 int assetEntriesTotal = 0;
 
 if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(new long[]{groupId}, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
+	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(filterGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
 
 	assetBrowserSearch.setTotal(assetEntriesTotal);
 
-	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(new long[]{groupId}, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
+	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(filterGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
 
 	assetBrowserSearch.setResults(assetEntries);
 }
@@ -76,7 +82,7 @@ else {
 		statuses = new int[] {WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_SCHEDULED};
 	}
 
-	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[]{groupId}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
+	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), filterGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
 
 	assetEntriesTotal = hits.getLength();
 
@@ -88,10 +94,12 @@ else {
 
 List<ManagementBarFilterItem> managementBarFilterItems = new ArrayList<>();
 
+selectedGroupIds = ArrayUtil.append(new long[] {0}, selectedGroupIds);
+
 for (long curGroupId : selectedGroupIds) {
 	Group curGroup = GroupLocalServiceUtil.fetchGroup(curGroupId);
 
-	if (curGroup == null) {
+	if ((curGroup == null) && (curGroupId > 0)) {
 		continue;
 	}
 
@@ -105,7 +113,16 @@ for (long curGroupId : selectedGroupIds) {
 
 	groupURL.setParameter("groupId", String.valueOf(curGroupId));
 
-	ManagementBarFilterItem managementBarFilterItem = new ManagementBarFilterItem(active, HtmlUtil.escape(curGroup.getDescriptiveName(locale)), groupURL.toString());
+	String label = StringPool.BLANK;
+
+	if (curGroup != null) {
+		label = HtmlUtil.escape(curGroup.getDescriptiveName(locale));
+	}
+	else {
+		label = LanguageUtil.get(request, "all");
+	}
+
+	ManagementBarFilterItem managementBarFilterItem = new ManagementBarFilterItem(active, label, groupURL.toString());
 
 	managementBarFilterItems.add(managementBarFilterItem);
 }
@@ -134,13 +151,22 @@ for (long curGroupId : selectedGroupIds) {
 			/>
 
 			<%
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			String label = StringPool.BLANK;
+
+			if (groupId > 0) {
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				label = HtmlUtil.escape(group.getDescriptiveName(locale));
+			}
+			else {
+				label = LanguageUtil.get(request, "all");
+			}
 			%>
 
 			<liferay-frontend:management-bar-filter
 				label="my-sites"
 				managementBarFilterItems="<%= managementBarFilterItems %>"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+				value="<%= label %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 

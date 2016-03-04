@@ -112,7 +112,13 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 		>
 
 			<%
-			User membershipRequestUser = UserLocalServiceUtil.getUserById(membershipRequest.getUserId());
+			User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
+
+			long membershipRequestUserUserId = themeDisplay.getDefaultUserId();
+
+			if (membershipRequestUser != null) {
+				membershipRequestUserUserId = membershipRequestUser.getUserId();
+			}
 
 			row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
 			%>
@@ -120,7 +126,7 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:user-portrait
 					imageCssClass="user-icon-lg"
-					userId="<%= membershipRequestUser.getUserId() %>"
+					userId="<%= membershipRequestUserUserId %>"
 				/>
 			</liferay-ui:search-container-column-text>
 
@@ -132,7 +138,15 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 			<liferay-ui:search-container-column-text
 				name="user"
 			>
-				<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)
+				<c:choose>
+					<c:when test="<%= membershipRequestUser != null %>">
+						<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)
+					</c:when>
+					<c:otherwise>
+						<%= LanguageUtil.get(request, "the-user-could-not-be-found") %>
+					</c:otherwise>
+				</c:choose>
+
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -147,23 +161,30 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 				/>
 
 				<%
-				User membershipRequestReplierUser = UserLocalServiceUtil.getUserById(membershipRequest.getReplierUserId());
+				User membershipRequestReplierUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getReplierUserId());
 				%>
 
 				<liferay-ui:search-container-column-text
 					name="replier"
 				>
 					<c:choose>
-						<c:when test="<%= membershipRequestReplierUser.isDefaultUser() %>">
+						<c:when test="<%= membershipRequestReplierUser != null %>">
+							<c:choose>
+								<c:when test="<%= membershipRequestReplierUser.isDefaultUser() %>">
 
-							<%
-							Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
-							%>
+									<%
+									Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
+									%>
 
-							<%= HtmlUtil.escape(membershipRequestReplierCompany.getName()) %>
+									<%= HtmlUtil.escape(membershipRequestReplierCompany.getName()) %>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(membershipRequestReplierUser.getFullName()) %>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:otherwise>
-							<%= HtmlUtil.escape(membershipRequestReplierUser.getFullName()) %>
+							<%= LanguageUtil.get(request, "the-user-could-not-be-found") %>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>

@@ -95,6 +95,10 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i);
 
 							if (entry != null) {
+								if (entry.isTruncate()) {
+									truncate = true;
+								}
+
 								cssClass = entry.getCssClass();
 							}
 						}

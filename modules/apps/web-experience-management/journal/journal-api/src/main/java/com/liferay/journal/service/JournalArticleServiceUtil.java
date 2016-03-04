@@ -1073,6 +1073,11 @@ public class JournalArticleServiceUtil {
 		return getService().getLatestArticle(resourcePrimKey);
 	}
 
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getLayoutArticles(
+		long groupId) {
+		return getService().getLayoutArticles(groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

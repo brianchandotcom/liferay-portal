@@ -20,8 +20,9 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,19 +52,20 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
-	public void visitLayout(
-			Element element, Layout layout, ThemeDisplay themeDisplay)
+	public void visitLayoutSet(
+			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<JournalArticle> journalArticles =
-			_journalArticleService.getArticlesByLayoutUuid(
-				layout.getGroupId(), layout.getUuid());
+			_journalArticleService.getLayoutArticles(layoutSet.getGroupId());
 
 		if (journalArticles.isEmpty()) {
 			return;
 		}
 
 		Set<String> processedArticleIds = new HashSet<>();
+
+		String portalURL = PortalUtil.getPortalURL(layoutSet, themeDisplay);
 
 		for (JournalArticle journalArticle : journalArticles) {
 			if (processedArticleIds.contains(journalArticle.getArticleId()) ||
@@ -72,8 +75,6 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 				continue;
 			}
-
-			String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
 
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 				_layoutSetLocalService.getLayoutSet(
@@ -90,30 +91,34 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 			sb.append(journalArticle.getUrlTitle());
 
+			Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+				journalArticle.getLayoutUuid(), layoutSet.getGroupId(),
+				layoutSet.getPrivateLayout());
+
 			String articleURL = PortalUtil.getCanonicalURL(
 				sb.toString(), themeDisplay, layout);
 
+			Map<Locale, String> alternateURLs = SitemapUtil.getAlternateURLs(
+				articleURL, themeDisplay, layout);
+
 			SitemapUtil.addURLElement(
 				element, articleURL, null, journalArticle.getModifiedDate(),
-				articleURL,
-				SitemapUtil.getAlternateURLs(articleURL, themeDisplay, layout));
+				articleURL, alternateURLs);
 
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-				layout.getGroupId());
-
-			if (availableLocales.size() > 1) {
+			if (alternateURLs.size() > 1) {
 				Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-				for (Locale availableLocale : availableLocales) {
-					if (!availableLocale.equals(defaultLocale)) {
-						String alternateURL = PortalUtil.getAlternateURL(
-							articleURL, themeDisplay, availableLocale, layout);
+				for (Map.Entry<Locale, String> entry :
+						alternateURLs.entrySet()) {
 
+					Locale availableLocale = entry.getKey();
+					String alternateURL = entry.getValue();
+
+					if (!availableLocale.equals(defaultLocale)) {
 						SitemapUtil.addURLElement(
 							element, alternateURL, null,
 							journalArticle.getModifiedDate(), articleURL,
-							SitemapUtil.getAlternateURLs(
-								articleURL, themeDisplay, layout));
+							alternateURLs);
 					}
 				}
 			}
@@ -130,6 +135,13 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
 
@@ -137,6 +149,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	private JournalArticleService _journalArticleService;
+	private LayoutLocalService _layoutLocalService;
 	private LayoutSetLocalService _layoutSetLocalService;
 
 }

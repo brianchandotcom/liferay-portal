@@ -1245,6 +1245,21 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.journal.model.JournalArticleSoap[] getLayoutArticles(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getLayoutArticles(groupId);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Moves all versions of the web content article matching the group and
 	* article ID to the folder.

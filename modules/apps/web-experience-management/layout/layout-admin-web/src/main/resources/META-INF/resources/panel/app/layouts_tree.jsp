@@ -29,10 +29,10 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 		<div class="layout-set-tabs">
 			<c:if test="<%= layoutsTreeDisplayContext.isShowEmptyLayoutsTree() %>">
-				<span class="layout-set-tab selected-layout-set">
+				<div class="layout-set-tab selected-layout-set">
 					<aui:a cssClass="layout-set-link" href="<%= null %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
-					<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
+					<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
 						<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pagesOptions" data-toggle="dropdown" href="javascript:;">
 							<aui:icon image="ellipsis-v" markupView="lexicon" />
 						</a>
@@ -58,11 +58,11 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 							</c:if>
 						</ul>
 					</div>
-				</span>
+				</div>
 			</c:if>
 
 			<c:if test="<%= layoutsTreeDisplayContext.isShowPublicLayoutsTree() %>">
-				<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
+				<div class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? StringPool.BLANK : "selected-layout-set" %>">
 
 					<%
 					data.put("qa-id", "goToPublicPages");
@@ -71,7 +71,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
 					<c:if test="<%= !layoutsTreeDisplayContext.isPrivateLayout() %>">
-						<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
+						<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
 							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="publicPagesOptions" data-toggle="dropdown" href="javascript:;">
 								<aui:icon image="ellipsis-v" markupView="lexicon" />
 							</a>
@@ -131,11 +131,11 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 							</ul>
 						</div>
 					</c:if>
-				</span>
+				</div>
 			</c:if>
 
 			<c:if test="<%= layoutsTreeDisplayContext.isShowPrivateLayoutsTree() %>">
-				<span class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? "selected-layout-set" : StringPool.BLANK %>">
+				<div class="layout-set-tab <%= layoutsTreeDisplayContext.isPrivateLayout() ? "selected-layout-set" : StringPool.BLANK %>">
 
 					<%
 					data.put("qa-id", "goToPrivatePages");
@@ -144,7 +144,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(true) %>" />
 
 					<c:if test="<%= layoutsTreeDisplayContext.isPrivateLayout() %>">
-						<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right">
+						<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
 							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="privatePagesOptions" data-toggle="dropdown" href="javascript:;">
 								<aui:icon image="ellipsis-v" markupView="lexicon" />
 							</a>
@@ -204,7 +204,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 							</ul>
 						</div>
 					</c:if>
-				</span>
+				</div>
 			</c:if>
 		</div>
 	</c:if>
@@ -242,7 +242,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<liferay-util:buffer var="linkTemplate">
 		<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-		<div class="dropdown dropdown-menu-no-arrow layout-tree-options pull-right" data-deleteable="{deleteable}" data-parentable="{parentable}" data-updateable="{updateable}">
+		<div class="dropdown dropdown-menu-no-arrow layout-tree-options" data-deleteable="{deleteable}" data-parentable="{parentable}" data-updateable="{updateable}">
 			<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pageOptions" data-toggle="dropdown" href="javascript:;">
 				<aui:icon image="ellipsis-v" markupView="lexicon" />
 			</a>

@@ -57,7 +57,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 								{
 									dialog: {
 										destroyOnHide: true,
-										height: 300,
+										height: 400,
 										width: 400
 									},
 									title: '<%= UnicodeLanguageUtil.get(request, "report-inappropriate-content") %>'
@@ -103,7 +103,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 									dialog: {
 										bodyContent: A.one('#<%= randomNamespace %>signIn').html(),
 										destroyOnHide: true,
-										height: 300,
+										height: 400,
 										width: 400
 									},
 									title: '<%= UnicodeLanguageUtil.get(request, "report-inappropriate-content") %>'

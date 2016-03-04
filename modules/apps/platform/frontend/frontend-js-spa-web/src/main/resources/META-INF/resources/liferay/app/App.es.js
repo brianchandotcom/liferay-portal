@@ -16,7 +16,7 @@ class LiferayApp extends App {
 
 		this.setFormSelector('form' + exceptionsSelector);
 		this.setLinkSelector('a' + exceptionsSelector);
-		this.setLoadingCssClass('lfr-surface-loading');
+		this.setLoadingCssClass('lfr-spa-loading');
 
 		this.on('beforeNavigate', this.onBeforeNavigate);
 		this.on('endNavigate', this.onEndNavigate);
@@ -26,7 +26,7 @@ class LiferayApp extends App {
 
 		this.addSurfaces(new LiferaySurface(document.body.id));
 
-		dom.append(document.body, '<div class="lfr-surface-loading-bar"></div>');
+		dom.append(document.body, '<div class="lfr-spa-loading-bar"></div>');
 	}
 
 	getValidStatusCodes() {

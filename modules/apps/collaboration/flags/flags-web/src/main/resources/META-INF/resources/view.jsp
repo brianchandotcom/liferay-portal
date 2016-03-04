@@ -30,6 +30,6 @@ if (group.isUser()) {
 	className="<%= Layout.class.getName() %>"
 	classPK="<%= layout.getPlid() %>"
 	contentTitle="<%= layout.getHTMLTitle(LocaleUtil.getDefault()) %>"
-	message='<%= LanguageUtil.get(request, "flag-this-page") %>'
+	message="flag-this-page"
 	reportedUserId="<%= reportedUserId %>"
 />

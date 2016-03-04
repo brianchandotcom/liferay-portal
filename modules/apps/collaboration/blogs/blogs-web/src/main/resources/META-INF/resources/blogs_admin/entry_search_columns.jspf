@@ -98,26 +98,30 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="text-strong"
+			cssClass="content-column title-column"
 			href="<%= rowURL %>"
 			name="title"
 			orderable="<%= false %>"
 			property="title"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="author-column text-column"
 			name="author"
 			orderable="<%= false %>"
 			property="userName"
 		/>
 
 		<liferay-ui:search-container-column-date
+			cssClass="create-date-column text-column"
 			name="create-date"
 			orderable="<%= false %>"
 			property="createDate"
 		/>
 
 		<liferay-ui:search-container-column-date
+			cssClass="display-date-column text-column"
 			name="display-date"
 			orderable="<%= false %>"
 			property="displayDate"
@@ -138,8 +142,7 @@
 		/>
 
 		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
+			cssClass="entry-action-column"
 			path="/blogs_admin/entry_action.jsp"
 		/>
 	</c:otherwise>

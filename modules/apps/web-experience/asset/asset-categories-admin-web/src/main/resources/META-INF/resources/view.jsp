@@ -98,7 +98,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
+				cssClass="content-column name-column title-column"
 				href="<%= rowURL %>"
 				name="name"
 				truncate="<%= true %>"
@@ -106,23 +106,26 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
 				name="description"
 				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
+				cssClass="create-date-column text-column"
 				name="create-date"
 				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="text-left"
+				cssClass="number-of-categories-column"
 				name="number-of-categories"
 				value="<%= String.valueOf(vocabulary.getCategoriesCount()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="asset-type-column text-column"
 				name="asset-type"
 			>
 

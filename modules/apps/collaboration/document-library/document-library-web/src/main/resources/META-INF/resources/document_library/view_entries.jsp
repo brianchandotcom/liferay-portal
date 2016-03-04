@@ -378,7 +378,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								%>
 
 								<liferay-ui:search-container-column-text
-									cssClass="text-strong title-column"
+									cssClass="content-column title-column"
 									name="title"
 									truncate="<%= true %>"
 								>
@@ -424,7 +424,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "create-date") %>'>
 								<liferay-ui:search-container-column-date
-									cssClass="create-date-column"
+									cssClass="create-date-column text-column"
 									name="create-date"
 									value="<%= fileEntry.getCreateDate() %>"
 								/>
@@ -432,7 +432,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "modified-date") %>'>
 								<liferay-ui:search-container-column-date
-									cssClass="modified-date-column"
+									cssClass="modified-date-column text-column"
 									name="modified-date"
 									value="<%= latestFileVersion.getModifiedDate() %>"
 								/>
@@ -534,7 +534,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								%>
 
 								<liferay-ui:search-container-column-text
-									cssClass="text-strong title-column"
+									cssClass="content-column title-column"
 									href="<%= rowURL %>"
 									name="title"
 									truncate="<%= true %>"
@@ -568,7 +568,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "create-date") %>'>
 								<liferay-ui:search-container-column-date
-									cssClass="create-date-column"
+									cssClass="create-date-column text-column"
 									name="create-date"
 									value="<%= curFolder.getCreateDate() %>"
 								/>
@@ -576,7 +576,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "modified-date") %>'>
 								<liferay-ui:search-container-column-date
-									cssClass="modified-date-column"
+									cssClass="modified-date-column text-column"
 									name="modified-date"
 									value="<%= curFolder.getModifiedDate() %>"
 								/>

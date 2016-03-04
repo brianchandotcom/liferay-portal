@@ -183,8 +183,9 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 					>
 						<c:choose>
 							<c:when test="<%= !trashHandler.isContainerModel() %>">
@@ -242,16 +243,19 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="type-column"
 						name="type"
 						value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="removed-date-column text-column"
 						name="removed-date"
 						value="<%= trashEntry.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="removed-by-column text-column"
 						name="removed-by"
 						value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
 					/>
@@ -259,13 +263,13 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
 							<liferay-ui:search-container-column-jsp
-								cssClass="list-group-item-field"
+								cssClass="entry-action-column"
 								path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
 							/>
 						</c:when>
 						<c:when test="<%= trashEntry.getRootEntry() == null %>">
 							<liferay-ui:search-container-column-jsp
-								cssClass="list-group-item-field"
+								cssClass="entry-action-column"
 								path="/entry_action.jsp"
 							/>
 						</c:when>

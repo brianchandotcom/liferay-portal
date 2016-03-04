@@ -144,7 +144,7 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[2]/a)[1]</td>
+	<td>//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -160,6 +160,11 @@
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
 	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[2]/a)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_DESCRIPTION</td>
+	<td>//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[contains(.,'${key_ddlListDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

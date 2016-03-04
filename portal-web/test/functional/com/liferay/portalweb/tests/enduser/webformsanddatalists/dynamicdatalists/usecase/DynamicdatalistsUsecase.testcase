@@ -571,7 +571,9 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#deleteCP" />
+		<execute macro="DDLRecord#deleteCP">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 

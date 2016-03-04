@@ -36,17 +36,17 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
-		<execute function="AssertElementPresent#assertVisible" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		<execute function="AssertElementPresent#assertVisible" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -75,13 +75,11 @@
 	</command>
 
 	<command name="editCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-
-		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
 
@@ -105,13 +103,11 @@
 	</command>
 
 	<command name="editViaRecordViewCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-
-		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" />
 

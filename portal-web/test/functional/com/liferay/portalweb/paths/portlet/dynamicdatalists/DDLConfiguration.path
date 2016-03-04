@@ -67,6 +67,11 @@
 </tr>
 <!--LIST_TABLE-->
 <tr>
+	<td>LIST_TABLE_NAME</td>
+	<td>//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td/a[contains(.,'${key_ddlListName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_TABLE_NAME_1</td>
 	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td/a)[1]</td>
 	<td></td>
@@ -74,6 +79,11 @@
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
 	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_DESCRIPTION_1</td>
+	<td>//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a[contains(.,'${key_ddlListDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

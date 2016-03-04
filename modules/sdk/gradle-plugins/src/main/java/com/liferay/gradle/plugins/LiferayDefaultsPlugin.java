@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -38,8 +39,11 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
 import groovy.lang.Closure;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+
+import java.lang.reflect.Method;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -73,6 +77,7 @@ import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
+import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
@@ -87,6 +92,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
+import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
@@ -97,6 +103,8 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.Upload;
+import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -114,6 +122,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
+import org.gradle.process.ExecSpec;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -133,6 +142,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
+
+	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
 
 	public static final String UPDATE_BUNDLE_VERSION_TASK_NAME =
 		"updateBundleVersion";
@@ -309,6 +320,54 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		jar.from(tlddocTask);
 
 		return jar;
+	}
+
+	protected WritePropertiesTask addTaskRecordArtifact(
+		final Project project, AbstractArchiveTask ... abstractArchiveTasks) {
+
+		WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
+			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
+
+		writePropertiesTask.property(
+			"artifact.git.id",
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return getGitHead(project);
+				}
+
+			});
+
+		for (final AbstractArchiveTask abstractArchiveTask :
+				abstractArchiveTasks) {
+
+			String key = abstractArchiveTask.getClassifier();
+
+			if (Validator.isNull(key)) {
+				key = "artifact.url";
+			}
+			else {
+				key = "artifact." + key + ".url";
+			}
+
+			writePropertiesTask.property(
+				key,
+				new Callable<String>() {
+
+					@Override
+					public String call() throws Exception {
+						return getArtifactRemoteURL(abstractArchiveTask, true);
+					}
+
+				});
+		}
+
+		writePropertiesTask.setDescription(
+			"Records the commit ID and the artifact URLs.");
+		writePropertiesTask.setOutputFile("artifact.properties");
+
+		return writePropertiesTask;
 	}
 
 	protected Task addTaskUpdateBundleVersion(Project project) {
@@ -649,6 +708,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
+			project, jar, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
+
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project);
 
@@ -715,7 +780,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					// to know if we are publishing a snapshot or not.
 
 					configureTaskUploadArchives(
-						project, updateFileVersionsTask);
+						project, recordArtifactTask, updateFileVersionsTask);
 				}
 
 			});
@@ -1161,7 +1226,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskUploadArchives(
-		Project project, ReplaceRegexTask updateFileVersionsTask) {
+		Project project, WritePropertiesTask recordArtifactTask,
+		ReplaceRegexTask updateFileVersionsTask) {
 
 		String version = String.valueOf(project.getVersion());
 
@@ -1171,6 +1237,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		uploadArchivesTask.dependsOn(recordArtifactTask);
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -1189,6 +1257,56 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		uploadArchivesTask.finalizedBy(updateFileVersionsTask);
 	}
 
+	protected String getArtifactRemoteURL(
+			AbstractArchiveTask abstractArchiveTask, boolean cdn)
+		throws Exception {
+
+		Project project = abstractArchiveTask.getProject();
+
+		Upload upload = (Upload)GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		RepositoryHandler repositoryHandler = upload.getRepositories();
+
+		MavenDeployer mavenDeployer = (MavenDeployer)repositoryHandler.getAt(
+			MavenRepositoryHandlerConvention.DEFAULT_MAVEN_DEPLOYER_NAME);
+
+		Object repository = mavenDeployer.getRepository();
+
+		// org.apache.maven.artifact.ant.RemoteRepository is not in the
+		// classpath
+
+		Class<?> repositoryClass = repository.getClass();
+
+		Method getUrlMethod = repositoryClass.getMethod("getUrl");
+
+		String url = (String)getUrlMethod.invoke(repository);
+
+		if (cdn) {
+			url = url.replace("http://", "http://cdn.");
+			url = url.replace("https://", "https://cdn.");
+		}
+
+		StringBuilder sb = new StringBuilder(url);
+
+		if (sb.charAt(sb.length() - 1) != '/') {
+			sb.append('/');
+		}
+
+		String group = String.valueOf(project.getGroup());
+
+		sb.append(group.replace('.', '/'));
+
+		sb.append('/');
+		sb.append(abstractArchiveTask.getBaseName());
+		sb.append('/');
+		sb.append(abstractArchiveTask.getVersion());
+		sb.append('/');
+		sb.append(abstractArchiveTask.getArchiveName());
+
+		return sb.toString();
+	}
+
 	protected String getBundleInstruction(Project project, String key) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
@@ -1201,6 +1319,26 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			project, BundleExtension.class);
 
 		return (Map<String, String>)bundleExtension.getInstructions();
+	}
+
+	protected String getGitHead(Project project) {
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		project.exec(
+			new Action<ExecSpec>() {
+
+				@Override
+				public void execute(ExecSpec execSpec) {
+					execSpec.commandLine("git", "rev-parse", "HEAD");
+					execSpec.setStandardOutput(byteArrayOutputStream);
+				}
+
+			});
+
+		String gitHead = byteArrayOutputStream.toString();
+
+		return gitHead.trim();
 	}
 
 	protected File getLibDir(Project project) {

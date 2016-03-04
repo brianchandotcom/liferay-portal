@@ -119,7 +119,6 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	%>
 
 	<liferay-ui:user-search-container-results
-		useIndexer="<%= portletName.equals(PortletKeys.DIRECTORY) %>"
 		userParams="<%= userParams %>"
 	/>
 

@@ -49,6 +49,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>

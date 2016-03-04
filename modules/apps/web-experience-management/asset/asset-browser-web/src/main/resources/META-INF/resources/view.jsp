@@ -166,7 +166,7 @@ for (long curGroupId : selectedGroupIds) {
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -189,53 +189,110 @@ for (long curGroupId : selectedGroupIds) {
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="title"
-			>
-				<c:choose>
-					<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
+							userId="<%= assetEntry.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
 						<%
-						Map<String, Object> data = new HashMap<String, Object>();
+						Date modifiedDate = assetEntry.getModifiedDate();
 
-						data.put("assetentryid", assetEntry.getEntryId());
-						data.put("assetclassname", assetEntry.getClassName());
-						data.put("assetclasspk", assetEntry.getClassPK());
-						data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
-						data.put("assettitle", assetEntry.getTitle(locale));
-						data.put("groupdescriptivename", group.getDescriptiveName(locale));
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 						%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= assetEntry.getTitle(locale) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= assetEntry.getTitle(locale) %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+						<h6 class="text-default">
+							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" /></span>
+						</h6>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
-			/>
+						<h5>
+							<c:choose>
+								<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
 
-			<liferay-ui:search-container-column-text
-				name="user-name"
-				value="<%= PortalUtil.getUserName(assetEntry) %>"
-			/>
+									<%
+									Map<String, Object> data = new HashMap<String, Object>();
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= assetEntry.getModifiedDate() %>"
-			/>
+									data.put("assetentryid", assetEntry.getEntryId());
+									data.put("assetclassname", assetEntry.getClassName());
+									data.put("assetclasspk", assetEntry.getClassPK());
+									data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
+									data.put("assettitle", assetEntry.getTitle(locale));
+									data.put("groupdescriptivename", group.getDescriptiveName(locale));
+									%>
 
-			<liferay-ui:search-container-column-text
-				name="site"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-			/>
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= assetEntry.getTitle(locale) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= assetEntry.getTitle(locale) %>
+								</c:otherwise>
+							</c:choose>
+						</h5>
+
+						<h6 class="text-default">
+							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="title"
+					>
+						<c:choose>
+							<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("assetentryid", assetEntry.getEntryId());
+								data.put("assetclassname", assetEntry.getClassName());
+								data.put("assetclasspk", assetEntry.getClassPK());
+								data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
+								data.put("assettitle", assetEntry.getTitle(locale));
+								data.put("groupdescriptivename", group.getDescriptiveName(locale));
+								%>
+
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= assetEntry.getTitle(locale) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= assetEntry.getTitle(locale) %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="user-name"
+						value="<%= PortalUtil.getUserName(assetEntry) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= assetEntry.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="site"
+						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

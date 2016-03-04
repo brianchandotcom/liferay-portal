@@ -419,4 +419,12 @@
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
 	</command>
+
+	<command name="viewCannotEdit">
+		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+	</command>
+
+	<command name="viewCannotPublish">
+		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
 </definition>

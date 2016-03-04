@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.privatemessaging.model.UserThread;
 import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
-import com.liferay.privatemessaging.util.PortletKeys;
+import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.PRIVATE_MESSAGING},
+	property = {"javax.portlet.name=" + PrivateMessagingPortletKeys.PRIVATE_MESSAGING},
 	service = UserNotificationHandler.class
 )
 public class PrivateMessagingUserNotificationHandler
@@ -60,7 +60,7 @@ public class PrivateMessagingUserNotificationHandler
 
 	public PrivateMessagingUserNotificationHandler() {
 		setOpenDialog(true);
-		setPortletId(PortletKeys.PRIVATE_MESSAGING);
+		setPortletId(PrivateMessagingPortletKeys.PRIVATE_MESSAGING);
 	}
 
 	@Override
@@ -155,14 +155,15 @@ public class PrivateMessagingUserNotificationHandler
 		Group group = user.getGroup();
 
 		long portletPlid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.PRIVATE_MESSAGING);
+			group.getGroupId(), true,
+			PrivateMessagingPortletKeys.PRIVATE_MESSAGING);
 
 		PortletURL portletURL = null;
 
 		if (portletPlid != 0) {
 			portletURL = PortletURLFactoryUtil.create(
 				serviceContext.getLiferayPortletRequest(),
-				PortletKeys.PRIVATE_MESSAGING, portletPlid,
+				PrivateMessagingPortletKeys.PRIVATE_MESSAGING, portletPlid,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
@@ -172,7 +173,7 @@ public class PrivateMessagingUserNotificationHandler
 				serviceContext.getLiferayPortletResponse();
 
 			portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.PRIVATE_MESSAGING);
+				PrivateMessagingPortletKeys.PRIVATE_MESSAGING);
 
 			portletURL.setParameter("mvcPath", "/view.jsp");
 			portletURL.setParameter("mbThreadId", String.valueOf(mbThreadId));

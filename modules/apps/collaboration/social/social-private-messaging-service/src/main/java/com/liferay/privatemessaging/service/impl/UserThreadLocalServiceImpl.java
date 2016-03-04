@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.model.UserThread;
 import com.liferay.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
-import com.liferay.privatemessaging.util.PortletKeys;
+import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingConstants;
 import com.liferay.util.ContentUtil;
 
@@ -358,7 +358,8 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		Group group = user.getGroup();
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			group.getGroupId(), true, PortletKeys.PRIVATE_MESSAGING);
+			group.getGroupId(), true,
+			PrivateMessagingPortletKeys.PRIVATE_MESSAGING);
 
 		Layout layout = layoutLocalService.getLayout(plid);
 
@@ -455,7 +456,8 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		for (UserThread userThread : userThreads) {
 			if ((userThread.getUserId() == mbMessage.getUserId()) &&
 				UserNotificationManagerUtil.isDeliver(
-					userThread.getUserId(), PortletKeys.PRIVATE_MESSAGING,
+					userThread.getUserId(),
+					PrivateMessagingPortletKeys.PRIVATE_MESSAGING,
 					PrivateMessagingConstants.NEW_MESSAGE, 0,
 					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
@@ -510,7 +512,8 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			if ((userThread.getUserId() == mbMessage.getUserId()) ||
 				((userThread.getUserId() != mbMessage.getUserId()) &&
 				 !UserNotificationManagerUtil.isDeliver(
-					 userThread.getUserId(), PortletKeys.PRIVATE_MESSAGING, 0,
+					 userThread.getUserId(),
+					 PrivateMessagingPortletKeys.PRIVATE_MESSAGING, 0,
 					 PrivateMessagingConstants.NEW_MESSAGE,
 					 UserNotificationDeliveryConstants.TYPE_WEBSITE))) {
 
@@ -518,7 +521,8 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			}
 
 			userNotificationEventLocalService.sendUserNotificationEvents(
-				userThread.getUserId(), PortletKeys.PRIVATE_MESSAGING,
+				userThread.getUserId(),
+				PrivateMessagingPortletKeys.PRIVATE_MESSAGING,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
 				notificationEventJSONObject);
 		}

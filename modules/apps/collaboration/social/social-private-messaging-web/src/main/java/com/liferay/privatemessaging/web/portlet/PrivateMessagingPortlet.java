@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.privatemessaging.service.UserThreadLocalService;
-import com.liferay.privatemessaging.util.PortletKeys;
+import com.liferay.privatemessaging.util.PrivateMessagingPortletKeys;
 import com.liferay.privatemessaging.util.PrivateMessagingUtil;
 
 import java.io.File;
@@ -109,7 +109,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.title=Private Messaging",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.PRIVATE_MESSAGING,
+		"javax.portlet.name=" + PrivateMessagingPortletKeys.PRIVATE_MESSAGING,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},

@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  * @author André de Oliveira
@@ -29,6 +30,11 @@ import java.util.TreeSet;
 public abstract class ImportsFormatter {
 
 	protected abstract ImportPackage createImportPackage(String line);
+
+	protected abstract String doFormat(
+			String content, Pattern importPattern, String packageDir,
+			String className)
+		throws IOException;
 
 	protected String sortAndGroupImports(String imports) throws IOException {
 		if (imports.contains("/*") || imports.contains("*/") ||

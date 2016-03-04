@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.social.activities.web.portlet.display.context.util.SocialActivitiesRequestHelper;
+import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
+import com.liferay.social.kernel.model.SocialActivity;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -38,9 +41,11 @@ public class DefaultSocialActivitiesDisplayContext
 	implements SocialActivitiesDisplayContext {
 
 	public DefaultSocialActivitiesDisplayContext(
-		SocialActivitiesRequestHelper socialActivitiesRequestHelper) {
+		SocialActivitiesRequestHelper socialActivitiesRequestHelper,
+		SocialActivityQueryHelper socialActivityQueryHelper) {
 
 		_socialActivitiesRequestHelper = socialActivitiesRequestHelper;
+		_socialActivityQueryHelper = socialActivityQueryHelper;
 	}
 
 	@Override
@@ -88,6 +93,18 @@ public class DefaultSocialActivitiesDisplayContext
 	@Override
 	public String getSelectedTabName() {
 		return _socialActivitiesRequestHelper.getTabs1();
+	}
+
+	@Override
+	public List<SocialActivity> getSocialActivities() throws Exception {
+		Group group = _socialActivitiesRequestHelper.getScopeGroup();
+		Layout layout = _socialActivitiesRequestHelper.getLayout();
+
+		SocialActivityQueryHelper.Scope scope =
+			SocialActivityQueryHelper.Scope.fromValue(getSelectedTabName());
+
+		return _socialActivityQueryHelper.getSocialActivities(
+			group, layout, scope, 0, _socialActivitiesRequestHelper.getMax());
 	}
 
 	@Override
@@ -160,5 +177,6 @@ public class DefaultSocialActivitiesDisplayContext
 
 	private ResourceBundle _resourceBundle;
 	private final SocialActivitiesRequestHelper _socialActivitiesRequestHelper;
+	private final SocialActivityQueryHelper _socialActivityQueryHelper;
 
 }

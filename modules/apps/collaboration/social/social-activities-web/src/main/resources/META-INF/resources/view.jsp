@@ -16,12 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SocialActivityQueryHelper socialActivityQueryHelper = (SocialActivityQueryHelper)request.getAttribute(SocialActivitiesWebKeys.SOCIAL_ACTIVITY_QUERY_HELPER);
-Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
-SocialActivityQueryHelper.Scope scope = SocialActivityQueryHelper.Scope.valueOf(socialActivitiesDisplayContext.getSelectedTabName());
-%>
-
 <c:if test="<%= socialActivitiesDisplayContext.isTabsVisible() %>">
 	<liferay-ui:tabs
 		names="<%= socialActivitiesDisplayContext.getTabsNames() %>"
@@ -31,7 +25,7 @@ SocialActivityQueryHelper.Scope scope = SocialActivityQueryHelper.Scope.valueOf(
 </c:if>
 
 <liferay-ui:social-activities
-	activities="<%= socialActivityQueryHelper.getSocialActivities(group, layout, scope, 0, socialActivitiesDisplayContext.getMax()) %>"
+	activities="<%= socialActivitiesDisplayContext.getSocialActivities() %>"
 	feedDisplayStyle="<%= socialActivitiesDisplayContext.getRSSDisplayStyle() %>"
 	feedEnabled="<%= socialActivitiesDisplayContext.isRSSEnabled() %>"
 	feedResourceURL="<%= socialActivitiesDisplayContext.getRSSResourceURL() %>"

@@ -23,9 +23,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.model.Group" %><%@
-page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
+<%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.social.activities.web.constants.SocialActivitiesWebKeys" %><%@
 page import="com.liferay.social.activities.web.portlet.display.context.DefaultSocialActivitiesDisplayContext" %><%@
@@ -39,7 +37,8 @@ page import="com.liferay.social.activities.web.util.SocialActivityQueryHelper" %
 
 <%
 SocialActivitiesRequestHelper socialActivitiesRequestHelper = new SocialActivitiesRequestHelper(request);
-SocialActivitiesDisplayContext socialActivitiesDisplayContext = new DefaultSocialActivitiesDisplayContext(socialActivitiesRequestHelper);
+SocialActivityQueryHelper socialActivityQueryHelper = (SocialActivityQueryHelper)request.getAttribute(SocialActivitiesWebKeys.SOCIAL_ACTIVITY_QUERY_HELPER);
+SocialActivitiesDisplayContext socialActivitiesDisplayContext = new DefaultSocialActivitiesDisplayContext(socialActivitiesRequestHelper, socialActivityQueryHelper);
 %>
 
 <%@ include file="/init-ext.jsp" %>

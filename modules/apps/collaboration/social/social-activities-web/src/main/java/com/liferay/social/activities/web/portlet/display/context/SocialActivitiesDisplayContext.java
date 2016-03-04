@@ -15,6 +15,9 @@
 package com.liferay.social.activities.web.portlet.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.social.kernel.model.SocialActivity;
+
+import java.util.List;
 
 import javax.portlet.ResourceURL;
 
@@ -34,6 +37,8 @@ public interface SocialActivitiesDisplayContext {
 	public ResourceURL getRSSResourceURL() throws PortalException;
 
 	public String getSelectedTabName();
+
+	public List<SocialActivity> getSocialActivities() throws Exception;
 
 	public String getTabsNames();
 

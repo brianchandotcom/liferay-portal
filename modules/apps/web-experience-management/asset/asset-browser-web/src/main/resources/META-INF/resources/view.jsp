@@ -166,7 +166,7 @@ for (long curGroupId : selectedGroupIds) {
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -187,8 +187,22 @@ for (long curGroupId : selectedGroupIds) {
 
 			<%
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
-			%>
 
+			String cssClass = StringPool.BLANK;
+
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			if (assetEntry.getEntryId() != refererAssetEntryId) {
+				data.put("assetentryid", assetEntry.getEntryId());
+				data.put("assetclassname", assetEntry.getClassName());
+				data.put("assetclasspk", assetEntry.getClassPK());
+				data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
+				data.put("assettitle", assetEntry.getTitle(locale));
+				data.put("groupdescriptivename", group.getDescriptiveName(locale));
+
+				cssClass = "selector-button";
+			}
+			%>
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
@@ -216,19 +230,7 @@ for (long curGroupId : selectedGroupIds) {
 						<h5>
 							<c:choose>
 								<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
-
-									<%
-									Map<String, Object> data = new HashMap<String, Object>();
-
-									data.put("assetentryid", assetEntry.getEntryId());
-									data.put("assetclassname", assetEntry.getClassName());
-									data.put("assetclasspk", assetEntry.getClassPK());
-									data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
-									data.put("assettitle", assetEntry.getTitle(locale));
-									data.put("groupdescriptivename", group.getDescriptiveName(locale));
-									%>
-
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 										<%= assetEntry.getTitle(locale) %>
 									</aui:a>
 								</c:when>
@@ -243,6 +245,37 @@ for (long curGroupId : selectedGroupIds) {
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+
+					AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
+								<liferay-frontend:vertical-card
+									cssClass="<%= cssClass %>"
+									data="<%= data %>"
+									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
+									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+									title="<%= assetEntry.getTitle(locale) %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-frontend:icon-vertical-card
+									cssClass="<%= cssClass %>"
+									data="<%= data %>"
+									icon="<%= assetRendererFactory.getIconCssClass() %>"
+									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+									title="<%= assetEntry.getTitle(locale) %>"
+								/>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="text-strong"
@@ -250,19 +283,7 @@ for (long curGroupId : selectedGroupIds) {
 					>
 						<c:choose>
 							<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
-
-								<%
-								Map<String, Object> data = new HashMap<String, Object>();
-
-								data.put("assetentryid", assetEntry.getEntryId());
-								data.put("assetclassname", assetEntry.getClassName());
-								data.put("assetclasspk", assetEntry.getClassPK());
-								data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
-								data.put("assettitle", assetEntry.getTitle(locale));
-								data.put("groupdescriptivename", group.getDescriptiveName(locale));
-								%>
-
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 									<%= assetEntry.getTitle(locale) %>
 								</aui:a>
 							</c:when>

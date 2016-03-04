@@ -234,8 +234,6 @@
 	</command>
 
 	<command name="ActivateStaging" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -420,8 +418,6 @@
 	</command>
 
 	<command name="AddSitePagesVariation" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

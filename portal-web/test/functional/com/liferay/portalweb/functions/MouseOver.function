@@ -20,6 +20,8 @@
 
 		<execute function="MouseOver#mouseOver" />
 
+		<execute argument1="1000" selenium="pause" />
+
 		<execute selenium="assertJavaScriptErrors" />
 
 		<execute selenium="assertLiferayErrors" />

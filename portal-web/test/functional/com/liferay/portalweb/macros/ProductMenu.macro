@@ -248,6 +248,8 @@
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute function="AssertClick" locator1="ProductMenu#STAGING_LINK" value1="Staging" />
+
+		<execute function="AssertVisible" locator1="ProductMenu#STAGING_SELECTED" />
 	</command>
 
 	<command name="gotoUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">

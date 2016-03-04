@@ -117,6 +117,8 @@
 			<var name="orgName" value="${orgName}" />
 		</execute>
 
+		<var name="key_orgName" value="${orgName}" />
+
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#AVAILABLE_TAB" value1="Available" />

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + PollsResourcePermissionChecker.RESOURCE_NAME}
+	property = {"resource.name=" + PollsResourcePermissionChecker.RESOURCE_NAME},
+	service = ResourcePermissionChecker.class
 )
 public class PollsResourcePermissionChecker
 	extends BaseResourcePermissionChecker {

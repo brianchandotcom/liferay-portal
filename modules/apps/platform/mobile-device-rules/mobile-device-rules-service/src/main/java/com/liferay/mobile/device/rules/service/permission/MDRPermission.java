@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(
-	property = {"resource.name=" + MDRConstants.SERVICE_NAME},
+	immediate = true, property = {"resource.name=" + MDRConstants.SERVICE_NAME},
 	service = ResourcePermissionChecker.class
 )
 public class MDRPermission extends BaseResourcePermissionChecker {

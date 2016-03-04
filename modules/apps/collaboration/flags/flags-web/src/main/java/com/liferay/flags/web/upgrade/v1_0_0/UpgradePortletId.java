@@ -14,7 +14,7 @@
 
 package com.liferay.flags.web.upgrade.v1_0_0;
 
-import com.liferay.flags.web.constants.PageFlagsPortletKeys;
+import com.liferay.flags.web.constants.FlagsPortletKeys;
 
 /**
  * @author Peter Fellwock
@@ -25,8 +25,8 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"142", PageFlagsPortletKeys.FLAGS},
-			new String[] {"143", PageFlagsPortletKeys.PAGE_FLAGS}
+			new String[] {"142", FlagsPortletKeys.FLAGS},
+			new String[] {"143", FlagsPortletKeys.PAGE_FLAGS}
 		};
 	}
 

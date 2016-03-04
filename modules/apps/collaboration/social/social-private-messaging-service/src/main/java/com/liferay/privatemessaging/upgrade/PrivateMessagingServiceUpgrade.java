@@ -14,13 +14,12 @@
 
 package com.liferay.privatemessaging.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.privatemessaging.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
 import com.liferay.privatemessaging.upgrade.v1_0_1.UpgradeResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -37,16 +36,11 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.privatemessaging.service", "0.0.1", "1.0.0",
-			new UpgradePrivateMessaging());
+			new UpgradePrivateMessaging(), new UpgradePortletId());
 
 		registry.register(
 			"com.liferay.privatemessaging.web", "1.0.0", "1.0.1",
 			new UpgradeResourcePermission());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

@@ -323,6 +323,14 @@
 		<execute function="AssertElementNotPresent" locator1="${portletLocator}" />
 	</command>
 
+	<command name="viewCannotEdit">
+		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+	</command>
+
+	<command name="viewCannotPublish">
+		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
+
 	<command name="viewCustomStylesViaLookandfeelPG">
 		<execute function="SikuliClick" locator1="BasePortlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL" />
 	</command>
@@ -418,13 +426,5 @@
 		<var name="key_portletName" value="${portletName}" />
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
-	</command>
-
-	<command name="viewCannotEdit">
-		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
-	</command>
-
-	<command name="viewCannotPublish">
-		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
 </definition>

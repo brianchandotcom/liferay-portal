@@ -46,6 +46,25 @@ public class JavaImportsFormatter extends ImportsFormatter {
 	}
 
 	@Override
+	protected ImportPackage createImportPackage(String line) {
+		Matcher matcher = _javaImportPattern.matcher(line);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		boolean isStatic = false;
+
+		if (Validator.isNotNull(matcher.group(1))) {
+			isStatic = true;
+		}
+
+		String importString = matcher.group(2);
+
+		return new ImportPackage(importString, isStatic, line);
+	}
+
+	@Override
 	protected String doFormat(
 			String content, Pattern importPattern, String packageDir,
 			String className)
@@ -113,25 +132,6 @@ public class JavaImportsFormatter extends ImportsFormatter {
 			"$1\n\n/**");
 
 		return content;
-	}
-
-	@Override
-	protected ImportPackage createImportPackage(String line) {
-		Matcher matcher = _javaImportPattern.matcher(line);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		boolean isStatic = false;
-
-		if (Validator.isNotNull(matcher.group(1))) {
-			isStatic = true;
-		}
-
-		String importString = matcher.group(2);
-
-		return new ImportPackage(importString, isStatic, line);
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

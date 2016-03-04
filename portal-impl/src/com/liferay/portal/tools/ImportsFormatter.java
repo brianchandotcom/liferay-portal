@@ -28,6 +28,8 @@ import java.util.TreeSet;
  */
 public abstract class ImportsFormatter {
 
+	protected abstract ImportPackage createImportPackage(String line);
+
 	protected String sortAndGroupImports(String imports) throws IOException {
 		if (imports.contains("/*") || imports.contains("*/") ||
 			imports.contains("\n//")) {
@@ -69,7 +71,5 @@ public abstract class ImportsFormatter {
 
 		return sb.toString();
 	}
-
-	protected abstract ImportPackage createImportPackage(String line);
 
 }

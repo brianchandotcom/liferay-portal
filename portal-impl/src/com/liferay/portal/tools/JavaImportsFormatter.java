@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
  * @author Carlos Sierra Andrés
  * @author André de Oliveira
  * @author Raymond Augé
+ * @author Hugo Huijser
  */
 public class JavaImportsFormatter extends ImportsFormatter {
 
@@ -76,6 +77,29 @@ public class JavaImportsFormatter extends ImportsFormatter {
 			return content;
 		}
 
+		String newImports = stripUnusedImports(
+			imports, content, packageDir, className);
+
+		newImports = sortAndGroupImports(newImports);
+
+		if (!imports.equals(newImports)) {
+			content = StringUtil.replaceFirst(content, imports, newImports);
+		}
+
+		content = content.replaceFirst(
+			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
+
+		content = content.replaceFirst(
+			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
+			"$1\n\n/**");
+
+		return content;
+	}
+
+	protected String stripUnusedImports(
+			String imports, String content, String packageDir, String className)
+		throws IOException {
+
 		Set<String> classes = ClassUtil.getClasses(
 			new UnsyncStringReader(content), className);
 
@@ -111,27 +135,7 @@ public class JavaImportsFormatter extends ImportsFormatter {
 			}
 		}
 
-		ImportsFormatter importsFormatter = new JavaImportsFormatter();
-
-		String newImports = importsFormatter.sortAndGroupImports(sb.toString());
-
-		if (!imports.equals(newImports)) {
-			content = StringUtil.replaceFirst(content, imports, newImports);
-		}
-
-		// Ensure a blank line exists between the package and the first import
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
-
-		// Ensure a blank line exists between the last import (or package if
-		// there are no imports) and the class comment
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
-			"$1\n\n/**");
-
-		return content;
+		return sb.toString();
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

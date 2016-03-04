@@ -9,7 +9,7 @@ Import-Package:\
 	!org.apache.maven.plugin,\
 	!org.apache.tools.ant.*,\
 	*
-Include-Resource:\
+-includeresource:\
 	@com.liferay.portal.impl-${portalImplVersion}.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-${portalImplVersion}.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-${portalImplVersion}.jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\

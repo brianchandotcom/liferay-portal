@@ -16,8 +16,8 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
-import com.liferay.portal.tools.ImportsFormatter;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * @author André de Oliveira
  * @author Hugo Huijser
  */
-public class JSPImportsFormatter extends ImportsFormatter {
+public class JSPImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {

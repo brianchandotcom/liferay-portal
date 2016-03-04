@@ -17,8 +17,8 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
-import com.liferay.portal.tools.ImportsFormatter;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class BNDImportsFormatter extends ImportsFormatter {
+public class BNDImportsFormatter extends BaseImportsFormatter {
 
 	public static String getImports(String content, Pattern pattern) {
 		Matcher matcher = pattern.matcher(content);

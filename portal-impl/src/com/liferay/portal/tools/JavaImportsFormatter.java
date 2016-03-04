@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * @author Raymond Augé
  * @author Hugo Huijser
  */
-public class JavaImportsFormatter extends ImportsFormatter {
+public class JavaImportsFormatter extends BaseImportsFormatter {
 
 	public static String getImports(String content) {
 		Matcher matcher = _importsPattern.matcher(content);

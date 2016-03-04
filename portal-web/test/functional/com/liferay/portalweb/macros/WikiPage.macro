@@ -355,6 +355,10 @@
 		<if>
 			<isset var="customFieldText" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Custom Fields" />
+				</execute>
+
 				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldText}" />
 			</then>
 		</if>
@@ -685,15 +689,21 @@
 		<if>
 			<isset var="customFieldTextEdit" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Custom Fields" />
+				</execute>
+
 				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldTextEdit}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WikiNavigator#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContentEdit}" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="linkOrphanPageHtmlPG">

@@ -86,8 +86,6 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="${userLastNameEdit}" />
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Bookmarks" />
 		</execute>
@@ -203,7 +201,7 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Blogs" />
-			<var name="portletOption" value="Look and Feel" />
+			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
 		<execute function="AssertAlertNotPresent" />

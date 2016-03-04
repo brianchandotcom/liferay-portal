@@ -53,4 +53,10 @@ if (exportImportConfiguration != null) {
 
 	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 }
+
+boolean useRequestValues = false;
+
+if ((ParamUtil.getString(portletRequest, ExportImportDateUtil.RANGE, null) != null) || (exportImportConfiguration == null)) {
+	useRequestValues = true;
+}
 %>

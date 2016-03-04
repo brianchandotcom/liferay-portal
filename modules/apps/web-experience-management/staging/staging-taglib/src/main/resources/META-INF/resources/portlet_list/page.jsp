@@ -19,6 +19,8 @@
 <ul class="portlet-list">
 
 	<%
+	DateRange dateRange = null;
+
 	for (Portlet portlet : portlets) {
 		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
@@ -41,7 +43,12 @@
 			continue;
 		}
 
-		DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, exportGroupId, privateLayout, 0, portlet.getRootPortletId(), defaultRange);
+		if (useRequestValues) {
+			dateRange = ExportImportDateUtil.getDateRange(renderRequest, exportGroupId, privateLayout, 0, portlet.getRootPortletId(), defaultRange);
+		}
+		else {
+			dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration, portlet.getRootPortletId());
+		}
 
 		PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), exportGroupId, dateRange.getStartDate(), dateRange.getEndDate());
 

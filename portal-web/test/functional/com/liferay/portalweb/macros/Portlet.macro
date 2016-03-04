@@ -155,14 +155,13 @@
 		<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyle" />
 
 		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
-				<condition function="IsVisible" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
-			</and>
+			<condition function="IsElementNotPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}_ACTIVE" />
 			<then>
 				<execute function="Click" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}_ACTIVE" />
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">

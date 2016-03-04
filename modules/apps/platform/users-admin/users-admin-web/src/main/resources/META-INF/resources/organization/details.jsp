@@ -224,7 +224,7 @@ if (parentOrganization != null) {
 	url="javascript:;"
 />
 
-<aui:script use="liferay-dynamic-select,liferay-search-container">
+<aui:script use="liferay-address,liferay-dynamic-select,liferay-search-container">
 	new Liferay.DynamicSelect(
 		[
 			{

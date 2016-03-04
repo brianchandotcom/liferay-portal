@@ -46,6 +46,10 @@
 				combine: COMBINE,
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
+					'liferay-address': {
+						path: 'address.js',
+						requires: []
+					},
 					'liferay-alert': {
 						path: 'alert.js',
 						requires: [

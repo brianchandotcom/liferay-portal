@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -45,6 +47,24 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	protected abstract ImportPackage createImportPackage(String line);
+
+	protected ImportPackage createJavaImportPackage(String line) {
+		Matcher matcher = _javaImportPattern.matcher(line);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		boolean isStatic = false;
+
+		if (Validator.isNotNull(matcher.group(1))) {
+			isStatic = true;
+		}
+
+		String importString = matcher.group(2);
+
+		return new ImportPackage(importString, isStatic, line);
+	}
 
 	protected abstract String doFormat(
 			String content, Pattern importPattern, String packageDir,
@@ -137,5 +157,8 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		return sb.toString();
 	}
+
+	private static final Pattern _javaImportPattern = Pattern.compile(
+		"import( static)? ([^;]+);");
 
 }

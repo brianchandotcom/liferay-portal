@@ -42,21 +42,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
-		Matcher matcher = _javaImportPattern.matcher(line);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		boolean isStatic = false;
-
-		if (Validator.isNotNull(matcher.group(1))) {
-			isStatic = true;
-		}
-
-		String importString = matcher.group(2);
-
-		return new ImportPackage(importString, isStatic, line);
+		return createJavaImportPackage(line);
 	}
 
 	@Override
@@ -92,7 +78,5 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 
 	private static final Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
-	private static final Pattern _javaImportPattern = Pattern.compile(
-		"import( static)? ([^;]+);");
 
 }

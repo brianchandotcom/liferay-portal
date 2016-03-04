@@ -137,16 +137,6 @@
 
 	<command name="openProductMenu">
 		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="Button#CLOSE_PANEL" />
-				<condition function="IsVisible" locator1="Button#CLOSE_PANEL" />
-			</and>
-			<then>
-				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
-			</then>
-		</if>
-
-		<if>
 			<not>
 				<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
 			</not>

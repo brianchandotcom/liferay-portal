@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
+import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalService;
-import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -47,7 +47,6 @@ import com.sun.syndication.feed.synd.SyndLink;
 import com.sun.syndication.feed.synd.SyndLinkImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -185,8 +184,14 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		int max = ParamUtil.getInteger(
 			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
 
-		List<SocialActivity> socialActivities = getSocialActivities(
-			resourceRequest, max);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = _groupLocalService.getGroup(
+			themeDisplay.getScopeGroupId());
+
+		List<SocialActivity> socialActivities =
+			_socialActivityQueryHelper.getSocialActivities(group, 0, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			resourceRequest);
@@ -196,34 +201,6 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			displayStyle, socialActivities, serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
-	}
-
-	protected List<SocialActivity> getSocialActivities(
-			ResourceRequest resourceRequest, int max)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = _groupLocalService.getGroup(
-			themeDisplay.getScopeGroupId());
-
-		int start = 0;
-
-		if (group.isOrganization()) {
-			return _socialActivityLocalService.getOrganizationActivities(
-				group.getOrganizationId(), start, max);
-		}
-		else if (group.isRegularSite()) {
-			return _socialActivityLocalService.getGroupActivities(
-				group.getGroupId(), start, max);
-		}
-		else if (group.isUser()) {
-			return _socialActivityLocalService.getUserActivities(
-				group.getClassPK(), start, max);
-		}
-
-		return Collections.emptyList();
 	}
 
 	@Override
@@ -254,15 +231,15 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
+	protected void setSocialActivityQueryHelper(
+		SocialActivityQueryHelper socialActivityQueryHelper) {
 
-		_socialActivityLocalService = socialActivityLocalService;
+		_socialActivityQueryHelper = socialActivityQueryHelper;
 	}
 
 	private GroupLocalService _groupLocalService;
 	private SocialActivityInterpreterLocalService
 		_socialActivityInterpreterLocalService;
-	private SocialActivityLocalService _socialActivityLocalService;
+	private SocialActivityQueryHelper _socialActivityQueryHelper;
 
 }

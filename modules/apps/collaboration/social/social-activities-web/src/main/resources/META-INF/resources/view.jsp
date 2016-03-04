@@ -17,19 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+SocialActivityQueryHelper socialActivityQueryHelper = (SocialActivityQueryHelper)request.getAttribute(SocialActivitiesWebKeys.SOCIAL_ACTIVITY_QUERY_HELPER);
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
-List<SocialActivity> socialActivities = null;
-
-if (group.isOrganization()) {
-	socialActivities = SocialActivityLocalServiceUtil.getOrganizationActivities(group.getOrganizationId(), 0, max);
-}
-else if (group.isRegularSite()) {
-	socialActivities = SocialActivityLocalServiceUtil.getGroupActivities(group.getGroupId(), 0, max);
-}
-else if (group.isUser()) {
-	socialActivities = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), 0, max);
-}
+List<SocialActivity> socialActivities = socialActivityQueryHelper.getSocialActivities(group, 0, max);
 
 String feedTitle = LanguageUtil.format(request, "x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 

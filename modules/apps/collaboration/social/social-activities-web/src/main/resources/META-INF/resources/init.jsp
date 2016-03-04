@@ -33,8 +33,9 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.social.kernel.model.SocialActivity" %><%@
-page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %>
+page import="com.liferay.social.activities.web.constants.SocialActivitiesWebKeys" %><%@
+page import="com.liferay.social.activities.web.util.SocialActivityQueryHelper" %><%@
+page import="com.liferay.social.kernel.model.SocialActivity" %>
 
 <%@ page import="java.util.List" %>
 

@@ -93,7 +93,7 @@ else {
 			</div>
 		</div>
 
-		<aui:script use="liferay-dynamic-select">
+		<aui:script use="liferay-address,liferay-dynamic-select">
 			new Liferay.DynamicSelect(
 				[
 					{
@@ -122,7 +122,7 @@ else {
 	<aui:input name="addressesIndexes" type="hidden" value="<%= StringUtil.merge(addressesIndexes) %>" />
 </aui:fieldset>
 
-<aui:script use="liferay-auto-fields,liferay-dynamic-select">
+<aui:script use="liferay-address,liferay-auto-fields,liferay-dynamic-select">
 	new Liferay.AutoFields(
 		{
 			contentBox: '#<portlet:namespace />addresses',

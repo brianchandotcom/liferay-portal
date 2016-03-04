@@ -59,7 +59,7 @@ public class JSPImportsFormatterTest {
 	}
 
 	private void _test(String original, String expected) throws Exception {
-		String formatted = _importsFormatter.format(original);
+		String formatted = _importsFormatter.sortAndGroupImports(original);
 
 		Assert.assertEquals(expected, formatted);
 	}

@@ -51,7 +51,7 @@ public class BNDImportsFormatter extends ImportsFormatter {
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 
-		String newImports = importsFormatter.format(imports);
+		String newImports = importsFormatter.sortAndGroupImports(imports);
 
 		newImports = StringUtil.replace(
 			newImports, new String[] {"\n", "\n,\\"},

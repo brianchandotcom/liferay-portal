@@ -92,7 +92,7 @@ public class JavaImportsFormatter extends ImportsFormatter {
 
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
-		String newImports = importsFormatter.format(sb.toString());
+		String newImports = importsFormatter.sortAndGroupImports(sb.toString());
 
 		if (!imports.equals(newImports)) {
 			content = StringUtil.replaceFirst(content, imports, newImports);

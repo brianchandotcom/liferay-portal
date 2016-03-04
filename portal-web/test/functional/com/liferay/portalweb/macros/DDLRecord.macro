@@ -30,7 +30,7 @@
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
 	</command>

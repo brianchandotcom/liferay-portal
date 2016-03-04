@@ -29,7 +29,7 @@
 <#assign monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", fieldValue.get(MONTH))>
 <#assign yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", fieldValue.get(YEAR))>
 
-<@liferay_aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName>
+<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName>
 	<div class="form-group">
 		<@liferay_ui["input-date"]
 			cssClass=cssClass

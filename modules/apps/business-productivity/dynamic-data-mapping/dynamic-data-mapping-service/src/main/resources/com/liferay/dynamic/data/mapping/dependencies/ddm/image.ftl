@@ -18,7 +18,7 @@
 	<#assign name = fileJSONObject.getString("name")>
 </#if>
 
-<@liferay_aui["field-wrapper"] data=data>
+<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 

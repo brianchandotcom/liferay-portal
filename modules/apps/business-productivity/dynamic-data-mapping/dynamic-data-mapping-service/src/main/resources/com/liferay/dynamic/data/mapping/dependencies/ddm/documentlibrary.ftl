@@ -18,7 +18,7 @@
 	</#if>
 </#if>
 
-<@liferay_aui["field-wrapper"] data=data required=required>
+<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data required=required>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 

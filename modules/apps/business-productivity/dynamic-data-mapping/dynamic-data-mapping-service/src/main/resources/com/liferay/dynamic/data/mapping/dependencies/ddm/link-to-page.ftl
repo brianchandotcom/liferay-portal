@@ -3,7 +3,7 @@
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutLocalService")>
 <#assign layoutService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutService")>
 
-<@liferay_aui["field-wrapper"] data=data>
+<@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>
 	<#assign selectedLayoutName = "">
 
 	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>

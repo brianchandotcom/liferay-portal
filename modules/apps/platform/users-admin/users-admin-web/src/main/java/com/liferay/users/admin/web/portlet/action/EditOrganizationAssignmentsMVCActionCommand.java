@@ -15,6 +15,8 @@
 package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -91,8 +93,15 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		_userService.addOrganizationUsers(organizationId, addUserIds);
-		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
+		try (
+			ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+				new ProxyModeThreadLocalCloseable()) {
+
+			ProxyModeThreadLocal.setForceSync(true);
+
+			_userService.addOrganizationUsers(organizationId, addUserIds);
+			_userService.unsetOrganizationUsers(organizationId, removeUserIds);
+		}
 	}
 
 	private UserService _userService;

@@ -14,7 +14,7 @@
 
 package com.liferay.flags.web.portlet.action;
 
-import com.liferay.flags.web.constants.PageFlagsPortletKeys;
+import com.liferay.flags.web.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PageFlagsPortletKeys.FLAGS,
-		"javax.portlet.name=" + PageFlagsPortletKeys.PAGE_FLAGS,
+		"javax.portlet.name=" + FlagsPortletKeys.FLAGS,
 		"mvc.command.name=/flags/edit_entry"
 	},
 	service = MVCRenderCommand.class

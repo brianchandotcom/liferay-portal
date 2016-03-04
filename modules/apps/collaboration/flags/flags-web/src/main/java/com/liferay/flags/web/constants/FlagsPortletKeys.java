@@ -18,7 +18,7 @@ package com.liferay.flags.web.constants;
  * @author Adolfo Pérez
  * @author Peter Fellwock
  */
-public class PageFlagsPortletKeys {
+public class FlagsPortletKeys {
 
 	public static final String FLAGS =
 		"com_liferay_flags_web_portlet_FlagsPortlet";

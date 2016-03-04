@@ -37,7 +37,8 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 		java.lang.String reporterEmailAddress, long reportedUserId,
 		java.lang.String contentTitle, java.lang.String contentURL,
 		java.lang.String reason,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_flagsEntryService.addEntry(className, classPK, reporterEmailAddress,
 			reportedUserId, contentTitle, contentURL, reason, serviceContext);
 	}

@@ -3976,3 +3976,27 @@ This change standardizes naming conventions and separates concepts in the
 Product Menu.
 
 ---------------------------------------
+
+### FlagsEntryService addEntry method throws PortalException
+- **Date:** 2016-Mar-4
+- **JIRA Ticket:** LPS-63109
+
+#### What changed?
+
+Method `FlagsEntryService.addEntry` throws PortalException if the
+reporterEmailAddress is not a valid email address.
+
+#### Who is affected?
+
+Any caller of the method `FlagsEntryService.addEntry`.
+
+#### How should I update my code?
+
+Consider if the `PortalException` should be catch or not and adapt the code
+accordingly, catching or throwing the exception.
+
+#### Why was this change made?
+
+To prevent providing incorrect email address when adding flag entries.
+
+---------------------------------------

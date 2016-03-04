@@ -19,10 +19,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jonathan Lee
  */
+@Component(
+	immediate = true,
+	property = {"resource.name=" + MicroblogsPermission.RESOURCE_NAME},
+	service = ResourcePermissionChecker.class
+)
 public class MicroblogsPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.microblogs";

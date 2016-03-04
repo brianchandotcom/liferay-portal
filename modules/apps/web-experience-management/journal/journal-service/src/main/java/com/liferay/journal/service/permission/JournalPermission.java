@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
+	immediate = true,
 	property = {"resource.name=" + JournalPermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )

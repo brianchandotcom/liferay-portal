@@ -21,10 +21,18 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
  */
+@Component(
+	immediate = true,
+	property = {"resource.name=" + DDMDataProviderPermission.RESOURCE_NAME},
+	service = ResourcePermissionChecker.class
+)
 public class DDMDataProviderPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =

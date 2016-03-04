@@ -19,11 +19,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Lundgren
  * @author Andrea Di Giorgi
  */
+@Component(
+	immediate = true,
+	property = {"resource.name=" + CalendarPortletPermission.RESOURCE_NAME},
+	service = ResourcePermissionChecker.class
+)
 public class CalendarPortletPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.calendar";

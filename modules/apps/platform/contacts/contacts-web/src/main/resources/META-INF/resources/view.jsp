@@ -97,7 +97,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 								<aui:input label="" name="checkAll" type="checkbox" />
 
 								<c:if test="<%= !userPublicPage %>">
-									<aui:select cssClass="contact-group-filter-select" inlineField="true" label="" name="filterBy" value="<%= filterBy %>">
+									<aui:select cssClass="contact-group-filter-select" inlineField="<%= true %>" label="" name="filterBy" value="<%= filterBy %>">
 										<aui:option label="all" value="<%= ContactsConstants.FILTER_BY_DEFAULT %>" />
 
 										<c:if test="<%= showOnlySiteMembers %>">
@@ -145,7 +145,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 		</aui:form>
 
 		<aui:row cssClass="contacts-result-container lfr-app-column-view">
-			<aui:col cssClass="contacts-list" first="<%= true %>" width="30">
+			<aui:col cssClass="contacts-list" first="<%= true %>" width="<%= 30 %>">
 				<div class="toggle-user">
 					<i class="icon-chevron-left"></i>
 				</div>
@@ -298,7 +298,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 				</aui:row>
 			</aui:col>
 
-			<aui:col cssClass="contacts-container" width="70">
+			<aui:col cssClass="contacts-container" width="<%= 70 %>">
 				<div id="<portlet:namespace />userToolbarButtons"><!-- --></div>
 
 				<div class="hide" id="<portlet:namespace />contactCenterToolbarButtons">

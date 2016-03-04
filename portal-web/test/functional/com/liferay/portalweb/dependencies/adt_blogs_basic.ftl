@@ -36,7 +36,7 @@
 			<#assign blogsEntryClassName = "com.liferay.blogs.kernel.model.BlogsEntry" />
 
 			<#if blogsPortletInstanceConfiguration.enableFlags()>
-				<@liferay_ui["flags"]
+				<@liferay_flags["flags"]
 					className=blogsEntryClassName
 					classPK=entry.getEntryId()
 					contentTitle=entry.getTitle()

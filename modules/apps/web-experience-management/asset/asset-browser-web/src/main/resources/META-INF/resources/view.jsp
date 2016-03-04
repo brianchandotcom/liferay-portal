@@ -52,6 +52,12 @@ portletURL.setParameter("eventName", eventName);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
+long[] filterGroupIds = selectedGroupIds;
+
+if (groupId > 0) {
+	filterGroupIds = new long[] {groupId};
+}
+
 AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse));
 
 AssetBrowserSearchTerms searchTerms = (AssetBrowserSearchTerms)assetBrowserSearch.getSearchTerms();
@@ -61,11 +67,11 @@ AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.
 int assetEntriesTotal = 0;
 
 if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
+	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(filterGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
 
 	assetBrowserSearch.setTotal(assetEntriesTotal);
 
-	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
+	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(filterGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
 
 	assetBrowserSearch.setResults(assetEntries);
 }
@@ -76,7 +82,7 @@ else {
 		statuses = new int[] {WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_SCHEDULED};
 	}
 
-	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), ArrayUtil.clone(selectedGroupIds), themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
+	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), filterGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
 
 	assetEntriesTotal = hits.getLength();
 
@@ -88,10 +94,12 @@ else {
 
 List<ManagementBarFilterItem> managementBarFilterItems = new ArrayList<>();
 
+selectedGroupIds = ArrayUtil.append(new long[] {0}, selectedGroupIds);
+
 for (long curGroupId : selectedGroupIds) {
 	Group curGroup = GroupLocalServiceUtil.fetchGroup(curGroupId);
 
-	if (curGroup == null) {
+	if ((curGroup == null) && (curGroupId > 0)) {
 		continue;
 	}
 
@@ -105,7 +113,16 @@ for (long curGroupId : selectedGroupIds) {
 
 	groupURL.setParameter("groupId", String.valueOf(curGroupId));
 
-	ManagementBarFilterItem managementBarFilterItem = new ManagementBarFilterItem(active, HtmlUtil.escape(curGroup.getDescriptiveName(locale)), groupURL.toString());
+	String label = StringPool.BLANK;
+
+	if (curGroup != null) {
+		label = HtmlUtil.escape(curGroup.getDescriptiveName(locale));
+	}
+	else {
+		label = LanguageUtil.get(request, "all");
+	}
+
+	ManagementBarFilterItem managementBarFilterItem = new ManagementBarFilterItem(active, label, groupURL.toString());
 
 	managementBarFilterItems.add(managementBarFilterItem);
 }
@@ -128,24 +145,28 @@ for (long curGroupId : selectedGroupIds) {
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
 
 			<%
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			String label = StringPool.BLANK;
+
+			if (groupId > 0) {
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				label = HtmlUtil.escape(group.getDescriptiveName(locale));
+			}
+			else {
+				label = LanguageUtil.get(request, "all");
+			}
 			%>
 
 			<liferay-frontend:management-bar-filter
-				label="my-sites"
 				managementBarFilterItems="<%= managementBarFilterItems %>"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+				value="<%= label %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -166,55 +187,133 @@ for (long curGroupId : selectedGroupIds) {
 
 			<%
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
+
+			String cssClass = StringPool.BLANK;
+
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			if (assetEntry.getEntryId() != refererAssetEntryId) {
+				data.put("assetentryid", assetEntry.getEntryId());
+				data.put("assetclassname", assetEntry.getClassName());
+				data.put("assetclasspk", assetEntry.getClassPK());
+				data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
+				data.put("assettitle", assetEntry.getTitle(locale));
+				data.put("groupdescriptivename", group.getDescriptiveName(locale));
+
+				cssClass = "selector-button";
+			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="title"
-			>
-				<c:choose>
-					<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
+							userId="<%= assetEntry.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
 						<%
-						Map<String, Object> data = new HashMap<String, Object>();
+						Date modifiedDate = assetEntry.getModifiedDate();
 
-						data.put("assetentryid", assetEntry.getEntryId());
-						data.put("assetclassname", assetEntry.getClassName());
-						data.put("assetclasspk", assetEntry.getClassPK());
-						data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
-						data.put("assettitle", assetEntry.getTitle(locale));
-						data.put("groupdescriptivename", group.getDescriptiveName(locale));
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 						%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= assetEntry.getTitle(locale) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= assetEntry.getTitle(locale) %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+						<h6 class="text-default">
+							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" /></span>
+						</h6>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
-			/>
+						<h5>
+							<c:choose>
+								<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+										<%= assetEntry.getTitle(locale) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= assetEntry.getTitle(locale) %>
+								</c:otherwise>
+							</c:choose>
+						</h5>
 
-			<liferay-ui:search-container-column-text
-				name="user-name"
-				value="<%= PortalUtil.getUserName(assetEntry) %>"
-			/>
+						<h6 class="text-default">
+							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= assetEntry.getModifiedDate() %>"
-			/>
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 
-			<liferay-ui:search-container-column-text
-				name="site"
-				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-			/>
+					AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
+								<liferay-frontend:vertical-card
+									cssClass="<%= cssClass %>"
+									data="<%= data %>"
+									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
+									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+									title="<%= assetEntry.getTitle(locale) %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<liferay-frontend:icon-vertical-card
+									cssClass="<%= cssClass %>"
+									data="<%= data %>"
+									icon="<%= assetRendererFactory.getIconCssClass() %>"
+									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+									title="<%= assetEntry.getTitle(locale) %>"
+								/>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="title"
+					>
+						<c:choose>
+							<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+									<%= assetEntry.getTitle(locale) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= assetEntry.getTitle(locale) %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="user-name"
+						value="<%= PortalUtil.getUserName(assetEntry) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= assetEntry.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="site"
+						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

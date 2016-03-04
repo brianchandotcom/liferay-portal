@@ -103,30 +103,23 @@ public class VerifyGroupedModel extends VerifyProcess {
 			long primKey)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement(
+		try (PreparedStatement ps = con.prepareStatement(
 				"select groupId from " + tableName + " where " +
-					primaryKeColumnName + " = ?");
+					primaryKeColumnName + " = ?")) {
 
 			ps.setLong(1, primKey);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("groupId");
+				}
 
-			if (rs.next()) {
-				return rs.getLong("groupId");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to find " + tableName + " " + primKey);
+				}
+
+				return 0;
 			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find " + tableName + " " + primKey);
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -141,23 +134,19 @@ public class VerifyGroupedModel extends VerifyProcess {
 			VerifiableGroupedModel verifiableGroupedModel)
 		throws Exception {
 
-		PreparedStatement ps1 = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(7);
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			StringBundler sb = new StringBundler(7);
+		sb.append("select ");
+		sb.append(verifiableGroupedModel.getPrimaryKeyColumnName());
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append(verifiableGroupedModel.getRelatedPrimaryKeyColumnName());
+		sb.append(" from ");
+		sb.append(verifiableGroupedModel.getTableName());
+		sb.append(" where groupId is null");
 
-			sb.append("select ");
-			sb.append(verifiableGroupedModel.getPrimaryKeyColumnName());
-			sb.append(StringPool.COMMA_AND_SPACE);
-			sb.append(verifiableGroupedModel.getRelatedPrimaryKeyColumnName());
-			sb.append(" from ");
-			sb.append(verifiableGroupedModel.getTableName());
-			sb.append(" where groupId is null");
-
-			ps1 = con.prepareStatement(sb.toString());
-
-			rs = ps1.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps1 = con.prepareStatement(sb.toString());
+			ResultSet rs = ps1.executeQuery()) {
 
 			sb = new StringBundler(6);
 
@@ -196,9 +185,6 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 				ps2.executeBatch();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps1, rs);
 		}
 	}
 

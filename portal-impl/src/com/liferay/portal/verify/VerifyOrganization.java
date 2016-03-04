@@ -101,7 +101,6 @@ public class VerifyOrganization extends VerifyProcess {
 		sb.append("and AssetEntry.classUuid is null");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-
 			PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			ResultSet rs = ps1.executeQuery()) {
 

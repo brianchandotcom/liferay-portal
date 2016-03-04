@@ -23,35 +23,23 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.model.Group" %><%@
+<%@ page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.social.activities.web.constants.SocialActivitiesWebKeys" %><%@
-page import="com.liferay.social.activities.web.util.SocialActivityQueryHelper" %><%@
-page import="com.liferay.social.kernel.model.SocialActivity" %>
-
-<%@ page import="java.util.List" %>
-
-<%@ page import="javax.portlet.ResourceURL" %>
+page import="com.liferay.social.activities.web.portlet.display.context.DefaultSocialActivitiesDisplayContext" %><%@
+page import="com.liferay.social.activities.web.portlet.display.context.SocialActivitiesDisplayContext" %><%@
+page import="com.liferay.social.activities.web.portlet.display.context.util.SocialActivitiesRequestHelper" %><%@
+page import="com.liferay.social.activities.web.util.SocialActivityQueryHelper" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-int max = GetterUtil.getInteger(portletPreferences.getValue("max", "10"));
-
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+SocialActivitiesRequestHelper socialActivitiesRequestHelper = new SocialActivitiesRequestHelper(request);
+SocialActivitiesDisplayContext socialActivitiesDisplayContext = new DefaultSocialActivitiesDisplayContext(socialActivitiesRequestHelper);
 %>
 
 <%@ include file="/init-ext.jsp" %>

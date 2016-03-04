@@ -25,7 +25,7 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<aui:fieldset>
-		<aui:select label="maximum-activities-to-display" name="preferences--max--" value="<%= max %>">
+		<aui:select label="maximum-activities-to-display" name="preferences--max--" value="<%= socialActivitiesDisplayContext.getMax() %>">
 			<aui:option label="1" />
 			<aui:option label="2" />
 			<aui:option label="3" />
@@ -48,10 +48,10 @@
 
 	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 		<liferay-ui:rss-settings
-			delta="<%= rssDelta %>"
-			displayStyle="<%= rssDisplayStyle %>"
-			enabled="<%= enableRSS %>"
-			feedType="<%= rssFeedType %>"
+			delta="<%= socialActivitiesDisplayContext.getRSSDelta() %>"
+			displayStyle="<%= socialActivitiesDisplayContext.getRSSDisplayStyle() %>"
+			enabled="<%= socialActivitiesDisplayContext.isRSSEnabled() %>"
+			feedType="<%= socialActivitiesDisplayContext.getRSSFeedType() %>"
 		/>
 	</c:if>
 

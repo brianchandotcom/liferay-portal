@@ -19,25 +19,14 @@
 <%
 SocialActivityQueryHelper socialActivityQueryHelper = (SocialActivityQueryHelper)request.getAttribute(SocialActivitiesWebKeys.SOCIAL_ACTIVITY_QUERY_HELPER);
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-List<SocialActivity> socialActivities = socialActivityQueryHelper.getSocialActivities(group, 0, max);
-
-String feedTitle = LanguageUtil.format(request, "x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
-
-ResourceURL rssURL = renderResponse.createResourceURL();
-
-rssURL.setParameter("feedTitle", feedTitle);
-rssURL.setResourceID("rss");
-
-String taglibFeedTitle = LanguageUtil.format(request, "subscribe-to-x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
 %>
 
 <liferay-ui:social-activities
-	activities="<%= socialActivities %>"
-	feedDisplayStyle="<%= rssDisplayStyle %>"
-	feedEnabled="<%= enableRSS %>"
-	feedResourceURL="<%= rssURL %>"
-	feedTitle="<%= taglibFeedTitle %>"
-	feedType="<%= rssFeedType %>"
-	feedURLMessage="<%= taglibFeedTitle %>"
+	activities="<%= socialActivityQueryHelper.getSocialActivities(group, 0, socialActivitiesDisplayContext.getMax()) %>"
+	feedDisplayStyle="<%= socialActivitiesDisplayContext.getRSSDisplayStyle() %>"
+	feedEnabled="<%= socialActivitiesDisplayContext.isRSSEnabled() %>"
+	feedResourceURL="<%= socialActivitiesDisplayContext.getRSSResourceURL() %>"
+	feedTitle="<%= socialActivitiesDisplayContext.getTaglibFeedTitle() %>"
+	feedType="<%= socialActivitiesDisplayContext.getRSSFeedType() %>"
+	feedURLMessage="<%= socialActivitiesDisplayContext.getTaglibFeedTitle() %>"
 />

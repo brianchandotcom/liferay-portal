@@ -36,6 +36,12 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "EMBEDDED", required = false)
 	public OperationMode operationMode();
 
+	@Meta.AD(
+		deflt = "liferay-", description = "%index-name-prefix-help",
+		required = false
+	)
+	public String indexNamePrefix();
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean bootstrapMlockAll();
 

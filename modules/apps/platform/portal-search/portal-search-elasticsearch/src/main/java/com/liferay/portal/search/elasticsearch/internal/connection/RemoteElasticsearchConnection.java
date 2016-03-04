@@ -183,7 +183,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		settingsBuilder.put("node.client", true);
 		settingsBuilder.put("node.data", false);
 		settingsBuilder.put(
-			"path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
+			"path.logs", props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		settingsBuilder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
@@ -218,15 +218,12 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		setTransportAddresses(SetUtil.fromArray(transportAddresses));
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
+	@Reference
+	protected Props props;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
-	private Props _props;
 	private Set<String> _transportAddresses = new HashSet<>();
 
 }

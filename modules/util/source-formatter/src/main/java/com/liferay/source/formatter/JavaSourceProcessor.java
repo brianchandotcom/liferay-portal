@@ -969,6 +969,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkUpgradeClass(fileName, newContent);
 
+		// LPS-63953
+
+		if (!absolutePath.contains("poshi") &&
+			!fileName.endsWith("StringUtilTest.java")) {
+
+			checkReplaceSingleLengthString(fileName, newContent);
+		}
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(

@@ -39,6 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
@@ -498,6 +499,44 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				"Do not use org.apache.commons.beanutils.PropertyUtils: " +
 					fileName);
 		}
+	}
+
+	protected void checkReplaceSingleLengthString(
+			String fileName, String newContent)
+		throws Exception {
+
+		Matcher matcher = replaceSingleLengthString.matcher(newContent);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String method = null;
+
+		do {
+			method = matcher.group(1);
+
+			String fieldName = matcher.group(5);
+
+			if (fieldName == null) {
+				break;
+			}
+
+			Field field = StringPool.class.getDeclaredField(fieldName);
+
+			String value = (String)field.get(null);
+
+			if (value.length() == 1) {
+				break;
+			}
+		}
+		while (matcher.find());
+
+		processErrorMessage(
+			fileName,
+			"Use StringUtil." + method + "(String, char, char) or " +
+				"StringUtil." + method + "(String, char, String) instead: "
+					+ fileName);
 	}
 
 	protected void checkResourceUtil(
@@ -2222,6 +2261,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
+	protected static Pattern replaceSingleLengthString = Pattern.compile(
+		"StringUtil\\.(replace|replaceFirst|replaceLast)\\((\\s)?[^,\\s\\)]+," +
+			" (\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)), [^,\\s\\)]+\\);");
 	protected static Pattern sessionKeyPattern = Pattern.compile(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),

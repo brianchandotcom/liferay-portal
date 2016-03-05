@@ -216,6 +216,8 @@ public class ActionKeys {
 
 	public static final String PRINT = "PRINT";
 
+	public static final String PUBLISH_PORTLET_INFO = "PUBLISH_PORTLET_INFO";
+
 	public static final String PUBLISH_STAGING = "PUBLISH_STAGING";
 
 	public static final String PUBLISH_TO_REMOTE = "PUBLISH_TO_REMOTE";

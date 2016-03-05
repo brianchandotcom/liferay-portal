@@ -29,11 +29,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -215,61 +212,6 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	@Override
-	public String updateXMLDefaultLocale(
-		String xml, Locale contentDefaultLocale,
-		Locale contentNewDefaultLocale) {
-
-		try {
-			if (LocaleUtil.equals(
-					contentDefaultLocale, contentNewDefaultLocale)) {
-
-				return xml;
-			}
-
-			Document document = _saxReader.read(xml);
-
-			Element rootElement = document.getRootElement();
-
-			Attribute availableLocalesAttribute = rootElement.attribute(
-				_AVAILABLE_LOCALES);
-
-			String contentNewDefaultLanguageId = LocaleUtil.toLanguageId(
-				contentNewDefaultLocale);
-
-			String availableLocalesAttributeValue =
-				availableLocalesAttribute.getValue();
-
-			if (!availableLocalesAttributeValue.contains(
-					contentNewDefaultLanguageId)) {
-
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(availableLocalesAttribute.getValue());
-				sb.append(StringPool.COMMA);
-				sb.append(contentNewDefaultLanguageId);
-
-				availableLocalesAttribute.setValue(sb.toString());
-			}
-
-			Attribute defaultLocaleAttribute = rootElement.attribute(
-				_DEFAULT_LOCALE);
-
-			defaultLocaleAttribute.setValue(contentNewDefaultLanguageId);
-
-			fixElementsDefaultLocale(
-				rootElement, contentDefaultLocale, contentNewDefaultLocale);
-
-			return document.formattedString();
-		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	@Override
 	public String validateXML(String xml) throws PortalException {
 		try {
 			Document document = _saxReader.read(xml, getXMLSchema());
@@ -313,43 +255,6 @@ public class DDMXMLImpl implements DDMXML {
 
 				updateField(dynamicContentElement, value);
 			}
-		}
-	}
-
-	protected void fixElementsDefaultLocale(
-		Element element, Locale contentDefaultLocale,
-		Locale contentNewDefaultLocale) {
-
-		for (Element dynamicElementElement :
-				element.elements(_DYNAMIC_ELEMENT)) {
-
-			Element importMetaDataElement =
-				(Element)dynamicElementElement.selectSingleNode(
-					"meta-data[@locale='" + contentNewDefaultLocale.toString() +
-						"']");
-
-			if (importMetaDataElement == null) {
-				Element metaDataElement =
-					(Element)dynamicElementElement.selectSingleNode(
-						"meta-data[@locale='" +
-							contentDefaultLocale.toString() + "']");
-
-				Element copiedMetadataElement = metaDataElement.createCopy();
-
-				Attribute localeAttribute = copiedMetadataElement.attribute(
-					_LOCALE);
-
-				String contentNewDefaultLanguageId = LocaleUtil.toLanguageId(
-					contentNewDefaultLocale);
-
-				localeAttribute.setValue(contentNewDefaultLanguageId);
-
-				dynamicElementElement.add(copiedMetadataElement);
-			}
-
-			fixElementsDefaultLocale(
-				dynamicElementElement, contentDefaultLocale,
-				contentNewDefaultLocale);
 		}
 	}
 
@@ -415,14 +320,6 @@ public class DDMXMLImpl implements DDMXML {
 			elementNames.add(name);
 		}
 	}
-
-	private static final String _AVAILABLE_LOCALES = "available-locales";
-
-	private static final String _DEFAULT_LOCALE = "default-locale";
-
-	private static final String _DYNAMIC_ELEMENT = "dynamic-element";
-
-	private static final String _LOCALE = "locale";
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
 

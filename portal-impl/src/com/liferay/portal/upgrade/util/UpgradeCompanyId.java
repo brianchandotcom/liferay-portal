@@ -44,8 +44,10 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		List<Callable<Void>> callables = new ArrayList<>();
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
+			tableUpdater.setSkipAddColumnToTable(false);
+
 			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
-				tableUpdater.setCreateCompanyIdColumn(true);
+				tableUpdater.setSkipAddColumnToTable(true);
 			}
 
 			callables.add(tableUpdater);
@@ -96,22 +98,23 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			try {
 				_con = DataAccess.getUpgradeOptimizedConnection();
 
-				if (_createCompanyIdColumn) {
+				if (_skipAddColumnToTable) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Adding column companyId to table " + _tableName);
+							"Skipping add companyId for table " + _tableName);
 					}
-
-					runSQL(
-						_con,
-						"alter table " + _tableName +" add companyId LONG");
 				}
 				else {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Skipping the creation of companyId column for " +
-								"table " + _tableName);
+							"Adding column companyId to table " +
+								getTableName());
 					}
+
+					runSQL(
+						_con,
+						"alter table " + getTableName() +
+							" add companyId LONG");
 				}
 
 				update();
@@ -127,8 +130,8 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			return _tableName;
 		}
 
-		public void setCreateCompanyIdColumn(boolean createCompanyIdColumn) {
-			_createCompanyIdColumn = createCompanyIdColumn;
+		public void setSkipAddColumnToTable(boolean skipAddColumnToTable) {
+			_skipAddColumnToTable = skipAddColumnToTable;
 		}
 
 		public void update() throws IOException, SQLException {
@@ -202,8 +205,8 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		private final String _columnName;
 		private Connection _con;
-		private boolean _createCompanyIdColumn;
 		private final String[][] _foreignNamesArray;
+		private boolean _skipAddColumnToTable;
 		private final String _tableName;
 
 	}

@@ -372,7 +372,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 								</aui:fieldset>
 							</c:if>
 
-							<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+							<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
 							<c:if test="<%= !quickPublish %>">
 								<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />

@@ -129,7 +129,7 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 						</span>
 					</aui:fieldset>
 
-					<liferay-staging:content disableInputs="<%= true %>" parameterMap="<%= parameterMap %>" type="<%= cmd %>" />
+					<liferay-staging:content disableInputs="<%= true %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= cmd %>" />
 
 					<aui:button-row>
 						<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, submitLanguageKey) %>" />

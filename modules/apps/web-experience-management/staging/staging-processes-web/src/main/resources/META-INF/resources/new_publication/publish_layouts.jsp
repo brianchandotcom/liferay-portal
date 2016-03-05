@@ -287,7 +287,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 					</aui:fieldset>
 				</c:if>
 
-				<liferay-staging:content cmd="<%= cmd %>" disableInputs="<%= configuredPublish %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+				<liferay-staging:content cmd="<%= cmd %>" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
 				<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" disableInputs="<%= configuredPublish %>" />
 

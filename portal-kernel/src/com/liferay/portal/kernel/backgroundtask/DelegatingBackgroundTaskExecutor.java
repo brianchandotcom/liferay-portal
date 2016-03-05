@@ -44,6 +44,11 @@ public class DelegatingBackgroundTaskExecutor
 	}
 
 	@Override
+	public String generateLockKey(BackgroundTask backgroundTask) {
+		return _backgroundTaskExecutor.generateLockKey(backgroundTask);
+	}
+
+	@Override
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask) {
 

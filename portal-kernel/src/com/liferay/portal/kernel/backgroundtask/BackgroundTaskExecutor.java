@@ -26,6 +26,8 @@ public interface BackgroundTaskExecutor {
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception;
 
+	public String generateLockKey(BackgroundTask backgroundTask);
+
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask);
 

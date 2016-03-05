@@ -155,6 +155,8 @@
 	</command>
 
 	<command name="ViewDeactivatedPortalInstance" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Virtual Instances" />
 		</execute>

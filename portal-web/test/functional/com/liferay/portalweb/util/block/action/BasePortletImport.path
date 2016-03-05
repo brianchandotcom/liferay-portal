@@ -155,6 +155,11 @@
 </tr>
 <!--CONTENT-->
 <tr>
+	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
+	<td>//input[contains(@id,'chooseContent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_CHECK_BOX</td>
 	<td>//label[contains(.,'Content')]/input[2]</td>
 	<td></td>

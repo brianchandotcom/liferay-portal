@@ -78,44 +78,41 @@ else {
 
 <%@ include file="/toolbar.jspf" %>
 
-<aui:form action="<%= portletURLString %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+<c:choose>
+	<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 
-	<c:choose>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+		<%
+		request.setAttribute("view.jsp-backURL", backURL);
+		request.setAttribute("view.jsp-inactiveUsersCount", inactiveUsersCount);
+		request.setAttribute("view.jsp-organization", organization);
+		request.setAttribute("view.jsp-organizationGroupId", organizationGroupId);
+		request.setAttribute("view.jsp-organizationId", organizationId);
+		request.setAttribute("view.jsp-portletURL", portletURL);
+		request.setAttribute("view.jsp-status", status);
+		request.setAttribute("view.jsp-toolbarItem", toolbarItem);
+		request.setAttribute("view.jsp-usersCount", usersCount);
+		request.setAttribute("view.jsp-usersListView", usersListView);
+		request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
+		%>
 
-			<%
-			request.setAttribute("view.jsp-backURL", backURL);
-			request.setAttribute("view.jsp-inactiveUsersCount", inactiveUsersCount);
-			request.setAttribute("view.jsp-organization", organization);
-			request.setAttribute("view.jsp-organizationGroupId", organizationGroupId);
-			request.setAttribute("view.jsp-organizationId", organizationId);
-			request.setAttribute("view.jsp-portletURL", portletURL);
-			request.setAttribute("view.jsp-status", status);
-			request.setAttribute("view.jsp-toolbarItem", toolbarItem);
-			request.setAttribute("view.jsp-usersCount", usersCount);
-			request.setAttribute("view.jsp-usersListView", usersListView);
-			request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
-			%>
+		<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+		<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
 
-			<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
+		<%
+		request.setAttribute("view.jsp-backURL", backURL);
+		request.setAttribute("view.jsp-inactiveUsersCount", inactiveUsersCount);
+		request.setAttribute("view.jsp-status", status);
+		request.setAttribute("view.jsp-usersListView", usersListView);
+		request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
+		%>
 
-			<%
-			boolean organizationContextView = false;
-			%>
-
-			<%@ include file="/view_flat_users.jspf" %>
-		</c:when>
-	</c:choose>
-</aui:form>
+		<liferay-util:include page="/view_flat_users.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
 
 <aui:script>
 	function <portlet:namespace />deleteOrganization(organizationId) {

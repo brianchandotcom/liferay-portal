@@ -85,63 +85,70 @@ if (filterManageableOrganizations) {
 			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
 
-		<liferay-ui:search-container
-			id="organizations"
-			searchContainer="<%= searchContainer %>"
-			var="organizationSearchContainer"
-		>
-			<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-			<aui:input name="deleteOrganizationIds" type="hidden" />
+		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
+			<liferay-portlet:renderURLParams varImpl="portletURL" />
+			<aui:input name="<%= Constants.CMD %>" type="hidden" />
+			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-			<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-				<div id="breadcrumb">
-					<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-				</div>
-			</c:if>
-
-			<%
-			OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
-
-			long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
-
-			if (parentOrganizationId <= 0) {
-				parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-			}
-			%>
-
-			<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.Organization"
-				escapedModel="<%= true %>"
-				keyProperty="organizationId"
-				modelVar="organization"
+			<liferay-ui:search-container
+				id="organizations"
+				searchContainer="<%= searchContainer %>"
+				var="organizationSearchContainer"
 			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-					<portlet:param name="toolbarItem" value="view-all-organizations" />
-					<portlet:param name="redirect" value="<%= organizationSearchContainer.getIteratorURL().toString() %>" />
-					<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
-					<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-				</liferay-portlet:renderURL>
+				<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="deleteOrganizationIds" type="hidden" />
+
+				<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+					<div id="breadcrumb">
+						<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+					</div>
+				</c:if>
 
 				<%
-				if (!OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.VIEW)) {
-					rowURL = null;
+				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
+
+				long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+				if (parentOrganizationId <= 0) {
+					parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 				}
 				%>
 
-				<%@ include file="/organization/search_columns.jspf" %>
+				<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/organization_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.model.Organization"
+					escapedModel="<%= true %>"
+					keyProperty="organizationId"
+					modelVar="organization"
+				>
+					<liferay-portlet:renderURL varImpl="rowURL">
+						<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
+						<portlet:param name="toolbarItem" value="view-all-organizations" />
+						<portlet:param name="redirect" value="<%= organizationSearchContainer.getIteratorURL().toString() %>" />
+						<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
+						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+					</liferay-portlet:renderURL>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
+					<%
+					if (!OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.VIEW)) {
+						rowURL = null;
+					}
+					%>
+
+					<%@ include file="/organization/search_columns.jspf" %>
+
+					<liferay-ui:search-container-column-jsp
+						align="right"
+						cssClass="entry-action"
+						path="/organization_action.jsp"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator markupView="lexicon" />
+			</liferay-ui:search-container>
+		</aui:form>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">
@@ -150,7 +157,31 @@ if (filterManageableOrganizations) {
 	</c:otherwise>
 </c:choose>
 
-<%@ include file="/add_menu.jspf" %>
+<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION) %>">
+	<liferay-frontend:add-menu>
+		<portlet:renderURL var="viewUsersURL">
+			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+			<portlet:param name="usersListView" value="<%= usersListView %>" />
+		</portlet:renderURL>
+
+		<%
+		for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
+		%>
+
+			<portlet:renderURL var="addOrganizationURL">
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
+				<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+				<portlet:param name="type" value="<%= organizationType %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
+
+		<%
+		}
+		%>
+
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request, "organizationSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');

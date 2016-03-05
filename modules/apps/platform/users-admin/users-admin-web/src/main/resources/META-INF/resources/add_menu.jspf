@@ -21,15 +21,11 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 
 <c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
 	<liferay-frontend:add-menu>
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-			<portlet:param name="usersListView" value="<%= usersListView %>" />
-		</portlet:renderURL>
-
 		<c:if test="<%= hasAddUserPermission %>">
 			<portlet:renderURL var="addUserURL">
 				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
-				<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="organizationsSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "user") %>' url="<%= addUserURL.toString() %>" />
@@ -43,7 +39,8 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 
 				<portlet:renderURL var="addOrganizationURL">
 					<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
-					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="parentOrganizationSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 					<portlet:param name="type" value="<%= organizationType %>" />
 				</portlet:renderURL>
 

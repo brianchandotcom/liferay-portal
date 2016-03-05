@@ -854,7 +854,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		Map<String, String> args = new HashMap<>();
 
-		args.put("group", BasePortalToolDefaultsPlugin.PORTAL_TOOL_GROUP);
+		args.put("group", GradleUtil.PORTAL_TOOL_GROUP);
 		args.put("module", portalToolName);
 
 		configuration.exclude(args);

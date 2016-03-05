@@ -708,7 +708,7 @@ public class ServicePreAction extends Action {
 		boolean themeJsBarebone = PropsValues.JAVASCRIPT_BAREBONE_ENABLED;
 
 		if (themeJsBarebone) {
-			if (signedIn) {
+			if (signedIn || PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED) {
 				themeJsBarebone = false;
 			}
 		}

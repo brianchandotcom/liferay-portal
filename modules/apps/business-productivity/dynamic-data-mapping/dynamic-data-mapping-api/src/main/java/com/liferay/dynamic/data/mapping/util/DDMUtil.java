@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 
 import org.osgi.framework.FrameworkUtil;
@@ -178,6 +180,12 @@ public class DDMUtil {
 
 	public static Fields mergeFields(Fields newFields, Fields existingFields) {
 		return getDDM().mergeFields(newFields, existingFields);
+	}
+
+	public static DDMForm updateDDMFormDefaultLocale(
+		DDMForm ddmForm, Locale newDefaultLocale) {
+
+		return getDDM().updateDDMFormDefaultLocale(ddmForm, newDefaultLocale);
 	}
 
 	protected static DDM getDDM() {

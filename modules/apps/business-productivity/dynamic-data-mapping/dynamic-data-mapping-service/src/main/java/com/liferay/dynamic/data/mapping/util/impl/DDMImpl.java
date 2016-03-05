@@ -584,6 +584,27 @@ public class DDMImpl implements DDM {
 		return existingFields;
 	}
 
+	@Override
+	public DDMForm updateDDMFormDefaultLocale(
+		DDMForm ddmForm, Locale newDefaultLocale) {
+
+		DDMForm ddmFormCopy = new DDMForm(ddmForm);
+
+		Locale defautLocale = ddmForm.getDefaultLocale();
+
+		if (defautLocale.equals(newDefaultLocale)) {
+			return ddmFormCopy;
+		}
+
+		ddmFormCopy.addAvailableLocale(newDefaultLocale);
+		ddmFormCopy.setDefaultLocale(newDefaultLocale);
+
+		updateDDMFormFieldsDefaultLocale(
+			ddmFormCopy.getDDMFormFields(), newDefaultLocale);
+
+		return ddmFormCopy;
+	}
+
 	protected void addDDMFormFieldLocalizedProperties(
 		JSONObject jsonObject, DDMFormField ddmFormField, Locale locale,
 		Locale defaultLocale) {
@@ -1263,6 +1284,60 @@ public class DDMImpl implements DDM {
 		String value = (String)fieldsDisplayField.getValue();
 
 		return StringUtil.split(value);
+	}
+
+	protected void updateDDMFormFieldDefaultLocale(
+		DDMFormField ddmFormField, Locale newDefaultLocale) {
+
+		updateDDMFormFieldOptionsDefaultLocale(
+			ddmFormField.getDDMFormFieldOptions(), newDefaultLocale);
+
+		updateLocalizedValueDefaultLocale(
+			ddmFormField.getLabel(), newDefaultLocale);
+		updateLocalizedValueDefaultLocale(
+			ddmFormField.getPredefinedValue(), newDefaultLocale);
+		updateLocalizedValueDefaultLocale(
+			ddmFormField.getStyle(), newDefaultLocale);
+		updateLocalizedValueDefaultLocale(
+			ddmFormField.getTip(), newDefaultLocale);
+	}
+
+	protected void updateDDMFormFieldOptionsDefaultLocale(
+		DDMFormFieldOptions ddmFormFieldOptions, Locale newDefaultLocale) {
+
+		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
+
+		for (LocalizedValue localizedValue : options.values()) {
+			updateLocalizedValueDefaultLocale(localizedValue, newDefaultLocale);
+		}
+
+		ddmFormFieldOptions.setDefaultLocale(newDefaultLocale);
+	}
+
+	protected void updateDDMFormFieldsDefaultLocale(
+		List<DDMFormField> ddmFormFields, Locale newDefaultLocale) {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			updateDDMFormFieldDefaultLocale(ddmFormField, newDefaultLocale);
+
+			updateDDMFormFieldsDefaultLocale(
+				ddmFormField.getNestedDDMFormFields(), newDefaultLocale);
+		}
+	}
+
+	protected void updateLocalizedValueDefaultLocale(
+		LocalizedValue localizedValue, Locale newDefaultLocale) {
+
+		Set<Locale> availableLocales = localizedValue.getAvailableLocales();
+
+		if (!availableLocales.contains(newDefaultLocale)) {
+			String defaultValueString = localizedValue.getString(
+				localizedValue.getDefaultLocale());
+
+			localizedValue.addString(newDefaultLocale, defaultValueString);
+		}
+
+		localizedValue.setDefaultLocale(newDefaultLocale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMImpl.class);

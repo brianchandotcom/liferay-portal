@@ -35,8 +35,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
@@ -401,15 +399,6 @@ public class DDMStructureLocalServiceImpl
 			structure.getCompanyId(), structure.getGroupId(),
 			structure.getUserId(), resourceName, structure.getStructureId(),
 			modelPermissions);
-	}
-
-	@Override
-	public Fields convert(
-			DDMStructure ddmStructure, DDMFormValues ddmFormValues)
-		throws PortalException {
-
-		return ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, ddmFormValues);
 	}
 
 	/**

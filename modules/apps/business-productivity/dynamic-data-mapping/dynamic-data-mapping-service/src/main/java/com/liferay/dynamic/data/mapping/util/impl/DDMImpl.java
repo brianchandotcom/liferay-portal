@@ -340,6 +340,17 @@ public class DDMImpl implements DDM {
 	}
 
 	@Override
+	public Fields getFields(long ddmStructureId, DDMFormValues ddmFormValues)
+		throws PortalException {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		return _ddmFormValuesToFieldsConverter.convert(
+			ddmStructure, ddmFormValues);
+	}
+
+	@Override
 	public Fields getFields(
 			long ddmStructureId, long ddmTemplateId,
 			ServiceContext serviceContext)

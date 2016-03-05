@@ -1002,6 +1002,14 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getStructuresCount(groupIds, classNameId);
 	}
 
+	public static java.lang.String prepareLocalizedDefinitionForImport(
+		com.liferay.dynamic.data.mapping.model.DDMStructure structure,
+		java.util.Locale defaultImportLocale) {
+		return getService()
+				   .prepareLocalizedDefinitionForImport(structure,
+			defaultImportLocale);
+	}
+
 	public static void revertStructure(long userId, long structureId,
 		java.lang.String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1246,15 +1254,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService()
 				   .updateStructure(userId, structureId, parentStructureId,
 			nameMap, descriptionMap, ddmForm, ddmFormLayout, serviceContext);
-	}
-
-	public static java.lang.String updateXMLDefaultLocale(
-		com.liferay.dynamic.data.mapping.model.DDMStructure structure,
-		java.util.Locale contentDefaultLocale,
-		java.util.Locale contentNewDefaultLocale) {
-		return getService()
-				   .updateXMLDefaultLocale(structure, contentDefaultLocale,
-			contentNewDefaultLocale);
 	}
 
 	/**

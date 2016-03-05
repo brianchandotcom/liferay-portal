@@ -857,6 +857,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructuresCount(long[] groupIds, long classNameId);
 
+	public java.lang.String prepareLocalizedDefinitionForImport(
+		DDMStructure structure, Locale defaultImportLocale);
+
 	public void revertStructure(long userId, long structureId,
 		java.lang.String version, ServiceContext serviceContext)
 		throws PortalException;
@@ -1047,9 +1050,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> descriptionMap, DDMForm ddmForm,
 		DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException;
-
-	public java.lang.String updateXMLDefaultLocale(DDMStructure structure,
-		Locale contentDefaultLocale, Locale contentNewDefaultLocale);
 
 	/**
 	* Updates the structure matching the structure ID, replacing its XSD with a

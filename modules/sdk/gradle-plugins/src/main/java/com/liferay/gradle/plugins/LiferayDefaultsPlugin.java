@@ -73,6 +73,7 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
+import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
@@ -83,6 +84,7 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -322,10 +324,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return jar;
 	}
 
-	protected WritePropertiesTask addTaskRecordArtifact(
-		final Project project, AbstractArchiveTask ... abstractArchiveTasks) {
-
-		WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
+	protected WritePropertiesTask addTaskRecordArtifact(Project project) {
+		final WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
 			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
 
 		writePropertiesTask.property(
@@ -334,34 +334,48 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public String call() throws Exception {
-					return getGitHead(project);
+					return getGitHead(writePropertiesTask.getProject());
 				}
 
 			});
 
-		for (final AbstractArchiveTask abstractArchiveTask :
-				abstractArchiveTasks) {
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, Dependency.ARCHIVES_CONFIGURATION);
 
-			String key = abstractArchiveTask.getClassifier();
+		PublishArtifactSet publishArtifactSet = configuration.getArtifacts();
 
-			if (Validator.isNull(key)) {
-				key = "artifact.url";
-			}
-			else {
-				key = "artifact." + key + ".url";
-			}
+		publishArtifactSet.withType(
+			ArchivePublishArtifact.class,
+			new Action<ArchivePublishArtifact>() {
 
-			writePropertiesTask.property(
-				key,
-				new Callable<String>() {
+				@Override
+				public void execute(
+					final ArchivePublishArtifact archivePublishArtifact) {
 
-					@Override
-					public String call() throws Exception {
-						return getArtifactRemoteURL(abstractArchiveTask, true);
+					String key = archivePublishArtifact.getClassifier();
+
+					if (Validator.isNull(key)) {
+						key = "artifact.url";
+					}
+					else {
+						key = "artifact." + key + ".url";
 					}
 
-				});
-		}
+					writePropertiesTask.property(
+						key,
+						new Callable<String>() {
+
+							@Override
+							public String call() throws Exception {
+								return getArtifactRemoteURL(
+									archivePublishArtifact.getArchiveTask(),
+									true);
+							}
+
+						});
+				}
+
+			});
 
 		writePropertiesTask.setDescription(
 			"Records the commit ID and the artifact URLs.");
@@ -708,11 +722,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
 		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
-			project, jar, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
+			project);
 
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project);

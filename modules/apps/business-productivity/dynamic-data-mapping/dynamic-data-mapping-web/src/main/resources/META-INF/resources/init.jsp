@@ -147,16 +147,18 @@ boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
 DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-boolean changeableDefaultLanguage = false;
 DDMDisplay ddmDisplay = null;
+
+boolean changeableDefaultLanguage = false;
 String scopeAvailableFields = StringPool.BLANK;
 long scopeClassNameId = 0;
 String scopeStorageType = StringPool.BLANK;
 String scopeTemplateType = StringPool.BLANK;
 
 if (ddmDisplayContext != null) {
-	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
 	ddmDisplay = ddmDisplayContext.getDDMDisplay(refererPortletName);
+
+	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
 	scopeAvailableFields = ddmDisplay.getAvailableFields();
 	scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 	scopeStorageType = ddmDisplay.getStorageType();

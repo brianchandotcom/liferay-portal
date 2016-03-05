@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.RenderRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -67,10 +68,6 @@ public class DDMDisplayContext {
 		return _ddmWebConfiguration.changeableDefaultLanguage();
 	}
 
-	public DDMDisplay getDDMDisplay(String portletId) {
-		return _ddmDisplayRegistry.getDDMDisplay(portletId);
-	}
-
 	public DDMStructure fetchStructure(DDMTemplate template) {
 		return _ddmTemplateHelper.fetchStructure(template);
 	}
@@ -80,6 +77,10 @@ public class DDMDisplayContext {
 		throws Exception {
 
 		return _ddmTemplateHelper.getAutocompleteJSON(request, language);
+	}
+
+	public DDMDisplay getDDMDisplay(String portletId) {
+		return _ddmDisplayRegistry.getDDMDisplay(portletId);
 	}
 
 	public DDMGroupServiceConfiguration getDDMGroupServiceConfiguration() {
@@ -144,7 +145,7 @@ public class DDMDisplayContext {
 		return ddmGroupServiceConfiguration.smallImageMaxSize();
 	}
 
-private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private final DDMWebConfiguration _ddmWebConfiguration;
 	private final DDMWebRequestHelper _ddmWebRequestHelper;

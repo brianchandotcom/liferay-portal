@@ -20,7 +20,18 @@
 String action = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:action"));
 String descriptionCSSClass = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:descriptionCSSClass"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:permissions:disableInputs"));
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:permissions:exportImportConfigurationId"));
 boolean global = GetterUtil.getBoolean(request.getAttribute("liferay-staging:permissions:global"));
 String labelCSSClass = GetterUtil.getString(request.getAttribute("liferay-staging:permissions:labelCSSClass"));
-Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:permissions:parameterMap"), Collections.emptyMap());
+
+Map<String, Serializable> settingsMap = Collections.emptyMap();
+Map<String, String[]> parameterMap = Collections.emptyMap();
+
+ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.fetchExportImportConfiguration(exportImportConfigurationId);
+
+if (exportImportConfiguration != null) {
+	settingsMap = exportImportConfiguration.getSettingsMap();
+
+	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+}
 %>

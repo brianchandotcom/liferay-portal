@@ -377,7 +377,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							<c:if test="<%= !quickPublish %>">
 								<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
 
-								<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
+								<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 							</c:if>
 
 							<c:if test="<%= !localPublishing %>">

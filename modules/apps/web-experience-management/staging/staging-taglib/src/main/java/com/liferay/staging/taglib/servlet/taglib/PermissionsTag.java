@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.staging.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Collections;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -51,6 +48,12 @@ public class PermissionsTag extends IncludeTag {
 		_disableInputs = disableInputs;
 	}
 
+	public void setExportImportConfigurationId(
+		long exportImportConfigurationId) {
+
+		_exportImportConfigurationId = exportImportConfigurationId;
+	}
+
 	public void setGlobal(boolean global) {
 		_global = global;
 	}
@@ -71,23 +74,14 @@ public class PermissionsTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setParameterMap(Map<String, String[]> parameterMap) {
-		if (parameterMap != null) {
-			_parameterMap = parameterMap;
-		}
-		else {
-			_parameterMap = Collections.emptyMap();
-		}
-	}
-
 	@Override
 	protected void cleanUp() {
 		_action = StringPool.BLANK;
 		_descriptionCSSClass = StringPool.BLANK;
 		_disableInputs = false;
+		_exportImportConfigurationId = 0;
 		_global = false;
 		_labelCSSClass = StringPool.BLANK;
-		_parameterMap = Collections.emptyMap();
 	}
 
 	@Override
@@ -103,11 +97,12 @@ public class PermissionsTag extends IncludeTag {
 			_descriptionCSSClass);
 		request.setAttribute(
 			"liferay-staging:permissions:disableInputs", _disableInputs);
+		request.setAttribute(
+			"liferay-staging:permissions:exportImportConfigurationId",
+			_exportImportConfigurationId);
 		request.setAttribute("liferay-staging:deletions:global", _global);
 		request.setAttribute(
 			"liferay-staging:permissions:labelCSSClass", _labelCSSClass);
-		request.setAttribute(
-			"liferay-staging:permissions:parameterMap", _parameterMap);
 	}
 
 	private static final String _PAGE = "/permissions/page.jsp";
@@ -115,8 +110,8 @@ public class PermissionsTag extends IncludeTag {
 	private String _action = StringPool.BLANK;
 	private String _descriptionCSSClass = StringPool.BLANK;
 	private boolean _disableInputs;
+	private long _exportImportConfigurationId = 0;
 	private boolean _global;
 	private String _labelCSSClass = StringPool.BLANK;
-	private Map<String, String[]> _parameterMap = Collections.emptyMap();
 
 }

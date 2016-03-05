@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.lar;
+package com.liferay.dynamic.data.lists.form.web.lar;
 
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
@@ -46,9 +46,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -57,15 +55,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Leonardo Barros
  */
 @Component(
-	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
+	property = {"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN},
 	service = PortletDataHandler.class
 )
-public class DDLPortletDataHandler extends BasePortletDataHandler {
+public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "dynamic_data_lists";
+	public static final String NAMESPACE = "forms";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -82,10 +80,10 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(DDLRecordSet.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "record-sets", true, false, null,
+				NAMESPACE, "forms", true, false, null,
 				DDLRecordSet.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "records", true, false, null,
+				NAMESPACE, "form-entries", true, false, null,
 				DDLRecord.class.getName()));
 	}
 
@@ -109,7 +107,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		Property scopeProperty = PropertyFactoryUtil.forName("scope");
 
 		recordSetDynamicQuery.add(
-			scopeProperty.eq(DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS));
+			scopeProperty.eq(DDLRecordSetConstants.SCOPE_FORMS));
 
 		return recordSetDynamicQuery;
 	}
@@ -145,32 +143,21 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		return recordVersionDynamicQuery;
 	}
 
-	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
-		throws PortalException {
-
-		for (Long ddmStructureId : ddmStructureIds) {
-			_ddmStructureLocalService.deleteStructure(ddmStructureId);
-		}
-	}
-
 	protected void deleteRecordSets(PortletDataContext portletDataContext)
 		throws PortalException {
-
-		Set<Long> recordSetDDMStructureIds = new HashSet<>();
 
 		List<DDLRecordSet> recordSets = _ddlRecordSetLocalService.search(
 			portletDataContext.getCompanyId(),
 			portletDataContext.getScopeGroupId(), null,
-			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, QueryUtil.ALL_POS,
+			DDLRecordSetConstants.SCOPE_FORMS, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new DDLRecordSetNameComparator());
 
 		for (DDLRecordSet recordSet : recordSets) {
-			recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
+			_ddmStructureLocalService.deleteStructure(
+				recordSet.getDDMStructureId());
 
 			_ddlRecordSetLocalService.deleteRecordSet(recordSet);
 		}
-
-		deleteDDMStructures(recordSetDDMStructureIds);
 	}
 
 	@Override
@@ -180,7 +167,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-				DDLPortletDataHandler.class, "deleteData")) {
+				DDLFormAdminPortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
@@ -200,14 +187,14 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
 			ActionableDynamicQuery recordSetActionableDynamicQuery =
 				getRecordSetActionableDynamicQuery(portletDataContext);
 
 			recordSetActionableDynamicQuery.performActions();
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "records")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "form-entries")) {
 			ActionableDynamicQuery recordActionableDynamicQuery =
 				getRecordActionableDynamicQuery(portletDataContext);
 
@@ -226,7 +213,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		portletDataContext.importPortletPermissions(
 			DDLPermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
 			Element recordSetsElement =
 				portletDataContext.getImportDataGroupElement(
 					DDLRecordSet.class);
@@ -261,7 +248,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "records")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "form-entries")) {
 			Element recordsElement =
 				portletDataContext.getImportDataGroupElement(DDLRecord.class);
 
@@ -355,8 +342,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 						"scope");
 
 					dynamicQuery.add(
-						scopeProperty.eq(
-							DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS));
+						scopeProperty.eq(DDLRecordSetConstants.SCOPE_FORMS));
 				}
 
 			}

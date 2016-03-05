@@ -98,7 +98,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 
 					servletOutputStream.println(
 						"var MODULE_PATH = '" + PortalUtil.getPathContext() +
-							servletContext.getContextPath() + "/';");
+							servletContext.getContextPath() + "';");
 
 					StreamUtil.transfer(
 						inputStream, servletOutputStream, false);

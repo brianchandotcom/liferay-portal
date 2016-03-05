@@ -3,7 +3,7 @@
 		{
 			groups: {
 				controlmenu: {
-					base: MODULE_PATH,
+					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-product-navigation-control-menu': {
@@ -87,7 +87,7 @@
 							]
 						}
 					},
-					root: MODULE_PATH
+					root: MODULE_PATH + '/'
 				}
 			}
 		}

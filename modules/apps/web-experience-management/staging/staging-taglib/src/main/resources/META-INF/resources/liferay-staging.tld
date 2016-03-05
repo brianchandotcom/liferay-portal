@@ -43,9 +43,10 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>parameterMap</name>
-			<required>true</required>
+			<name>exportImportConfigurationId</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
 		</attribute>
 		<attribute>
 			<name>type</name>
@@ -159,6 +160,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>exportImportConfigurationId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
 			<name>global</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -169,11 +176,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>parameterMap</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -187,9 +189,10 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<name>parameterMap</name>
-			<required>true</required>
+			<name>exportImportConfigurationId</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
 		</attribute>
 		<attribute>
 			<name>portlets</name>

@@ -128,6 +128,19 @@ public class ExportImportDateUtil {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
+		String portletId = (String)settingsMap.get("portletId");
+
+		return getDateRange(exportImportConfiguration, portletId);
+	}
+
+	public static DateRange getDateRange(
+			ExportImportConfiguration exportImportConfiguration,
+			String portletId)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
 		Date startDate = (Date)settingsMap.get("startDate");
 		Date endDate = (Date)settingsMap.get("endDate");
 
@@ -156,7 +169,6 @@ public class ExportImportDateUtil {
 		int endDateHour = MapUtil.getInteger(parameterMap, "endDateHour");
 		int endDateMinute = MapUtil.getInteger(parameterMap, "endDateMinute");
 
-		String portletId = (String)settingsMap.get("portletId");
 		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 		long plid = MapUtil.getLong(settingsMap, "sourcePlid");
 		boolean privateLayout = MapUtil.getBoolean(

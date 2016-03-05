@@ -17,8 +17,6 @@ package com.liferay.staging.taglib.servlet.taglib;
 import com.liferay.staging.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -35,15 +33,17 @@ public class ContentTag extends IncludeTag {
 		_disableInputs = disableInputs;
 	}
 
+	public void setExportImportConfigurationId(
+		long exportImportConfigurationId) {
+
+		_exportImportConfigurationId = exportImportConfigurationId;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
 		servletContext = ServletContextUtil.getServletContext();
-	}
-
-	public void setParameterMap(Map<String, String[]> parameterMap) {
-		_parameterMap = parameterMap;
 	}
 
 	public void setType(String type) {
@@ -54,7 +54,7 @@ public class ContentTag extends IncludeTag {
 	protected void cleanUp() {
 		_cmd = null;
 		_disableInputs = false;
-		_parameterMap = null;
+		_exportImportConfigurationId = 0;
 		_type = null;
 	}
 
@@ -69,7 +69,8 @@ public class ContentTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:content:disableInputs", _disableInputs);
 		request.setAttribute(
-			"liferay-staging:content:parameterMap", _parameterMap);
+			"liferay-staging:content:exportImportConfigurationId",
+			_exportImportConfigurationId);
 		request.setAttribute("liferay-staging:content:type", _type);
 	}
 
@@ -77,7 +78,7 @@ public class ContentTag extends IncludeTag {
 
 	private String _cmd;
 	private boolean _disableInputs;
-	private Map<String, String[]> _parameterMap;
+	private long _exportImportConfigurationId = 0;
 	private String _type;
 
 }

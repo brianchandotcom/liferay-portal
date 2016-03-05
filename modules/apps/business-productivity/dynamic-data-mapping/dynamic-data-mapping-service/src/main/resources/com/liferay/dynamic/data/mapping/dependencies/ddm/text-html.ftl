@@ -11,7 +11,7 @@
 	<#assign cssClass = "form-control">
 </#if>
 
-<@liferay_aui["field-wrapper"] cssClass="field-wrapper-html" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=inputEditorName required=required>
+<@liferay_aui["field-wrapper"] cssClass="field-wrapper-html form-builder-field" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=inputEditorName required=required>
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
 	<div class="form-group">

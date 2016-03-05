@@ -15,10 +15,7 @@
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -115,12 +112,8 @@ public class HTMLTag extends BaseHTMLTag {
 				ddmStructureId = ddmTemplate.getClassPK();
 			}
 
-			DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
-				ddmStructureId);
-
 			if (getDdmFormValues() != null) {
-				return DDMStructureLocalServiceUtil.convert(
-					ddmStructure, getDdmFormValues());
+				return DDMUtil.getFields(ddmStructureId, getDdmFormValues());
 			}
 		}
 		catch (PortalException pe) {

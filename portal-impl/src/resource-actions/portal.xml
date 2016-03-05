@@ -78,7 +78,6 @@
 				<action-key>PREVIEW_IN_DEVICE</action-key>
 				<action-key>PUBLISH_PORTLET_INFO</action-key>
 				<action-key>PUBLISH_STAGING</action-key>
-				<action-key>PUBLISH_TO_REMOTE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 				<action-key>VIEW_MEMBERS</action-key>
@@ -107,7 +106,6 @@
 				<action-key>PREVIEW_IN_DEVICE</action-key>
 				<action-key>PUBLISH_PORTLET_INFO</action-key>
 				<action-key>PUBLISH_STAGING</action-key>
-				<action-key>PUBLISH_TO_REMOTE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 				<action-key>VIEW_MEMBERS</action-key>

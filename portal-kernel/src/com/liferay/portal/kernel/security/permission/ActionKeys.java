@@ -220,8 +220,6 @@ public class ActionKeys {
 
 	public static final String PUBLISH_STAGING = "PUBLISH_STAGING";
 
-	public static final String PUBLISH_TO_REMOTE = "PUBLISH_TO_REMOTE";
-
 	public static final String REPLY_TO_MESSAGE = "REPLY_TO_MESSAGE";
 
 	public static final String SIGNAL = "SIGNAL";

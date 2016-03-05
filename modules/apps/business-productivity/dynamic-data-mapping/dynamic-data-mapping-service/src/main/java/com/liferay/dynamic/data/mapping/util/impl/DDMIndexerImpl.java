@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -383,6 +383,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValuesToFieldsConverter(
+		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+
+		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
@@ -393,7 +400,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
 
 		try {
-			return DDMFormValuesToFieldsConverterUtil.convert(
+			return _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 		}
 		catch (PortalException pe) {
@@ -406,6 +413,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 
 	private DDM _ddm;
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

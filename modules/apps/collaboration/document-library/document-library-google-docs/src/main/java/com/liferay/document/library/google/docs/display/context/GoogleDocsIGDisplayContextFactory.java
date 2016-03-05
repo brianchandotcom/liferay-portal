@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContextFactory;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,7 +75,7 @@ public class GoogleDocsIGDisplayContextFactory
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
-				_ddmStructureLocalService,
+				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
 				(DLFileVersion)fileVersion.getModel(),
 				_dlFileEntryMetadataLocalService, _storageEngine);
 
@@ -85,6 +86,13 @@ public class GoogleDocsIGDisplayContextFactory
 		}
 
 		return parentIGViewFileVersionDisplayContext;
+	}
+
+	@Reference(unbind = "-")
+	public void setDDMFormValuesToFieldsConverter(
+		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+
+		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
 	}
 
 	@Reference(unbind = "-")
@@ -111,6 +119,7 @@ public class GoogleDocsIGDisplayContextFactory
 		_storageEngine = storageEngine;
 	}
 
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLAppService _dlAppService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

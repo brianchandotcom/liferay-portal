@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBas
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
@@ -1780,6 +1781,9 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = DDMFormValidator.class)
 	protected DDMFormValidator ddmFormValidator;
+
+	@ServiceReference(type = DDMFormValuesToFieldsConverter.class)
+	protected DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter;
 
 	@ServiceReference(type = DDMFormXSDDeserializer.class)
 	protected DDMFormXSDDeserializer ddmFormXSDDeserializer;

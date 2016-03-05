@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngineUtil;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -241,7 +241,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
 			record.getDDMStorageId());
 
-		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+		Fields fields = ddmFormValuesToFieldsConverter.convert(
 			recordSet.getDDMStructure(), ddmFormValues);
 
 		for (Field field : fields) {
@@ -619,7 +619,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				StorageEngineUtil.getDDMFormValues(
 					recordVersion.getDDMStorageId());
 
-			Fields existingFields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields existingFields = ddmFormValuesToFieldsConverter.convert(
 				recordSet.getDDMStructure(), existingDDMFormValues);
 
 			fields = ddm.mergeFields(fields, existingFields);
@@ -954,6 +954,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@ServiceReference(type = DDM.class)
 	protected DDM ddm;
+
+	@ServiceReference(type = DDMFormValuesToFieldsConverter.class)
+	protected DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter;
 
 	@ServiceReference(type = IndexerRegistry.class)
 	protected IndexerRegistry indexerRegistry;

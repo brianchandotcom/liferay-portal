@@ -68,7 +68,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		setUpAvailableLocales();
 		setUpDDMFormJSONDeserializer();
 		setUpDDMFormJSONSerializer();
-		setUpDDMFormValuesToFieldsConverterUtil();
 		setUpDDMStructureLocalServiceUtil();
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
@@ -106,7 +105,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocaleUtil.class.getName(), Level.WARNING)) {
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -172,7 +171,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocaleUtil.class.getName(), Level.WARNING)) {
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			Assert.assertNotNull(fields);
@@ -275,7 +274,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocaleUtil.class.getName(), Level.WARNING)) {
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -356,7 +355,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocaleUtil.class.getName(), Level.WARNING)) {
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -416,7 +415,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocaleUtil.class.getName(), Level.WARNING)) {
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -470,14 +469,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		_availableLocales.add(LocaleUtil.US);
 	}
 
-	protected void setUpDDMFormValuesToFieldsConverterUtil() {
-		DDMFormValuesToFieldsConverterUtil ddmFormValuesToFieldsConverterUtil =
-			new DDMFormValuesToFieldsConverterUtil();
-
-		ddmFormValuesToFieldsConverterUtil.setDDMFormValuesToFieldsConverter(
-			new DDMFormValuesToFieldsConverterImpl());
-	}
-
 	protected void testField(
 		Field field, List<Serializable> expectedEnValues,
 		List<Serializable> expectedPtValues,
@@ -492,5 +483,8 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	}
 
 	private Set<Locale> _availableLocales;
+	private final DDMFormValuesToFieldsConverter
+		_ddmFormValuesToFieldsConverter =
+			new DDMFormValuesToFieldsConverterImpl();
 
 }

@@ -73,6 +73,9 @@ public interface DDM {
 			ThemeDisplay themeDisplay, Serializable fieldValue, String type)
 		throws Exception;
 
+	public Fields getFields(long ddmStructureId, DDMFormValues ddmFormValues)
+		throws PortalException;
+
 	public Fields getFields(
 			long ddmStructureId, long ddmTemplateId,
 			ServiceContext serviceContext)

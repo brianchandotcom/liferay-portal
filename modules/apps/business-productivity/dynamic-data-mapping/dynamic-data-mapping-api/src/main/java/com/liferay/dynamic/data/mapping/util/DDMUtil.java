@@ -111,6 +111,13 @@ public class DDMUtil {
 	}
 
 	public static Fields getFields(
+			long ddmStructureId, DDMFormValues ddmFormValues)
+		throws PortalException {
+
+		return getDDM().getFields(ddmStructureId, ddmFormValues);
+	}
+
+	public static Fields getFields(
 			long ddmStructureId, long ddmTemplateId,
 			ServiceContext serviceContext)
 		throws PortalException {

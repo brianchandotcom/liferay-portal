@@ -407,29 +407,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		super.prepareLocalizedFieldsForImport(defaultImportLocale);
 
-		String defaultLanguageId = getDefaultLanguageId();
-
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
-		String name = getName(siteDefaultLocale);
-
-		if (Validator.isNull(name)) {
-			setName(getName(defaultLanguageId), siteDefaultLocale);
-		}
-		else {
-			setName(name, defaultImportLocale, siteDefaultLocale);
-		}
-
-		String description = getDescription(siteDefaultLocale);
-
-		if (Validator.isNull(description)) {
-			setDescription(
-				getDescription(defaultLanguageId), siteDefaultLocale);
-		}
-		else {
-			setDescription(description, defaultImportLocale, siteDefaultLocale);
-		}
-
 		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
 			getDefaultLanguageId());
 

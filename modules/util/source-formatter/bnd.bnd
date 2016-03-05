@@ -15,6 +15,7 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportPackage.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\

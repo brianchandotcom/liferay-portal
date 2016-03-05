@@ -157,6 +157,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
 
+		configuration.setDescription(
+			"Configures Liferay portal test utility artifacts for this " +
+				"project.");
 		configuration.setVisible(false);
 
 		return configuration;

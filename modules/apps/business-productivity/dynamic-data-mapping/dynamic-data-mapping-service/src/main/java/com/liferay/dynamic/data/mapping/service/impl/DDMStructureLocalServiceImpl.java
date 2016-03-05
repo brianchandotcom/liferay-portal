@@ -1092,6 +1092,16 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	@Override
+	public String prepareLocalizedDefinitionForImport(
+		DDMStructure structure, Locale defaultImportLocale) {
+
+		DDMForm ddmForm = ddm.updateDDMFormDefaultLocale(
+			structure.getDDMForm(), defaultImportLocale);
+
+		return ddmFormJSONSerializer.serialize(ddmForm);
+	}
+
+	@Override
 	public void revertStructure(
 			long userId, long structureId, String version,
 			ServiceContext serviceContext)
@@ -1389,16 +1399,6 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			userId, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext, structure);
-	}
-
-	@Override
-	public String updateXMLDefaultLocale(
-		DDMStructure structure, Locale contentDefaultLocale,
-		Locale contentNewDefaultLocale) {
-
-		return ddmXML.updateXMLDefaultLocale(
-			structure.getDefinition(), contentDefaultLocale,
-			contentNewDefaultLocale);
 	}
 
 	/**

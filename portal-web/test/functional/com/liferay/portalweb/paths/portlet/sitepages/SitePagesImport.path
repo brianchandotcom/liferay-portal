@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_STATUS_1</td>
-	<td>//tr[1]/td[2]/strong //tr[1]/td[2]/strong | //table[contains(@data-searchcontainerid,'importLayoutProcesses')]//tr//td[3]/strong</td>
+	<td>//div[contains(@id,'importLayoutProcessesSearchContainer')]//h6[2] | //table[contains(@data-searchcontainerid,'backgroundTasksSearchContainer')]//tr//td[2]/h5</td>
 	<td></td>
 </tr>
 <tr>

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Bruno Basto
@@ -40,10 +39,6 @@ public interface DDMXML {
 	public String getXML(Document document, Fields fields);
 
 	public String getXML(Fields fields);
-
-	public String updateXMLDefaultLocale(
-		String xml, Locale contentDefaultLocale,
-		Locale contentNewDefaultLocale);
 
 	public String validateXML(String xml) throws PortalException;
 

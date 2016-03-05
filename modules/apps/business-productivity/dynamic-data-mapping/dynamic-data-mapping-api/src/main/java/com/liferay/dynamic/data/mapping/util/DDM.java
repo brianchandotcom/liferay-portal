@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -105,5 +107,8 @@ public interface DDM {
 		String orderByCol, String orderByType);
 
 	public Fields mergeFields(Fields newFields, Fields existingFields);
+
+	public DDMForm updateDDMFormDefaultLocale(
+		DDMForm ddmForm, Locale newDefaultLocale);
 
 }

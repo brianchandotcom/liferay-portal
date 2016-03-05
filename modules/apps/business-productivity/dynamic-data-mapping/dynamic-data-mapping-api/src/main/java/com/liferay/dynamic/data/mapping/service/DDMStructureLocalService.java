@@ -857,6 +857,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructuresCount(long[] groupIds, long classNameId);
 
+	public java.lang.String prepareLocalizedDefinitionForImport(
+		DDMStructure structure, Locale defaultImportLocale);
+
 	public void revertStructure(long userId, long structureId,
 		java.lang.String version, ServiceContext serviceContext)
 		throws PortalException;

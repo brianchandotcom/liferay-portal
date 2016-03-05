@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
-import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
+import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1511,7 +1511,7 @@ public class DDMTemplateLocalServiceImpl
 
 		if (language.equals(TemplateConstants.LANG_TYPE_XSL)) {
 			try {
-				script = DDMXMLUtil.validateXML(script);
+				script = ddmXML.validateXML(script);
 			}
 			catch (PortalException pe) {
 				throw new TemplateScriptException(pe);
@@ -1680,6 +1680,9 @@ public class DDMTemplateLocalServiceImpl
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = DDMXML.class)
+	protected DDMXML ddmXML;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateLocalServiceImpl.class);

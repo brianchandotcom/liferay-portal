@@ -64,6 +64,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkModel;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateModel;
 import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
@@ -71,6 +72,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -1292,7 +1294,7 @@ public class DataFactory {
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append("{\"columns\": [{\"fieldNames\": [\"");
 			sb.append(nextDDLCustomFieldName(groupId, i));
-			sb.append("\"]}]}");
+			sb.append("\"], \"size\": 12}]}");
 			sb.append(", ");
 		}
 
@@ -1300,7 +1302,7 @@ public class DataFactory {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		sb.append("\"], \"size\": 12}]},], \"title\": {\"en_US\": \"\"}}],");
+		sb.append("], \"title\": {\"en_US\": \"\"}}],");
 		sb.append("\"paginationMode\": \"single-page\"}");
 
 		return newDDMStructureLayoutModel(
@@ -1490,6 +1492,21 @@ public class DataFactory {
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
+		JournalArticleModel journalArticleModel, long structureId) {
+
+		DDMStorageLinkModel ddmStorageLinkModel = new DDMStorageLinkModelImpl();
+
+		ddmStorageLinkModel.setUuid(SequentialUUID.generate());
+		ddmStorageLinkModel.setStorageLinkId(_counter.get());
+		ddmStorageLinkModel.setClassNameId(
+			getClassNameId(JournalArticle.class));
+		ddmStorageLinkModel.setClassPK(journalArticleModel.getId());
+		ddmStorageLinkModel.setStructureId(structureId);
+
+		return ddmStorageLinkModel;
+	}
+
+	public DDMStorageLinkModel newDDMStorageLinkModel(
 		long ddmStorageLinkId, DDMContentModel ddmContentModel,
 		long structureId) {
 
@@ -1557,6 +1574,22 @@ public class DataFactory {
 		ddmStructureVersionModel.setStatusDate(nextFutureDate());
 
 		return ddmStructureVersionModel;
+	}
+
+	public DDMTemplateLinkModel newDDMTemplateLinkModel(
+		JournalArticleModel journalArticleModel, long templateId) {
+
+		DDMTemplateLinkModel ddmTemplateLinkModel =
+			new DDMTemplateLinkModelImpl();
+
+		ddmTemplateLinkModel.setCompanyId(_companyId);
+		ddmTemplateLinkModel.setTemplateLinkId(_counter.get());
+		ddmTemplateLinkModel.setClassNameId(
+			getClassNameId(JournalArticle.class));
+		ddmTemplateLinkModel.setClassPK(journalArticleModel.getId());
+		ddmTemplateLinkModel.setTemplateId(templateId);
+
+		return ddmTemplateLinkModel;
 	}
 
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(

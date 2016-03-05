@@ -41,15 +41,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_password_policy_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId()));
-
-PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), portletURL.toString());
-
-portletURL.setParameter("tabs2", tabs2);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), portletURL.toString());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -66,6 +60,13 @@ if (tabs2.equals("organizations")) {
 	searchContainer = new OrganizationSearch(renderRequest, searchURL);
 	rowChecker = new DeleteOrganizationPasswordPolicyChecker(renderResponse, passwordPolicy);
 }
+
+PortletURL homeURL = renderResponse.createRenderURL();
+
+homeURL.setParameter("mvcPath", "/view.jsp");
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "password-policies"), homeURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -145,6 +146,10 @@ if (tabs2.equals("organizations")) {
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="passwordPolicyId" type="hidden" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
+
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>

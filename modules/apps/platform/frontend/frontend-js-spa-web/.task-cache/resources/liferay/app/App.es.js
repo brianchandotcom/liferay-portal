@@ -96,15 +96,12 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 		LiferayApp.prototype.onDocClickDelegate_ = function onDocClickDelegate_(event) {
 			var inBlacklist = false;
 
-			Object.keys(this.blacklist).map(function (portletId) {
+			Object.keys(this.blacklist).forEach(function (portletId) {
 				var boundaryId = _Utils2.default.getPortletBoundaryId(portletId);
 				var portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
 
-				Array.prototype.slice.call(portlets).forEach(function (portlet) {
-					if (_dom2.default.contains(portlet, event.delegateTarget)) {
-						inBlacklist = true;
-						return;
-					}
+				inBlacklist = Array.prototype.slice.call(portlets).some(function (portlet) {
+					return _dom2.default.contains(portlet, event.delegateTarget);
 				});
 			});
 

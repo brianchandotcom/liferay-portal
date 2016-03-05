@@ -412,8 +412,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		try {
 			setDefinition(
-				DDMStructureLocalServiceUtil.updateXMLDefaultLocale(
-					this, ddmStructureDefaultLocale, defaultImportLocale));
+				DDMStructureLocalServiceUtil.
+					prepareLocalizedDefinitionForImport(
+						this, defaultImportLocale));
 		}
 		catch (Exception e) {
 			throw new LocaleException(LocaleException.TYPE_EXPORT_IMPORT, e);

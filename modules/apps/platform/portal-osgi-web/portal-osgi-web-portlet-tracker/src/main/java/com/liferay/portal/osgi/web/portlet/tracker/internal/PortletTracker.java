@@ -1192,8 +1192,7 @@ public class PortletTracker
 			serviceReference = bundleContext.getServiceReference(
 				ServletContextHelperRegistration.class);
 
-		serviceRegistrations.setServletContextHelperRegistrationReference(
-			serviceReference);
+		serviceRegistrations.addServiceReference(serviceReference);
 
 		return bundleContext.getService(serviceReference);
 	}
@@ -1456,7 +1455,7 @@ public class PortletTracker
 		}
 
 		public synchronized void addServiceReference(
-			ServiceReference<Portlet> serviceReference) {
+			ServiceReference<?> serviceReference) {
 
 			_serviceReferences.add(serviceReference);
 		}
@@ -1472,7 +1471,7 @@ public class PortletTracker
 		}
 
 		public synchronized void removeServiceReference(
-			ServiceReference<Portlet> serviceReference) {
+			ServiceReference<?> serviceReference) {
 
 			_serviceReferences.remove(serviceReference);
 
@@ -1491,14 +1490,6 @@ public class PortletTracker
 			_bundlePortletApp = bundlePortletApp;
 		}
 
-		public void setServletContextHelperRegistrationReference(
-			ServiceReference<ServletContextHelperRegistration>
-				servletContextHelperRegistrationReference) {
-
-			_servletContextHelperRegistrationReference =
-				servletContextHelperRegistrationReference;
-		}
-
 		protected synchronized void close() {
 			for (ServiceRegistration<?> serviceRegistration :
 					_serviceRegistrations) {
@@ -1506,18 +1497,15 @@ public class PortletTracker
 				serviceRegistration.unregister();
 			}
 
-			BundleContext bundleContext = _bundle.getBundleContext();
-
 			if (!_serviceReferences.isEmpty()) {
+				BundleContext bundleContext = _bundle.getBundleContext();
+
 				for (ServiceReference<?> serviceReference :
 						_serviceReferences) {
 
 					bundleContext.ungetService(serviceReference);
 				}
 			}
-
-			bundleContext.ungetService(
-				_servletContextHelperRegistrationReference);
 
 			_bundlePortletApp = null;
 			_serviceReferences.clear();
@@ -1544,12 +1532,10 @@ public class PortletTracker
 		private final Bundle _bundle;
 		private BundlePortletApp _bundlePortletApp;
 		private Configuration _configuration;
-		private final List<ServiceReference<Portlet>> _serviceReferences =
+		private final List<ServiceReference<?>> _serviceReferences =
 			new ArrayList<>();
 		private final List<ServiceRegistration<?>> _serviceRegistrations =
 			new ArrayList<>();
-		private ServiceReference<ServletContextHelperRegistration>
-			_servletContextHelperRegistrationReference;
 
 	}
 

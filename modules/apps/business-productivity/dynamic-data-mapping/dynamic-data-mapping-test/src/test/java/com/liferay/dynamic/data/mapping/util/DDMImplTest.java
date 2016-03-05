@@ -42,6 +42,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Marcellus Tavares
  */
@@ -619,6 +621,26 @@ public class DDMImplTest extends BaseDDMTestCase {
 		testValues(
 			actualNameNestedField.getValues(LocaleUtil.BRAZIL), "Nome nested 1",
 			"Nome nested 2");
+	}
+
+	@Test
+	public void testUpdateDDMFormDefaultLocale() throws Exception {
+		String expectedSerializedDDMForm = read(
+			"dynamic-data-mapping-structure-definition-updated-default-" +
+				"locale.json");
+
+		String serializedDDMForm = read(
+			"dynamic-data-mapping-structure-definition.json");
+
+		DDMForm ddmForm = _ddm.updateDDMFormDefaultLocale(
+			ddmFormJSONDeserializer.deserialize(serializedDDMForm),
+			LocaleUtil.BRAZIL);
+
+		String actualSerializedDDMForm = ddmFormJSONSerializer.serialize(
+			ddmForm);
+
+		JSONAssert.assertEquals(
+			expectedSerializedDDMForm, actualSerializedDDMForm, false);
 	}
 
 	protected void assertDefaultDDMFormLayoutRow(

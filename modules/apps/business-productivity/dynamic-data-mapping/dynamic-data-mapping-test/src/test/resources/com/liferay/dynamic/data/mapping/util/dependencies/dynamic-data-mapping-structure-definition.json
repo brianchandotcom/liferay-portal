@@ -1,0 +1,97 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedFields": [
+				{
+					"dataType": "integer",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"label":{
+						"en_US": "Integer"
+					},
+					"localizable": true,
+					"name": "Integer",
+					"predefinedValue": {
+						"en_US": "0"
+					},
+					"readOnly": false,
+					"repeatable": true,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US":"Please type a integer."
+					},
+					"type": "ddm-integer",
+					"validation": {
+						"errorMessage": "Integer must be equal to zero.",
+						"expression": "Integer == 0"
+					},
+					"visibilityExpression": "FALSE"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "Joe Bloggs"
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Please type your name."
+			},
+			"type": "text",
+			"validation": {
+				"errorMessage": "This field is never valid.",
+				"expression": "FALSE"
+			},
+			"visibilityExpression": "TRUE"
+		},
+		{
+			"dataType": "string",
+			"indexType": "",
+			"label": {
+				"en_US": "Option"
+			},
+			"localizable": true,
+			"multiple": true,
+			"name": "ChildField",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2"
+					},
+					"value": "Value 2"
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Please choose an option."
+			},
+			"type": "select",
+			"validation": {
+				"errorMessage": "Field ChildField must not be empty.",
+				"expression": "!ChildField.isEmpty()"
+			},
+			"visibilityExpression": "true"
+		}
+	]
+}

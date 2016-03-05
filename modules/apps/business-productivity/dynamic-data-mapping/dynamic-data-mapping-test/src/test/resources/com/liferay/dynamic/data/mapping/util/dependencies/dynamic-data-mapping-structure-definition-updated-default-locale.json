@@ -1,0 +1,107 @@
+{
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"defaultLanguageId": "pt_BR",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedFields": [
+				{
+					"dataType": "integer",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"label":{
+						"en_US": "Integer",
+						"pt_BR": "Integer"
+					},
+					"localizable": true,
+					"name": "Integer",
+					"predefinedValue": {
+						"en_US": "0",
+						"pt_BR": "0",
+					},
+					"readOnly": false,
+					"repeatable": true,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US":"Please type a integer.",
+						"pt_BR":"Please type a integer."
+					},
+					"type": "ddm-integer",
+					"validation": {
+						"errorMessage": "Integer must be equal to zero.",
+						"expression": "Integer == 0"
+					},
+					"visibilityExpression": "FALSE"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "Joe Bloggs",
+				"pt_BR": "Joe Bloggs",
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Please type your name.",
+				"pt_BR": "Please type your name."
+			},
+			"type": "text",
+			"validation": {
+				"errorMessage": "This field is never valid.",
+				"expression": "FALSE"
+			},
+			"visibilityExpression": "TRUE"
+		},
+		{
+			"dataType": "string",
+			"indexType": "",
+			"label": {
+				"en_US": "Option",
+				"pt_BR": "Option"
+			},
+			"localizable": true,
+			"multiple": true,
+			"name": "ChildField",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Option 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Option 2"
+					},
+					"value": "Value 2"
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Please choose an option.",
+				"pt_BR": "Please choose an option."
+			},
+			"type": "select",
+			"validation": {
+				"errorMessage": "Field ChildField must not be empty.",
+				"expression": "!ChildField.isEmpty()"
+			},
+			"visibilityExpression": "true"
+		}
+	]
+}

@@ -51,7 +51,7 @@ public class DDMDisplayRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, service = DDMDisplay.class
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "unsetDDMDisplay"
 	)
 	protected void setDDMDisplay(DDMDisplay ddmDisplay) {
 		_ddmDisplays.put(ddmDisplay.getPortletId(), ddmDisplay);

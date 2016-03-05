@@ -64,7 +64,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 
 			_this.setFormSelector('form' + exceptionsSelector);
 			_this.setLinkSelector('a' + exceptionsSelector);
-			_this.setLoadingCssClass('lfr-surface-loading');
+			_this.setLoadingCssClass('lfr-spa-loading');
 
 			_this.on('beforeNavigate', _this.onBeforeNavigate);
 			_this.on('endNavigate', _this.onEndNavigate);
@@ -74,7 +74,7 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 
 			_this.addSurfaces(new _Surface2.default(document.body.id));
 
-			_dom2.default.append(document.body, '<div class="lfr-surface-loading-bar"></div>');
+			_dom2.default.append(document.body, '<div class="lfr-spa-loading-bar"></div>');
 			return _this;
 		}
 

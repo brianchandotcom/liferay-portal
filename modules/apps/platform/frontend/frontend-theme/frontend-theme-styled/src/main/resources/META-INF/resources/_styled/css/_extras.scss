@@ -200,12 +200,12 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include experimental(animation, highlight-animation 0.7s);
 }
 
-.lfr-surface-loading .lfr-surface-loading-bar {
+.lfr-spa-loading .lfr-spa-loading-bar {
 	@include experimental(animation, shift-rightwards 1s ease-in-out infinite);
 	@include experimental(animation-delay, 0.4s);
 }
 
-.lfr-surface-loading-bar {
+.lfr-spa-loading-bar {
 	@include transform(translateX(100%));
 }
 

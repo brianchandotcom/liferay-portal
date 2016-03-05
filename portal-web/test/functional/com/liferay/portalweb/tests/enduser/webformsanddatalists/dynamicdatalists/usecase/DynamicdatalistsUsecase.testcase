@@ -921,9 +921,7 @@
 
 		<execute macro="DDLRecord#viewSecondRecordViaDDLDisplayTemplate">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
-			<var name="ddlRecordFieldDataTableDisplay" value="${ddlRecordFieldData2}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
-			<var name="userRole" value="Guest" />
 		</execute>
 
 		<execute macro="Portlet#viewCannotEdit" />

@@ -64,7 +64,7 @@ AUI.add(
 
 					TPL_PAGE_CONTROL_TRIGGER:
 						'<a class="' + CSS_FORM_BUILDER_CONTROLS_TRIGGER + '" data-position="{position}" href="javascript:;">' +
-							'<span class="icon-ellipsis-vertical icon-monospaced"></span>' +
+							Liferay.Util.getLexiconIconTpl('ellipsis-v') +
 						'</a>',
 
 					TPL_PAGE_HEADER: '<div class="' + CSS_PAGE_HEADER + ' form-inline">' +

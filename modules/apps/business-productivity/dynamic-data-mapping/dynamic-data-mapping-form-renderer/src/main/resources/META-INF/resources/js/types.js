@@ -32,7 +32,7 @@ AUI.add(
 			_getFieldType: function(config) {
 				var instance = this;
 
-				var fieldType = new A.FormBuilderFieldType(
+				var fieldType = new Liferay.DDM.FormRendererFieldType(
 					{
 						defaultConfig: {
 							type: config.name
@@ -61,6 +61,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'aui-form-builder-field-type']
+		requires: ['array-extras', 'liferay-ddm-form-renderer-type']
 	}
 );

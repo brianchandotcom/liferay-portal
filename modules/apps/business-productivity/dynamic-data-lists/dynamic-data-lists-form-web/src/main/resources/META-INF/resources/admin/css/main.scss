@@ -1,5 +1,6 @@
 @import "bourbon";
 @import "mixins";
+@import "form-builder-field-toolbar";
 @import "form-builder-modal";
 
 $horizontal-spacing: 35px;
@@ -357,12 +358,21 @@ $horizontal-spacing: 35px;
 		display: none;
 	}
 
+	.form-builder-field-types-list {
+		margin-top: 10px;
+	}
+
 	.modal-body {
 		background-color: #FFF;
-		padding: 25px 35px;
+		padding: 15px 25px;
 
 		.field-type {
+			border-radius: 5px;
 			padding: 20px 0;
+
+			&:hover {
+				background-color: #E8F1F7;
+			}
 
 			@include md {
 				float: none;
@@ -375,7 +385,13 @@ $horizontal-spacing: 35px;
 			}
 
 			.field-type-icon {
-				font-size: 24px;
+				font-size: 0;
+				margin: 0 0 10px;
+
+				.lexicon-icon {
+					height: 18px;
+					width: 18px;
+				}
 			}
 
 			.field-type-label {
@@ -495,19 +511,6 @@ $horizontal-spacing: 35px;
 			position: relative;
 		}
 
-		.form-builder-field-toolbar {
-			min-width: 200px;
-			z-index: 750;
-
-			.form-builder-field-toolbar-items {
-				float: right;
-			}
-		}
-
-		.form-builder-field-toolbar-items {
-			z-index: 500;
-		}
-
 		.liferay-ddm-form-field-paragraph p {
 			min-height: 65px;
 		}
@@ -567,6 +570,10 @@ $horizontal-spacing: 35px;
 		word-break: break-all;
 	}
 
+	.form-builder-field-list {
+		padding: 25px 0;
+	}
+
 	.form-builder-field-list-container {
 		hyphens: auto;
 		padding: 0;
@@ -592,12 +599,6 @@ $horizontal-spacing: 35px;
 		font-size: 14px;
 	}
 
-	.form-builder-field-list-empty .form-builder-field-move-target {
-		margin-top: 0;
-		padding: 37px 0 36px 0;
-		position: static;
-	}
-
 	.form-group {
 		margin: 0;
 
@@ -610,7 +611,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.lfr-ddm-form-field-container {
-		padding: 23px 0;
+		padding: 21px 0;
 	}
 
 	.lfr-ddm-form-page-title {
@@ -631,7 +632,7 @@ $horizontal-spacing: 35px;
 }
 
 .portlet-forms-admin {
-	$side-spacing: 34px;
+	@import "form-builder-field-toolbar";
 
 	.aspect-ratio img {
 		top: 0;
@@ -643,22 +644,19 @@ $horizontal-spacing: 35px;
 		}
 	}
 
-	.form-builder-controls-trigger  {
+	.form-builder-controls-trigger {
+		color: #B0BEC9;
 		display: block;
 		font-size: 20px;
-		height: 48px;
-		padding: 12px;
+		line-height: 0;
+		padding: 32px;
 		position: absolute;
 		right: 0;
 		text-decoration: none;
-		top: 13px;
+		top: 0;
 
-		&:hover .icon-monospaced {
-			color: inherit;
-		}
-
-		.icon-monospaced {
-			color: #B0BEC9;
+		&:hover {
+			color: #4A90E2;
 		}
 	}
 
@@ -679,6 +677,15 @@ $horizontal-spacing: 35px;
 		width: 100%;
 	}
 
+	.form-builder-field-list-add-button-icon {
+		position: relative;
+
+		.lexicon-icon {
+			height: 10px;
+			width: 10px;
+		}
+	}
+
 	.form-builder-field-list-add-button-label {
 		color: #4A90E2;
 	}
@@ -689,9 +696,33 @@ $horizontal-spacing: 35px;
 		margin-top: -7px;
 	}
 
-	.form-builder-field-list-empty .form-builder-field-list-add-container,
-	.form-builder-field-list-empty .form-builder-field-move-target {
-		margin-top: 0;
+	.form-builder-field-list-empty {
+		.form-builder-field-list-add-button-icon {
+			margin-top: 5px;
+
+			.lexicon-icon {
+				height: 16px;
+				width: 16px;
+			}
+		}
+
+		.form-builder-field-list-add-button-label {
+			padding-top: 0;
+		}
+
+		.form-builder-field-list-add-container {
+			margin-top: 0;
+		}
+
+		.form-builder-field-list-container {
+			padding: 0;
+		}
+
+		.form-builder-field-move-target {
+			margin-top: 0;
+			padding: 37px 0 36px 0;
+			position: static;
+		}
 	}
 
 	.form-builder-header {
@@ -705,10 +736,6 @@ $horizontal-spacing: 35px;
 	.form-builder-layout {
 		margin: 0 auto;
 		width: auto;
-
-		.form-builder-field-list-empty .form-builder-field-list-container {
-			padding: 23px 0;
-		}
 
 		.layout-builder-add-row-area {
 			margin: 0;
@@ -762,7 +789,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-page-header {
-		padding-right: 34px;
+		padding-right: 62px;
 		position: relative;
 	}
 
@@ -770,6 +797,7 @@ $horizontal-spacing: 35px;
 		margin-bottom: 0;
 		margin-top: 0;
 		padding-left: 34px;
+		padding-right: 0;
 		width: auto;
 
 		.form-builder-page-header-description,
@@ -802,29 +830,30 @@ $horizontal-spacing: 35px;
 		}
 	}
 
+	.form-builder-page-manager-content {
+		border-top: 1px solid #DCE0E3;
+
+		.form-builder-controls-trigger {
+			margin: 0;
+			padding: 29px;
+		}
+	}
+
 	.form-builder-pages-lexicon {
 		position: relative;
 		text-align: center;
-
-		.form-builder-page-manager-content {
-			border-top: 1px solid #DCE0E3;
-		}
 
 		.form-builder-pagination {
 			margin: 0;
 		}
 	}
 
-	.form-builder-field-toolbar-toggle,
-	.form-builder-field-toolbar {
-		z-index: 20;
-	}
-
 	.form-builder-tabview {
 		padding-right: 70px;
 
 		.form-builder-controls-trigger {
-			top: 34px;
+			margin: 0;
+			top: 18px;
 		}
 	}
 
@@ -838,9 +867,41 @@ $horizontal-spacing: 35px;
 		background-color: transparent;
 	}
 
+	.layout-builder-move-cut-button.layout-builder-move-cut-row-button,
+	.layout-builder-remove-row-button {
+		background: #FFF;
+		border: 1px solid #65B6F0;
+		height: auto;
+		padding: 0;
+		top: -22px;
+		width: auto;
+		z-index: 10;
+
+		.lexicon-icon {
+			color: #65B6F0;
+			margin: 10px;
+		}
+
+		&:hover {
+			background: #65B6F0;
+
+			.lexicon-icon {
+				color: #FFF;
+			}
+		}
+	}
+
+	.layout-builder-move-cut-button.layout-builder-move-cut-row-button {
+		right: 30px;
+	}
+
 	.layout-builder-move-row-target {
-		margin-left: $side-spacing;
-		margin-right: $side-spacing;
+		margin-left: 34px;
+		margin-right: 34px;
+	}
+
+	.layout-builder-remove-row-button {
+		right: -20px;
 	}
 
 	.lfr-ddm-repeatable-add-button {

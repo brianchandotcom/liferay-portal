@@ -407,9 +407,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		super.prepareLocalizedFieldsForImport(defaultImportLocale);
 
-		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
-
 		try {
 			setDefinition(
 				DDMStructureLocalServiceUtil.

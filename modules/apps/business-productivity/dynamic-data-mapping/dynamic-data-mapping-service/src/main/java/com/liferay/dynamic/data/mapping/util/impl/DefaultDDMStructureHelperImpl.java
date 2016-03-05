@@ -35,12 +35,10 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -200,16 +198,9 @@ public class DefaultDDMStructureHelperImpl
 
 		String definition = structureElementRootElement.asXML();
 
-		Attribute defaultLocaleAttribute =
-			structureElementRootElement.attribute("default-locale");
+		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
-		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
-			defaultLocaleAttribute.getValue());
-
-		definition = _ddmXML.updateXMLDefaultLocale(
-			definition, ddmStructureDefaultLocale, locale);
-
-		return _ddmFormXSDDeserializer.deserialize(definition);
+		return _ddm.updateDDMFormDefaultLocale(ddmForm, locale);
 	}
 
 	protected DDMFormLayout getDDMFormLayout(

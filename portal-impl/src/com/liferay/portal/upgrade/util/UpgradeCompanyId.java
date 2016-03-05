@@ -44,7 +44,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		List<Callable<Void>> callables = new ArrayList<>();
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
+			if (!hasColumn(tableUpdater.getTableName(), "companyId")) {
 				tableUpdater.setCreateCompanyIdColumn(true);
 			}
 

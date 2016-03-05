@@ -44,10 +44,12 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		List<Callable<Void>> callables = new ArrayList<>();
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			tableUpdater.setSkipAddColumnToTable(false);
-
 			if (hasColumn(tableUpdater.getTableName(), "companyId")) {
-				tableUpdater.setSkipAddColumnToTable(true);
+				if (_log.isInfoEnabled()) {
+					_log.info("Skipping table " + tableUpdater.getTableName());
+				}
+
+				continue;
 			}
 
 			callables.add(tableUpdater);
@@ -95,27 +97,16 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		@Override
 		public final Void call() throws Exception {
+			if (_log.isInfoEnabled()) {
+				_log.info("Adding column companyId to table " + getTableName());
+			}
+
 			try {
 				_con = DataAccess.getUpgradeOptimizedConnection();
 
-				if (_skipAddColumnToTable) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Skipping add companyId for table " + _tableName);
-					}
-				}
-				else {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Adding column companyId to table " +
-								getTableName());
-					}
-
-					runSQL(
-						_con,
-						"alter table " + getTableName() +
-							" add companyId LONG");
-				}
+				runSQL(
+					_con,
+					"alter table " + getTableName() + " add companyId LONG");
 
 				update();
 			}
@@ -128,10 +119,6 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		public String getTableName() {
 			return _tableName;
-		}
-
-		public void setSkipAddColumnToTable(boolean skipAddColumnToTable) {
-			_skipAddColumnToTable = skipAddColumnToTable;
 		}
 
 		public void update() throws IOException, SQLException {
@@ -206,7 +193,6 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		private final String _columnName;
 		private Connection _con;
 		private final String[][] _foreignNamesArray;
-		private boolean _skipAddColumnToTable;
 		private final String _tableName;
 
 	}

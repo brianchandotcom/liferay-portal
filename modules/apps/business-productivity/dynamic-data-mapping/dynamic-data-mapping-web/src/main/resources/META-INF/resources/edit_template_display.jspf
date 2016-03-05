@@ -27,7 +27,7 @@ if (Validator.isNotNull(scriptContent)) {
 <liferay-ui:panel-container extended="<%= true %>" id="templateScriptContainer" markupView="lexicon" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="templateScriptSectionPanel" markupView="lexicon" persistState="<%= true %>" title="script">
 		<div class="form-group lfr-template-editor-container">
-			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
+			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
 						<input class="col-md-12 field search-query" id="<portlet:namespace />paletteSearch" placeholder="<liferay-ui:message key="search" />" type="text">
@@ -91,7 +91,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<%
 			String editorContainerClass = "lfr-editor-container";
 
-			if (!DDMTemplateHelperUtil.isAutocompleteEnabled(language)) {
+			if (!ddmDisplayContext.isAutocompleteEnabled(language)) {
 				editorContainerClass += " lfr-editor-container-full";
 			}
 			%>
@@ -133,7 +133,7 @@ if (Validator.isNotNull(scriptContent)) {
 	var prevEditorContent;
 	var richEditor;
 
-	<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
+	<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
 		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
 
@@ -318,7 +318,7 @@ if (Validator.isNotNull(scriptContent)) {
 		if (AutoComplete) {
 			var processor = new AutoComplete(
 				{
-					variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request, language) %>
+					variables: <%= ddmDisplayContext.getAutocompleteJSON(request, language) %>
 				}
 			);
 
@@ -391,7 +391,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 			setEditorPlugins();
 
-			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
+			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
 
 				new A.TogglerDelegate(

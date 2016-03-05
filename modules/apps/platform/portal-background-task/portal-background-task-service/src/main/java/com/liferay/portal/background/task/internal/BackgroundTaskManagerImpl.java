@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -581,6 +582,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 		backgroundTaskStatusDestination.register(
 			backgroundTaskQueuingMessageListener);
+
+		if (!_clusterMasterExecutor.isEnabled()) {
+			cleanUpBackgroundTasks();
+		}
 	}
 
 	@Deactivate
@@ -687,6 +692,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
 
 	private volatile BundleContext _bundleContext;
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

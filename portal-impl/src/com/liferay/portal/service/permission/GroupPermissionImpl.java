@@ -135,7 +135,8 @@ public class GroupPermissionImpl
 			return true;
 		}
 		else if ((actionId.equals(ActionKeys.EXPORT_IMPORT_LAYOUTS) ||
-				  actionId.equals(ActionKeys.EXPORT_IMPORT_PORTLET_INFO)) &&
+				  actionId.equals(ActionKeys.EXPORT_IMPORT_PORTLET_INFO) ||
+				  actionId.equals(ActionKeys.PUBLISH_PORTLET_INFO)) &&
 				 permissionChecker.hasPermission(
 					 groupId, Group.class.getName(), groupId,
 					 ActionKeys.PUBLISH_STAGING)) {

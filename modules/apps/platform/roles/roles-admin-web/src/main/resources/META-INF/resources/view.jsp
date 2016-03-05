@@ -210,6 +210,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				href="<%= rowURL %>"
 				name="title"
 				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"

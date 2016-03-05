@@ -35,10 +35,6 @@
 		display: block;
 	}
 
-	.display-date-wrapper {
-		padding-top: 40px;
-	}
-
 	.entry-author {
 		float: left;
 		line-height: 20px;
@@ -55,36 +51,20 @@
 		padding-left: 0;
 	}
 
-	.entry-abstract-wrapper {
-		.entry-abstract-options {
-			margin-top: 20px;
-		}
+	.lfr-blogs-small-image-selector {
+		float: left;
+		margin-right: 20px;
+		width: 200px;
 
-		.entry-abstract {
-			margin-bottom: 30px;
-			margin-top: 40px;
+		.taglib-image-selector {
+			min-height: 150px;
 
-			.lfr-blogs-small-image-selector {
-				float: left;
-				width: 200px;
-
-				.taglib-image-selector {
-					min-height: 150px;
-
-					.drag-drop-label {
-						font-size: 15px;
-					}
-
-					.file-validation-info {
-						font-size: 13px;
-					}
-				}
+			.drag-drop-label {
+				font-size: 15px;
 			}
 
-			.entry-description {
-				font-size: 16px;
-				overflow: hidden;
-				padding-left: 24px;
+			.file-validation-info {
+				font-size: 13px;
 			}
 		}
 	}
@@ -157,29 +137,16 @@
 	}
 
 	.edit-entry {
-		h1 p {
+		.entry-title h1 p {
 			line-height: 80px;
 		}
 
-		h3 {
-			font-size: 22px;
-			margin-top: 0;
-		}
-
-		h4 p {
-			line-height: 45px;
-		}
-
-		.entry-body {
-			padding-bottom: 30px;
-		}
-
 		.entry-subtitle {
-			line-height: 45px;
-		}
-
-		.entry-subtitle, .entry-footer {
 			margin-bottom: 30px;
+
+			h4 p {
+			  line-height: 45px;
+			}
 		}
 
 		.cover-image-caption .alloy-editor {
@@ -189,10 +156,6 @@
 				border-left-width: 0;
 			}
 		}
-	}
-
-	.categorization-wrapper, .custom-attributes-wrapper, .display-date-wrapper, .email-entry-updated-wrapper, .entry-abstract-wrapper, .permissions-wrapper, .pingback-enabled-wrapper, .related-assets-wrapper, .trackback-enabled-wrapper {
-		margin-bottom: 55px;
 	}
 
 	.entry.draft, .entry.pending, .entry.scheduled {
@@ -306,14 +269,6 @@
 		.cover-image-caption .alloy-editor {
 			color: #868889;
 		}
-
-		.explanation {
-			font-weight: normal;
-		}
-	}
-
-	.entry-abstract-wrapper {
-		color: #2B4259;
 	}
 
 	.entry.draft, .entry.pending, .entry.scheduled {

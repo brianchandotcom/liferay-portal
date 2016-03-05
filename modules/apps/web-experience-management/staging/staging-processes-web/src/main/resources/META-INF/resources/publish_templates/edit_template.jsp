@@ -193,7 +193,9 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 	function <portlet:namespace />publishPages() {
 		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
-		if (form.fm('allContent').prop('checked')) {
+		var allContentSelected = AUI.$('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
+
+		if (allContentSelected === 'true') {
 			form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
 		}
 

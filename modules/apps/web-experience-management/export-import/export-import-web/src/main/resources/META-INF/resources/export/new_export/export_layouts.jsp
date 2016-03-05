@@ -215,9 +215,9 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 			var A = AUI();
 
-			var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');
+			var allContentSelected = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
 
-			if (allContentRadioChecked) {
+			if (allContentSelected === 'true') {
 				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
 
 				portletDataControlDefault.val(true);

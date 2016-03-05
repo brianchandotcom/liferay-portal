@@ -1063,6 +1063,14 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
+	public java.lang.String prepareLocalizedDefinitionForImport(
+		com.liferay.dynamic.data.mapping.model.DDMStructure structure,
+		java.util.Locale defaultImportLocale) {
+		return _ddmStructureLocalService.prepareLocalizedDefinitionForImport(structure,
+			defaultImportLocale);
+	}
+
+	@Override
 	public void revertStructure(long userId, long structureId,
 		java.lang.String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1312,15 +1320,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.updateStructure(userId, structureId,
 			parentStructureId, nameMap, descriptionMap, ddmForm, ddmFormLayout,
 			serviceContext);
-	}
-
-	@Override
-	public java.lang.String updateXMLDefaultLocale(
-		com.liferay.dynamic.data.mapping.model.DDMStructure structure,
-		java.util.Locale contentDefaultLocale,
-		java.util.Locale contentNewDefaultLocale) {
-		return _ddmStructureLocalService.updateXMLDefaultLocale(structure,
-			contentDefaultLocale, contentNewDefaultLocale);
 	}
 
 	/**

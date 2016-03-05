@@ -119,6 +119,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="layoutUuid" />
 		</finder>
+		<finder name="G_NotL" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutUuid" comparator="!=" />
+		</finder>
 		<finder name="G_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="status" />

@@ -37,9 +37,16 @@
 
 	insert into DDMContent values ('${ddmContentModel.uuid}', ${ddmContentModel.contentId}, ${ddmContentModel.groupId}, ${ddmContentModel.companyId}, ${ddmContentModel.userId}, '${ddmContentModel.userName}', '${dataFactory.getDateString(ddmContentModel.createDate)}', '${dataFactory.getDateString(ddmContentModel.modifiedDate)}', '${ddmContentModel.name}', '${ddmContentModel.description}', '${ddmContentModel.data}');
 
-	<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)>
+	<@insertDDMStorageLink
+		_ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)
+	/>
+</#macro>
 
-	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, '${ddmStorageLinkModel.companyId}', ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
+
+<#macro insertDDMStorageLink
+	_ddmStorageLinkModel
+>
+	insert into DDMStorageLink values ('${_ddmStorageLinkModel.uuid}', ${_ddmStorageLinkModel.storageLinkId}, ${_ddmStorageLinkModel.companyId}, ${_ddmStorageLinkModel.classNameId}, ${_ddmStorageLinkModel.classPK}, ${_ddmStorageLinkModel.structureId});
 </#macro>
 
 <#macro insertDDMStructure

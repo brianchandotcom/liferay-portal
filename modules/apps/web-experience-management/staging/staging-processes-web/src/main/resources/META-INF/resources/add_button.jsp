@@ -28,31 +28,33 @@ if (stagingGroup.hasRemoteStagingGroup()) {
 List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(stagingGroupId, configurationType);
 %>
 
-<liferay-frontend:add-menu>
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING) %>">
+	<liferay-frontend:add-menu>
 
-	<%
-	for (ExportImportConfiguration exportImportConfiguration : exportImportConfigurations) {
-	%>
+		<%
+		for (ExportImportConfiguration exportImportConfiguration : exportImportConfigurations) {
+		%>
 
-	<portlet:renderURL var="addNewProcessURL">
-		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-	</portlet:renderURL>
+		<portlet:renderURL var="addNewProcessURL">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-frontend:add-menu-item title="<%= exportImportConfiguration.getName() %>" url="<%= addNewProcessURL %>" />
+		<liferay-frontend:add-menu-item title="<%= exportImportConfiguration.getName() %>" url="<%= addNewProcessURL %>" />
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-	<portlet:renderURL var="addNewCustomProcessURL">
-		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-		<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-	</portlet:renderURL>
+		<portlet:renderURL var="addNewCustomProcessURL">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+		</portlet:renderURL>
 
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />
-</liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

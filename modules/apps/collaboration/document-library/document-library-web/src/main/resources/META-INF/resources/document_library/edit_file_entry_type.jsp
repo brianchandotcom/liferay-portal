@@ -43,7 +43,7 @@ if (fileEntryType != null) {
 	}
 }
 
-String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields", "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE");
+DDMDisplay ddmDisplay = new DLDDMDisplay();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -93,6 +93,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 					<portlet:param name="script" value="<%= script %>" />
 					<portlet:param name="fieldsJSONArrayString" value="<%= (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK %>" />
+					<portlet:param name="className" value="<%= ddmDisplay.getStructureType() %>" />
+					<portlet:param name="storageType" value="<%= ddmDisplay.getStorageType() %>" />
+					<portlet:param name="scopeAvailableFields" value="<%= ddmDisplay.getAvailableFields() %>" />
 				</liferay-util:include>
 			</aui:fieldset>
 

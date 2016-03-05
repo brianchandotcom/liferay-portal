@@ -29,18 +29,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.xml.XMLSchemaImpl;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -52,10 +50,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Bruno Basto
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true)
 @DoPrivileged
 public class DDMXMLImpl implements DDMXML {
 
@@ -75,7 +77,7 @@ public class DDMXMLImpl implements DDMXML {
 		Document document = null;
 
 		try {
-			document = SAXReaderUtil.read(xml);
+			document = _saxReader.read(xml);
 		}
 		catch (DocumentException de) {
 			if (_log.isDebugEnabled()) {
@@ -164,7 +166,7 @@ public class DDMXMLImpl implements DDMXML {
 				rootElement = document.getRootElement();
 			}
 			else {
-				document = SAXReaderUtil.createDocument();
+				document = _saxReader.createDocument();
 
 				rootElement = document.addElement("root");
 			}
@@ -195,69 +197,24 @@ public class DDMXMLImpl implements DDMXML {
 		return getXML(null, fields);
 	}
 
-	public void setXMLSchema(XMLSchema xmlSchema) {
-		_xmlSchema = xmlSchema;
-	}
+	public XMLSchema getXMLSchema() {
+		if (_xmlSchema == null) {
+			XMLSchemaImpl xmlSchema = new XMLSchemaImpl();
 
-	@Override
-	public String updateXMLDefaultLocale(
-		String xml, Locale contentDefaultLocale,
-		Locale contentNewDefaultLocale) {
+			xmlSchema.setSchemaLanguage("http://www.w3.org/2001/XMLSchema");
+			xmlSchema.setSystemId(
+				"http://www.liferay.com/dtd/liferay-ddm-structure_6_2_0.xsd");
 
-		try {
-			if (LocaleUtil.equals(
-					contentDefaultLocale, contentNewDefaultLocale)) {
-
-				return xml;
-			}
-
-			Document document = SAXReaderUtil.read(xml);
-
-			Element rootElement = document.getRootElement();
-
-			Attribute availableLocalesAttribute = rootElement.attribute(
-				_AVAILABLE_LOCALES);
-
-			String contentNewDefaultLanguageId = LocaleUtil.toLanguageId(
-				contentNewDefaultLocale);
-
-			String availableLocalesAttributeValue =
-				availableLocalesAttribute.getValue();
-
-			if (!availableLocalesAttributeValue.contains(
-					contentNewDefaultLanguageId)) {
-
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(availableLocalesAttribute.getValue());
-				sb.append(StringPool.COMMA);
-				sb.append(contentNewDefaultLanguageId);
-
-				availableLocalesAttribute.setValue(sb.toString());
-			}
-
-			Attribute defaultLocaleAttribute = rootElement.attribute(
-				_DEFAULT_LOCALE);
-
-			defaultLocaleAttribute.setValue(contentNewDefaultLanguageId);
-
-			fixElementsDefaultLocale(
-				rootElement, contentDefaultLocale, contentNewDefaultLocale);
-
-			return document.formattedString();
+			_xmlSchema = xmlSchema;
 		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
+
+		return _xmlSchema;
 	}
 
 	@Override
 	public String validateXML(String xml) throws PortalException {
 		try {
-			Document document = SAXReaderUtil.read(xml, _xmlSchema);
+			Document document = _saxReader.read(xml, getXMLSchema());
 
 			validate(document);
 
@@ -301,50 +258,18 @@ public class DDMXMLImpl implements DDMXML {
 		}
 	}
 
-	protected void fixElementsDefaultLocale(
-		Element element, Locale contentDefaultLocale,
-		Locale contentNewDefaultLocale) {
-
-		for (Element dynamicElementElement :
-				element.elements(_DYNAMIC_ELEMENT)) {
-
-			Element importMetaDataElement =
-				(Element)dynamicElementElement.selectSingleNode(
-					"meta-data[@locale='" + contentNewDefaultLocale.toString() +
-						"']");
-
-			if (importMetaDataElement == null) {
-				Element metaDataElement =
-					(Element)dynamicElementElement.selectSingleNode(
-						"meta-data[@locale='" +
-							contentDefaultLocale.toString() + "']");
-
-				Element copiedMetadataElement = metaDataElement.createCopy();
-
-				Attribute localeAttribute = copiedMetadataElement.attribute(
-					_LOCALE);
-
-				String contentNewDefaultLanguageId = LocaleUtil.toLanguageId(
-					contentNewDefaultLocale);
-
-				localeAttribute.setValue(contentNewDefaultLanguageId);
-
-				dynamicElementElement.add(copiedMetadataElement);
-			}
-
-			fixElementsDefaultLocale(
-				dynamicElementElement, contentDefaultLocale,
-				contentNewDefaultLocale);
-		}
-	}
-
 	protected List<Node> getElementsByName(Document document, String name) {
 		name = HtmlUtil.escapeXPathAttribute(name);
 
-		XPath xPathSelector = SAXReaderUtil.createXPath(
+		XPath xPathSelector = _saxReader.createXPath(
 			"//dynamic-element[@name=".concat(name).concat("]"));
 
 		return xPathSelector.selectNodes(document);
+	}
+
+	@Reference(unbind = "-")
+	protected void setSAXReader(SAXReader saxReader) {
+		_saxReader = saxReader;
 	}
 
 	protected void updateField(
@@ -364,7 +289,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	protected void validate(Document document) throws Exception {
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+		XPath xPathSelector = _saxReader.createXPath("//dynamic-element");
 
 		List<Node> nodes = xPathSelector.selectNodes(document);
 
@@ -396,16 +321,9 @@ public class DDMXMLImpl implements DDMXML {
 		}
 	}
 
-	private static final String _AVAILABLE_LOCALES = "available-locales";
-
-	private static final String _DEFAULT_LOCALE = "default-locale";
-
-	private static final String _DYNAMIC_ELEMENT = "dynamic-element";
-
-	private static final String _LOCALE = "locale";
-
 	private static final Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
 
+	private SAXReader _saxReader;
 	private XMLSchema _xmlSchema;
 
 }

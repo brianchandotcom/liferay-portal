@@ -65,6 +65,8 @@ public class SyncFile extends StateAwareModel {
 
 	public static final String TYPE_SYSTEM = "system";
 
+	public static final int UI_EVENT_ACCESS_DENIED_LOCAL = 28;
+
 	public static final int UI_EVENT_ADDED_LOCAL = 1;
 
 	public static final int UI_EVENT_ADDED_REMOTE = 2;

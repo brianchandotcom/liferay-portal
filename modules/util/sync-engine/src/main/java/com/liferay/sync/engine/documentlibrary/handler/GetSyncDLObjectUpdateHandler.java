@@ -38,6 +38,7 @@ import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
 
+import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -297,10 +298,20 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		boolean exists = Files.exists(
 			Paths.get(targetSyncFile.getFilePathName()));
 
-		Files.move(
-			tempFilePath, Paths.get(targetSyncFile.getFilePathName()),
-			StandardCopyOption.ATOMIC_MOVE,
-			StandardCopyOption.REPLACE_EXISTING);
+		try {
+			Files.move(
+				tempFilePath, Paths.get(targetSyncFile.getFilePathName()),
+				StandardCopyOption.ATOMIC_MOVE,
+				StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch (AccessDeniedException ade) {
+			targetSyncFile.setState(SyncFile.STATE_ERROR);
+			targetSyncFile.setUiEvent(SyncFile.UI_EVENT_ACCESS_DENIED_LOCAL);
+
+			SyncFileService.update(targetSyncFile);
+
+			return;
+		}
 
 		targetSyncFile.setState(SyncFile.STATE_SYNCED);
 

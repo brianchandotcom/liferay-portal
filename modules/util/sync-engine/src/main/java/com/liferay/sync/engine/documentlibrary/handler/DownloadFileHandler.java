@@ -35,6 +35,7 @@ import com.liferay.sync.engine.util.StreamUtil;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -238,9 +239,19 @@ public class DownloadFileHandler extends BaseHandler {
 					MSOfficeFileUtil.getLastSavedDate(tempFilePath));
 			}
 
-			Files.move(
-				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
-				StandardCopyOption.REPLACE_EXISTING);
+			try {
+				Files.move(
+					tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+			catch (AccessDeniedException ade) {
+				syncFile.setState(SyncFile.STATE_ERROR);
+				syncFile.setUiEvent(SyncFile.UI_EVENT_ACCESS_DENIED_LOCAL);
+
+				SyncFileService.update(syncFile);
+
+				return;
+			}
 
 			ExecutorService executorService = SyncEngine.getExecutorService();
 

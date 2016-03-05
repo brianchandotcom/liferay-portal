@@ -9,6 +9,7 @@ targetCompatibility = "1.6"
 
 dependencies {
 	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
+	compile group: "org.glassfish", name: "javax.el", version: "3.0.1-b05"
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
 }
@@ -24,6 +25,7 @@ patch {
 
 	fileNames "**/org/apache/jasper/compiler/Jsr199JavaCompiler.java"
 	fileNames "**/org/apache/jasper/compiler/Node.java"
+	fileNames "**/org/apache/jasper/runtime/PageContextImpl.java"
 
 	originalLibModuleName = "javax.servlet.jsp"
 }

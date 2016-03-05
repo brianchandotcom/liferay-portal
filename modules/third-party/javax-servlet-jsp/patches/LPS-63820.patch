@@ -1,0 +1,35 @@
+diff --git a/org/apache/jasper/runtime/PageContextImpl.java b/org/apache/jasper/runtime/PageContextImpl.java
+index 3365f42..ecfe3ed 100644
+--- a/org/apache/jasper/runtime/PageContextImpl.java
++++ b/org/apache/jasper/runtime/PageContextImpl.java
+@@ -69,7 +69,6 @@ import java.util.Enumeration;
+ import java.util.HashMap;
+ import java.util.Iterator;
+ import java.util.logging.Logger;
+-import java.util.logging.Level;
+ 
+ import javax.servlet.Servlet;
+ import javax.servlet.ServletConfig;
+@@ -958,9 +957,13 @@ public class PageContextImpl extends PageContext {
+     private static ExpressionFactory getExpressionFactory(
+             PageContext pageContext) {
+ 
+-        PageContextImpl pc =
+-            (PageContextImpl) JspContextWrapper.getRootPageContext(pageContext);
+-        return pc.getJspApplicationContext().getExpressionFactory();
++		JspFactory jspFactory = JspFactory.getDefaultFactory();
++
++		JspApplicationContext jspApplicationContext =
++			jspFactory.getJspApplicationContext(
++				pageContext.getServletContext());
++
++		return jspApplicationContext.getExpressionFactory();
+     }
+ 
+     /**
+@@ -1065,3 +1068,4 @@ public class PageContextImpl extends PageContext {
+         setValueVariable(pageContext, variable, exp);
+     }
+ }
++/* @generated */
+\ No newline at end of file

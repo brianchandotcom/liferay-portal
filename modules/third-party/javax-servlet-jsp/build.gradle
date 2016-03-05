@@ -8,9 +8,9 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
-	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
-	compile group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
+	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.2-b01"
+	compile group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
+	compile group: "org.glassfish.web", name: "javax.servlet.jsp", version: "2.3.3-b02"
 }
 
 liferay {
@@ -24,6 +24,7 @@ patch {
 
 	fileNames "**/org/apache/jasper/compiler/Jsr199JavaCompiler.java"
 	fileNames "**/org/apache/jasper/compiler/Node.java"
+	fileNames "**/org/apache/jasper/runtime/PageContextImpl.java"
 
 	originalLibModuleName = "javax.servlet.jsp"
 }

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>javax.servlet.jsp</artifactId>
-  <version>2.3.3-b02.LIFERAY-PATCHED-1</version>
+  <version>2.3.3-b02.LIFERAY-PATCHED-2</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>

@@ -132,6 +132,8 @@ import org.gradle.util.VersionNumber;
  */
 public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
+	public static final String ANT_JGIT_CONFIGURATION_NAME = "antJGit";
+
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
@@ -153,6 +155,27 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
+	protected Configuration addConfigurationAntJGit(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, ANT_JGIT_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesAntJGit(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures Liferay Ant JGit for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	protected Configuration addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -163,6 +186,15 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configuration.setVisible(false);
 
 		return configuration;
+	}
+
+	protected void addDependenciesAntJGit(Project project) {
+		String version = GradleUtil.getPortalToolVersion(
+			project, _ANT_JGIT_PORTAL_TOOL_NAME);
+
+		GradleUtil.addDependency(
+			project, ANT_JGIT_CONFIGURATION_NAME, GradleUtil.PORTAL_TOOL_GROUP,
+			_ANT_JGIT_PORTAL_TOOL_NAME, version);
 	}
 
 	protected void addDependenciesPortalTest(Project project) {
@@ -714,6 +746,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		applyConfigScripts(project);
 
+		Configuration antJGitConfiguration = addConfigurationAntJGit(project);
 		Configuration portalConfiguration = GradleUtil.getConfiguration(
 			project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
 		Configuration portalTestConfiguration = addConfigurationPortalTest(
@@ -1415,6 +1448,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		return false;
 	}
+
+	private static final String _ANT_JGIT_PORTAL_TOOL_NAME =
+		"com.liferay.ant.jgit";
 
 	private static final String _GROUP = "com.liferay";
 

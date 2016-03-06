@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 
@@ -31,26 +32,29 @@ public class SearchIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstancePreregistered(long companyId) {
-		_searchEngineHelper.initialize(companyId);
+		if (_clusterMasterExecutor.isMaster()) {
+			_searchEngineHelper.initialize(companyId);
+		}
 	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_searchEngineHelper.initialize(company.getCompanyId());
+		if (_clusterMasterExecutor.isMaster()) {
+			_searchEngineHelper.initialize(company.getCompanyId());
+		}
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		_searchEngineHelper.removeCompany(company.getCompanyId());
+		if (_clusterMasterExecutor.isMaster()) {
+			_searchEngineHelper.removeCompany(company.getCompanyId());
+		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchEngineHelper(
-		SearchEngineHelper searchEngineHelper) {
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
-		_searchEngineHelper = searchEngineHelper;
-	}
-
+	@Reference
 	private SearchEngineHelper _searchEngineHelper;
 
 }

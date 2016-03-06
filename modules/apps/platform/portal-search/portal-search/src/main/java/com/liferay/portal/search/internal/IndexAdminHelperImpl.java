@@ -115,13 +115,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchEngineHelper(
-		SearchEngineHelper searchEngineHelper) {
-
-		_searchEngineHelper = searchEngineHelper;
-	}
-
+	@Reference
 	private SearchEngineHelper _searchEngineHelper;
 
 }

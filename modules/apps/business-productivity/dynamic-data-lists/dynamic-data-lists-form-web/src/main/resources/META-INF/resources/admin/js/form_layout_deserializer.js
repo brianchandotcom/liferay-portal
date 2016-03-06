@@ -55,7 +55,7 @@ AUI.add(
 						);
 
 						if (column.fieldNames && column.fieldNames.length > 0) {
-							var fieldsList = new A.FormBuilderFieldList(
+							var fieldsList = new Liferay.DDL.FormBuilderFieldList(
 								{
 									fields: instance._deserializeFields(deserializedColumn, column.fieldNames)
 								}
@@ -164,6 +164,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder-field-list', 'aui-layout', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-layout', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-field-list', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer-util']
 	}
 );

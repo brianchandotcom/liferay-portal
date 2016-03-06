@@ -56,7 +56,7 @@
 <!--PAGE_CONTROLS-->
 <tr>
 	<td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
-	<td>//a[@class='form-builder-controls-trigger']/svg[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td>//a[@class='form-builder-controls-trigger']</td>
 	<td></td>
 </tr>
 <tr>

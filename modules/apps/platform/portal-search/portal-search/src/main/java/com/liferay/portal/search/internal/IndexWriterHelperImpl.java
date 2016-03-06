@@ -603,13 +603,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		_indexReadOnly = indexWriterHelperConfiguration.indexReadOnly();
 	}
 
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskManager(
-		BackgroundTaskManager backgroundTaskManager) {
-
-		_backgroundTaskManager = backgroundTaskManager;
-	}
-
 	protected void setCommitImmediately(
 		SearchContext searchContext, boolean commitImmediately) {
 
@@ -621,27 +614,19 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchEngineHelper(
-		SearchEngineHelper searchEngineHelper) {
-
-		_searchEngineHelper = searchEngineHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchPermissionChecker(
-		SearchPermissionChecker searchPermissionChecker) {
-
-		_searchPermissionChecker = searchPermissionChecker;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexWriterHelperImpl.class);
 
+	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
+
 	private volatile boolean _commitImmediately;
 	private volatile boolean _indexReadOnly;
+
+	@Reference
 	private SearchEngineHelper _searchEngineHelper;
+
+	@Reference
 	private SearchPermissionChecker _searchPermissionChecker;
 
 }

@@ -185,8 +185,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		SearchResultTranslatorImpl searchResultTranslatorImpl =
 			new SearchResultTranslatorImpl();
 
-		searchResultTranslatorImpl.setSearchResultManager(
-			createSearchResultManagerImpl());
+		searchResultTranslatorImpl.searchResultManager =
+			createSearchResultManagerImpl();
 
 		return searchResultTranslatorImpl;
 	}
@@ -194,7 +194,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	protected SummaryFactory createSummaryFactory() {
 		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
 
-		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+		summaryFactoryImpl.indexerRegistry = _indexerRegistry;
 
 		return summaryFactoryImpl;
 	}

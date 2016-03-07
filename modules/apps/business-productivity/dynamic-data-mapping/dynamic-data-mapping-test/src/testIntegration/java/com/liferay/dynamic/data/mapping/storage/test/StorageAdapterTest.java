@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
@@ -90,9 +90,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
-
-		_jsonStorageAdapter = StorageAdapterRegistryUtil.getStorageAdapter(
-			StorageType.JSON.toString());
 	}
 
 	@Before
@@ -101,6 +98,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		super.setUp();
 
 		setUpDDMFormValuesToFieldsConverter();
+		setUpJSONStorageAdapter();
 	}
 
 	@Test
@@ -699,6 +697,16 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			DDMFormValuesToFieldsConverter.class);
 	}
 
+	protected void setUpJSONStorageAdapter() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		StorageAdapterRegistry storageAdapterRegistry = registry.getService(
+			StorageAdapterRegistry.class);
+
+		_jsonStorageAdapter = storageAdapterRegistry.getStorageAdapter(
+			StorageType.JSON.toString());
+	}
+
 	protected void validate(long ddmStructureId, Fields fields)
 		throws Exception {
 
@@ -724,9 +732,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static long _CLASS_NAME_ID;
 
 	private static Locale _enLocale;
-	private static StorageAdapter _jsonStorageAdapter;
 	private static Locale _ptLocale;
 
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private StorageAdapter _jsonStorageAdapter;
 
 }

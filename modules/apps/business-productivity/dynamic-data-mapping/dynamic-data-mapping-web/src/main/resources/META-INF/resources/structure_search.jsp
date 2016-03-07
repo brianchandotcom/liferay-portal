@@ -37,7 +37,7 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 				<aui:select inlineField="<%= true %>" name="storageType">
 
 					<%
-					for (String storageType : StorageType.getTypes()) {
+					for (String storageType : ddmDisplayContext.getStorageTypes()) {
 					%>
 
 						<aui:option label="<%= storageType %>" selected="<%= storageType.equals(displayTerms.getStorageType()) %>" value="<%= storageType %>" />

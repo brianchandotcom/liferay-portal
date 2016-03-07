@@ -349,6 +349,12 @@ public class DDLRecordLocalServiceUtil {
 		return getService().getDDLRecordsCount();
 	}
 
+	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
+		long ddmStorageId)
+		throws com.liferay.dynamic.data.mapping.exception.StorageException {
+		return getService().getDDMFormValues(ddmStorageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);

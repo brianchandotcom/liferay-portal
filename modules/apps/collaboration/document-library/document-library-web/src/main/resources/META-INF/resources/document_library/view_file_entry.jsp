@@ -314,7 +314,7 @@ if (portletTitleBasedNavigation) {
 								<liferay-ddm:html
 									classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 									classPK="<%= ddmStructure.getPrimaryKey() %>"
-									ddmFormValues="<%= DDMBeanTranslatorUtil.translate(ddmFormValues) %>"
+									ddmFormValues="<%= ddmFormValues %>"
 									fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 									readOnly="<%= true %>"
 									requestedLocale="<%= (ddmFormValues != null) ? ddmFormValues.getDefaultLocale() : locale %>"
@@ -350,12 +350,12 @@ if (portletTitleBasedNavigation) {
 					List<DDMStructure> ddmStructures = DDMStructureManagerUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
 					for (DDMStructure ddmStructure : ddmStructures) {
-						com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+						DDMFormValues ddmFormValues = null;
 
 						try {
 							DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-							ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+							ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 
 						}
 						catch (Exception e) {

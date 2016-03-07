@@ -15,12 +15,15 @@
 package com.liferay.document.library.display.context;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Iván Zaera
  */
 public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
+
+	public DDMFormValues getDDMFormValues(long classPK) throws PortalException;
 
 	public DLFilePicker getDLFilePicker(String onFilePickCallback)
 		throws PortalException;

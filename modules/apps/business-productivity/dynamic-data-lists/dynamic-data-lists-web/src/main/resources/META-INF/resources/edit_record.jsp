@@ -41,7 +41,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 DDMFormValues ddmFormValues = null;
 
 if (recordVersion != null) {
-	ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
+	ddmFormValues = ddlDisplayContext.getDDMFormValues(recordVersion.getDDMStorageId());
 }
 
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");

@@ -201,6 +201,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		return _ddlRecordVersion.getCreateDate();
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
+		throws com.liferay.dynamic.data.mapping.exception.StorageException {
+		return _ddlRecordVersion.getDDMFormValues();
+	}
+
 	/**
 	* Returns the d d m storage ID of this d d l record version.
 	*

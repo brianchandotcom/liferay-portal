@@ -173,7 +173,7 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 					recordVersion = record.getLatestRecordVersion();
 				}
 
-				DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
+				DDMFormValues ddmFormValues = ddlDisplayContext.getDDMFormValues(recordVersion.getDDMStorageId());
 
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 

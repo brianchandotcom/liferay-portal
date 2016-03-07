@@ -17,6 +17,7 @@ package com.liferay.document.library.display.context;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -64,6 +65,11 @@ public class BaseDLEditFileEntryDisplayContext
 				throw new SystemException(pe);
 			}
 		}
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
+		return parentDisplayContext.getDDMFormValues(classPK);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.document.library.display.context.DLEditFileEntryDisplayContex
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,7 +55,7 @@ public class DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				request, response, dlFileEntryType);
+				request, response, dlFileEntryType, _storageEngine);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -74,7 +75,7 @@ public class DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				request, response, fileEntry);
+				request, response, fileEntry, _storageEngine);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -97,7 +98,7 @@ public class DLDisplayContextProvider {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
-					_resourceBundleLoader);
+					_resourceBundleLoader, _storageEngine);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -127,7 +128,7 @@ public class DLDisplayContextProvider {
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
-				_resourceBundleLoader);
+				_resourceBundleLoader, _storageEngine);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -154,6 +155,11 @@ public class DLDisplayContextProvider {
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
 
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+	}
+
+	@Reference(unbind = "-")
+	public void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
 	}
 
 	public void unsetDLMimeTypeDisplayContext(
@@ -189,5 +195,6 @@ public class DLDisplayContextProvider {
 		_dlDisplayContextFactories;
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private ResourceBundleLoader _resourceBundleLoader;
+	private StorageEngine _storageEngine;
 
 }

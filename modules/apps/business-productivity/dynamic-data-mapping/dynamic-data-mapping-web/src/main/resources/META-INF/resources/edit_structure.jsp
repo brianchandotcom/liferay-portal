@@ -259,7 +259,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 											<aui:select disabled="<%= structure != null %>" name="storageType">
 
 											<%
-											for (String storageType : StorageType.getTypes()) {
+											for (String storageType : ddmDisplayContext.getStorageTypes()) {
 											%>
 
 												<aui:option label="<%= storageType %>" value="<%= storageType %>" />

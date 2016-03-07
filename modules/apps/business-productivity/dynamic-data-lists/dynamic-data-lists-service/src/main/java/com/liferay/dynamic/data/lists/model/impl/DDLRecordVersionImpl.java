@@ -18,12 +18,19 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DDLRecordVersionImpl extends DDLRecordVersionBaseImpl {
+
+	@Override
+	public DDMFormValues getDDMFormValues() throws StorageException {
+		return DDLRecordLocalServiceUtil.getDDMFormValues(getDDMStorageId());
+	}
 
 	@Override
 	public DDLRecord getRecord() throws PortalException {

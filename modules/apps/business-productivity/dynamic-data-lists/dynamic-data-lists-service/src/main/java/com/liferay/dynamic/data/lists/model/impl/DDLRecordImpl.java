@@ -16,12 +16,12 @@ package com.liferay.dynamic.data.lists.model.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngineUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
@@ -49,7 +49,7 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 
 	@Override
 	public DDMFormValues getDDMFormValues() throws PortalException {
-		return StorageEngineUtil.getDDMFormValues(getDDMStorageId());
+		return DDLRecordLocalServiceUtil.getDDMFormValues(getDDMStorageId());
 	}
 
 	@Override

@@ -63,7 +63,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 		DDMFormValues ddmFormValues = null;
 
 		if (recordVersion != null) {
-			ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
+			ddmFormValues = ddlDisplayContext.getDDMFormValues(recordVersion.getDDMStorageId());
 		}
 
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);

@@ -57,19 +57,4 @@
 			</map>
 		</property>
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry" class="com.liferay.dynamic.data.mapping.storage.impl.StorageAdapterRegistryImpl">
-		<property name="defaultStorageType" value="json" />
-		<property name="storageAdapters">
-			<list>
-				<bean class="com.liferay.dynamic.data.mapping.storage.impl.JSONStorageAdapter" />
-			</list>
-		</property>
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil" class="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil">
-		<property name="storageAdapterRegistry" ref="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry" />
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.storage.StorageEngine" class="com.liferay.dynamic.data.mapping.storage.impl.StorageEngineImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil" class="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil">
-		<property name="storageEngine" ref="com.liferay.dynamic.data.mapping.storage.StorageEngine" />
-	</bean>
 </beans>

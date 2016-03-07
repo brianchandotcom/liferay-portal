@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
-import java.util.Set;
-
 /**
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
@@ -23,10 +21,6 @@ import java.util.Set;
 public enum StorageType {
 
 	JSON("json");
-
-	public static Set<String> getTypes() {
-		return StorageAdapterRegistryUtil.getStorageTypes();
-	}
 
 	public static StorageType parse(String value) {
 		if (JSON.getValue().equals(value)) {

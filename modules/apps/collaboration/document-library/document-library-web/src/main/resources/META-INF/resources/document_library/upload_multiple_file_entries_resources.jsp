@@ -155,12 +155,12 @@ else {
 							List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 							for (DDMStructure ddmStructure : ddmStructures) {
-								com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+								DDMFormValues ddmFormValues = null;
 
 								try {
 									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+									ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 								}
 								catch (Exception e) {
 								}

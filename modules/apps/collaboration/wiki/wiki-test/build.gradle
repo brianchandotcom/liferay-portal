@@ -1,6 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
-
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
 	testCompile project(":apps:collaboration:wiki:wiki-api")
 	testCompile project(":apps:collaboration:wiki:wiki-service")
 	testCompile project(":apps:collaboration:wiki:wiki-web")

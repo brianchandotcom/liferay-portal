@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -65,7 +65,9 @@ public class WidgetPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			PortletURL basePortletURL = PortletURLFactoryUtil.create(
-				portletRequest, PortletKeys.PORTLET_SHARING,
+				portletRequest,
+				PortletConfigurationSharingPortletKeys.
+					PORTLET_CONFIGURATION_SHARING,
 				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
 			StringBundler sb = new StringBundler();

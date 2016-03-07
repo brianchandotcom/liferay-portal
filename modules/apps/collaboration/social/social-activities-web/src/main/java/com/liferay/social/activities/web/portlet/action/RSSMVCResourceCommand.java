@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
-import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
+import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalService;
 import com.liferay.util.RSSUtil;
 
@@ -77,7 +77,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 	protected String exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			String title, String description, String format, double version,
-			String displayStyle, List<SocialActivity> socialActivities,
+			String displayStyle, List<SocialActivitySet> socialActivitySets,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -92,10 +92,10 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
 		syndFeed.setEntries(syndEntries);
 
-		for (SocialActivity socialActivity : socialActivities) {
+		for (SocialActivitySet socialActivitySet : socialActivitySets) {
 			SocialActivityFeedEntry socialActivityFeedEntry =
 				_socialActivityInterpreterLocalService.interpret(
-					StringPool.BLANK, socialActivity, serviceContext);
+					StringPool.BLANK, socialActivitySet, serviceContext);
 
 			if (socialActivityFeedEntry == null) {
 				continue;
@@ -125,7 +125,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			}
 
 			syndEntry.setPublishedDate(
-				new Date(socialActivity.getCreateDate()));
+				new Date(socialActivitySet.getCreateDate()));
 			syndEntry.setTitle(
 				HtmlUtil.extractText(socialActivityFeedEntry.getTitle()));
 			syndEntry.setUri(syndEntry.getLink());
@@ -194,8 +194,8 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		SocialActivityQueryHelper.Scope scope =
 			SocialActivityQueryHelper.Scope.fromValue(tabs1);
 
-		List<SocialActivity> socialActivities =
-			_socialActivityQueryHelper.getSocialActivities(
+		List<SocialActivitySet> socialActivitySets =
+			_socialActivityQueryHelper.getSocialActivitySets(
 				group, themeDisplay.getLayout(), scope, 0, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -203,7 +203,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
 		String rss = exportToRSS(
 			resourceRequest, resourceResponse, feedTitle, null, format, version,
-			displayStyle, socialActivities, serviceContext);
+			displayStyle, socialActivitySets, serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
 	}

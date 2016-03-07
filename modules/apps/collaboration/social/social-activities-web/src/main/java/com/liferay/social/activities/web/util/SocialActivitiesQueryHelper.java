@@ -17,9 +17,9 @@ package com.liferay.social.activities.web.util;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.model.SocialRelationConstants;
-import com.liferay.social.kernel.service.SocialActivityLocalService;
+import com.liferay.social.kernel.service.SocialActivitySetLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,42 +33,42 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = SocialActivitiesQueryHelper.class)
 public class SocialActivitiesQueryHelper {
 
-	public List<SocialActivity> getSocialActivities(
+	public List<SocialActivitySet> getSocialActivitySets(
 		Group group, Layout layout, Scope scope, int start, int end) {
 
 		if (scope == Scope.ALL) {
 			if (!group.isUser()) {
-				return _socialActivityLocalService.getGroupActivities(
+				return _socialActivitySetLocalService.getGroupActivitySets(
 					group.getGroupId(), start, end);
 			}
 
-			return _socialActivityLocalService.getUserActivities(
+			return _socialActivitySetLocalService.getUserActivitySets(
 				group.getClassPK(), start, end);
 		}
 		else if (group.isOrganization()) {
-			return _socialActivityLocalService.getOrganizationActivities(
+			return _socialActivitySetLocalService.getOrganizationActivitySets(
 				group.getOrganizationId(), start, end);
 		}
 		else if (!group.isUser()) {
-			return _socialActivityLocalService.getGroupActivities(
+			return _socialActivitySetLocalService.getGroupActivitySets(
 				group.getGroupId(), start, end);
 		}
 		else if (layout.isPublicLayout() || (scope == Scope.ME)) {
-			return _socialActivityLocalService.getUserActivities(
+			return _socialActivitySetLocalService.getUserActivitySets(
 				group.getClassPK(), start, end);
 		}
 		else if (scope == Scope.CONNECTIONS) {
-			return _socialActivityLocalService.getRelationActivities(
+			return _socialActivitySetLocalService.getRelationActivitySets(
 				group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION,
 				start, end);
 		}
 		else if (scope == Scope.FOLLOWING) {
-			return _socialActivityLocalService.getRelationActivities(
+			return _socialActivitySetLocalService.getRelationActivitySets(
 				group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER,
 				start, end);
 		}
 		else if (scope == Scope.MY_SITES) {
-			return _socialActivityLocalService.getUserGroupsActivities(
+			return _socialActivitySetLocalService.getUserGroupsActivitySets(
 				group.getClassPK(), start, end);
 		}
 		else {
@@ -109,13 +109,13 @@ public class SocialActivitiesQueryHelper {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
+	protected void setSocialActivitySetLocalService(
+		SocialActivitySetLocalService socialActivitySetLocalService) {
 
-		_socialActivityLocalService = socialActivityLocalService;
+		_socialActivitySetLocalService = socialActivitySetLocalService;
 	}
 
 	private GroupLocalService _groupLocalService;
-	private SocialActivityLocalService _socialActivityLocalService;
+	private SocialActivitySetLocalService _socialActivitySetLocalService;
 
 }

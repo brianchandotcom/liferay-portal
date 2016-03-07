@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.social.activities.web.portlet.display.context.util.SocialActivitiesRequestHelper;
 import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
-import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.List;
 import java.util.Locale;
@@ -96,14 +96,14 @@ public class DefaultSocialActivitiesDisplayContext
 	}
 
 	@Override
-	public List<SocialActivity> getSocialActivities() {
+	public List<SocialActivitySet> getSocialActivitySets() {
 		Group group = _socialActivitiesRequestHelper.getScopeGroup();
 		Layout layout = _socialActivitiesRequestHelper.getLayout();
 
 		SocialActivityQueryHelper.Scope scope =
 			SocialActivityQueryHelper.Scope.fromValue(getSelectedTabName());
 
-		return _socialActivityQueryHelper.getSocialActivities(
+		return _socialActivityQueryHelper.getSocialActivitySets(
 			group, layout, scope, 0, _socialActivitiesRequestHelper.getMax());
 	}
 

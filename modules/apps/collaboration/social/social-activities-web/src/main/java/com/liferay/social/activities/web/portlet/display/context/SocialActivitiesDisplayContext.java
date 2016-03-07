@@ -15,7 +15,7 @@
 package com.liferay.social.activities.web.portlet.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public interface SocialActivitiesDisplayContext {
 
 	public String getSelectedTabName();
 
-	public List<SocialActivity> getSocialActivities();
+	public List<SocialActivitySet> getSocialActivitySets();
 
 	public String getTabsNames();
 

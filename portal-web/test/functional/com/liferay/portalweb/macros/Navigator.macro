@@ -65,14 +65,6 @@
 		<execute function="Click" locator1="Link#STAGING" />
 	</command>
 
-	<command name="gotoStagingPage">
-		<execute macro="Navigator#openStagingURL" />
-
-		<execute macro="Navigator#_gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-	</command>
-
 	<command name="gotoTab">
 		<var name="key_tab" value="${tab}" />
 
@@ -141,7 +133,7 @@
 	</command>
 
 	<command name="openStagingURL">
-		<execute function="Open" locator1="/web/guest-staging/home" />
+		<execute function="Open" locator1="/web/guest-staging" />
 	</command>
 
 	<command name="openURL">

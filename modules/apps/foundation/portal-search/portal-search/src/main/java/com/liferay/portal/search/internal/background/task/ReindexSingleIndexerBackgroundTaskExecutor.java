@@ -37,7 +37,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
 
 	public ReindexSingleIndexerBackgroundTaskExecutor() {
-		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_CUSTOM);
+		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
 	}
 
 	@Override

@@ -57,7 +57,14 @@ public class CheckAssetEntryMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		AssetPublisherUtil.checkAssetEntries();
+		_assetPublisherUtil.checkAssetEntries();
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetPublisherUtil(
+		AssetPublisherUtil assetPublisherUtil) {
+
+		_assetPublisherUtil = assetPublisherUtil;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -76,6 +83,7 @@ public class CheckAssetEntryMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
+	private AssetPublisherUtil _assetPublisherUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

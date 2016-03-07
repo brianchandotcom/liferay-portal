@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -577,7 +578,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		if (data != null) {
 			for (int i = 0; i < data.length; i++) {
 				data[i] = StringUtil.replace(
-					data[i], StringPool.COMMA, _EXPANDO_COMMA);
+					data[i], CharPool.COMMA, _EXPANDO_COMMA);
 			}
 		}
 

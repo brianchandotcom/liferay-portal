@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
@@ -91,7 +92,7 @@ public class PluginsSummaryBuilder {
 
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			_createPluginSummary(sb, fileName);
 		}
@@ -187,7 +188,7 @@ public class PluginsSummaryBuilder {
 
 		String content = StringUtil.read(process.getInputStream());
 
-		content = StringUtil.replace(content, "\n", " ");
+		content = StringUtil.replace(content, '\n', ' ');
 
 		for (String ticketIdPrefix : _TICKET_ID_PREFIXES) {
 			int x = 0;

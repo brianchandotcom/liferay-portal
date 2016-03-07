@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ThemeConstants;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslator;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -266,7 +267,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			bbCodeItems, marker, "code", BBCodeParser.TYPE_DATA, true);
 
 		code = HtmlUtil.escape(code);
-		code = StringUtil.replace(code, StringPool.TAB, StringPool.FOUR_SPACES);
+		code = StringUtil.replace(code, CharPool.TAB, StringPool.FOUR_SPACES);
 
 		String[] lines = code.split("\r?\n");
 
@@ -552,7 +553,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		if (data.length() > 0) {
 			data = StringUtil.replace(
 				data, StringPool.RETURN_NEW_LINE, "<br />");
-			data = StringUtil.replace(data, StringPool.NEW_LINE, "<br />");
+			data = StringUtil.replace(data, CharPool.NEW_LINE, "<br />");
 		}
 
 		return data;

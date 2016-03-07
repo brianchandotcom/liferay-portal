@@ -15,6 +15,7 @@
 package com.liferay.css.builder;
 
 import com.liferay.portal.kernel.model.ModelHintsConstants;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -38,10 +39,10 @@ public class CSSBuilderUtil {
 
 	public static String getCacheFileName(String fileName, String suffix) {
 		String cacheFileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		int x = cacheFileName.lastIndexOf(StringPool.SLASH);
-		int y = cacheFileName.lastIndexOf(StringPool.PERIOD);
+		int x = cacheFileName.lastIndexOf(CharPool.SLASH);
+		int y = cacheFileName.lastIndexOf(CharPool.PERIOD);
 
 		if (cacheFileName.endsWith(".scss")) {
 			cacheFileName = cacheFileName.substring(0, y + 1) + "css";
@@ -53,7 +54,7 @@ public class CSSBuilderUtil {
 	}
 
 	public static String getRtlCustomFileName(String fileName) {
-		int pos = fileName.lastIndexOf(StringPool.PERIOD);
+		int pos = fileName.lastIndexOf(CharPool.PERIOD);
 
 		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
 	}

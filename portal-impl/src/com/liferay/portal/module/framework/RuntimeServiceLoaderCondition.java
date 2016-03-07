@@ -14,8 +14,8 @@
 
 package com.liferay.portal.module.framework;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ServiceLoaderCondition;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -30,8 +30,7 @@ public class RuntimeServiceLoaderCondition implements ServiceLoaderCondition {
 	public boolean isLoad(URL url) {
 		String path = url.getPath();
 
-		path = StringUtil.replace(
-			path, StringPool.BACK_SLASH, StringPool.SLASH);
+		path = StringUtil.replace(path, CharPool.BACK_SLASH, CharPool.SLASH);
 
 		if (!path.startsWith("file:/") && path.startsWith("file:")) {
 			path = "file:/" + path.substring(5, path.length());

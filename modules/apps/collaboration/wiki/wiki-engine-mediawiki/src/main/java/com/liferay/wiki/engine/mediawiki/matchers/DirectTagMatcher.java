@@ -61,7 +61,7 @@ public class DirectTagMatcher extends CallbackMatcher {
 					}
 
 					fileName = StringUtil.replace(
-						fileName, StringPool.UNDERLINE, "%5F");
+						fileName, CharPool.UNDERLINE, "%5F");
 
 					return StringUtil.replace(
 						matchResult.group(0), matchResult.group(1), fileName);

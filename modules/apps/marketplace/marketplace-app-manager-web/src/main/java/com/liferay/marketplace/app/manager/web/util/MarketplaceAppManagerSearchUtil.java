@@ -16,6 +16,7 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
 import com.liferay.marketplace.app.manager.web.constants.BundleStateConstants;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -97,8 +98,7 @@ public class MarketplaceAppManagerSearchUtil {
 	}
 
 	protected static String getKeywordsRegex(String keywords) {
-		keywords = StringUtil.replace(
-			keywords, StringPool.SPACE, StringPool.PIPE);
+		keywords = StringUtil.replace(keywords, CharPool.SPACE, CharPool.PIPE);
 
 		return
 			StringPool.OPEN_PARENTHESIS + keywords +

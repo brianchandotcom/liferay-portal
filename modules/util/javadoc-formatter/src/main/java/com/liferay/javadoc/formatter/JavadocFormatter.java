@@ -191,7 +191,7 @@ public class JavadocFormatter {
 
 				for (String curLimit : limitArray) {
 					includes.add(
-						"**\\" + StringUtil.replace(curLimit, ".", "\\") +
+						"**\\" + StringUtil.replace(curLimit, '.', '\\') +
 							"\\**\\*.java");
 					includes.add("**\\" + curLimit + ".java");
 				}
@@ -228,7 +228,7 @@ public class JavadocFormatter {
 			_populateJavadocBuilder(fileNames);
 
 			for (String fileName : fileNames) {
-				fileName = StringUtil.replace(fileName, "\\", "/");
+				fileName = StringUtil.replace(fileName, '\\', '/');
 
 				try {
 					_format(fileName);
@@ -922,7 +922,7 @@ public class JavadocFormatter {
 
 			// Escape dollar signs
 
-			trimmed = StringUtil.replace(trimmed, "$", "\\$");
+			trimmed = StringUtil.replace(trimmed, '$', "\\$");
 
 			matcher.appendReplacement(sb, trimmed);
 		}
@@ -1096,7 +1096,7 @@ public class JavadocFormatter {
 		String srcFile = fileName.substring(pos + 1, fileName.length());
 
 		return StringUtil.replace(
-			srcFile.substring(0, srcFile.length() - 5), "/", ".");
+			srcFile.substring(0, srcFile.length() - 5), '/', '.');
 	}
 
 	private String _getFieldKey(Element fieldElement) {
@@ -1255,7 +1255,7 @@ public class JavadocFormatter {
 
 		String absolutePath = file.getAbsolutePath();
 
-		absolutePath = StringUtil.replace(absolutePath, "\\", "/");
+		absolutePath = StringUtil.replace(absolutePath, '\\', '/');
 		absolutePath = StringUtil.replace(absolutePath, "/./", "/");
 
 		int pos = absolutePath.indexOf("/portal-impl/src/");

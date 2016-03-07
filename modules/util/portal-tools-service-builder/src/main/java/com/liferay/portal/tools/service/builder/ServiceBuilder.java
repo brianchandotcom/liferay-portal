@@ -556,19 +556,19 @@ public class ServiceBuilder {
 			_apiPackagePath = GetterUtil.getString(
 				rootElement.attributeValue("api-package-path"), packagePath);
 			_oldServiceOutputPath =
-				_apiDirName + "/" + StringUtil.replace(packagePath, ".", "/");
+				_apiDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 			_outputPath =
-				_implDirName + "/" + StringUtil.replace(packagePath, ".", "/");
+				_implDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 
 			if (Validator.isNotNull(_testDirName)) {
 				_testOutputPath =
 					_testDirName + "/" +
-						StringUtil.replace(packagePath, ".", "/");
+						StringUtil.replace(packagePath, '.', '/');
 			}
 
 			_serviceOutputPath =
 				_apiDirName + "/" +
-					StringUtil.replace(_apiPackagePath, ".", "/");
+					StringUtil.replace(_apiPackagePath, '.', '/');
 
 			_packagePath = packagePath;
 
@@ -971,9 +971,9 @@ public class ServiceBuilder {
 		String createMappingTableSQL = _getCreateMappingTableSQL(entityMapping);
 
 		createMappingTableSQL = StringUtil.replace(
-			createMappingTableSQL, "\n", "");
+			createMappingTableSQL, '\n', "");
 		createMappingTableSQL = StringUtil.replace(
-			createMappingTableSQL, "\t", "");
+			createMappingTableSQL, '\t', "");
 		createMappingTableSQL = createMappingTableSQL.substring(
 			0, createMappingTableSQL.length() - 1);
 
@@ -983,8 +983,8 @@ public class ServiceBuilder {
 	public String getCreateTableSQL(Entity entity) {
 		String createTableSQL = _getCreateTableSQL(entity);
 
-		createTableSQL = StringUtil.replace(createTableSQL, "\n", "");
-		createTableSQL = StringUtil.replace(createTableSQL, "\t", "");
+		createTableSQL = StringUtil.replace(createTableSQL, '\n', "");
+		createTableSQL = StringUtil.replace(createTableSQL, '\t', "");
 		createTableSQL = createTableSQL.substring(
 			0, createTableSQL.length() - 1);
 
@@ -1061,7 +1061,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		String refPackageDirName = StringUtil.replace(refPackage, ".", "/");
+		String refPackageDirName = StringUtil.replace(refPackage, '.', '/');
 
 		String refFileName =
 			_implDirName + "/" + refPackageDirName + "/service.xml";
@@ -3056,7 +3056,7 @@ public class ServiceBuilder {
 		}
 
 		File file = new File(
-			_implDirName + "/" + StringUtil.replace(_propsUtil, ".", "/") +
+			_implDirName + "/" + StringUtil.replace(_propsUtil, '.', '/') +
 				".java");
 
 		Map<String, Object> context = _getContext();

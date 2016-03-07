@@ -131,7 +131,7 @@ public class URLCodecTest {
 					_RAW_URLS[i], StringPool.UTF8);
 
 				_ESCAPE_SPACES_ENCODED_URLS[i] = StringUtil.replace(
-					_ENCODED_URLS[i], StringPool.PLUS, "%20");
+					_ENCODED_URLS[i], CharPool.PLUS, "%20");
 			}
 		}
 		catch (Exception e) {

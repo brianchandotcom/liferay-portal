@@ -17,6 +17,7 @@ package com.liferay.wiki.engine.creole.antlrwiki.translator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -274,8 +275,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		sb.append(StringPool.DASH);
 		sb.append(text.trim());
 
-		return StringUtil.replace(
-			sb.toString(), StringPool.SPACE, StringPool.PLUS);
+		return StringUtil.replace(sb.toString(), CharPool.SPACE, CharPool.PLUS);
 	}
 
 	protected String getUnformattedHeadingText(HeadingNode headingNode) {

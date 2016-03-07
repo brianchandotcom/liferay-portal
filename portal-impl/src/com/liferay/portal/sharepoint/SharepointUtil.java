@@ -105,7 +105,7 @@ public class SharepointUtil {
 	}
 
 	public static String replaceBackSlashes(String value) {
-		return StringUtil.replace(value, "\\", StringPool.BLANK);
+		return StringUtil.replace(value, '\\', StringPool.BLANK);
 	}
 
 	public static String stripService(String url, boolean trailingSlash) {

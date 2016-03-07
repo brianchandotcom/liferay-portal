@@ -15,7 +15,7 @@
 package com.liferay.wiki.engine.mediawiki.matchers;
 
 import com.liferay.portal.kernel.util.CallbackMatcher;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.MatchResult;
@@ -41,7 +41,7 @@ public class ImageTagMatcher extends CallbackMatcher {
 		public String foundMatch(MatchResult matchResult) {
 			String title = matchResult.group(0);
 
-			title = StringUtil.replace(title, StringPool.UNDERLINE, "%5F");
+			title = StringUtil.replace(title, CharPool.UNDERLINE, "%5F");
 
 			return title;
 		}

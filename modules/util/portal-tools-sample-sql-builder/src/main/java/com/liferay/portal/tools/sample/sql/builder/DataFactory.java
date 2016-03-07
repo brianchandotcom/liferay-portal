@@ -1837,7 +1837,7 @@ public class DataFactory {
 		typeSettingsProperties.setProperty("column-2", column2);
 
 		String typeSettings = StringUtil.replace(
-			typeSettingsProperties.toString(), "\n", "\\n");
+			typeSettingsProperties.toString(), '\n', "\\n");
 
 		layoutModel.setTypeSettings(typeSettings);
 		layoutModel.setLastPublishDate(new Date());

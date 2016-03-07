@@ -22,8 +22,8 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,7 +75,7 @@ public class PanelCategoryTag extends BasePanelTag {
 
 	protected String getId() {
 		String id = StringUtil.replace(
-			_panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
+			_panelCategory.getKey(), CharPool.PERIOD, CharPool.UNDERLINE);
 
 		return "panel-manage-" + id;
 	}

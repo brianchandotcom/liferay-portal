@@ -89,8 +89,8 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 			results = results.substring(pos + 1);
 		}
 
-		results = StringUtil.replace(results, "<", "&lt;");
-		results = StringUtil.replace(results, ">", "&gt;");
+		results = StringUtil.replace(results, '<', "&lt;");
+		results = StringUtil.replace(results, '>', "&gt;");
 
 		sb.append(results);
 

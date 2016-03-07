@@ -44,7 +44,7 @@ public class CSVUtil {
 			return s;
 		}
 
-		s = StringUtil.replace(s, StringPool.QUOTE, StringPool.DOUBLE_QUOTE);
+		s = StringUtil.replace(s, CharPool.QUOTE, StringPool.DOUBLE_QUOTE);
 
 		return StringPool.QUOTE.concat(s.concat(StringPool.QUOTE));
 	}

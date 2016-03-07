@@ -16,6 +16,7 @@ package com.liferay.portal.uuid;
 
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
@@ -50,7 +51,7 @@ public class PortalUUIDImpl implements PortalUUID {
 	@Override
 	public String toJsSafeUuid(String uuid) {
 		return StringUtil.replace(
-			uuid, StringPool.DASH, StringPool.DOUBLE_UNDERLINE);
+			uuid, CharPool.DASH, StringPool.DOUBLE_UNDERLINE);
 	}
 
 }

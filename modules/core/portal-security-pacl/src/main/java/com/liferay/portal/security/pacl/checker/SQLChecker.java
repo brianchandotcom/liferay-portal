@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringReader;
@@ -173,8 +173,7 @@ public class SQLChecker extends BaseChecker {
 		else {
 			key = "security-manager-sql-statements";
 
-			value = StringUtil.replace(
-				sql, StringPool.COMMA, StringPool.SEMICOLON);
+			value = StringUtil.replace(sql, CharPool.COMMA, CharPool.SEMICOLON);
 		}
 
 		AuthorizationProperty authorizationProperty =
@@ -248,8 +247,7 @@ public class SQLChecker extends BaseChecker {
 			}
 		}
 		else {
-			sql = StringUtil.replace(
-				sql, StringPool.COMMA, StringPool.SEMICOLON);
+			sql = StringUtil.replace(sql, CharPool.COMMA, CharPool.SEMICOLON);
 
 			if (_sqls.contains(sql)) {
 				return true;

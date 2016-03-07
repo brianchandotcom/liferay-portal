@@ -17,6 +17,7 @@ package com.liferay.portal.json;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -294,7 +295,7 @@ public class JSONFactoryTest {
 	}
 
 	protected String removeQuotes(String string) {
-		return StringUtil.replace(string, StringPool.QUOTE, StringPool.BLANK);
+		return StringUtil.replace(string, CharPool.QUOTE, StringPool.BLANK);
 	}
 
 	private static final double[] _DOUBLE_ARRAY = {1.2345, 2.3456, 5.6789};

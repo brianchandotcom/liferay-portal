@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.generic.QueryTermImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -93,7 +94,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 		if (!phrase && (like || isSubstringSearchAlways)) {
 			value = StringUtil.replace(
-				value, StringPool.PERCENT, StringPool.BLANK);
+				value, CharPool.PERCENT, StringPool.BLANK);
 
 			if (isSubstringSearchAlways) {
 				if (value.length() == 0) {

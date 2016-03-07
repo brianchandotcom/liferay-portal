@@ -243,7 +243,7 @@ public class InstanceWrapperBuilder {
 
 		File file = new File(
 			parentDir + "/" +
-				StringUtil.replace(javaClass.getPackage().getName(), ".", "/") +
+				StringUtil.replace(javaClass.getPackage().getName(), '.', '/') +
 					"/" + javaClass.getName() + "_IW.java");
 
 		ToolsUtil.writeFile(file, sb.toString(), null);
@@ -263,7 +263,7 @@ public class InstanceWrapperBuilder {
 		throws IOException {
 
 		String className = StringUtil.replace(
-			srcFile.substring(0, srcFile.length() - 5), "/", ".");
+			srcFile.substring(0, srcFile.length() - 5), '/', '.');
 
 		JavaDocBuilder builder = new JavaDocBuilder();
 

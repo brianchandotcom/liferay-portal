@@ -14,11 +14,11 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileComparator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -497,7 +497,7 @@ public class PluginsEnvironmentBuilder {
 		writeEclipseFiles(libDir, projectDir, dependencyJars);
 
 		String libDirPath = StringUtil.replace(
-			libDir.getPath(), StringPool.BACK_SLASH, StringPool.SLASH);
+			libDir.getPath(), CharPool.BACK_SLASH, CharPool.SLASH);
 
 		List<String> ignores = ListUtil.fromFile(
 			libDir.getCanonicalPath() + "/../.gitignore");
@@ -544,7 +544,7 @@ public class PluginsEnvironmentBuilder {
 		Set<String> extPortalJars = new LinkedHashSet<>();
 
 		String libDirPath = StringUtil.replace(
-			libDir.getPath(), StringPool.BACK_SLASH, StringPool.SLASH);
+			libDir.getPath(), CharPool.BACK_SLASH, CharPool.SLASH);
 
 		if (libDirPath.contains("/ext/")) {
 			FilenameFilter filenameFilter = new GlobFilenameFilter("*.jar");

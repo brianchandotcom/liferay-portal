@@ -91,6 +91,8 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 					<%
 					for (PortletCategory category : categories) {
+						portletCategoryIndex++;
+
 						request.setAttribute(WebKeys.PORTLET_CATEGORY, category);
 						request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
 						request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
@@ -100,8 +102,6 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 					<%
 						request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, oldCategoryPath);
-
-						portletCategoryIndex++;
 					}
 
 					for (Portlet portlet : portlets) {

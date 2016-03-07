@@ -14,10 +14,6 @@
 			</then>
 		</if>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Settings" />
-		</execute>
-
 		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${adtType} Test ADT" />
 
 		<execute macro="Button#clickSave" />
@@ -94,10 +90,6 @@
 				<execute function="AssertClick" locator1="Configuration#SETUP_DISPLAY_SETTINGS" value1="Display Settings" />
 			</then>
 		</if>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Settings" />
-		</execute>
 
 		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 

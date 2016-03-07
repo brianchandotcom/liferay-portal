@@ -19,7 +19,6 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(liveGroupId, ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT);
@@ -29,14 +28,15 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 
 	<%
 	for (ExportImportConfiguration exportImportConfiguration : exportImportConfigurations) {
+		Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 	%>
 
-		<portlet:renderURL var="addNewExportProcessURL">
+		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addNewExportProcessURL">
 			<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="privateLayout" value='<%= MapUtil.getString(settingsMap, "privateLayout") %>' />
 			<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 		</portlet:renderURL>

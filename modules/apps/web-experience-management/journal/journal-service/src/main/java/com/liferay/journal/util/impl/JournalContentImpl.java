@@ -281,8 +281,8 @@ public class JournalContentImpl implements JournalContent {
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get display for " + groupId + " " +
-						articleId + " " + languageId);
+					"Unable to get display for " + groupId + " " + articleId +
+						" " + languageId);
 			}
 
 			return null;

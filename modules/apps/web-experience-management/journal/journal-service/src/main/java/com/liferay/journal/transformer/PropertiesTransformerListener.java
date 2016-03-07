@@ -126,8 +126,8 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 			String actualKey = StringPool.AT + key + StringPool.AT;
 
 			String tempEscapedKey =
-				TokensTransformerListener.TEMP_ESCAPED_AT_OPEN +
-					key + TokensTransformerListener.TEMP_ESCAPED_AT_CLOSE;
+				TokensTransformerListener.TEMP_ESCAPED_AT_OPEN + key +
+					TokensTransformerListener.TEMP_ESCAPED_AT_CLOSE;
 
 			escapedKeys[counter] = escapedKey;
 			escapedValues[counter] = tempEscapedKey;

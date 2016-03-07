@@ -652,8 +652,8 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Theme " + getThemeId() + " is " +
-					(!available ? "NOT " : "") + "available for " + id);
+				"Theme " + getThemeId() + " is " + (!available ? "NOT " : "") +
+					"available for " + id);
 		}
 
 		return available;

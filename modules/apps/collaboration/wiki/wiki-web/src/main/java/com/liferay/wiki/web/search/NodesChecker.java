@@ -103,8 +103,8 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 
 		return getRowCheckBox(
 			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
-				name + "",
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name +
+				"",
 			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}

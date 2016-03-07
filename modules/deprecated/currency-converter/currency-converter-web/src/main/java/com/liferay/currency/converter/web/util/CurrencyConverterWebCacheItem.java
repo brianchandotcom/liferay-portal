@@ -59,8 +59,8 @@ public class CurrencyConverterWebCacheItem implements WebCacheItem {
 			}
 
 			String text = HttpUtil.URLtoString(
-				"http://finance.yahoo.com/d/quotes.csv?s=" +
-					symbol + "=X&f=sl1d1t1c1ohgv&e=.csv");
+				"http://finance.yahoo.com/d/quotes.csv?s=" + symbol +
+					"=X&f=sl1d1t1c1ohgv&e=.csv");
 
 			StringTokenizer st = new StringTokenizer(text, StringPool.COMMA);
 

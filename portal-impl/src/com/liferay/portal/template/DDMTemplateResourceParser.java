@@ -70,9 +70,9 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Loading {companyId=" + companyId + ", groupId=" +
-						groupId + ", classNameId=" + classNameId +
-							", ddmTemplateKey=" + ddmTemplateKey + "}");
+					"Loading {companyId=" + companyId + ", groupId=" + groupId +
+						", classNameId=" + classNameId + ", ddmTemplateKey=" +
+							ddmTemplateKey + "}");
 			}
 
 			DDMTemplate ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(

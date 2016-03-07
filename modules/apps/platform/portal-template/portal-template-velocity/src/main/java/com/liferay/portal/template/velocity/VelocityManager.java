@@ -165,8 +165,8 @@ public class VelocityManager extends BaseSingleTemplateManager {
 				VelocityEngine.RESOURCE_LOADER, "liferay");
 
 			extendedProperties.setProperty(
-				"liferay." + VelocityEngine.RESOURCE_LOADER +
-					"." + VelocityTemplateResourceLoader.class.getName(),
+				"liferay." + VelocityEngine.RESOURCE_LOADER + "." +
+					VelocityTemplateResourceLoader.class.getName(),
 				templateResourceLoader);
 
 			boolean cacheEnabled = false;

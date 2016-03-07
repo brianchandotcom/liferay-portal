@@ -865,8 +865,8 @@ public class PoshiRunnerValidation {
 		if (!requiredPropertyNames.isEmpty()) {
 			_exceptions.add(
 				new Exception(
-					"Missing required properties " +
-						requiredPropertyNames + "\n" + filePath));
+					"Missing required properties " + requiredPropertyNames +
+						"\n" + filePath));
 		}
 	}
 
@@ -1225,9 +1225,8 @@ public class PoshiRunnerValidation {
 		else if (!Validator.equals(theadClassName, className)) {
 			_exceptions.add(
 				new Exception(
-					"Thead class name does not match file name\n" +
-						filePath + ":" +
-							trElement.attributeValue("line-number")));
+					"Thead class name does not match file name\n" + filePath +
+						":" + trElement.attributeValue("line-number")));
 		}
 
 		Element headElement = element.element("head");
@@ -1611,9 +1610,8 @@ public class PoshiRunnerValidation {
 				else {
 					_exceptions.add(
 						new Exception(
-							"Missing while condition element\n" +
-								filePath + ":" +
-									element.attributeValue("line-number")));
+							"Missing while condition element\n" + filePath +
+								":" + element.attributeValue("line-number")));
 				}
 			}
 			else if (childElementName.equals("then")) {

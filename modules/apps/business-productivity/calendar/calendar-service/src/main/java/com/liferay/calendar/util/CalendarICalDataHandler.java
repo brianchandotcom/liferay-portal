@@ -642,10 +642,10 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 			calendarBooking.getDescription(user.getLocale()),
 			new String[] {"href=\"/", "src=\"/"},
 			new String[] {
-				"href=\"" +
-					company.getPortalURL(calendarBooking.getGroupId()) + "/",
-				"src=\"" +
-					company.getPortalURL(calendarBooking.getGroupId()) + "/"
+				"href=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
+					"/",
+				"src=\"" + company.getPortalURL(calendarBooking.getGroupId()) +
+					"/"
 			});
 
 		Description description = new Description(calendarBookingDescription);

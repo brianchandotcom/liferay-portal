@@ -249,8 +249,8 @@ public class PoshiRunnerGetterUtil {
 					if (line.contains("<" + reservedTag)) {
 						line = StringUtil.replace(
 							line, matcher.group(),
-							matcher.group() + " line-number=\"" +
-								lineNumber + "\"");
+							matcher.group() + " line-number=\"" + lineNumber +
+								"\"");
 
 						tagIsReservedTag = true;
 

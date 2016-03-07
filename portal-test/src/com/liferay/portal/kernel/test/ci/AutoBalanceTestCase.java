@@ -40,8 +40,8 @@ public abstract class AutoBalanceTestCase {
 
 		if (isCIMode()) {
 			System.out.println(
-				"Running in CI mode with " + (testClassGroupIndex + 1) +
-					"/" + testClassGroupsSize);
+				"Running in CI mode with " + (testClassGroupIndex + 1) + "/" +
+					testClassGroupsSize);
 		}
 	}
 

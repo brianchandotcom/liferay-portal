@@ -198,8 +198,8 @@ public class Table {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Finished backup of " + _tableName + " to " +
-						tempFileName + " in " + stopWatch.getTime() + " ms");
+					"Finished backup of " + _tableName + " to " + tempFileName +
+						" in " + stopWatch.getTime() + " ms");
 			}
 		}
 		catch (Exception e) {

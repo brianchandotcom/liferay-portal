@@ -103,8 +103,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Add failed, fetch {groupId=" + groupId + ", name=" +
-						name + "}");
+					"Add failed, fetch {groupId=" + groupId + ", name=" + name +
+						"}");
 			}
 
 			node = wikiNodePersistence.fetchByG_N(groupId, name, false);

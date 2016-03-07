@@ -401,8 +401,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Checking permission for " + groupId + " " + name +
-						" " + primKey + " " + actionId + " takes " +
+					"Checking permission for " + groupId + " " + name + " " +
+						primKey + " " + actionId + " takes " +
 							stopWatch.getTime() + " ms");
 			}
 

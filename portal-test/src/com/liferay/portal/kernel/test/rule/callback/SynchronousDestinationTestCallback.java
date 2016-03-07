@@ -253,8 +253,8 @@ public class SynchronousDestinationTestCallback
 			Registry registry = RegistryUtil.getRegistry();
 
 			return registry.getFilter(
-				"(&(destination.name=" + destinationName +
-					")(objectClass=" + Destination.class.getName() + "))");
+				"(&(destination.name=" + destinationName + ")(objectClass=" +
+					Destination.class.getName() + "))");
 		}
 
 		private final List<String> _absentDestinationNames = new ArrayList<>();

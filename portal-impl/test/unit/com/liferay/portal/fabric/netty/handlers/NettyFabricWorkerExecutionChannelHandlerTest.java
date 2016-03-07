@@ -522,13 +522,13 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		processConfig = loadedPaths.toProcessConfig(processConfig);
 
 		Assert.assertEquals(
-			mappedBootstrapPath1 + File.pathSeparator +
-				mappedBootstrapPath2 + File.pathSeparator +
+			mappedBootstrapPath1 + File.pathSeparator + mappedBootstrapPath2 +
+				File.pathSeparator +
 					mappedBootstrapPath3,
 			processConfig.getBootstrapClassPath());
 		Assert.assertEquals(
-			mappedRuntimePath1 + File.pathSeparator +
-				mappedRuntimePath2 + File.pathSeparator +
+			mappedRuntimePath1 + File.pathSeparator + mappedRuntimePath2 +
+				File.pathSeparator +
 					mappedRuntimePath3,
 			processConfig.getRuntimeClassPath());
 	}

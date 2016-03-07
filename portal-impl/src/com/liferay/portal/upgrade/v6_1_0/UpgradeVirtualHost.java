@@ -36,8 +36,8 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 		runSQL(
 			"insert into VirtualHost (virtualHostId, companyId, layoutSetId, " +
-				"hostname) values (" + virtualHostId + ", " + companyId +
-					", " + layoutSetId + ", '" + hostname + "')");
+				"hostname) values (" + virtualHostId + ", " + companyId + ", " +
+					layoutSetId + ", '" + hostname + "')");
 	}
 
 	@Override

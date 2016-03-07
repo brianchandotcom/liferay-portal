@@ -163,8 +163,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 			"/" + friendlyURLPath, "urlTitle", _URL_TITLE);
 
 		String targetURI =
-			"http://" + RandomTestUtil.randomString() +
-				"/" + friendlyURL + "/-/" + friendlyURLPath;
+			"http://" + RandomTestUtil.randomString() + "/" + friendlyURL +
+				"/-/" + friendlyURLPath;
 
 		whenHttpURLToString(
 			"<body><a href='" + targetURI + "'>" +
@@ -283,9 +283,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 	@Test
 	public void testGetExcerptWhenAnchorHasParent() throws Exception {
 		whenHttpURLToString(
-			"<body><p>" +
-				"Visit <a href='http://" + _TARGET_URI + "'>Liferay</a>" +
-					" to learn more</p></body>");
+			"<body><p>" + "Visit <a href='http://" + _TARGET_URI +
+				"'>Liferay</a>" + " to learn more</p></body>");
 
 		execute();
 
@@ -301,8 +300,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 		try {
 			whenHttpURLToString(
-				"<body>_____<p>12345<span>67890" +
-					"<a href='http://" + _TARGET_URI + "'>Liferay</a>" +
+				"<body>_____<p>12345<span>67890" + "<a href='http://" +
+					_TARGET_URI + "'>Liferay</a>" +
 						"12345</span>67890</p>_____</body>");
 
 			execute();
@@ -414,8 +413,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	protected void setUpHttpUtil() throws Exception {
 		whenHttpURLToString(
-			"<body><a href='http://" + _TARGET_URI + "'>" +
-				_EXCERPT_BODY + "</a></body>");
+			"<body><a href='http://" + _TARGET_URI + "'>" + _EXCERPT_BODY +
+				"</a></body>");
 
 		mockStatic(PortalSocketPermission.class, Mockito.RETURNS_DEFAULTS);
 

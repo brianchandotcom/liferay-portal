@@ -104,8 +104,8 @@ public class HttpPrincipalTestUtil {
 			String host = url.substring(pos + 3);
 
 			url =
-				protocol + login + ":" + password + "@" + host +
-					"/api/axis/" + serviceName;
+				protocol + login + ":" + password + "@" + host + "/api/axis/" +
+					serviceName;
 		}
 		else {
 			url += "/api/axis/" + serviceName;

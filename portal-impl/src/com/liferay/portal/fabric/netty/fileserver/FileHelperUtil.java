@@ -286,9 +286,8 @@ public class FileHelperUtil {
 
 				if (size != length) {
 					throw new IOException(
-						"Zip stream for entry " + zipEntry.getName() +
-							" is " + size + " bytes but should " + length +
-								" bytes");
+						"Zip stream for entry " + zipEntry.getName() + " is " +
+							size + " bytes but should " + length + " bytes");
 				}
 			}
 		}

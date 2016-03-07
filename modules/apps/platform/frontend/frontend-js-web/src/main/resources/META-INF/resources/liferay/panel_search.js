@@ -157,8 +157,8 @@ AUI.add(
 										if (contentParent) {
 											contentParent.show();
 
-											contentParent.one('.list-group-heading').removeClass('collapsed');
-											contentParent.one('.list-group-panel').addClass('in');
+											contentParent.all('> .list-group-heading').removeClass('collapsed');
+											contentParent.all('> .list-group-panel').addClass('in');
 										}
 									}
 								);

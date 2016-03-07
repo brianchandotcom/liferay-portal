@@ -84,6 +84,7 @@ import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
@@ -250,12 +251,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public void execute(Task task) {
-					Project project = task.getProject();
-
-					if (_logger.isQuietEnabled() &&
-						!isArtifactUpToDate(
-							recordArtifactTask, antJGitConfiguration,
-							portalRootDir)) {
+					if (_logger.isQuietEnabled()) {
+						Project project = task.getProject();
 
 						_logger.quiet(
 							project.getProjectDir() + " is not up-to-date");
@@ -263,6 +260,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+
+		task.onlyIf(
+			new OutOfDateArtifactSpec(
+				antJGitConfiguration, recordArtifactTask, portalRootDir));
 
 		task.setDescription(
 			"Checks if this project has been changed since the last publish.");
@@ -1466,74 +1467,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
-	protected boolean isArtifactUpToDate(
-		WritePropertiesTask recordArtifactTask,
-		Configuration antJGitConfiguration, File portalRootDir) {
-
-		Project project = recordArtifactTask.getProject();
-
-		Properties artifactProperties;
-
-		try {
-			artifactProperties = FileUtil.readProperties(
-				recordArtifactTask.getOutputFile());
-		}
-		catch (IOException ioe) {
-			throw new GradleException(
-				"Unable to read artifact properties", ioe);
-		}
-
-		String artifactGitId = artifactProperties.getProperty(
-			"artifact.git.id");
-
-		if (Validator.isNull(artifactGitId)) {
-			if (_logger.isInfoEnabled()) {
-				_logger.info(project + " has never been published");
-			}
-
-			return false;
-		}
-
-		AntBuilder antBuilder = project.createAntBuilder();
-
-		if (portalRootDir == null) {
-			portalRootDir = project.getRootDir();
-
-			while (true) {
-				File gitDir = new File(portalRootDir, ".git");
-
-				if (gitDir.exists()) {
-					break;
-				}
-
-				portalRootDir = portalRootDir.getParentFile();
-			}
-		}
-
-		antBuilder.setProperty("project.dir", portalRootDir);
-
-		Map<String, String> args = new HashMap<>();
-
-		args.put("classpath", antJGitConfiguration.getAsPath());
-		args.put("resource", "com/liferay/ant/jgit/ant-jgit-tasks.properties");
-
-		antBuilder.invokeMethod("taskdef", args);
-
-		args.clear();
-
-		args.put("ignoredMessagePattern", "artifact:ignore");
-		args.put("path", FileUtil.getAbsolutePath(project.getProjectDir()));
-		args.put("property", "git.up.to.date");
-		args.put("since", artifactGitId);
-
-		antBuilder.invokeMethod("git-up-to-date", args);
-
-		Map<String, Object> properties = antBuilder.getProperties();
-
-		return Boolean.parseBoolean(
-			String.valueOf(properties.get("git.up.to.date")));
-	}
-
 	protected boolean isPublishing(Project project) {
 		Gradle gradle = project.getGradle();
 
@@ -1564,6 +1497,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		"com.liferay.ant.jgit";
 
 	private static final String _GROUP = "com.liferay";
+
+	private static final String _IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
 
@@ -1596,5 +1531,92 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayDefaultsPlugin.class);
+
+	private static class OutOfDateArtifactSpec implements Spec<Task> {
+
+		public OutOfDateArtifactSpec(
+			FileCollection antJGitFileCollection,
+			WritePropertiesTask recordArtifactTask, File rootDir) {
+
+			_antJGitFileCollection = antJGitFileCollection;
+			_recordArtifactTask = recordArtifactTask;
+
+			if (rootDir == null) {
+				Project project = recordArtifactTask.getProject();
+
+				rootDir = project.getRootDir();
+
+				while (true) {
+					File gitDir = new File(rootDir, ".git");
+
+					if (gitDir.exists()) {
+						break;
+					}
+
+					rootDir = rootDir.getParentFile();
+				}
+			}
+
+			_rootDir = rootDir;
+		}
+
+		@Override
+		public boolean isSatisfiedBy(Task task) {
+			Project project = task.getProject();
+
+			Properties artifactProperties;
+
+			try {
+				artifactProperties = FileUtil.readProperties(
+					_recordArtifactTask.getOutputFile());
+			}
+			catch (IOException ioe) {
+				throw new GradleException(
+					"Unable to read artifact properties", ioe);
+			}
+
+			String artifactGitId = artifactProperties.getProperty(
+				"artifact.git.id");
+
+			if (Validator.isNull(artifactGitId)) {
+				if (_logger.isInfoEnabled()) {
+					_logger.info(project + " has never been published");
+				}
+
+				return true;
+			}
+
+			AntBuilder antBuilder = project.createAntBuilder();
+
+			antBuilder.setProperty("project.dir", _rootDir);
+
+			Map<String, String> args = new HashMap<>();
+
+			args.put("classpath", _antJGitFileCollection.getAsPath());
+			args.put(
+				"resource", "com/liferay/ant/jgit/ant-jgit-tasks.properties");
+
+			antBuilder.invokeMethod("taskdef", args);
+
+			args.clear();
+
+			args.put("ignoredMessagePattern", _IGNORED_MESSAGE_PATTERN);
+			args.put("path", FileUtil.getAbsolutePath(project.getProjectDir()));
+			args.put("property", "git.up.to.date");
+			args.put("since", artifactGitId);
+
+			antBuilder.invokeMethod("git-up-to-date", args);
+
+			Map<String, Object> properties = antBuilder.getProperties();
+
+			return !Boolean.parseBoolean(
+				String.valueOf(properties.get("git.up.to.date")));
+		}
+
+		private final FileCollection _antJGitFileCollection;
+		private final WritePropertiesTask _recordArtifactTask;
+		private final File _rootDir;
+
+	}
 
 }

@@ -642,9 +642,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-		</execute>
+		<execute macro="Navigator#openPrivateURL" />
 
 		<execute macro="User#viewLoginPG" />
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
@@ -876,9 +874,7 @@
 			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-		</execute>
+		<execute macro="Navigator#openPrivateURL" />
 
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Test Private Page" />
@@ -1119,9 +1115,7 @@
 			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-		</execute>
+		<execute macro="Navigator#openPrivateURL" />
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 

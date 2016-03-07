@@ -14,6 +14,14 @@ $horizontal-spacing: 35px;
 	position: absolute;
 }
 
+.ddl-form-settings-modal,
+.lfr-ddl-field-settings-modal.form-builder-field-settings,
+.publish-modal-container {
+	.modal-body {
+		background-color: #FFF;
+	}
+}
+
 .ddl-publish-modal {
 	.alert-info {
 		text-align: center;
@@ -259,7 +267,6 @@ $horizontal-spacing: 35px;
 	}
 
 	.modal-body {
-		background-color: #FFF;
 		overflow-x: hidden;
 		overflow-y: auto;
 		padding: 0;

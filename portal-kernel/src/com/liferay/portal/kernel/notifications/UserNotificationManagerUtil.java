@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.Registry;
@@ -38,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.portlet.PortletConfig;
 
 /**
  * @author Jonathan Lee
@@ -77,25 +80,15 @@ public class UserNotificationManagerUtil {
 	}
 
 	public static Map<String, List<UserNotificationDefinition>>
+		getActiveUserNotificationDefinitions() {
+
+		return _instance._doGetUserNotificationDefinitions(true);
+	}
+
+	public static Map<String, List<UserNotificationDefinition>>
 		getUserNotificationDefinitions() {
 
-		Map<String, List<UserNotificationDefinition>>
-			userNotificationDefinitionsMap = new ConcurrentHashMap<>();
-
-		ServiceTrackerMap<String, List<UserNotificationDefinition>>
-			userNotificationDefinitionsServiceTrackerMap =
-				_instance._userNotificationDefinitions;
-
-		for (String portletId :
-				userNotificationDefinitionsServiceTrackerMap.keySet()) {
-
-			userNotificationDefinitionsMap.put(
-				portletId,
-				userNotificationDefinitionsServiceTrackerMap.getService(
-					portletId));
-		}
-
-		return Collections.unmodifiableMap(userNotificationDefinitionsMap);
+		return _instance._doGetUserNotificationDefinitions(false);
 	}
 
 	public static Map<String, Map<String, UserNotificationHandler>>
@@ -132,6 +125,37 @@ public class UserNotificationManagerUtil {
 		return _instance._isDeliver(
 			userId, selector, portletId, classNameId, notificationType,
 			deliveryType, serviceContext);
+	}
+
+	private Map<String, List<UserNotificationDefinition>>
+		_doGetUserNotificationDefinitions(boolean checkActive) {
+
+		Map<String, List<UserNotificationDefinition>>
+			userNotificationDefinitionsMap = new ConcurrentHashMap<>();
+
+		ServiceTrackerMap<String, List<UserNotificationDefinition>>
+			userNotificationDefinitionsServiceTrackerMap =
+				_instance._userNotificationDefinitions;
+
+		for (String portletId :
+				userNotificationDefinitionsServiceTrackerMap.keySet()) {
+
+			if (checkActive) {
+				PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+					portletId);
+
+				if (portletConfig == null) {
+					continue;
+				}
+			}
+
+			userNotificationDefinitionsMap.put(
+				portletId,
+				userNotificationDefinitionsServiceTrackerMap.getService(
+					portletId));
+		}
+
+		return Collections.unmodifiableMap(userNotificationDefinitionsMap);
 	}
 
 	private UserNotificationManagerUtil() {

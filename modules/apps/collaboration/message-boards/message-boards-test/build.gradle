@@ -1,4 +1,6 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+
 	testCompile project(":apps:collaboration:message-boards:message-boards-comment")
 	testCompile project(":apps:collaboration:message-boards:message-boards-web")
 	testCompile project(":apps:platform:portal-search:portal-search")

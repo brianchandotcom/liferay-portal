@@ -1,4 +1,6 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+
 	testCompile project(":apps:business-productivity:calendar:calendar-api")
 	testCompile project(":apps:business-productivity:calendar:calendar-service")
 

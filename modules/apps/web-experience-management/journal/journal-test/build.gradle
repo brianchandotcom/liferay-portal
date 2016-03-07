@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "1.0.0"
 
 	testCompile project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")

@@ -269,9 +269,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		ifClause = stripQuotes(ifClause, CharPool.QUOTE);
-
-		ifClause = stripQuotes(ifClause, CharPool.APOSTROPHE);
+		ifClause = stripQuotes(ifClause);
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {

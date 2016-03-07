@@ -129,6 +129,14 @@ public class SocialActivitySetLocalServiceImpl
 	}
 
 	@Override
+	public List<SocialActivitySet> getOrganizationActivitySets(
+		long organizationId, int start, int end) {
+
+		return socialActivitySetFinder.findByOrganizationId(
+			organizationId, start, end);
+	}
+
+	@Override
 	public List<SocialActivitySet> getRelationActivitySets(
 		long userId, int start, int end) {
 

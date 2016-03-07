@@ -58,6 +58,48 @@ public class SocialActivitySetFinderImpl
 	public static final String FIND_BY_USER_GROUPS =
 		SocialActivitySetFinder.class.getName() + ".findByUserGroups";
 
+	public static final String FIND_BY_ORGANIZATION_ID =
+		SocialActivitySetFinder.class.getName() + ".findByOrganizationId";
+
+	@Override
+	public int countByUserGroups(long userId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUPS);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+			qPos.add(userId);
+			qPos.add(userId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	@Override
 	public int countByRelation(long userId) {
 		Session session = null;
@@ -175,35 +217,26 @@ public class SocialActivitySetFinderImpl
 	}
 
 	@Override
-	public int countByUserGroups(long userId) {
+	public List<SocialActivitySet> findByOrganizationId(
+		long organizationId, int start, int end) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUPS);
+			String sql = CustomSQLUtil.get(FIND_BY_ORGANIZATION_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			q.addEntity("SocialActivitySet", SocialActivitySetImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(userId);
-			qPos.add(userId);
-			qPos.add(userId);
+			qPos.add(organizationId);
 
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
+			return (List<SocialActivitySet>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

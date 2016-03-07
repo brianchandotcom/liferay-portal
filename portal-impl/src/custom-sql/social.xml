@@ -641,6 +641,24 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.findByOrganizationId">
+		<![CDATA[
+			SELECT
+				{SocialActivitySet.*}
+			FROM
+				SocialActivitySet
+			INNER JOIN
+				Group_ ON
+					(Group_.groupId = SocialActivitySet.groupId)
+			INNER JOIN
+				Organization_ ON
+					(Organization_.organizationId = Group_.classPK)
+			WHERE
+				(Organization_.organizationId = ?)
+			ORDER BY
+				SocialActivity.createDate DESC
+		]]>
+	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.findByRelation">
 		<![CDATA[
 			SELECT

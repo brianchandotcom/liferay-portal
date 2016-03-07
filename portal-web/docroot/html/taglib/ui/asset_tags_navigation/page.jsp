@@ -78,7 +78,7 @@ private String _buildTagsNavigation(long scopeGroupId, long siteGroupId, String 
 
 	sb.append("<ul class=\"tag-items ");
 
-	if (showAssetCount && displayStyle.equals("cloud")) {
+	if (displayStyle.equals("cloud")) {
 		sb.append("tag-cloud");
 	}
 	else {

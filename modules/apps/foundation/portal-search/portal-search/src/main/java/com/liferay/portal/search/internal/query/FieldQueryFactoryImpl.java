@@ -156,17 +156,6 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setQueryPreProcessConfiguration(
-		QueryPreProcessConfiguration queryPreProcessConfiguration) {
-
-		_queryPreProcessConfiguration = queryPreProcessConfiguration;
-	}
-
 	protected void unsetKeywordTokenizer(
 		KeywordTokenizer keywordTokenizer, Map<String, Object> properties) {
 
@@ -180,14 +169,14 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		}
 	}
 
-	protected void unsetQueryPreProcessConfiguration(
-		QueryPreProcessConfiguration queryPreProcessConfiguration) {
-
-		_queryPreProcessConfiguration = null;
-	}
-
 	private KeywordTokenizer _defaultKeywordTokenizer;
 	private KeywordTokenizer _keywordTokenizer;
-	private QueryPreProcessConfiguration _queryPreProcessConfiguration;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile QueryPreProcessConfiguration _queryPreProcessConfiguration;
 
 }

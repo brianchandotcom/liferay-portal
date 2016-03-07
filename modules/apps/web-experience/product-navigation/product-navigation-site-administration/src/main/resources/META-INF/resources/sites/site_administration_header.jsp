@@ -30,7 +30,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 			label="<%= false %>"
 			linkCssClass="icon-monospaced"
 			markupView="lexicon"
-			message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
+			message="go-to-other-site"
 			url="javascript:;"
 		/>
 	</div>

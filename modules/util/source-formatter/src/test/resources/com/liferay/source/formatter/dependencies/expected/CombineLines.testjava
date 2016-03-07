@@ -133,8 +133,8 @@ public class CombineLines extends SuperClass {
 		String anotherStringWithAVeryLongName = "Hello World";
 
 		boolean b = StringUtil.contains(
-			anotherStringWithAVeryLongName,
-			StringUtil.trim(anotherStringWithAVeryLongName));
+			anotherStringWithAVeryLongName, StringUtil.trim(
+				anotherStringWithAVeryLongName));
 
 		boolean b2 = StringUtil.contains(
 			test1,

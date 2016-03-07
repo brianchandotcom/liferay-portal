@@ -266,9 +266,15 @@
 
 	<command name="selectDisplayTemplateViaDDLDisplayPG">
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+
 		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+
 		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 
 		<execute function="SelectFrameTop" />
@@ -277,9 +283,14 @@
 	<command name="selectFormTemplateViaDDLDisplayPG">
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+
 		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
 
 		<execute macro="PortletEntry#save" />
+
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+
 		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
 
 		<execute function="SelectFrameTop" />

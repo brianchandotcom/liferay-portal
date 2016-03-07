@@ -46,6 +46,9 @@ if (ddlDisplayContext.isAdminPortlet()) {
 
 	renderResponse.setTitle(LanguageUtil.format(request, "view-x", ddmStructure.getName(locale), false));
 }
+else {
+	portletDisplay.setShowBackIcon(false);
+}
 %>
 
 <div class="container-fluid-1280">

@@ -43,35 +43,33 @@
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
 				>
-					<h6 class="text-default">
+					<h5 class="text-default">
 
 						<%
 						dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance));
 						%>
 
-						<aui:a href="<%= rowURL %>">
-							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
-						</aui:a>
-					</h6>
+						<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
+					</h5>
 
-					<h5>
+					<h4>
 						<aui:a href="<%= rowURL %>">
 							<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>
 						</aui:a>
-					</h5>
+					</h4>
 
-					<h6 class="text-default">
-						<aui:a cssClass="asset-type" href="<%= rowURL %>">
+					<h5 class="text-default">
+						<span class="asset-type">
 							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>" />
-						</aui:a>
+						</span>
 
-						<aui:a cssClass="status" href="<%= rowURL %>">
+						<span class="status">
 							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>" />
-						</aui:a>
+						</span>
 
-						<aui:a cssClass="definition" href="<%= rowURL %>">
+						<span class="definition">
 							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>" />
-						</aui:a>
+						</span>
 
 						<c:if test="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) != null %>">
 
@@ -79,16 +77,17 @@
 							dateSearchEntry.setDate(workflowInstanceViewDisplayContext.getEndDate(workflowInstance));
 							%>
 
-							<aui:a cssClass="end-date" href="<%= rowURL %>">
-								<strong><liferay-ui:message key="end-date" />:</strong> <%= dateSearchEntry.getName(request) %>
-							</aui:a>
+							<span class="end-date">
+								<liferay-ui:message key="end-date" />: <%= dateSearchEntry.getName(request) %>
+							</span>
 						</c:if>
-					</h6>
+					</h5>
 				</liferay-ui:search-container-column-text>
 
 				<c:choose>
 					<c:when test="<%= !workflowInstance.isComplete() %>">
 						<liferay-ui:search-container-column-jsp
+							align="right"
 							path="/workflow_instance_action.jsp"
 						/>
 					</c:when>
@@ -101,6 +100,7 @@
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
+					cssClass="asset-title"
 					href="<%= rowURL %>"
 					name="asset-title"
 					value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
@@ -139,6 +139,7 @@
 				<c:choose>
 					<c:when test="<%= !workflowInstance.isComplete() %>">
 						<liferay-ui:search-container-column-jsp
+							align="right"
 							path="/workflow_instance_action.jsp"
 						/>
 					</c:when>

@@ -33,13 +33,11 @@
 	</command>
 
 	<command name="gotoListRecords">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-
-		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">
 			<var name="portletTitle" value="${ddlListName}" />
@@ -57,13 +55,9 @@
 	</command>
 
 	<command name="gotoSpreadsheetView">
-		<var name="key_rowEntry" value="${ddlListName}" />
+		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 

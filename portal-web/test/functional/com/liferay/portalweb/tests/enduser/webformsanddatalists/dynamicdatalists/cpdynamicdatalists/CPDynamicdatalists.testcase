@@ -2776,6 +2776,7 @@
 
 		<execute macro="DDLRecord#deleteCP">
 			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		</execute>
 	</command>
 

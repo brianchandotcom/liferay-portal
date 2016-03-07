@@ -85,24 +85,9 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 </portlet:renderURL>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="<%= recordSet.getName(locale) %>" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isDisplayPortlet() %>">
-		<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
-			<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
-
-			<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
-				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="editRecordSetURL">
-					<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= editRecordSetURL %>" iconCssClass="icon-edit" label='<%= LanguageUtil.get(request, "edit-list") %>' />
-			</c:if>
+	<c:if test="<%= ddlDisplayContext.isAdminPortlet() %>">
+		<aui:nav cssClass="navbar-nav">
+			<aui:nav-item label="<%= recordSet.getName(locale) %>" selected="<%= true %>" />
 		</aui:nav>
 	</c:if>
 

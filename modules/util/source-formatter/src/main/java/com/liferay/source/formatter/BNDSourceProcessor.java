@@ -43,6 +43,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = trimContent(content, false);
 
+		content = StringUtil.replace(
+			content, new String[] {"/\n", "/,\\\n"},
+			new String[] {"\n", ",\\\n"});
+
 		// LPS-61288
 
 		if (fileName.endsWith("-web/bnd.bnd") &&

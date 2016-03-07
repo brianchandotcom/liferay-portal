@@ -257,7 +257,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							recordArtifactTask, antJGitConfiguration,
 							portalRootDir)) {
 
-						_logger.quiet(project.getPath() + " is not up-to-date");
+						_logger.quiet(
+							project.getProjectDir() + " is not up-to-date");
 					}
 				}
 

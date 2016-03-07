@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -46,9 +45,6 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			String newValue)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("update ");
@@ -75,21 +71,19 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			sb.append(oldValue);
 			sb.append("%'");
 
-			ps = connection.prepareStatement(sb.toString());
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps.executeQuery();) {
 
-			rs = ps.executeQuery();
+				while (rs.next()) {
+					long primaryKey = rs.getLong(primaryKeyColumnName);
+					String preferences = rs.getString("preferences");
 
-			while (rs.next()) {
-				long primaryKey = rs.getLong(primaryKeyColumnName);
-				String preferences = rs.getString("preferences");
-
-				updatePreferences(
-					tableName, primaryKeyColumnName, oldValue, newValue,
-					primaryKey, preferences);
+					updatePreferences(
+						tableName, primaryKeyColumnName, oldValue, newValue,
+						primaryKey, preferences);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -100,9 +94,6 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 
 		preferences = StringUtil.replace(preferences, oldValue, newValue);
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("update ");
@@ -111,16 +102,13 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 		sb.append(primaryKeyColumnName);
 		sb.append(" = ?");
 
-		try {
-			ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setString(1, preferences);
 			ps.setLong(2, primaryKey);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

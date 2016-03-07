@@ -139,6 +139,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-item-viewer', 'liferay-portlet-base']
+		requires: ['aui-event-input', 'liferay-item-viewer', 'liferay-portlet-base']
 	}
 );

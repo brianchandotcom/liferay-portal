@@ -167,10 +167,18 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Organization Name 1" />
+		</execute>			
+
 		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Organization Name 1" />
 			<var name="siteTemplate" value="Community" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
 		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
@@ -921,6 +929,10 @@
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site1 Name" />
 		</execute>
 
 		<execute macro="Page#viewDefaultSiteTemplatePagesPG">

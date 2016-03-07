@@ -70,7 +70,13 @@ String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						title="<%= fileEntry.getTitle() %>"
-					/>
+					>
+						<liferay-frontend:vertical-card-sticker-bottom>
+							<div class="sticker sticker-bottom <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>">
+								<%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %>
+							</div>
+						</liferay-frontend:vertical-card-sticker-bottom>
+					</liferay-frontend:icon-vertical-card>
 				</c:when>
 				<c:otherwise>
 					<liferay-frontend:vertical-card
@@ -80,7 +86,13 @@ String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						title="<%= fileEntry.getTitle() %>"
-					/>
+					>
+						<liferay-frontend:vertical-card-sticker-bottom>
+							<div class="sticker sticker-bottom <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>">
+								<%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %>
+							</div>
+						</liferay-frontend:vertical-card-sticker-bottom>
+					</liferay-frontend:vertical-card>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-column-text>

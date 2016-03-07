@@ -53,6 +53,7 @@ page import="com.liferay.blogs.web.configuration.BlogsPortletInstanceConfigurati
 page import="com.liferay.blogs.web.constants.BlogsPortletKeys" %><%@
 page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.display.context.BlogsPortletInstanceSettingsHelper" %><%@
+page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@

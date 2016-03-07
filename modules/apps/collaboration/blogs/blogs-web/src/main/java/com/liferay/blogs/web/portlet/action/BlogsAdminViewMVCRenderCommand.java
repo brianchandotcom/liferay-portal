@@ -15,12 +15,18 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.constants.BlogsWebKeys;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sergio González
@@ -39,7 +45,24 @@ public class BlogsAdminViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			BlogsWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+			_dlMimeTypeDisplayContext);
+
 		return "/blogs_admin/view.jsp";
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+	)
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+	}
+
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 }

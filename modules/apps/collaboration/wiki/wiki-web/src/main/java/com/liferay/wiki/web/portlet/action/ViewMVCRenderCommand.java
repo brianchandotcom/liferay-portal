@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -64,7 +66,11 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 		return super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL, unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+	)
 	public void setDLMimeTypeDisplayContext(
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
 

@@ -17,6 +17,8 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
+DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(BlogsWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
+
 Folder attachmentsFolder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");

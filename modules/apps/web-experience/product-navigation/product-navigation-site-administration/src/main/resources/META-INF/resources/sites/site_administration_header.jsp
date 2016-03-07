@@ -79,34 +79,32 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 <c:choose>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
 		<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %>>
-			<div>
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
-						<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
-					</c:when>
-					<c:otherwise>
-						<div class="sticker sticker-default">
-							<aui:icon image="sites" markupView="lexicon" />
-						</div>
-					</c:otherwise>
-				</c:choose>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
+					<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
+				</c:when>
+				<c:otherwise>
+					<div class="sticker sticker-default">
+						<aui:icon image="sites" markupView="lexicon" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 
-				<span class="site-name truncate-text">
-					<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
+			<span class="site-name truncate-text">
+				<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
-					<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
-						<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
-					</c:if>
-				</span>
-
-				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-					<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
+				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">
+					<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
 				</c:if>
+			</span>
 
-				<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
+				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
+			</c:if>
 
-				<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-			</div>
+			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+			<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 		</div>
 	</c:when>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">

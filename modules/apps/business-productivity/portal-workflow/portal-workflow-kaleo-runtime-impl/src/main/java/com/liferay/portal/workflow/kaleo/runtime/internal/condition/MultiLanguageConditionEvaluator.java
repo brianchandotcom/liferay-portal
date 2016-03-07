@@ -47,7 +47,7 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 			kaleoCondition.getScriptLanguage());
 
 		ConditionEvaluator conditionEvaluator = _conditionEvaluators.get(
-			scriptLanguage);
+			scriptLanguage.getValue());
 
 		if (conditionEvaluator == null) {
 			throw new IllegalArgumentException(

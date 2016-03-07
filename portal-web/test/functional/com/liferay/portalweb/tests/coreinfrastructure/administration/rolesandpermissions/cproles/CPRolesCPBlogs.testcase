@@ -35,7 +35,9 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewBlogsEntryRegRoleInline" priority="4">
+	<command name="ViewBlogsEntryRegRoleInline" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
 			<var name="portletName" value="Blogs" />
 			<var name="roleName" value="Regrole Name" />

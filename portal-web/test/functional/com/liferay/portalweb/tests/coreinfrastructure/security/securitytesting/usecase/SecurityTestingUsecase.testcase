@@ -23,7 +23,8 @@
 		</if>
 	</tear-down>
 
-	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="4">
+	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<var name="url" value="http://localhost:8080/web/guest/home?&amp;p_p_id=com_liferay_journal_web_portlet_JournalPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_com_liferay_journal_web_portlet_JournalPortlet_struts_action=%2Fjournal%2Fview_article_history&amp;_com_liferay_journal_web_portlet_JournalPortlet_groupId=10180&amp;_com_liferay_journal_web_portlet_JournalPortlet_articleId=" />
 
 		<execute macro="Page#add">
@@ -56,7 +57,8 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 	</command>
 
-	<command name="ValidateBeanIdentifierUserPermissions" priority="4">
+	<command name="ValidateBeanIdentifierUserPermissions" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
 
 		<execute macro="Api#gotoPAuthURL" />
@@ -100,8 +102,9 @@
 		<execute function="AssertConsoleTextPresent" value1="User  must have DELETE permission for com.liferay.portal.kernel.model.User" />
 	</command>
 
-	<command name="ValidateForwardURLPG" priority="4">
+	<command name="ValidateForwardURLPG" priority="5">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute function="Open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
 		<execute function="Pause" locator1="3000" />

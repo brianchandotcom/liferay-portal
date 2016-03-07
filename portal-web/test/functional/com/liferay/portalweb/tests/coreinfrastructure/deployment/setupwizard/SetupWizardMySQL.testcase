@@ -10,8 +10,9 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="MySQLtoMySQLLportal1" priority="4">
+	<command name="MySQLtoMySQLLportal1" priority="5">
 		<property name="databases.size" value="1" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -33,8 +34,9 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="MySQLtoMySQLLportal1SampleDataDisabled" priority="4">
+	<command name="MySQLtoMySQLLportal1SampleDataDisabled" priority="5">
 		<property name="databases.size" value="1" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />

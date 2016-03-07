@@ -35,7 +35,9 @@
 		</if>
 	</tear-down>
 
-	<command name="EditDefaultUserAssociationsOrganizationSites" priority="4">
+	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -243,7 +245,9 @@
 		</execute>
 	</command>
 
-	<command name="EnterReservedEmailAddress" priority="4">
+	<command name="EnterReservedEmailAddress" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -264,7 +268,9 @@
 		</execute>
 	</command>
 
-	<command name="EnterReservedScreenName" priority="4">
+	<command name="EnterReservedScreenName" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>

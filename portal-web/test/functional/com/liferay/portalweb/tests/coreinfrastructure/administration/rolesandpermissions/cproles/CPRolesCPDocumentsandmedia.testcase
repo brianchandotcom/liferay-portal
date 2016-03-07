@@ -33,7 +33,9 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewDocumentsAndMediaPortletRegRole" priority="4">
+	<command name="ViewDocumentsAndMediaPortletRegRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="roleName" value="Regrole Name" />

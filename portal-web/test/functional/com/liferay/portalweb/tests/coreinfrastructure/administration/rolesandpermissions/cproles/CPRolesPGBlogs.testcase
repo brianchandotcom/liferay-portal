@@ -33,7 +33,9 @@
 		</if>
 	</tear-down>
 
-	<command name="AddBlogsEntryNoGuestRole" priority="4">
+	<command name="AddBlogsEntryNoGuestRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -625,6 +627,8 @@
 	</command>
 
 	<command name="DeleteBlogsEntryOrgRole" priority="4">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Organization" />
@@ -1510,7 +1514,9 @@
 		</execute>
 	</command>
 
-	<command name="SubscribeBlogsRegRole" priority="4">
+	<command name="SubscribeBlogsRegRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpRegRoleLoginUserPG">
 			<var name="pageName" value="Blogs Page" />
 			<var name="portletName" value="Blogs" />
@@ -1797,7 +1803,9 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPermissionsRegRole" priority="4">
+	<command name="ViewBlogsPermissionsRegRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpRegRoleLoginUserPG">
 			<var name="pageName" value="Blogs Page" />
 			<var name="portletName" value="Blogs" />

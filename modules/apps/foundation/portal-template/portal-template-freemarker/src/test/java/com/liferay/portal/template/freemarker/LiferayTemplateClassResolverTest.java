@@ -15,10 +15,6 @@
 package com.liferay.portal.template.freemarker;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import freemarker.core.TemplateClassResolver;
 
@@ -28,6 +24,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,6 +36,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Tomas Polesovsky
@@ -49,17 +47,20 @@ public class LiferayTemplateClassResolverTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
+		Bundle bundle = FrameworkUtil.getBundle(
+			LiferayTemplateClassResolverTest.class);
 
-		Filter filter = registry.getFilter(
-			"(&(objectClass=" + TemplateClassResolver.class.getName() + "))");
-
-		_serviceTracker = registry.trackServices(filter);
+		_serviceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), TemplateClassResolver.class, null);
 
 		_serviceTracker.open();
 
-		_liferayTemplateClassResolver =
-			(TemplateClassResolver)_serviceTracker.getService();
+		_liferayTemplateClassResolver = _serviceTracker.getService();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
 	}
 
 	@Before
@@ -94,7 +95,7 @@ public class LiferayTemplateClassResolverTest {
 		_freemarkerTemplateConfiguration.update(_properties);
 	}
 
-	@Test()
+	@Test
 	public void testResolveAllowedClassByClassName() throws Exception {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -110,7 +111,7 @@ public class LiferayTemplateClassResolverTest {
 			"freemarker.template.utility.ClassUtil", null, null);
 	}
 
-	@Test()
+	@Test
 	public void testResolveAllowedClassByStar() throws Exception {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -226,7 +227,8 @@ public class LiferayTemplateClassResolverTest {
 	private static final long _DEFAULT_TIMEOUT = 1000;
 
 	private static TemplateClassResolver _liferayTemplateClassResolver;
-	private static ServiceTracker _serviceTracker;
+	private static ServiceTracker<TemplateClassResolver, TemplateClassResolver>
+		_serviceTracker;
 
 	private Configuration _freemarkerTemplateConfiguration;
 	private Dictionary<String, Object> _properties;

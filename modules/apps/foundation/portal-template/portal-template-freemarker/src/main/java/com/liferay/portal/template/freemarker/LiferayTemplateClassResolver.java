@@ -249,8 +249,8 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			if (_log.isWarnEnabled()) {
 				Bundle bundle = bundleContext.getBundle();
 				_log.warn(
-					"Bundle " + bundle.getSymbolicName() +
-						" does not export " + allowedClass);
+					"Bundle " + bundle.getSymbolicName() + " does not export " +
+						allowedClass);
 			}
 		}
 

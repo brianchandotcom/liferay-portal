@@ -88,6 +88,11 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 	}
 
+	@Override
+	public ScriptData split() {
+		return new ScriptData();
+	}
+
 	public void writeTo(HttpServletRequest request, Writer writer)
 		throws IOException {
 

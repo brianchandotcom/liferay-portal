@@ -116,6 +116,11 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		_dataMap.put(dataKey, sb);
 	}
 
+	@Override
+	public OutputData split() {
+		return new OutputData();
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private final Map<DataKey, StringBundler> _dataMap = new HashMap<>();

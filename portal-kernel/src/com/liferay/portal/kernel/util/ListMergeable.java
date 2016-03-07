@@ -52,6 +52,11 @@ public class ListMergeable<T>
 		return StringUtil.merge(_list, delimiter);
 	}
 
+	@Override
+	public ListMergeable<T> split() {
+		return new ListMergeable<>();
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private final List<T> _list = new ArrayList<>();

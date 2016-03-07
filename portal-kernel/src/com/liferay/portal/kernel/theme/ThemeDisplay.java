@@ -1828,6 +1828,16 @@ public class ThemeDisplay
 		_widget = widget;
 	}
 
+	@Override
+	public ThemeDisplay split() {
+		try {
+			return (ThemeDisplay)clone();
+		}
+		catch (CloneNotSupportedException cnse) {
+			throw new RuntimeException(cnse);
+		}
+	}
+
 	public String translate(String key) {
 		return LanguageUtil.get(getLocale(), key);
 	}

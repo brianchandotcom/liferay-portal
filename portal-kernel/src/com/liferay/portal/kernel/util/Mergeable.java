@@ -21,4 +21,6 @@ public interface Mergeable<T> {
 
 	public T merge(T mergeable);
 
+	public T split();
+
 }

@@ -5,8 +5,7 @@ Export-Package:\
 	com.liferay.invitation.invite.members.exception,\
 	com.liferay.invitation.invite.members.model,\
 	com.liferay.invitation.invite.members.service,\
-	com.liferay.invitation.invite.members.service.persistence,\
-	com.liferay.invitation.invite.members.util
+	com.liferay.invitation.invite.members.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../../../../marketplace/collaboration/bnd.bnd

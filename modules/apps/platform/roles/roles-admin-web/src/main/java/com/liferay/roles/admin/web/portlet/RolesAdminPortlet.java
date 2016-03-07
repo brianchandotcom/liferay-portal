@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -241,8 +243,15 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (!ArrayUtil.isEmpty(addUserIds) ||
 			!ArrayUtil.isEmpty(removeUserIds)) {
 
-			_userService.addRoleUsers(roleId, addUserIds);
-			_userService.unsetRoleUsers(roleId, removeUserIds);
+			try (
+				ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+					new ProxyModeThreadLocalCloseable()) {
+
+				ProxyModeThreadLocal.setForceSync(true);
+
+				_userService.addRoleUsers(roleId, addUserIds);
+				_userService.unsetRoleUsers(roleId, removeUserIds);
+			}
 		}
 
 		long[] addGroupIds = StringUtil.split(

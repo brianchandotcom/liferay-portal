@@ -138,9 +138,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String ANT_JGIT_CONFIGURATION_NAME = "antJGit";
 
-	public static final String CHECK_STALE_ARTIFACT_TASK_NAME =
-		"checkStaleArtifact";
-
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
@@ -153,6 +150,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
+
+	public static final String PRINT_STALE_ARTIFACT_TASK_NAME =
+		"printStaleArtifact";
 
 	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
 
@@ -236,40 +236,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"org.springframework", "spring-test", "3.2.15.RELEASE");
-	}
-
-	protected Task addTaskCheckStaleArtifact(
-		final WritePropertiesTask recordArtifactTask,
-		final Configuration antJGitConfiguration, final File portalRootDir) {
-
-		Project project = recordArtifactTask.getProject();
-
-		Task task = project.task(CHECK_STALE_ARTIFACT_TASK_NAME);
-
-		task.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					if (_logger.isQuietEnabled()) {
-						Project project = task.getProject();
-
-						_logger.quiet(
-							project.getProjectDir() + " is not up-to-date");
-					}
-				}
-
-			});
-
-		task.onlyIf(
-			new OutOfDateArtifactSpec(
-				antJGitConfiguration, recordArtifactTask, portalRootDir));
-
-		task.setDescription(
-			"Checks if this project has been changed since the last publish.");
-		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
-
-		return task;
 	}
 
 	protected Copy addTaskCopyLibs(Project project) {
@@ -398,6 +364,40 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		jar.from(tlddocTask);
 
 		return jar;
+	}
+
+	protected Task addTaskPrintStaleArtifact(
+		WritePropertiesTask recordArtifactTask,
+		Configuration antJGitConfiguration, File portalRootDir) {
+
+		Project project = recordArtifactTask.getProject();
+
+		Task task = project.task(PRINT_STALE_ARTIFACT_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					File projectDir = project.getProjectDir();
+
+					System.out.println(projectDir.getAbsolutePath());
+				}
+
+			});
+
+		task.onlyIf(
+			new OutOfDateArtifactSpec(
+				antJGitConfiguration, recordArtifactTask, portalRootDir));
+
+		task.setDescription(
+			"Prints the project directory if this project has been changed " +
+				"since the last publish.");
+		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
+		return task;
 	}
 
 	protected WritePropertiesTask addTaskRecordArtifact(Project project) {
@@ -802,7 +802,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project);
 
-		addTaskCheckStaleArtifact(
+		addTaskPrintStaleArtifact(
 			recordArtifactTask, antJGitConfiguration, portalRootDir);
 
 		final ReplaceRegexTask updateFileVersionsTask =

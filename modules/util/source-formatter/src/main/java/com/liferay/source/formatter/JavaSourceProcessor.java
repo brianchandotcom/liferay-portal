@@ -2062,8 +2062,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 							String linePart = previousLine.substring(0, x);
 
-							linePart = BaseSourceProcessor.stripQuotes(
-								linePart);
+							linePart = stripQuotes(linePart);
 
 							int closeParenthesesCount = StringUtil.count(
 								linePart, StringPool.CLOSE_PARENTHESIS);

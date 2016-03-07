@@ -3,31 +3,6 @@ AUI.add(
 	function(A) {
 		var Util = Liferay.Util;
 
-		var CONFIG_REORDER = {
-			children: [
-				[
-					{
-						cssClass: 'reorder-up',
-						icon: 'icon-circle-arrow-up',
-						on: {
-							click: function(event) {
-								event.domEvent.preventDefault();
-							}
-						}
-					},
-					{
-						cssClass: 'reorder-down',
-						icon: 'icon-circle-arrow-down',
-						on: {
-							click: function(event) {
-								event.domEvent.preventDefault();
-							}
-						}
-					}
-				]
-			]
-		};
-
 		var CSS_LEFT_REORDER = 'left-reorder';
 
 		var CSS_RIGHT_REORDER = 'right-reorder';
@@ -249,22 +224,47 @@ AUI.add(
 							).render(moveButtonsColumn);
 						}
 
+						var config_reorder = {
+							children: [
+								[
+									{
+										cssClass: 'reorder-up',
+										icon: 'icon-circle-arrow-up',
+										on: {
+											click: function(event) {
+												event.domEvent.preventDefault();
+											}
+										}
+									},
+									{
+										cssClass: 'reorder-down',
+										icon: 'icon-circle-arrow-down',
+										on: {
+											click: function(event) {
+												event.domEvent.preventDefault();
+											}
+										}
+									}
+								]
+							]
+						};
+
 						if (instance.get('leftReorder')) {
 							var leftColumn = contentBox.one('.left-selector-column');
 
-							CONFIG_REORDER.children[0][0].title = strings.LEFT_MOVE_UP;
-							CONFIG_REORDER.children[0][1].title = strings.LEFT_MOVE_DOWN;
+							config_reorder.children[0][0].title = strings.LEFT_MOVE_UP;
+							config_reorder.children[0][1].title = strings.LEFT_MOVE_DOWN;
 
-							instance._leftReorderToolbar = new A.Toolbar(CONFIG_REORDER).render(leftColumn);
+							instance._leftReorderToolbar = new A.Toolbar(config_reorder).render(leftColumn);
 						}
 
 						if (instance.get('rightReorder')) {
 							var rightColumn = contentBox.one('.right-selector-column');
 
-							CONFIG_REORDER.children[0][0].title = strings.RIGHT_MOVE_UP;
-							CONFIG_REORDER.children[0][1].title = strings.RIGHT_MOVE_DOWN;
+							config_reorder.children[0][0].title = strings.RIGHT_MOVE_UP;
+							config_reorder.children[0][1].title = strings.RIGHT_MOVE_DOWN;
 
-							instance._rightReorderToolbar = new A.Toolbar(CONFIG_REORDER).render(rightColumn);
+							instance._rightReorderToolbar = new A.Toolbar(config_reorder).render(rightColumn);
 						}
 					}
 				}

@@ -2,8 +2,7 @@
 	<var name="orgName" value="Organization Name" />
 
 	<command name="addAdditionalEmailAddressesCP">
-		<execute macro="Organization#editIdentificationCP">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
 			<var name="panelHeading" value="Additional Email Addresses" />
 		</execute>
 
@@ -20,9 +19,7 @@
 	</command>
 
 	<command name="addAddressCP">
-		<execute macro="Organization#editIdentificationCP">
-			<var name="orgName" value="${orgName}" />
-		</execute>
+		<execute macro="Organization#gotoIdentificationCP" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_STREET_FIELD_1" value1="${orgAddressStreet}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_CITY_FIELD" value1="${orgAddressCity}" />
@@ -58,9 +55,7 @@
 	</command>
 
 	<command name="addCommentCP">
-		<execute macro="Organization#editMiscellaneousCP">
-			<var name="orgName" value="${orgName}" />
-		</execute>
+		<execute macro="Organization#gotoMiscellaneousCP" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
 
@@ -146,8 +141,7 @@
 	</command>
 
 	<command name="addPhoneNumbersCP">
-		<execute macro="Organization#editIdentificationCP">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
 			<var name="panelHeading" value="Phone Numbers" />
 		</execute>
 
@@ -164,8 +158,7 @@
 	</command>
 
 	<command name="addReminderQueriesCP">
-		<execute macro="Organization#editMiscellaneousCP">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoMiscellaneousCP">
 			<var name="panelHeading" value="Reminder Queries" />
 		</execute>
 
@@ -185,8 +178,7 @@
 	</command>
 
 	<command name="addServicesCP">
-		<execute macro="Organization#editIdentificationCP">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
 			<var name="panelHeading" value="Services" />
 		</execute>
 
@@ -254,8 +246,7 @@
 	</command>
 
 	<command name="addWebsitesCP">
-		<execute macro="Organization#editIdentificationCP">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
 			<var name="panelHeading" value="Websites" />
 		</execute>
 
@@ -385,10 +376,6 @@
 	</command>
 
 	<command name="editIdentificationCP">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#gotoActionsCmd">
@@ -405,10 +392,6 @@
 	</command>
 
 	<command name="editMiscellaneousCP">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#gotoActionsCmd">
@@ -425,10 +408,6 @@
 	</command>
 
 	<command name="editOrganizationInformationCP">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#gotoActionsCmd">

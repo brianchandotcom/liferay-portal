@@ -901,26 +901,21 @@
 			<var name="orgAddressRegion" value="California" />
 			<var name="orgAddressStreet" value="1400 Montefino Ave" />
 			<var name="orgAddressType" value="Billing" />
-			<var name="orgName" value="Organization Name" />
 		</execute>
 
 		<execute macro="Organization#addPhoneNumbersCP">
-			<var name="orgName" value="Organization Name" />
 			<var name="orgPhoneNumber" value="1-877-543-3729" />
 		</execute>
 
 		<execute macro="Organization#addAdditionalEmailAddressesCP">
 			<var name="orgAdditionalEmailAddress" value="testuser@liferay.com" />
-			<var name="orgName" value="Organization Name" />
 		</execute>
 
 		<execute macro="Organization#addWebsitesCP">
-			<var name="orgName" value="Organization Name" />
 			<var name="orgWebsite" value="http://www.liferay.com" />
 		</execute>
 
 		<execute macro="Organization#addServicesCP">
-			<var name="orgName" value="Organization Name" />
 			<var name="orgServicesClosed" value="18:00" />
 			<var name="orgServicesOpen" value="08:00" />
 		</execute>

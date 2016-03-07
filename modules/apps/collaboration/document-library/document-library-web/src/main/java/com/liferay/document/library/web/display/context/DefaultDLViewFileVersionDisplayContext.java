@@ -109,8 +109,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-		getDDMFormValues(long classPK) throws StorageException {
+	public DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
 
 		return _storageEngine.getDDMFormValues(classPK);
 	}

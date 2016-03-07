@@ -29,6 +29,8 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+
+Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("select_pages.jsp-parameterMap"), Collections.emptyMap());
 %>
 
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds) %>" />

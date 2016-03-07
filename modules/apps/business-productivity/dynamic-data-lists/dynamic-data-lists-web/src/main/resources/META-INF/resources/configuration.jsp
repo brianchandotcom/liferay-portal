@@ -39,16 +39,14 @@ String tabsNames = (selRecordSet == null) ? "lists" : "lists,optional-configurat
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-	<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
+<liferay-ui:tabs
+	names="<%= tabsNames %>"
+	refresh="<%= false %>"
+	type="tabs nav-tabs-default"
+>
 
-	<liferay-ui:tabs
-		names="<%= tabsNames %>"
-		refresh="<%= false %>"
-		type="tabs nav-tabs-default"
-	>
+	<aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
+		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 		<liferay-ui:section>
 
@@ -61,6 +59,12 @@ String tabsNames = (selRecordSet == null) ? "lists" : "lists,optional-configurat
 					<liferay-ui:message key="displaying-list" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
 				</span>
 			</div>
+
+			<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+				<aui:nav-bar-search>
+					<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+				</aui:nav-bar-search>
+			</aui:nav-bar>
 
 			<liferay-frontend:management-bar
 				includeCheckBox="<%= false %>"
@@ -136,71 +140,77 @@ String tabsNames = (selRecordSet == null) ? "lists" : "lists,optional-configurat
 				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 		</liferay-ui:section>
+	</aui:form>
 
-		<c:if test="<%= selRecordSet != null %>">
-			<liferay-ui:section>
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset>
-						<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
-							<aui:option label="default" value="<%= 0 %>" />
+	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
+		<aui:input name="preferences--recordSetId--" type="hidden" value="<%= recordSetId %>" />
 
-							<%
-							List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+			<c:if test="<%= selRecordSet != null %>">
+				<liferay-ui:section>
+					<aui:fieldset-group markupView="lexicon">
+						<aui:fieldset>
+							<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
+								<aui:option label="default" value="<%= 0 %>" />
 
-							for (DDMTemplate template : templates) {
-								boolean selected = false;
+								<%
+								List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
 
-								if (displayDDMTemplateId == template.getTemplateId()) {
-									selected = true;
+								for (DDMTemplate template : templates) {
+									boolean selected = false;
+
+									if (displayDDMTemplateId == template.getTemplateId()) {
+										selected = true;
+									}
+								%>
+
+									<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+
+								<%
 								}
-							%>
+								%>
 
-								<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+							</aui:select>
 
-							<%
-							}
-							%>
+							<aui:select helpMessage="select-the-form-template-used-to-add-records-to-the-list" label="form-template" name="preferences--formDDMTemplateId--">
+								<aui:option label="default" value="<%= 0 %>" />
 
-						</aui:select>
+								<%
+								List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 
-						<aui:select helpMessage="select-the-form-template-used-to-add-records-to-the-list" label="form-template" name="preferences--formDDMTemplateId--">
-							<aui:option label="default" value="<%= 0 %>" />
+								for (DDMTemplate template : templates) {
+									boolean selected = false;
 
-							<%
-							List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+									if (formDDMTemplateId == template.getTemplateId()) {
+										selected = true;
+									}
+								%>
 
-							for (DDMTemplate template : templates) {
-								boolean selected = false;
+									<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
 
-								if (formDDMTemplateId == template.getTemplateId()) {
-									selected = true;
+								<%
 								}
-							%>
+								%>
 
-								<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+							</aui:select>
 
-							<%
-							}
-							%>
+							<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
 
-						</aui:select>
+							<aui:input helpMessage="check-to-display-the-form-entry-view" label="form-view" name="preferences--formView--" type="checkbox" value="<%= formView %>" />
 
-						<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= editable %>" />
+							<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
+						</aui:fieldset>
+					</aui:fieldset-group>
+				</liferay-ui:section>
+			</c:if>
 
-						<aui:input helpMessage="check-to-display-the-form-entry-view" label="form-view" name="preferences--formView--" type="checkbox" value="<%= formView %>" />
-
-						<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
-					</aui:fieldset>
-				</aui:fieldset-group>
-			</liferay-ui:section>
-		</c:if>
-	</liferay-ui:tabs>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-		<aui:button cssClass="btn-lg" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+			<aui:button cssClass="btn-lg" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</liferay-ui:tabs>
 
 <aui:script>
 	Liferay.provide(

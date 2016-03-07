@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.netvibes;
+package com.liferay.portlet.configuration.sharing.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,10 +26,11 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -42,18 +43,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIcon.class)
-public class NetvibesPortletConfigurationIcon
+public class WidgetPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "add-to-netvibes");
-	}
-
-	@Override
-	public String getMethod() {
-		return "get";
+			getResourceBundle(getLocale(portletRequest)), "add-to-any-website");
 	}
 
 	@Override
@@ -69,13 +65,15 @@ public class NetvibesPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			PortletURL basePortletURL = PortletURLFactoryUtil.create(
-				portletRequest, PortletKeys.PORTLET_SHARING,
+				portletRequest,
+				PortletConfigurationSharingPortletKeys.
+					PORTLET_CONFIGURATION_SHARING,
 				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler();
 
-			sb.append("javascript:Liferay.PortletSharing.showNetvibesInfo('");
-			sb.append(PortalUtil.getNetvibesURL(portlet, themeDisplay));
+			sb.append("javascript:Liferay.PortletSharing.showWidgetInfo('");
+			sb.append(PortalUtil.getWidgetURL(portlet, themeDisplay));
 			sb.append("', '");
 			sb.append(basePortletURL);
 			sb.append("');");
@@ -93,7 +91,7 @@ public class NetvibesPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 2.0;
+		return 5.0;
 	}
 
 	@Override
@@ -110,11 +108,11 @@ public class NetvibesPortletConfigurationIcon
 
 		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
-		boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
-			portletSetup.getValue(
-				"lfrNetvibesShowAddAppLink", StringPool.BLANK));
+		boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
+			portletSetup.getValue("lfrWidgetShowAddAppLink", null),
+			PropsValues.THEME_PORTLET_SHARING_DEFAULT);
 
-		if (lfrNetvibesShowAddAppLink) {
+		if (lfrWidgetShowAddAppLink) {
 			return true;
 		}
 
@@ -122,6 +120,6 @@ public class NetvibesPortletConfigurationIcon
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		NetvibesPortletConfigurationIcon.class);
+		WidgetPortletConfigurationIcon.class);
 
 }

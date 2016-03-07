@@ -132,6 +132,13 @@
 		<execute function="Open" locator1="${url}" />
 	</command>
 
+	<command name="openStagingSiteURL">
+		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
+
+		<execute function="Open" locator1="/web/${siteNameURL}-staging" />
+	</command>
+
 	<command name="openStagingURL">
 		<execute function="Open" locator1="/web/guest-staging" />
 	</command>

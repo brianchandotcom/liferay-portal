@@ -3013,6 +3013,52 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		if (previousLine.endsWith(StringPool.PLUS) &&
+			(lineTabCount == (previousLineTabCount + 1))) {
+
+			int x = -1;
+
+			while (true) {
+				x = trimmedLine.indexOf(" +", x + 1);
+
+				if ((x == -1) ||
+					(previousLineLength + 3 + x) > _MAX_LINE_LENGTH) {
+
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+					continue;
+				}
+
+				String linePart = trimmedLine.substring(0, x + 2);
+
+				String strippedQuotesLinePart = stripQuotes(linePart);
+
+				int closeParenthesesCount = StringUtil.count(
+					strippedQuotesLinePart, StringPool.CLOSE_PARENTHESIS);
+				int openParenthesesCount = StringUtil.count(
+					strippedQuotesLinePart, StringPool.OPEN_PARENTHESIS);
+
+				if (closeParenthesesCount != openParenthesesCount) {
+					continue;
+				}
+
+				if (trimmedLine.equals(linePart)) {
+					processErrorMessage(
+						fileName,
+						"line break: " + fileName + " " + lineCount);
+
+					return null;
+				}
+
+				return getCombinedLinesContent(
+					content, fileName, line, trimmedLine, lineLength, lineCount,
+					previousLine, linePart + StringPool.SPACE, tabDiff, true,
+					true, 0);
+			}
+		}
+
 		if (previousLine.endsWith(StringPool.COMMA) &&
 			(previousLineTabCount == lineTabCount) &&
 			!trimmedPreviousLine.equals("},")) {

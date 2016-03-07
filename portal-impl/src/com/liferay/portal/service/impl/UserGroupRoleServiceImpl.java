@@ -255,4 +255,14 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public void updateUserGroupRoles(
+			long userId, long groupId, long[] addedRoleIds,
+			long[] deletedRoleIds)
+		throws PortalException {
+
+		addUserGroupRoles(userId, groupId, addedRoleIds);
+		deleteUserGroupRoles(userId, groupId, deletedRoleIds);
+	}
+
 }

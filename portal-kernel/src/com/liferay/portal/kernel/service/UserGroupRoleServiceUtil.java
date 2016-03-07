@@ -71,6 +71,13 @@ public class UserGroupRoleServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static void updateUserGroupRoles(long userId, long groupId,
+		long[] addedRoleIds, long[] deletedRoleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateUserGroupRoles(userId, groupId, addedRoleIds, deletedRoleIds);
+	}
+
 	public static UserGroupRoleService getService() {
 		if (_service == null) {
 			_service = (UserGroupRoleService)PortalBeanLocatorUtil.locate(UserGroupRoleService.class.getName());

@@ -66,6 +66,14 @@ public class UserGroupRoleServiceWrapper implements UserGroupRoleService,
 	}
 
 	@Override
+	public void updateUserGroupRoles(long userId, long groupId,
+		long[] addedRoleIds, long[] deletedRoleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_userGroupRoleService.updateUserGroupRoles(userId, groupId,
+			addedRoleIds, deletedRoleIds);
+	}
+
+	@Override
 	public UserGroupRoleService getWrappedService() {
 		return _userGroupRoleService;
 	}

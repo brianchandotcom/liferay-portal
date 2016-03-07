@@ -281,10 +281,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			}
 		}
 
-		_userGroupRoleService.addUserGroupRoles(
-			user.getUserId(), group.getGroupId(), roleIds);
-		_userGroupRoleService.deleteUserGroupRoles(
-			user.getUserId(), group.getGroupId(),
+		_userGroupRoleService.updateUserGroupRoles(
+			user.getUserId(), group.getGroupId(), roleIds,
 			ArrayUtil.toLongArray(removeRoleIds));
 	}
 

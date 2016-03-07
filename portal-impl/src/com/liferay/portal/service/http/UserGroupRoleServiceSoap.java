@@ -114,5 +114,18 @@ public class UserGroupRoleServiceSoap {
 		}
 	}
 
+	public static void updateUserGroupRoles(long userId, long groupId,
+		long[] addedRoleIds, long[] deletedRoleIds) throws RemoteException {
+		try {
+			UserGroupRoleServiceUtil.updateUserGroupRoles(userId, groupId,
+				addedRoleIds, deletedRoleIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(UserGroupRoleServiceSoap.class);
 }

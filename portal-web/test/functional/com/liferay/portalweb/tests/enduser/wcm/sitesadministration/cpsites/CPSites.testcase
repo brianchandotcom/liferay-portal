@@ -362,9 +362,8 @@
 			<var name="sitePageURL" value="http://localhost:8080/web/alpha" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="alpha" />
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSiteURL">
+			<var name="siteName" value="alpha" />
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">

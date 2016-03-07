@@ -130,6 +130,13 @@
 		<execute function="Open" locator1="/group/${siteNameURL}/${sitePageNameURL}" />
 	</command>
 
+	<command name="openPrivateSiteURL">
+		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
+
+		<execute function="Open" locator1="/group/${siteNameURL}" />
+	</command>
+
 	<command name="openPrivateURL">
 		<execute function="Open" locator1="/group/guest" />
 	</command>

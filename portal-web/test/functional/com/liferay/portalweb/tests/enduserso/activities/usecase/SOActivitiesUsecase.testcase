@@ -370,10 +370,8 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject4}" />
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSiteURL">
 			<var name="siteName" value="${siteName3}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOActivities#viewSiteContent">
@@ -446,10 +444,8 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject4}" />
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSiteURL">
 			<var name="siteName" value="${siteName4}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOActivities#viewSiteContent">

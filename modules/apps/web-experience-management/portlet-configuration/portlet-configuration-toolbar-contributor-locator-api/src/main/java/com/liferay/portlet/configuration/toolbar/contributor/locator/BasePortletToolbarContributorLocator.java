@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.configuration.toolbar.contributor.locator;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
@@ -21,14 +24,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Sergio González
@@ -54,9 +56,10 @@ public abstract class BasePortletToolbarContributorLocator
 		return portletToolbarContributors;
 	}
 
-	protected void activate() {
-		_serviceTrackerMap = ServiceTrackerCollections.openMultiValueMap(
-			PortletToolbarContributor.class, "(javax.portlet.name=*)",
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			bundleContext, PortletToolbarContributor.class,
+			"(javax.portlet.name=*)",
 			new ServiceReferenceMapper<String, PortletToolbarContributor>() {
 
 				@Override
@@ -78,6 +81,8 @@ public abstract class BasePortletToolbarContributorLocator
 				}
 
 			});
+
+		_serviceTrackerMap.open();
 	}
 
 	protected void deactivate() {

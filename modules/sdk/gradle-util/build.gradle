@@ -1,8 +1,3 @@
 dependencies {
 	compile gradleApi()
 }
-
-updateFileVersions {
-	ignoreUnmatched = true
-	match(/"com\.liferay\.gradle\.util", version: "(.+)"/, fileTree(dir: "..", include: "gradle-plugins*/build.gradle"))
-}

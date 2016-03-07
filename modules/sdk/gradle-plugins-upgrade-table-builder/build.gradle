@@ -4,7 +4,3 @@ dependencies {
 
 	provided project(":util:portal-tools-upgrade-table-builder")
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.upgrade\.table\.builder", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

@@ -28,5 +28,5 @@ dependencies {
 }
 
 updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins", version: "(.+)"/, "../../build-buildscript.gradle", "../gradle-plugins-workspace/build.gradle")
+	match(/"com\.liferay\.gradle\.plugins", version: "(.+)"/, "../../build-buildscript.gradle")
 }

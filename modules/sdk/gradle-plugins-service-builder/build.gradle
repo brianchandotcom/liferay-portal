@@ -4,7 +4,3 @@ dependencies {
 
 	provided project(":util:portal-tools-service-builder")
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.service\.builder", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

@@ -4,7 +4,3 @@ dependencies {
 
 	provided project(":util:source-formatter")
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.source\.formatter", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

@@ -4,7 +4,3 @@ dependencies {
 
 	provided project(":util:portal-tools-wsdd-builder")
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.wsdd\.builder", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

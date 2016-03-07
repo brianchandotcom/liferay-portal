@@ -49,7 +49,7 @@
 			</liferay-ui:panel>
 
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" markupView="lexicon" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
-				<liferay-ui:error exception="<%= XugglerInstallException.class %>">
+				<liferay-ui:error exception="<%= XugglerInstallException.class %>" targetNode="#controlMenuAlertsContainer">
 
 					<%
 					XugglerInstallException xie = (XugglerInstallException)errorException;

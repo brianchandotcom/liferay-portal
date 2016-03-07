@@ -1109,7 +1109,6 @@
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
-			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="virtualHostsURL" value="www.baker.com:8080/group/russia2018" />
 		</execute>

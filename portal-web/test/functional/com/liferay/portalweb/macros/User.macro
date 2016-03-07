@@ -1408,16 +1408,17 @@
 			</then>
 		</if>
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<if>
+			<isset var="virtualHostsURL" />
+			<then>
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="${virtualHostsURL}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#openURL" />
+			</else>
+		</if>
 
 		<if>
 			<condition function="IsElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />

@@ -54,7 +54,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 				<aui:a
 					cssClass="goto-link list-group-heading"
 					href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
-					label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
+					label="go-to-site"
 				/>
 			</c:if>
 		</div>

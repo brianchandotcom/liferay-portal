@@ -19,6 +19,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -42,6 +44,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -53,9 +56,11 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	public UpgradePortletPreferences(
 		DDMStructureLocalService ddmStructureLocalService,
+		DDMStructureLinkLocalService ddmStructureLinkLocalService,
 		SAXReader saxReader) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 		_saxReader = saxReader;
 
 		_newDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
@@ -179,40 +184,23 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue(_DL_CLASS_TYPE, "0"));
 
 		if (fileEntryTypeId > 0) {
-			PreparedStatement ps = null;
-			ResultSet rs = null;
+			long fileEntryTypeClassNameId = PortalUtil.getClassNameId(
+				DLFileEntryType.class);
 
-			try {
-				long fileEntryTypeClassNameId = PortalUtil.getClassNameId(
-					DLFileEntryType.class);
+			List<DDMStructureLink> ddmStructureLinks =
+				_ddmStructureLinkLocalService.getStructureLinks(
+					fileEntryTypeClassNameId, fileEntryTypeId);
 
-				ps = connection.prepareStatement(
-					"select structureId from DDMStructureLink where " +
-						"classNameId = ? and classPK = ?");
+			String selectedFieldName = GetterUtil.getString(
+				portletPreferences.getValue(_DDM_STRUCTURE_FIELD_NAME, null));
 
-				ps.setLong(1, fileEntryTypeClassNameId);
-				ps.setLong(2, fileEntryTypeId);
+			for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
+				DDMForm ddmForm = getDDMForm(ddmStructureLink.getStructureId());
 
-				rs = ps.executeQuery();
-
-				String selectedFieldName = GetterUtil.getString(
-					portletPreferences.getValue(
-						_DDM_STRUCTURE_FIELD_NAME, null));
-
-				while (rs.next()) {
-					long structureId = rs.getLong("structureId");
-
-					DDMForm ddmForm = getDDMForm(structureId);
-
-					if (isDateField(ddmForm, selectedFieldName)) {
-						transformDateFieldValue(portletPreferences);
-
-						break;
-					}
+				if (isDateField(ddmForm, selectedFieldName)) {
+					transformDateFieldValue(portletPreferences);
+					break;
 				}
-			}
-			finally {
-				DataAccess.cleanUp(ps, rs);
 			}
 		}
 	}
@@ -411,6 +399,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private static final Map<Long, DDMForm> _ddmSructureDDMForms =
 		new HashMap<>();
 
+	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DateFormat _newDateFormat;
 	private final DateFormat _oldDateFormat;

@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.upgrade;
 
 import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -40,7 +41,15 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.asset.publisher.web", "0.0.1", "1.0.0",
 			new UpgradePortletId(),
 			new UpgradePortletPreferences(
-				_ddmStructureLocalService, _saxReader));
+				_ddmStructureLocalService, _ddmStructureLinkLocalService,
+				_saxReader));
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLinkLocalService(
+		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
+
+		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -55,6 +64,7 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 		_saxReader = saxReader;
 	}
 
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private SAXReader _saxReader;
 

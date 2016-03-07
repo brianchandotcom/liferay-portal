@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
-import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
+import com.liferay.social.activities.web.util.SocialActivitiesQueryHelper;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalService;
@@ -191,11 +191,11 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
-		SocialActivityQueryHelper.Scope scope =
-			SocialActivityQueryHelper.Scope.fromValue(tabs1);
+		SocialActivitiesQueryHelper.Scope scope =
+			SocialActivitiesQueryHelper.Scope.fromValue(tabs1);
 
 		List<SocialActivitySet> socialActivitySets =
-			_socialActivityQueryHelper.getSocialActivitySets(
+			_socialActivitiesQueryHelper.getSocialActivitySets(
 				group, themeDisplay.getLayout(), scope, 0, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -227,6 +227,13 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setSocialActivitiesQueryHelper(
+		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
+
+		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSocialActivityInterpreterLocalService(
 		SocialActivityInterpreterLocalService
 			socialActivityInterpreterLocalService) {
@@ -235,16 +242,9 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			socialActivityInterpreterLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSocialActivityQueryHelper(
-		SocialActivityQueryHelper socialActivityQueryHelper) {
-
-		_socialActivityQueryHelper = socialActivityQueryHelper;
-	}
-
 	private GroupLocalService _groupLocalService;
+	private SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
 	private SocialActivityInterpreterLocalService
 		_socialActivityInterpreterLocalService;
-	private SocialActivityQueryHelper _socialActivityQueryHelper;
 
 }

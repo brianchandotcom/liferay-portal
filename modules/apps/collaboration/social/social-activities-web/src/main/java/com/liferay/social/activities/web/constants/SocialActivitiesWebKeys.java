@@ -19,7 +19,7 @@ package com.liferay.social.activities.web.constants;
  */
 public class SocialActivitiesWebKeys {
 
-	public static final String SOCIAL_ACTIVITY_QUERY_HELPER =
-		"SOCIAL_ACTIVITY_QUERY_HELPER";
+	public static final String SOCIAL_ACTIVITIES_QUERY_HELPER =
+		"SOCIAL_ACTIVITIES_QUERY_HELPER";
 
 }

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.social.activities.web.portlet.display.context.util.SocialActivitiesRequestHelper;
-import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
+import com.liferay.social.activities.web.util.SocialActivitiesQueryHelper;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.List;
@@ -42,10 +42,10 @@ public class DefaultSocialActivitiesDisplayContext
 
 	public DefaultSocialActivitiesDisplayContext(
 		SocialActivitiesRequestHelper socialActivitiesRequestHelper,
-		SocialActivityQueryHelper socialActivityQueryHelper) {
+		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
 
 		_socialActivitiesRequestHelper = socialActivitiesRequestHelper;
-		_socialActivityQueryHelper = socialActivityQueryHelper;
+		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
 	}
 
 	@Override
@@ -100,10 +100,10 @@ public class DefaultSocialActivitiesDisplayContext
 		Group group = _socialActivitiesRequestHelper.getScopeGroup();
 		Layout layout = _socialActivitiesRequestHelper.getLayout();
 
-		SocialActivityQueryHelper.Scope scope =
-			SocialActivityQueryHelper.Scope.fromValue(getSelectedTabName());
+		SocialActivitiesQueryHelper.Scope scope =
+			SocialActivitiesQueryHelper.Scope.fromValue(getSelectedTabName());
 
-		return _socialActivityQueryHelper.getSocialActivitySets(
+		return _socialActivitiesQueryHelper.getSocialActivitySets(
 			group, layout, scope, 0, _socialActivitiesRequestHelper.getMax());
 	}
 
@@ -176,7 +176,7 @@ public class DefaultSocialActivitiesDisplayContext
 	}
 
 	private ResourceBundle _resourceBundle;
+	private final SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
 	private final SocialActivitiesRequestHelper _socialActivitiesRequestHelper;
-	private final SocialActivityQueryHelper _socialActivityQueryHelper;
 
 }

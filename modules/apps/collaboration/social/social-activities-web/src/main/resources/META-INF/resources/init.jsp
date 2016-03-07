@@ -29,7 +29,7 @@ page import="com.liferay.social.activities.web.constants.SocialActivitiesWebKeys
 page import="com.liferay.social.activities.web.portlet.display.context.DefaultSocialActivitiesDisplayContext" %><%@
 page import="com.liferay.social.activities.web.portlet.display.context.SocialActivitiesDisplayContext" %><%@
 page import="com.liferay.social.activities.web.portlet.display.context.util.SocialActivitiesRequestHelper" %><%@
-page import="com.liferay.social.activities.web.util.SocialActivityQueryHelper" %>
+page import="com.liferay.social.activities.web.util.SocialActivitiesQueryHelper" %>
 
 <liferay-theme:defineObjects />
 
@@ -37,8 +37,8 @@ page import="com.liferay.social.activities.web.util.SocialActivityQueryHelper" %
 
 <%
 SocialActivitiesRequestHelper socialActivitiesRequestHelper = new SocialActivitiesRequestHelper(request);
-SocialActivityQueryHelper socialActivityQueryHelper = (SocialActivityQueryHelper)request.getAttribute(SocialActivitiesWebKeys.SOCIAL_ACTIVITY_QUERY_HELPER);
-SocialActivitiesDisplayContext socialActivitiesDisplayContext = new DefaultSocialActivitiesDisplayContext(socialActivitiesRequestHelper, socialActivityQueryHelper);
+SocialActivitiesQueryHelper socialActivitiesQueryHelper = (SocialActivitiesQueryHelper)request.getAttribute(SocialActivitiesWebKeys.SOCIAL_ACTIVITIES_QUERY_HELPER);
+SocialActivitiesDisplayContext socialActivitiesDisplayContext = new DefaultSocialActivitiesDisplayContext(socialActivitiesRequestHelper, socialActivitiesQueryHelper);
 %>
 
 <%@ include file="/init-ext.jsp" %>

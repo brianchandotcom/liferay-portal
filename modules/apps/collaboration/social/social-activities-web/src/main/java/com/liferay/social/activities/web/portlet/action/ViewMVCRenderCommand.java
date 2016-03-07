@@ -17,7 +17,7 @@ package com.liferay.social.activities.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 import com.liferay.social.activities.web.constants.SocialActivitiesWebKeys;
-import com.liferay.social.activities.web.util.SocialActivityQueryHelper;
+import com.liferay.social.activities.web.util.SocialActivitiesQueryHelper;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -45,19 +45,19 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			SocialActivitiesWebKeys.SOCIAL_ACTIVITY_QUERY_HELPER,
-			_socialActivityQueryHelper);
+			SocialActivitiesWebKeys.SOCIAL_ACTIVITIES_QUERY_HELPER,
+			_socialActivitiesQueryHelper);
 
 		return "/view.jsp";
 	}
 
 	@Reference(unbind = "-")
-	protected void setSocialActivityQueryHelper(
-		SocialActivityQueryHelper socialActivityQueryHelper) {
+	protected void setSocialActivitiesQueryHelper(
+		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
 
-		_socialActivityQueryHelper = socialActivityQueryHelper;
+		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
 	}
 
-	private SocialActivityQueryHelper _socialActivityQueryHelper;
+	private SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
 
 }

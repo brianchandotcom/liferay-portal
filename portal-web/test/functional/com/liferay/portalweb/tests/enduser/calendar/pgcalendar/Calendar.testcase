@@ -1502,7 +1502,7 @@
 			<var name="viewType" value="Month" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="Calendar Event Today Month" />
 		</execute>
 	</command>

@@ -195,7 +195,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected static String stripQuotes(String s, char delimeter) {
+	protected static String stripQuotes(String s) {
+		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
+	}
+
+	protected static String stripQuotes(String s, char... delimeters) {
+		List<Character> delimetersList = ListUtil.toList(delimeters);
+
+		char delimeter = CharPool.SPACE;
 		boolean insideQuotes = false;
 
 		StringBundler sb = new StringBundler();
@@ -223,7 +230,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					}
 				}
 			}
-			else if (c == delimeter) {
+			else if (delimetersList.contains(c)) {
+				delimeter = c;
 				insideQuotes = true;
 			}
 			else {

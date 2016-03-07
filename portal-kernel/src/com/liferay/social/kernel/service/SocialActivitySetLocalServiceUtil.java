@@ -231,6 +231,12 @@ public class SocialActivitySetLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.liferay.social.kernel.model.SocialActivitySet> getOrganizationActivitySets(
+		long organizationId, int start, int end) {
+		return getService()
+				   .getOrganizationActivitySets(organizationId, start, end);
+	}
+
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

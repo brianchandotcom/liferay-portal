@@ -205,6 +205,10 @@ public interface SocialActivitySetLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SocialActivitySet> getOrganizationActivitySets(
+		long organizationId, int start, int end);
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)

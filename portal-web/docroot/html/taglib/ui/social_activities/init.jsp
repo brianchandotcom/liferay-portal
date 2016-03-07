@@ -18,11 +18,11 @@
 
 <%@ page import="com.liferay.social.kernel.model.SocialActivity" %><%@
 page import="com.liferay.social.kernel.model.SocialActivityFeedEntry" %><%@
-page import="com.liferay.social.kernel.service.SocialActivityInterpreterLocalServiceUtil" %><%@
-page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %>
+page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %><%@
+page import="com.liferay.social.kernel.util.SocialActivityDescriptor" %>
 
 <%
-List<SocialActivity> activities = (List<SocialActivity>)request.getAttribute("liferay-ui:social-activities:activities");
+List<SocialActivityDescriptor> activityDescriptors = (List<SocialActivityDescriptor>)request.getAttribute("liferay-ui:social-activities:activityDescriptors");
 String className = (String)request.getAttribute("liferay-ui:social-activities:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:social-activities:classPK"));
 int feedDelta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:social-activities:feedDelta"));
@@ -34,8 +34,14 @@ String feedType = (String)request.getAttribute("liferay-ui:social-activities:fee
 String feedURL = (String)request.getAttribute("liferay-ui:social-activities:feedURL");
 String feedURLMessage = (String)request.getAttribute("liferay-ui:social-activities:feedURLMessage");
 
-if (activities == null) {
-	activities = SocialActivityLocalServiceUtil.getActivities(0, className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+if (activityDescriptors == null) {
+	List<SocialActivity> activities = SocialActivityLocalServiceUtil.getActivities(0, className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+	activityDescriptors = new ArrayList<SocialActivityDescriptor>(activities.size());
+
+	for (SocialActivity activity : activities) {
+		activityDescriptors.add(new SocialActivityDescriptor(activity));
+	}
 }
 
 String selector = StringPool.BLANK;

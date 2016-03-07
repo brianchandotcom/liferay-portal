@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = SocialActivityQueryHelper.class)
-public class SocialActivityQueryHelper {
+@Component(immediate = true, service = SocialActivitiesQueryHelper.class)
+public class SocialActivitiesQueryHelper {
 
 	public List<SocialActivity> getSocialActivities(
 		Group group, Layout layout, Scope scope, int start, int end) {

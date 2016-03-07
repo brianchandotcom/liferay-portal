@@ -16,8 +16,11 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivitySet;
+import com.liferay.social.kernel.util.SocialActivityDescriptor;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ResourceURL;
@@ -30,7 +33,25 @@ import javax.servlet.http.HttpServletRequest;
 public class SocialActivitiesTag extends IncludeTag {
 
 	public void setActivities(List<SocialActivity> activities) {
-		_activities = activities;
+		List<SocialActivityDescriptor> activityDescriptors = new ArrayList<>(
+			activities.size());
+
+		for (SocialActivity activity : activities) {
+			activityDescriptors.add(new SocialActivityDescriptor(activity));
+		}
+
+		_activityDescriptors = activityDescriptors;
+	}
+
+	public void setActivitySets(List<SocialActivitySet> activitySets) {
+		List<SocialActivityDescriptor> activityDescriptors = new ArrayList<>(
+			activitySets.size());
+
+		for (SocialActivitySet activitySet : activitySets) {
+			activityDescriptors.add(new SocialActivityDescriptor(activitySet));
+		}
+
+		_activityDescriptors = activityDescriptors;
 	}
 
 	public void setClassName(String className) {
@@ -95,7 +116,7 @@ public class SocialActivitiesTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_activities = null;
+		_activityDescriptors = null;
 		_className = StringPool.BLANK;
 		_classPK = 0;
 		_displayRSSFeed = false;
@@ -117,7 +138,8 @@ public class SocialActivitiesTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:social-activities:activities", _activities);
+			"liferay-ui:social-activities:activityDescriptors",
+			_activityDescriptors);
 		request.setAttribute(
 			"liferay-ui:social-activities:className", _className);
 		request.setAttribute(
@@ -147,7 +169,7 @@ public class SocialActivitiesTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/social_activities/page.jsp";
 
-	private List<SocialActivity> _activities;
+	private List<SocialActivityDescriptor> _activityDescriptors;
 	private String _className = StringPool.BLANK;
 	private long _classPK;
 	private boolean _displayRSSFeed;

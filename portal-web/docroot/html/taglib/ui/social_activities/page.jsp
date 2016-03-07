@@ -28,8 +28,8 @@
 
 	int daysBetween = -1;
 
-	for (SocialActivity activity : activities) {
-		SocialActivityFeedEntry activityFeedEntry = SocialActivityInterpreterLocalServiceUtil.interpret(selector, activity, serviceContext);
+	for (SocialActivityDescriptor activityDescriptor : activityDescriptors) {
+		SocialActivityFeedEntry activityFeedEntry = activityDescriptor.interpret(selector, serviceContext);
 
 		if (activityFeedEntry == null) {
 			continue;
@@ -41,7 +41,7 @@
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), activityFeedEntry.getPortletId());
 
-		int curDaysBetween = DateUtil.getDaysBetween(new Date(activity.getCreateDate()), now, timeZone);
+		int curDaysBetween = DateUtil.getDaysBetween(new Date(activityDescriptor.getCreateDate()), now, timeZone);
 	%>
 
 		<c:if test="<%= curDaysBetween > daysBetween %>">
@@ -60,7 +60,7 @@
 							<liferay-ui:message key="yesterday" />
 						</c:when>
 						<c:otherwise>
-							<%= dateFormatDate.format(activity.getCreateDate()) %>
+							<%= dateFormatDate.format(activityDescriptor.getCreateDate()) %>
 						</c:otherwise>
 					</c:choose>
 				</td>
@@ -76,7 +76,7 @@
 					<%= activityFeedEntry.getTitle() %>
 				</div>
 				<div class="activity-body">
-					<span class="time"><%= timeFormatDate.format(activity.getCreateDate()) %></span>
+					<span class="time"><%= timeFormatDate.format(activityDescriptor.getCreateDate()) %></span>
 
 					<%= activityFeedEntry.getBody() %>
 				</div>
@@ -94,7 +94,7 @@
 	</c:if>
 </div>
 
-<c:if test="<%= feedEnabled && !activities.isEmpty() %>">
+<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
 	<div class="separator"><!-- --></div>
 
 	<liferay-ui:rss

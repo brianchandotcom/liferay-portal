@@ -122,6 +122,12 @@ public class EmbeddedPortletTest {
 				PortletKeys.LOGIN);
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				portlet.getPortletId(), portlet, null);
+
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
 				TestPropsValues.getCompanyId(), _layout.getGroupId(),
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId(), portlet,
@@ -136,6 +142,12 @@ public class EmbeddedPortletTest {
 		public void shouldReturnItFromEmbeddedPortlets() throws Exception {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				PortletKeys.LOGIN);
+
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				portlet.getPortletId(), portlet, null);
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
 				TestPropsValues.getCompanyId(), _layout.getGroupId(),

@@ -410,7 +410,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<Portlet> portlets = new ArrayList<>(portletPreferences.size());
+		List<Portlet> portlets = new ArrayList<>();
+
+		List<String> layoutPortlets = _getLayoutPortlets();
 
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();
@@ -419,7 +421,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 				getCompanyId(), portletId);
 
 			if ((portlet == null) || !portlet.isReady() ||
-				portlet.isUndeployedPortlet() || !portlet.isActive()) {
+				portlet.isUndeployedPortlet() || !portlet.isActive() ||
+				!layoutPortlets.contains(portletId)) {
 
 				continue;
 			}
@@ -1265,6 +1268,21 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			_friendlyURLKeywords[i] = StringUtil.toLowerCase(keyword);
 		}
+	}
+
+	private List<String> _getLayoutPortlets() {
+		List<String> layoutPortlets = new ArrayList<>();
+
+		List<PortletPreferences> portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, getPlid());
+
+		for (PortletPreferences portletPreference : portletPreferences) {
+			layoutPortlets.add(portletPreference.getPortletId());
+		}
+
+		return layoutPortlets;
 	}
 
 	private String _getLayoutTypeControllerType() {

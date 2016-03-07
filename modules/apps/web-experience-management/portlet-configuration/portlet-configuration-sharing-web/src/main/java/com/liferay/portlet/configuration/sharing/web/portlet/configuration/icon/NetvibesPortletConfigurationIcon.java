@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.widget;
+package com.liferay.portlet.configuration.sharing.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -43,13 +42,18 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIcon.class)
-public class WidgetPortletConfigurationIcon
+public class NetvibesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "add-to-any-website");
+			getResourceBundle(getLocale(portletRequest)), "add-to-netvibes");
+	}
+
+	@Override
+	public String getMethod() {
+		return "get";
 	}
 
 	@Override
@@ -68,10 +72,10 @@ public class WidgetPortletConfigurationIcon
 				portletRequest, PortletKeys.PORTLET_SHARING,
 				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
-			sb.append("javascript:Liferay.PortletSharing.showWidgetInfo('");
-			sb.append(PortalUtil.getWidgetURL(portlet, themeDisplay));
+			sb.append("javascript:Liferay.PortletSharing.showNetvibesInfo('");
+			sb.append(PortalUtil.getNetvibesURL(portlet, themeDisplay));
 			sb.append("', '");
 			sb.append(basePortletURL);
 			sb.append("');");
@@ -89,7 +93,7 @@ public class WidgetPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 5.0;
+		return 2.0;
 	}
 
 	@Override
@@ -106,11 +110,11 @@ public class WidgetPortletConfigurationIcon
 
 		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
-		boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
-			portletSetup.getValue("lfrWidgetShowAddAppLink", null),
-			PropsValues.THEME_PORTLET_SHARING_DEFAULT);
+		boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
+			portletSetup.getValue(
+				"lfrNetvibesShowAddAppLink", StringPool.BLANK));
 
-		if (lfrWidgetShowAddAppLink) {
+		if (lfrNetvibesShowAddAppLink) {
 			return true;
 		}
 
@@ -118,6 +122,6 @@ public class WidgetPortletConfigurationIcon
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WidgetPortletConfigurationIcon.class);
+		NetvibesPortletConfigurationIcon.class);
 
 }

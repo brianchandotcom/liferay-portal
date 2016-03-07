@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.netvibes;
+package com.liferay.portlet.configuration.sharing.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,18 +38,18 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIcon.class)
-public class NetvibesPortletConfigurationIcon
+public class IGooglePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	@Override
+	public String getCssClass() {
+		return "expose-as-widget";
+	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "add-to-netvibes");
-	}
-
-	@Override
-	public String getMethod() {
-		return "get";
+			getResourceBundle(getLocale(portletRequest)), "add-to-igoogle");
 	}
 
 	@Override
@@ -68,19 +64,8 @@ public class NetvibesPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			PortletURL basePortletURL = PortletURLFactoryUtil.create(
-				portletRequest, PortletKeys.PORTLET_SHARING,
-				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("javascript:Liferay.PortletSharing.showNetvibesInfo('");
-			sb.append(PortalUtil.getNetvibesURL(portlet, themeDisplay));
-			sb.append("', '");
-			sb.append(basePortletURL);
-			sb.append("');");
-
-			return sb.toString();
+			return "http://fusion.google.com/add?source=atgs&moduleurl=" +
+				PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
@@ -93,7 +78,7 @@ public class NetvibesPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 2.0;
+		return 3.0;
 	}
 
 	@Override
@@ -110,11 +95,11 @@ public class NetvibesPortletConfigurationIcon
 
 		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
-		boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
+		boolean lfrIgoogleShowAddAppLink = GetterUtil.getBoolean(
 			portletSetup.getValue(
-				"lfrNetvibesShowAddAppLink", StringPool.BLANK));
+				"lfrIgoogleShowAddAppLink", StringPool.BLANK));
 
-		if (lfrNetvibesShowAddAppLink) {
+		if (lfrIgoogleShowAddAppLink) {
 			return true;
 		}
 
@@ -122,6 +107,6 @@ public class NetvibesPortletConfigurationIcon
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		NetvibesPortletConfigurationIcon.class);
+		IGooglePortletConfigurationIcon.class);
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.facebook;
+package com.liferay.portlet.configuration.sharing.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;

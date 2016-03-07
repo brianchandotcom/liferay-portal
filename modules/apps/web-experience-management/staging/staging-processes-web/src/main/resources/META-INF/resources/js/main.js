@@ -990,11 +990,19 @@ AUI.add(
 
 							instance._notice = new Liferay.Notice(
 								{
+									animationConfig:
+									{
+										duration: 2,
+										left: '0px',
+										top: '0px'
+									},
 									closeText: false,
 									content: message + '<button type="button" class="close">&times;</button>',
+									noticeClass: 'hide',
 									timeout: 10000,
 									toggleText: false,
-									type: 'warning'
+									type: 'warning',
+									useAnimation: true
 								}
 							);
 

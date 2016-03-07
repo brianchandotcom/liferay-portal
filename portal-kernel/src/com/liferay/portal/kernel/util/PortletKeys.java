@@ -27,13 +27,6 @@ public class PortletKeys {
 	public static final String ANNOUNCEMENTS =
 		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
 
-	public static final String ASSET_CATEGORIES_ADMIN =
-		"com_liferay_asset_categories_admin_web_portlet_" +
-			"AssetCategoriesAdminPortlet";
-
-	public static final String ASSET_TAGS_ADMIN =
-		"com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
-
 	public static final String BACKGROUND_TASK = "189";
 
 	public static final String BLOGS =
@@ -81,16 +74,6 @@ public class PortletKeys {
 
 	public static final String ITEM_SELECTOR =
 		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";
-
-	public static final String LAYOUT_PROTOTYPE =
-		"com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet";
-
-	public static final String LAYOUT_SET_PROTOTYPE =
-		"com_liferay_layout_set_prototype_web_portlet_" +
-			"LayoutSetPrototypePortlet";
-
-	public static final String LAYOUTS_ADMIN =
-		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
 
 	public static final String LICENSE_MANAGER =
 		"com_liferay_license_manager_web_portlet_LicenseManagerPortlet";
@@ -192,19 +175,6 @@ public class PortletKeys {
 
 	public static final String SITE_MEMBERS_DIRECTORY =
 		"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet";
-
-	public static final String SITE_MEMBERSHIPS_ADMIN =
-		"com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet";
-
-	public static final String SITE_SETTINGS =
-		"com_liferay_site_admin_web_portlet_SiteSettingsPortlet";
-
-	public static final String SITE_TEAMS =
-		"com_liferay_site_teams_web_portlet_SiteTeamsPortlet";
-
-	public static final String SITE_TEMPLATE_SETTINGS =
-		"com_liferay_layout_set_prototype_web_portlet_" +
-			"SiteTemplateSettingsPortlet";
 
 	public static final String STOCKS = "12";
 

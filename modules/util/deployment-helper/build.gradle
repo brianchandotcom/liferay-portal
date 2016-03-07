@@ -26,5 +26,5 @@ formatSource {
 }
 
 updateFileVersions {
-	match(/\t\t\t\t<version>(.+)<\/version>/, "samples/pom.xml")
+	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 }

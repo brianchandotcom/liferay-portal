@@ -3,7 +3,3 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.maven\.plugin\.builder", version: "(.+)"/, "../../build-buildscript.gradle")
-}

@@ -7,5 +7,5 @@ liferay {
 }
 
 updateFileVersions {
-	match(/com\.liferay\.whip=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	match(/com\.liferay\.whip=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 }

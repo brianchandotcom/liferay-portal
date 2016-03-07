@@ -97,19 +97,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="configureAnyTagsFilterPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Filter" />
-		</execute>
-
-		<execute function="Type" locator1="APConfiguration#FILTER_TAGS_FIELD" value1="${tagNames}" />
-		<execute function="Type" locator1="Button#ADD_TAGS" />
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="configureAPSelectMoreThanOnePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
@@ -202,29 +189,6 @@
 				</elseif>
 			</if>
 		</for>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="configureDisplayFullContentPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
-
-		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
-
-		<execute macro="PortletEntry#save" />
-		<execute function="AssertChecked#assertCheckedToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
-	</command>
-
-	<command name="configureDisplayPagePG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
-		</execute>
-
-		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
 
 		<execute macro="PortletEntry#save" />
 	</command>

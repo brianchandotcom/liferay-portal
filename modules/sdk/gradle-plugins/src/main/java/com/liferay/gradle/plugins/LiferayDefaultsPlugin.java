@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.regex.Pattern;
 
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
@@ -562,6 +563,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		replaceRegexTask.setDescription(
 			"Updates the project version in external files.");
+		replaceRegexTask.setIgnoreUnmatched(true);
 
 		replaceRegexTask.setReplacement(
 			new Callable<Object>() {
@@ -865,6 +867,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
 					configureProjectBndProperties(project);
 					configureProjectVersion(project);
+					configureTaskUpdateFileVersions(
+						updateFileVersionsTask, portalRootDir);
 
 					// configureProjectVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -1314,6 +1318,31 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
 		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
 		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
+	}
+
+	protected void configureTaskUpdateFileVersions(
+		ReplaceRegexTask updateFileVersionsTask, File portalRootDir) {
+
+		Project project = updateFileVersionsTask.getProject();
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		String archivesBaseName = basePluginConvention.getArchivesBaseName();
+
+		String regex =
+			"\"" + Pattern.quote(archivesBaseName) + "\", version: \"(\\d.+)\"";
+
+		Map<String, Object> args = new HashMap<>();
+
+		if (portalRootDir == null) {
+			portalRootDir = project.getRootDir();
+		}
+
+		args.put("dir", portalRootDir);
+		args.put("include", "**/*.gradle");
+
+		updateFileVersionsTask.match(regex, project.fileTree(args));
 	}
 
 	protected void configureTaskUploadArchives(

@@ -28,7 +28,10 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.filter.AndRevFilter;
 import org.eclipse.jgit.revwalk.filter.MaxCountRevFilter;
+import org.eclipse.jgit.revwalk.filter.MessageRevFilter;
+import org.eclipse.jgit.revwalk.filter.NotRevFilter;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
@@ -46,7 +49,8 @@ public class UpToDateUtil {
 	}
 
 	public static boolean hasChangedSince(
-			Repository repository, String path, String since)
+			Repository repository, String path, String since,
+			String ignoredMessagePattern)
 		throws IOException {
 
 		RevWalk revWalk = new RevWalk(repository);
@@ -61,13 +65,9 @@ public class UpToDateUtil {
 				return true;
 			}
 
-			revWalk.setRetainBody(false);
-
 			revWalk.markStart(
 				revWalk.parseCommit(repository.resolve(Constants.HEAD)));
 			revWalk.markUninteresting(sinceRevCommit);
-
-			revWalk.setRevFilter(MaxCountRevFilter.create(2));
 
 			revWalk.setTreeFilter(
 				AndTreeFilter.create(
@@ -76,8 +76,26 @@ public class UpToDateUtil {
 
 			boolean changedSince = true;
 
-			if ((revWalk.next() != null) && (revWalk.next() == null)) {
-				changedSince = false;
+			if ((ignoredMessagePattern != null) &&
+				!ignoredMessagePattern.isEmpty()) {
+
+				revWalk.setRevFilter(
+					AndRevFilter.create(
+						MaxCountRevFilter.create(1),
+						NotRevFilter.create(
+							MessageRevFilter.create(ignoredMessagePattern))));
+
+				if (revWalk.next() == null) {
+					changedSince = false;
+				}
+			}
+			else {
+				revWalk.setRetainBody(false);
+				revWalk.setRevFilter(MaxCountRevFilter.create(2));
+
+				if ((revWalk.next() != null) && (revWalk.next() == null)) {
+					changedSince = false;
+				}
 			}
 
 			return changedSince;

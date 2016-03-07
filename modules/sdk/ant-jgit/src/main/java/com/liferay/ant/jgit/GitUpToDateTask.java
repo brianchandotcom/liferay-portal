@@ -87,7 +87,8 @@ public class GitUpToDateTask extends Task implements Condition {
 
 				if (UpToDateUtil.isClean(new Git(repository), relativePath) &&
 					!UpToDateUtil.hasChangedSince(
-						repository, relativePath, _since)) {
+						repository, relativePath, _since,
+						_ignoredMessagePattern)) {
 
 					return true;
 				}
@@ -131,8 +132,16 @@ public class GitUpToDateTask extends Task implements Condition {
 		_gitDir = gitDir;
 	}
 
+	public void setIgnoredMessagePattern(String ignoredMessagePattern) {
+		_ignoredMessagePattern = ignoredMessagePattern;
+	}
+
 	public void setPath(String path) {
 		_path = path;
+	}
+
+	public void setProperty(String property) {
+		_property = property;
 	}
 
 	public void setSince(String since) {
@@ -219,6 +228,7 @@ public class GitUpToDateTask extends Task implements Condition {
 
 	private String _cacheFileName = "uptodate.properties";
 	private File _gitDir;
+	private String _ignoredMessagePattern;
 	private String _path;
 	private String _property;
 	private String _since;

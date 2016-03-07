@@ -17,59 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-
-if (groupId == 0) {
-	groupId = themeDisplay.getScopeGroupId();
-}
-
-String typeSelection = ParamUtil.getString(request, "typeSelection");
-long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
-
-AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
+String addButtonURL = assetBrowserDisplayContext.getAddButtonURL();
 %>
 
-<liferay-frontend:add-menu>
-	<c:choose>
-		<c:when test="<%= assetRendererFactory.isSupportsClassTypes() && (subtypeSelectionId > 0) %>">
-
-			<%
-			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, subtypeSelectionId, null, null, portletURL.toString());
-			%>
-
-			<c:if test="<%= addPortletURL != null %>">
-
-				<%
-				addPortletURL.setParameter("groupId", String.valueOf(groupId));
-
-				String addPortletURLString = addPortletURL.toString();
-
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-				%>
-
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", assetRendererFactory.getTypeName(locale, subtypeSelectionId)) %>' url="<%= addPortletURLString.toString() %>" />
-			</c:if>
-		</c:when>
-		<c:otherwise>
-
-			<%
-			PortletURL addPortletURL = AssetUtil.getAddPortletURL(liferayPortletRequest, liferayPortletResponse, groupId, typeSelection, 0, null, null, portletURL.toString());
-			%>
-
-			<c:if test="<%= addPortletURL != null %>">
-
-				<%
-				addPortletURL.setParameter("groupId", String.valueOf(groupId));
-
-				String addPortletURLString = addPortletURL.toString();
-
-				addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-				%>
-
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", assetRendererFactory.getTypeName(locale), false) %>' url="<%= addPortletURLString.toString() %>" />
-			</c:if>
-		</c:otherwise>
-	</c:choose>
-</liferay-frontend:add-menu>
+<c:if test="<%= Validator.isNotNull(addButtonURL) %>">
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", assetBrowserDisplayContext.getAddButtonLabel(), false) %>' url="<%= addButtonURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

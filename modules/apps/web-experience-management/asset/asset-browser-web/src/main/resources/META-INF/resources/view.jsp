@@ -16,168 +16,42 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long groupId = ParamUtil.getLong(request, "groupId");
-long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
-long refererAssetEntryId = ParamUtil.getLong(request, "refererAssetEntryId");
-String typeSelection = ParamUtil.getString(request, "typeSelection");
-long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
-boolean showNonindexable = ParamUtil.getBoolean(request, "showNonindexable");
-boolean showScheduled = ParamUtil.getBoolean(request, "showScheduled");
-
-Boolean listable = null;
-
-String listableValue = ParamUtil.getString(request, "listable", null);
-
-if (Validator.isNotNull(listableValue)) {
-	listable = ParamUtil.getBoolean(request, "listable", true);
-}
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAsset");
-
-long[] filterGroupIds = selectedGroupIds;
-
-if (groupId > 0) {
-	filterGroupIds = new long[] {groupId};
-}
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("groupId", String.valueOf(groupId));
-portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
-portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
-portletURL.setParameter("typeSelection", typeSelection);
-portletURL.setParameter("subtypeSelectionId", String.valueOf(subtypeSelectionId));
-
-if (listable != null) {
-	portletURL.setParameter("listable", String.valueOf(listable));
-}
-
-portletURL.setParameter("eventName", eventName);
-
-request.setAttribute("view.jsp-portletURL", portletURL);
-
-AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse));
-
-AssetBrowserSearchTerms searchTerms = (AssetBrowserSearchTerms)assetBrowserSearch.getSearchTerms();
-
-AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
-
-int assetEntriesTotal = 0;
-
-if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
-	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(filterGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false);
-
-	assetBrowserSearch.setTotal(assetEntriesTotal);
-
-	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(filterGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), searchTerms.getKeywords(), listable, false, false, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
-
-	assetBrowserSearch.setResults(assetEntries);
-}
-else {
-	int[] statuses = {WorkflowConstants.STATUS_APPROVED};
-
-	if (showScheduled) {
-		statuses = new int[] {WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_SCHEDULED};
-	}
-
-	Hits hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), filterGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
-
-	assetEntriesTotal = hits.getLength();
-
-	List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
-
-	assetBrowserSearch.setResults(assetEntries);
-	assetBrowserSearch.setTotal(assetEntriesTotal);
-}
-
-List<ManagementBarFilterItem> managementBarFilterItems = new ArrayList<>();
-
-selectedGroupIds = ArrayUtil.append(new long[] {0}, selectedGroupIds);
-
-for (long curGroupId : selectedGroupIds) {
-	Group curGroup = GroupLocalServiceUtil.fetchGroup(curGroupId);
-
-	if ((curGroup == null) && (curGroupId > 0)) {
-		continue;
-	}
-
-	boolean active = false;
-
-	if (groupId == curGroupId) {
-		active = true;
-	}
-
-	String label = StringPool.BLANK;
-
-	if (curGroup != null) {
-		label = HtmlUtil.escape(curGroup.getDescriptiveName(locale));
-	}
-	else {
-		label = LanguageUtil.get(request, "all");
-	}
-
-	PortletURL groupURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-	groupURL.setParameter("groupId", String.valueOf(curGroupId));
-
-	ManagementBarFilterItem managementBarFilterItem = new ManagementBarFilterItem(active, label, groupURL.toString());
-
-	managementBarFilterItems.add(managementBarFilterItem);
-}
-%>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= assetBrowserSearch %>">
-		<aui:nav-item href="<%= portletURL %>" label="entries" selected="<%= true %>" />
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= assetBrowserDisplayContext.getPortletURL() %>" label="entries" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="searchFm">
+		<aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="searchFm">
 			<liferay-ui:input-search markupView="lexicon" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= (assetEntriesTotal <= 0) && Validator.isNull(searchTerms.getKeywords()) %>"
+	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-filters>
-
-			<%
-			String label = StringPool.BLANK;
-
-			if (groupId > 0) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-				label = HtmlUtil.escape(group.getDescriptiveName(locale));
-			}
-			else {
-				label = LanguageUtil.get(request, "all");
-			}
-			%>
-
 			<liferay-frontend:management-bar-filter
-				managementBarFilterItems="<%= managementBarFilterItems %>"
-				value="<%= label %>"
+				managementBarFilterItems="<%= assetBrowserDisplayContext.getManagementBarFilterItem() %>"
+				value="<%= assetBrowserDisplayContext.getManagementBarFilterLabel() %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= assetBrowserDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
-	<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
+<aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
+	<aui:input name="typeSelection" type="hidden" value="<%= assetBrowserDisplayContext.getTypeSelection() %>" />
 
 	<liferay-ui:search-container
-		searchContainer="<%= assetBrowserSearch %>"
+		searchContainer="<%= assetBrowserDisplayContext.getAssetBrowserSearch() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetEntry"
@@ -186,17 +60,19 @@ for (long curGroupId : selectedGroupIds) {
 		>
 
 			<%
+			AssetRendererFactory assetRendererFactory = assetBrowserDisplayContext.getAssetRendererFactory();
+
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
 			String cssClass = StringPool.BLANK;
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			if (assetEntry.getEntryId() != refererAssetEntryId) {
+			if (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) {
 				data.put("assetentryid", assetEntry.getEntryId());
 				data.put("assetclassname", assetEntry.getClassName());
 				data.put("assetclasspk", assetEntry.getClassPK());
-				data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
+				data.put("assettype", assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId()));
 				data.put("assettitle", assetEntry.getTitle(locale));
 				data.put("groupdescriptivename", group.getDescriptiveName(locale));
 
@@ -205,7 +81,7 @@ for (long curGroupId : selectedGroupIds) {
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
 							cssClass="user-icon-lg"
@@ -229,7 +105,7 @@ for (long curGroupId : selectedGroupIds) {
 
 						<h5>
 							<c:choose>
-								<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+								<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 										<%= assetEntry.getTitle(locale) %>
 									</aui:a>
@@ -245,7 +121,7 @@ for (long curGroupId : selectedGroupIds) {
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("icon") %>'>
 
 					<%
 					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
@@ -276,13 +152,13 @@ for (long curGroupId : selectedGroupIds) {
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="text-strong"
 						name="title"
 					>
 						<c:choose>
-							<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+							<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
 									<%= assetEntry.getTitle(locale) %>
 								</aui:a>
@@ -316,16 +192,12 @@ for (long curGroupId : selectedGroupIds) {
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
-	<liferay-util:param name="subtypeSelectionId" value="<%= String.valueOf(subtypeSelectionId) %>" />
-</liferay-util:include>
+<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>');
 </aui:script>

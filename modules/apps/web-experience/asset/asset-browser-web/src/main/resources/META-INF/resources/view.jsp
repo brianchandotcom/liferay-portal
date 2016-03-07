@@ -196,7 +196,11 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
+<c:if test="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) %>">
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", assetBrowserDisplayContext.getAddButtonLabel(), false) %>' url="<%= assetBrowserDisplayContext.getAddButtonURL() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>');

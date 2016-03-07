@@ -1490,8 +1490,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return _utilTaglibDirName;
 		}
 
-		File utilTaglibDir = getFile(
-			"util-taglib", BaseSourceProcessor.PORTAL_MAX_DIR_LEVEL);
+		File utilTaglibDir = getFile("util-taglib", PORTAL_MAX_DIR_LEVEL);
 
 		if (utilTaglibDir != null) {
 			_utilTaglibDirName = utilTaglibDir.getAbsolutePath();

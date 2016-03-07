@@ -493,8 +493,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource) {
 			File file = getFile(
-				"portal-impl/src/portal.properties",
-				BaseSourceProcessor.PORTAL_MAX_DIR_LEVEL);
+				"portal-impl/src/portal.properties", PORTAL_MAX_DIR_LEVEL);
 
 			_portalPortalPropertiesContent = FileUtil.read(file);
 

@@ -61,8 +61,7 @@ AUI.add(
 
 						if (formNode && !readOnly) {
 							instance._eventHandlers.push(
-								formNode.on('submit', A.bind('_onDOMSubmitForm', instance)),
-								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
+								formNode.on('submit', A.bind('_onSubmitForm', instance))
 							);
 						}
 
@@ -105,7 +104,7 @@ AUI.add(
 
 									instance.showLoadingFeedback();
 
-									formNode.submit();
+									submitForm(formNode);
 								}
 							}
 						);
@@ -139,7 +138,7 @@ AUI.add(
 						}
 					},
 
-					_onDOMSubmitForm: function(event) {
+					_onSubmitForm: function(event) {
 						var instance = this;
 
 						event.preventDefault();
@@ -152,14 +151,6 @@ AUI.add(
 						}
 						else {
 							instance.submit();
-						}
-					},
-
-					_onLiferaySubmitForm: function(event) {
-						var instance = this;
-
-						if (event.form === instance.getFormNode()) {
-							event.preventDefault();
 						}
 					},
 

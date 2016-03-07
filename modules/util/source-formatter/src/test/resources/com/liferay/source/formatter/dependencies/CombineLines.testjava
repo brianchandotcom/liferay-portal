@@ -180,6 +180,10 @@ public class CombineLines
 		boolean b3 = StringUtil.merge(
 			new String[] {"One", "Two"},
 			"Hello World");
+
+		String s =
+			"Hello World " +
+				"Hello World Hello" + "Hello World Hello World Hello";
 	}
 
 	private class SubClass1 extends

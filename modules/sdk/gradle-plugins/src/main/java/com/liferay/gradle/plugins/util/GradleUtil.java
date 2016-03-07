@@ -14,13 +14,33 @@
 
 package com.liferay.gradle.plugins.util;
 
+import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+
+import org.gradle.api.Project;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
+
+	public static final String PORTAL_TOOL_GROUP = "com.liferay";
+
+	public static String getPortalToolVersion(
+		Project project, String portalToolName) {
+
+		String portalToolVersion = _portalToolVersions.getProperty(
+			portalToolName);
+
+		return GradleUtil.getProperty(
+			project, portalToolName + ".version", portalToolVersion);
+	}
 
 	public static Map<String, String> toStringMap(Map<String, ?> map) {
 		Map<String, String> stringMap = new HashMap<>();
@@ -33,6 +53,23 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return stringMap;
+	}
+
+	private static final Properties _portalToolVersions = new Properties();
+
+	static {
+		ClassLoader classLoader =
+			BasePortalToolDefaultsPlugin.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/gradle/plugins/dependencies/" +
+					"portal-tools.properties")) {
+
+			_portalToolVersions.load(inputStream);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

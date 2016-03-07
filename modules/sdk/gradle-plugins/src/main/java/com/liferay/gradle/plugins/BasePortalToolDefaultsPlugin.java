@@ -17,11 +17,6 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Properties;
-
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -31,8 +26,6 @@ import org.gradle.api.Project;
 public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	extends BaseDefaultsPlugin<T> {
 
-	public static final String PORTAL_TOOL_GROUP = "com.liferay";
-
 	protected void addPortalToolDependencies(Project project) {
 		addPortalToolDependencies(
 			project, getPortalToolConfigurationName(), getPortalToolName());
@@ -41,13 +34,13 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	protected void addPortalToolDependencies(
 		Project project, String configurationName, String portalToolName) {
 
-		String portalToolVersion = getPortalToolVersion(
+		String portalToolVersion = GradleUtil.getPortalToolVersion(
 			project, portalToolName);
 
 		if (Validator.isNotNull(portalToolVersion)) {
 			GradleUtil.addDependency(
-				project, configurationName, PORTAL_TOOL_GROUP, portalToolName,
-				portalToolVersion);
+				project, configurationName, GradleUtil.PORTAL_TOOL_GROUP,
+				portalToolName, portalToolVersion);
 		}
 	}
 
@@ -59,32 +52,5 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	protected abstract String getPortalToolConfigurationName();
 
 	protected abstract String getPortalToolName();
-
-	protected String getPortalToolVersion(
-		Project project, String portalToolName) {
-
-		String portalToolVersion = _portalToolVersions.getProperty(
-			portalToolName);
-
-		return GradleUtil.getProperty(
-			project, portalToolName + ".version", portalToolVersion);
-	}
-
-	private static final Properties _portalToolVersions = new Properties();
-
-	static {
-		ClassLoader classLoader =
-			BasePortalToolDefaultsPlugin.class.getClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/gradle/plugins/dependencies/" +
-					"portal-tools.properties")) {
-
-			_portalToolVersions.load(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
-		}
-	}
 
 }

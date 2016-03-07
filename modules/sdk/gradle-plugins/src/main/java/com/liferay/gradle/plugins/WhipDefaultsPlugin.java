@@ -36,7 +36,8 @@ public class WhipDefaultsPlugin
 		WhipExtension whipExtension = GradleUtil.getExtension(
 			project, WhipExtension.class);
 
-		String version = getPortalToolVersion(project, getPortalToolName());
+		String version = GradleUtil.getPortalToolVersion(
+			project, getPortalToolName());
 
 		if (Validator.isNotNull(version)) {
 			whipExtension.setVersion(version);

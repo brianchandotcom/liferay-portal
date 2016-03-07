@@ -52,7 +52,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 	</liferay-portlet:renderURL>
 

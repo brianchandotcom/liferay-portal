@@ -67,49 +67,6 @@ Group group = layoutSetPrototype.getGroup();
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
-
-		<%
-		PortletURL exportPagesURL = PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE);
-
-		exportPagesURL.setParameter("mvcRenderCommandName", "exportLayouts");
-		exportPagesURL.setParameter(Constants.CMD, Constants.EXPORT);
-		exportPagesURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-		exportPagesURL.setParameter("privateLayout", Boolean.TRUE.toString());
-		exportPagesURL.setParameter("rootNodeName", layoutSetPrototype.getName(locale));
-		exportPagesURL.setParameter("showHeader", Boolean.FALSE.toString());
-		exportPagesURL.setWindowState(LiferayWindowState.POP_UP);
-		%>
-
-		<liferay-ui:icon
-			cssClass="export-layoutset-prototype layoutset-prototype-action"
-			message="export"
-			method="get"
-			url="<%= exportPagesURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
-
-		<%
-		PortletURL importPagesURL = PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.IMPORT, PortletRequest.RENDER_PHASE);
-
-		importPagesURL.setParameter("mvcRenderCommandName", "importLayouts");
-		importPagesURL.setParameter(Constants.CMD, Constants.IMPORT);
-		importPagesURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-		importPagesURL.setParameter("privateLayout", Boolean.TRUE.toString());
-		importPagesURL.setParameter("rootNodeName", layoutSetPrototype.getName(locale));
-		importPagesURL.setParameter("showHeader", Boolean.FALSE.toString());
-		importPagesURL.setWindowState(LiferayWindowState.POP_UP);
-		%>
-
-		<liferay-ui:icon
-			cssClass="import-layoutset-prototype layoutset-prototype-action"
-			message="import"
-			method="get"
-			url="<%= importPagesURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteLayoutSetPrototypes" var="deleteLayoutSetPrototypesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

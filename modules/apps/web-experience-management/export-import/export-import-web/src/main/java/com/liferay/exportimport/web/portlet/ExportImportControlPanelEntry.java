@@ -41,7 +41,7 @@ public class ExportImportControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+		if (group.isLayoutPrototype()) {
 			return true;
 		}
 

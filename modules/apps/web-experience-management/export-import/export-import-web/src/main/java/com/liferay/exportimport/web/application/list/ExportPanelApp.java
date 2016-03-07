@@ -18,7 +18,15 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +47,24 @@ public class ExportPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return ExportImportPortletKeys.EXPORT;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getSiteGroup();
+
+		PortletURL portletURL = super.getPortletURL(request);
+
+		if (group.isLayoutSetPrototype()) {
+			portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
+		}
+
+		return portletURL;
 	}
 
 	@Override

@@ -160,7 +160,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 				</dl>
 			</aui:fieldset>
 
-			<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+			<c:if test="<%= !group.isLayoutPrototype() && !group.isLayoutSetPrototype() && !group.isCompany() %>">
 				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 					<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
 

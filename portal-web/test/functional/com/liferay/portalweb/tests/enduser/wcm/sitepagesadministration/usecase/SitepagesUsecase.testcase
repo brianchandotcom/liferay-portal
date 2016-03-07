@@ -374,7 +374,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="site Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">
@@ -400,12 +400,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-			<var name="siteName" value="site Name" />
+		<execute macro="Navigator#openPrivateSitePageURL">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
@@ -417,7 +414,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="site Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">
@@ -439,12 +436,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-			<var name="siteName" value="site Name" />
+		<execute macro="Navigator#openPrivateSitePageURL">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />

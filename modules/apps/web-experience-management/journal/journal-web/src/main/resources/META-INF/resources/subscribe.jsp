@@ -78,6 +78,7 @@ if (Validator.isNotNull(ddmStructureKey)) {
 
 						<liferay-ui:icon
 							icon="star"
+							linkCssClass="text-default"
 							markupView="lexicon"
 							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
@@ -86,6 +87,7 @@ if (Validator.isNotNull(ddmStructureKey)) {
 					<c:otherwise>
 						<liferay-ui:icon
 							icon="star"
+							linkCssClass="text-default"
 							markupView="lexicon"
 							message="subscribed-to-a-parent-folder"
 						/>
@@ -108,6 +110,7 @@ if (Validator.isNotNull(ddmStructureKey)) {
 
 				<liferay-ui:icon
 					icon="star-o"
+					linkCssClass="text-default"
 					markupView="lexicon"
 					message="subscribe"
 					url="<%= subscribeURL %>"

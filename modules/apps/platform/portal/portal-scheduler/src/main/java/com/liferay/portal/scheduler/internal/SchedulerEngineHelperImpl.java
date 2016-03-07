@@ -852,8 +852,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext,
-			"(objectClass=" +
-				SchedulerEventMessageListener.class.getName() + ")",
+			"(objectClass=" + SchedulerEventMessageListener.class.getName() +
+				")",
 			new SchedulerEventMessageListenerServiceTrackerCustomizer());
 	}
 

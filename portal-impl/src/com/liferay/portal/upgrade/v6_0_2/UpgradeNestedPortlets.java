@@ -107,7 +107,7 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 		_INSTANCE_SEPARATOR, StringPool.UNDERLINE) + 1;
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(" + PortletKeys.NESTED_PORTLETS +
-			_INSTANCE_SEPARATOR + "[^_,\\s=]+_)([^_,\\s=]+)");
+		"(" + PortletKeys.NESTED_PORTLETS + _INSTANCE_SEPARATOR +
+			"[^_,\\s=]+_)([^_,\\s=]+)");
 
 }

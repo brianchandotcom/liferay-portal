@@ -82,8 +82,8 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 				@Override
 				public void render(PrintWriter printWriter, String href) {
 					printWriter.println(
-						"<script data-senna-track=\"temporary\" src=\"" +
-							href + "\" " + "\" type = \"text/javascript\">" +
+						"<script data-senna-track=\"temporary\" src=\"" + href +
+							"\" " + "\" type = \"text/javascript\">" +
 								"</script>");
 				}
 

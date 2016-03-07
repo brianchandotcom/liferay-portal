@@ -798,8 +798,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		runSQL(
 			"update DDMStorageLink set classNameId = " + newClassNameId +
-				" where classNameId = " +
-					oldClassNameId + " and classPK = " + classPK);
+				" where classNameId = " + oldClassNameId + " and classPK = " +
+					classPK);
 	}
 
 	protected void updateDDMStructureStorageType() throws Exception {

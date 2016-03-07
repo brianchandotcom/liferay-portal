@@ -178,8 +178,8 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"File " + url + " will be reloaded every " +
-							delay + " seconds");
+						"File " + url + " will be reloaded every " + delay +
+							" seconds");
 				}
 
 				long milliseconds = delay.longValue() * 1000;
@@ -349,8 +349,8 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Resource " + url + " will be reloaded every " +
-							delay + " seconds");
+						"Resource " + url + " will be reloaded every " + delay +
+							" seconds");
 				}
 
 				long milliseconds = delay.longValue() * 1000;

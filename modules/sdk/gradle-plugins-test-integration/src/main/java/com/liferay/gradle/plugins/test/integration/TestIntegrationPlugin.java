@@ -270,8 +270,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					if (startParameter.isParallelProjectExecutionEnabled()) {
 						if (_logger.isDebugEnabled()) {
 							_logger.debug(
-								"Waiting for application server " +
-									binDir + " to be reachable");
+								"Waiting for application server " + binDir +
+									" to be reachable");
 						}
 
 						startTestableTomcatTask.waitForAppServer();

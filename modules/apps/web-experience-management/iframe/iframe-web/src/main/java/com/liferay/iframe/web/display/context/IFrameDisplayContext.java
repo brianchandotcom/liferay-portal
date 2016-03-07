@@ -194,8 +194,8 @@ public class IFrameDisplayContext {
 
 			if (name.startsWith(_IFRAME_PREFIX)) {
 				iFrameVariables.add(
-					name.substring(_IFRAME_PREFIX.length()) +
-						StringPool.EQUAL + _request.getParameter(name));
+					name.substring(_IFRAME_PREFIX.length()) + StringPool.EQUAL +
+						_request.getParameter(name));
 			}
 		}
 

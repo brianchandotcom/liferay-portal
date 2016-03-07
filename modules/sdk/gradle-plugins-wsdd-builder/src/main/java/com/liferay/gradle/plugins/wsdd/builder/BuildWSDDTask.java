@@ -94,8 +94,8 @@ public class BuildWSDDTask extends JavaExec {
 		args.add("wsdd.class.path=" + getBuilderClasspath());
 		args.add("wsdd.input.file=" + FileUtil.getAbsolutePath(getInputFile()));
 		args.add(
-			"wsdd.output.path=" +
-				FileUtil.getAbsolutePath(getOutputDir()) + "/");
+			"wsdd.output.path=" + FileUtil.getAbsolutePath(getOutputDir()) +
+				"/");
 		args.add(
 			"wsdd.server.config.file=" +
 				FileUtil.getAbsolutePath(getServerConfigFile()));

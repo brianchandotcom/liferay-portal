@@ -138,9 +138,8 @@ public class SearchEngineInitializer implements Runnable {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Reindexing with " + indexer.getClass() +
-					" completed in " + (stopWatch.getTime() / Time.SECOND) +
-						" seconds");
+				"Reindexing with " + indexer.getClass() + " completed in " +
+					(stopWatch.getTime() / Time.SECOND) + " seconds");
 		}
 	}
 

@@ -42,9 +42,8 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 				long groupId = getGroupId(resourcePrimKey);
 
 				runSQL(
-					"update WikiPageResource set groupId = " +
-						groupId + " where resourcePrimKey = " +
-							resourcePrimKey);
+					"update WikiPageResource set groupId = " + groupId +
+						" where resourcePrimKey = " + resourcePrimKey);
 			}
 		}
 		finally {

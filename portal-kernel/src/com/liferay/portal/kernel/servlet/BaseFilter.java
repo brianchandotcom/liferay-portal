@@ -154,8 +154,8 @@ public abstract class BaseFilter implements LiferayFilter {
 		}
 
 		log.debug(
-			"[" + threadName + "]" + depther + "< " +
-				logName + " " + path + " " + (endTime - startTime) + " ms");
+			"[" + threadName + "]" + depther + "< " + logName + " " + path +
+				" " + (endTime - startTime) + " ms");
 
 		if (depther.length() > 0) {
 			depther = depther.substring(1);

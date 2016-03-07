@@ -56,8 +56,8 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		catch (SystemException se) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Add failed, fetch {userId=" + userId + ", type=" +
-						type + "}");
+					"Add failed, fetch {userId=" + userId + ", type=" + type +
+						"}");
 			}
 
 			delivery = announcementsDeliveryPersistence.fetchByU_T(

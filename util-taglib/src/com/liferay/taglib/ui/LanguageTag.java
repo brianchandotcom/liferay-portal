@@ -128,8 +128,8 @@ public class LanguageTag extends IncludeTag {
 			WebKeys.THEME_DISPLAY);
 
 		formAction =
-			themeDisplay.getPathMain() +
-				"/portal/update_language?p_l_id=" + themeDisplay.getPlid();
+			themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" +
+				themeDisplay.getPlid();
 		formAction = HttpUtil.setParameter(
 			formAction, "redirect", PortalUtil.getCurrentURL(request));
 

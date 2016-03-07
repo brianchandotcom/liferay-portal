@@ -848,8 +848,8 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		throw new NoSuchStructureException(
-			"No DDMStructure exists with the structure key " +
-				structureKey + " in the ancestor groups");
+			"No DDMStructure exists with the structure key " + structureKey +
+				" in the ancestor groups");
 	}
 
 	/**

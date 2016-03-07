@@ -60,8 +60,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	public static final String PREVIEW_PATH = "document_preview/";
 
 	public static final String PREVIEW_TMP_PATH =
-		SystemProperties.get(SystemProperties.TMP_DIR) +
-			"/liferay/" + PREVIEW_PATH;
+		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/" +
+			PREVIEW_PATH;
 
 	public static final long REPOSITORY_ID = CompanyConstants.SYSTEM;
 
@@ -74,8 +74,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	public static final String THUMBNAIL_PATH = "document_thumbnail/";
 
 	public static final String THUMBNAIL_TMP_PATH =
-		SystemProperties.get(SystemProperties.TMP_DIR) +
-			"/liferay/" + THUMBNAIL_PATH;
+		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/" +
+			THUMBNAIL_PATH;
 
 	public static void deleteFiles() {
 		long[] companyIds = PortalUtil.getCompanyIds();

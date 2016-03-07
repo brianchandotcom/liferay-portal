@@ -4732,8 +4732,8 @@ public class ServiceBuilder {
 
 		if (newFinderImplFile.exists()) {
 			finderClass =
-				_packagePath +
-					".service.persistence.impl." + ejbName + "FinderImpl";
+				_packagePath + ".service.persistence.impl." + ejbName +
+					"FinderImpl";
 		}
 
 		String dataSource = entityElement.attributeValue("data-source");
@@ -5170,14 +5170,14 @@ public class ServiceBuilder {
 
 	private void _removeActionableDynamicQuery(Entity entity) {
 		File ejbFile = new File(
-			_oldServiceOutputPath + "/service/persistence/" +
-				entity.getName() + "ActionableDynamicQuery.java");
+			_oldServiceOutputPath + "/service/persistence/" + entity.getName() +
+				"ActionableDynamicQuery.java");
 
 		ejbFile.delete();
 
 		ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
-				entity.getName() + "ActionableDynamicQuery.java");
+			_serviceOutputPath + "/service/persistence/" + entity.getName() +
+				"ActionableDynamicQuery.java");
 
 		ejbFile.delete();
 	}
@@ -5204,14 +5204,14 @@ public class ServiceBuilder {
 
 	private void _removeExportActionableDynamicQuery(Entity entity) {
 		File ejbFile = new File(
-			_oldServiceOutputPath + "/service/persistence/" +
-				entity.getName() + "ExportActionableDynamicQuery.java");
+			_oldServiceOutputPath + "/service/persistence/" + entity.getName() +
+				"ExportActionableDynamicQuery.java");
 
 		ejbFile.delete();
 
 		ejbFile = new File(
-			_serviceOutputPath + "/service/persistence/" +
-				entity.getName() + "ExportActionableDynamicQuery.java");
+			_serviceOutputPath + "/service/persistence/" + entity.getName() +
+				"ExportActionableDynamicQuery.java");
 
 		ejbFile.delete();
 	}

@@ -600,8 +600,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Finished adding LDAP user " + ldapUser + " as user " +
-					user + " in " + stopWatch.getTime() + "ms");
+				"Finished adding LDAP user " + ldapUser + " as user " + user +
+					" in " + stopWatch.getTime() + "ms");
 		}
 
 		return user;

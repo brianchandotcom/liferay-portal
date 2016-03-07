@@ -146,8 +146,8 @@ public class ReflectionServiceTracker implements Closeable {
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
-				"Unable to unset " +
-					injectionPoint.getName() + " on "+ target,
+				"Unable to unset " + injectionPoint.getName() +
+					" on "+ target,
 				e);
 		}
 

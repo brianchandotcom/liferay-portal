@@ -459,8 +459,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"The search engine processed " + solrQuery.getQuery() +
-					" in " + queryResponse.getElapsedTime() + " ms");
+				"The search engine processed " + solrQuery.getQuery() + " in " +
+					queryResponse.getElapsedTime() + " ms");
 		}
 
 		return queryResponse;

@@ -339,8 +339,8 @@ public class ServiceTestUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		return registry.getFilter(
-			"(&(destination.name=" + destinationName +
-				")(objectClass=" + Destination.class.getName() + "))");
+			"(&(destination.name=" + destinationName + ")(objectClass=" +
+				Destination.class.getName() + "))");
 	}
 
 	private static void _replaceWithSynchronousDestination(String name) {

@@ -195,8 +195,8 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Extension environment for " +
-					servletContextName + " will not be undeployed");
+				"Extension environment for " + servletContextName +
+					" will not be undeployed");
 		}
 	}
 

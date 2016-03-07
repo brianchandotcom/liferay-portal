@@ -1852,8 +1852,8 @@ public class TableMapperTest {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
-				"SELECT " + _LEFT_COLUMN_NAME + " FROM " +
-					_TABLE_NAME + " WHERE " + _RIGHT_COLUMN_NAME + " = ?",
+				"SELECT " + _LEFT_COLUMN_NAME + " FROM " + _TABLE_NAME +
+					" WHERE " + _RIGHT_COLUMN_NAME + " = ?",
 				sql);
 			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
@@ -1900,8 +1900,8 @@ public class TableMapperTest {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
-				"SELECT " + _RIGHT_COLUMN_NAME + " FROM " +
-					_TABLE_NAME + " WHERE " + _LEFT_COLUMN_NAME + " = ?",
+				"SELECT " + _RIGHT_COLUMN_NAME + " FROM " + _TABLE_NAME +
+					" WHERE " + _LEFT_COLUMN_NAME + " = ?",
 				sql);
 			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);

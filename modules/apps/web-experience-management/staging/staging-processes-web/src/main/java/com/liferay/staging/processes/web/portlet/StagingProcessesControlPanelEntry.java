@@ -14,11 +14,14 @@
 
 package com.liferay.staging.processes.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,7 +49,28 @@ public class StagingProcessesControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
+		if (!GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.VIEW_STAGING)) {
+
+			return true;
+		}
+
 		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
+	}
+
+	@Override
+	protected boolean hasAccessPermissionExplicitlyGranted(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws PortalException {
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.VIEW_STAGING)) {
+
+			return true;
+		}
+
+		return super.hasAccessPermissionExplicitlyGranted(
 			permissionChecker, group, portlet);
 	}
 

@@ -30,40 +30,49 @@ portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<c:choose>
+	<c:when test="<%= !GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.MANAGE_STAGING) %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<aui:nav-bar markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
 
-		<%
-		portletURL.setParameter("tabs2", "export");
-		%>
+				<%
+				portletURL.setParameter("tabs2", "export");
+				%>
 
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="export"
-			selected='<%= tabs2.equals("export") %>'
-		/>
+				<aui:nav-item
+					href="<%= portletURL.toString() %>"
+					label="export"
+					selected='<%= tabs2.equals("export") %>'
+				/>
 
-		<%
-		portletURL.setParameter("tabs2", "import");
-		%>
+				<%
+				portletURL.setParameter("tabs2", "import");
+				%>
 
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="import"
-			selected='<%= tabs2.equals("import") %>'
-		/>
-	</aui:nav>
-</aui:nav-bar>
+				<aui:nav-item
+					href="<%= portletURL.toString() %>"
+					label="import"
+					selected='<%= tabs2.equals("import") %>'
+				/>
+			</aui:nav>
+		</aui:nav-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />exportImportPortletContainer">
-	<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
+		<div class="container-fluid-1280" id="<portlet:namespace />exportImportPortletContainer">
+			<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
 
-	<c:choose>
-		<c:when test='<%= tabs2.equals("export") %>'>
-			<liferay-util:include page="/export_portlet.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs2.equals("import") %>'>
-			<liferay-util:include page="/import_portlet.jsp" servletContext="<%= application %>" />
-		</c:when>
-	</c:choose>
-</div>
+			<c:choose>
+				<c:when test='<%= tabs2.equals("export") %>'>
+					<liferay-util:include page="/export_portlet.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:when test='<%= tabs2.equals("import") %>'>
+					<liferay-util:include page="/import_portlet.jsp" servletContext="<%= application %>" />
+				</c:when>
+			</c:choose>
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -39,7 +39,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 %>
 
 <c:choose>
-	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING) %>">
+	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.VIEW_STAGING) %>">
 		<div class="container-fluid-1280">
 			<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
 

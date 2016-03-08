@@ -39,28 +39,37 @@ String searchContainerId = "importLayoutProcesses";
 GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 %>
 
-<liferay-util:include page="/import/navigation.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= !GroupPermissionUtil.contains(permissionChecker, groupDisplayContextHelper.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/import/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/import/processes_list/view.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-	<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
-	<liferay-util:param name="navigation" value="<%= navigation %>" />
-	<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
-	<liferay-util:param name="orderByType" value="<%= orderByType %>" />
-	<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
-</liferay-util:include>
+		<liferay-util:include page="/import/processes_list/view.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+			<liferay-util:param name="displayStyle" value="<%= displayStyle %>" />
+			<liferay-util:param name="navigation" value="<%= navigation %>" />
+			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
+			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		</liferay-util:include>
 
-<portlet:renderURL var="addNewImportProcessURL">
-	<portlet:param name="mvcPath" value="/import/new_import/import_layouts.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-	<portlet:param name="validate" value="<%= String.valueOf(Boolean.TRUE) %>" />
-</portlet:renderURL>
+		<portlet:renderURL var="addNewImportProcessURL">
+			<portlet:param name="mvcPath" value="/import/new_import/import_layouts.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="validate" value="<%= String.valueOf(Boolean.TRUE) %>" />
+		</portlet:renderURL>
 
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "import") %>' url="<%= addNewImportProcessURL %>" />
-</liferay-frontend:add-menu>
+		<liferay-frontend:add-menu>
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "import") %>' url="<%= addNewImportProcessURL %>" />
+		</liferay-frontend:add-menu>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importProcessesURL">

@@ -67,6 +67,10 @@ else if (stagingGroup.isLayout()) {
 	}
 }
 
+if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.PUBLISH_PORTLET_INFO)) {
+	errorMessageKey = "you-do-not-have-permission-to-access-the-requested-resource";
+}
+
 PortletURL portletURL = currentURLObj;
 
 portletURL.setParameter("tabs3", "current-and-previous");

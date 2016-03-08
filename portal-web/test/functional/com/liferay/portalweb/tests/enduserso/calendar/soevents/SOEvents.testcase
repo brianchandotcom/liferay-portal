@@ -45,7 +45,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -83,7 +83,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -126,7 +126,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -168,7 +168,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -178,7 +178,7 @@
 			<var name="numberOfRepeats" value="3" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -188,7 +188,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -198,7 +198,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -208,7 +208,7 @@
 			<var name="eventTitle" value="${eventTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -261,7 +261,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -271,7 +271,7 @@
 			<var name="numberOfRepeats" value="7" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -281,7 +281,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -291,7 +291,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -301,7 +301,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -311,7 +311,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -321,7 +321,7 @@
 			<var name="eventTitle" value="${eventTitle6}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -331,7 +331,7 @@
 			<var name="eventTitle" value="${eventTitle7}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -341,7 +341,7 @@
 			<var name="eventTitle" value="${eventTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -350,7 +350,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -359,7 +359,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -368,7 +368,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -377,7 +377,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -423,7 +423,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -435,7 +435,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -447,7 +447,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -522,7 +522,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -534,7 +534,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -546,7 +546,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -558,7 +558,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -570,7 +570,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -582,7 +582,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -594,7 +594,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -606,7 +606,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -618,7 +618,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -630,7 +630,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -642,7 +642,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -654,7 +654,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -666,7 +666,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -678,7 +678,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -690,7 +690,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -702,7 +702,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -714,7 +714,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -726,7 +726,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -738,7 +738,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -750,7 +750,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -762,7 +762,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1021,7 +1021,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1067,7 +1067,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1122,7 +1122,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1135,7 +1135,7 @@
 			<var name="site" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1146,7 +1146,7 @@
 			<var name="numberOfRepeats" value="5" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1157,7 +1157,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1168,7 +1168,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1179,7 +1179,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1190,7 +1190,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1288,7 +1288,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1302,7 +1302,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1354,7 +1354,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1367,7 +1367,7 @@
 			<var name="site" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1378,7 +1378,7 @@
 			<var name="numberOfRepeats" value="5" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1389,7 +1389,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1400,7 +1400,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1411,7 +1411,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1422,7 +1422,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1539,7 +1539,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1550,7 +1550,7 @@
 			<var name="numberOfRepeats" value="7" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1561,7 +1561,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1572,7 +1572,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1583,7 +1583,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1594,7 +1594,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1605,7 +1605,7 @@
 			<var name="eventTitle" value="${eventTitle6}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1616,7 +1616,7 @@
 			<var name="eventTitle" value="${eventTitle7}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1627,7 +1627,7 @@
 			<var name="eventTitle" value="${eventTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1637,7 +1637,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1647,7 +1647,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1657,7 +1657,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1667,7 +1667,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1726,7 +1726,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1739,7 +1739,7 @@
 			<var name="site" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1814,7 +1814,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1827,7 +1827,7 @@
 			<var name="site" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1838,7 +1838,7 @@
 			<var name="numberOfRepeats" value="6" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1849,7 +1849,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1860,7 +1860,7 @@
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1871,7 +1871,7 @@
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1882,7 +1882,7 @@
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2175,7 +2175,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2189,7 +2189,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2203,7 +2203,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2217,7 +2217,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2231,7 +2231,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2245,7 +2245,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2259,7 +2259,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2273,7 +2273,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2287,7 +2287,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2301,7 +2301,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2315,7 +2315,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2329,7 +2329,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2343,7 +2343,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2357,7 +2357,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2371,7 +2371,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2385,7 +2385,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2399,7 +2399,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2413,7 +2413,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2427,7 +2427,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2441,7 +2441,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2455,7 +2455,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2719,7 +2719,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2766,7 +2766,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2813,7 +2813,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2827,7 +2827,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2841,7 +2841,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2898,7 +2898,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

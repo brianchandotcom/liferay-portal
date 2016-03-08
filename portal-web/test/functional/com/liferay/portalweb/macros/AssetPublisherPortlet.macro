@@ -97,19 +97,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="configureAnyTagsFilterPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Filter" />
-		</execute>
-
-		<execute function="Type" locator1="APConfiguration#FILTER_TAGS_FIELD" value1="${tagNames}" />
-		<execute function="Type" locator1="Button#ADD_TAGS" />
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="configureAPSelectMoreThanOnePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
@@ -202,29 +189,6 @@
 				</elseif>
 			</if>
 		</for>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
-	<command name="configureDisplayFullContentPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
-
-		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
-
-		<execute macro="PortletEntry#save" />
-		<execute function="AssertChecked#assertCheckedToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
-	</command>
-
-	<command name="configureDisplayPagePG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
-		</execute>
-
-		<execute function="Check#checkToggleSwitch" locator1="APConfiguration#FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -528,7 +492,7 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="deleteArchivedSetupPG">
+	<command name="deleteConfigurationTemplatePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
 			<var name="portletOption" value="Configuration Templates" />
@@ -647,6 +611,14 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DETAIL_CONTENT" value1="${assetContent}" />
 	</command>
 
+	<command name="viewAssetMetadataPG">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#METADATA_VOCABULARY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#METADATA_CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="viewAssetNotPresentPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
@@ -659,17 +631,6 @@
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
-
-		<if>
-			<equals arg1="${addMetadata}" arg2="true" />
-			<then>
-				<var name="key_categoryName" value="${categoryName}" />
-				<var name="key_vocabularyName" value="${vocabularyName}" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="AP#METADATA_VOCABULARY" value1="${vocabularyName}" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="AP#METADATA_CATEGORY" value1="${categoryName}" />
-			</then>
-		</if>
 	</command>
 
 	<command name="viewAssetTypeNotAvailable">
@@ -842,19 +803,8 @@
 		<execute function="AssertElementPresent" locator1="Icon#FLAG" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
-
-		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
-			<then>
-				<execute function="AssertElementNotPresent" locator1="Comments#BE_THE_FIRST_LINK" />
-				<execute function="AssertElementNotPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
-				<execute function="AssertElementNotPresent" locator1="Icon#CUSTOM_EDIT" />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
-				<execute function="AssertElementPresent" locator1="Icon#CUSTOM_EDIT" />
-			</else>
-		</if>
+		<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
+		<execute function="AssertElementPresent" locator1="Icon#CUSTOM_EDIT" />
 
 		<execute function="Click" locator1="Icon#SHARE" value1="Share" />
 

@@ -52,6 +52,7 @@
 		</execute>
 
 		<execute macro="User#logoutPG" />
+
 		<execute macro="User#loginPG" />
 
 		<execute macro="Navigator#openURL" />

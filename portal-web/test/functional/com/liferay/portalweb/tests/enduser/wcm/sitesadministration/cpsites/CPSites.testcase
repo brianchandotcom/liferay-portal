@@ -123,9 +123,8 @@
 			<var name="publicVirtualHosts" value="true" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="portletName" value="Site Settings" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080/test-public-page" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.able.com:8080/test-public-page" />
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
@@ -353,8 +352,8 @@
 			<var name="siteFriendlyURLEdit" value="alpha" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="alpha" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="alpha" />
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">
@@ -363,9 +362,8 @@
 			<var name="sitePageURL" value="http://localhost:8080/web/alpha" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="alpha" />
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSiteURL">
+			<var name="siteName" value="alpha" />
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">

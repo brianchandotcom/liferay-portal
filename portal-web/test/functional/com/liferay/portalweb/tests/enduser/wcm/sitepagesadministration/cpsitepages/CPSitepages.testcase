@@ -569,6 +569,10 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Site Name" />

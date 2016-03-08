@@ -40,7 +40,7 @@
 	</command>
 
 	<command name="addSiteContent">
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Calendar" />
@@ -72,7 +72,7 @@
 			<var name="user" value="${user}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Documents" />
@@ -91,7 +91,7 @@
 			<var name="viewableBy" value="${viewableBy}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Documents" />
@@ -120,7 +120,7 @@
 			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Forums" />
@@ -137,7 +137,7 @@
 			<var name="displayStyle" value="${displayStyle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Forums" />
@@ -157,7 +157,7 @@
 
 		<execute macro="MessageboardsThread#addPG" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs" />
@@ -169,7 +169,7 @@
 
 		<execute macro="Blogs#addEntry" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Wiki" />
@@ -204,18 +204,7 @@
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageAccessURL" value="${pageAccessURL}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="pageStagingURL" value="${pageStagingURL}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="true" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="SOBookmarks#addBookmarksEntry">
 			<var name="addTag" value="${addTag}" />
@@ -258,7 +247,7 @@
 	</command>
 
 	<command name="deleteSiteContent">
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Calendar" />
@@ -272,7 +261,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Documents" />
@@ -286,7 +275,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Forums" />
@@ -301,7 +290,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs" />
@@ -317,7 +306,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Wiki" />
@@ -380,7 +369,7 @@
 	</command>
 
 	<command name="editSiteContent">
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Calendar" />
@@ -406,7 +395,7 @@
 			<var name="startDateTimeEdit" value="11:00 PM" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Documents" />
@@ -422,7 +411,7 @@
 			<var name="dmFolderNameEdit" value="${dmFolderNameEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Documents" />
@@ -445,7 +434,7 @@
 			<var name="revision" value="${revision}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Forums" />
@@ -460,7 +449,7 @@
 			<var name="categoryNameEdit" value="${categoryNameEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Forums" />
@@ -496,7 +485,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs" />
@@ -513,7 +502,7 @@
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Wiki" />

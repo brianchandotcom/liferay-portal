@@ -374,7 +374,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="site Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">
@@ -400,12 +400,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-			<var name="siteName" value="site Name" />
+		<execute macro="Navigator#openPrivateSitePageURL">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
@@ -417,7 +414,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
-			<var name="siteName" value="site Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">
@@ -439,12 +436,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-			<var name="siteName" value="site Name" />
+		<execute macro="Navigator#openPrivateSitePageURL">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
@@ -642,9 +636,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-		</execute>
+		<execute macro="Navigator#openPrivateURL" />
 
 		<execute macro="User#viewLoginPG" />
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
@@ -876,9 +868,7 @@
 			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-		</execute>
+		<execute macro="Navigator#openPrivateURL" />
 
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Test Private Page" />
@@ -1119,9 +1109,7 @@
 			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
-		</execute>
+		<execute macro="Navigator#openPrivateURL" />
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 

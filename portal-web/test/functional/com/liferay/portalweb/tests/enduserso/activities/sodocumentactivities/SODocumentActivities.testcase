@@ -39,7 +39,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -80,7 +80,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -159,7 +159,7 @@
 			<var name="userScreenName" value="${userScreenName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -419,7 +419,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -432,7 +432,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -448,7 +448,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -460,7 +460,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -581,7 +581,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -625,7 +625,7 @@
 
 		<execute function="AssertTextNotPresent" value1="1 Comment" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -659,7 +659,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -710,7 +710,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -756,7 +756,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -769,7 +769,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -785,7 +785,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -797,7 +797,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -929,7 +929,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -942,7 +942,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1024,7 +1024,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1037,7 +1037,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1053,7 +1053,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1065,7 +1065,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1144,7 +1144,7 @@
 			<var name="dmDocumentVersionNumber" value="1.0" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1199,7 +1199,7 @@
 			<var name="dmDocumentVersionNumber" value="1.0" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1283,7 +1283,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1296,7 +1296,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1312,7 +1312,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1327,7 +1327,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1339,7 +1339,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1350,7 +1350,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1366,7 +1366,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1441,7 +1441,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1453,7 +1453,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1465,7 +1465,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1477,7 +1477,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1489,7 +1489,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1501,7 +1501,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1656,7 +1656,7 @@
 			<var name="dmDocumentVersionNumber" value="1.0" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1666,7 +1666,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle6}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1676,7 +1676,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle5}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1724,7 +1724,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1791,7 +1791,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1870,7 +1870,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1880,7 +1880,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1895,7 +1895,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1910,7 +1910,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1990,7 +1990,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -2000,7 +2000,7 @@
 			<var name="dmFolderName" value="${dmFolderName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -2015,7 +2015,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -2025,7 +2025,7 @@
 			<var name="dmFolderName" value="${dmFolderName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -2040,7 +2040,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

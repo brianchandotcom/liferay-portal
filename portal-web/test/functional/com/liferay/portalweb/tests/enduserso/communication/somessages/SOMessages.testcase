@@ -46,7 +46,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -58,7 +58,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -98,7 +98,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -115,7 +115,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -178,7 +178,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -195,7 +195,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -208,7 +208,7 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -228,7 +228,7 @@
 		<execute function="Confirm" value1="Are you sure you want to delete the selected messages?" />
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -248,7 +248,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -282,7 +282,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -294,7 +294,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -339,7 +339,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -351,7 +351,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -363,7 +363,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -375,7 +375,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -425,7 +425,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -442,7 +442,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -483,7 +483,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -500,7 +500,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -555,7 +555,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -567,7 +567,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -579,7 +579,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -591,7 +591,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -603,7 +603,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -663,7 +663,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -675,7 +675,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -687,7 +687,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -699,7 +699,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -771,7 +771,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -783,7 +783,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -808,7 +808,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -851,7 +851,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -864,7 +864,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -882,7 +882,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -920,7 +920,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -943,7 +943,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1011,7 +1011,7 @@
 			<var name="userScreenName" value="${userScreenName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1028,7 +1028,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1046,7 +1046,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1067,7 +1067,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1088,7 +1088,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1109,7 +1109,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1126,7 +1126,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1147,7 +1147,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1168,7 +1168,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1185,7 +1185,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1202,7 +1202,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1274,7 +1274,7 @@
 			<var name="userScreenName" value="${userScreenName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1290,7 +1290,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1306,7 +1306,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1325,7 +1325,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1343,7 +1343,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1362,7 +1362,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1377,7 +1377,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1395,7 +1395,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1414,7 +1414,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1429,7 +1429,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1444,7 +1444,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1466,7 +1466,7 @@
 		<var name="pageName" value="Messages" />
 		<var name="soPage" value="true" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1537,7 +1537,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${adminScreenName}" />
@@ -1551,7 +1551,7 @@
 			<var name="recipientScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName}" />
@@ -1570,7 +1570,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1689,7 +1689,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName1}" />
@@ -1703,7 +1703,7 @@
 			<var name="recipientScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName1}" />
@@ -1722,7 +1722,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${userScreenName2}" />
@@ -1762,7 +1762,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1774,7 +1774,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1786,7 +1786,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1798,7 +1798,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1810,7 +1810,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1822,7 +1822,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1857,7 +1857,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1870,7 +1870,7 @@
 			<var name="recipientScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1897,7 +1897,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1951,7 +1951,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1980,7 +1980,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1997,7 +1997,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2022,7 +2022,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2072,7 +2072,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2097,7 +2097,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2140,7 +2140,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2157,7 +2157,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2173,7 +2173,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2192,7 +2192,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2230,7 +2230,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2248,7 +2248,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2266,7 +2266,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2287,7 +2287,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2362,7 +2362,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${adminScreenName}" />
@@ -2382,7 +2382,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2401,7 +2401,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2422,7 +2422,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${adminScreenName}" />
@@ -2444,7 +2444,7 @@
 			<var name="messageReplyBody" value="${messageReplyBody2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${adminScreenName}" />
@@ -2466,7 +2466,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2565,7 +2565,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2577,7 +2577,7 @@
 			<var name="recipientScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2592,7 +2592,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2604,7 +2604,7 @@
 			<var name="senderName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2616,7 +2616,7 @@
 			<var name="recipientScreenName" value="${userScreenName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2631,7 +2631,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2806,7 +2806,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2821,7 +2821,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2898,7 +2898,7 @@
 			<var name="userScreenName" value="${userScreenName4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2986,7 +2986,7 @@
 			<var name="userScreenName" value="${userScreenName4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3006,7 +3006,7 @@
 		<execute function="AssertTextNotPresent" value1="${userName4}" />
 		<execute function="AssertTextNotPresent" value1="${userScreenName4}" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3026,7 +3026,7 @@
 		<execute function="AssertTextNotPresent" value1="${userName4}" />
 		<execute function="AssertTextNotPresent" value1="${userScreenName4}" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3046,7 +3046,7 @@
 		<execute function="AssertTextNotPresent" value1="${userName4}" />
 		<execute function="AssertTextNotPresent" value1="${userScreenName4}" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3066,7 +3066,7 @@
 		<execute function="AssertTextNotPresent" value1="${userName3}" />
 		<execute function="AssertTextNotPresent" value1="${userScreenName3}" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3189,7 +3189,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3201,7 +3201,7 @@
 			<var name="recipientScreenName" value="${userScreenName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3216,7 +3216,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3228,7 +3228,7 @@
 			<var name="senderName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3240,7 +3240,7 @@
 			<var name="recipientScreenName" value="${userScreenName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3255,7 +3255,7 @@
 			<var name="userLoginFullName" value="${userName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3312,7 +3312,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3322,7 +3322,7 @@
 			<var name="userInformation" value="${userAddressCity}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3332,7 +3332,7 @@
 			<var name="userInformation" value="${userAddressCountry}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3342,7 +3342,7 @@
 			<var name="userInformation" value="${userAddressPostalCode}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3352,7 +3352,7 @@
 			<var name="userInformation" value="${userAddressRegion}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3362,7 +3362,7 @@
 			<var name="userInformation" value="${userAddressStreet1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3372,7 +3372,7 @@
 			<var name="userInformation" value="${userAddressType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3382,7 +3382,7 @@
 			<var name="userInformation" value="Primary" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3423,7 +3423,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3516,7 +3516,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3656,7 +3656,7 @@
 			<var name="pageNumber" value="2" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3971,7 +3971,7 @@
 			<var name="userScreenName" value="${userScreenName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -4080,7 +4080,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -4127,7 +4127,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -4142,7 +4142,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -4181,7 +4181,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -4198,7 +4198,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>

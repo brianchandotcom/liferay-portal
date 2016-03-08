@@ -1347,8 +1347,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="specificURL" value="${friendlyURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${friendlyURL}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">

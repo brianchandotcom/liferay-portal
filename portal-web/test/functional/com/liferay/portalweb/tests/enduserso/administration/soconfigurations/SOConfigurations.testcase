@@ -190,8 +190,8 @@
 		</execute>
 
 		<execute macro="User#loginPG">
+			<var name="specificURL" value="http://www.able.com:8080" />
 			<var name="userEmailAddress" value="test@www.able.com" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="SOUserBar#USER_BAR" />

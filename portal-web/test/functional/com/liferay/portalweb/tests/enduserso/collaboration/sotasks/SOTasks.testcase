@@ -53,7 +53,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -65,7 +65,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -82,7 +82,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -124,7 +124,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -141,7 +141,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -152,7 +152,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -194,7 +194,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -211,7 +211,7 @@
 	<command name="AddTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -223,7 +223,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -240,7 +240,7 @@
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -252,7 +252,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -263,7 +263,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -280,13 +280,13 @@
 	<command name="AddTaskAssignedToMeDueDate" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -299,7 +299,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -316,7 +316,7 @@
 	<command name="AddTaskAssignedToMeTag" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -329,7 +329,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -346,7 +346,7 @@
 	<command name="AddTaskAssignedToMeTagInvalidCharacters" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -378,7 +378,7 @@
 		<var name="taskDescription" value="Task Description" />
 		<var name="taskPriority" value="Low" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -391,7 +391,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -409,7 +409,7 @@
 		<var name="taskDescription" value="Task Description" />
 		<var name="taskPriority" value="Low" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -422,7 +422,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -441,7 +441,7 @@
 		<var name="taskDescription2" value="Task2 Description" />
 		<var name="taskDescription3" value="Task3 Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -453,7 +453,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -465,7 +465,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -477,7 +477,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -489,7 +489,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -501,7 +501,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -517,7 +517,7 @@
 	<command name="AddTaskScheduled" priority="3">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -530,7 +530,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -545,7 +545,7 @@
 
 		<execute function="Pause" locator1="150000" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -562,7 +562,7 @@
 	<command name="CompleteTask100Percent" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -574,7 +574,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -587,7 +587,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -604,7 +604,7 @@
 	<command name="CompleteTask60Percent" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -616,7 +616,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -629,7 +629,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -672,7 +672,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -689,7 +689,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -700,7 +700,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -715,7 +715,7 @@
 	<command name="DeleteTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -727,7 +727,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -744,7 +744,7 @@
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -756,7 +756,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -767,7 +767,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -808,7 +808,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -820,7 +820,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -832,7 +832,7 @@
 			<var name="taskDescriptionEdit" value="${taskDescriptionEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -850,7 +850,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -894,7 +894,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -911,7 +911,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -922,7 +922,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -934,7 +934,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -952,7 +952,7 @@
 		<var name="taskDescription" value="Task Description" />
 		<var name="taskDescriptionEdit" value="Task Description Edit" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -964,7 +964,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -975,7 +975,7 @@
 			<var name="taskDescriptionEdit" value="${taskDescriptionEdit}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -993,7 +993,7 @@
 		<var name="taskCommentEdit" value="Task Comment Edit" />
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1005,7 +1005,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1016,7 +1016,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1028,7 +1028,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1045,13 +1045,13 @@
 	<command name="EditTaskAssignedToMeDueDate" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1064,7 +1064,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1077,7 +1077,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1094,7 +1094,7 @@
 	<command name="FilterTasksByPlace" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1116,7 +1116,7 @@
 			<var name="portletName" value="Tasks" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Tasks Page" />
 		</execute>
 
@@ -1127,7 +1127,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1147,7 +1147,7 @@
 	<command name="FilterTasksByTag" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1169,7 +1169,7 @@
 			<var name="portletName" value="Tasks" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Tasks Page" />
 		</execute>
 
@@ -1180,7 +1180,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1238,7 +1238,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1250,7 +1250,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1263,7 +1263,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1274,7 +1274,7 @@
 			<var name="taskDescription" value="${taskDescription}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1292,7 +1292,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1334,7 +1334,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1351,7 +1351,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1363,7 +1363,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1381,7 +1381,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1398,7 +1398,7 @@
 	<command name="ResolveTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1410,7 +1410,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1422,7 +1422,7 @@
 			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1459,7 +1459,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1476,7 +1476,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1494,7 +1494,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />

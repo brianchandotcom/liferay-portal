@@ -136,10 +136,8 @@
 			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageStaging" value="true" />
+		<execute macro="Navigator#openStagingSiteURL">
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">

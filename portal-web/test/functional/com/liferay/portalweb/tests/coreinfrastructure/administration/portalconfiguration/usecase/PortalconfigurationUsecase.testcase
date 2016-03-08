@@ -145,8 +145,8 @@
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="virtualHostsURL" value="${otherInstanceAccessAttempt}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${otherInstanceAccessAttempt}" />
 		</execute>
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
@@ -261,8 +261,8 @@
 			<var name="virtualHost" value="www.able.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
@@ -318,18 +318,18 @@
 			<var name="sitePagePrivacy" value="Private Pages" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="virtualHostsURL" value="http://www.charlie.com:8080" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.charlie.com:8080" />
 		</execute>
 
 		<var name="key_pageName" value="Welcome" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-		<execute macro="User#loginUserPG">
+		<execute macro="User#loginPG">
 			<var name="password" value="test" />
+			<var name="specificURL" value="http://www.charlie.com:8080/group/guest" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="virtualHostsURL" value="http://www.charlie.com:8080/group/guest" />
 		</execute>
 
 		<var name="key_pageName" value="Private Page" />

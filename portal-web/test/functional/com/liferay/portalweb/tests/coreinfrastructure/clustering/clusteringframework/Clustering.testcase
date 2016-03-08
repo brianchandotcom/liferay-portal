@@ -274,10 +274,7 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageStaging" value="true" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<execute macro="Navigator#openStagingURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="New Page Name" />

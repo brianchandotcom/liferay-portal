@@ -370,10 +370,8 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject4}" />
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSiteURL">
 			<var name="siteName" value="${siteName3}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOActivities#viewSiteContent">
@@ -446,10 +444,8 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject4}" />
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit4}" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSiteURL">
 			<var name="siteName" value="${siteName4}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOActivities#viewSiteContent">
@@ -758,7 +754,7 @@
 			<var name="userScreenName" value="${userScreenName4}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName1}" />
 			<var name="siteURL" value="true" />
@@ -771,7 +767,7 @@
 			<var name="site" value="${siteName1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName2}" />
 			<var name="siteURL" value="true" />
@@ -784,7 +780,7 @@
 			<var name="site" value="${siteName2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName3}" />
@@ -798,7 +794,7 @@
 			<var name="site" value="${siteName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName4}" />
@@ -1339,7 +1335,7 @@
 			<var name="userName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1348,7 +1344,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1428,7 +1424,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1437,7 +1433,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1589,7 +1585,7 @@
 			<var name="userName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1598,7 +1594,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1678,7 +1674,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1687,7 +1683,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2160,7 +2156,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2276,7 +2272,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2353,7 +2349,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -2362,7 +2358,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2372,7 +2368,7 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2388,7 +2384,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2422,7 +2418,7 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Forums" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2438,7 +2434,7 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -3046,7 +3042,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

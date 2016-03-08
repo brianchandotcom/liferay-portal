@@ -464,11 +464,9 @@
 
 		<execute function="AssertTextNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#openPrivateSitePageURL">
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Private Blogs Page" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

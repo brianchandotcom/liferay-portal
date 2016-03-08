@@ -65,14 +65,6 @@
 		<execute function="Click" locator1="Link#STAGING" />
 	</command>
 
-	<command name="gotoStagingPage">
-		<execute macro="Navigator#openStagingURL" />
-
-		<execute macro="Navigator#_gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-	</command>
-
 	<command name="gotoTab">
 		<var name="key_tab" value="${tab}" />
 
@@ -129,6 +121,26 @@
 		<execute function="Open" locator1="http://localhost:${nodePort}" />
 	</command>
 
+	<command name="openPrivateSitePageURL">
+		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
+		<var method="StringUtil#replace('${sitePageName}', ' ', '-')" name="sitePageNameURL" />
+		<var method="StringUtil#lowerCase('${sitePageNameURL}')" name="sitePageNameURL" />
+
+		<execute function="Open" locator1="/group/${siteNameURL}/${sitePageNameURL}" />
+	</command>
+
+	<command name="openPrivateSiteURL">
+		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
+
+		<execute function="Open" locator1="/group/${siteNameURL}" />
+	</command>
+
+	<command name="openPrivateURL">
+		<execute function="Open" locator1="/group/guest" />
+	</command>
+
 	<command name="openSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
@@ -140,8 +152,15 @@
 		<execute function="Open" locator1="${url}" />
 	</command>
 
+	<command name="openStagingSiteURL">
+		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
+
+		<execute function="Open" locator1="/web/${siteNameURL}-staging" />
+	</command>
+
 	<command name="openStagingURL">
-		<execute function="Open" locator1="/web/guest-staging/home" />
+		<execute function="Open" locator1="/web/guest-staging" />
 	</command>
 
 	<command name="openURL">

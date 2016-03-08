@@ -39,6 +39,5 @@ Provide-Capability: liferay.resource.bundle;aggregate:String="(bundle.symbolic.n
 Require-Capability:\
 	liferay.extender;filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 	liferay.resource.bundle;filter:="(bundle.symbolic.name=com.liferay.journal.lang)"
--donotcopy: (.*\.wsdd)
 -include: ../../../../../marketplace/web-content-management/bnd.bnd
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

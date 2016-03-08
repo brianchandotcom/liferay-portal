@@ -162,8 +162,7 @@ AUI.add(
 							instance.get('dataSourceURL'),
 							{
 								data: {
-									fieldName: instance.get('name'),
-									serializedDDMForm: JSON.stringify(form.get('definition'))
+									ddmDataProviderInstanceId: instance.get('ddmDataProviderInstanceId')
 								},
 								dataType: 'JSON',
 								method: 'GET',

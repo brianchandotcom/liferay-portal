@@ -48,7 +48,7 @@ public class SocialActivityDescriptor {
 
 		if (_activity != null) {
 			return SocialActivityInterpreterLocalServiceUtil.interpret(
-				selector, _activitySet, serviceContext);
+				selector, _activity, serviceContext);
 		}
 
 		return SocialActivityInterpreterLocalServiceUtil.interpret(

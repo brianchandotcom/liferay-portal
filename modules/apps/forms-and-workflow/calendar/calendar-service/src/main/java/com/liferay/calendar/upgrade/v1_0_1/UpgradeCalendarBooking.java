@@ -15,6 +15,7 @@
 package com.liferay.calendar.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Bryan Engler
@@ -23,13 +24,19 @@ public class UpgradeCalendarBooking extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("CalendarBooking", "vEventUid")) {
-			runSQL("alter table CalendarBooking add vEventUid STRING null");
-		}
+		updateCalendarBooking();
+	}
 
-		runSQL(
-			"update CalendarBooking set vEventUid = uuid_ where vEventUid is " +
-				"null or vEventUid = ''");
+	protected void updateCalendarBooking() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasColumn("CalendarBooking", "vEventUid")) {
+				runSQL("alter table CalendarBooking add vEventUid STRING null");
+			}
+
+			runSQL(
+				"update CalendarBooking set vEventUid = uuid_ where vEventUid" +
+					" is null or vEventUid = ''");
+		}
 	}
 
 }

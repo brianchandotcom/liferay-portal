@@ -29,16 +29,23 @@
 
 	<command name="addAdditionalEmailAddressViaMyAccount">
 		<execute function="Click" locator1="NavListItem#ADDITIONAL_EMAIL_ADDRESSES" />
+
 		<execute function="Type" locator1="MyAccount#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${userAdditionalEmailAddress}" />
+		
 		<execute function="Select" locator1="MyAccount#ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT" value1="Email Address" />
+		
 		<execute function="Click" locator1="MyAccount#ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON" />
+		
 		<execute function="Click" locator1="Button#SAVE" />
+		
 		<execute macro="Alert#viewSuccessMessage" />
+		
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addAddressViaMyAccount">
 		<execute function="Click" locator1="NavListItem#ADDRESSES" />
+
 		<execute function="Type" locator1="TextInput#STREET_1" value1="${userAddressStreet1}" />
 
 		<if>
@@ -72,8 +79,11 @@
 		<execute function="Type" locator1="TextInput#CITY" value1="${userAddressCity}" />
 		<execute function="Click" locator1="Radio#PRIMARY" />
 		<execute function="Check" locator1="Checkbox#MAILING" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+		
 		<execute macro="Alert#viewSuccessMessage" />
+		
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -81,7 +91,9 @@
 		<execute function="Click" locator1="NavListItem#COMMENTS" />
 		<execute function="Type" locator1="MyAccount#COMMENTS_FIELD" value1="${userIntroduction}" />
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+		
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -114,6 +126,7 @@
 		</if>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+
 		<execute macro="Button#clickSave" />
 
 		<if>
@@ -188,7 +201,9 @@
 		</if>
 
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -219,6 +234,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute macro="Panel#expandPanel">
@@ -227,12 +243,15 @@
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_LABEL" value1="Personal site" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES_LABEL" value1="My Dashboard" />
+
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES" value1="${siteTemplateName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addPhoneNumbersViaMyAccount">
 		<execute function="Click" locator1="NavListItem#PHONE_NUMBERS" />
+
 		<execute function="Type" locator1="TextInput#NUMBER" value1="${userPhoneNumberNumber}" />
 
 		<if>
@@ -245,35 +264,53 @@
 		<execute function="Select" locator1="MyAccount#PHONE_NUMBERS_TYPE_SELECT" value1="${userPhoneNumberType}" />
 
 		<execute function="Click" locator1="MyAccount#PHONE_NUMBERS_PRIMARY_RADIO_BUTTON" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProfilePictureViaMyAccount">
 		<execute function="Click" locator1="Button#CHANGE" />
+
 		<execute function="Pause" locator1="1000" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="IFrame#UPLOAD_IMAGE" />
+
 		<execute function="UploadCommonFile" locator1="UploadImage#BROWSE_BUTTON" value1="${imageFileName}" />
+		
 		<execute function="Pause" locator1="1000" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#UPLOAD_IMAGE" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute function="Pause" locator1="1000" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="Pause" locator1="1000" />
 	</command>
 
 	<command name="addProjectViaMyAccount">
 		<execute function="Click" locator1="NavListItem#PROJECTS" />
+
 		<execute function="Type" locator1="MyAccount#PROJECTS_TITLE_FIELD" value1="${userProjectTitle}" />
+
 		<execute function="Select" locator1="MyAccount#PROJECTS_START_DATE_MONTH_SELECT" value1="${userProjectStartDateMonth}" />
+
 		<execute function="Select" locator1="MyAccount#PROJECTS_START_DATE_YEAR_SELECT" value1="${userProjectStartDateYear}" />
+
 		<execute function="Check" locator1="MyAccount#PROJECTS_CURRENT_CHECKBOX" />
 
 		<if>
@@ -284,7 +321,9 @@
 		</if>
 
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -295,6 +334,7 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
@@ -309,6 +349,7 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
@@ -323,6 +364,7 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
@@ -332,9 +374,13 @@
 
 	<command name="addSMSViaMyAccount">
 		<execute function="Click" locator1="NavListItem#SMS" />
+
 		<execute function="Type" locator1="MyAccount#SMS_SMS_FIELD" value1="${userSMS}" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -356,26 +402,39 @@
 		</if>
 
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addTagViaMyAccount">
 		<execute function="Click" locator1="NavListItem#CATEGORIZATION" />
+
 		<execute function="Type" locator1="AssetCategorization#CATEGORIES_SEARCH_FIELD" value1="${userTag}" />
+
 		<execute function="Click" locator1="Button#ADD" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addWebsiteViaMyAccount">
 		<execute function="Click" locator1="NavListItem#WEBSITES" />
+
 		<execute function="Type" locator1="MyAccount#WEBSITES_URL_FIELD" value1="${userWebsiteURL}" />
+
 		<execute function="Select" locator1="MyAccount#WEBSITES_TYPE_SELECT" value1="${userWebsiteType}" />
+
 		<execute function="Click" locator1="MyAccount#WEBSITES_PRIMARY_RADIO_BUTTON" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -386,6 +445,7 @@
 			<equals arg1="${userAdvancedSearch}" arg2="First Name" />
 			<then>
 				<execute function="Type" locator1="AdvancedSearch#FIRST_NAME_FIELD" value1="${userFirstName}" />
+
 				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
@@ -395,13 +455,16 @@
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 				<execute function="Type" locator1="AdvancedSearch#FIRST_NAME_FIELD" value1="${userFirstName}1" />
+
 				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<elseif>
 				<equals arg1="${userAdvancedSearch}" arg2="Middle Name" />
 				<then>
 					<execute function="Type" locator1="AdvancedSearch#MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -411,7 +474,9 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 					<execute function="Type" locator1="AdvancedSearch#MIDDLE_NAME_FIELD" value1="${userMiddleName}1" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
 			</elseif>
@@ -419,6 +484,7 @@
 				<equals arg1="${userAdvancedSearch}" arg2="Last Name" />
 				<then>
 					<execute function="Type" locator1="AdvancedSearch#LAST_NAME_FIELD" value1="${userLastName}" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -428,7 +494,9 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 					<execute function="Type" locator1="AdvancedSearch#LAST_NAME_FIELD" value1="${userLastName}1" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
 			</elseif>
@@ -436,6 +504,7 @@
 				<equals arg1="${userAdvancedSearch}" arg2="Screen Name" />
 				<then>
 					<execute function="Type" locator1="AdvancedSearch#SCREEN_NAME_FIELD" value1="${userScreenName}" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -445,7 +514,9 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 					<execute function="Type" locator1="AdvancedSearch#SCREEN_NAME_FIELD" value1="${userScreenName}1" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
 			</elseif>
@@ -453,6 +524,7 @@
 				<equals arg1="${userAdvancedSearch}" arg2="Email Address" />
 				<then>
 					<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -462,7 +534,9 @@
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 					<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}1" />
+
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 				</then>
 			</elseif>
@@ -717,6 +791,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
@@ -724,14 +799,19 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_SELECT_LINK" value1="Select" />
+
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_SELECT_IFRAME" />
 
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_SELECT_ROLE_IFRAME_TITLE" value1="${roleName}" />
+
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_TABLE_TITLE" value1="${roleName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -743,6 +823,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Pause" locator1="5000" />
@@ -760,9 +841,13 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLE_TITLE" value1="${roleName}" />
+
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -774,6 +859,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
@@ -781,14 +867,19 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_SELECT_LINK" value1="Select" />
+
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_IFRAME" />
 
 		<var name="key_siteRoleName" value="${siteRoleName}" />
 
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_TITLE" value1="${siteRoleName}" />
+
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#ROLES_SITE_ROLES_IFRAME_CHOOSE_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_TABLE_TITLE" value1="${siteRoleName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -863,6 +954,7 @@
 					<var name="quotes"><![CDATA["${userScreenName}"]]></var>
 
 					<execute function="Type" locator1="TextInput#SEARCH" value1="${quotes}" />
+
 					<execute function="Click" locator1="Button#SUBMIT" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -880,9 +972,11 @@
 			<equals arg1="${userPassword}" arg2="Invalid" />
 			<then>
 				<execute function="AssertClick" locator1="NavListItem#PASSWORD" value1="Password" />
+
 				<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="" />
 				<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="test1" />
 				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test1" />
+
 				<execute macro="Button#clickSave" />
 
 				<execute macro="Alert#viewRequestFailedToComplete" />
@@ -910,9 +1004,11 @@
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="NavListItem#PASSWORD" value1="Password" />
+
 				<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="test" />
 				<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="test1" />
 				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test1" />
+
 				<execute macro="Button#clickSave" />
 
 				<execute macro="Alert#viewSuccessMessage" />
@@ -1053,7 +1149,9 @@
 		</if>
 
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1064,7 +1162,9 @@
 		<var name="key_notificationType" value="${notificationType}" />
 
 		<execute function="Check" locator1="MyAccount#ANNOUNCEMENTS_NOTIFICATION_CHECKBOX" />
+
 		<execute macro="PortletEntry#save" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1110,6 +1210,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Select" locator1="CPUsersandorganizationsUser#LANGUAGE_SELECT" value1="${languageName}" />
@@ -1122,7 +1223,9 @@
 		</execute>
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+
 		<execute macro="PortletEntry#save" />
+
 		<execute function="AssertTextEquals" locator1="MyAccount#ALERT_SUCCESS_MESSAGE" value1="Your email verification code has been sent and the new email address will be applied to your account once it is verified." />
 	</command>
 
@@ -1132,6 +1235,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute function="Pause" locator1="3000" />
@@ -1183,6 +1287,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<if>
@@ -1200,6 +1305,7 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
+
 		<execute macro="Button#clickSave" />
 
 		<if>
@@ -1243,6 +1349,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute macro="User#editUserDisplaySettingsTimeZonePacific">
@@ -1298,11 +1405,13 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -1312,9 +1421,11 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -1360,6 +1471,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute function="Pause" locator1="3000" />
@@ -1371,21 +1483,27 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="Select" />
+
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#SITES_SELECT_IFRAME" />
 
 		<execute function="Type" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="${siteName}" />
+
 		<execute function="KeyPress" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="\RETURN" />
+
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
+
 		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SITES_TABLE_NAME" value1="${siteName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="expandRootCP">
 		<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
+
 		<execute function="AssertElementPresent#assertElementPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<if>
@@ -1579,8 +1697,10 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
@@ -1594,8 +1714,10 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
 		<execute function="Click" locator1="Button#SIGN_IN" />
 	</command>
 
@@ -1667,6 +1789,7 @@
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${emailPassword}" />
 		<execute function="Check" locator1="Checkbox#REMEMBER_ME" />
+
 		<execute function="AssertClick" locator1="Button#SIGN_IN" value1="Sign In" />
 
 		<if>
@@ -1677,7 +1800,9 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please enter your verification code." />
+
 		<execute function="Type" locator1="SignInCreateAccount#EMAIL_VERIFICATION_CODE_FIELD" value1="${emailVerification}" />
+
 		<execute function="AssertClick" locator1="Button#VERIFY" value1="Verify" />
 
 		<if>
@@ -1737,6 +1862,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
@@ -1746,7 +1872,9 @@
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_REMOVE_LINK" value1="Remove" />
+
 		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -1756,9 +1884,11 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This user account has been locked due to excessive failed login attempts." />
+
 		<execute function="AssertClick" locator1="Button#UNLOCK" value1="Unlock" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1769,16 +1899,22 @@
 			<equals arg1="${userEmailAddressVariation}" arg2="At" />
 			<then>
 				<execute function="Pause" locator1="1000" />
+
 				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userEmailAddress}" />
+
 				<execute function="Click" locator1="Button#SUBMIT" />
+
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 			</then>
 			<elseif>
 				<equals arg1="${userEmailAddressVariation}" arg2="Period" />
 				<then>
 					<execute function="Pause" locator1="1000" />
+
 					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userEmailAddress}" />
+
 					<execute function="Click" locator1="Button#SUBMIT" />
+
 					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 				</then>
 			</elseif>
@@ -1786,8 +1922,11 @@
 				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
 				<then>
 					<execute function="Pause" locator1="1000" />
+
 					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+
 					<execute function="Click" locator1="Button#SUBMIT" />
+
 					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 				</then>
 			</elseif>

@@ -144,10 +144,11 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
 									assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
 									assetBrowserURL.setParameter("eventName", eventName);
+									assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
+									assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+									assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
 									assetBrowserURL.setPortletMode(PortletMode.VIEW);
 									assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-									assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 
 									Map<String, Object> data = new HashMap<String, Object>();
 
@@ -179,6 +180,8 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 										for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
 											assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
+											assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+											assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
 
 											data.put("href", assetBrowserURL.toString());
 

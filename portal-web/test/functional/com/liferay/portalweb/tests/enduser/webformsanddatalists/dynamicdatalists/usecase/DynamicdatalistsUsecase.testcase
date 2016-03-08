@@ -783,7 +783,7 @@
 		<var name="field1" value="Text" />
 		<var name="field2" value="Documents and Media" />
 		<var name="fieldFieldLabel1" value="Text" />
-		<var name="fieldFieldLabel1Edit" value="Text Edit" />
+		<var name="ddlRecordFieldData1Edit" value="Text Edit" />
 		<var name="fieldFieldLabel2" value="Document" />
 		<var name="fieldName1" value="Text" />
 		<var name="fieldName2" value="Document" />

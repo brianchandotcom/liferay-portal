@@ -335,6 +335,10 @@
 		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
 
+	<command name="viewCannotSaveAsDraft">
+		<execute function="AssertElementNotPresent" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
+	</command>
+
 	<command name="viewCustomStylesViaLookandfeelPG">
 		<execute function="SikuliClick" locator1="BasePortlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL" />
 	</command>

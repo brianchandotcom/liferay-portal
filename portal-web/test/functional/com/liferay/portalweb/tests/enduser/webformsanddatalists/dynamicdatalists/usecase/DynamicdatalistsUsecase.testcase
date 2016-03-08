@@ -985,8 +985,7 @@
 			<var name="url" value="${adminEditURL}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute macro="Portlet#viewCannotSaveAsDraft" />
 	</command>
 
 	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="3">

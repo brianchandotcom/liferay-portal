@@ -184,6 +184,12 @@
 		<execute function="Type" locator1="DDLEditRecord#DECIMAL_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
+	<command name="clearFieldDocumentsAndMedia">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CLEAR_BUTTON" value1="Clear" />
+	</command>
+
 	<command name="populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
 		<var name="key_fieldName" value="${fieldName}" />
 

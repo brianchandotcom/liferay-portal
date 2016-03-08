@@ -975,9 +975,11 @@
 			<var name="url" value="${adminEditURL}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CLEAR_BUTTON" value1="Clear" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute macro="DDLRecord#clearFieldDocumentsAndMedia">
+			<var name="fieldName" value="${fieldName2}" />
+		</execute>
+
+		<execute macro="Portlet#viewCannotPublish" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${adminEditURL}" />

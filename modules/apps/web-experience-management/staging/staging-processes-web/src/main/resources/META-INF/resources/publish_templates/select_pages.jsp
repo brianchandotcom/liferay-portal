@@ -41,22 +41,12 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			<c:choose>
 				<c:when test="<%= privateLayout %>">
 					<li>
-						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
-							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-							<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-						</liferay-portlet:renderURL>
-
-						<aui:button href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
+						<aui:button id="changeToPrivateLayoutsButton" value="change-to-public-pages" />
 					</li>
 				</c:when>
 				<c:otherwise>
 					<li>
-						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
-							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-							<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-						</liferay-portlet:renderURL>
-
-						<aui:button href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
+						<aui:button id="changeToPublicLayoutsButton" value="change-to-private-pages" />
 					</li>
 				</c:otherwise>
 			</c:choose>

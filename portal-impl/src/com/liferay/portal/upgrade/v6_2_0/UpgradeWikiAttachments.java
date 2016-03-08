@@ -30,7 +30,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected String getClassName() {
-		return "com.liferay.wiki.model.WikiPage";
+		return "com.liferay.portlet.wiki.model.WikiPage";
 	}
 
 	@Override

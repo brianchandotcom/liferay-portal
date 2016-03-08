@@ -718,6 +718,16 @@
 		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />
 	</command>
 
+	<command name="viewNestedFieldsRepeating">
+		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
+		<var name="key_nestedChildFieldFieldName" value="${nestedChildFieldFieldName}" />
+
+		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_FIELD" />
+		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />
+		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_REPEATING_FIELD" />
+		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_REPEATING_FIELD" />
+	</command>
+
 	<command name="viewNoRecords">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
 	</command>

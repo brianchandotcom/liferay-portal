@@ -2886,6 +2886,9 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLRecord#viewRepeatableNestedFieldsVisualGrouping" />
+		<execute macro="DDLRecord#viewNestedFieldsRepeating">
+			<var name="nestedParentFieldFieldName" value="Text" />
+			<var name="nestedChildFieldFieldName" value="DocumentsAndMedia" />
+		<execute>
 	</command>
 </definition>

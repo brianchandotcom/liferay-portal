@@ -262,6 +262,10 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetLink> getDirectLinks(long entryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetLink> getDirectLinks(long entryId,
+		boolean excludeNonVisibleLinks);
+
 	/**
 	* Returns all the asset links of the given link type whose first entry ID
 	* is the given entry ID.
@@ -277,6 +281,10 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetLink> getDirectLinks(long entryId, int typeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetLink> getDirectLinks(long entryId, int typeId,
+		boolean excludeNonVisibleLinks);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionbleDynamicQuery(

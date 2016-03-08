@@ -4,7 +4,23 @@
 	<var name="ddlListName" value="List Name" />
 
 	<command name="_add">
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Structures" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="ControlMenu#HEADER_TITLE" />
+			<then>
+				<var name="key_iframeTitle" value="Data Definitions" />
+
+				<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Data Definitions" />
+
+				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+
+				<var name="key_assetTitle" value="Data Definitions" />
+
+				<execute function="AssertTextEquals" locator1="NavBar#ASSET_TITLE" value1="Data Definitions" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Structures" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
@@ -48,8 +64,6 @@
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-
 		<execute macro="DDLDataDefinition#_add">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -208,17 +222,12 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<if>
-			<not>
-				<isset var="ddlDataDefinitionName" />
-			</not>
-			<then>
-				<var name="ddlDataDefinitionName" value="Data Definition" />
-			</then>
-		</if>
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<execute function="AssertTextNotEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="Contacts" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 

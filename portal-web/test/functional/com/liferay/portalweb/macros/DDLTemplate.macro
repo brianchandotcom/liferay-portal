@@ -79,6 +79,8 @@
 
 		<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${ddlDisplayTemplateScript}" />
 
 		<execute macro="Button#clickSave" />

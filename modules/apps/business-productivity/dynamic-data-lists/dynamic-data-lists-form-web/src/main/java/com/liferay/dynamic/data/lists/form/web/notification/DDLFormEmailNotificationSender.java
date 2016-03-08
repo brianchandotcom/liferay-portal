@@ -294,8 +294,14 @@ public class DDLFormEmailNotificationSender {
 		List<Object> fields = new ArrayList<>();
 
 		for (String fieldName : fieldNames) {
-			Map<String, Object> field = getField(
-				ddmFormFieldValuesMap.get(fieldName), locale);
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormFieldValuesMap.get(fieldName);
+
+			if (ddmFormFieldValues == null) {
+				continue;
+			}
+
+			Map<String, Object> field = getField(ddmFormFieldValues, locale);
 
 			fields.add(field);
 		}

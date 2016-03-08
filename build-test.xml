@@ -3563,6 +3563,8 @@ go]]></replacevalue>
 	</target>
 
 	<target name="clean-up-mobile-device">
+		<get-testcase-property property.name="browser.type" />
+
 		<if>
 			<equals arg1="${browser.type}" arg2="android" />
 			<then>

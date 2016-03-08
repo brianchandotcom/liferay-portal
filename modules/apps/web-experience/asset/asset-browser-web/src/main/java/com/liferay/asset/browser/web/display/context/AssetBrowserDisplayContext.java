@@ -313,6 +313,10 @@ public class AssetBrowserDisplayContext {
 		portletURL.setParameter("typeSelection", getTypeSelection());
 		portletURL.setParameter(
 			"subtypeSelectionId", String.valueOf(getSubtypeSelectionId()));
+		portletURL.setParameter(
+			"showNonindexable", String.valueOf(isShowNonindexable()));
+		portletURL.setParameter(
+			"showScheduled", String.valueOf(isShowScheduled()));
 
 		if (getListable() != null) {
 			portletURL.setParameter("listable", String.valueOf(getListable()));
@@ -346,11 +350,9 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public int[] getStatuses() {
-		boolean showScheduled = ParamUtil.getBoolean(_request, "showScheduled");
-
 		int[] statuses = {WorkflowConstants.STATUS_APPROVED};
 
-		if (showScheduled) {
+		if (isShowScheduled()) {
 			statuses = new int[] {
 				WorkflowConstants.STATUS_APPROVED,
 				WorkflowConstants.STATUS_SCHEDULED
@@ -431,6 +433,16 @@ public class AssetBrowserDisplayContext {
 		return _showNonindexable;
 	}
 
+	public boolean isShowScheduled() {
+		if (_showScheduled != null) {
+			return _showScheduled;
+		}
+
+		_showScheduled = ParamUtil.getBoolean(_request, "showScheduled");
+
+		return _showScheduled;
+	}
+
 	private AssetRendererFactory _assetRendererFactory;
 	private String _displayStyle;
 	private String _eventName;
@@ -442,6 +454,7 @@ public class AssetBrowserDisplayContext {
 	private final HttpServletRequest _request;
 	private long[] _selectedGroupIds;
 	private Boolean _showNonindexable;
+	private Boolean _showScheduled;
 	private Long _subtypeSelectionId;
 	private String _typeSelection;
 

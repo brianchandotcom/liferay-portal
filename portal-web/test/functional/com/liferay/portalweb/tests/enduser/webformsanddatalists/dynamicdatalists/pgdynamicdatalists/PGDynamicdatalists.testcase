@@ -373,8 +373,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#viewNestedFields">
-			<var name="nestedParentFieldFieldName" value="Text" />
 			<var name="nestedChildFieldFieldName" value="Integer" />
+			<var name="nestedParentFieldFieldName" value="Text" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -38,16 +40,25 @@ public class UserSearchFixture {
 		return group;
 	}
 
-	public void addUser(Group group, String tag) throws Exception {
+	public void addUser(Group group, String... tags) throws Exception {
 		User user = UserTestUtil.addUser(group.getGroupId());
 
 		_users.add(user);
 
 		ServiceContext serviceContext = getServiceContext(group);
 
-		serviceContext.setAssetTagNames(new String[] {tag});
+		serviceContext.setAssetTagNames(tags);
 
 		UserTestUtil.updateUser(user, serviceContext);
+
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+			user.getModelClassName(), user.getPrimaryKey());
+
+		_assetTags.addAll(assetTags);
+	}
+
+	public List<AssetTag> getAssetTags() {
+		return _assetTags;
 	}
 
 	public List<Group> getGroups() {
@@ -71,6 +82,7 @@ public class UserSearchFixture {
 			group.getGroupId(), TestPropsValues.getUserId());
 	}
 
+	private final List<AssetTag> _assetTags = new ArrayList<>();
 	private final List<Group> _groups = new ArrayList<>();
 	private final List<User> _users = new ArrayList<>();
 

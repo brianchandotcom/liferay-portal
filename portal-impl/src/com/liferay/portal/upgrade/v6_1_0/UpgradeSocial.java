@@ -458,7 +458,7 @@ public class UpgradeSocial extends UpgradeProcess {
 				}
 
 				assetEntryArray = getAssetEntryArray(
-					"com.liferay.portlet.messageboards.MBMessage",
+					"com.liferay.portlet.messageboards.model.MBMessage",
 					mbThreadRootMessageId);
 
 				if (assetEntryArray == null) {

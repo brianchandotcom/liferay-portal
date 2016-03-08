@@ -466,6 +466,19 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String assetCategoryIds, java.lang.String assetTagNames,
 		int status, boolean andSearch, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long searchCount(long companyId, long[] groupIds, long userId,
+		java.lang.String className, long classTypeId,
+		java.lang.String keywords, boolean showNonindexable, int[] statuses);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long searchCount(long companyId, long[] groupIds, long userId,
+		java.lang.String className, long classTypeId,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, boolean showNonindexable,
+		int[] statuses, boolean andSearch);
+
 	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds);
 
 	public void setAssetTagAssetEntries(long tagId, long[] entryIds);

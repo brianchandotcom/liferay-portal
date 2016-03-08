@@ -949,8 +949,10 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${adminEditURL}" />
 		</execute>
-		
-		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
+
+		<execute macro="DDLRecord#viewTranslationNotAvailable">
+			<var name="localizedLanguage" value="${localizedLanguage}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1Edit}" />

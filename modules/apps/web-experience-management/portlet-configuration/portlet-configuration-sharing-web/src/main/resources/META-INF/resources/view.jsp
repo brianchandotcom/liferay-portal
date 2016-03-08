@@ -18,6 +18,7 @@
 
 <%
 String netvibesURL = ParamUtil.getString(request, "netvibesURL");
+String openSocialURL = ParamUtil.getString(request, "openSocialURL");
 String widgetURL = ParamUtil.getString(request, "widgetURL");
 %>
 
@@ -27,16 +28,23 @@ String widgetURL = ParamUtil.getString(request, "widgetURL");
 			<liferay-ui:message key="share-this-application-on-any-website" />
 		</p>
 
-		<textarea class="lfr-textarea" onClick="this.select();">&lt;script src=&quot;<%= themeDisplay.getPortalURL() %><%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS) %>/liferay/widget.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+		<textarea class="col-md-12 lfr-textarea" onClick="this.select();" rows="10">&lt;script src=&quot;<%= themeDisplay.getPortalURL() %><%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS) %>/liferay/widget.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
 Liferay.Widget({ url: &#x27;<%= HtmlUtil.escape(widgetURL) %>&#x27;});
 &lt;/script&gt;</textarea>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(netvibesURL) %>">
 		<p>
-			<aui:a href="http://eco.netvibes.com/apps/submit" target="_blank"><liferay-ui:message key="add-this-application-to-netvibes" /></aui:a>
+			<aui:a href='<%= HttpUtil.addParameter("http://eco.netvibes.com/apps/submit/info", "url", netvibesURL) %>' target="_blank"><liferay-ui:message key="add-this-application-to-netvibes" /></aui:a>
 		</p>
 
 		<aui:input label="" name="netvibesURL" type="resource" value="<%= netvibesURL %>" />
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(openSocialURL) %>">
+		<p>
+			<liferay-ui:message key="share-this-application-on-an-open-social-platform" />
+		</p>
+
+		<aui:input label="" name="openSocialURL" type="resource" value="<%= openSocialURL %>" />
 	</c:when>
 </c:choose>

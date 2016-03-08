@@ -19,14 +19,21 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -48,8 +55,11 @@ public class IGooglePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "add-to-igoogle");
+			resourceBundle, "add-to-an-open-social-platform");
 	}
 
 	@Override
@@ -57,20 +67,24 @@ public class IGooglePortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			Portlet portlet = (Portlet)portletRequest.getAttribute(
-				WebKeys.RENDER_PORTLET);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			return "http://fusion.google.com/add?source=atgs&moduleurl=" +
-				PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
+			LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+				portletRequest,
+				PortletConfigurationSharingPortletKeys.
+					PORTLET_CONFIGURATION_SHARING,
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"openSocialURL", getWidgetURL(portletRequest));
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
 		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
+		catch (Exception e) {
+			_log.error(e, e);
 
 			return StringPool.BLANK;
 		}
@@ -104,6 +118,23 @@ public class IGooglePortletConfigurationIcon
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
+	}
+
+	protected String getWidgetURL(PortletRequest portletRequest)
+		throws PortalException {
+
+		Portlet portlet = (Portlet)portletRequest.getAttribute(
+			WebKeys.RENDER_PORTLET);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

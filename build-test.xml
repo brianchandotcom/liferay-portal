@@ -4704,14 +4704,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	</target>
 
 	<target name="prepare-mobile-device">
-		<if>
-			<equals arg1="${browser.type}" arg2="android" />
-			<then>
-				<stop-android-device />
+		<stop-android-device />
 
-				<start-android-device />
-			</then>
-		</if>
+		<start-android-device />
 	</target>
 
 	<target name="prepare-portal-ext-properties">

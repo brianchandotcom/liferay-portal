@@ -778,12 +778,12 @@
 		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData1" value="Text" />
+		<var name="ddlRecordFieldData1Edit" value="Text Edit" />
 		<var name="ddlRecordFieldData2" value="Document_1.doc" />
 		<var name="document" value="Document_1.doc" />
 		<var name="field1" value="Text" />
 		<var name="field2" value="Documents and Media" />
 		<var name="fieldFieldLabel1" value="Text" />
-		<var name="ddlRecordFieldData1Edit" value="Text Edit" />
 		<var name="fieldFieldLabel2" value="Document" />
 		<var name="fieldName1" value="Text" />
 		<var name="fieldName2" value="Document" />
@@ -934,7 +934,7 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${adminEditURL}" />
 		</execute>
-		
+
 		<execute macro="DDLRecord#editTranslation">
 			<var name="localizedLanguage" value="Catalan (Spain)" />
 		</execute>

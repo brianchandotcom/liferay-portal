@@ -1,4 +1,16 @@
 <definition>
+	<command name="getAdminEditURL" returns="adminEditURL">
+		<var method="selenium#getLocation()" name="adminEditURL" />
+
+		<return name="adminEditURL" value="${adminEditURL}" />
+	</command>
+
+	<command name="getAdminViewURL" returns="adminViewURL">
+		<var method="selenium#getLocation()" name="adminViewURL" />
+
+		<return name="adminViewURL" value="${adminViewURL}" />
+	</command>
+
 	<command name="getSiteName" returns="siteName">
 		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
@@ -52,17 +64,5 @@
 				<execute macro="SignIn#signInPortalInstanceSetUp" />
 			</then>
 		</if>
-	</command>
-
-	<command name="getAdminViewURL" returns="adminViewURL">
-		<var method="selenium#getLocation()" name="adminViewURL" />
-
-		<return name="adminViewURL" value="${adminViewURL}" />
-	</command>
-
-	<command name="getAdminEditURL" returns="adminEditURL">
-		<var method="selenium#getLocation()" name="adminEditURL" />
-
-		<return name="adminEditURL" value="${adminEditURL}" />
 	</command>
 </definition>

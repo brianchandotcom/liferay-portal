@@ -122,10 +122,10 @@ public abstract class BasePropMethodImpl implements Method {
 			props.remove(ALLPROP);
 
 			if (resource.isCollection()) {
-				props.addAll(_ALL_COLLECTION_PROPS);
+				props.addAll(_allCollectionProps);
 			}
 			else {
-				props.addAll(_ALL_SIMPLE_PROPS);
+				props.addAll(_allSimpleProps);
 			}
 		}
 
@@ -414,19 +414,18 @@ public abstract class BasePropMethodImpl implements Method {
 		return HttpServletResponse.SC_NOT_FOUND;
 	}
 
-	private static final List<QName> _ALL_COLLECTION_PROPS = Arrays.asList(
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePropMethodImpl.class);
+
+	private static final List<QName> _allCollectionProps = Arrays.asList(
 		new QName[] {
 			CREATIONDATE, DISPLAYNAME, GETLASTMODIFIED, GETCONTENTTYPE,
 			LOCKDISCOVERY, RESOURCETYPE
 		});
-
-	private static final List<QName> _ALL_SIMPLE_PROPS = Arrays.asList(
+	private static final List<QName> _allSimpleProps = Arrays.asList(
 		new QName[] {
 			CREATIONDATE, DISPLAYNAME, GETLASTMODIFIED, GETCONTENTTYPE,
 			GETCONTENTLENGTH, ISREADONLY, LOCKDISCOVERY, RESOURCETYPE
 		});
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BasePropMethodImpl.class);
 
 }

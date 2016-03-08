@@ -75,7 +75,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			String returnRequestUri = getReturnRequestUri(request);
 
 			String loginRedirect = _googleAuthorization.getLoginRedirect(
-				themeDisplay.getCompanyId(), returnRequestUri, _SCOPES_LOGIN);
+				themeDisplay.getCompanyId(), returnRequestUri, _scopesLogin);
 
 			response.sendRedirect(loginRedirect);
 		}
@@ -89,7 +89,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 
 				User user = _googleAuthorization.addOrUpdateUser(
 					session, themeDisplay.getCompanyId(), authorizationCode,
-					returnRequestUri, _SCOPES_LOGIN);
+					returnRequestUri, _scopesLogin);
 
 				if ((user != null) &&
 					(user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
@@ -180,7 +180,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 	private static final String _REDIRECT_URI =
 		"/portal/google_login?cmd=token";
 
-	private static final List<String> _SCOPES_LOGIN = Arrays.asList(
+	private static final List<String> _scopesLogin = Arrays.asList(
 		"email", "profile");
 
 	@Reference

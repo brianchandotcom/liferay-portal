@@ -267,7 +267,7 @@ public class WorkflowInstanceEditDisplayContext
 			_workflowLogs =
 				WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
 					workflowInstanceRequestHelper.getCompanyId(),
-					getWorkflowInstanceId(), _LOG_TYPES, QueryUtil.ALL_POS,
+					getWorkflowInstanceId(), _logTypes, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, orderByComparator);
 		}
 
@@ -391,7 +391,7 @@ public class WorkflowInstanceEditDisplayContext
 
 	protected List<WorkflowTask> workflowTasks;
 
-	private static final List<Integer> _LOG_TYPES = Arrays.asList(
+	private static final List<Integer> _logTypes = Arrays.asList(
 		WorkflowLog.TASK_ASSIGN, WorkflowLog.TASK_COMPLETION,
 		WorkflowLog.TASK_UPDATE, WorkflowLog.TRANSITION);
 

@@ -45,7 +45,7 @@ public class TypedSettingsTest extends PowerMockito {
 		modifiableSettings.setValue(_KEY + "_es_ES", "value_es_ES");
 
 		_typedSettings = new TypedSettings(
-			modifiableSettings, _AVAILABLE_LOCALES);
+			modifiableSettings, _availableLocales);
 	}
 
 	@Test
@@ -63,10 +63,10 @@ public class TypedSettingsTest extends PowerMockito {
 			"valueDefault", localizedValuesMap.get(LocaleUtil.BRAZIL));
 	}
 
-	private static final List<Locale> _AVAILABLE_LOCALES = Arrays.asList(
-		LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US);
-
 	private static final String _KEY = "key";
+
+	private static final List<Locale> _availableLocales = Arrays.asList(
+		LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US);
 
 	private final TypedSettings _typedSettings;
 

@@ -178,7 +178,7 @@ public class VerifyPermission extends VerifyProcess {
 								resourcePermission.getRoleId());
 				}
 
-				for (String actionId : _DEPRECATED_ORGANIZATION_ACTION_IDS) {
+				for (String actionId : _deprecatedOrganizationActionIds) {
 					if (resourcePermission.hasActionId(actionId)) {
 						resourcePermission.removeResourceAction(actionId);
 
@@ -388,21 +388,20 @@ public class VerifyPermission extends VerifyProcess {
 		return true;
 	}
 
-	private static final List<String> _DEPRECATED_ORGANIZATION_ACTION_IDS =
-		new ArrayList<>();
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyPermission.class);
 
+	private static final List<String> _deprecatedOrganizationActionIds =
+		new ArrayList<>();
+
 	static {
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(
-			ActionKeys.MANAGE_ARCHIVED_SETUPS);
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.MANAGE_LAYOUTS);
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.MANAGE_STAGING);
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.MANAGE_TEAMS);
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.PUBLISH_STAGING);
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add("APPROVE_PROPOSAL");
-		_DEPRECATED_ORGANIZATION_ACTION_IDS.add("ASSIGN_REVIEWER");
+		_deprecatedOrganizationActionIds.add(ActionKeys.MANAGE_ARCHIVED_SETUPS);
+		_deprecatedOrganizationActionIds.add(ActionKeys.MANAGE_LAYOUTS);
+		_deprecatedOrganizationActionIds.add(ActionKeys.MANAGE_STAGING);
+		_deprecatedOrganizationActionIds.add(ActionKeys.MANAGE_TEAMS);
+		_deprecatedOrganizationActionIds.add(ActionKeys.PUBLISH_STAGING);
+		_deprecatedOrganizationActionIds.add("APPROVE_PROPOSAL");
+		_deprecatedOrganizationActionIds.add("ASSIGN_REVIEWER");
 	}
 
 }

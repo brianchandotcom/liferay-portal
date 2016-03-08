@@ -17,6 +17,7 @@ package com.liferay.portal.scheduler.quartz.upgrade.v1_0_0;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,7 +29,12 @@ public class UpgradeQuartz extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		updateJobDetails();
+	}
+
+	protected void updateJobDetails() {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"update QUARTZ_JOB_DETAILS set job_class_name = ? " +
 					"where job_class_name = ?")) {
 

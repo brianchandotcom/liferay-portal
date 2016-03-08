@@ -98,7 +98,7 @@ public class ElasticsearchFixture {
 
 		createIndexRequestBuilder.get();
 
-		indexCreationHelper.whenIndexCreated();
+		indexCreationHelper.whenIndexCreated(name);
 
 		return new Index(indexName);
 	}

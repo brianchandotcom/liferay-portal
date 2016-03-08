@@ -26,6 +26,6 @@ public interface IndexCreationHelper {
 
 	public void contributeIndexSettings(Settings.Builder builder);
 
-	public void whenIndexCreated();
+	public void whenIndexCreated(String indexName);
 
 }

@@ -53,6 +53,42 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	protected String applyDiamondOperator(String content) {
+		Matcher matcher = _diamondOperatorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+			String whitespace = matcher.group(4);
+			String parameterType = matcher.group(5);
+
+			String replacement = StringUtil.replaceFirst(
+				match, whitespace + "<" + parameterType + ">", "<>");
+
+			content = StringUtil.replace(content, match, replacement);
+		}
+
+		return content;
+	}
+
+	protected String checkAnnotationMetaTypeProperties(
+		String content, String annotation) {
+
+		if (!annotation.contains("@Meta.")) {
+			return content;
+		}
+
+		Matcher matcher = _annotationMetaTypePattern.matcher(annotation);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String newAnnotation = StringUtil.replaceFirst(
+			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
+
+		return StringUtil.replace(content, annotation, newAnnotation);
+	}
+
 	protected String checkAnnotationParameterProperties(
 		String content, String annotation) {
 
@@ -124,42 +160,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected String applyDiamondOperator(String content) {
-		Matcher matcher = _diamondOperatorPattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-			String whitespace = matcher.group(4);
-			String parameterType = matcher.group(5);
-
-			String replacement = StringUtil.replaceFirst(
-				match, whitespace + "<" + parameterType + ">", "<>");
-
-			content = StringUtil.replace(content, match, replacement);
-		}
-
-		return content;
-	}
-
-	protected String checkAnnotationMetaTypeProperties(
-		String content, String annotation) {
-
-		if (!annotation.contains("@Meta.")) {
-			return content;
-		}
-
-		Matcher matcher = _annotationMetaTypePattern.matcher(annotation);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String newAnnotation = StringUtil.replaceFirst(
-			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
-
-		return StringUtil.replace(content, annotation, newAnnotation);
 	}
 
 	protected void checkAnnotationParameters(

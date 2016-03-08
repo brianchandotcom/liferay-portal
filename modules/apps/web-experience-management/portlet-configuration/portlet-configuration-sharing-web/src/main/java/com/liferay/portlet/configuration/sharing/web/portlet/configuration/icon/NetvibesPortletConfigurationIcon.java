@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -26,7 +28,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurationSharingPortletKeys;
@@ -34,7 +35,6 @@ import com.liferay.portlet.configuration.sharing.web.constants.PortletConfigurat
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -61,33 +61,24 @@ public class NetvibesPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			Portlet portlet = (Portlet)portletRequest.getAttribute(
-				WebKeys.RENDER_PORTLET);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			PortletURL basePortletURL = PortletURLFactoryUtil.create(
+			LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest,
 				PortletConfigurationSharingPortletKeys.
 					PORTLET_CONFIGURATION_SHARING,
-				themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-			StringBundler sb = new StringBundler(5);
+			portletURL.setParameter(
+				"netvibesURL", getWidgetURL(portletRequest));
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			sb.append("javascript:Liferay.PortletSharing.showNetvibesInfo('");
-			sb.append(PortalUtil.getNetvibesURL(portlet, themeDisplay));
-			sb.append("', '");
-			sb.append(basePortletURL);
-			sb.append("');");
-
-			return sb.toString();
+			return portletURL.toString();
 		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
+		catch (Exception e) {
+			_log.error(e, e);
 
 			return StringPool.BLANK;
 		}
@@ -121,6 +112,23 @@ public class NetvibesPortletConfigurationIcon
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
+	}
+
+	protected String getWidgetURL(PortletRequest portletRequest)
+		throws PortalException {
+
+		Portlet portlet = (Portlet)portletRequest.getAttribute(
+			WebKeys.RENDER_PORTLET);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return PortalUtil.getWidgetURL(portlet, themeDisplay);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

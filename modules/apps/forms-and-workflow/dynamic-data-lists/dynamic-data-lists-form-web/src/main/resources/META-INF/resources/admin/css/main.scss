@@ -519,13 +519,6 @@ $horizontal-spacing: 35px;
 			resize: none;
 		}
 
-		.required-warning {
-			display: block;
-			font-weight: inherit;
-			margin: -15px 0 15px;
-			text-align: left;
-		}
-
 		.toggle-switch-text {
 			word-break: break-word;
 		}
@@ -546,6 +539,11 @@ $horizontal-spacing: 35px;
 
 	.portlet-column {
 		padding: 0;
+	}
+
+	.required-warning {
+		margin-left: 34px;
+		margin-right: 34px;
 	}
 }
 
@@ -621,6 +619,13 @@ $horizontal-spacing: 35px;
 
 	.multi-step-progress-bar .progress-bar-title {
 		word-break: break-all;
+	}
+
+	.required-warning {
+		display: block;
+		font-weight: inherit;
+		margin-top: -11px;
+		text-align: left;
 	}
 }
 

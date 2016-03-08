@@ -710,6 +710,14 @@
 		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" value1="${ddlRecordFieldData}" />
 	</command>
 
+	<command name="viewNestedFields">
+		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
+		<var name="key_nestedChildFieldFieldName" value="${nestedChildFieldFieldName}" />
+
+		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_FIELD" />
+		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />
+	</command>
+
 	<command name="viewNoRecords">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
 	</command>

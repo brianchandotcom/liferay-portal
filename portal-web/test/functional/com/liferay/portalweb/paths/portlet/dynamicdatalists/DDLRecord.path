@@ -38,6 +38,17 @@
 	<td>//div[@class='lfr-ddm-container']/div[3]</td>
 	<td></td>
 </tr>
+<!--NESTED_FIELDS-->
+<tr>
+	<td>NESTED_PARENT_FIELD</td>
+	<td>//div[@data-fieldname='${key_nestedParentFieldFieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NESTED_CHILD_FIELD</td>
+	<td>//div[@data-fieldname='${key_parentFieldFieldName}']/div[@class='form-group']/following-sibling::div[@data-fieldname='${key_nestedChildFieldFieldName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

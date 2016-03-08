@@ -138,6 +138,28 @@ AUI.add(
 							);
 						}
 
+						var changeToPublicLayoutsButton = instance.byId('changeToPublicLayoutsButton');
+
+						if (changeToPublicLayoutsButton) {
+							changeToPublicLayoutsButton.on(
+								STR_CLICK,
+								function(event) {
+									instance._changeLayouts(false);
+								}
+							);
+						}
+
+						var changeToPrivateLayoutsButton = instance.byId('changeToPrivateLayoutsButton');
+
+						if (changeToPrivateLayoutsButton) {
+							changeToPrivateLayoutsButton.on(
+								STR_CLICK,
+								function(event) {
+									instance._changeLayouts(true);
+								}
+							);
+						}
+
 						var contentOptionsLink = instance.byId('contentOptionsLink');
 
 						if (contentOptionsLink) {
@@ -211,6 +233,16 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					_changeLayouts: function(privateLayout) {
+						var instance = this;
+
+						var privateLayoutNode = instance.byId('privateLayout');
+
+						privateLayoutNode.val(privateLayout);
+
+						instance._reloadForm();
 					},
 
 					_getConfigurationDialog: function(portletId, portletTitle) {

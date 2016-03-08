@@ -7,7 +7,7 @@ AUI.add(
 
 		var TPL_MODE_TOGGLER = '<a class="settings-toggler" href="javascript:;"></a>';
 
-		var TPL_OPTION = '<option value="{value}">{label}</option>';
+		var TPL_OPTION = '<option {status} value="{value}">{label}</option>';
 
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"></form>';
 
@@ -118,13 +118,22 @@ AUI.add(
 
 						var ddmDataProviderInstanceIdField = event.target;
 
+						var ddmDataProviderInstanceId = ddmDataProviderInstanceIdField.get('value');
+
 						ddmDataProviderInstanceIdField.getInputNode().html(
 							instance.get('dataProviders').map(
 								function(item) {
+									var status = '';
+
+									if (item.id === ddmDataProviderInstanceId) {
+										status = 'selected';
+									}
+
 									return Lang.sub(
 										TPL_OPTION,
 										{
 											label: item.name,
+											status: status,
 											value: item.id
 										}
 									);

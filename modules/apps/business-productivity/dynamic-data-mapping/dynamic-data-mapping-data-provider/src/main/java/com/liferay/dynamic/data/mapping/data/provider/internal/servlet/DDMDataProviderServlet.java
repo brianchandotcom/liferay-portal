@@ -17,11 +17,9 @@ package com.liferay.dynamic.data.mapping.data.provider.internal.servlet;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -34,7 +32,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,7 +41,6 @@ import java.io.IOException;
 
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -107,11 +103,10 @@ public class DDMDataProviderServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String fieldName = ParamUtil.getString(request, "fieldName");
-		String serializedDDMForm = ParamUtil.getString(
-			request, "serializedDDMForm");
+		long ddmDataProviderInstanceId = ParamUtil.getLong(
+			request, "ddmDataProviderInstanceId");
 
-		String data = doGetData(fieldName, serializedDDMForm);
+		String data = doGetData(ddmDataProviderInstanceId);
 
 		if (data == null) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -125,19 +120,8 @@ public class DDMDataProviderServlet extends HttpServlet {
 		ServletResponseUtil.write(response, data);
 	}
 
-	protected String doGetData(String fieldName, String serializedDDMForm) {
+	protected String doGetData(long ddmDataProviderInstanceId) {
 		try {
-			DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-				serializedDDMForm);
-
-			Map<String, DDMFormField> ddmFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(true);
-
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
-
-			long ddmDataProviderInstanceId = GetterUtil.getLong(
-				ddmFormField.getProperty("ddmDataProviderInstanceId"));
-
 			DDMDataProviderInstance ddmDataProviderInstance =
 				_ddmDataProviderInstanceService.getDataProviderInstance(
 					ddmDataProviderInstanceId);
@@ -146,7 +130,8 @@ public class DDMDataProviderServlet extends HttpServlet {
 				_ddmDataProviderTracker.getDDMDataProvider(
 					ddmDataProviderInstance.getType());
 
-			ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
+			DDMForm ddmForm = DDMFormFactory.create(
+				ddmDataProvider.getSettings());
 
 			DDMFormValues ddmFormValues =
 				_ddmFormValuesJSONDeserializer.deserialize(
@@ -181,13 +166,6 @@ public class DDMDataProviderServlet extends HttpServlet {
 		DDMDataProviderTracker ddmDataProviderTracker) {
 
 		_ddmDataProviderTracker = ddmDataProviderTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
-
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
 	@Reference(unbind = "-")
@@ -230,7 +208,6 @@ public class DDMDataProviderServlet extends HttpServlet {
 
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 	private DDMDataProviderTracker _ddmDataProviderTracker;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private JSONFactory _jsonFactory;
 

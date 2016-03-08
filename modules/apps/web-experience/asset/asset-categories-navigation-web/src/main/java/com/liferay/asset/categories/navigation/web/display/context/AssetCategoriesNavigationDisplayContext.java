@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -193,8 +194,13 @@ public class AssetCategoriesNavigationDisplayContext {
 		}
 
 		for (long assetVocabularyId : getAssetVocabularyIds()) {
-			_ddmTemplateAssetVocabularies.add(
-				AssetVocabularyServiceUtil.fetchVocabulary(assetVocabularyId));
+			try {
+				_ddmTemplateAssetVocabularies.add(
+					AssetVocabularyServiceUtil.fetchVocabulary(
+						assetVocabularyId));
+			}
+			catch (PrincipalException pe) {
+			}
 		}
 
 		return _ddmTemplateAssetVocabularies;

@@ -201,13 +201,21 @@
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
 
-		<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON" value1="${document}" />
+		<if>
+			<equals arg1="${userRole}" arg2="Guest" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Button#SIGN_IN" value1="Sign In" />
+			</then>
+			<else>
+				<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON" value1="${document}" />
 
-		<execute function="Pause" locator1="1000" />
+				<execute function="Pause" locator1="1000" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
+				<execute function="SelectFrameTop" value1="relative=top" />
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+			</else>
+		</if>
 	</command>
 
 	<command name="populateFieldGeolocation">

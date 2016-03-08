@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.db;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -76,18 +77,22 @@ public abstract class BaseDBProcess implements DBProcess {
 	public void runSQLTemplate(String path)
 		throws IOException, NamingException, SQLException {
 
-		DB db = DBManagerUtil.getDB();
+		try (LoggingTimer loggingTimer = new LoggingTimer(path)) {
+			DB db = DBManagerUtil.getDB();
 
-		db.runSQLTemplate(path);
+			db.runSQLTemplate(path);
+		}
 	}
 
 	@Override
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
-		DB db = DBManagerUtil.getDB();
+		try (LoggingTimer loggingTimer = new LoggingTimer(path)) {
+			DB db = DBManagerUtil.getDB();
 
-		db.runSQLTemplate(path, failOnError);
+			db.runSQLTemplate(path, failOnError);
+		}
 	}
 
 	@Override
@@ -95,14 +100,16 @@ public abstract class BaseDBProcess implements DBProcess {
 			String template, boolean evaluate, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
-		DB db = DBManagerUtil.getDB();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DB db = DBManagerUtil.getDB();
 
-		if (connection == null) {
-			db.runSQLTemplateString(template, evaluate, failOnError);
-		}
-		else {
-			db.runSQLTemplateString(
-				connection, template, evaluate, failOnError);
+			if (connection == null) {
+				db.runSQLTemplateString(template, evaluate, failOnError);
+			}
+			else {
+				db.runSQLTemplateString(
+					connection, template, evaluate, failOnError);
+			}
 		}
 	}
 

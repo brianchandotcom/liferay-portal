@@ -185,7 +185,9 @@ public class EditExportConfigurationMVCActionCommand
 				addSessionMessages(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

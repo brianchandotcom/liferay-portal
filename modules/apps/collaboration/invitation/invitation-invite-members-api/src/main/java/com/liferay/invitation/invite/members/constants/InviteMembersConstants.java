@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.util;
+package com.liferay.invitation.invite.members.constants;
 
 /**
  * @author Ryan Park

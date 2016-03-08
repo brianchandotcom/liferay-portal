@@ -36,6 +36,10 @@
 .lfr-page-layouts {
 	.radio {
 		margin-top: 4px;
+
+		input[type="radio"]:checked + img {
+			border: $toggle-card-border-width solid $toggle-card-on-border;
+		}
 	}
 
 	.lfr-layout-template .layout-template-entry {

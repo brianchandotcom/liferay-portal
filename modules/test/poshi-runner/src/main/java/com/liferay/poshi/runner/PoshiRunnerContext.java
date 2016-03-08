@@ -950,8 +950,7 @@ public class PoshiRunnerContext {
 			new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
 				"**\\*.testcase"
-			}
-		);
+			});
 
 		_filePathsList.addAll(testBaseDirFilePaths);
 
@@ -968,8 +967,7 @@ public class PoshiRunnerContext {
 					new String[] {
 						"**\\*.action", "**\\*.function", "**\\*.macro",
 						"**\\*.path"
-					}
-				);
+					});
 
 				_filePathsList.addAll(testIncludeDirFilePaths);
 			}

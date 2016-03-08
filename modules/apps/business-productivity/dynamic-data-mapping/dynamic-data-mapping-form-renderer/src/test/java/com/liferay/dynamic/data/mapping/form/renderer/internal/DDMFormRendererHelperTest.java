@@ -398,8 +398,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 				ddmFormFieldRenderingContext.getChildElementsHTML(),
 				ddmFormFieldRenderingContext.getName(),
 				ddmFormFieldRenderingContext.getValue()
-			}
-		);
+			});
 	}
 
 	protected String renderTextField(

@@ -101,8 +101,7 @@ public class MPIHelperUtilTest {
 				public void unregisterSPI(SPI spi) {
 				}
 
-			}
-		);
+			});
 	}
 
 	@After

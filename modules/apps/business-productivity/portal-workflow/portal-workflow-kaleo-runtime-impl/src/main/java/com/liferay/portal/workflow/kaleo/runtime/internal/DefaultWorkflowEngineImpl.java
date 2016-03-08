@@ -161,8 +161,7 @@ public class DefaultWorkflowEngineImpl
 						return null;
 					}
 
-				}
-			);
+				});
 
 			return executionContext;
 		}
@@ -426,8 +425,7 @@ public class DefaultWorkflowEngineImpl
 						return null;
 					}
 
-				}
-			);
+				});
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, kaleoInstanceToken, workflowContext);
@@ -516,8 +514,7 @@ public class DefaultWorkflowEngineImpl
 						return null;
 					}
 
-				}
-			);
+				});
 
 			return _kaleoWorkflowModelConverter.toWorkflowInstance(
 				kaleoInstance, rootKaleoInstanceToken, workflowContext);

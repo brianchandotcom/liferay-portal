@@ -164,8 +164,7 @@ public class LiferaySyncCapability
 					return null;
 				}
 
-			}
-		);
+			});
 	}
 
 	private final RepositoryEventListener

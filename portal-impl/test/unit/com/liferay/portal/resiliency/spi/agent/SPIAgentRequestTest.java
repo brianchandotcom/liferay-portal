@@ -111,8 +111,7 @@ public class SPIAgentRequestTest {
 					}
 				}
 
-			}
-		);
+			});
 
 		PortalUtil portalUtil = new PortalUtil();
 

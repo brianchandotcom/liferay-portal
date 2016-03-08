@@ -651,8 +651,7 @@ public class JournalRSSUtil {
 			new String[] {
 				String.valueOf(feed.getGroupId()), themeDisplay.getPathImage(),
 				themeDisplay.getPathMain()
-			}
-		);
+			});
 
 		List<SyndEnclosure> syndEnclosures = getDLEnclosures(
 			themeDisplay.getURLPortal(), url);

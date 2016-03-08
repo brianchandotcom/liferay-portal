@@ -693,8 +693,7 @@ public class LayoutExportController implements ExportController {
 				new Object[] {
 					portletId, layout.getPlid(), scopeGroupId, scopeType,
 					scopeLayoutUuid
-				}
-			);
+				});
 		}
 	}
 

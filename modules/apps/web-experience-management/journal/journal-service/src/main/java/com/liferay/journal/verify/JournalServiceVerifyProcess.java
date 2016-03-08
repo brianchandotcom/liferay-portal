@@ -465,8 +465,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 					dynamicQuery.add(resourcePrimKey.le(0l));
 				}
 
-			}
-		);
+			});
 
 		if (_log.isDebugEnabled()) {
 			long count = actionableDynamicQuery.performCount();

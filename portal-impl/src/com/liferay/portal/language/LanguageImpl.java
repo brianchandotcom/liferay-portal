@@ -144,8 +144,7 @@ public class LanguageImpl implements Language, Serializable {
 				public void destroy() {
 				}
 
-			}
-		);
+			});
 
 		serviceDependencyManager.registerDependencies(MultiVMPool.class);
 	}

@@ -345,8 +345,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 						scopeProperty.eq(DDLRecordSetConstants.SCOPE_FORMS));
 				}
 
-			}
-		);
+			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DDLRecordSet>() {
 
@@ -370,8 +369,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 					}
 				}
 
-			}
-		);
+			});
 
 		return actionableDynamicQuery;
 	}

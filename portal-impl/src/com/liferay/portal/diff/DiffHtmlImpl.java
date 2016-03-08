@@ -174,8 +174,7 @@ public class DiffHtmlImpl implements DiffHtml {
 				"style=\"border-bottom: 2px dotted blue;\"",
 				"style=\"background-color: #FDC6C6; text-decoration: " +
 					"line-through;\""
-			}
-		);
+			});
 	}
 
 	private static final String _DIFF = "diff";

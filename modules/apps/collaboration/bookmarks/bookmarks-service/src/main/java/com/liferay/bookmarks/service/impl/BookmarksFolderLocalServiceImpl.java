@@ -524,8 +524,7 @@ public class BookmarksFolderLocalServiceImpl
 					}
 				}
 
-			}
-		);
+			});
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

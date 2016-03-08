@@ -59,8 +59,7 @@ public class NetPermissionTest {
 					return null;
 				}
 
-			}
-		);
+			});
 	}
 
 	@Test

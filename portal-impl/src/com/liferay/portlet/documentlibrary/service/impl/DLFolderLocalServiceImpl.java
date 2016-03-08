@@ -762,8 +762,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					}
 				}
 
-			}
-		);
+			});
 	}
 
 	@Override

@@ -214,8 +214,7 @@ public class FileUtil {
 					return FileVisitResult.CONTINUE;
 				}
 
-			}
-		);
+			});
 
 		List<SyncFile> deletedSyncFiles = SyncFileService.findSyncFiles(
 			filePath.toString(), startTime);

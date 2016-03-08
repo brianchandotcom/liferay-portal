@@ -236,8 +236,7 @@ public class BackgroundTaskLocalServiceImpl
 					return null;
 				}
 
-			}
-		);
+			});
 	}
 
 	@Clusterable(onMaster = true)

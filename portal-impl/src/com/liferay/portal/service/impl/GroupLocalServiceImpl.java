@@ -1965,8 +1965,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 						QueryUtil.ALL_POS, size, new GroupIdComparator(true));
 				}
 
-			}
-		);
+			});
 	}
 
 	/**

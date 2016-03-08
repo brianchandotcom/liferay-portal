@@ -582,8 +582,7 @@ public class ShoppingItemLocalServiceImpl
 			new String[] {
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK
-			}
-		);
+			});
 	}
 
 	protected long getCategory(ShoppingItem item, long categoryId) {

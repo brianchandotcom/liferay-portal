@@ -713,8 +713,7 @@ public class JournalFolderLocalServiceImpl
 					}
 				}
 
-			}
-		);
+			});
 	}
 
 	@Override

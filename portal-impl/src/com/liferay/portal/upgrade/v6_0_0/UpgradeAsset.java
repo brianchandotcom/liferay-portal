@@ -14,10 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -430,7 +426,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		throws Exception {
 
 		String oldName = "com.liferay.portlet.tags.model.TagsEntry";
-		String newName = AssetCategory.class.getName();
+		String newName = "com.liferay.portlet.asset.model.AssetCategory";
 
 		runSQL(
 			"update ResourcePermission set name = '" + newName + "' where " +
@@ -447,17 +443,17 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			updateResources(
 				"com.liferay.portlet.tags.model.TagsEntry",
-				AssetTag.class.getName()
+				"com.liferay.portlet.asset.model.AssetTag"
 			);
 
 			updateResources(
 				"com.liferay.portlet.tags.model.TagsAsset",
-				AssetEntry.class.getName()
+				"com.liferay.portlet.asset.model.AssetEntry"
 			);
 
 			updateResources(
 				"com.liferay.portlet.tags.model.TagsVocabulary",
-				AssetVocabulary.class.getName()
+				"com.liferay.portlet.asset.model.AssetVocabulary"
 			);
 		}
 	}

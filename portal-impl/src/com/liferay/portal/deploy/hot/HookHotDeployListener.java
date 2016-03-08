@@ -542,8 +542,6 @@ public class HookHotDeployListener
 
 		// End backwards compatibility for 5.1.0
 
-		registerClpMessageListeners(servletContext, portletClassLoader);
-
 		DirectServletRegistryUtil.clearServlets();
 		FileAvailabilityUtil.clearAvailabilities();
 
@@ -581,8 +579,6 @@ public class HookHotDeployListener
 		if (portalProperties != null) {
 			destroyPortalProperties(servletContextName, portalProperties);
 		}
-
-		unregisterClpMessageListeners(servletContext);
 
 		Map<Object, ServiceRegistration<?>> serviceRegistrations =
 			_serviceRegistrations.remove(servletContextName);

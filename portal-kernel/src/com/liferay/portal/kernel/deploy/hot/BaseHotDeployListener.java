@@ -14,19 +14,11 @@
 
 package com.liferay.portal.kernel.deploy.hot;
 
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -97,68 +89,6 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 
 		return ProxyFactory.newInstance(
 			portletClassLoader, interfaceClasses, implClassName);
-	}
-
-	protected void registerClpMessageListeners(
-			ServletContext servletContext, ClassLoader portletClassLoader)
-		throws Exception {
-
-		List<MessageListener> clpMessageListeners =
-			(List<MessageListener>)servletContext.getAttribute(
-				WebKeys.CLP_MESSAGE_LISTENERS);
-
-		if (clpMessageListeners != null) {
-			return;
-		}
-
-		clpMessageListeners = new ArrayList<>();
-
-		Set<String> classNames = ServletContextUtil.getClassNames(
-			servletContext);
-
-		for (String className : classNames) {
-			if (className.endsWith(".ClpMessageListener")) {
-				Class<?> clpMessageListenerClass = portletClassLoader.loadClass(
-					className);
-
-				MessageListener clpMessageListener =
-					(MessageListener)clpMessageListenerClass.newInstance();
-
-				String clpServletContextName = getClpServletContextName(
-					clpMessageListenerClass, clpMessageListener);
-
-				if (clpServletContextName.equals(
-						servletContext.getServletContextName())) {
-
-					continue;
-				}
-
-				clpMessageListeners.add(clpMessageListener);
-
-				MessageBusUtil.registerMessageListener(
-					DestinationNames.HOT_DEPLOY, clpMessageListener);
-			}
-		}
-
-		servletContext.setAttribute(
-			WebKeys.CLP_MESSAGE_LISTENERS, clpMessageListeners);
-	}
-
-	protected void unregisterClpMessageListeners(ServletContext servletContext)
-		throws Exception {
-
-		List<MessageListener> clpMessageListeners =
-			(List<MessageListener>)servletContext.getAttribute(
-				WebKeys.CLP_MESSAGE_LISTENERS);
-
-		if (clpMessageListeners != null) {
-			servletContext.removeAttribute(WebKeys.CLP_MESSAGE_LISTENERS);
-
-			for (MessageListener clpMessageListener : clpMessageListeners) {
-				MessageBusUtil.unregisterMessageListener(
-					DestinationNames.HOT_DEPLOY, clpMessageListener);
-			}
-		}
 	}
 
 }

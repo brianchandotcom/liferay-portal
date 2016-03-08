@@ -1206,22 +1206,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		sb.append(getDynamicResourceServletContent());
 
-		File serverConfigWsdd = new File(
-			srcFile + "/WEB-INF/server-config.wsdd");
-
-		if (serverConfigWsdd.exists()) {
-			File webXml = new File(srcFile + "/WEB-INF/web.xml");
-
-			String content = FileUtil.read(webXml);
-
-			if (!content.contains("axis.servicesPath")) {
-				String remotingContent = FileUtil.read(
-					DeployUtil.getResourcePath("remoting-web.xml"));
-
-				sb.append(remotingContent);
-			}
-		}
-
 		boolean hasTaglib = false;
 
 		if (Validator.isNotNull(auiTaglibDTD) ||

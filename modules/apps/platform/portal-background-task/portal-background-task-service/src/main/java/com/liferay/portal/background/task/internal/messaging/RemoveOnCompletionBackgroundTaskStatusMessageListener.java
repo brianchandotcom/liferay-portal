@@ -64,7 +64,11 @@ public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 			return;
 		}
 
-		int status = (Integer)message.get("status");
+		int status = GetterUtil.getInteger(message.get("status"), -1);
+
+		if (status == -1) {
+			return;
+		}
 
 		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 			if (_log.isInfoEnabled()) {

@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGE_MENU_HEBREW</td>
+	<td>//*[name()='svg'][@message='עברית']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE_MENU_HUNGARIAN</td>
 	<td>//*[name()='svg'][@message='magyar']</td>
 	<td></td>

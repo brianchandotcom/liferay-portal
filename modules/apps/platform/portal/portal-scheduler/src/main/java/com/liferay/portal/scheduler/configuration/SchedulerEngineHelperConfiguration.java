@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SchedulerEngineHelperConfiguration {
 
 	@Meta.AD(
-		deflt = "false", description = "%audit-scheduler-job-enabled-help",
+		deflt = "false", description = "audit-scheduler-job-enabled-help",
 		required = false
 	)
 	public boolean auditSchedulerJobEnabled();

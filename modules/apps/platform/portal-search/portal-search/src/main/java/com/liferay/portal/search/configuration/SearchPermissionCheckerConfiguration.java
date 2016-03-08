@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SearchPermissionCheckerConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "%include-inherited-permissions-help",
+		deflt = "true", description = "include-inherited-permissions-help",
 		required = false
 	)
 	public boolean includeInheritedPermissions();

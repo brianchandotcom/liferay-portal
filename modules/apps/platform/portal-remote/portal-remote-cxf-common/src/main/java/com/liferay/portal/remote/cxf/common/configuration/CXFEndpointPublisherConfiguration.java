@@ -36,7 +36,7 @@ public interface CXFEndpointPublisherConfiguration {
 
 	@Meta.AD(
 		deflt = "auth.verifier.PortalSessionAuthVerifier.urls.includes=*",
-		name = "%auth-verifier-properties", required = false
+		name = "auth-verifier-properties", required = false
 	)
 	public String[] authVerifierProperties();
 

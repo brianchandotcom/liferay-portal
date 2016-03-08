@@ -2,6 +2,7 @@ Bundle-Name: Liferay Portal Axis Extender
 Bundle-SymbolicName: com.liferay.portal.axis.extender
 Bundle-Version: 1.0.0
 DynamicImport-Package: com.liferay.*
+Export-Package: org.apache.axis.*;version="1.4"
 Import-Package:\
 	!com.ibm.*,\
 	\

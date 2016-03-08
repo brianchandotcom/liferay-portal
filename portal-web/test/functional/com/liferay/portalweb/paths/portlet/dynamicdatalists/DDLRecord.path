@@ -46,7 +46,17 @@
 </tr>
 <tr>
 	<td>NESTED_CHILD_FIELD</td>
-	<td>//div[@data-fieldname='${key_parentFieldFieldName}']/div[@class='form-group']/following-sibling::div[@data-fieldname='${key_nestedChildFieldFieldName}']</td>
+	<td>//div[@data-fieldname='${key_nestedParentFieldFieldName}']/div[@class='form-group']/following-sibling::div[@data-fieldname='${key_nestedChildFieldFieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NESTED_PARENT_REPEATING_FIELD</td>
+	<td>//div[@data-fieldname='${key_nestedParentFieldFieldName}' and @data-repeatable='true']/following-sibling::div[@data-fieldname='${key_nestedParentFieldFieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NESTED_CHILD_REPEATING_FIELD</td>
+	<td>//div[@data-fieldname='${key_nestedParentFieldFieldName}' and @data-repeatable='true']/following-sibling::div[@data-fieldname='${key_nestedParentFieldFieldName}']/div[@class='form-group']/following-sibling::div[@data-fieldname='${key_nestedChildFieldFieldName}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -403,6 +403,9 @@ AUI.add(
 						var controlsTriggerNodeList = boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER);
 
 						controlsTriggerNodeList.on('clickoutside', popover.hide, popover);
+
+						instance._setCharacterLimitToPageTitle(100);
+						instance._setCharacterLimitToPageDescription(120);
 					},
 
 					_renderTopPagination: function() {
@@ -411,6 +414,42 @@ AUI.add(
 						var wizard = instance._getWizard();
 
 						wizard.render();
+					},
+
+					_setCharacterLimitToPageDescription: function(maxLength) {
+						var instance = this;
+
+						if (!instance._charCounterPageDescription) {
+							var pageHeader = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER);
+
+							instance._charCounterPageDescription = new A.CharCounter(
+								{
+									input: pageHeader.one('.' + CSS_PAGE_HEADER_DESCRIPTION),
+									maxLength: maxLength
+								}
+							);
+						}
+						else {
+							instance._charCounterPageDescription.set('maxLength', maxLength);
+						}
+					},
+
+					_setCharacterLimitToPageTitle: function(maxLength) {
+						var instance = this;
+
+						if (!instance._charCounterPageTitle) {
+							var pageHeader = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER);
+
+							instance._charCounterPageTitle = new A.CharCounter(
+								{
+									input: pageHeader.one('.' + CSS_PAGE_HEADER_TITLE),
+									maxLength: maxLength
+								}
+							);
+						}
+						else {
+							instance._charCounterPageTitle.set('maxLength', maxLength);
+						}
 					},
 
 					_syncControlTriggersUI: function() {
@@ -495,6 +534,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-autosize-deprecated', 'aui-form-builder-page-manager', 'liferay-ddm-form-renderer-wizard']
+		requires: ['aui-autosize-deprecated', 'aui-char-counter', 'aui-form-builder-page-manager', 'liferay-ddm-form-renderer-wizard']
 	}
 );

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.notifications;
+package com.liferay.social.privatemessaging.web.notifications;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys;
 import com.liferay.social.privatemessaging.model.UserThread;
-import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -92,7 +92,7 @@ public class PrivateMessagingUserNotificationHandler
 			userId = jsonObject.getLong("userId");
 		}
 		else {
-			UserThread userThread = UserThreadLocalServiceUtil.fetchUserThread(
+			UserThread userThread = _userThreadLocalService.fetchUserThread(
 				serviceContext.getUserId(), mbMessage.getThreadId());
 
 			if ((userThread == null) || userThread.isDeleted()) {
@@ -204,9 +204,17 @@ public class PrivateMessagingUserNotificationHandler
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserThreadLocalService(
+		UserThreadLocalService userThreadLocalService) {
+
+		_userThreadLocalService = userThreadLocalService;
+	}
+
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+	private UserThreadLocalService _userThreadLocalService;
 
 }

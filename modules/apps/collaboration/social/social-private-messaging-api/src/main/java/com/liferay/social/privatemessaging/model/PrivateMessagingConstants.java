@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.constants;
+package com.liferay.social.privatemessaging.model;
 
 /**
- * @author Eudaldo Alonso
+ * @author Scott Lee
  */
-public class RoleConstants
-	extends com.liferay.portal.kernel.model.RoleConstants {
+public class PrivateMessagingConstants {
 
-	public static final String SOCIAL_OFFICE_USER = "Social Office User";
+	public static final int NEW_MESSAGE = 0;
+
+	public static final long PRIVATE_MESSAGING_CATEGORY_ID = -2;
 
 }

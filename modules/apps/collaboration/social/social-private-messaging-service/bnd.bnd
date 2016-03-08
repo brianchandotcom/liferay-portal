@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.social.privatemessaging.hook,\
 	com.liferay.social.privatemessaging.hook.listeners,\
 	com.liferay.social.privatemessaging.model.impl,\
-	com.liferay.social.privatemessaging.notifications,\
 	com.liferay.social.privatemessaging.service.base,\
 	com.liferay.social.privatemessaging.service.http,\
 	com.liferay.social.privatemessaging.service.impl,\

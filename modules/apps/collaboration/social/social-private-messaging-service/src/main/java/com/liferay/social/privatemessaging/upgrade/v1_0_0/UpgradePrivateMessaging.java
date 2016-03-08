@@ -18,7 +18,7 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.social.privatemessaging.constants.PrivateMessagingConstants;
+import com.liferay.social.privatemessaging.model.PrivateMessagingConstants;
 import com.liferay.social.privatemessaging.model.UserThread;
 import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
 

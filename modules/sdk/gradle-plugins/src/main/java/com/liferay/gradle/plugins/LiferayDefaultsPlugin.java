@@ -48,6 +48,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -151,6 +152,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
+
+	public static final String PRINT_ARTIFACT_PUBLISH_COMMANDS =
+		"printArtifactPublishCommands";
 
 	public static final String PRINT_STALE_ARTIFACT_TASK_NAME =
 		"printStaleArtifact";
@@ -365,6 +369,164 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		jar.from(tlddocTask);
 
 		return jar;
+	}
+
+	protected Task addTaskPrintArtifactPublishCommands(
+		final WritePropertiesTask recordArtifactTask,
+		Configuration antJGitConfiguration, final File portalRootDir) {
+
+		Project project = recordArtifactTask.getProject();
+
+		Task task = project.task(PRINT_ARTIFACT_PUBLISH_COMMANDS);
+
+		task.doLast(
+			new Action<Task>() {
+
+				private String _getGitCommitCommand(
+					Project project, String message, boolean ignored) {
+
+					return _getGitCommitCommand(
+						project, message, false, ignored);
+				}
+
+				private String _getGitCommitCommand(
+					Project project, String message, boolean all,
+					boolean ignored) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("git commit ");
+
+					if (all) {
+						sb.append("--all ");
+					}
+
+					sb.append("--message=\"");
+
+					if (ignored) {
+						sb.append(_IGNORED_MESSAGE_PATTERN);
+						sb.append(' ');
+					}
+
+					sb.append(project.getName());
+					sb.append(' ');
+					sb.append(project.getVersion());
+					sb.append(' ');
+					sb.append(message);
+
+					sb.append('"');
+
+					return sb.toString();
+				}
+
+				@Override
+				public void execute(Task task) {
+					List<String> commands = new ArrayList<>();
+
+					Project project = task.getProject();
+
+					// Change directory
+
+					commands.add(
+						"cd " +
+							FileUtil.getAbsolutePath(project.getProjectDir()));
+
+					// Publish snapshot
+
+					File rootDir = portalRootDir;
+
+					if (portalRootDir == null) {
+						rootDir = project.getRootDir();
+					}
+
+					File gradlewFile = new File(rootDir, "gradlew");
+
+					String gradlewRelativePath = project.relativePath(
+						gradlewFile);
+
+					commands.add(
+						gradlewRelativePath + " " +
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME + " -P" +
+								_SNAPSHOT_PROPERTY_NAME);
+
+					// Publish release
+
+					commands.add(
+						gradlewRelativePath + " " +
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+					// Commit "prep next"
+
+					commands.add("git add " + project.relativePath("bnd.bnd"));
+
+					commands.add(
+						_getGitCommitCommand(project, "prep next", true));
+
+					// Commit "artifact properties"
+
+					commands.add(
+						"git add " +
+							project.relativePath(
+								recordArtifactTask.getOutputFile()));
+
+					commands.add(
+						_getGitCommitCommand(
+							project, "artifact properties", true));
+
+					// Convert module to project dependencies
+
+					File projectDir = project.getProjectDir();
+
+					File projectGroupDir = projectDir.getParentFile();
+
+					BasePluginConvention basePluginConvention =
+						GradleUtil.getConvention(
+							project, BasePluginConvention.class);
+
+					String archivesBaseName =
+						basePluginConvention.getArchivesBaseName();
+
+					commands.add(
+						String.format(
+							_MODULE_TO_PROJECT_DEPENDENCIES_COMMAND,
+							FileUtil.getAbsolutePath(projectGroupDir),
+							escapeBRE(project.getGroup()),
+							escapeBRE(archivesBaseName), project.getPath()));
+
+					// Convert project to module dependencies
+
+					commands.add(
+						String.format(
+							_PROJECT_TO_MODULE_DEPENDENCIES_COMMAND,
+							FileUtil.getAbsolutePath(rootDir),
+							FileUtil.getAbsolutePath(projectGroupDir),
+							escapeBRE(project.getPath()), project.getGroup(),
+							archivesBaseName,
+							String.valueOf(project.getVersion())));
+
+					// Commit other changed files
+
+					commands.add(
+						_getGitCommitCommand(project, "apply", true, false));
+
+					for (String command : commands) {
+						System.out.println(command);
+					}
+
+					throw new GradleException();
+				}
+
+			});
+
+		task.onlyIf(
+			new OutOfDateArtifactSpec(
+				antJGitConfiguration, recordArtifactTask, portalRootDir));
+
+		task.setDescription(
+			"Prints the artifact publish commands if this project has been " +
+				"changed since the last publish.");
+
+		return task;
 	}
 
 	protected Task addTaskPrintStaleArtifact(
@@ -804,6 +966,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project);
 
+		addTaskPrintArtifactPublishCommands(
+			recordArtifactTask, antJGitConfiguration, portalRootDir);
 		addTaskPrintStaleArtifact(
 			recordArtifactTask, antJGitConfiguration, portalRootDir);
 
@@ -1377,6 +1541,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		uploadArchivesTask.finalizedBy(updateFileVersionsTask);
 	}
 
+	protected String escapeBRE(Object object) {
+		String s = GradleUtil.toString(object);
+
+		return s.replaceAll("[\\Q\\{}()[]*+?.|^$\\E]", "\\\\$0");
+	}
+
 	protected String getArtifactRemoteURL(
 			AbstractArchiveTask abstractArchiveTask, boolean cdn)
 		throws Exception {
@@ -1533,6 +1703,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
 		"maven.local.ignore");
+
+	private static final String _MODULE_TO_PROJECT_DEPENDENCIES_COMMAND =
+		"find %s -name 'build.gradle' -type f -exec sed -i " +
+			"'s/group: \"%s\", name: \"%s\", version: \".*\"/" +
+				"project(\"%s\")/' {} \\;";
+
+	private static final String _PROJECT_TO_MODULE_DEPENDENCIES_COMMAND =
+		"find %s -name 'build.gradle' -not -path '%s/*' -type f -exec sed -i " +
+			"'s/project(\"%s\")/" +
+				"group: \"%s\", name: \"%s\", version: \"%s\"/' {} \\;";
 
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url", DEFAULT_REPOSITORY_URL);

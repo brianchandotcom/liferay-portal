@@ -139,9 +139,7 @@ public abstract class Watcher implements Runnable {
 						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (Files.notExists(filePath) ||
-						isIgnoredFilePath(filePath)) {
-
+					if (isIgnoredFilePath(filePath)) {
 						return FileVisitResult.CONTINUE;
 					}
 
@@ -331,10 +329,8 @@ public abstract class Watcher implements Runnable {
 			removeCreatedFilePathName(filePath.toString());
 
 			if (_deletedFilePathNames.remove(filePath.toString()) ||
-				FileUtil.isHidden(filePath) ||
 				FileUtil.isIgnoredFileName(
 					String.valueOf(filePath.getFileName())) ||
-				FileUtil.isShortcut(filePath) ||
 				FileUtil.isTempFile(filePath)) {
 
 				return;
@@ -352,11 +348,11 @@ public abstract class Watcher implements Runnable {
 			if (_downloadedFilePathNames.remove(filePath.toString()) ||
 				(removeCreatedFilePathName(filePath.toString()) &&
 				 !FileUtil.isValidChecksum(filePath)) ||
-				Files.isDirectory(filePath) || FileUtil.isHidden(filePath) ||
 				FileUtil.isIgnoredFileName(
 					String.valueOf(filePath.getFileName())) ||
-				FileUtil.isShortcut(filePath) ||
-				FileUtil.isTempFile(filePath) || Files.notExists(filePath)) {
+				FileUtil.isTempFile(filePath) ||
+				Files.notExists(filePath) || Files.isDirectory(filePath) ||
+				FileUtil.isHidden(filePath) || FileUtil.isShortcut(filePath)) {
 
 				return;
 			}
@@ -366,9 +362,7 @@ public abstract class Watcher implements Runnable {
 		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_FROM)) {
 			removeCreatedFilePathName(filePath.toString());
 
-			if (FileUtil.isHidden(filePath) || FileUtil.isShortcut(filePath) ||
-				FileUtil.isTempFile(filePath)) {
-
+			if (FileUtil.isTempFile(filePath)) {
 				return;
 			}
 
@@ -383,6 +377,10 @@ public abstract class Watcher implements Runnable {
 					String.valueOf(filePath.getFileName())) ||
 				Files.notExists(filePath) || Files.isDirectory(filePath) ||
 				FileUtil.isHidden(filePath) || FileUtil.isShortcut(filePath)) {
+
+				if (_logger.isDebugEnabled()) {
+					_logger.debug("Ignored file path {}", filePath);
+				}
 
 				return;
 			}

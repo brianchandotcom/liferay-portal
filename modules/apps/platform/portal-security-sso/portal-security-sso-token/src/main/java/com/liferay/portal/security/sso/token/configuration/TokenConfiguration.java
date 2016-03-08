@@ -34,26 +34,25 @@ public interface TokenConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", description = "%import-from-ldap-help",
-		required = false
+		deflt = "false", description = "import-from-ldap-help", required = false
 	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(
-		deflt = "SM_USER", description = "%user-token-name-help",
+		deflt = "SM_USER", description = "user-token-name-help",
 		required = false
 	)
 	public String userTokenName();
 
 	@Meta.AD(
-		deflt = "REQUEST_HEADER", description = "%token-location-help",
+		deflt = "REQUEST_HEADER", description = "token-location-help",
 		required = false
 	)
 	public TokenLocation tokenLocation();
 
 	@Meta.AD(
 		deflt ="SMIDENTITY|SMSESSION",
-		description = "%authentication-cookies-help", required = false
+		description = "authentication-cookies-help", required = false
 	)
 	public String[] authenticationCookies();
 

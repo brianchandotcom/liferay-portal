@@ -143,6 +143,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String checkAnnotationMetaTypeProperties(
+		String content, String annotation) {
+
+		if (!annotation.contains("@Meta.")) {
+			return content;
+		}
+
+		Matcher matcher = _annotationMetaTypePattern.matcher(annotation);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String newAnnotation = StringUtil.replaceFirst(
+			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
+
+		return StringUtil.replace(content, annotation, newAnnotation);
+	}
+
 	protected void checkAnnotationParameters(
 		String fileName, String javaTermName, String annotation) {
 
@@ -1256,6 +1275,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					String newContent = checkAnnotationParameterProperties(
 						content, annotation);
+
+					newContent = checkAnnotationMetaTypeProperties(
+						newContent, annotation);
 
 					if (!newContent.equals(content)) {
 						return formatAnnotations(
@@ -4028,6 +4050,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
+	private Pattern _annotationMetaTypePattern = Pattern.compile(
+		"\\s(name|description) = \"%");
 	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");

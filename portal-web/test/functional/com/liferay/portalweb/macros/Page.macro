@@ -495,43 +495,13 @@
 			</elseif>
 		</if>
 
-		<if>
-			<and>
-				<isset var="soPage" />
-				<equals arg1="${soPage}" arg2="true" />
-			</and>
-			<then>
-				<if>
-					<and>
-						<isset var="soDashboard" />
-						<equals arg1="${soDashboard}" arg2="true" />
-					</and>
-					<then>
-						<var name="key_pageName" value="${pageName}" />
+		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 
-						<execute macro="SOUserBar#gotoDashboardPG" />
-
-						<execute function="Click" locator1="SODashboard#NAVIGATION_PAGE" />
-					</then>
-					<else>
-						<var name="key_pageName" value="${pageName}" />
-
-						<execute function="AssertElementPresent" locator1="SOActivities#ACTIVITIES_PORTLET_LOADED" />
-
-						<execute function="Click" locator1="SOSite#NAVIGATION_PAGE" />
-					</else>
-				</if>
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}">
-					<var name="key_pageName" value="${pageName}" />
-				</execute>
-
-				<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
-					<var name="key_pageName" value="${pageName}" />
-				</execute>
-			</else>
-		</if>
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="gotoSALocalizedCP">

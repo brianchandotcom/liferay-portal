@@ -196,8 +196,7 @@ public class BeanLocatorTest {
 						return null;
 					}
 
-				}
-			);
+				});
 
 			Assert.fail();
 		}

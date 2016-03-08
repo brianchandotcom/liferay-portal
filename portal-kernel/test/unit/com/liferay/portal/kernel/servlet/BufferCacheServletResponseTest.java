@@ -731,8 +731,7 @@ public class BufferCacheServletResponseTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		// Clean
 

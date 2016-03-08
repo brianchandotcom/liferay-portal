@@ -83,8 +83,7 @@ public class GoogleDocsConfigurator {
 					}
 				}
 
-			}
-		);
+			});
 
 		actionableDynamicQuery.performActions();
 	}

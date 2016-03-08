@@ -115,8 +115,7 @@ public class ServiceBeanAutoProxyCreator
 						_serviceBeanAopCacheManager);
 				}
 
-			}
-		);
+			});
 	}
 
 	@Override

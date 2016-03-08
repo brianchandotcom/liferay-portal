@@ -128,8 +128,7 @@ public class TunnelUtil {
 						return true;
 					}
 
-				}
-			);
+				});
 		}
 
 		httpURLConnection.setRequestProperty(

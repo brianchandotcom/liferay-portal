@@ -485,8 +485,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 				new String[] {
 					dateFormatDateTime.format(mbMessage.getCreateDate()),
 					threadURL
-				}
-			);
+				});
 
 			MailMessage mailMessage = new MailMessage(
 				from, to, subject, userThreadBody, true);

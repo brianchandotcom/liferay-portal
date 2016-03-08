@@ -129,8 +129,7 @@ public class CoalescedPipeTest {
 					return o1.length() - o2.length();
 				}
 
-			}
-		);
+			});
 
 		// Null
 

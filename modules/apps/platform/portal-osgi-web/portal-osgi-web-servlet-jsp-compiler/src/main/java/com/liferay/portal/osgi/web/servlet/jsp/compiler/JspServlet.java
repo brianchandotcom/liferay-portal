@@ -255,8 +255,7 @@ public class JspServlet extends HttpServlet {
 						_jspBundleClassloader, _INTERFACES,
 						new JspServletContextInvocationHandler(servletContext));
 
-			}
-		);
+			});
 
 		scanTLDs(servletContext);
 	}

@@ -72,8 +72,7 @@ public class IgnoreDuplicatesStore implements Store {
 					_store.addFile(companyId, repositoryId, fileName, file);
 				}
 
-			}
-		);
+			});
 	}
 
 	@Override

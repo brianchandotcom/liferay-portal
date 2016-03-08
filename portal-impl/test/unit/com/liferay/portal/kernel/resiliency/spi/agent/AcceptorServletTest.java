@@ -73,8 +73,7 @@ public class AcceptorServletTest {
 					return _pathContext;
 				}
 
-			}
-		);
+			});
 
 		ConcurrentMap<String, Object> attributes =
 			LocalProcessLauncher.ProcessContext.getAttributes();

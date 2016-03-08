@@ -981,8 +981,7 @@ public class OrganizationLocalServiceImpl
 						new OrganizationIdComparator(true));
 				}
 
-			}
-		);
+			});
 	}
 
 	/**

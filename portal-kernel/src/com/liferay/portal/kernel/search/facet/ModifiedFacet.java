@@ -101,8 +101,7 @@ public class ModifiedFacet extends RangeFacet {
 					dateFormat.format(pastMonth.getTime()),
 					dateFormat.format(pastYear.getTime()),
 					dateFormat.format(now.getTime())
-				}
-			);
+				});
 
 			rangeObject.put("range", rangeString);
 		}

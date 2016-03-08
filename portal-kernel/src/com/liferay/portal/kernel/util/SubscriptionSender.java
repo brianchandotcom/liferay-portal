@@ -213,8 +213,7 @@ public class SubscriptionSender implements Serializable {
 					return null;
 				}
 
-			}
-		);
+			});
 	}
 
 	public Object getContextAttribute(String key) {

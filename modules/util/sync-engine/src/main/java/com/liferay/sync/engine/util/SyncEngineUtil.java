@@ -59,8 +59,7 @@ public class SyncEngineUtil {
 							syncAccountId, syncEngineState);
 					}
 
-				}
-			);
+				});
 		}
 	}
 

@@ -359,8 +359,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 							DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS));
 				}
 
-			}
-		);
+			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DDLRecordSet>() {
 
@@ -384,8 +383,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 					}
 				}
 
-			}
-		);
+			});
 
 		return actionableDynamicQuery;
 	}

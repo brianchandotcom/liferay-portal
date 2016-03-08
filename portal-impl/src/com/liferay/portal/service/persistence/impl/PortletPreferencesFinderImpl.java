@@ -72,8 +72,7 @@ public class PortletPreferencesFinderImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName(), Boolean.class.getName()
-			}
-		);
+			});
 
 	@Override
 	public long countByO_O_P(

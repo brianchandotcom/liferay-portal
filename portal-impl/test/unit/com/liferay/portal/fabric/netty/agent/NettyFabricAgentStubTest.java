@@ -171,8 +171,7 @@ public class NettyFabricAgentStubTest {
 						nettyFabricWorkerConfig.getId());
 				}
 
-			}
-		);
+			});
 		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			processConfig, processCallable);
 

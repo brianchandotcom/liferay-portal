@@ -212,8 +212,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		Thread thread = new Thread(futureTask);
 
@@ -241,8 +240,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		Thread thread = new Thread(futureTask);
 
@@ -271,8 +269,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		Thread thread = new Thread(futureTask);
 
@@ -301,8 +298,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		Thread thread = new Thread(futureTask);
 
@@ -333,8 +329,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		Thread thread = new Thread(futureTask);
 
@@ -363,8 +358,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 
 		Thread thread = new Thread(futureTask);
 
@@ -385,8 +379,7 @@ public class ThreadTest {
 				public void run() {
 				}
 
-			}
-		);
+			});
 
 		thread.start();
 	}
@@ -406,8 +399,7 @@ public class ThreadTest {
 						return null;
 					}
 
-				}
-			);
+				});
 
 			Assert.fail();
 		}
@@ -428,8 +420,7 @@ public class ThreadTest {
 					return null;
 				}
 
-			}
-		);
+			});
 	}
 
 	@Test

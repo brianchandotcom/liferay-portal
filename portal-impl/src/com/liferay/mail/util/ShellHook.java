@@ -47,8 +47,7 @@ public class ShellHook implements Hook {
 			new String[] {
 				SHELL_SCRIPT, "addForward", String.valueOf(userId),
 				StringUtil.merge(emailAddresses)
-			}
-		);
+			});
 	}
 
 	@Override
@@ -60,8 +59,7 @@ public class ShellHook implements Hook {
 			new String[] {
 				SHELL_SCRIPT, "addUser", String.valueOf(userId), password,
 				firstName, middleName, lastName, emailAddress
-			}
-		);
+			});
 	}
 
 	@Override
@@ -73,8 +71,7 @@ public class ShellHook implements Hook {
 			new String[] {
 				SHELL_SCRIPT, "addVacationMessage", String.valueOf(userId),
 				emailAddress, vacationMessage
-			}
-		);
+			});
 	}
 
 	@Override
@@ -82,15 +79,13 @@ public class ShellHook implements Hook {
 		execute(
 			new String[] {
 				SHELL_SCRIPT, "deleteEmailAddress", String.valueOf(userId)
-			}
-		);
+			});
 	}
 
 	@Override
 	public void deleteUser(long companyId, long userId) {
 		execute(
-			new String[] {SHELL_SCRIPT, "deleteUser", String.valueOf(userId)}
-		);
+			new String[] {SHELL_SCRIPT, "deleteUser", String.valueOf(userId)});
 	}
 
 	@Override
@@ -101,8 +96,7 @@ public class ShellHook implements Hook {
 			new String[] {
 				SHELL_SCRIPT, "updateBlocked", String.valueOf(userId),
 				StringUtil.merge(blocked)
-			}
-		);
+			});
 	}
 
 	@Override
@@ -113,8 +107,7 @@ public class ShellHook implements Hook {
 			new String[] {
 				SHELL_SCRIPT, "updateEmailAddress", String.valueOf(userId),
 				emailAddress
-			}
-		);
+			});
 	}
 
 	@Override
@@ -122,8 +115,7 @@ public class ShellHook implements Hook {
 		execute(
 			new String[] {
 				SHELL_SCRIPT, "updatePassword", String.valueOf(userId), password
-			}
-		);
+			});
 	}
 
 	protected void execute(String[] cmdLine) {

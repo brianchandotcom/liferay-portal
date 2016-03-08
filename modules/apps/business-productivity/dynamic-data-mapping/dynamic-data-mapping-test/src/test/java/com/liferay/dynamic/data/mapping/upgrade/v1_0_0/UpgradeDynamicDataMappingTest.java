@@ -320,8 +320,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		addDynamicElementElement(
 			rootElement, "Text",
 			new String[] {"En Text Value 1", "En Text Value 2"},
-			new String[] {"Pt Text Value 1", "Pt Text Value 2"}
-		);
+			new String[] {"Pt Text Value 1", "Pt Text Value 2"});
 		addDynamicElementElement(
 			rootElement, "TextArea",
 			new String[] {
@@ -331,16 +330,14 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			new String[] {
 				"Pt Text Area Value 1", "Pt Text Area Value 2",
 				"Pt Text Area Value 3"
-			}
-		);
+			});
 		addDynamicElementElement(
 			rootElement, "_fieldsDisplay",
 			new String[] {
 				"Text_INSTANCE_srfa,TextArea_INSTANCE_elcy," +
 					"TextArea_INSTANCE_uxyj,Text_INSTANCE_ealq," +
 						"TextArea_INSTANCE_eepy"
-			}
-		);
+			});
 
 		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);
@@ -440,8 +437,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		addDynamicElementElement(
 			rootElement, "Text",
 			new String[] {"En Text Value 1", "En Text Value 2"},
-			new String[] {"Pt Text Value 1", "Pt Text Value 2"}
-		);
+			new String[] {"Pt Text Value 1", "Pt Text Value 2"});
 		addDynamicElementElement(
 			rootElement, "TextArea",
 			new String[] {
@@ -451,19 +447,15 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 			new String[] {
 				"Pt Text Area Value 1", "Pt Text Area Value 2",
 				"Pt Text Area Value 3"
-			}
-		);
-		addDynamicElementElement(
-			rootElement, "Integer", new String[] {"1"}
-		);
+			});
+		addDynamicElementElement(rootElement, "Integer", new String[] {"1"});
 		addDynamicElementElement(
 			rootElement, "_fieldsDisplay",
 			new String[] {
 				"Text_INSTANCE_srfa,Text_INSTANCE_ealq," +
 					"TextArea_INSTANCE_elcy,TextArea_INSTANCE_uxyj," +
 						"TextArea_INSTANCE_eepy,Integer_INSTANCE_ckkp"
-			}
-		);
+			});
 
 		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);
@@ -533,21 +525,18 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		rootElement.addAttribute("available-locales", "en_US");
 
 		addDynamicElementElement(
-			rootElement, "Text", new String[] {"Text Value"}
-		);
+			rootElement, "Text", new String[] {"Text Value"});
 		addDynamicElementElement(
 			rootElement, "TextArea",
 			new String[] {
 				"Text Area Value 1", "Text Area Value 2", "Text Area Value 3"
-			}
-		);
+			});
 		addDynamicElementElement(
 			rootElement, "_fieldsDisplay",
 			new String[] {
 				"Text_INSTANCE_hcxo,TextArea_INSTANCE_vfqd," +
 					"TextArea_INSTANCE_ycey,TextArea_INSTANCE_habt"
-			}
-		);
+			});
 
 		String expectedJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);

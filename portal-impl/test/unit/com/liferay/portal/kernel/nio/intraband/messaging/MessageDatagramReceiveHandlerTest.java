@@ -160,8 +160,7 @@ public class MessageDatagramReceiveHandlerTest {
 					messageReference.set(message);
 				}
 
-			}
-		);
+			});
 
 		datagram = Datagram.createRequestDatagram(
 			systemDataType.getValue(), messageRoutingBag.toByteArray());
@@ -199,8 +198,7 @@ public class MessageDatagramReceiveHandlerTest {
 					throw messageListenerException;
 				}
 
-			}
-		);
+			});
 
 		datagram = Datagram.createRequestDatagram(
 			systemDataType.getValue(), messageRoutingBag.toByteArray());
@@ -266,8 +264,7 @@ public class MessageDatagramReceiveHandlerTest {
 					messageReference.set(message);
 				}
 
-			}
-		);
+			});
 
 		datagram = Datagram.createRequestDatagram(
 			systemDataType.getValue(), messageRoutingBag.toByteArray());

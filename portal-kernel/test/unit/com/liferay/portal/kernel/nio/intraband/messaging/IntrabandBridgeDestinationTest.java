@@ -211,8 +211,7 @@ public class IntrabandBridgeDestinationTest {
 					return super.loadClass(name);
 				}
 
-			}
-		);
+			});
 
 		try {
 			_intrabandBridgeDestination.send(message);

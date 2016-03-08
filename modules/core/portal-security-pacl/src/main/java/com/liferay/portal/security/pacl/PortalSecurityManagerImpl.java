@@ -688,8 +688,7 @@ public class PortalSecurityManagerImpl
 							servletContextNames, addContextClassLoader);
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -702,8 +701,7 @@ public class PortalSecurityManagerImpl
 						return _noPacl.getClassLoader(clazz);
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -716,8 +714,7 @@ public class PortalSecurityManagerImpl
 						return _noPacl.getContextClassLoader();
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -732,8 +729,7 @@ public class PortalSecurityManagerImpl
 						return _noPacl.getPluginClassLoader(servletContextName);
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -746,8 +742,7 @@ public class PortalSecurityManagerImpl
 						return _noPacl.getPortalClassLoader();
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -762,8 +757,7 @@ public class PortalSecurityManagerImpl
 						return null;
 					}
 
-				}
-			);
+				});
 		}
 
 		private final ClassLoaderUtil.PACL _noPacl =
@@ -783,8 +777,7 @@ public class PortalSecurityManagerImpl
 						return InfrastructureUtil.getDataSource();
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -806,8 +799,7 @@ public class PortalSecurityManagerImpl
 								context, location);
 						}
 
-					}
-				);
+					});
 			}
 			catch (PrivilegedActionException pae) {
 				throw (NamingException)pae.getException();
@@ -904,8 +896,7 @@ public class PortalSecurityManagerImpl
 						return beanLocator.getClassLoader();
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -918,8 +909,7 @@ public class PortalSecurityManagerImpl
 						return currentThread.getContextClassLoader();
 					}
 
-				}
-			);
+				});
 		}
 
 		@Override
@@ -936,8 +926,7 @@ public class PortalSecurityManagerImpl
 						return null;
 					}
 
-				}
-			);
+				});
 		}
 
 	}
@@ -1373,8 +1362,7 @@ public class PortalSecurityManagerImpl
 							return new ReferenceEntry(object, field);
 						}
 
-					}
-				);
+					});
 			}
 			catch (PrivilegedActionException pae) {
 				Exception exception = pae.getException();

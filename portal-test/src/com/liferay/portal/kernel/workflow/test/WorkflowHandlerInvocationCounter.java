@@ -91,8 +91,7 @@ public class WorkflowHandlerInvocationCounter<T> implements AutoCloseable {
 					return method.invoke(workflowHandler, args);
 				}
 
-			}
-		);
+			});
 	}
 
 	private final Map<Method, AtomicInteger> _counts;

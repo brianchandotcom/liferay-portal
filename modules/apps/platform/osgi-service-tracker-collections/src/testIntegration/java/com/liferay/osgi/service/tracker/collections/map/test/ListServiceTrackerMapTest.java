@@ -261,8 +261,7 @@ public class ListServiceTrackerMapTest {
 					return 0;
 				}
 
-			}
-		);
+			});
 
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());

@@ -266,8 +266,7 @@ public class TemplateContextHelper {
 						return portletRequestModel.toXML();
 					}
 
-				}
-			);
+				});
 		}
 
 		// Theme display

@@ -174,8 +174,7 @@ public class JavaSecurityTest {
 						return assignedDomains;
 					}
 
-				}
-			);
+				});
 
 			AccessController.doPrivileged(
 				new PrivilegedAction<Void>() {

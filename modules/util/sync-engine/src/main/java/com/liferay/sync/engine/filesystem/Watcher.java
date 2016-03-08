@@ -170,8 +170,7 @@ public abstract class Watcher implements Runnable {
 					return FileVisitResult.CONTINUE;
 				}
 
-			}
-		);
+			});
 	}
 
 	protected void addCreatedFilePathName(String filePathName) {

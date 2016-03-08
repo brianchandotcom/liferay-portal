@@ -426,9 +426,12 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Web Content1 Content" />
 			<var name="assetTitle" value="Web Content1 Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetMetadataPG">
+			<var name="addMetadata" value="true" />
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -442,9 +445,12 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Netz Content1 Inhalt" />
 			<var name="assetTitle" value="Netz Content1 Titel" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetMetadataPG">
+			<var name="addMetadata" value="true" />
 			<var name="categoryName" value="Kategorienamen" />
 			<var name="vocabularyName" value="Vokabular Namen" />
 		</execute>
@@ -458,9 +464,12 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="addMetadata" value="true" />
 			<var name="assetContent" value="Contenu de Contenu Web1" />
 			<var name="assetTitle" value="Titre de Contenu Web1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetMetadataPG">
+			<var name="addMetadata" value="true" />
 			<var name="categoryName" value="Nom de la Catégorie" />
 			<var name="vocabularyName" value="Nom Vocabulaire" />
 		</execute>

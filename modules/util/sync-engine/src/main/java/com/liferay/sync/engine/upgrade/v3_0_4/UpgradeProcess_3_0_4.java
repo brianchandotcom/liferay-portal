@@ -30,13 +30,13 @@ public class UpgradeProcess_3_0_4 extends BaseUpgradeProcess {
 	@Override
 	public void upgradeSchema() throws Exception {
 		runSQL(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerKey " +
+			"ALTER TABLE SyncAccount ADD COLUMN oAuthConsumerKey " +
 				"VARCHAR(16777216) BEFORE password;");
 		runSQL(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerSecret " +
+			"ALTER TABLE SyncAccount ADD COLUMN oAuthConsumerSecret " +
 				"VARCHAR(16777216) BEFORE password;");
 		runSQL(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthEnabled" +
+			"ALTER TABLE SyncAccount ADD COLUMN oAuthEnabled " +
 				"VARCHAR(16777216) BEFORE password;");
 	}
 

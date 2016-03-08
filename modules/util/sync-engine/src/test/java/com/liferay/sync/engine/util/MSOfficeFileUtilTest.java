@@ -25,21 +25,10 @@ import org.junit.Test;
 public class MSOfficeFileUtilTest {
 
 	@Test
-	public void testIsExcelFile() throws Exception {
-		String[] fileNames = {
-			"TEST.CSV", "test.csv", "test.xls", "test.xlsb", "test.xlsm",
-			"test.xlsx", "test.xltx"
-		};
-
-		for (String fileName : fileNames) {
-			Assert.assertTrue(
-				MSOfficeFileUtil.isExcelFile(Paths.get(fileName)));
-		}
-	}
-
-	@Test
 	public void testIsTempCreatedFile() throws Exception {
-		String[] fileNames = {"~$st.doc", "~wrf0000.tmp"};
+		String[] fileNames = new String[] {
+			"B1F94A3.tmp", "ppt5039.tmp", "~$st.doc", "~WRF0000.tmp"
+		};
 
 		for (String fileName : fileNames) {
 			Assert.assertTrue(
@@ -52,15 +41,68 @@ public class MSOfficeFileUtilTest {
 
 	@Test
 	public void testIsTempRenamedFile() throws Exception {
-		String[] fileNames = {"CF19E4A8.tmp", "6CFEC200", "E1ECC200"};
 
-		for (String fileName : fileNames) {
-			Assert.assertTrue(
-				MSOfficeFileUtil.isTempRenamedFile(Paths.get(fileName)));
-		}
+		// Excel
+
+		testIsTempRenamedFile(
+			new String[] {
+				"test.csv", "test.xls", "test.xlsb", "test.xlsm", "test.xlsx",
+				"test.xltx"
+			},
+			new String[] {"CF19E4A8.tmp", "6CFEC200"}
+		);
 
 		Assert.assertFalse(
-			MSOfficeFileUtil.isTempCreatedFile(Paths.get("6cfec200")));
+			MSOfficeFileUtil.isTempRenamedFile(
+				Paths.get("test.xlsx"), Paths.get("6cfec200")));
+
+		// Powerpoint
+
+		testIsTempRenamedFile(
+			new String[] {
+				"test.pot", "test.potm", "test.potx", "test.ppa", "test.ppam",
+				"test.pps", "test.ppsm", "test.ppsx", "test.ppt", "test.pptm",
+				"test.pptx"
+			},
+			new String[] {"CF19E4A8.tmp", "6CFEC200"}
+		);
+
+		Assert.assertFalse(
+			MSOfficeFileUtil.isTempRenamedFile(
+				Paths.get("test.pptx"), Paths.get("6cfec200")));
+
+		// Publisher
+
+		Assert.assertTrue(
+			MSOfficeFileUtil.isTempRenamedFile(
+				Paths.get("test.pub"), Paths.get("pubDD2F.tmp")));
+
+		// Word
+
+		testIsTempRenamedFile(
+			new String[] {
+				"test.doc", "test.docb", "test.docm", "test.docx", "test.dot",
+				"test.dotm", "test.dotx"
+			},
+			new String[] {"~WRD1001.tmp", "~WRL0001.tmp", "~WRF1233.tmp"}
+		);
+
+		Assert.assertFalse(
+			MSOfficeFileUtil.isTempRenamedFile(
+				Paths.get("test.docx"), Paths.get("CF19E4A8.tmp")));
+	}
+
+	protected void testIsTempRenamedFile(
+		String[] sourceFilePathNames, String[] targetFilePathNames) {
+
+		for (String sourceFilePathName : sourceFilePathNames) {
+			for (String targetFilePathName : targetFilePathNames) {
+				Assert.assertTrue(
+					MSOfficeFileUtil.isTempRenamedFile(
+						Paths.get(sourceFilePathName),
+						Paths.get(targetFilePathName)));
+			}
+		}
 	}
 
 }

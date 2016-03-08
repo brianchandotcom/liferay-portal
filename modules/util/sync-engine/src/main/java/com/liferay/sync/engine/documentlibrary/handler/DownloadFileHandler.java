@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -239,19 +240,9 @@ public class DownloadFileHandler extends BaseHandler {
 					MSOfficeFileUtil.getLastSavedDate(tempFilePath));
 			}
 
-			try {
-				Files.move(
-					tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-			catch (AccessDeniedException ade) {
-				syncFile.setState(SyncFile.STATE_ERROR);
-				syncFile.setUiEvent(SyncFile.UI_EVENT_ACCESS_DENIED_LOCAL);
-
-				SyncFileService.update(syncFile);
-
-				return;
-			}
+			Files.move(
+				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
+				StandardCopyOption.REPLACE_EXISTING);
 
 			ExecutorService executorService = SyncEngine.getExecutorService();
 
@@ -271,18 +262,35 @@ public class DownloadFileHandler extends BaseHandler {
 			executorService.execute(runnable);
 		}
 		catch (FileSystemException fse) {
+			if (fse instanceof AccessDeniedException) {
+				syncFile.setState(SyncFile.STATE_ERROR);
+				syncFile.setUiEvent(SyncFile.UI_EVENT_ACCESS_DENIED_LOCAL);
+
+				SyncFileService.update(syncFile);
+
+				return;
+			}
+			else if (fse instanceof NoSuchFileException) {
+				if (isEventCancelled()) {
+					SyncFileService.deleteSyncFile(syncFile);
+
+					return;
+				}
+			}
+
 			watcher.removeDownloadedFilePathName(filePath.toString());
 
 			String message = fse.getMessage();
 
 			_logger.error(message, fse);
 
-			if (message.contains("File name too long")) {
-				syncFile.setState(SyncFile.STATE_ERROR);
-				syncFile.setUiEvent(SyncFile.UI_EVENT_FILE_NAME_TOO_LONG);
+			syncFile.setState(SyncFile.STATE_ERROR);
 
-				SyncFileService.update(syncFile);
+			if (message.contains("File name too long")) {
+				syncFile.setUiEvent(SyncFile.UI_EVENT_FILE_NAME_TOO_LONG);
 			}
+
+			SyncFileService.update(syncFile);
 		}
 		finally {
 			StreamUtil.cleanUp(outputStream);

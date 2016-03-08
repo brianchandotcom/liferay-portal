@@ -391,7 +391,7 @@ public class FileUtil {
 	}
 
 	public static boolean isHidden(Path filePath) {
-		if (!Files.exists(filePath)) {
+		if (!PropsValues.SYNC_FILE_IGNORE_HIDDEN || !Files.exists(filePath)) {
 			return false;
 		}
 
@@ -411,10 +411,8 @@ public class FileUtil {
 	public static boolean isIgnoredFilePath(Path filePath) {
 		String fileName = String.valueOf(filePath.getFileName());
 
-		if (isIgnoredFileName(fileName) ||
-			MSOfficeFileUtil.isTempCreatedFile(filePath) ||
-			(PropsValues.SYNC_FILE_IGNORE_HIDDEN && isHidden(filePath)) ||
-			Files.isSymbolicLink(filePath) || fileName.endsWith(".lnk")) {
+		if (isHidden(filePath) || isIgnoredFileName(fileName) ||
+			isShortcut(filePath) || isTempFile(filePath)) {
 
 			return true;
 		}
@@ -513,6 +511,28 @@ public class FileUtil {
 
 			return true;
 		}
+	}
+
+	public static boolean isShortcut(Path filePath) {
+		if (Files.isSymbolicLink(filePath)) {
+			return true;
+		}
+
+		String fileName = String.valueOf(filePath.getFileName());
+
+		if (fileName.endsWith(".lnk")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isTempFile(Path filePath) {
+		if (MSOfficeFileUtil.isTempCreatedFile(filePath)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isValidChecksum(Path filePath) throws IOException {

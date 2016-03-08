@@ -106,8 +106,12 @@ public class DownloadFileEvent extends BaseEvent {
 		if (ServerInfo.supportsPartialDownloads(getSyncAccountId()) &&
 			Files.exists(tempFilePath)) {
 
-			httpGet.setHeader(
-				"Range", "bytes=" + Files.size(tempFilePath) + "-");
+			long size = Files.size(tempFilePath);
+
+			if (syncFile.getSize() > size) {
+				httpGet.setHeader(
+					"Range", "bytes=" + Files.size(tempFilePath) + "-");
+			}
 		}
 
 		executeAsynchronousGet(httpGet);

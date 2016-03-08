@@ -253,12 +253,12 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		syncFile.setFilePathName(filePathName);
 		syncFile.setSyncAccountId(getSyncAccountId());
-		syncFile.setUiEvent(SyncFile.UI_EVENT_ADDED_REMOTE);
 
 		if (syncFile.isFolder()) {
 			Files.createDirectories(filePath);
 
 			syncFile.setState(SyncFile.STATE_SYNCED);
+			syncFile.setUiEvent(SyncFile.UI_EVENT_ADDED_REMOTE);
 
 			SyncFileService.update(syncFile);
 
@@ -266,6 +266,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				filePath, String.valueOf(syncFile.getSyncFileId()), false);
 		}
 		else {
+			syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADING);
+
 			SyncFileService.update(syncFile);
 
 			downloadFile(syncFile, null, 0, false);

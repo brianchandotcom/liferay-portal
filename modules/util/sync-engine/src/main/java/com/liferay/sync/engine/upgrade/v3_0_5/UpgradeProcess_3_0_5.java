@@ -29,9 +29,9 @@ public class UpgradeProcess_3_0_5 extends BaseUpgradeProcess {
 
 	@Override
 	public void upgradeSchema() throws Exception {
-		runSQL("ALTER TABLE `SyncFile` ADD COLUMN userId LONG BEFORE version;");
+		runSQL("ALTER TABLE SyncFile ADD COLUMN userId LONG BEFORE version;");
 		runSQL(
-			"ALTER TABLE `SyncFile` ADD COLUMN userName VARCHAR(16777216) " +
+			"ALTER TABLE SyncFile ADD COLUMN userName VARCHAR(16777216) " +
 				"BEFORE version;");
 	}
 

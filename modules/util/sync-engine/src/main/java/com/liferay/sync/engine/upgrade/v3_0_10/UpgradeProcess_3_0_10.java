@@ -60,17 +60,17 @@ public class UpgradeProcess_3_0_10 extends BaseUpgradeProcess {
 	@Override
 	public void upgradeSchema() throws Exception {
 		runSQL(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthToken " +
+			"ALTER TABLE SyncAccount ADD COLUMN oAuthToken VARCHAR(16777216) " +
+				"BEFORE password;");
+		runSQL(
+			"ALTER TABLE SyncAccount ADD COLUMN oAuthTokenSecret " +
 				"VARCHAR(16777216) BEFORE password;");
 		runSQL(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthTokenSecret " +
-				"VARCHAR(16777216) BEFORE password;");
-		runSQL(
-			"ALTER TABLE `SyncAccount` ADD COLUMN pluginVersion VARCHAR " +
-				"BEFORE pollInterval;");
+			"ALTER TABLE SyncAccount ADD COLUMN pluginVersion VARCHAR BEFORE " +
+				"pollInterval;");
 
 		runSQL(
-			"ALTER TABLE `SyncFile` ADD COLUMN localExtraSettings " +
+			"ALTER TABLE SyncFile ADD COLUMN localExtraSettings " +
 				"VARCHAR(16777216) BEFORE localSyncTime;");
 	}
 

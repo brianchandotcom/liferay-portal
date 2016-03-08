@@ -677,7 +677,7 @@
 			<var name="siteType" value="${siteType2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName1}" />
@@ -691,7 +691,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName1}" />
@@ -706,7 +706,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName2}" />
@@ -746,7 +746,7 @@
 			<var name="siteType" value="${siteType2}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName1}" />
@@ -760,7 +760,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName1}" />
@@ -775,7 +775,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName2}" />

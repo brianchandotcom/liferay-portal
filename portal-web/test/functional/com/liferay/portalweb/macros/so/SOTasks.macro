@@ -332,7 +332,7 @@
 		<execute function="AssertTextNotPresent" value1="${taskComment}" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Tasks" />
@@ -544,7 +544,7 @@
 	<command name="tearDownTask">
 		<execute macro="SOUser#firstLoginPG" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Tasks" />

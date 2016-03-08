@@ -647,7 +647,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -666,7 +666,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -680,7 +680,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -699,7 +699,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -717,7 +717,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -776,7 +776,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -795,7 +795,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -809,7 +809,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -823,7 +823,7 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -841,7 +841,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1552,7 +1552,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1683,7 +1683,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1701,7 +1701,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1726,7 +1726,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1744,7 +1744,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1792,7 +1792,7 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1810,7 +1810,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1828,7 +1828,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1841,7 +1841,7 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1859,7 +1859,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2733,7 +2733,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -2865,7 +2865,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2884,7 +2884,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2910,7 +2910,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2929,7 +2929,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2979,7 +2979,7 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -2998,7 +2998,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3017,7 +3017,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3030,7 +3030,7 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3049,7 +3049,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3081,7 +3081,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3178,7 +3178,7 @@
 
 		<execute function="AssertTextEquals" locator1="SOContactsProfile#NO_CONTACTS_MESSAGE" value1="${adminName} has no connections." />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3216,7 +3216,7 @@
 
 		<execute function="AssertTextEquals" locator1="SOContactsProfile#NO_CONTACTS_MESSAGE" value1="${adminName} has no connections." />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3226,7 +3226,7 @@
 		<execute function="Select" locator1="SOContactscenter#CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute function="AssertTextEquals" locator1="SOContactscenter#CONTACTS_LIST_EMPTY" value1="There are no results." />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3280,7 +3280,7 @@
 		<execute function="AssertTextEquals" locator1="SOContactsProfile#USER_DETAILS_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="SOContactsProfile#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3387,7 +3387,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -3534,7 +3534,7 @@
 			<var name="contactName" value="${contactName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -3572,7 +3572,7 @@
 			<var name="siteType" value="${siteType}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

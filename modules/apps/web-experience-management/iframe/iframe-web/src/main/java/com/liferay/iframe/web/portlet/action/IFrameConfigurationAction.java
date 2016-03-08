@@ -15,15 +15,22 @@
 package com.liferay.iframe.web.portlet.action;
 
 import com.liferay.iframe.web.constants.IFramePortletKeys;
+import com.liferay.iframe.web.util.IFrameUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.ReadOnlyException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -88,6 +95,31 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected void postProcess(
+			long companyId, PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws PortalException {
+
+		String formPassword = portletPreferences.getValue(
+			"formPassword", StringPool.BLANK);
+
+		if (Validator.isNotNull(formPassword) &&
+			formPassword.contains("@password@")) {
+
+			if (!IFrameUtil.isPasswordTokenEnabled(portletRequest)) {
+				formPassword = formPassword.replaceAll("@password@", "");
+
+				try {
+					portletPreferences.setValue("formPassword", formPassword);
+				}
+				catch (ReadOnlyException roe) {
+					throw new PortalException(roe);
+				}
+			}
+		}
 	}
 
 }

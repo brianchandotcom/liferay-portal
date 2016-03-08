@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
@@ -93,7 +94,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		@Override
 		public final Void call() throws Exception {
-			try {
+			try (LoggingTimer loggingTimer = new LoggingTimer(_tableName)) {
 				_con = DataAccess.getUpgradeOptimizedConnection();
 
 				if (_createCompanyIdColumn) {

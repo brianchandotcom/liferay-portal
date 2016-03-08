@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,47 +40,8 @@ public class UpgradePortletId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-
-		// Rename instanceable portlet IDs. We expect the root form of the
-		// portlet ID because we will rename all instances of the portlet ID.
-
-		String[][] renamePortletIdsArray = getRenamePortletIdsArray();
-
-		for (String[] renamePortletIds : renamePortletIdsArray) {
-			String oldRootPortletId = renamePortletIds[0];
-			String newRootPortletId = renamePortletIds[1];
-
-			updatePortlet(oldRootPortletId, newRootPortletId);
-			updateLayouts(oldRootPortletId, newRootPortletId, false);
-		}
-
-		// Rename uninstanceable portlet IDs to instanceable portlet IDs
-
-		String[] uninstanceablePortletIds = getUninstanceablePortletIds();
-
-		for (String portletId : uninstanceablePortletIds) {
-			PortletInstance portletInstance =
-				PortletInstance.fromPortletInstanceKey(portletId);
-
-			if (portletInstance.hasInstanceId()) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Portlet " + portletId + " is already instanceable");
-				}
-
-				continue;
-			}
-
-			PortletInstance newPortletInstance = new PortletInstance(portletId);
-
-			String newPortletInstanceKey =
-				newPortletInstance.getPortletInstanceKey();
-
-			updateResourcePermission(portletId, newPortletInstanceKey, false);
-			updateInstanceablePortletPreferences(
-				portletId, newPortletInstanceKey);
-			updateLayouts(portletId, newPortletInstanceKey, true);
-		}
+		upgradeInstanceablePortletIds();
+		upgradeUninstanceablePortletIds();
 	}
 
 	protected String getNewTypeSettings(
@@ -397,6 +359,60 @@ public class UpgradePortletId extends UpgradeProcess {
 		catch (SQLException sqle) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(sqle, sqle);
+			}
+		}
+	}
+
+	protected void upgradeInstanceablePortletIds() throws Exception {
+
+		// Rename instanceable portlet IDs. We expect the root form of the
+		// portlet ID because we will rename all instances of the portlet ID.
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String[][] renamePortletIdsArray = getRenamePortletIdsArray();
+
+			for (String[] renamePortletIds : renamePortletIdsArray) {
+				String oldRootPortletId = renamePortletIds[0];
+				String newRootPortletId = renamePortletIds[1];
+
+				updatePortlet(oldRootPortletId, newRootPortletId);
+				updateLayouts(oldRootPortletId, newRootPortletId, false);
+			}
+		}
+	}
+
+	protected void upgradeUninstanceablePortletIds() throws Exception {
+
+		// Rename uninstanceable portlet IDs to instanceable portlet IDs
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String[] uninstanceablePortletIds = getUninstanceablePortletIds();
+
+			for (String portletId : uninstanceablePortletIds) {
+				PortletInstance portletInstance =
+					PortletInstance.fromPortletInstanceKey(portletId);
+
+				if (portletInstance.hasInstanceId()) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Portlet " + portletId +
+								" is already instanceable");
+					}
+
+					continue;
+				}
+
+				PortletInstance newPortletInstance = new PortletInstance(
+					portletId);
+
+				String newPortletInstanceKey =
+					newPortletInstance.getPortletInstanceKey();
+
+				updateResourcePermission(
+					portletId, newPortletInstanceKey, false);
+				updateInstanceablePortletPreferences(
+					portletId, newPortletInstanceKey);
+				updateLayouts(portletId, newPortletInstanceKey, true);
 			}
 		}
 	}

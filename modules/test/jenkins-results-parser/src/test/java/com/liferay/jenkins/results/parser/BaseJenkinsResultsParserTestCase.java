@@ -44,17 +44,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		expectedMessage = expectedMessage.replace(" \n", "\n");
 
-		String actualMessage = getMessage(
+		String actualMessage = _fixMessage(getMessage(
 			"${dependencies.url}/" + getSimpleClassName() + "/" +
-				caseDir.getName() + "/");
+				caseDir.getName() + "/"));
 
 		actualMessage = actualMessage.replace(" \n", "\n");
-
-		if (actualMessage.contains(JenkinsResultsParserUtil.DEPENDENCIES_URL)) {
-			actualMessage = actualMessage.replace(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL,
-				"${dependencies.url}");
-		}
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -228,17 +222,32 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-		String expectedMessage = getMessage(toURLString(sampleDir));
 
-		if (expectedMessage.contains(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL)) {
-
-			expectedMessage = expectedMessage.replace(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL,
-				"${dependencies.url}");
-		}
+		String expectedMessage = _fixMessage(getMessage(toURLString(sampleDir)));
 
 		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
+	}
+	
+	private String _fixMessage(String message) {
+		String fixedMessage = message;
+		
+		if (fixedMessage.contains(
+			JenkinsResultsParserUtil.HTTP_DEPENDENCIES_URL)) {
+
+			fixedMessage = fixedMessage.replace(
+			JenkinsResultsParserUtil.HTTP_DEPENDENCIES_URL,
+			"${dependencies.url}");
+		}
+		
+		if (fixedMessage.contains(
+			JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL)) {
+
+			fixedMessage = fixedMessage.replace(
+			JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL,
+			"${dependencies.url}");
+		}
+		
+		return fixedMessage;
 	}
 
 	protected File dependenciesDir = new File(

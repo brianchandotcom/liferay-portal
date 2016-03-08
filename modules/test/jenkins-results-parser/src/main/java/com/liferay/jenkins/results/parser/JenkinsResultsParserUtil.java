@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Writer;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
@@ -308,8 +309,18 @@ public class JenkinsResultsParserUtil {
 		if (remoteURL.contains("${dependencies.url}")) {
 			remoteURL = fixFileName(remoteURL);
 
-			remoteURL = remoteURL.replace(
-				"${dependencies.url}", DEPENDENCIES_URL);
+			String fileURL = remoteURL.replace(
+				"${dependencies.url}", FILE_DEPENDENCIES_URL);
+
+			File file = new File(fileURL.substring("file:".length()));
+
+			if (file.exists()) {
+				remoteURL = fileURL;
+			}
+			else {
+				remoteURL = remoteURL.replace(
+					"${dependencies.url}", HTTP_DEPENDENCIES_URL);
+			}
 		}
 
 		if (remoteURL.startsWith("file")) {
@@ -458,9 +469,26 @@ public class JenkinsResultsParserUtil {
 		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
-	protected static final String DEPENDENCIES_URL =
+	protected static final String FILE_DEPENDENCIES_URL;
+
+	protected static final String HTTP_DEPENDENCIES_URL =
 		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 			"/liferay-jenkins-results-parser-samples-ee/1/";
+
+	static {
+		File dependenciesDir = new File("src/test/resources/dependencies/");
+
+		try {
+			URI uri = dependenciesDir.toURI();
+
+			URL url = uri.toURL();
+
+			FILE_DEPENDENCIES_URL = url.toString();
+		}
+		catch (MalformedURLException murle) {
+			throw new RuntimeException(murle);
+		}
+	}
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

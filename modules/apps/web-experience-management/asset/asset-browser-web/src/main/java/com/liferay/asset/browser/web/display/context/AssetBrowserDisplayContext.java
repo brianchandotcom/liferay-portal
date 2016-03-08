@@ -389,7 +389,7 @@ public class AssetBrowserDisplayContext {
 				getListable(), false, false);
 		}
 		else {
-			total = AssetEntryLocalServiceUtil.searchCount(
+			total = (int)AssetEntryLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), getFilterGroupIds(),
 				themeDisplay.getUserId(), assetRendererFactory.getClassName(),
 				getSubtypeSelectionId(), getKeywords(), isShowNonindexable(),

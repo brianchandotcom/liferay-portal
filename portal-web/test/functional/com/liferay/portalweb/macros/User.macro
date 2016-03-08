@@ -31,15 +31,15 @@
 		<execute function="Click" locator1="NavListItem#ADDITIONAL_EMAIL_ADDRESSES" />
 
 		<execute function="Type" locator1="MyAccount#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${userAdditionalEmailAddress}" />
-		
+
 		<execute function="Select" locator1="MyAccount#ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT" value1="Email Address" />
-		
+
 		<execute function="Click" locator1="MyAccount#ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON" />
-		
+
 		<execute function="Click" locator1="Button#SAVE" />
-		
+
 		<execute macro="Alert#viewSuccessMessage" />
-		
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -81,9 +81,9 @@
 		<execute function="Check" locator1="Checkbox#MAILING" />
 
 		<execute function="Click" locator1="Button#SAVE" />
-		
+
 		<execute macro="Alert#viewSuccessMessage" />
-		
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -93,7 +93,7 @@
 		<execute function="Click" locator1="Button#SAVE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-		
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -282,7 +282,7 @@
 		<execute function="SelectFrame" locator1="IFrame#UPLOAD_IMAGE" />
 
 		<execute function="UploadCommonFile" locator1="UploadImage#BROWSE_BUTTON" value1="${imageFileName}" />
-		
+
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -1549,8 +1549,8 @@
 			<else>
 				<execute macro="User#loginPG">
 					<var name="setupWizardEnabled" value="${setupWizardEnabled}" />
-					<var name="userEmailAddress" value="${userEmailAddress}" />
 					<var name="specificURL" value="${virtualHostsURL}" />
+					<var name="userEmailAddress" value="${userEmailAddress}" />
 				</execute>
 			</else>
 		</if>
@@ -1728,7 +1728,7 @@
 			<condition function="IsTextNotEqual" locator1="ControlMenu#USER_NAME" value1="${userLoginFullName}" />
 			<then>
 				<execute macro="User#logoutPG" />
-				
+
 				<execute macro="User#loginPG">
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />

@@ -169,7 +169,7 @@
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name 1" />
-		</execute>			
+		</execute>
 
 		<execute macro="Page#viewDefaultSiteTemplatePagesPG">
 			<var name="pageName" value="Home" />

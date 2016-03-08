@@ -328,8 +328,8 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="specificURL" value="http://www.charlie.com:8080/group/guest" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<var name="key_pageName" value="Private Page" />

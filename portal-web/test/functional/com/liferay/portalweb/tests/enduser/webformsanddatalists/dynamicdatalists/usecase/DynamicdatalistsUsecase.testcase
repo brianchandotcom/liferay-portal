@@ -888,7 +888,10 @@
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 		<execute function="Pause" locator1="1000" />
 
-		<var method="selenium#getLocation()" name="adminViewURL" />
+		<execute macro="TestCase#getAdminViewURL">
+			<return from="adminViewURL" name="adminViewURL" />
+			<var name="adminViewURL" value="${adminViewURL}" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -898,7 +901,10 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<var method="selenium#getLocation()" name="adminEditURL" />
+		<execute macro="TestCase#getAdminEditURL">
+			<return from="adminEditURL" name="adminEditURL" />
+			<var name="adminEditURL" value="${adminEditURL}" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

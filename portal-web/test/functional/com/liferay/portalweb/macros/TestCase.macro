@@ -53,4 +53,16 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="getAdminViewURL" returns="adminViewURL">
+		<var method="selenium#getLocation()" name="adminViewURL" />
+
+		<return name="adminViewURL" value="${adminViewURL}" />
+	</command>
+
+	<command name="getAdminEditURL" returns="adminEditURL">
+		<var method="selenium#getLocation()" name="adminEditURL" />
+
+		<return name="adminEditURL" value="${adminEditURL}" />
+	</command>
 </definition>

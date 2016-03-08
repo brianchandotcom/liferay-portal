@@ -494,18 +494,6 @@ $horizontal-spacing: 35px;
 			width: auto;
 		}
 
-		.form-builder-field {
-			border-radius: 0;
-			border-width: 0;
-			box-shadow: none;
-			margin: 0;
-
-			label {
-				float: none;
-				word-wrap: break-word;
-			}
-		}
-
 		.form-builder-field-list-empty .form-builder-field-list-add-button {
 			padding: 16px 0;
 			position: relative;
@@ -599,22 +587,41 @@ $horizontal-spacing: 35px;
 
 	.form-group {
 		margin: 0;
-
-		.input-group-container,
-		.radio-options,
-		.input-select-wrapper,
-		.checkbox {
-			margin: 0;
-		}
 	}
 
 	.lfr-ddm-form-field-container {
+		border-radius: 0;
+		border-width: 0;
+		box-shadow: none;
+		margin: 0;
 		padding: 21px 0;
+
+		label {
+			float: none;
+			line-height: 12px;
+			margin-bottom: 0;
+			word-wrap: break-word;
+		}
+	}
+
+	.liferay-ddm-form-field-paragraph {
+		p {
+			margin-top: 14px;
+		}
+	}
+
+	.liferay-ddm-form-field-tip {
+		margin: 4px 0 0 0;
 	}
 
 	.lfr-ddm-form-page-title {
 		font-size: 19px;
 		margin-top: 0;
+	}
+
+	.input-group-container,
+	.radio-options {
+		margin-top: 14px;
 	}
 
 	.multi-step-progress-bar .progress-bar-title {

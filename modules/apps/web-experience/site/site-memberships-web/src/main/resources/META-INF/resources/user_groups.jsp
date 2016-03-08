@@ -151,9 +151,8 @@ userGroupSearch.setResults(userGroups);
 		}
 	);
 
-	form.on(
+	$('.assign-site-roles a').on(
 		'click',
-		'.assign-site-roles a',
 		function(event) {
 			event.preventDefault();
 

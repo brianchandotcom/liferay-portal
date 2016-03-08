@@ -18,6 +18,7 @@
 
 <%
 String netvibesURL = ParamUtil.getString(request, "netvibesURL");
+String openSocialURL = ParamUtil.getString(request, "openSocialURL");
 String widgetURL = ParamUtil.getString(request, "widgetURL");
 %>
 
@@ -38,5 +39,12 @@ Liferay.Widget({ url: &#x27;<%= HtmlUtil.escape(widgetURL) %>&#x27;});
 		</p>
 
 		<aui:input label="" name="netvibesURL" type="resource" value="<%= netvibesURL %>" />
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(openSocialURL) %>">
+		<p>
+			<liferay-ui:message key="share-this-application-on-an-open-social-platform" />
+		</p>
+
+		<aui:input label="" name="openSocialURL" type="resource" value="<%= openSocialURL %>" />
 	</c:when>
 </c:choose>

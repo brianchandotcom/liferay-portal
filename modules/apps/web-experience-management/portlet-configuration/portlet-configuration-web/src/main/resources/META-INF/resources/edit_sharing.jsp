@@ -127,7 +127,7 @@ Liferay.Widget({ url: '<%= widgetURL %>'});
 
 			<aui:input name="opensocialGadgetURL" type="resource" value="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
 
-			<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-igoogle", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="iGoogleShowAddAppLink" type="toggle-switch" value="<%= iGoogleShowAddAppLink %>" />
+			<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-an-open-social-platform", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="iGoogleShowAddAppLink" type="toggle-switch" value="<%= iGoogleShowAddAppLink %>" />
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="netvibes">

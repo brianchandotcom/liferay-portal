@@ -59,7 +59,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int x = annotation.indexOf("property = {");
 
 		if (x == -1) {
-			return null;
+			return content;
 		}
 
 		int y = x;
@@ -100,7 +100,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if ((x == -1) || (y == -1) || (z == -1)) {
-				return null;
+				return content;
 			}
 
 			String propertyName = parameterProperty.substring(x + 1, y);
@@ -123,7 +123,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			previousPropertyNameAndValue = propertyNameAndValue;
 		}
 
-		return null;
+		return content;
 	}
 
 	protected String applyDiamondOperator(String content) {
@@ -1257,7 +1257,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					String newContent = checkAnnotationParameterProperties(
 						content, annotation);
 
-					if (newContent != null) {
+					if (!newContent.equals(content)) {
 						return formatAnnotations(
 							fileName, javaTermName, newContent, indent);
 					}

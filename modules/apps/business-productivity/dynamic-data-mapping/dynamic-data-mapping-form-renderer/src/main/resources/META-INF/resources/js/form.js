@@ -61,7 +61,8 @@ AUI.add(
 
 						if (formNode && !readOnly) {
 							instance._eventHandlers.push(
-								formNode.on('submit', A.bind('_onSubmitForm', instance))
+								formNode.on('submit', A.bind('_onSubmitForm', instance)),
+								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
 						}
 
@@ -104,7 +105,7 @@ AUI.add(
 
 									instance.showLoadingFeedback();
 
-									submitForm(formNode);
+									Liferay.Util.submitForm(formNode);
 								}
 							}
 						);
@@ -135,6 +136,14 @@ AUI.add(
 
 						if (submitButton) {
 							submitButton.attr('disabled', false);
+						}
+					},
+
+					_onLiferaySubmitForm: function(event) {
+						var instance = this;
+
+						if (event.form === instance.getFormNode()) {
+							event.preventDefault();
 						}
 					},
 

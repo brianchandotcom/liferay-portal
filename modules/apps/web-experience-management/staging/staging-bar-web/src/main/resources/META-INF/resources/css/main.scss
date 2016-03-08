@@ -109,6 +109,26 @@
 		@include justify-content(space-between);
 	}
 
+	&:first-child {
+		@include sm() {
+			@include flex-basis(100%);
+		}
+
+		.staging-layout-revision-details-list {
+			@include sm() {
+				@include flex-wrap(nowrap);
+
+				> li {
+					margin-left: 15px;
+
+					&:first-child {
+						margin-left: 0;
+					}
+				}
+			}
+		}
+	}
+
 	.staging-layout-revision-details-list {
 		display: block;
 		width: 100%;

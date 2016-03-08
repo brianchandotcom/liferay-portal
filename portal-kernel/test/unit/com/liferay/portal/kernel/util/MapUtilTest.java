@@ -392,56 +392,6 @@ public class MapUtilTest {
 	public static class WhenFilteringByPredicateFilter {
 
 		@Test
-		public void shouldReturnMapFilteredByEven() {
-			Map<String, String> inputMap = new HashMap<>();
-
-			inputMap.put("1", "one");
-			inputMap.put("2", "two");
-			inputMap.put("3", "three");
-			inputMap.put("4", "four");
-			inputMap.put("5", "five");
-
-			Map<String, String> outputMap = MapUtil.filter(
-				inputMap,
-				new PredicateFilter<Map.Entry<String, ?>>() {
-
-					@Override
-					public boolean filter(Map.Entry<String, ?> entry) {
-						int value = GetterUtil.getInteger(entry.getKey());
-
-						if ((value % 2) == 0) {
-							return true;
-						}
-
-						return false;
-					}
-
-				});
-
-			Assert.assertEquals(2, outputMap.size());
-			Assert.assertEquals("two", outputMap.get("2"));
-			Assert.assertEquals("four", outputMap.get("4"));
-		}
-
-		@Test
-		public void shouldReturnMapFilteredByPrefix() {
-			Map<String, String> inputMap = new HashMap<>();
-
-			inputMap.put("x1", "one");
-			inputMap.put("2", "two");
-			inputMap.put("x3", "three");
-			inputMap.put("4", "four");
-			inputMap.put("x5", "five");
-
-			Map<String, String> outputMap = MapUtil.filterByKeys(
-				inputMap, new PrefixPredicateFilter("x"));
-
-			Assert.assertEquals(2, outputMap.size());
-			Assert.assertEquals("two", outputMap.get("2"));
-			Assert.assertEquals("four", outputMap.get("4"));
-		}
-
-		@Test
 		public void shouldAllowFilterBySuperType() {
 			Map<String, Integer> inputMap = new HashMap<>();
 
@@ -493,6 +443,56 @@ public class MapUtilTest {
 			Assert.assertEquals(2, outputMap.size());
 			Assert.assertEquals(2, outputMap.get("2"));
 			Assert.assertEquals(4, outputMap.get("4"));
+		}
+
+		@Test
+		public void shouldReturnMapFilteredByEven() {
+			Map<String, String> inputMap = new HashMap<>();
+
+			inputMap.put("1", "one");
+			inputMap.put("2", "two");
+			inputMap.put("3", "three");
+			inputMap.put("4", "four");
+			inputMap.put("5", "five");
+
+			Map<String, String> outputMap = MapUtil.filter(
+				inputMap,
+				new PredicateFilter<Map.Entry<String, ?>>() {
+
+					@Override
+					public boolean filter(Map.Entry<String, ?> entry) {
+						int value = GetterUtil.getInteger(entry.getKey());
+
+						if ((value % 2) == 0) {
+							return true;
+						}
+
+						return false;
+					}
+
+				});
+
+			Assert.assertEquals(2, outputMap.size());
+			Assert.assertEquals("two", outputMap.get("2"));
+			Assert.assertEquals("four", outputMap.get("4"));
+		}
+
+		@Test
+		public void shouldReturnMapFilteredByPrefix() {
+			Map<String, String> inputMap = new HashMap<>();
+
+			inputMap.put("x1", "one");
+			inputMap.put("2", "two");
+			inputMap.put("x3", "three");
+			inputMap.put("4", "four");
+			inputMap.put("x5", "five");
+
+			Map<String, String> outputMap = MapUtil.filterByKeys(
+				inputMap, new PrefixPredicateFilter("x"));
+
+			Assert.assertEquals(2, outputMap.size());
+			Assert.assertEquals("two", outputMap.get("2"));
+			Assert.assertEquals("four", outputMap.get("4"));
 		}
 
 	}

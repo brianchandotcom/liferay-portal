@@ -1084,7 +1084,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String codeBlock = content.substring(pos + 1, matcher1.end());
 
 				String firstLine = codeBlock.substring(
-					0, codeBlock.indexOf(CharPool.NEW_LINE));
+					0, codeBlock.indexOf(CharPool.NEW_LINE) + 1);
 
 				Matcher matcher2 = _incorrectCloseCurlyBracePattern2.matcher(
 					firstLine);
@@ -4053,7 +4053,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
-		"(\t| )@?(class |enum |interface |new )");
+		"(\t| )@?(class|enum|interface|new)\\s");
 	private Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(

@@ -710,10 +710,6 @@
 		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE" value1="${ddlRecordFieldData}" />
 	</command>
 
-	<command name="viewNestedFieldsVisualGroupingViaDDLDisplay">
-		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG" />
-	</command>
-
 	<command name="viewNoRecords">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${ddlDataDefinitionName} records were found" />
 	</command>
@@ -722,10 +718,6 @@
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewRepeatableNestedFieldsVisualGrouping">
-		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>
 
 	<command name="viewSecondFieldCP">

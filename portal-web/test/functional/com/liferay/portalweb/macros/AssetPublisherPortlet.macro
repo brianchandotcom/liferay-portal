@@ -492,7 +492,7 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="deleteArchivedSetupPG">
+	<command name="deleteConfigurationTemplatePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
 			<var name="portletOption" value="Configuration Templates" />

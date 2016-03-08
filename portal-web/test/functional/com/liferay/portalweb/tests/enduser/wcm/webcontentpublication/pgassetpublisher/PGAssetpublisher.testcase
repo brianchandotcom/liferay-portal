@@ -857,7 +857,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#deleteArchivedSetupPG">
+		<execute macro="AssetPublisherPortlet#deleteConfigurationTemplatePG">
 			<var name="configurationName" value="AP Manual Display" />
 		</execute>
 	</command>

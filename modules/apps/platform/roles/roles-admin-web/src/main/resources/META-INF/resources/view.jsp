@@ -112,7 +112,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURLString %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -130,7 +130,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"name"} %>'
+			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -210,6 +210,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				href="<%= rowURL %>"
 				name="title"
 				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"

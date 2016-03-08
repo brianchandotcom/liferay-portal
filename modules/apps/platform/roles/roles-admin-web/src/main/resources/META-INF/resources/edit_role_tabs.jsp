@@ -111,7 +111,7 @@ request.setAttribute("edit_role_permissions.jsp-portletResource", portletResourc
 	<c:if test='<%= tabs1.equals("assign-members") %>'>
 		<aui:nav-bar-search>
 			<aui:form action="<%= portletURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
 			</aui:form>
 		</aui:nav-bar-search>
 	</c:if>

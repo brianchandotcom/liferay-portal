@@ -85,6 +85,11 @@ public class LockLocalServiceTest {
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
+				expectedDBType = ExpectedDBType.MYSQL,
+				expectedLog = "Duplicate entry",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				expectedDBType = ExpectedDBType.ORACLE,
 				expectedLog = "ORA-00001: unique constraint",
 				expectedType = ExpectedType.PREFIX

@@ -15,7 +15,6 @@
 package com.liferay.portal.lock.service.impl;
 
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
-import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
@@ -193,7 +192,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		String className, String key, String expectedOwner,
 		String updatedOwner) {
 
-		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
+		Lock lock = lockPersistence.fetchByC_K(className, key, false);
 
 		if (lock == null) {
 			long lockId = counterLocalService.increment();
@@ -208,8 +207,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lockPersistence.update(lock);
 
 			lock.setNew(true);
-
-			lockPersistence.flush();
 		}
 		else if (Validator.equals(lock.getOwner(), expectedOwner)) {
 			lock.setCreateDate(new Date());
@@ -220,8 +217,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lockPersistence.update(lock);
 
 			lock.setNew(true);
-
-			lockPersistence.flush();
 		}
 
 		return lock;
@@ -298,7 +293,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(String className, String key, String owner) {
-		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
+		Lock lock = lockPersistence.fetchByC_K(className, key, false);
 
 		if (lock == null) {
 			return;

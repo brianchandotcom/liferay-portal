@@ -4,7 +4,3 @@ dependencies {
 
 	provided project(":util:css-builder")
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.css\.builder", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

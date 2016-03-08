@@ -2,7 +2,3 @@ dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "1.0.12"
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.js\.module\.config\.generator", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

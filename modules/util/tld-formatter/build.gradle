@@ -31,6 +31,6 @@ liferay {
 }
 
 updateFileVersions {
-	match(/\t\t\t\t<version>(.+)<\/version>/, "samples/pom.xml")
-	match(/com\.liferay\.tld\.formatter=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
+	match(/com\.liferay\.tld\.formatter=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 }

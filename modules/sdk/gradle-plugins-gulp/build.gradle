@@ -2,7 +2,3 @@ dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "1.0.12"
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.gradle\.plugins\.gulp", version: "(.+)"/, "../../build-buildscript.gradle", "../gradle-plugins-workspace/build.gradle")
-}

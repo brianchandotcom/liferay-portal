@@ -11,5 +11,5 @@ liferay {
 }
 
 updateFileVersions {
-	match(/com\.liferay\.jasper\.jspc=(.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	match(/com\.liferay\.jasper\.jspc=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 }

@@ -5,5 +5,5 @@ dependencies {
 }
 
 updateFileVersions {
-	match(/com\.liferay\.ant\.jgit=(.+)/, "../gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	match(/com\.liferay\.ant\.jgit=(\d.+)/, "../gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 }

@@ -17,7 +17,3 @@ dependencies {
 liferay {
 	deployDir = file("../../../lib/development")
 }
-
-updateFileVersions {
-	match(/"com\.liferay\.ant\.bnd", version: "(.+)"/, "../gradle-plugins/build.gradle")
-}

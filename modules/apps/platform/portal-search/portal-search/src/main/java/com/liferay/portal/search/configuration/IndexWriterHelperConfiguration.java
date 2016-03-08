@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface IndexWriterHelperConfiguration {
 
 	@Meta.AD(
-		deflt = "true", description = "%index-commit-immediately-help",
+		deflt = "true", description = "index-commit-immediately-help",
 		required = false
 	)
 	public boolean indexCommitImmediately();

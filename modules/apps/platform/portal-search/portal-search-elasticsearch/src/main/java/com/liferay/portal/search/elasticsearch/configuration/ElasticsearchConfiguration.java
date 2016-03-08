@@ -37,7 +37,7 @@ public interface ElasticsearchConfiguration {
 	public OperationMode operationMode();
 
 	@Meta.AD(
-		deflt = "liferay-", description = "%index-name-prefix-help",
+		deflt = "liferay-", description = "index-name-prefix-help",
 		required = false
 	)
 	public String indexNamePrefix();
@@ -46,7 +46,7 @@ public interface ElasticsearchConfiguration {
 	public boolean bootstrapMlockAll();
 
 	@Meta.AD(
-		deflt = "true", description = "%log-exceptions-only-help",
+		deflt = "true", description = "log-exceptions-only-help",
 		required = false
 	)
 	public boolean logExceptionsOnly();
@@ -97,7 +97,7 @@ public interface ElasticsearchConfiguration {
 	public String additionalConfigurations();
 
 	@Meta.AD(
-		description = "%additional-index-configurations-help", required = false
+		description = "additional-index-configurations-help", required = false
 	)
 	public String additionalIndexConfigurations();
 

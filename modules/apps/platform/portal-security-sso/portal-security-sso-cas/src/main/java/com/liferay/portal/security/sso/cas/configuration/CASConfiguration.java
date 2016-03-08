@@ -38,12 +38,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CASConfiguration {
 
-	@Meta.AD(deflt = "false", description = "%enabled-help", required = false)
+	@Meta.AD(deflt = "false", description = "enabled-help", required = false)
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", description = "%import-from-ldap-help",
-		required = false
+		deflt = "false", description = "import-from-ldap-help", required = false
 	)
 	public boolean importFromLDAP();
 
@@ -51,7 +50,7 @@ public interface CASConfiguration {
 	public String loginURL();
 
 	@Meta.AD(
-		deflt = "false", description = "%logout-on-session-expiration-help",
+		deflt = "false", description = "logout-on-session-expiration-help",
 		required = false
 	)
 	public boolean logoutOnSessionExpiration();
@@ -60,7 +59,7 @@ public interface CASConfiguration {
 	public String logoutURL();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080", description = "%server-name-help",
+		deflt = "http://localhost:8080", description = "server-name-help",
 		required = false
 	)
 	public String serverName();

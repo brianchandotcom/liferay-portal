@@ -44,19 +44,19 @@ public interface LDAPAuthConfiguration extends CompanyScopedConfiguration {
 	public boolean required();
 
 	@Meta.AD(
-		deflt = "false", description = "%password-policy-enabled-help",
+		deflt = "false", description = "password-policy-enabled-help",
 		required = false
 	)
 	public boolean passwordPolicyEnabled();
 
 	@Meta.AD(
-		deflt = "bind", description = "%method-help",
+		deflt = "bind", description = "method-help",
 		optionValues = {"bind", "password-compare"}, required = false
 	)
 	public String method();
 
 	@Meta.AD(
-		deflt = "NONE", description = "%password-encryption-algorithm-help",
+		deflt = "NONE", description = "password-encryption-algorithm-help",
 		optionValues = {
 			"BCRYPT", "MD2", "MD5", "NONE", "SHA", "SHA-256", "SHA-384", "SSHA",
 			"UFC-CRYPT"

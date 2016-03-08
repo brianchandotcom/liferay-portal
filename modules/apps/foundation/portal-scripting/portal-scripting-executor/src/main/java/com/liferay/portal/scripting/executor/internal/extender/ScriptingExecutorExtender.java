@@ -33,9 +33,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -113,7 +111,6 @@ public class ScriptingExecutorExtender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScriptingExecutorExtender.class);
 
-	private final Map<String, Long> _bundles = new ConcurrentHashMap<>();
 	private BundleTracker<Object> _bundleTracker;
 
 	@Reference
@@ -127,8 +124,6 @@ public class ScriptingExecutorExtender {
 
 		@Override
 		public Object addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-			_bundles.put(bundle.getSymbolicName(), bundle.getBundleId());
-
 			Dictionary<String, String> headers = bundle.getHeaders();
 
 			if (GetterUtil.getBoolean(

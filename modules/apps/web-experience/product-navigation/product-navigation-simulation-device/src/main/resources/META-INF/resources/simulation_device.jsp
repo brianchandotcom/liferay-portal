@@ -113,4 +113,18 @@
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	Liferay.on(
+		'SimulationMenu:closeSimulationPanel',
+		function(event) {
+			simulationDevice.hideDeviceDialog();
+		}
+	);
+
+	Liferay.on(
+		'SimulationMenu:openSimulationPanel',
+		function(event) {
+			simulationDevice.showDeviceDialog();
+		}
+	);
 </aui:script>

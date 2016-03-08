@@ -126,6 +126,22 @@ AUI.add(
 						instance._simulationDeviceNode.remove();
 					},
 
+					hideDeviceDialog: function() {
+						var instance = this;
+
+					    var dialog = Liferay.Util.getWindow(instance._dialogId);
+
+					    dialog.hide();
+				    },
+
+					showDeviceDialog: function() {
+						var instance = this;
+
+						var dialog = Liferay.Util.getWindow(instance._dialogId);
+
+					    dialog.show();
+				    },
+
 					_bindUI: function() {
 						var instance = this;
 

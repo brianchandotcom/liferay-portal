@@ -156,7 +156,6 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 				actions.remove(ActionKeys.MANAGE_STAGING);
 				actions.remove(ActionKeys.MANAGE_TEAMS);
 				actions.remove(ActionKeys.PUBLISH_STAGING);
-				actions.remove(ActionKeys.PUBLISH_TO_REMOTE);
 				actions.remove(ActionKeys.VIEW_MEMBERS);
 				actions.remove(ActionKeys.VIEW_STAGING);
 			}

@@ -205,6 +205,16 @@ if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
 	if (PropsValues.PORTLET_CSS_ENABLED) {
 		showPortletCssIcon = true;
 	}
+
+	Group checkingStagingGroup = group;
+
+	if (checkingStagingGroup.isControlPanel()) {
+		checkingStagingGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getSiteGroupId());
+	}
+
+	if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
+		showStagingIcon = true;
+	}
 }
 
 if (!columnDisabled && customizable && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
@@ -217,16 +227,7 @@ if (!columnDisabled && customizable && !portlet.isPreferencesCompanyWide() && po
 
 if (group.isLayoutPrototype()) {
 	showExportImportIcon = false;
-}
-
-Group checkingStagingGroup = group;
-
-if (checkingStagingGroup.isControlPanel()) {
-	checkingStagingGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getSiteGroupId());
-}
-
-if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
-	showStagingIcon = true;
+	showStagingIcon = false;
 }
 
 if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT)) {

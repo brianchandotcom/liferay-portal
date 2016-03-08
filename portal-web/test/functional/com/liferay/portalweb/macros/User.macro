@@ -1576,16 +1576,7 @@
 	</command>
 
 	<command name="loginUserInvalidPG">
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
@@ -1600,16 +1591,7 @@
 	<command name="loginUserPG">
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
 
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
@@ -1644,16 +1626,17 @@
 				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
-				<execute macro="Page#openURL">
-					<var name="friendlyURL" value="${friendlyURL}" />
-					<var name="pageAccess" value="${pageAccess}" />
-					<var name="pageStaging" value="${pageStaging}" />
-					<var name="siteName" value="${siteName}" />
-					<var name="siteNameURL" value="${siteNameURL}" />
-					<var name="siteURL" value="${siteURL}" />
-					<var name="specificURL" value="${specificURL}" />
-					<var name="virtualHostsURL" value="${virtualHostsURL}" />
-				</execute>
+				<if>
+					<isset var="specificURL" />
+					<then>
+						<execute macro="Navigator#openSpecificURL">
+							<var name="url" value="${specificURL}" />
+						</execute>
+					</then>
+					<else>
+						<execute macro="Navigator#openURL" />
+					</else>
+				</if>
 			</else>
 		</if>
 

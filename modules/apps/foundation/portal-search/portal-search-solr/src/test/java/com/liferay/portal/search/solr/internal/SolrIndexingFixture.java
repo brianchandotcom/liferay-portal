@@ -20,7 +20,7 @@ import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr.document.SolrUpdateDocumentCommand;
 import com.liferay.portal.search.solr.internal.document.DefaultSolrDocumentFactory;
-import com.liferay.portal.search.solr.internal.facet.DateRangeFacetProcessor;
+import com.liferay.portal.search.solr.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.solr.internal.filter.BooleanFilterTranslatorImpl;
 import com.liferay.portal.search.solr.internal.filter.DateRangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.solr.internal.filter.ExistsFilterTranslatorImpl;
@@ -61,7 +61,7 @@ import java.util.Map;
  */
 public class SolrIndexingFixture implements IndexingFixture {
 
-	public SolrIndexingFixture() throws Exception {
+	public SolrIndexingFixture() {
 		_properties = createSolrConfigurationProperties();
 	}
 
@@ -145,7 +145,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 		return new SolrIndexSearcher() {
 			{
-				setFacetProcessor(new DateRangeFacetProcessor());
+				setFacetProcessor(new DefaultFacetProcessor());
 				setFilterTranslator(createSolrFilterTranslator());
 				setGroupByTranslator(new DefaultGroupByTranslator());
 				setQueryTranslator(createSolrQueryTranslator());

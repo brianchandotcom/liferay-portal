@@ -24,7 +24,7 @@ import com.liferay.portal.search.elasticsearch.internal.connection.Elasticsearch
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch.internal.document.DefaultElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch.internal.facet.DateRangeFacetProcessor;
+import com.liferay.portal.search.elasticsearch.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.filter.BooleanFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch.internal.filter.DateRangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch.internal.filter.ElasticsearchFilterTranslator;
@@ -178,7 +178,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			{
 				elasticsearchConnectionManager =
 					elasticsearchConnectionManager1;
-				facetProcessor = new DateRangeFacetProcessor();
+				facetProcessor = new DefaultFacetProcessor();
 				filterTranslator = createElasticsearchFilterTranslator();
 				groupByTranslator = new DefaultGroupByTranslator();
 				indexNameBuilder = indexNameBuilder1;

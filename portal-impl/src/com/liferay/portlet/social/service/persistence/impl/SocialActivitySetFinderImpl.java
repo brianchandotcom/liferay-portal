@@ -46,6 +46,9 @@ public class SocialActivitySetFinderImpl
 	public static final String COUNT_BY_USER_GROUPS =
 		SocialActivitySetFinder.class.getName() + ".countByUserGroups";
 
+	public static final String FIND_BY_ORGANIZATION_ID =
+		SocialActivitySetFinder.class.getName() + ".findByOrganizationId";
+
 	public static final String FIND_BY_RELATION =
 		SocialActivitySetFinder.class.getName() + ".findByRelation";
 
@@ -57,48 +60,6 @@ public class SocialActivitySetFinderImpl
 
 	public static final String FIND_BY_USER_GROUPS =
 		SocialActivitySetFinder.class.getName() + ".findByUserGroups";
-
-	public static final String FIND_BY_ORGANIZATION_ID =
-		SocialActivitySetFinder.class.getName() + ".findByOrganizationId";
-
-	@Override
-	public int countByUserGroups(long userId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUPS);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(userId);
-			qPos.add(userId);
-			qPos.add(userId);
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
 
 	@Override
 	public int countByRelation(long userId) {
@@ -192,6 +153,45 @@ public class SocialActivitySetFinderImpl
 
 			qPos.add(userId);
 			qPos.add(userId);
+			qPos.add(userId);
+			qPos.add(userId);
+			qPos.add(userId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countByUserGroups(long userId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUPS);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
 			qPos.add(userId);
 			qPos.add(userId);
 			qPos.add(userId);

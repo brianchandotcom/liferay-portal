@@ -118,7 +118,7 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected String getMessage(String urlString) throws Exception {
 		Project project = getProject(
-			urlString, urlString.substring("${dependency.url}".length()));
+			urlString, urlString.substring("${dependencies.url}".length()));
 
 		GitHubJobMessageUtil.getGitHubJobMessage(project);
 

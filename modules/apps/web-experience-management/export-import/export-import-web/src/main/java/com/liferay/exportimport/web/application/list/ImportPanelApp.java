@@ -60,8 +60,13 @@ public class ImportPanelApp extends BasePanelApp {
 
 		PortletURL portletURL = super.getPortletURL(request);
 
-		if (group.isLayoutSetPrototype()) {
+		if ((!group.hasPublicLayouts() && group.hasPrivateLayouts()) ||
+			group.isLayoutSetPrototype()) {
+
 			portletURL.setParameter("privateLayout", Boolean.TRUE.toString());
+		}
+		else {
+			portletURL.setParameter("privateLayout", Boolean.FALSE.toString());
 		}
 
 		return portletURL;

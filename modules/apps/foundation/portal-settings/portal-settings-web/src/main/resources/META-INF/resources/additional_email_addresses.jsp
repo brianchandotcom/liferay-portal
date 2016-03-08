@@ -16,4 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/common/additional_email_addresses.jsp" portletId="<%= PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW) %>" />
+<c:choose>
+	<c:when test="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>">
+		<liferay-util:include page="/common/additional_email_addresses.jsp" portletId="<%= PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW) %>" />
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<liferay-ui:message key="you-do-not-have-the-required-permissions-to-access-this-content" />
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -16,6 +16,7 @@ package com.liferay.document.library.google.docs.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.document.library.display.context.DLViewDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -87,6 +89,15 @@ public class GoogleDocsDLDisplayContextFactory
 		}
 
 		return parentDLEditFileEntryDisplayContext;
+	}
+
+	@Override
+	public DLViewDisplayContext getDLViewDisplayContext(
+		DLViewDisplayContext parentDLViewDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		Folder folder) {
+
+		return parentDLViewDisplayContext;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.document.library.web.display.context;
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.display.context.DLViewDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Map;
@@ -87,6 +89,24 @@ public class DLDisplayContextProvider {
 		}
 
 		return dlEditFileEntryDisplayContext;
+	}
+
+	public DLViewDisplayContext getDLViewDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		Folder folder) {
+
+		DLViewDisplayContext dlViewDisplayContext =
+			new DefaultDLViewDisplayContext(request, response, folder);
+
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				_dlDisplayContextFactories) {
+
+			dlViewDisplayContext =
+				dlDisplayContextFactory.getDLViewDisplayContext(
+					dlViewDisplayContext, request, response, folder);
+		}
+
+		return dlViewDisplayContext;
 	}
 
 	public DLViewFileVersionDisplayContext

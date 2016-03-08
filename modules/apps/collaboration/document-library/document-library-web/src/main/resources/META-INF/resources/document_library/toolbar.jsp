@@ -23,6 +23,8 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
+Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
@@ -30,10 +32,15 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
+
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+
+DLViewDisplayContext dlViewDisplayContext = dlDisplayContextProvider.getDLViewDisplayContext(request, response, folder);
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) > 0 %>"
+	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	includeCheckBox="<%= !user.isDefaultUser() && dlPortletInstanceSettingsHelper.isShowActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -46,7 +53,11 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		/>
 
 		<c:if test="<%= !search %>">
-			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
+			<liferay-frontend:management-bar-display-buttons
+				displayViews="<%= dlPortletInstanceSettings.getDisplayViews() %>"
+				portletURL="<%= dlViewDisplayContext.getDisplayStyleURL() %>"
+				selectedDisplayStyle="<%= dlViewDisplayContext.getDisplayStyle() %>"
+			/>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
@@ -99,7 +110,18 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		</liferay-frontend:management-bar-navigation>
 
 		<c:if test='<%= !search && !navigation.equals("recent") %>'>
-			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
+
+			<%
+			String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
+			String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
+			%>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns="<%= dlViewDisplayContext.getOrderColumns() %>"
+				portletURL="<%= dlViewDisplayContext.getSortURL() %>"
+			/>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
 

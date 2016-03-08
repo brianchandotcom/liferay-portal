@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,11 @@ public interface DLDisplayContextFactory extends DisplayContextFactory {
 		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry);
+
+	public DLViewDisplayContext getDLViewDisplayContext(
+		DLViewDisplayContext parentDLViewDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		Folder folder);
 
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(

@@ -37,6 +37,7 @@ page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.persistence.AssetEntryQuery" %><%@
 page import="com.liferay.document.library.display.context.DLEditFileEntryDisplayContext" %><%@
 page import="com.liferay.document.library.display.context.DLFilePicker" %><%@
+page import="com.liferay.document.library.display.context.DLViewDisplayContext" %><%@
 page import="com.liferay.document.library.display.context.DLViewFileVersionDisplayContext" %><%@
 page import="com.liferay.document.library.dynamic.data.mapping.util.DLDDMDisplay" %><%@
 page import="com.liferay.document.library.kernel.antivirus.AntivirusScannerException" %><%@

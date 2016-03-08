@@ -17,6 +17,7 @@ package com.liferay.notifications.web.upgrade.v2_0_0;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +39,12 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement ps = connection.prepareStatement(
+		updateUserNotificationEvents();
+	}
+
+	protected void updateUserNotificationEvents() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select userNotificationEventId, actionRequired from " +
 					"Notifications_UserNotificationEvent");
 			ResultSet rs = ps.executeQuery()) {

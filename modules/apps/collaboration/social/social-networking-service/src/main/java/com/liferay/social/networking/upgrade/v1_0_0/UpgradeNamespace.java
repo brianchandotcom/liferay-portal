@@ -59,7 +59,7 @@ public class UpgradeNamespace extends UpgradeProcess {
 			String tableSqlCreate, String tableSqlDrop)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(newTableName)) {
 			if (hasRows(newTableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(

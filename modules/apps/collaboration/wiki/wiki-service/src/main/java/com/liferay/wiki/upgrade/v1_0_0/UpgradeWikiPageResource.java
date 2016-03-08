@@ -15,6 +15,7 @@
 package com.liferay.wiki.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,20 +27,7 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select resourcePrimKey from WikiPageResource");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-
-				long groupId = getGroupId(resourcePrimKey);
-
-				runSQL(
-					"update WikiPageResource set groupId = " + groupId +
-						" where resourcePrimKey = " + resourcePrimKey);
-			}
-		}
+		updateWikiPageResources();
 	}
 
 	protected long getGroupId(long resourcePrimKey) throws Exception {
@@ -58,6 +46,24 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 		}
 
 		return groupId;
+	}
+
+	protected void updateWikiPageResources() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select resourcePrimKey from WikiPageResource");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long resourcePrimKey = rs.getLong("resourcePrimKey");
+
+				long groupId = getGroupId(resourcePrimKey);
+
+				runSQL(
+					"update WikiPageResource set groupId = " + groupId +
+						" where resourcePrimKey = " + resourcePrimKey);
+			}
+		}
 	}
 
 }

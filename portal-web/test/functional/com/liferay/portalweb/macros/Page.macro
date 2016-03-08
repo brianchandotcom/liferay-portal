@@ -275,8 +275,9 @@
 		<execute function="Click" locator1="SitePages#DETAILS_NAVIGATION_ADVANCED" />
 
 		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />
+
 		<execute function="SelectFrame" locator1="SitePages#LOGO_UPLOAD_IMAGE_IFRAME" />
-		
+
 		<execute function="UploadCommonFile" locator1="Button#SELECT" value1="${logoFile}" />
 
 		<execute function="Pause" locator1="5000" />

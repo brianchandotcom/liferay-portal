@@ -120,7 +120,7 @@ if (resizable) {
 		},
 
 		getHTML: function() {
-			window['<%= name %>'].getText();
+			return window['<%= name %>'].getText();
 		},
 
 		getNativeEditor: function() {

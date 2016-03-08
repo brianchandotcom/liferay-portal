@@ -114,6 +114,31 @@
 	}
 }
 
+.display-style-icon {
+	.article-entry, .folder-entry {
+		float: left;
+		padding-left: 15px;
+		padding-right: 15px;
+		width: 100%;
+
+		@include respond-to(tablet) {
+			width: 33.33333%;
+		}
+	}
+
+	.article-entry {
+		@include respond-to(desktop) {
+			width: 20%;
+		}
+	}
+
+	.folder-entry {
+		@include respond-to(desktop) {
+			width: 25%;
+		}
+	}
+}
+
 .article-entry {
 	min-width: 150px;
 }

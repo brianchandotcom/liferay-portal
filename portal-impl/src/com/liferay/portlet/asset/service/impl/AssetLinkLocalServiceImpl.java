@@ -216,22 +216,32 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getDirectLinks(long entryId) {
+		return getDirectLinks(entryId, true);
+	}
+
+	@Override
+	public List<AssetLink> getDirectLinks(
+		long entryId, boolean excludeNonVisibleLinks) {
+
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1(entryId);
 
-		if (!assetLinks.isEmpty()) {
-			List<AssetLink> filteredAssetLinks = new ArrayList<>(
-				assetLinks.size());
+		if (excludeNonVisibleLinks) {
+			if (!assetLinks.isEmpty()) {
+				List<AssetLink> filteredAssetLinks = new ArrayList<>(
+					assetLinks.size());
 
-			for (AssetLink assetLink : assetLinks) {
-				AssetEntry assetEntry = assetEntryPersistence.fetchByPrimaryKey(
-					assetLink.getEntryId2());
+				for (AssetLink assetLink : assetLinks) {
+					AssetEntry assetEntry =
+						assetEntryPersistence.fetchByPrimaryKey(
+							assetLink.getEntryId2());
 
-				if ((assetEntry != null) && assetEntry.isVisible()) {
-					filteredAssetLinks.add(assetLink);
+					if ((assetEntry != null) && assetEntry.isVisible()) {
+						filteredAssetLinks.add(assetLink);
+					}
 				}
-			}
 
-			assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+				assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+			}
 		}
 
 		return assetLinks;
@@ -252,23 +262,33 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getDirectLinks(long entryId, int typeId) {
+		return getDirectLinks(entryId, typeId, true);
+	}
+
+	@Override
+	public List<AssetLink> getDirectLinks(
+		long entryId, int typeId, boolean excludeNonVisibleLinks) {
+
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1_T(
 			entryId, typeId);
 
-		if (!assetLinks.isEmpty()) {
-			List<AssetLink> filteredAssetLinks = new ArrayList<>(
-				assetLinks.size());
+		if (excludeNonVisibleLinks) {
+			if (!assetLinks.isEmpty()) {
+				List<AssetLink> filteredAssetLinks = new ArrayList<>(
+					assetLinks.size());
 
-			for (AssetLink assetLink : assetLinks) {
-				AssetEntry assetEntry = assetEntryPersistence.fetchByPrimaryKey(
-					assetLink.getEntryId2());
+				for (AssetLink assetLink : assetLinks) {
+					AssetEntry assetEntry =
+						assetEntryPersistence.fetchByPrimaryKey(
+							assetLink.getEntryId2());
 
-				if ((assetEntry != null) && assetEntry.isVisible()) {
-					filteredAssetLinks.add(assetLink);
+					if ((assetEntry != null) && assetEntry.isVisible()) {
+						filteredAssetLinks.add(assetLink);
+					}
 				}
-			}
 
-			assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+				assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+			}
 		}
 
 		return assetLinks;

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.GroupTable;
 
@@ -29,11 +30,18 @@ public class UpgradeGroup extends UpgradeProcess {
 			GroupTable.class, new AlterColumnType("typeSettings", "TEXT null"),
 			new AlterColumnType("friendlyURL", "VARCHAR(255) null"));
 
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portal.model.Company");
+		upgradeGroup();
+	}
 
-		runSQL(
-			"update Group_ set site = TRUE where classNameId = " + classNameId);
+	protected void upgradeGroup() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portal.model.Company");
+
+			runSQL(
+				"update Group_ set site = TRUE where classNameId = " +
+					classNameId);
+		}
 	}
 
 }

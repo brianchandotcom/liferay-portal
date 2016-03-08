@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Encryptor;
 
@@ -37,7 +38,12 @@ public class UpgradeCompany extends UpgradeProcess {
 			return;
 		}
 
-		try (PreparedStatement ps = connection.prepareStatement(
+		upgradeKey();
+	}
+
+	protected void upgradeKey() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select companyId, key_ from Company");
 			ResultSet rs = ps.executeQuery()) {
 

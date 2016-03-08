@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -27,6 +28,32 @@ import java.sql.Timestamp;
  * @author Sergio González
  */
 public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
+
+	protected void addLayoutFriendlyURL() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select plid, groupId, companyId, userId, userName, " +
+					"createDate, modifiedDate, privateLayout, friendlyURL " +
+						"from Layout");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long plid = rs.getLong("plid");
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				boolean privateLayout = rs.getBoolean("privateLayout");
+				String friendlyURL = rs.getString("friendlyURL");
+
+				addLayoutFriendlyURL(
+					groupId, companyId, userId, userName, createDate,
+					modifiedDate, plid, privateLayout, friendlyURL);
+			}
+		}
+	}
 
 	protected void addLayoutFriendlyURL(
 			long groupId, long companyId, long userId, String userName,
@@ -65,28 +92,7 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select plid, groupId, companyId, userId, userName, " +
-					"createDate, modifiedDate, privateLayout, friendlyURL " +
-						"from Layout");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				boolean privateLayout = rs.getBoolean("privateLayout");
-				String friendlyURL = rs.getString("friendlyURL");
-
-				addLayoutFriendlyURL(
-					groupId, companyId, userId, userName, createDate,
-					modifiedDate, plid, privateLayout, friendlyURL);
-			}
-		}
+		addLayoutFriendlyURL();
 	}
 
 }

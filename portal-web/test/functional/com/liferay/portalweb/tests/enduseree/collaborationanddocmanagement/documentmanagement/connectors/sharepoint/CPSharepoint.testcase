@@ -49,9 +49,8 @@
 
 		<execute macro="DMNavigator#gotoAddRepositoryCP" />
 
-		<execute macro="DMRepository#select">
+		<execute macro="DMRepository#edit">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-			<var name="dmRepositoryType" value="Sharepoint" />
 		</execute>
 
 		<execute macro="DMRepository#addSharepoint">

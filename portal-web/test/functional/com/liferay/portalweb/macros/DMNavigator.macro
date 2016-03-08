@@ -15,6 +15,12 @@
 		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
 	</command>
 
+	<command name="gotoAddRepositoryPG">
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
+	</command>
+
 	<command name="gotoDocumentCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -82,6 +88,14 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_HEADER" value1="Related Assets:" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
 		<execute function="AssertClick" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
+	</command>
+
+	<command name="gotoRepository">
+		<var name="key_dmFolderName" value="${dmRepositoryName}" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE"  value1="${dmRepositoryName}" />
+
+		<execute function="AssertVisible" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" />
 	</command>
 
 	<command name="gotoURLDetail">

@@ -1,6 +1,6 @@
 <definition component-name="portal-document-management-ee">
 	<property name="cmis.repository.type" value="sharepoint2010" />
-	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName" />
+	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column" />
 	<property name="hook.plugins.includes" value="sharepoint-hook" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
@@ -53,17 +53,10 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="DMNavigator#gotoAddRepositoryPG" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoAddRepositoryCP" />
-
-		<execute macro="DMRepository#select">
+		<execute macro="DMRepository#edit">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-			<var name="dmRepositoryType" value="Sharepoint" />
 		</execute>
 
 		<execute macro="DMRepository#addSharepoint">
@@ -72,6 +65,14 @@
 		</execute>
 
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
 	</set-up>
 
 	<tear-down>
@@ -120,7 +121,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMRepository#gotoCP">
+		<execute macro="DMNavigator#gotoRepository">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 

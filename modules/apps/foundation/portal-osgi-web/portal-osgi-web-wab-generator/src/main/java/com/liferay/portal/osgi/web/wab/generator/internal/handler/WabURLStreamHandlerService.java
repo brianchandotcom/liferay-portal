@@ -32,16 +32,14 @@ public class WabURLStreamHandlerService
 	public WabURLStreamHandlerService(
 		BundleContext bundleContext, ClassLoader classLoader) {
 
-		_bundleContext = bundleContext;
 		_classLoader = classLoader;
 	}
 
 	@Override
 	public URLConnection openConnection(URL url) {
-		return new WabURLConnection(_bundleContext, _classLoader, url);
+		return new WabURLConnection(_classLoader, url);
 	}
 
-	private final BundleContext _bundleContext;
 	private final ClassLoader _classLoader;
 
 }

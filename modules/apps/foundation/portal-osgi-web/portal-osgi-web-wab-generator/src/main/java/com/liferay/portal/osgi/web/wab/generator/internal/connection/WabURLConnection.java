@@ -34,20 +34,15 @@ import java.net.URLConnection;
 
 import java.util.Map;
 
-import org.osgi.framework.BundleContext;
-
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
  */
 public class WabURLConnection extends URLConnection {
 
-	public WabURLConnection(
-		BundleContext bundleContext, ClassLoader classLoader, URL url) {
-
+	public WabURLConnection(ClassLoader classLoader, URL url) {
 		super(url);
 
-		_bundleContext = bundleContext;
 		_classLoader = classLoader;
 
 		wireSpringUtils();
@@ -118,7 +113,6 @@ public class WabURLConnection extends URLConnection {
 		}
 	}
 
-	private final BundleContext _bundleContext;
 	private final ClassLoader _classLoader;
 
 }

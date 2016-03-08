@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
 import com.liferay.portal.test.rule.ExpectedDBType;
@@ -37,9 +36,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
-import org.hibernate.exception.LockAcquisitionException;
 import org.hibernate.util.JDBCExceptionReporter;
 
 import org.junit.Assert;
@@ -76,6 +73,13 @@ public class LockLocalServiceTest {
 				expectedDBType = ExpectedDBType.DB2,
 				expectedLog = "[jcc][t4][102][10040][4.16.53] Batch failure.",
 				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.HYPERSONIC,
+				expectedLog =
+					"integrity constraint violation: unique constraint or " +
+						"index violation: IX_228562AD",
+				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.MYSQL,
@@ -226,16 +230,6 @@ public class LockLocalServiceTest {
 
 		private boolean _isExpectedException(RuntimeException re) {
 			Throwable cause = re.getCause();
-
-			if (re instanceof SystemException) {
-				cause = cause.getCause();
-			}
-
-			if ((cause instanceof ConstraintViolationException) ||
-				(cause instanceof LockAcquisitionException)) {
-
-				return true;
-			}
 
 			DB db = DBManagerUtil.getDB();
 

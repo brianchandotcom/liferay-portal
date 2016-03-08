@@ -211,16 +211,6 @@
 </tr>
 <!--CONTENT-->
 <tr>
-	<td>CONTENT_ALL_CONTENT_RADIO</td>
-	<td>//input[contains(@id,'allContent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
-	<td>//input[contains(@id,'chooseContent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_CHOOSE_CONTENT_GENERAL_CHECKBOX</td>
 	<td>//ul[@class='portlet-list']/li//input[@type='checkbox']</td>
 	<td></td>

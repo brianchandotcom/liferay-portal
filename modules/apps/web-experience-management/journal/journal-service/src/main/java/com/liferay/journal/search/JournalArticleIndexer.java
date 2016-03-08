@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
@@ -169,10 +169,9 @@ public class JournalArticleIndexer
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			QueryFilter queryFilter =
-				DDMIndexerUtil.createFieldValueQueryFilter(
-					ddmStructureFieldName, ddmStructureFieldValue,
-					searchContext.getLocale());
+			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(
+				ddmStructureFieldName, ddmStructureFieldValue,
+				searchContext.getLocale());
 
 			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
@@ -353,7 +352,7 @@ public class JournalArticleIndexer
 		}
 
 		if (ddmFormValues != null) {
-			DDMIndexerUtil.addAttributes(document, ddmStructure, ddmFormValues);
+			_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 		}
 	}
 
@@ -678,7 +677,7 @@ public class JournalArticleIndexer
 			return StringPool.BLANK;
 		}
 
-		return DDMIndexerUtil.extractAttributes(
+		return _ddmIndexer.extractIndexableAttributes(
 			ddmStructure, ddmFormValues, LocaleUtil.fromLanguageId(languageId));
 	}
 
@@ -830,6 +829,11 @@ public class JournalArticleIndexer
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
+		_ddmIndexer = ddmIndexer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
@@ -856,6 +860,7 @@ public class JournalArticleIndexer
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleIndexer.class);
 
+	private DDMIndexer _ddmIndexer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContent _journalContent;

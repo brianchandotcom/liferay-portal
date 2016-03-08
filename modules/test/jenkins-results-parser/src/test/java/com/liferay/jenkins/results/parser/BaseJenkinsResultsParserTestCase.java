@@ -42,13 +42,9 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
-		expectedMessage = expectedMessage.replace(" \n", "\n");
-
 		String actualMessage = _fixMessage(getMessage(
 			"${dependencies.url}/" + getSimpleClassName() + "/" +
 				caseDir.getName() + "/"));
-
-		actualMessage = actualMessage.replace(" \n", "\n");
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -246,8 +242,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL,
 			"${dependencies.url}");
 		}
-		
-		return fixedMessage;
+
+		return fixedMessage.replaceAll("[^\\S\\r\\n]+\n", "\n");
 	}
 
 	protected File dependenciesDir = new File(

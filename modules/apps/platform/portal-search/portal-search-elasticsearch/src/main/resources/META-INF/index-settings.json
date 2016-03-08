@@ -3,7 +3,7 @@
 			"analyzer": {
 				"keyword_lowercase": {
 					"tokenizer": "keyword",
-					"filter":  "lowercase"
+					"filter": "lowercase"
 				}
 			},
 			"analyzer": {

@@ -128,6 +128,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
 			<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 			<aui:input name="groupId" type="hidden" value="<%= stagingGroupId %>" />
+			<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 			<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 			<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
 			<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />

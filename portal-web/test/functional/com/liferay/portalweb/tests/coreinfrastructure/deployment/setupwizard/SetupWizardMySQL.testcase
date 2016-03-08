@@ -12,7 +12,8 @@
 
 	<command name="MySQLtoMySQLLportal1" priority="5">
 		<property name="databases.size" value="1" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance.tomcat.mysql" value="true" />
+		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLLportal1" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -36,7 +37,8 @@
 
 	<command name="MySQLtoMySQLLportal1SampleDataDisabled" priority="5">
 		<property name="databases.size" value="1" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance.tomcat.mysql" value="true" />
+		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLLportal1SampleDataDisabled" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />

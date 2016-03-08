@@ -122,11 +122,6 @@
 					/>
 				</c:when>
 				<c:when test="<%= layoutPrototypeDisplayContext.isIconView() %>">
-
-					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
-					%>
-
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/layout_prototype_action.jsp"

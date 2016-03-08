@@ -130,7 +130,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+						row.setCssClass("article-entry " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text>
@@ -295,7 +295,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("col-md-3 col-sm-4 folder-entry " + row.getCssClass());
+						row.setCssClass("folder-entry " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">

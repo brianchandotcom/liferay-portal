@@ -123,7 +123,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 				<c:when test="<%= siteTeamsDisplayContext.isIconView() %>">
 
 					<%
-					row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6");
+					row.setCssClass("article-entry");
 					%>
 
 					<liferay-ui:search-container-column-text>

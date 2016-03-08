@@ -33,13 +33,12 @@ public interface RequestHeaderAutoLoginConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", description = "%import-from-ldap-help",
-		required = false
+		deflt = "false", description = "import-from-ldap-help", required = false
 	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(
-		deflt = "255.255.255.255", description = "%auth-hosts-allowed-help",
+		deflt = "255.255.255.255", description = "auth-hosts-allowed-help",
 		required = false
 	)
 	public String authHostsAllowed();

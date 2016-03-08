@@ -53,13 +53,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	protected static String checkAnnotationParameterProperties(
+	protected String applyDiamondOperator(String content) {
+		Matcher matcher = _diamondOperatorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+			String whitespace = matcher.group(4);
+			String parameterType = matcher.group(5);
+
+			String replacement = StringUtil.replaceFirst(
+				match, whitespace + "<" + parameterType + ">", "<>");
+
+			content = StringUtil.replace(content, match, replacement);
+		}
+
+		return content;
+	}
+
+	protected String checkAnnotationMetaTypeProperties(
+		String content, String annotation) {
+
+		if (!annotation.contains("@Meta.")) {
+			return content;
+		}
+
+		Matcher matcher = _annotationMetaTypePattern.matcher(annotation);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String newAnnotation = StringUtil.replaceFirst(
+			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
+
+		return StringUtil.replace(content, annotation, newAnnotation);
+	}
+
+	protected String checkAnnotationParameterProperties(
 		String content, String annotation) {
 
 		int x = annotation.indexOf("property = {");
 
 		if (x == -1) {
-			return null;
+			return content;
 		}
 
 		int y = x;
@@ -100,7 +136,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if ((x == -1) || (y == -1) || (z == -1)) {
-				return null;
+				return content;
 			}
 
 			String propertyName = parameterProperty.substring(x + 1, y);
@@ -121,23 +157,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			previousPropertyName = propertyName;
 			previousPropertyNameAndValue = propertyNameAndValue;
-		}
-
-		return null;
-	}
-
-	protected String applyDiamondOperator(String content) {
-		Matcher matcher = _diamondOperatorPattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-			String whitespace = matcher.group(4);
-			String parameterType = matcher.group(5);
-
-			String replacement = StringUtil.replaceFirst(
-				match, whitespace + "<" + parameterType + ">", "<>");
-
-			content = StringUtil.replace(content, match, replacement);
 		}
 
 		return content;
@@ -1257,7 +1276,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					String newContent = checkAnnotationParameterProperties(
 						content, annotation);
 
-					if (newContent != null) {
+					newContent = checkAnnotationMetaTypeProperties(
+						newContent, annotation);
+
+					if (!newContent.equals(content)) {
 						return formatAnnotations(
 							fileName, javaTermName, newContent, indent);
 					}
@@ -4028,6 +4050,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
+	private Pattern _annotationMetaTypePattern = Pattern.compile(
+		"\\s(name|description) = \"%");
 	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");

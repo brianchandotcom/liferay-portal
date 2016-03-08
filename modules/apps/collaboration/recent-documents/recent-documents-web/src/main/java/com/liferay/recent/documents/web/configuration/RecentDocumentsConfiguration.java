@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface RecentDocumentsConfiguration {
 
 	@Meta.AD(
-		deflt = "1", description = "%check-file-ranks-interval-help",
+		deflt = "1", description = "check-file-ranks-interval-help",
 		required = false
 	)
 	public int checkFileRanksInterval();

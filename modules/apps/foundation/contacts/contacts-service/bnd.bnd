@@ -8,8 +8,3 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Liferay-Service: true
-Liferay-Spring-Context: META-INF/spring
-Require-Capability:\
-	liferay.extender;\
-	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
--liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

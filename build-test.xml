@@ -5403,6 +5403,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<equals arg1="${browser.type}" arg2="android" />
+			<then>
+				<antcall target="prepare-mobile-device" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${browser.type}" arg2="androidchrome" />
 			<then>
 				<exec executable="/bin/bash" outputproperty="mobile.device.name" os="${os.apple},${os.unix}">

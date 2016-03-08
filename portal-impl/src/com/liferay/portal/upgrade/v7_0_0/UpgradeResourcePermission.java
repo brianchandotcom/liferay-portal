@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
@@ -28,38 +29,46 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String selectSQL =
-			"select resourcePermissionId, primKey, actionIds from " +
-				"ResourcePermission";
-		String updateSQL =
-			"update ResourcePermission set primKeyId = ?, viewActionId = ? " +
-				"where resourcePermissionId = ?";
+		upgradeResourcePermissions();
+	}
 
-		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, updateSQL)) {
+	protected void upgradeResourcePermissions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String selectSQL =
+				"select resourcePermissionId, primKey, actionIds from " +
+					"ResourcePermission";
+			String updateSQL =
+				"update ResourcePermission set primKeyId = ?, viewActionId = " +
+					"? where resourcePermissionId = ?";
 
-			while (rs.next()) {
-				long resourcePermissionId = rs.getLong("resourcePermissionId");
-				long actionIds = rs.getLong("actionIds");
+			try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
+				ResultSet rs = ps1.executeQuery();
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection, updateSQL)) {
 
-				long newPrimKeyId = GetterUtil.getLong(rs.getString("primKey"));
-				boolean newViewActionId = (actionIds % 2 == 1);
+				while (rs.next()) {
+					long resourcePermissionId = rs.getLong(
+						"resourcePermissionId");
+					long actionIds = rs.getLong("actionIds");
 
-				if ((newPrimKeyId == 0) && !newViewActionId) {
-					continue;
+					long newPrimKeyId = GetterUtil.getLong(
+						rs.getString("primKey"));
+					boolean newViewActionId = (actionIds % 2 == 1);
+
+					if ((newPrimKeyId == 0) && !newViewActionId) {
+						continue;
+					}
+
+					ps2.setLong(1, newPrimKeyId);
+					ps2.setBoolean(2, newViewActionId);
+					ps2.setLong(3, resourcePermissionId);
+
+					ps2.addBatch();
 				}
 
-				ps2.setLong(1, newPrimKeyId);
-				ps2.setBoolean(2, newViewActionId);
-				ps2.setLong(3, resourcePermissionId);
-
-				ps2.addBatch();
+				ps2.executeBatch();
 			}
-
-			ps2.executeBatch();
 		}
 	}
 

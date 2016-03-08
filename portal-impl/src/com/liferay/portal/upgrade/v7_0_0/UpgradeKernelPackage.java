@@ -70,19 +70,19 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
-		StringBundler sb1 = new StringBundler(7);
-
-		sb1.append("update ");
-		sb1.append(tableName);
-		sb1.append(" set ");
-		sb1.append(columnName);
-		sb1.append(" = replace(");
-		sb1.append(columnName);
-		sb1.append(", '");
-
-		String tableSQL = sb1.toString();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			StringBundler sb1 = new StringBundler(7);
+
+			sb1.append("update ");
+			sb1.append(tableName);
+			sb1.append(" set ");
+			sb1.append(columnName);
+			sb1.append(" = replace(");
+			sb1.append(columnName);
+			sb1.append(", '");
+
+			String tableSQL = sb1.toString();
+
 			StringBundler sb2 = new StringBundler(9);
 
 			for (String[] name : names) {

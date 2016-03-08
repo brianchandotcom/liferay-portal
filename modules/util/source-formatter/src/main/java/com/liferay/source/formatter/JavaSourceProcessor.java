@@ -53,7 +53,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	protected static String checkAnnotationParameterProperties(
+	protected String checkAnnotationParameterProperties(
 		String content, String annotation) {
 
 		int x = annotation.indexOf("property = {");

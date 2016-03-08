@@ -47,6 +47,42 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 						<aui:button disabled="<%= disableInputs %>" id="changeToPublicLayoutsButton" value="change-to-private-pages" />
 					</c:otherwise>
 				</c:choose>
+
+				<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
+
+					<%
+					long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId");
+					List<LayoutSetBranch> layoutSetBranches = null;
+
+					if (disableInputs && (layoutSetBranchId > 0)) {
+						layoutSetBranches = new ArrayList<>(1);
+
+						layoutSetBranches.add(LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId));
+					}
+					else {
+						layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
+					}
+					%>
+
+					<aui:select disabled="<%= disableInputs %>" label="site-pages-variation" name="layoutSetBranchId">
+
+						<%
+						for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+							boolean selected = false;
+
+							if ((layoutSetBranchId == layoutSetBranch.getLayoutSetBranchId()) || ((layoutSetBranchId == 0) && layoutSetBranch.isMaster())) {
+								selected = true;
+							}
+						%>
+
+						<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+				</c:if>
 			</aui:fieldset>
 		</li>
 	</c:if>

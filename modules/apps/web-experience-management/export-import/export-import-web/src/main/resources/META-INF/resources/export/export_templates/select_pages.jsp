@@ -44,6 +44,34 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 					<aui:button id="changeToPublicLayoutsButton" value="change-to-private-pages" />
 				</c:otherwise>
 			</c:choose>
+
+			<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
+
+				<%
+				List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
+
+				long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId");
+				%>
+
+				<aui:select label="site-pages-variation" name="layoutSetBranchId">
+
+					<%
+					for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+						boolean selected = false;
+
+						if ((layoutSetBranchId == layoutSetBranch.getLayoutSetBranchId()) || ((layoutSetBranchId == 0) && layoutSetBranch.isMaster())) {
+							selected = true;
+						}
+					%>
+
+					<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</c:if>
 		</aui:fieldset>
 	</li>
 

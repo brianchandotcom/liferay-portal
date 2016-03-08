@@ -364,7 +364,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 										<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 										<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 										<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-										<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+										<liferay-util:param name="privateLayout" value='<%= MapUtil.getString(exportImportConfigurationSettingsMap, "privateLayout", String.valueOf(privateLayout)) %>' />
 										<liferay-util:param name="treeId" value="<%= treeId %>" />
 										<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 										<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredPublish) %>" />

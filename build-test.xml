@@ -6963,8 +6963,6 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-selenium-test" depends="prepare-selenium">
-		<antcall target="prepare-mobile-device" />
-
 		<if>
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />

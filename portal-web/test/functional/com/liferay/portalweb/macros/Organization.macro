@@ -2,32 +2,24 @@
 	<var name="orgName" value="Organization Name" />
 
 	<command name="addAdditionalEmailAddressesCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Additional Email Addresses" />
 		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_TAB" value1="Additional Email Addresses" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${orgAdditionalEmailAddress}" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" />
+
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Additional Email Addresses" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${orgAdditionalEmailAddress}" />
 	</command>
 
 	<command name="addAddressCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_TAB" value1="Addresses" />
+		<execute macro="Organization#gotoIdentificationCP" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_STREET_FIELD_1" value1="${orgAddressStreet}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#ADDRESSES_CITY_FIELD" value1="${orgAddressCity}" />
@@ -63,18 +55,14 @@
 	</command>
 
 	<command name="addCommentCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#MISCELLANEOUS_COMMENTS" value1="Comments" />
+		<execute macro="Organization#gotoMiscellaneousCP" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
+
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoMiscellaneousCP" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
 	</command>
 
@@ -153,56 +141,56 @@
 	</command>
 
 	<command name="addPhoneNumbersCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Phone Numbers" />
 		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_TAB" value1="Phone Numbers" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_PRIMARY_RADIO" />
+
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Phone Numbers" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 	</command>
 
 	<command name="addReminderQueriesCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoMiscellaneousCP">
+			<var name="panelHeading" value="Reminder Queries" />
 		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#MISCELLANEOUS_REMINDER_QUERIES" value1="Reminder Queries" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD" value1="${orgReminderQueriesDefaultLanguage}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT" value1="${orgLocalizedLanguage}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_TEXT_FIELD" value1="${orgReminderQuery}" />
+
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoMiscellaneousCP">
+			<var name="panelHeading" value="Reminder Queries" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD" value1="${orgReminderQueriesDefaultLanguage}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT" value1="${orgLocalizedLanguage}" />
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT" value1="${orgLocalizedLanguage}" />
 	</command>
 
 	<command name="addServicesCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Services" />
 		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#SERVICES_TAB" value1="Services" />
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT" value1="${orgServicesOpen}" />
 		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_CLOSE_SELECT" value1="${orgServicesClosed}" />
+
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Services" />
+		</execute>
+
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_OPEN_SELECT" value1="${orgServicesOpen}" />
 		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditOrganization#SERVICES_MONDAY_CLOSE_SELECT" value1="${orgServicesClosed}" />
 	</command>
@@ -258,19 +246,19 @@
 	</command>
 
 	<command name="addWebsitesCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Websites" />
 		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_TAB" value1="Websites" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_PRIMARY_RADIO" />
+
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="Websites" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
 	</command>
 
@@ -387,6 +375,54 @@
 		<execute function="AssertTextNotPresent" value1="${orgName}" />
 	</command>
 
+	<command name="editIdentificationCP">
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Organization#gotoIdentificationCP">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+	</command>
+
+	<command name="editMiscellaneousCP">
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Organization#gotoMiscellaneousCP">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+	</command>
+
+	<command name="editOrganizationInformationCP">
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="Organization#gotoOrganizationInformationCP">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+	</command>
+
 	<command name="editSiteCP">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />
@@ -429,6 +465,45 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<execute function="AssertVisible" locator1="UsersAndOrganizations#BREADCRUMB" />
+	</command>
+
+	<command name="gotoIdentificationCP">
+		<execute function="AssertClick" locator1="UsersAndOrganizations#IDENTIFICATION" value1="Identification" />
+
+		<if>
+			<isset var="panelHeading" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="${panelHeading}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoMiscellaneousCP">
+		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
+
+		<if>
+			<isset var="panelHeading" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="${panelHeading}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoOrganizationInformationCP">
+		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_INFORMATION" value1="Organization Information" />
+
+		<if>
+			<isset var="panelHeading" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="${panelHeading}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="manageMembershipOptionsInSites">
@@ -569,19 +644,6 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_LAST_NAME" value1="${userLastName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-	</command>
-
-	<command name="viewCommentCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#MISCELLANEOUS_COMMENTS" value1="Comments" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#COMMENTS_FIELD" value1="${orgComment}" />
 	</command>
 
 	<command name="viewCP">

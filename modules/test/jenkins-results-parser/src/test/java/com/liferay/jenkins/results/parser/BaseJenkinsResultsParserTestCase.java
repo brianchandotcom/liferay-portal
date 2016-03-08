@@ -42,9 +42,10 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
-		String actualMessage = _fixMessage(getMessage(
-			"${dependencies.url}/" + getSimpleClassName() + "/" +
-				caseDir.getName() + "/"));
+		String actualMessage = _fixMessage(
+			getMessage(
+				"${dependencies.url}/" + getSimpleClassName() + "/" +
+					caseDir.getName() + "/"));
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -219,35 +220,36 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 
-		String expectedMessage = _fixMessage(getMessage(toURLString(sampleDir)));
+		String expectedMessage = _fixMessage(
+			getMessage(toURLString(sampleDir)));
 
 		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
-	}
-	
-	private String _fixMessage(String message) {
-		String fixedMessage = message;
-		
-		if (fixedMessage.contains(
-			JenkinsResultsParserUtil.HTTP_DEPENDENCIES_URL)) {
-
-			fixedMessage = fixedMessage.replace(
-			JenkinsResultsParserUtil.HTTP_DEPENDENCIES_URL,
-			"${dependencies.url}");
-		}
-		
-		if (fixedMessage.contains(
-			JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL)) {
-
-			fixedMessage = fixedMessage.replace(
-			JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL,
-			"${dependencies.url}");
-		}
-
-		return fixedMessage.replaceAll("[^\\S\\r\\n]+\n", "\n");
 	}
 
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
+
+	private String _fixMessage(String message) {
+		String fixedMessage = message;
+
+		if (fixedMessage.contains(
+				JenkinsResultsParserUtil.HTTP_DEPENDENCIES_URL)) {
+
+			fixedMessage = fixedMessage.replace(
+				JenkinsResultsParserUtil.HTTP_DEPENDENCIES_URL,
+				"${dependencies.url}");
+		}
+
+		if (fixedMessage.contains(
+				JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL)) {
+
+			fixedMessage = fixedMessage.replace(
+				JenkinsResultsParserUtil.FILE_DEPENDENCIES_URL,
+				"${dependencies.url}");
+		}
+
+		return fixedMessage.replaceAll("[^\\S\\r\\n]+\n", "\n");
+	}
 
 	private static final String[][] _XML_REPLACEMENTS = new String[][] {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},

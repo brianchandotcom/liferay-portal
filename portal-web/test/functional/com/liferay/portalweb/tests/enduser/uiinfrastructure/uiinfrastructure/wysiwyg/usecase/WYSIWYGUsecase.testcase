@@ -129,17 +129,6 @@
 	</command>
 
 	<command name="ViewWikiFrontPageRightToLeft" priority="4">
-		<var name="currentPortalLanguages" value="English (United States),Arabic (Saudi Arabia)" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#configureCurrentLanguagesCP">
-			<var name="currentPortalLanguages" value="${currentPortalLanguages}" />
-			<var name="displaySettings" value="Display Settings" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -157,14 +146,14 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Arabic (Saudi Arabia)" />
+			<var name="language" value="Hebrew (Israel)" />
 		</execute>
 
 		<execute macro="WikiPage#addLocalizedFrontPagePG">
-			<var name="emptyPageMessage" value="هذه الصفحة فارغة. قم بتحريرها لإضافة نص." />
+			<var name="emptyPageMessage" value="דף זה ריק. ערוך אותו על מנת להוסיף טקסט" />
 			<var name="rtl" value="true" />
-			<var name="successMessage" value="تم تنفيذ طلبك بنجاح." />
-			<var name="wikiPageContent" value="Wiki Right to Left محتوى" />
+			<var name="successMessage" value="בקשתך עברה בהצלחה" />
+			<var name="wikiPageContent" value="Wiki Right to Left תוֹכֶן" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -173,7 +162,7 @@
 
 		<execute macro="WikiPage#viewLocalizedFrontPagePG">
 			<var name="rightToLeft" value="true" />
-			<var name="wikiPageContent" value="Wiki Right to Left محتوى" />
+			<var name="wikiPageContent" value="Wiki Right to Left תוֹכֶן" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">

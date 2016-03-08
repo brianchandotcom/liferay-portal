@@ -137,7 +137,7 @@ AUI.add(
 
 						var indexActionsNode = A.one(instance.get(STR_INDEX_ACTIONS_PANEL));
 
-						return !!indexActionsNode.one('.background-task-status-in-progress');
+						return !!(indexActionsNode && indexActionsNode.one('.background-task-status-in-progress'));
 					},
 
 					_onSubmit: function(event) {
@@ -183,40 +183,42 @@ AUI.add(
 							renderInterval = INTERVAL_RENDER_IN_PROGRESS;
 						}
 
-						A.io.request(
-							instance.get(STR_URL),
-							{
-								on: {
-									success: function(event, id, obj) {
-										var responseDataNode = A.Node.create(this.get('responseData'));
+						var currentAdminIndexPanel = A.one(instance.get(STR_INDEX_ACTIONS_PANEL));
 
-										var responseAdminIndexPanel = responseDataNode.one(instance.get(STR_INDEX_ACTIONS_PANEL));
+						if (currentAdminIndexPanel) {
+							A.io.request(
+								instance.get(STR_URL),
+								{
+									on: {
+										success: function(event, id, obj) {
+											var responseDataNode = A.Node.create(this.get('responseData'));
 
-										var responseAdminIndexNodeList = responseAdminIndexPanel.all('.index-action-wrapper');
+											var responseAdminIndexPanel = responseDataNode.one(instance.get(STR_INDEX_ACTIONS_PANEL));
 
-										var currentAdminIndexPanel = A.one(instance.get(STR_INDEX_ACTIONS_PANEL));
+											var responseAdminIndexNodeList = responseAdminIndexPanel.all('.index-action-wrapper');
 
-										var currentAdminIndexNodeList = currentAdminIndexPanel.all('.index-action-wrapper');
+											var currentAdminIndexNodeList = currentAdminIndexPanel.all('.index-action-wrapper');
 
-										currentAdminIndexNodeList.each(
-											function(item, index) {
-												var inProgress = item.one('.progress');
+											currentAdminIndexNodeList.each(
+												function(item, index) {
+													var inProgress = item.one('.progress');
 
-												var responseAdminIndexNode = responseAdminIndexNodeList.item(index);
+													var responseAdminIndexNode = responseAdminIndexNodeList.item(index);
 
-												if (!inProgress) {
-													inProgress = responseAdminIndexNode.one('.progress');
+													if (!inProgress) {
+														inProgress = responseAdminIndexNode.one('.progress');
+													}
+
+													if (inProgress) {
+														item.replace(responseAdminIndexNode);
+													}
 												}
-
-												if (inProgress) {
-													item.replace(responseAdminIndexNode);
-												}
-											}
-										);
+											);
+										}
 									}
 								}
-							}
-						);
+							);
+						}
 
 						instance._laterTimeout = A.later(renderInterval, instance, '_updateIndexActions');
 					}

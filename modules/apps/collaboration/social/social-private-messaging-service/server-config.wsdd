@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<globalConfiguration>
+		<parameter name="adminPassword" value="admin" />
+		<parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl" />
+		<parameter name="sendXsiTypes" value="true" />
+		<parameter name="sendMultiRefs" value="true" />
+		<parameter name="sendXMLDeclaration" value="true" />
+		<parameter name="axis.sendMinimizedElements" value="true" />
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session" />
+			</handler>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request" />
+				<parameter name="extension" value=".jwr" />
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+	<handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder" />
+	<handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper" />
+	<handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+	<transport name="http">
+		<requestFlow>
+			<handler type="URLMapper" />
+			<handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</requestFlow>
+	</transport>
+	<transport name="local">
+		<responseFlow>
+			<handler type="LocalResponder" />
+		</responseFlow>
+	</transport>
+	<service name="Plugin_PM_UserThreadService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.privatemessaging.social.liferay.com" xmlns:cmp-ns="http://model.kernel.boards.message.liferay.com" qname="ns:ArrayOf_tns2_MBMessageSoap" type="java:com.liferay.message.boards.kernel.model.MBMessageSoap[]" innerType="cmp-ns:MBMessageSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.privatemessaging.social.liferay.com" xmlns:cmp-ns="http://model.privatemessaging.social.liferay.com" qname="ns:ArrayOf_tns3_UserThreadSoap" type="java:com.liferay.social.privatemessaging.model.UserThreadSoap[]" innerType="cmp-ns:UserThreadSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.kernel.boards.message.liferay.com" qname="ns:MBMessageSoap" type="java:com.liferay.message.boards.kernel.model.MBMessageSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://model.privatemessaging.social.liferay.com" qname="ns:UserThreadSoap" type="java:com.liferay.social.privatemessaging.model.UserThreadSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.privatemessaging.social.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getLastThreadMessage" qname="operNS:getLastThreadMessage" returnQName="getLastThreadMessageReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mbThreadId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.privatemessaging.social.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getThreadMessagesCount" qname="operNS:getThreadMessagesCount" returnQName="getThreadMessagesCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mbThreadId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.privatemessaging.social.liferay.com" xmlns:rtns="urn:http.service.privatemessaging.social.liferay.com" xmlns:tns2="http://model.kernel.boards.message.liferay.com" name="getThreadMessages" qname="operNS:getThreadMessages" returnQName="getThreadMessagesReturn" returnType="rtns:ArrayOf_tns2_MBMessageSoap" returnItemType="tns2:MBMessageSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mbThreadId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ascending" type="tns:boolean"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.privatemessaging.social.liferay.com" xmlns:rtns="urn:http.service.privatemessaging.social.liferay.com" xmlns:tns2="http://model.privatemessaging.social.liferay.com" name="getUserUserThreads" qname="operNS:getUserUserThreads" returnQName="getUserUserThreadsReturn" returnType="rtns:ArrayOf_tns3_UserThreadSoap" returnItemType="tns2:UserThreadSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="deleted" type="tns:boolean"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getLastThreadMessage getThreadMessages getThreadMessagesCount getUserUserThreads" />
+		<parameter name="className" value="com.liferay.social.privatemessaging.service.http.UserThreadServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.kernel.boards.message.liferay.com,http://model.privatemessaging.social.liferay.com,urn:http.service.privatemessaging.social.liferay.com" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="UserThreadServiceSoap" />
+		<parameter name="wsdlServiceElement" value="UserThreadServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_PM_UserThreadService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.privatemessaging.social.liferay.com" />
+	</service>
+</deployment>

@@ -23,7 +23,13 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="roleIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addUserGroupRoles deleteUserGroupRoles" />
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="updateUserGroupRoles" qname="operNS:updateUserGroupRoles" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="addedRoleIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="deletedRoleIds" type="tns:ArrayOf_xsd_long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addUserGroupRoles deleteUserGroupRoles updateUserGroupRoles" />
 		<parameter name="className" value="com.liferay.portal.service.http.UserGroupRoleServiceSoap" />
 		<parameter name="schemaUnqualified" value="urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

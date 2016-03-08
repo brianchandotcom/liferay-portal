@@ -16,5 +16,6 @@ Liferay-Spring-Context: META-INF/spring
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-donotcopy: (.*\.wsdd)
 -include: ../../../../../marketplace/collaboration/bnd.bnd
 -liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

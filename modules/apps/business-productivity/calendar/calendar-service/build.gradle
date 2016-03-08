@@ -22,6 +22,7 @@ dependencies {
 	provided project(":apps:platform:xstream:xstream-configurator-api")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":apps:web-experience-management:export-import:export-import-service")
+	provided project(":core:registry-api")
 }
 
 liferay {

@@ -35,7 +35,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -98,6 +98,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		super.setUp();
 
 		setUpDDMFormValuesToFieldsConverter();
+		setUpFieldsToDDMFormValuesConverter();
 		setUpJSONStorageAdapter();
 	}
 
@@ -646,8 +647,8 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
-		DDMFormValues ddmFormValues =
-			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
 
 		return storageAdapter.create(
 			TestPropsValues.getCompanyId(), ddmStructureId, ddmFormValues,
@@ -697,6 +698,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			DDMFormValuesToFieldsConverter.class);
 	}
 
+	protected void setUpFieldsToDDMFormValuesConverter() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_fieldsToDDMFormValuesConverter = registry.getService(
+			FieldsToDDMFormValuesConverter.class);
+	}
+
 	protected void setUpJSONStorageAdapter() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -735,6 +743,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static Locale _ptLocale;
 
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private StorageAdapter _jsonStorageAdapter;
 
 }

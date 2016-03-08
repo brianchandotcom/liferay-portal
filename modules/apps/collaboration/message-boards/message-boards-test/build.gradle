@@ -1,5 +1,4 @@
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
 	testCompile project(":apps:collaboration:message-boards:message-boards-comment")
 	testCompile project(":apps:collaboration:message-boards:message-boards-web")
 	testCompile project(":apps:platform:portal-search:portal-search")
@@ -7,4 +6,5 @@ dependencies {
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
 }

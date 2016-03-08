@@ -1,6 +1,7 @@
 apply plugin: "com.liferay.lang.merger"
 
 dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
@@ -12,6 +13,8 @@ dependencies {
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:business-productivity:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:platform:frontend:frontend-taglib")
+	provided project(":apps:platform:osgi-service-tracker-collections")
+	provided project(":apps:platform:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:platform:portal:portal-upgrade")
 	provided project(":apps:web-experience-management:export-import:export-import-api")
 	provided project(":apps:web-experience-management:export-import:export-import-service")

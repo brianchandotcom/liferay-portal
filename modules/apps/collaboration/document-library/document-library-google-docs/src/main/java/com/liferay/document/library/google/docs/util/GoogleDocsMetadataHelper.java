@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -70,12 +70,14 @@ public class GoogleDocsMetadataHelper {
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntry dlFileEntry,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
 		StorageEngine storageEngine) {
 
 		try {
 			_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
 			_ddmStructureLocalService = ddmStructureLocalService;
 			_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+			_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
 			_storageEngine = storageEngine;
 
 			_dlFileVersion = dlFileEntry.getFileVersion();
@@ -92,12 +94,14 @@ public class GoogleDocsMetadataHelper {
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileVersion dlFileVersion,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
 		StorageEngine storageEngine) {
 
 		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileVersion = dlFileVersion;
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
 		_storageEngine = storageEngine;
 
 		try {
@@ -272,7 +276,7 @@ public class GoogleDocsMetadataHelper {
 	protected DDMFormValues toDDMFormValues(Fields fields)
 		throws PortalException {
 
-		return FieldsToDDMFormValuesConverterUtil.convert(
+		return _fieldsToDDMFormValuesConverter.convert(
 			_ddmStructureLocalService.getDDMStructure(
 				_ddmStructure.getStructureId()),
 			fields);
@@ -300,6 +304,8 @@ public class GoogleDocsMetadataHelper {
 	private DLFileVersion _dlFileVersion;
 	private Fields _fields;
 	private Map<String, Field> _fieldsMap;
+	private final FieldsToDDMFormValuesConverter
+		_fieldsToDDMFormValuesConverter;
 	private final StorageEngine _storageEngine;
 
 }

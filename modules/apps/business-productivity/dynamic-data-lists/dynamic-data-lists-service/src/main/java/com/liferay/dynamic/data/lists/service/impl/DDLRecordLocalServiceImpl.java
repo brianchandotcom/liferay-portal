@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -153,9 +153,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
-		DDMFormValues ddmFormValues =
-			FieldsToDDMFormValuesConverterUtil.convert(
-				recordSet.getDDMStructure(), fields);
+		DDMFormValues ddmFormValues = fieldsToDDMFormValuesConverter.convert(
+			recordSet.getDDMStructure(), fields);
 
 		return ddlRecordLocalService.addRecord(
 			userId, groupId, recordSetId, displayIndex, ddmFormValues,
@@ -632,9 +631,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			fields = ddm.mergeFields(fields, existingFields);
 		}
 
-		DDMFormValues ddmFormValues =
-			FieldsToDDMFormValuesConverterUtil.convert(
-				recordSet.getDDMStructure(), fields);
+		DDMFormValues ddmFormValues = fieldsToDDMFormValuesConverter.convert(
+			recordSet.getDDMStructure(), fields);
 
 		return ddlRecordLocalService.updateRecord(
 			userId, recordId, majorVersion, displayIndex, ddmFormValues,
@@ -964,6 +962,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@ServiceReference(type = DDMFormValuesToFieldsConverter.class)
 	protected DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter;
+
+	@ServiceReference(type = FieldsToDDMFormValuesConverter.class)
+	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
 
 	@ServiceReference(type = IndexerRegistry.class)
 	protected IndexerRegistry indexerRegistry;

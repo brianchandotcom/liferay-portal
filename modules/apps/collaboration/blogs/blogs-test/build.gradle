@@ -1,6 +1,9 @@
 dependencies {
 	testCompile project(":apps:collaboration:blogs:blogs-service")
 	testCompile project(":apps:collaboration:blogs:blogs-web")
+	testCompile project(":core:registry-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
 }

@@ -16,6 +16,7 @@ package com.liferay.journal.web.asset;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -120,6 +121,8 @@ public class JournalArticleAssetRenderer
 		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
 			new JournalArticleDDMFormValuesReader(_article);
 
+		journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
+			_fieldsToDDMFormValuesConverter);
 		journalArticleDDMFormValuesReader.setJournalConverter(
 			_journalConverter);
 
@@ -462,6 +465,12 @@ public class JournalArticleAssetRenderer
 		return true;
 	}
 
+	public void setFieldsToDDMFormValuesConverter(
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
+
+		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
+	}
+
 	public void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
@@ -475,7 +484,7 @@ public class JournalArticleAssetRenderer
 		throws PortalException {
 
 		boolean workflowAssetPreview = GetterUtil.getBoolean(
-			(Boolean)request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
+			request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
 
 		String ddmTemplateKey = (String)request.getAttribute(
 			WebKeys.JOURNAL_TEMPLATE_ID);
@@ -514,6 +523,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	private final JournalArticle _article;
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private JournalContent _journalContent;
 	private JournalConverter _journalConverter;
 

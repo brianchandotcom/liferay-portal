@@ -24,20 +24,19 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -170,7 +169,23 @@ public class FieldsToDDMFormValuesConverterImpl
 		throws PortalException {
 
 		try {
-			return _ddm.getFieldsDisplayValues(ddmFieldsDisplayField);
+			DDMStructure ddmStructure = ddmFieldsDisplayField.getDDMStructure();
+
+			List<String> fieldsDisplayValues = new ArrayList<>();
+
+			String[] values = splitFieldsDisplayValue(ddmFieldsDisplayField);
+
+			for (String value : values) {
+				String fieldName = StringUtil.extractFirst(
+					value, DDMImpl.INSTANCE_SEPARATOR);
+
+				if (ddmStructure.hasField(fieldName)) {
+					fieldsDisplayValues.add(fieldName);
+				}
+			}
+
+			return fieldsDisplayValues.toArray(
+				new String[fieldsDisplayValues.size()]);
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
@@ -189,11 +204,6 @@ public class FieldsToDDMFormValuesConverterImpl
 		}
 
 		return String.valueOf(fieldValue);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
 	}
 
 	protected void setDDMFormFieldValueInstanceId(
@@ -304,6 +314,10 @@ public class FieldsToDDMFormValuesConverterImpl
 		}
 	}
 
-	private DDM _ddm;
+	protected String[] splitFieldsDisplayValue(Field fieldsDisplayField) {
+		String value = (String)fieldsDisplayField.getValue();
+
+		return StringUtil.split(value);
+	}
 
 }

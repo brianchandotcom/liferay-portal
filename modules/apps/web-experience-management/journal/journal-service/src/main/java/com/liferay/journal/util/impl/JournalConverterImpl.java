@@ -16,10 +16,11 @@ package com.liferay.journal.util.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.journal.util.JournalConverter;
@@ -54,6 +55,7 @@ import com.liferay.util.xml.XMLUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -198,6 +200,13 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
+	public DDMFormValues getDDMFormValues(
+			DDMStructure ddmStructure, Fields fields)
+		throws PortalException {
+
+		return _fieldsToDDMFormValuesConverter.convert(ddmStructure, fields);
+	}
+
 	@Override
 	public String getDDMXSD(String journalXSD) throws Exception {
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
@@ -247,6 +256,13 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return XMLUtil.formatXML(document);
+	}
+
+	@Reference(unbind = "-")
+	public void setFieldsToDDMFormValuesConverter(
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
+
+		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
 	}
 
 	protected void addDDMFields(
@@ -331,7 +347,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
-		String[] fieldsDisplayValues = _ddm.getFieldsDisplayValues(
+		String[] fieldsDisplayValues = getDDMFieldsDisplayValues(
 			fieldsDisplayField);
 
 		int offset = -1;
@@ -394,6 +410,33 @@ public class JournalConverterImpl implements JournalConverter {
 		String[] languageIds = LocaleUtil.toLanguageIds(availableLocalesArray);
 
 		return StringUtil.merge(languageIds);
+	}
+
+	protected String[] getDDMFieldsDisplayValues(Field ddmFieldsDisplayField)
+		throws PortalException {
+
+		try {
+			DDMStructure ddmStructure = ddmFieldsDisplayField.getDDMStructure();
+
+			List<String> fieldsDisplayValues = new ArrayList<>();
+
+			String[] values = splitFieldsDisplayValue(ddmFieldsDisplayField);
+
+			for (String value : values) {
+				String fieldName = StringUtil.extractFirst(
+					value, DDMImpl.INSTANCE_SEPARATOR);
+
+				if (ddmStructure.hasField(fieldName)) {
+					fieldsDisplayValues.add(fieldName);
+				}
+			}
+
+			return fieldsDisplayValues.toArray(
+				new String[fieldsDisplayValues.size()]);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	protected Serializable getDocumentLibraryValue(String url) {
@@ -646,11 +689,6 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}
@@ -658,6 +696,12 @@ public class JournalConverterImpl implements JournalConverter {
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	protected String[] splitFieldsDisplayValue(Field fieldsDisplayField) {
+		String value = (String)fieldsDisplayField.getValue();
+
+		return StringUtil.split(value);
 	}
 
 	protected void updateContentDynamicElement(
@@ -1103,11 +1147,11 @@ public class JournalConverterImpl implements JournalConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
 
-	private DDM _ddm;
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
 	private DLAppLocalService _dlAppLocalService;
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _journalTypesToDDMTypes;
 	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(

@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -151,12 +150,6 @@ public class DDMUtil {
 
 		return getDDM().getFields(
 			ddmStructureId, fieldNamespace, serviceContext);
-	}
-
-	public static String[] getFieldsDisplayValues(Field fieldsDisplayField)
-		throws Exception {
-
-		return getDDM().getFieldsDisplayValues(fieldsDisplayField);
 	}
 
 	public static Serializable getIndexedFieldValue(

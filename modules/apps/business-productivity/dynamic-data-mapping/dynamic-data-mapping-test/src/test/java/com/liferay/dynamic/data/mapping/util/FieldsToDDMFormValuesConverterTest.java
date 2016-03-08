@@ -24,10 +24,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.dynamic.data.mapping.util.impl.FieldsToDDMFormValuesConverterImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.List;
 
@@ -56,7 +54,6 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		setUpDDMFormJSONDeserializer();
 		setUpDDMFormJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();
-		setUpFieldsToDDMFormValuesConverter();
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
@@ -86,8 +83,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Fields fields = createFields(metadata1Field, metadata2Field);
 
-		DDMFormValues ddmFormValues =
-			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -133,8 +130,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Fields fields = createFields(nameField, phoneField, fieldsDisplayField);
 
-		DDMFormValues ddmFormValues =
-			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -198,8 +195,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Fields fields = createFields(nameField, fieldsDisplayField);
 
-		DDMFormValues ddmFormValues =
-			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -241,8 +238,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		Fields fields = createFields(
 			titleField, contentField, fieldsDisplayField);
 
-		DDMFormValues ddmFormValues =
-			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
+			ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -255,13 +252,6 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		testDDMFormFieldValue(
 			"ovho", "Content Example", "Conteudo Exemplo",
 			ddmFormFieldValues.get(1));
-	}
-
-	protected void setUpFieldsToDDMFormValuesConverter() throws Exception {
-		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
-			FieldsToDDMFormValuesConverterImpl.class, "_ddm");
-
-		field.set(_fieldsToDDMFormValuesConverterImpl, new DDMImpl());
 	}
 
 	protected void testDDMFormFieldValue(
@@ -287,7 +277,7 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 	}
 
 	private final FieldsToDDMFormValuesConverterImpl
-		_fieldsToDDMFormValuesConverterImpl =
+		_fieldsToDDMFormValuesConverter =
 			new FieldsToDDMFormValuesConverterImpl();
 
 }

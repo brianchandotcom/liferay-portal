@@ -103,7 +103,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 <div class="container-fluid-1280">
 	<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
-		<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
+		<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
 	</portlet:actionURL>
 
 	<aui:form action='<%= updateExportConfigurationURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
@@ -149,8 +149,8 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 				</aui:fieldset-group>
 			</div>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value="save" />
+			<aui:button-row>
+				<aui:button cssClass="btn-lg" type="submit" value="save" />
 
 				<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
 			</aui:button-row>

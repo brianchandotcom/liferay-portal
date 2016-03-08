@@ -711,16 +711,16 @@
 	</command>
 
 	<command name="viewNestedFields">
-		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
 		<var name="key_nestedChildFieldFieldName" value="${nestedChildFieldFieldName}" />
+		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
 
 		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_FIELD" />
 		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />
 	</command>
 
 	<command name="viewNestedFieldsRepeating">
-		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
 		<var name="key_nestedChildFieldFieldName" value="${nestedChildFieldFieldName}" />
+		<var name="key_nestedParentFieldFieldName" value="${nestedParentFieldFieldName}" />
 
 		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_CHILD_FIELD" />
 		<execute function="AssertElementPresent" locator1="DDLRecord#NESTED_PARENT_FIELD" />

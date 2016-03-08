@@ -22,6 +22,6 @@ import javax.sql.DataSource;
 public interface SqlUpdateFactory {
 
 	public SqlUpdate getSqlUpdate(
-		DataSource dataSource, String sql, int[] types);
+		DataSource dataSource, String sql, ParamSetter... paramSetters);
 
 }

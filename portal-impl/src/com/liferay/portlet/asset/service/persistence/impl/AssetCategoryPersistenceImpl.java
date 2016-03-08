@@ -22,8 +22,6 @@ import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -12267,8 +12265,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		assetCategoryToAssetEntryTableMapper = TableMapperFactory.getTableMapper("AssetEntries_AssetCategories",
 				"companyId", "categoryId", "entryId", this,
 				assetEntryPersistence);
-
-		updateTree = new UpdateTree();
 	}
 
 	public void destroy() {
@@ -12291,28 +12287,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			"AssetCategory", "AssetCategory", AssetCategoryImpl.class,
 			"categoryId", "groupId", "leftCategoryId", "rightCategoryId");
 	protected boolean rebuildTreeEnabled = true;
-	protected UpdateTree updateTree;
-
-	protected class UpdateTree {
-		protected UpdateTree() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"UPDATE AssetCategory SET leftCategoryId = ?, rightCategoryId = ? WHERE categoryId = ?",
-					new int[] {
-						java.sql.Types.BIGINT, java.sql.Types.BIGINT,
-						java.sql.Types.BIGINT
-					});
-		}
-
-		protected void update(long categoryId, long leftCategoryId,
-			long rightCategoryId) {
-			_sqlUpdate.update(new Object[] {
-					leftCategoryId, rightCategoryId, categoryId
-				});
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
 	private static final String _SQL_SELECT_ASSETCATEGORY = "SELECT assetCategory FROM AssetCategory assetCategory";
 	private static final String _SQL_SELECT_ASSETCATEGORY_WHERE_PKS_IN = "SELECT assetCategory FROM AssetCategory assetCategory WHERE categoryId IN (";
 	private static final String _SQL_SELECT_ASSETCATEGORY_WHERE = "SELECT assetCategory FROM AssetCategory assetCategory WHERE ";

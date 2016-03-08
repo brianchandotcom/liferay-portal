@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
@@ -29,8 +30,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,36 +60,36 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			dataSource,
 			"INSERT INTO " + tableName + " (" + companyColumnName + ", " +
 				leftColumnName + ", " + rightColumnName + ") VALUES (?, ?, ?)",
-			new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT});
+			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
 				"DELETE FROM " + tableName + " WHERE " + leftColumnName +
 					" = ?",
-				new int[] {Types.BIGINT});
+				ParamSetter.BIGINT);
 		deleteRightPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
 				"DELETE FROM " + tableName + " WHERE " + rightColumnName +
 					" = ?",
-				new int[] {Types.BIGINT});
+				ParamSetter.BIGINT);
 		deleteTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
 			dataSource,
 			"DELETE FROM " + tableName + " WHERE " + leftColumnName +
 				" = ? AND " + rightColumnName + " = ?",
-			new int[] {Types.BIGINT, Types.BIGINT});
+			ParamSetter.BIGINT, ParamSetter.BIGINT);
 		getLeftPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 				dataSource,
 				"SELECT " + leftColumnName + " FROM " + tableName + " WHERE " +
 					rightColumnName + " = ?",
-				new int[] {Types.BIGINT}, RowMapper.PRIMARY_KEY);
+				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
 		getRightPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 				dataSource,
 				"SELECT " + rightColumnName + " FROM " + tableName + " WHERE " +
 					leftColumnName + " = ?",
-				new int[] {Types.BIGINT}, RowMapper.PRIMARY_KEY);
+				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT);
 
 		leftToRightPortalCache = MultiVMPoolUtil.getPortalCache(
 			TableMapper.class.getName() + "-" + tableName + "-LeftToRight");

@@ -23,7 +23,7 @@ import java.sql.SQLException;
 public class PrimaryKeyRowMapper implements RowMapper<Long> {
 
 	@Override
-	public Long mapRow(ResultSet rs, int rowNumber) throws SQLException {
+	public Long mapRow(ResultSet rs) throws SQLException {
 		return rs.getLong(1);
 	}
 

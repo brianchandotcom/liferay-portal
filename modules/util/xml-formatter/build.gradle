@@ -15,7 +15,7 @@ dependencies {
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "log4j", name: "log4j", version: "1.2.17"
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2-SNAPSHOT"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "1.0.0"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"

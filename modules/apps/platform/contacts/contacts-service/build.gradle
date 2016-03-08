@@ -6,7 +6,7 @@ buildService {
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.4"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2-SNAPSHOT"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "1.0.0"
 	provided project(":apps:platform:contacts:contacts-api")
 	provided project(":apps:platform:portal:portal-upgrade")

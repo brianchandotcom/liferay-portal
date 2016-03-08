@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2-SNAPSHOT"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"
 	provided group: "junit", name: "junit", version: "4.12"
 	provided project(":apps:platform:portal-cache:portal-cache")

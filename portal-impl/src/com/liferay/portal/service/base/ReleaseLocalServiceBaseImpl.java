@@ -402,7 +402,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}

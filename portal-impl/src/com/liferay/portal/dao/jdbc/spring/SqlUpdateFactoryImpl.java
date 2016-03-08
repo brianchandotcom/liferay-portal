@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.jdbc.spring;
 
+import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -28,9 +29,9 @@ public class SqlUpdateFactoryImpl implements SqlUpdateFactory {
 
 	@Override
 	public SqlUpdate getSqlUpdate(
-		DataSource dataSource, String sql, int[] types) {
+		DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
-		return new SqlUpdateImpl(dataSource, sql, types);
+		return new SqlUpdateImpl(dataSource, sql, paramSetters);
 	}
 
 }

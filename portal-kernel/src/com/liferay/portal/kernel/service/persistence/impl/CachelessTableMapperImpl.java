@@ -20,12 +20,11 @@ import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-
-import java.sql.Types;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +49,7 @@ public class CachelessTableMapperImpl
 			leftBasePersistence.getDataSource(),
 			"SELECT * FROM " + tableName + " WHERE " + leftColumnName +
 				" = ? AND " + rightColumnName + " = ?",
-			new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.COUNT);
+			RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 
 		leftToRightPortalCache = new DummyPortalCache(
 			leftToRightPortalCache.getPortalCacheName(),

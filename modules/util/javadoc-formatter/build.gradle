@@ -18,7 +18,7 @@ dependencies {
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2-SNAPSHOT"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "1.0.0"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }

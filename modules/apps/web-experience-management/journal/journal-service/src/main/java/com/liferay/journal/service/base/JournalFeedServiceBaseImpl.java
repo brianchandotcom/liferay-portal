@@ -416,7 +416,7 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}

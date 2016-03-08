@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import java.sql.SQLException;
+
 import java.util.List;
 
 /**
@@ -21,6 +23,6 @@ import java.util.List;
  */
 public interface MappingSqlQuery<T> {
 
-	public List<T> execute(Object... params);
+	public List<T> execute(Object... params) throws SQLException;
 
 }

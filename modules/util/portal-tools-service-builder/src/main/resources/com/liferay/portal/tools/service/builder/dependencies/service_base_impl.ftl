@@ -1128,7 +1128,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource, sql, new int[0]);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource, sql);
 
 			sqlUpdate.update();
 		}

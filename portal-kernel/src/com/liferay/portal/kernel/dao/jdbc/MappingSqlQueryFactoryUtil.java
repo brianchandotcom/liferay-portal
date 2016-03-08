@@ -24,11 +24,11 @@ import javax.sql.DataSource;
 public class MappingSqlQueryFactoryUtil {
 
 	public static <T> MappingSqlQuery<T> getMappingSqlQuery(
-		DataSource dataSource, String sql, int[] types,
-		RowMapper<T> rowMapper) {
+		DataSource dataSource, String sql, RowMapper<T> rowMapper,
+		ParamSetter... paramSetters) {
 
 		return getMappingSqlQueryFactory().getMappingSqlQuery(
-			dataSource, sql, types, rowMapper);
+			dataSource, sql, rowMapper, paramSetters);
 	}
 
 	public static MappingSqlQueryFactory getMappingSqlQueryFactory() {

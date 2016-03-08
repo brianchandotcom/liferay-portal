@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public interface SqlUpdate {
 
-	public int update(Object... params);
+	public int update(Object... params) throws SQLException;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactory;
@@ -45,8 +46,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
-import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1600,7 +1599,7 @@ public class TableMapperTest {
 	private class MockAddMappingSqlUpdate implements SqlUpdate {
 
 		public MockAddMappingSqlUpdate(
-			DataSource dataSource, String sql, int[] types) {
+			DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
@@ -1609,7 +1608,10 @@ public class TableMapperTest {
 						"VALUES (?, ?, ?)",
 				sql);
 			Assert.assertArrayEquals(
-				new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT}, types);
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
+				},
+				paramSetters);
 		}
 
 		@Override
@@ -1701,14 +1703,15 @@ public class TableMapperTest {
 		implements SqlUpdate {
 
 		public MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, String sql, int[] types) {
+			DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
 				"DELETE FROM " + _TABLE_NAME + " WHERE " + _LEFT_COLUMN_NAME +
 					" = ?",
 				sql);
-			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
 
 		public void setDatabaseError(boolean databaseError) {
@@ -1742,7 +1745,7 @@ public class TableMapperTest {
 	private class MockDeleteMappingSqlUpdate implements SqlUpdate {
 
 		public MockDeleteMappingSqlUpdate(
-			DataSource dataSource, String sql, int[] types) {
+			DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
@@ -1750,7 +1753,8 @@ public class TableMapperTest {
 					" = ? AND " + _RIGHT_COLUMN_NAME + " = ?",
 				sql);
 			Assert.assertArrayEquals(
-				new int[] {Types.BIGINT, Types.BIGINT}, types);
+				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
+				paramSetters);
 		}
 
 		public void setDatabaseError(boolean databaseError) {
@@ -1796,14 +1800,15 @@ public class TableMapperTest {
 		implements SqlUpdate {
 
 		public MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, String sql, int[] types) {
+			DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
 				"DELETE FROM " + _TABLE_NAME + " WHERE " + _RIGHT_COLUMN_NAME +
 					" = ?",
 				sql);
-			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
 
 		public void setDatabaseError(boolean databaseError) {
@@ -1847,15 +1852,16 @@ public class TableMapperTest {
 		implements MappingSqlQuery<Long> {
 
 		public MockGetLeftPrimaryKeysSqlQuery(
-			DataSource dataSource, String sql, int[] types,
-			RowMapper<Long> rowMapper) {
+			DataSource dataSource, String sql, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
 				"SELECT " + _LEFT_COLUMN_NAME + " FROM " + _TABLE_NAME +
 					" WHERE " + _RIGHT_COLUMN_NAME + " = ?",
 				sql);
-			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
 		}
 
@@ -1895,15 +1901,16 @@ public class TableMapperTest {
 		implements MappingSqlQuery<Long> {
 
 		public MockGetRightPrimaryKeysSqlQuery(
-			DataSource dataSource, String sql, int[] types,
-			RowMapper<Long> rowMapper) {
+			DataSource dataSource, String sql, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
 				"SELECT " + _RIGHT_COLUMN_NAME + " FROM " + _TABLE_NAME +
 					" WHERE " + _LEFT_COLUMN_NAME + " = ?",
 				sql);
-			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
 		}
 
@@ -1946,21 +1953,21 @@ public class TableMapperTest {
 
 		@Override
 		public <T> MappingSqlQuery<T> getMappingSqlQuery(
-			DataSource dataSource, String sql, int[] types,
-			RowMapper<T> rowMapper) {
+			DataSource dataSource, String sql, RowMapper<T> rowMapper,
+			ParamSetter... paramSetters) {
 
 			int count = _counter++;
 
 			if (count == 0) {
 				return (MappingSqlQuery<T>)
 					new MockGetLeftPrimaryKeysSqlQuery(
-						dataSource, sql, types, RowMapper.PRIMARY_KEY);
+						dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
 			}
 
 			if (count == 1) {
 				return (MappingSqlQuery<T>)
 					new MockGetRightPrimaryKeysSqlQuery(
-						dataSource, sql, types, RowMapper.PRIMARY_KEY);
+						dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
 			}
 
 			return null;
@@ -1974,26 +1981,28 @@ public class TableMapperTest {
 
 		@Override
 		public SqlUpdate getSqlUpdate(
-			DataSource dataSource, String sql, int[] types) {
+			DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
 			int count = _count++;
 
 			if (count == 0) {
-				return new MockAddMappingSqlUpdate(dataSource, sql, types);
+				return new MockAddMappingSqlUpdate(
+					dataSource, sql, paramSetters);
 			}
 
 			if (count == 1) {
 				return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, sql, types);
+					dataSource, sql, paramSetters);
 			}
 
 			if (count == 2) {
 				return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, sql, types);
+					dataSource, sql, paramSetters);
 			}
 
 			if (count == 3) {
-				return new MockDeleteMappingSqlUpdate(dataSource, sql, types);
+				return new MockDeleteMappingSqlUpdate(
+					dataSource, sql, paramSetters);
 			}
 
 			return null;

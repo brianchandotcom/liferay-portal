@@ -1035,7 +1035,7 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}

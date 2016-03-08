@@ -1,5 +1,5 @@
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.1"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2-SNAPSHOT"
 	testCompile project(":apps:platform:portal-background-task:portal-background-task-api")
 	testCompile project(":apps:platform:portal-background-task:portal-background-task-service")
 

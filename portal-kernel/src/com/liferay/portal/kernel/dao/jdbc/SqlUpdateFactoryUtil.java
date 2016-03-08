@@ -24,9 +24,10 @@ import javax.sql.DataSource;
 public class SqlUpdateFactoryUtil {
 
 	public static SqlUpdate getSqlUpdate(
-		DataSource dataSource, String sql, int[] types) {
+		DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
-		return getSqlUpdateFactory().getSqlUpdate(dataSource, sql, types);
+		return getSqlUpdateFactory().getSqlUpdate(
+			dataSource, sql, paramSetters);
 	}
 
 	public static SqlUpdateFactory getSqlUpdateFactory() {

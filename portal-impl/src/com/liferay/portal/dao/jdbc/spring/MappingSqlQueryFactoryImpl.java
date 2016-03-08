@@ -16,6 +16,7 @@ package com.liferay.portal.dao.jdbc.spring;
 
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
+import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
@@ -29,10 +30,11 @@ public class MappingSqlQueryFactoryImpl implements MappingSqlQueryFactory {
 
 	@Override
 	public <T> MappingSqlQuery<T> getMappingSqlQuery(
-		DataSource dataSource, String sql, int[] types,
-		RowMapper<T> rowMapper) {
+		DataSource dataSource, String sql, RowMapper<T> rowMapper,
+		ParamSetter... paramSetters) {
 
-		return new MappingSqlQueryImpl<>(dataSource, sql, types, rowMapper);
+		return new MappingSqlQueryImpl<>(
+			dataSource, sql, rowMapper, paramSetters);
 	}
 
 }

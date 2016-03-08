@@ -210,7 +210,7 @@ public class InputAssetLinksDisplayContext {
 			SessionErrors.isEmpty(_portletRequest) && (_assetEntryId > 0)) {
 
 			List<AssetLink> directAssetLinks =
-				AssetLinkLocalServiceUtil.getDirectLinks(_assetEntryId);
+				AssetLinkLocalServiceUtil.getDirectLinks(_assetEntryId, false);
 
 			for (AssetLink assetLink : directAssetLinks) {
 				AssetEntry assetLinkEntry = getAssetLinkEntry(assetLink);

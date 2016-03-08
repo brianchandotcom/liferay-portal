@@ -871,7 +871,7 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
 
 		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
-			oldAssetEntry.getEntryId());
+			oldAssetEntry.getEntryId(), false);
 
 		long[] assetLinkEntryIds = ListUtil.toLongArray(
 			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
@@ -5749,7 +5749,7 @@ public class JournalArticleLocalServiceImpl
 						List<AssetLink> assetLinks =
 							assetLinkLocalService.getDirectLinks(
 								draftAssetEntry.getEntryId(),
-								AssetLinkConstants.TYPE_RELATED);
+								AssetLinkConstants.TYPE_RELATED, false);
 
 						long[] assetLinkEntryIds = ListUtil.toLongArray(
 							assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);

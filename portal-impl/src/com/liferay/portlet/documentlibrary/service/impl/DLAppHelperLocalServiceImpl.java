@@ -182,7 +182,7 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getDescription(), null, null, null, 0, 0, null);
 
 			List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
-				fileEntryAssetEntry.getEntryId());
+				fileEntryAssetEntry.getEntryId(), false);
 
 			long[] assetLinkIds = ListUtil.toLongArray(
 				assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
@@ -800,7 +800,7 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntryConstants.getClassName(), assetClassPk);
 
 		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
-			assetEntry.getEntryId());
+			assetEntry.getEntryId(), false);
 
 		long[] assetLinkIds = ListUtil.toLongArray(
 			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
@@ -864,7 +864,7 @@ public class DLAppHelperLocalServiceImpl
 				List<AssetLink> assetLinks =
 					assetLinkLocalService.getDirectLinks(
 						previousAssetEntry.getEntryId(),
-						AssetLinkConstants.TYPE_RELATED);
+						AssetLinkConstants.TYPE_RELATED, false);
 
 				assetLinkEntryIds = ListUtil.toLongArray(
 					assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
@@ -1041,7 +1041,7 @@ public class DLAppHelperLocalServiceImpl
 						List<AssetLink> assetLinks =
 							assetLinkLocalService.getDirectLinks(
 								draftAssetEntry.getEntryId(),
-								AssetLinkConstants.TYPE_RELATED);
+								AssetLinkConstants.TYPE_RELATED, false);
 
 						long[] assetLinkEntryIds = ListUtil.toLongArray(
 							assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);

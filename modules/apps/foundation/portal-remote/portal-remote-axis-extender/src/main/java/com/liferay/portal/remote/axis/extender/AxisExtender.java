@@ -25,6 +25,7 @@ import com.liferay.util.axis.AxisServlet;
 import java.net.URL;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.servlet.Filter;
@@ -120,9 +121,10 @@ public class AxisExtender {
 		public BundleRegistrationInfo addingBundle(
 			final Bundle bundle, BundleEvent bundleEvent) {
 
-			URL url = bundle.getResource("/WEB-INF/server-config.wsdd");
+			Enumeration<URL> enumeration = bundle.findEntries(
+				"/WEB-INF", "server-config.wsdd", false);
 
-			if (url == null) {
+			if ((enumeration == null) || !enumeration.hasMoreElements()) {
 				return null;
 			}
 

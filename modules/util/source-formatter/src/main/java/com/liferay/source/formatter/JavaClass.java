@@ -444,8 +444,8 @@ public class JavaClass {
 		boolean isStatic = modifierDefinition.contains("static");
 		String javaFieldType = StringUtil.trim(matcher.group(6));
 
-		if (isFinal && isStatic && javaFieldType.startsWith("Map<")) {
-			checkMutableFieldType(javaTerm.getName());
+		if (isFinal && isStatic) {
+			checkMutableFieldType(javaTerm, javaFieldType);
 		}
 
 		if (!javaTerm.isPrivate()) {
@@ -468,7 +468,18 @@ public class JavaClass {
 		}
 	}
 
-	protected void checkMutableFieldType(String javaTermName) {
+	protected void checkMutableFieldType(
+		JavaTerm javaTerm, String javaFieldType) {
+
+		if (!javaFieldType.startsWith("List<") &&
+			!javaFieldType.startsWith("Map<") &&
+			!javaFieldType.startsWith("Set<")) {
+
+			return;
+		}
+
+		String javaTermName = javaTerm.getName();
+
 		if (!StringUtil.isUpperCase(javaTermName)) {
 			return;
 		}
@@ -496,8 +507,16 @@ public class JavaClass {
 		String newName = sb.toString();
 
 		if (!newName.equals(javaTermName)) {
-			_classContent = _classContent.replaceAll(
-				"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
+			if (javaTerm.isPrivate()) {
+				_classContent = _classContent.replaceAll(
+					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
+			}
+			else {
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Rename " + javaTermName + " to " + newName + " " +
+						javaTerm.getLineCount());
+			}
 		}
 	}
 

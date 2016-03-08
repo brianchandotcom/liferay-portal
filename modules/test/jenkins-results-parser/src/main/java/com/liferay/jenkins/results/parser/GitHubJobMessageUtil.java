@@ -54,8 +54,8 @@ public class GitHubJobMessageUtil {
 			if (jsonObject.has("runs")) {
 				JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
 
-				List<String> runBuildURLs = new ArrayList<>();
 				List<String> failureBuildURLs = new ArrayList<>();
+				List<String> successBuildURLs = new ArrayList<>();
 
 				for (int i = 0; i < runsJSONArray.length(); i++) {
 					JSONObject runsJSONObject = runsJSONArray.getJSONObject(i);
@@ -76,19 +76,21 @@ public class GitHubJobMessageUtil {
 					String runBuildURLResult = runBuildURLJSONObject.getString(
 						"result");
 
-					if (!runBuildURLResult.equals("SUCCESS")) {
-						failureBuildURLs.add(runBuildURL);
+					if (runBuildURLResult.equals("SUCCESS")) {
+						successBuildURLs.add(runBuildURL);
+
+						continue;
 					}
 
-					runBuildURLs.add(runBuildURL);
+					failureBuildURLs.add(runBuildURL);
 				}
 
 				sb.append("<h6>Job Results:</h6>");
 				sb.append("<p>");
-				sb.append(runBuildURLs.size());
+				sb.append(successBuildURLs.size());
 				sb.append(" Test");
 
-				if (runBuildURLs.size() != 1) {
+				if (successBuildURLs.size() != 1) {
 					sb.append("s");
 				}
 

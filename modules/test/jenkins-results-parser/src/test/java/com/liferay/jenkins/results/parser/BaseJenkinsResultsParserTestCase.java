@@ -42,19 +42,10 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String expectedMessage = read(expectedMessageFile);
 
-		expectedMessage = expectedMessage.replace(" \n", "\n");
-
-		String actualMessage = getMessage(
-			"${dependencies.url}/" + getSimpleClassName() + "/" +
-				caseDir.getName() + "/");
-
-		actualMessage = actualMessage.replace(" \n", "\n");
-
-		if (actualMessage.contains(JenkinsResultsParserUtil.DEPENDENCIES_URL)) {
-			actualMessage = actualMessage.replace(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL,
-				"${dependencies.url}");
-		}
+		String actualMessage = _fixMessage(
+			getMessage(
+				"${dependencies.url}/" + getSimpleClassName() + "/" +
+					caseDir.getName() + "/"));
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -228,21 +219,37 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-		String expectedMessage = getMessage(toURLString(sampleDir));
 
-		if (expectedMessage.contains(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL)) {
-
-			expectedMessage = expectedMessage.replace(
-				JenkinsResultsParserUtil.DEPENDENCIES_URL,
-				"${dependencies.url}");
-		}
+		String expectedMessage = _fixMessage(
+			getMessage(toURLString(sampleDir)));
 
 		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}
 
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
+
+	private String _fixMessage(String message) {
+		String fixedMessage = message;
+
+		if (fixedMessage.contains(
+				JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP)) {
+
+			fixedMessage = fixedMessage.replace(
+				JenkinsResultsParserUtil.DEPENDENCIES_URL_HTTP,
+				"${dependencies.url}");
+		}
+
+		if (fixedMessage.contains(
+				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE)) {
+
+			fixedMessage = fixedMessage.replace(
+				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE,
+				"${dependencies.url}");
+		}
+
+		return fixedMessage.replaceAll("[^\\S\\r\\n]+\n", "\n");
+	}
 
 	private static final String[][] _XML_REPLACEMENTS = new String[][] {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},

@@ -205,8 +205,6 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="user1@liferay.com" />
 		</execute>
 
@@ -241,8 +239,6 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 			<var name="userEmailAddress" value="user2@liferay.com" />
 		</execute>
 

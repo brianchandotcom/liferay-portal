@@ -1432,7 +1432,7 @@
 				<execute macro="User#loginPG">
 					<var name="setupWizardEnabled" value="${setupWizardEnabled}" />
 					<var name="userEmailAddress" value="${userEmailAddress}" />
-					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+					<var name="specificURL" value="${virtualHostsURL}" />
 				</execute>
 			</else>
 		</if>
@@ -1471,17 +1471,16 @@
 			<then>
 				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
+			<elseif>
+				<isset var="specificURL" />
+				<then>
+					<execute macro="Navigator#openSpecificURL">
+						<var name="url" value="${specificURL}" />
+					</execute>
+				</then>
+			</elseif>
 			<else>
-				<execute macro="Page#openURL">
-					<var name="friendlyURL" value="${friendlyURL}" />
-					<var name="pageAccess" value="${pageAccess}" />
-					<var name="pageStaging" value="${pageStaging}" />
-					<var name="siteName" value="${siteName}" />
-					<var name="siteNameURL" value="${siteNameURL}" />
-					<var name="siteURL" value="${siteURL}" />
-					<var name="specificURL" value="${specificURL}" />
-					<var name="virtualHostsURL" value="${virtualHostsURL}" />
-				</execute>
+				<execute macro="Navigator#openURL" />
 			</else>
 		</if>
 
@@ -1619,21 +1618,13 @@
 	</command>
 
 	<command name="logoutAndLoginPG">
-		<execute macro="Page#openURL">
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="ControlMenu#USER_NAME" value1="${userLoginFullName}" />
 			<then>
 				<execute macro="User#logoutPG" />
+				
 				<execute macro="User#loginPG">
 					<var name="authenticationMethod" value="${authenticationMethod}" />
 					<var name="nodePort" value="${nodePort}" />

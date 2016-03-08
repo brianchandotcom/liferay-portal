@@ -32,9 +32,7 @@ public class StatisticsTest extends BaseStatisticsTestCase {
 	}
 
 	@Override
-	protected IndexingFixture createIndexingFixture(String indexName)
-		throws Exception {
-
+	protected IndexingFixture createIndexingFixture() {
 		return new SolrIndexingFixture();
 	}
 

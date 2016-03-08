@@ -46,7 +46,7 @@ public abstract class BaseIndexingTestCase {
 	public void setUp() throws Exception {
 		_documentFixture.setUp();
 
-		_indexingFixture = createIndexingFixture(String.valueOf(COMPANY_ID));
+		_indexingFixture = createIndexingFixture();
 
 		Assume.assumeTrue(_indexingFixture.isSearchEngineAvailable());
 
@@ -107,8 +107,7 @@ public abstract class BaseIndexingTestCase {
 		_indexWriter.addDocument(createSearchContext(), document);
 	}
 
-	protected abstract IndexingFixture createIndexingFixture(String indexName)
-		throws Exception;
+	protected abstract IndexingFixture createIndexingFixture() throws Exception;
 
 	protected Hits search(SearchContext searchContext) throws Exception {
 		Query query = new TermQueryImpl(

@@ -419,7 +419,10 @@ AUI.add(
 					_setCharacterLimitToPageDescription: function(maxLength) {
 						var instance = this;
 
-						if (!instance._charCounterPageDescription) {
+						if (instance._charCounterPageDescription) {
+							instance._charCounterPageDescription.set('maxLength', maxLength);
+						}
+						else {
 							var pageHeader = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER);
 
 							instance._charCounterPageDescription = new A.CharCounter(
@@ -429,15 +432,15 @@ AUI.add(
 								}
 							);
 						}
-						else {
-							instance._charCounterPageDescription.set('maxLength', maxLength);
-						}
 					},
 
 					_setCharacterLimitToPageTitle: function(maxLength) {
 						var instance = this;
 
-						if (!instance._charCounterPageTitle) {
+						if (instance._charCounterPageTitle) {
+							instance._charCounterPageTitle.set('maxLength', maxLength);
+						}
+						else {
 							var pageHeader = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER);
 
 							instance._charCounterPageTitle = new A.CharCounter(
@@ -446,9 +449,6 @@ AUI.add(
 									maxLength: maxLength
 								}
 							);
-						}
-						else {
-							instance._charCounterPageTitle.set('maxLength', maxLength);
 						}
 					},
 

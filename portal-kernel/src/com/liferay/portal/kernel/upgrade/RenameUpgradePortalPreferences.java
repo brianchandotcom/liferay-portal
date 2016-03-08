@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -45,43 +46,45 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			String newValue)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(9);
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			StringBundler sb = new StringBundler(9);
 
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set preferences = replace(preferences, '");
-		sb.append(oldValue);
-		sb.append("', '");
-		sb.append(newValue);
-		sb.append("') where preferences like '%");
-		sb.append(oldValue);
-		sb.append("%'");
-
-		try {
-			runSQL(sb.toString());
-		}
-		catch (Exception e) {
-			sb = new StringBundler(7);
-
-			sb.append("select ");
-			sb.append(primaryKeyColumnName);
-			sb.append(", preferences from ");
+			sb.append("update ");
 			sb.append(tableName);
-			sb.append(" where preferences like '%");
+			sb.append(" set preferences = replace(preferences, '");
+			sb.append(oldValue);
+			sb.append("', '");
+			sb.append(newValue);
+			sb.append("') where preferences like '%");
 			sb.append(oldValue);
 			sb.append("%'");
 
-			try (PreparedStatement ps = connection.prepareStatement(
-					sb.toString());
-				ResultSet rs = ps.executeQuery();) {
+			try {
+				runSQL(sb.toString());
+			}
+			catch (Exception e) {
+				sb = new StringBundler(7);
 
-				while (rs.next()) {
-					long primaryKey = rs.getLong(primaryKeyColumnName);
-					String preferences = rs.getString("preferences");
+				sb.append("select ");
+				sb.append(primaryKeyColumnName);
+				sb.append(", preferences from ");
+				sb.append(tableName);
+				sb.append(" where preferences like '%");
+				sb.append(oldValue);
+				sb.append("%'");
 
-					updatePreferences(
-						tableName, primaryKeyColumnName, oldValue, newValue,
-						primaryKey, preferences);
+				try (PreparedStatement ps = connection.prepareStatement(
+						sb.toString());
+					ResultSet rs = ps.executeQuery();) {
+
+					while (rs.next()) {
+						long primaryKey = rs.getLong(primaryKeyColumnName);
+						String preferences = rs.getString("preferences");
+
+						updatePreferences(
+							tableName, primaryKeyColumnName, oldValue, newValue,
+							primaryKey, preferences);
+					}
 				}
 			}
 		}

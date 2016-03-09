@@ -19,10 +19,10 @@
 		<execute function="Close#closeWindow" />
 	</command>
 
-	<command name="getLocationURL" returns="locationURL">
-		<var method="selenium#getLocation()" name="locationURL" />
+	<command name="getCurrentURL" returns="currentURL">
+		<var method="selenium#getLocation()" name="currentURL" />
 
-		<return name="locationURL" value="${locationURL}" />
+		<return name="currentURL" value="${currentURL}" />
 	</command>
 
 	<command name="gotoBack">

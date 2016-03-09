@@ -74,9 +74,9 @@ public class VerifyMySQL extends VerifyProcess {
 
 	protected void verifyDatetimePrecision() throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
-		Statement statement = connection.createStatement();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+			Statement statement = connection.createStatement();
 			ResultSet rs = databaseMetaData.getTables(
 				null, null, null, null)) {
 
@@ -132,9 +132,8 @@ public class VerifyMySQL extends VerifyProcess {
 	}
 
 	protected void verifyTableEngine() throws Exception {
-		Statement statement = connection.createStatement();
-
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("show table status")) {
 
 			while (rs.next()) {

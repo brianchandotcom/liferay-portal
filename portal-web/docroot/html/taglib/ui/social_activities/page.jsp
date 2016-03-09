@@ -17,6 +17,21 @@
 <%@ include file="/html/taglib/ui/social_activities/init.jsp" %>
 
 <div class="taglib-social-activities">
+	<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
+		<div class="pull-right">
+			<liferay-ui:rss
+				delta="<%= feedDelta %>"
+				displayStyle="<%= feedDisplayStyle %>"
+				feedType="<%= feedType %>"
+				message="<%= feedURLMessage %>"
+				name="<%= feedTitle %>"
+				resourceURL="<%= feedResourceURL %>"
+				url="<%= feedURL %>"
+			/>
+		</div>
+	</c:if>
+
+
 	<table>
 
 	<%
@@ -93,20 +108,6 @@
 		<liferay-ui:message key="there-are-no-recent-activities" />
 	</c:if>
 </div>
-
-<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
-	<div class="separator"><!-- --></div>
-
-	<liferay-ui:rss
-		delta="<%= feedDelta %>"
-		displayStyle="<%= feedDisplayStyle %>"
-		feedType="<%= feedType %>"
-		message="<%= feedURLMessage %>"
-		name="<%= feedTitle %>"
-		resourceURL="<%= feedResourceURL %>"
-		url="<%= feedURL %>"
-	/>
-</c:if>
 
 <%!
 %>

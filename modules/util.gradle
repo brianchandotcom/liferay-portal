@@ -5,6 +5,7 @@ buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
 
+task printLeafProjects
 task setUpPortalTools
 task wrapper(type: Wrapper)
 
@@ -47,6 +48,16 @@ dependencies {
 	portalToolsSourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
 	portalToolsTldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
 	portalToolsWhip group: "com.liferay", name: "com.liferay.whip", version: "default"
+}
+
+printLeafProjects << {
+	FileTree buildGradleFileTree = fileTree(dir: rootDir, include: "*/**/build.gradle")
+
+	buildGradleFileTree.each {
+		if (!it.text.contains("provided project(")) {
+			println it.parentFile
+		}
+	}
 }
 
 repositories {

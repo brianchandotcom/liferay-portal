@@ -21,6 +21,7 @@ TemplateDisplayTerms displayTerms = new TemplateDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_ddm_template_search"

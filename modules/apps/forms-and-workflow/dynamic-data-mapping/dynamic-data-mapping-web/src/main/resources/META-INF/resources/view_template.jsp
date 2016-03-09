@@ -66,7 +66,41 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<portlet:param name="mvcPath" value="/view_template.jsp" />
 </portlet:renderURL>
 
+<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
+	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+</liferay-util:include>
+
+<c:if test="<%= showHeader %>">
+	<c:choose>
+		<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
+
+			<%
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
+
+			renderResponse.setTitle(ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale));
+			%>
+
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:header
+				backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+				cssClass="container-fluid-1280"
+				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
+			/>
+		</c:otherwise>
+	</c:choose>
+</c:if>
+
 <aui:form action="<%= viewTemplateURL.toString() %>" method="post" name="fm">
+	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="searchContainerId" value="ddmTemplates" />
+	</liferay-util:include>
+
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
@@ -74,33 +108,8 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
-	<c:if test="<%= showHeader %>">
-		<c:choose>
-			<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
-
-				<%
-				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
-
-				renderResponse.setTitle(ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale));
-				%>
-
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:header
-					backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
-					cssClass="container-fluid-1280"
-					title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-
-	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="searchContainerId" value="ddmTemplates" />
-	</liferay-util:include>
-
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
+
 		<liferay-ui:search-container
 			id="ddmTemplates"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
@@ -146,6 +155,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("id") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
 						href="<%= rowHREF %>"
 						name="id"
 						orderable="<%= true %>"
@@ -156,6 +166,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("name") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
 						href="<%= rowHREF %>"
 						name="name"
 						value="<%= HtmlUtil.escape(template.getName(locale)) %>"

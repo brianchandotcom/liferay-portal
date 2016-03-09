@@ -46,8 +46,6 @@ portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameI
 portletURL.setParameter("eventName", eventName);
 %>
 
-<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= includeCheckBox && !user.isDefaultUser() %>"
 	searchContainerId="<%= searchContainerId %>"

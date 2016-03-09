@@ -57,15 +57,14 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
+<c:if test="<%= showToolbar %>">
+	<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	</liferay-util:include>
+</c:if>
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteStructureIds" type="hidden" />
-
 	<c:if test="<%= showToolbar %>">
-		<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</liferay-util:include>
-
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
 			<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
@@ -73,7 +72,11 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 		</liferay-util:include>
 	</c:if>
 
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="deleteStructureIds" type="hidden" />
+
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
+
 		<liferay-ui:search-container
 			id="ddmStructures"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
@@ -106,6 +109,7 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="text-strong"
 					href="<%= rowHREF %>"
 					name="id"
 					orderable="<%= true %>"
@@ -114,6 +118,7 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="text-strong"
 					href="<%= rowHREF %>"
 					name="name"
 					value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
@@ -168,21 +173,21 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</div>
-
-	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
-		<liferay-portlet:renderURL var="viewStructuresURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-portlet:renderURL var="addStructureURL">
-			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-			<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
-		</liferay-frontend:add-menu>
-	</c:if>
 </aui:form>
+
+<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+	<liferay-portlet:renderURL var="viewStructuresURL">
+		<portlet:param name="mvcPath" value="/view.jsp" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-portlet:renderURL var="addStructureURL">
+		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+		<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

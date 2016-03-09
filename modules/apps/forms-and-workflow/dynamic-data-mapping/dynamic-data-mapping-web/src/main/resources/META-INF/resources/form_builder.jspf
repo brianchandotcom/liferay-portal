@@ -47,6 +47,7 @@ if (Validator.isNotNull(script)) {
 <liferay-ui:tabs
 	names='<%= LanguageUtil.get(request, "view[action]") + "," + LanguageUtil.get(request, "source") %>'
 	refresh="<%= false %>"
+	type="tabs nav-tabs-default"
 >
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
@@ -63,7 +64,7 @@ if (Validator.isNotNull(script)) {
 				<div class="diagram-builder-content" id="<portlet:namespace />formBuilderContent">
 					<div class="tabbable">
 						<div class="tabbable-content">
-							<ul class="lfr-nav nav nav-tabs">
+							<ul class="lfr-nav nav nav-tabs nav-tabs-default">
 								<li class="active">
 									<a href="javascript:;">
 										<liferay-ui:message key="fields" />

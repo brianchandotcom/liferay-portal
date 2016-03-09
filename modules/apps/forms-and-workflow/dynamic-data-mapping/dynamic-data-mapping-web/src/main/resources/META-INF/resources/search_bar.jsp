@@ -17,8 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
+
+String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
+
 String scopedLabel = Validator.isNull(scopeTitle) ? "structures" : scopeTitle;
 %>
+
+<portlet:renderURL var="portletURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="tabs1" value="<%= tabs1 %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+</portlet:renderURL>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
@@ -26,6 +36,8 @@ String scopedLabel = Validator.isNull(scopeTitle) ? "structures" : scopeTitle;
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="formSearch">
+			<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

@@ -20,7 +20,7 @@
 try {
 %>
 
-	<%= xslContentDisplayContext.getContent() %>
+	<%= xslContentDisplayContext.getContent(request) %>
 
 <%
 }

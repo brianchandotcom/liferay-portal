@@ -17,9 +17,7 @@ package com.liferay.xsl.content.web.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 
@@ -36,9 +34,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
 import org.w3c.dom.Document;
 
 /**
@@ -52,19 +47,12 @@ public class XSLContentUtil {
 	public static final String DEFAULT_XSL_URL = "/example.xsl";
 
 	public static String replaceUrlTokens(
-		ThemeDisplay themeDisplay, String url) {
+		ThemeDisplay themeDisplay, String contextPath, String url) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(2);
 
 		sb.append(themeDisplay.getPortalURL());
-		sb.append(PortalUtil.getPathModule());
-		sb.append(StringPool.SLASH);
-
-		Bundle bundle = FrameworkUtil.getBundle(XSLContentUtil.class);
-
-		String symbolicName = bundle.getSymbolicName();
-
-		sb.append(symbolicName.replaceAll("[^a-zA-Z0-9]", StringPool.BLANK));
+		sb.append(contextPath);
 
 		return StringUtil.replace(
 			url, new String[] {"@portal_url@", "@portlet_context_url@"},

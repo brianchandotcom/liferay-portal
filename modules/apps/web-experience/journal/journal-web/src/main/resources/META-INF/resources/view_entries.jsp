@@ -75,7 +75,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				PortletURL rowURL = null;
 
 				if (journalDisplayContext.isShowEditActions() && JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)) {
-					rowURL = journalDisplayContext.getPortletURL();
+					rowURL = liferayPortletResponse.createRenderURL();
 
 					rowURL.setParameter("mvcPath", "/edit_article.jsp");
 					rowURL.setParameter("redirect", currentURL);

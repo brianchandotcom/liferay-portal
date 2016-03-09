@@ -286,9 +286,12 @@
 			_getItemSelectorDialog: function(editor, url, callback) {
 				var instance = this;
 
+				var eventName = editor.name + 'selectItem';
+
 				var itemSelectorDialog = instance._itemSelectorDialog;
 
 				if (itemSelectorDialog) {
+					itemSelectorDialog.set('eventName', eventName);
 					itemSelectorDialog.set('url', url);
 					itemSelectorDialog.set('zIndex', CKEDITOR.getNextZIndex());
 
@@ -298,7 +301,6 @@
 					AUI().use(
 						'liferay-item-selector-dialog',
 						function(A) {
-							var eventName = editor.name + 'selectItem';
 
 							itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{

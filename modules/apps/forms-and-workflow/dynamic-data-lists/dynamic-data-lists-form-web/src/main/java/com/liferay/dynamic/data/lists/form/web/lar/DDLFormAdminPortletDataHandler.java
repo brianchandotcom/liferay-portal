@@ -360,13 +360,6 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, ddmStructure);
-
-					for (DDMTemplate ddmTemplate :
-							ddmStructure.getTemplates()) {
-
-						StagedModelDataHandlerUtil.exportStagedModel(
-							portletDataContext, ddmTemplate);
-					}
 				}
 
 			});

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.FilterExceptionAdapter;
@@ -30,7 +29,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.Hashtable;
 import java.util.List;
@@ -64,7 +62,6 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -89,12 +86,6 @@ public class WabBundleProcessor {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			if (_jspServletServiceRegistration != null) {
-				_jspServletServiceRegistration.unregister();
-			}
-
-			_defaultServletServiceRegistration.unregister();
-
 			currentThread.setContextClassLoader(_bundleClassLoader);
 
 			destroyServlets();
@@ -105,7 +96,8 @@ public class WabBundleProcessor {
 
 			_servletContextRegistration.unregister();
 
-			_bundleContext.ungetService(_serviceReference);
+			_bundleContext.ungetService(
+				_servletContextHelperRegistrationReference);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -130,23 +122,13 @@ public class WabBundleProcessor {
 			WebXMLDefinition webXMLDefinition =
 				webXMLDefinitionLoader.loadWebXML();
 
-			_jspTaglibMappings = webXMLDefinition.getJspTaglibMappings();
-
-			initContext(webXMLDefinition.getContextParameters());
+			initContext(
+				webXMLDefinition.getContextParameters(),
+				webXMLDefinition.getJspTaglibMappings());
 
 			initListeners(webXMLDefinition.getListenerDefinitions());
 
 			initFilters(webXMLDefinition.getFilterDefinitions());
-
-			try {
-				currentThread.setContextClassLoader(contextClassLoader);
-
-				_defaultServletServiceRegistration = createDefaultServlet();
-				_jspServletServiceRegistration = createJspServlet(properties);
-			}
-			finally {
-				currentThread.setContextClassLoader(_bundleClassLoader);
-			}
 
 			initServlets(webXMLDefinition);
 		}
@@ -167,9 +149,6 @@ public class WabBundleProcessor {
 	}
 
 	public static class JspServletWrapper extends HttpServlet {
-
-		public JspServletWrapper() {
-		}
 
 		public JspServletWrapper(String jspFile) {
 			this.jspFile = jspFile;
@@ -217,54 +196,6 @@ public class WabBundleProcessor {
 		private final Servlet _servlet =
 			new com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet();
 
-	}
-
-	protected ServiceRegistration<?> createDefaultServlet() {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			_contextName);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX, "/");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, "/*");
-
-		return _bundleContext.registerService(
-			Object.class, new Object(), properties);
-	}
-
-	protected ServiceRegistration<Servlet> createJspServlet(
-		Dictionary<String, Object> properties) {
-
-		Dictionary<String, Object> jspProperties = new HashMapDictionary<>();
-
-		for (Enumeration<String> keys = properties.keys();
-			keys.hasMoreElements();) {
-
-			String key = keys.nextElement();
-
-			if (!key.startsWith(_JSP_SERVLET_INIT_PARAM_PREFIX)) {
-				continue;
-			}
-
-			String paramName =
-				_SERVLET_INIT_PARAM_PREFIX +
-					key.substring(_JSP_SERVLET_INIT_PARAM_PREFIX.length());
-
-			jspProperties.put(paramName, properties.get(key));
-		}
-
-		jspProperties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			_contextName);
-		jspProperties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "jsp");
-		jspProperties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "*.jsp");
-
-		return _bundleContext.registerService(
-			Servlet.class, new JspServletWrapper(), jspProperties);
 	}
 
 	protected void destroyFilters() {
@@ -347,49 +278,26 @@ public class WabBundleProcessor {
 		return classNamesList.toArray(new String[classNamesList.size()]);
 	}
 
-	protected void initContext(Map<String, String> contextParameters) {
-		_serviceReference = _bundleContext.getServiceReference(
-			ServletContextHelperRegistration.class);
+	protected void initContext(
+		Map<String, String> contextParameters,
+		Map<String, String> jspTaglibMappings) {
+
+		_servletContextHelperRegistrationReference =
+			_bundleContext.getServiceReference(
+				ServletContextHelperRegistration.class);
 
 		ServletContextHelperRegistration servletContextHelperRegistration =
-			_bundleContext.getService(_serviceReference);
+			_bundleContext.getService(
+				_servletContextHelperRegistrationReference);
 
-		ServiceRegistration<ServletContextHelper> serviceRegistration =
-			servletContextHelperRegistration.getServiceRegistration();
-
-		ServiceReference<ServletContextHelper> serviceReference =
-			serviceRegistration.getReference();
-
-		_contextName = GetterUtil.getString(
-			serviceReference.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME));
-
-		if (!contextParameters.isEmpty()) {
-			Dictionary<String, Object> properties = new Hashtable<>();
-
-			for (String key : serviceReference.getPropertyKeys()) {
-				properties.put(key, serviceReference.getProperty(key));
-			}
-
-			for (Entry<String, String> contextParametersEntry :
-					contextParameters.entrySet()) {
-
-				String key = contextParametersEntry.getKey();
-				String value = contextParametersEntry.getValue();
-
-				properties.put(
-					HttpWhiteboardConstants.
-						HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + key,
-					value);
-			}
-
-			serviceRegistration.setProperties(properties);
-		}
+		servletContextHelperRegistration.setProperties(contextParameters);
 
 		ServletContext servletContext =
 			servletContextHelperRegistration.getServletContext();
 
-		servletContext.setAttribute("jsp.taglib.mappings", _jspTaglibMappings);
+		_contextName = servletContext.getServletContextName();
+
+		servletContext.setAttribute("jsp.taglib.mappings", jspTaglibMappings);
 		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
 		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
 
@@ -595,28 +503,19 @@ public class WabBundleProcessor {
 		}
 	}
 
-	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
-		"jsp.servlet.init.param.";
-
-	private static final String _SERVLET_INIT_PARAM_PREFIX =
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
-
 	private static final String _VENDOR = "Liferay, Inc.";
 
 	private final Bundle _bundle;
 	private final ClassLoader _bundleClassLoader;
 	private final BundleContext _bundleContext;
 	private String _contextName;
-	private ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
-	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private Map<String, String> _jspTaglibMappings;
 	private final Set<ServiceRegistration<?>> _listenerRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final Logger _logger;
 	private ServiceReference<ServletContextHelperRegistration>
-		_serviceReference;
+		_servletContextHelperRegistrationReference;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final Set<ServiceRegistration<Servlet>> _servletRegistrations =
 		new ConcurrentSkipListSet<>();

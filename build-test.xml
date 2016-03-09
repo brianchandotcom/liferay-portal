@@ -3563,6 +3563,8 @@ go]]></replacevalue>
 	</target>
 
 	<target name="clean-up-mobile-device">
+		<get-testcase-property property.name="browser.type" />
+
 		<if>
 			<equals arg1="${browser.type}" arg2="android" />
 			<then>
@@ -4702,14 +4704,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	</target>
 
 	<target name="prepare-mobile-device">
-		<if>
-			<equals arg1="${browser.type}" arg2="android" />
-			<then>
-				<stop-android-device />
+		<stop-android-device />
 
-				<start-android-device />
-			</then>
-		</if>
+		<start-android-device />
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -5397,6 +5394,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					mobile.android.home=${mobile.android.home}
 					mobile.browser=true
 				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="android" />
+			<then>
+				<antcall target="prepare-mobile-device" />
 			</then>
 		</if>
 
@@ -6963,8 +6967,6 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-selenium-test" depends="prepare-selenium">
-		<antcall target="prepare-mobile-device" />
-
 		<if>
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />

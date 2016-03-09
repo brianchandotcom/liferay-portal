@@ -14,8 +14,7 @@
 
 package com.liferay.portal.configuration.settings;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.settings.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -96,7 +95,7 @@ public class ConfigurationBeanManagedService implements ManagedService {
 			properties = new HashMapDictionary<>();
 		}
 
-		_configurationBean = Configurable.createConfigurable(
+		_configurationBean = ConfigurableUtil.createConfigurable(
 			_configurationBeanClass, properties);
 
 		if (_configurationBeanServiceRegistration != null) {

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.remote.soap.extender.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.remote.soap.extender.configuration.JaxWsApiConfiguration;
 
@@ -54,7 +53,7 @@ public class JaxWsApiEnabler {
 		throws InterruptedException {
 
 		JaxWsApiConfiguration jaxWsApiConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				JaxWsApiConfiguration.class, properties);
 
 		String contextPath = jaxWsApiConfiguration.contextPath();

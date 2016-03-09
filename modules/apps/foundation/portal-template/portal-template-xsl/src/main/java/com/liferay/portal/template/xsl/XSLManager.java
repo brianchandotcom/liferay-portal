@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.xsl;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -73,7 +72,7 @@ public class XSLManager extends BaseSingleTemplateManager {
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext) {
-		_xslEngineConfiguration = Configurable.createConfigurable(
+		_xslEngineConfiguration = ConfigurableUtil.createConfigurable(
 			XSLEngineConfiguration.class, componentContext.getProperties());
 	}
 

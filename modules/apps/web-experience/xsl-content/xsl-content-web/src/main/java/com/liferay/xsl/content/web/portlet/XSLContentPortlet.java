@@ -14,8 +14,7 @@
 
 package com.liferay.xsl.content.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 
@@ -76,13 +75,13 @@ public class XSLContentPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_xslContentConfiguration = Configurable.createConfigurable(
+		_xslContentConfiguration = ConfigurableUtil.createConfigurable(
 			XSLContentConfiguration.class, properties);
 	}
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
-		_xslContentConfiguration = Configurable.createConfigurable(
+		_xslContentConfiguration = ConfigurableUtil.createConfigurable(
 			XSLContentConfiguration.class, properties);
 	}
 

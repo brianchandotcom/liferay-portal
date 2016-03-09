@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -209,7 +208,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	protected void replaceElasticsearchConfiguration(
 		Map<String, Object> properties) {
 
-		elasticsearchConfiguration = Configurable.createConfigurable(
+		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
 		String[] transportAddresses =

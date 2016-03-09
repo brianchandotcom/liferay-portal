@@ -14,8 +14,7 @@
 
 package com.liferay.portal.store.file.system;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
@@ -109,8 +108,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	@Activate
 	@Override
 	protected void activate(Map<String, Object> properties) {
-		_advancedFileSystemStoreConfiguration = Configurable.createConfigurable(
-			AdvancedFileSystemStoreConfiguration.class, properties);
+		_advancedFileSystemStoreConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AdvancedFileSystemStoreConfiguration.class, properties);
 
 		if (Validator.isBlank(
 				_advancedFileSystemStoreConfiguration.rootDir())) {

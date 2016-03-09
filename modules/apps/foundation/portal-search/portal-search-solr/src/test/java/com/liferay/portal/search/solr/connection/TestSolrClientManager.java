@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.solr.connection;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.solr.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr.internal.connection.ReplicatedSolrClientFactory;
 import com.liferay.portal.search.solr.internal.http.BasicAuthPoolingHttpClientFactory;
@@ -38,8 +37,9 @@ public class TestSolrClientManager extends SolrClientManager {
 				}
 			};
 
-		SolrConfiguration solrConfiguration = Configurable.createConfigurable(
-			SolrConfiguration.class, configurationProperties);
+		SolrConfiguration solrConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SolrConfiguration.class, configurationProperties);
 
 		setHttpClientFactory(
 			httpClientFactory,

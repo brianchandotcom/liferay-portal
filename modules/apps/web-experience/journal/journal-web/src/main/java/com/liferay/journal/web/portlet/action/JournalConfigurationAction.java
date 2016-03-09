@@ -14,8 +14,7 @@
 
 package com.liferay.journal.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
@@ -184,7 +183,7 @@ public class JournalConfigurationAction
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_journalWebConfiguration = Configurable.createConfigurable(
+		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
 			JournalWebConfiguration.class, properties);
 	}
 

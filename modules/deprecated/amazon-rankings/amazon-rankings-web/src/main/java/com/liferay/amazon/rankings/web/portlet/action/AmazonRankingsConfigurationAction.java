@@ -14,10 +14,9 @@
 
 package com.liferay.amazon.rankings.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
@@ -101,7 +100,7 @@ public class AmazonRankingsConfigurationAction
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_amazonRankingsConfiguration = Configurable.createConfigurable(
+		_amazonRankingsConfiguration = ConfigurableUtil.createConfigurable(
 			AmazonRankingsConfiguration.class, properties);
 	}
 

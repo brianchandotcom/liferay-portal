@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,7 +88,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_auditConfiguration = Configurable.createConfigurable(
+		_auditConfiguration = ConfigurableUtil.createConfigurable(
 			AuditConfiguration.class, properties);
 	}
 

@@ -14,10 +14,9 @@
 
 package com.liferay.blogs.web.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -48,7 +47,7 @@ public class CheckEntryMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_blogsConfiguration = Configurable.createConfigurable(
+		_blogsConfiguration = ConfigurableUtil.createConfigurable(
 			BlogsConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.jmx;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.monitoring.Level;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.MonitoringControl;
@@ -198,7 +197,7 @@ public class MonitoringConfigurationManager
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_monitoringConfiguration = Configurable.createConfigurable(
+		_monitoringConfiguration = ConfigurableUtil.createConfigurable(
 			MonitoringConfiguration.class, properties);
 
 		setMonitorPortalRequest(

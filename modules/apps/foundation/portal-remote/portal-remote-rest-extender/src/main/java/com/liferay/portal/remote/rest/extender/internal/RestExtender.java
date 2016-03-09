@@ -14,8 +14,7 @@
 
 package com.liferay.portal.remote.rest.extender.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration;
 
@@ -51,7 +50,7 @@ public class RestExtender {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_restExtenderConfiguration = Configurable.createConfigurable(
+		_restExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			RestExtenderConfiguration.class, properties);
 
 		_dependencyManager = new TCCLDependencyManager(bundleContext);

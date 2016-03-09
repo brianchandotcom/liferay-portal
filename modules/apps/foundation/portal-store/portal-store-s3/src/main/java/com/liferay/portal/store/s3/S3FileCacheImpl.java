@@ -14,11 +14,10 @@
 
 package com.liferay.portal.store.s3;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -141,7 +140,7 @@ public class S3FileCacheImpl implements S3FileCache {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_s3StoreConfiguration = Configurable.createConfigurable(
+		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(
 			S3StoreConfiguration.class, properties);
 
 		_cacheDirCleanUpExpunge = new AtomicInteger(

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -277,7 +276,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	@Modified
 	protected synchronized void activate(Map<String, Object> properties) {
 		SearchEngineHelperConfiguration searchEngineHelperConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				SearchEngineHelperConfiguration.class, properties);
 
 		_excludedEntryClassNames.addAll(

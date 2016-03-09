@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
@@ -306,7 +305,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext) {
-		_freemarkerEngineConfiguration = Configurable.createConfigurable(
+		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class,
 			componentContext.getProperties());
 

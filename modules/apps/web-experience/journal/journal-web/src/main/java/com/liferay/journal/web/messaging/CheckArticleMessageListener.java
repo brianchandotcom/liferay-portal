@@ -14,8 +14,7 @@
 
 package com.liferay.journal.web.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -51,7 +50,7 @@ public class CheckArticleMessageListener
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		JournalWebConfiguration journalWebConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				JournalWebConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(

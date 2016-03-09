@@ -14,8 +14,7 @@
 
 package com.liferay.portal.remote.http.tunnel.extender;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.remote.http.tunnel.configuration.HttpTunnelExtenderConfiguration;
 import com.liferay.portal.servlet.TunnelServlet;
@@ -61,7 +60,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 
 		_bundleContext = bundleContext;
 
-		_httpTunnelExtenderConfiguration = Configurable.createConfigurable(
+		_httpTunnelExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			HttpTunnelExtenderConfiguration.class, properties);
 		_logger = new Logger(bundleContext);
 

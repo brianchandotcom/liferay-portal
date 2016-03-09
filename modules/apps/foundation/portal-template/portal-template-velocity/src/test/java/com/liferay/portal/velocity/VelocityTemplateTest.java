@@ -14,8 +14,7 @@
 
 package com.liferay.portal.velocity;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -98,7 +97,7 @@ public class VelocityTemplateTest {
 	@Before
 	public void setUp() throws Exception {
 		VelocityEngineConfiguration _velocityEngineConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				VelocityEngineConfiguration.class, Collections.emptyMap());
 
 		_templateContextHelper = new MockTemplateContextHelper();

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -122,7 +121,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_indexerRegistryConfiguration = Configurable.createConfigurable(
+		_indexerRegistryConfiguration = ConfigurableUtil.createConfigurable(
 			IndexerRegistryConfiguration.class, properties);
 
 		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :

@@ -14,8 +14,7 @@
 
 package com.liferay.server.admin.web.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -48,7 +47,7 @@ public class PluginRepositoriesMessageListener
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		PluginRepositoriesConfiguration pluginRepositoriesConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				PluginRepositoriesConfiguration.class, properties);
 
 		if (!pluginRepositoriesConfiguration.enabled()) {

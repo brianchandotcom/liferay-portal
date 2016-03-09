@@ -14,8 +14,7 @@
 
 package com.liferay.site.navigation.breadcrumb.web.portlet.template;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -128,7 +127,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_siteNavigationBreadcrumbWebTemplateConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				SiteNavigationBreadcrumbWebTemplateConfiguration.class,
 				properties);
 	}

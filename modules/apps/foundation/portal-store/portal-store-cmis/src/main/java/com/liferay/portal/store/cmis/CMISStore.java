@@ -14,8 +14,7 @@
 
 package com.liferay.portal.store.cmis;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
@@ -468,7 +467,7 @@ public class CMISStore extends BaseStore {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_cmisStoreConfiguration = Configurable.createConfigurable(
+		_cmisStoreConfiguration = ConfigurableUtil.createConfigurable(
 			CMISStoreConfiguration.class, properties);
 		_operationContext = createOperationContext();
 		_sessionFactory = SessionFactoryImpl.newInstance();

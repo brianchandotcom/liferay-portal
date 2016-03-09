@@ -14,8 +14,7 @@
 
 package com.liferay.portal.workflow.task.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -115,7 +114,7 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_workflowTaskWebConfiguration = Configurable.createConfigurable(
+		_workflowTaskWebConfiguration = ConfigurableUtil.createConfigurable(
 			WorkflowTaskWebConfiguration.class, properties);
 	}
 

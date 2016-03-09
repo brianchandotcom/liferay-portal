@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.antisamy;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration;
 
@@ -45,7 +44,7 @@ public class AntiSamySanitizerPublisher {
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		AntiSamyConfiguration antiSamyConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				AntiSamyConfiguration.class, properties);
 
 		if (!antiSamyConfiguration.enabled()) {

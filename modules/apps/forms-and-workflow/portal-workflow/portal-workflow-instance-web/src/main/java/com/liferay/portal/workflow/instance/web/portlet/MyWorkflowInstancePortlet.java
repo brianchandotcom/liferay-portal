@@ -14,8 +14,7 @@
 
 package com.liferay.portal.workflow.instance.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.workflow.instance.web.configuration.WorkflowInstanceWebConfiguration;
 
@@ -61,8 +60,9 @@ public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
 	@Modified
 	@Override
 	protected void activate(Map<String, Object> properties) {
-		this.workflowInstanceWebConfiguration = Configurable.createConfigurable(
-			WorkflowInstanceWebConfiguration.class, properties);
+		this.workflowInstanceWebConfiguration =
+			ConfigurableUtil.createConfigurable(
+				WorkflowInstanceWebConfiguration.class, properties);
 	}
 
 }

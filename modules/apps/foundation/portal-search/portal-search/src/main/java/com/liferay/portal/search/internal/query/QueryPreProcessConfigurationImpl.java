@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal.query;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 
 import java.util.LinkedHashMap;
@@ -56,7 +55,7 @@ public class QueryPreProcessConfigurationImpl
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		com.liferay.portal.search.configuration.QueryPreProcessConfiguration
-			queryPreProcessConfiguration = Configurable.createConfigurable(
+			queryPreProcessConfiguration = ConfigurableUtil.createConfigurable(
 				com.liferay.portal.search.configuration.
 					QueryPreProcessConfiguration.class, properties);
 

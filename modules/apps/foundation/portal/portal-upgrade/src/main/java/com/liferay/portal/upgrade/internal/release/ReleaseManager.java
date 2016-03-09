@@ -14,8 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.release;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -124,7 +123,7 @@ public class ReleaseManager {
 		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
 			serviceTrackerMapListener = null;
 
-		_releaseManagerConfiguration = Configurable.createConfigurable(
+		_releaseManagerConfiguration = ConfigurableUtil.createConfigurable(
 			ReleaseManagerConfiguration.class, properties);
 
 		if (_releaseManagerConfiguration.autoUpgrade()) {

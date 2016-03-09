@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.audit.wiring.internal.messaging;
 
-import aQute.configurable.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
@@ -56,8 +55,9 @@ public class AuditMessagingConfigurator {
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		AuditConfiguration auditConfiguration = Configurable.createConfigurable(
-			AuditConfiguration.class, properties);
+		AuditConfiguration auditConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AuditConfiguration.class, properties);
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(

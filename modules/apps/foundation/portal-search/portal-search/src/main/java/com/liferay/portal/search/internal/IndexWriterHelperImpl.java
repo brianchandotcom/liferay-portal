@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -599,7 +598,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		IndexWriterHelperConfiguration indexWriterHelperConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				IndexWriterHelperConfiguration.class, properties);
 
 		_commitImmediately =

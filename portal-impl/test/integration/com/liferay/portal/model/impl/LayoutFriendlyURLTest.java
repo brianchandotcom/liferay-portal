@@ -401,6 +401,37 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test
+	public void testValidFriendlyURLEndingWithLanguageId() throws Exception {
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/home/es");
+
+		addLayout(_group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test
+	public void testValidFriendlyURLEndingWithLanguageIdAndCountryId()
+		throws Exception {
+
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/home/es_ES");
+
+		addLayout(_group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test
+	public void testValidFriendlyURLEndingWithLowerCaseLanguageIdAndCountryId()
+		throws Exception {
+
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/home/es_es");
+
+		addLayout(_group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test
 	public void testValidFriendlyURLMapperURLInDefaultLocale()
 		throws Exception {
 

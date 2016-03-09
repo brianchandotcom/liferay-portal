@@ -110,8 +110,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateArticleType();
-
-		runSQL("alter table JournalArticle drop column type_");
+		updateTable();
 	}
 
 	protected List<String> getArticleTypes() throws Exception {
@@ -248,6 +247,12 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 				LocaleThreadLocal.setDefaultLocale(
 					localeThreadLocalDefaultLocale);
 			}
+		}
+	}
+
+	protected void updateTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("alter table JournalArticle drop column type_");
 		}
 	}
 

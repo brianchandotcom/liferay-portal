@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.util.PortalInstances;
 
 /**
@@ -69,6 +70,14 @@ public class VerifyRole extends VerifyProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
+			verifyRoles(companyId);
+		}
+	}
+
+	protected void verifyRoles(long companyId) throws Exception {
+		try (LoggingTimer loggingTimer =
+				new LoggingTimer(String.valueOf(companyId))) {
+
 			RoleLocalServiceUtil.checkSystemRoles(companyId);
 
 			try {

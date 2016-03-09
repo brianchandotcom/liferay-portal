@@ -14,9 +14,9 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Encryptor;
 
@@ -38,14 +38,14 @@ public class UpgradeCompany extends UpgradeProcess {
 			return;
 		}
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		upgradeKey();
+	}
 
-		try {
-			ps = connection.prepareStatement(
+	protected void upgradeKey() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select companyId, key_ from Company");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
@@ -53,9 +53,6 @@ public class UpgradeCompany extends UpgradeProcess {
 
 				upgradeKey(companyId, key);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -74,20 +71,13 @@ public class UpgradeCompany extends UpgradeProcess {
 			}
 		}
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Company set key_ = ? where companyId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Company set key_ = ? where companyId = ?")) {
 
 			ps.setString(1, Base64.objectToString(Encryptor.generateKey()));
 			ps.setLong(2, companyId);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

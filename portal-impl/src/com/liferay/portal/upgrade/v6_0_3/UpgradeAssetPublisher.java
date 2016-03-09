@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_3;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -93,30 +92,23 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 		long assetEntryId = GetterUtil.getLong(assetEntryIdElement.getText());
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select classUuid from AssetEntry where entryId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select classUuid from AssetEntry where entryId = ?")) {
 
 			ps.setLong(1, assetEntryId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String classUuid = rs.getString("classUuid");
 
-			if (rs.next()) {
-				String classUuid = rs.getString("classUuid");
+					Element assetEntryUuidElement = rootElement.addElement(
+						"assetEntryUuid");
 
-				Element assetEntryUuidElement = rootElement.addElement(
-					"assetEntryUuid");
+					assetEntryUuidElement.addText(classUuid);
 
-				assetEntryUuidElement.addText(classUuid);
-
-				rootElement.remove(assetEntryIdElement);
+					rootElement.remove(assetEntryIdElement);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

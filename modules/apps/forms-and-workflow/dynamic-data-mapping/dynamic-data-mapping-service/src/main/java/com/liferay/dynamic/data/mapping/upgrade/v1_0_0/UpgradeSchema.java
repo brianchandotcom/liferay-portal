@@ -26,19 +26,8 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class UpgradeSchema extends UpgradeProcess {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				"runSQLTemplateString")) {
-
-			String template = StringUtil.read(
-				UpgradeSchema.class.getResourceAsStream(
-					"dependencies/update.sql"));
-
-			runSQLTemplateString(template, false, false);
-		}
-
-		try (LoggingTimer loggingTimer = new LoggingTimer("alterColumn")) {
+	protected void alterColumn() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
 				DDMContentTable.class,
 				new AlterColumnName("xml", "data_ TEXT null"));
@@ -49,6 +38,22 @@ public class UpgradeSchema extends UpgradeProcess {
 			alter(
 				DDMTemplateTable.class,
 				new AlterColumnType("description", "TEXT null"));
+		}
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		updateSQL();
+		alterColumn();
+	}
+
+	protected void updateSQL() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String template = StringUtil.read(
+				UpgradeSchema.class.getResourceAsStream(
+					"dependencies/update.sql"));
+
+			runSQLTemplateString(template, false, false);
 		}
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.bookmarks.upgrade.v1_0_0;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Mate Thurzo
@@ -24,15 +25,19 @@ public class UpgradeLastPublishDate
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table BookmarksEntry add lastPublishDate DATE null");
+		updateTables();
 
 		updateLastPublishDates(
 			BookmarksPortletKeys.BOOKMARKS, "BookmarksEntry");
-
-		runSQL("alter table BookmarksFolder add lastPublishDate DATE null");
-
 		updateLastPublishDates(
 			BookmarksPortletKeys.BOOKMARKS, "BookmarksFolder");
+	}
+
+	protected void updateTables() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("alter table BookmarksEntry add lastPublishDate DATE null");
+			runSQL("alter table BookmarksFolder add lastPublishDate DATE null");
+		}
 	}
 
 }

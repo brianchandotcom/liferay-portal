@@ -134,24 +134,17 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	 *         com.liferay.portal.kernel.util.ReleaseInfo#getBuildNumber}
 	 */
 	protected int getBuildNumber() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select buildNumber from Release_ where servletContextName " +
-					"= ?");
+					"= ?")) {
 
 			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				rs.next();
 
-			rs.next();
-
-			return rs.getInt(1);
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
+				return rs.getInt(1);
+			}
 		}
 	}
 

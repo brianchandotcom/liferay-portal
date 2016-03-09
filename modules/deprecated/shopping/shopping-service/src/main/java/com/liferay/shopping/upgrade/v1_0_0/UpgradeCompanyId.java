@@ -16,6 +16,7 @@ package com.liferay.shopping.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
@@ -28,28 +29,7 @@ public class UpgradeCompanyId
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
 
-		runSQL("alter table ShoppingOrderItem add companyId LONG");
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("update ShoppingOrderItem set companyId = (select ");
-		sb.append("max(ShoppingItem.companyId) from ShoppingItem where ");
-		sb.append("SUBSTR(ShoppingOrderItem.itemId, 0, INSTR('|', ");
-		sb.append("ShoppingOrderItem.itemId)) = ");
-		sb.append("CAST_TEXT(ShoppingItem.itemId)) where ");
-		sb.append("ShoppingOrderItem.itemId like '%|%' ");
-
-		runSQL(sb.toString());
-
-		sb = new StringBundler(5);
-
-		sb.append("update ShoppingOrderItem set companyId = (select ");
-		sb.append("max(ShoppingItem.companyId) from ShoppingItem where ");
-		sb.append("ShoppingOrderItem.itemId = ");
-		sb.append("CAST_TEXT(ShoppingItem.itemId)) where ");
-		sb.append("ShoppingOrderItem.itemId not like '%|%' ");
-
-		runSQL(sb.toString());
+		updateShoppingOrderItem();
 	}
 
 	@Override
@@ -58,6 +38,33 @@ public class UpgradeCompanyId
 			new TableUpdater("ShoppingItemField", "ShoppingItem", "itemId"),
 			new TableUpdater("ShoppingItemPrice", "ShoppingItem", "itemId")
 		};
+	}
+
+	protected void updateShoppingOrderItem() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("alter table ShoppingOrderItem add companyId LONG");
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("update ShoppingOrderItem set companyId = (select ");
+			sb.append("max(ShoppingItem.companyId) from ShoppingItem where ");
+			sb.append("SUBSTR(ShoppingOrderItem.itemId, 0, INSTR('|', ");
+			sb.append("ShoppingOrderItem.itemId)) = ");
+			sb.append("CAST_TEXT(ShoppingItem.itemId)) where ");
+			sb.append("ShoppingOrderItem.itemId like '%|%' ");
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(5);
+
+			sb.append("update ShoppingOrderItem set companyId = (select ");
+			sb.append("max(ShoppingItem.companyId) from ShoppingItem where ");
+			sb.append("ShoppingOrderItem.itemId = ");
+			sb.append("CAST_TEXT(ShoppingItem.itemId)) where ");
+			sb.append("ShoppingOrderItem.itemId not like '%|%' ");
+
+			runSQL(sb.toString());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

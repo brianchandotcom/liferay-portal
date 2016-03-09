@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.upgrade.v1_0_0;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -69,34 +68,28 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			return ddmStructureJSONObject;
 		}
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select definition from DDMStructure where structureId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select definition from DDMStructure where structureId = ?")) {
 
 			ps.setLong(1, structureId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String definition = rs.getString("definition");
 
-			if (rs.next()) {
-				String definition = rs.getString("definition");
+					ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
+						definition);
 
-				ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
-					definition);
+					_ddmSructureJSONObjects.put(
+						structureId, ddmStructureJSONObject);
 
-				_ddmSructureJSONObjects.put(
-					structureId, ddmStructureJSONObject);
+					return ddmStructureJSONObject;
+				}
 
-				return ddmStructureJSONObject;
+				throw new UpgradeException(
+					"Unable to find dynamic data mapping structure " +
+						structureId);
 			}
-
-			throw new UpgradeException(
-				"Unable to find dynamic data mapping structure " + structureId);
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -135,32 +128,26 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	protected String getJournalArticleResourceUuid(String journalArticleUuid)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(5);
 
-		try {
-			StringBundler sb = new StringBundler(5);
+		sb.append("select JournalArticleResource.uuid_ from ");
+		sb.append("JournalArticleResource inner join JournalArticle on ");
+		sb.append("JournalArticle.resourcePrimKey = ");
+		sb.append("JournalArticleResource.resourcePrimKey where ");
+		sb.append("JournalArticle.uuid_ = ?");
 
-			sb.append("select JournalArticleResource.uuid_ from ");
-			sb.append("JournalArticleResource inner join JournalArticle on ");
-			sb.append("JournalArticle.resourcePrimKey = ");
-			sb.append("JournalArticleResource.resourcePrimKey where ");
-			sb.append("JournalArticle.uuid_ = ?");
-
-			ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setString(1, journalArticleUuid);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getString("uuid_");
+				}
 
-			if (rs.next()) {
-				return rs.getString("uuid_");
+				return null;
 			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -219,43 +206,36 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue(_DL_CLASS_TYPE, "0"));
 
 		if (fileEntryTypeId > 0) {
-			PreparedStatement ps = null;
-			ResultSet rs = null;
+			long fileEntryTypeClassNameId = PortalUtil.getClassNameId(
+				DLFileEntryType.class);
 
-			try {
-				long fileEntryTypeClassNameId = PortalUtil.getClassNameId(
-					DLFileEntryType.class);
-
-				ps = connection.prepareStatement(
+			try (PreparedStatement ps = connection.prepareStatement(
 					"select structureId from DDMStructureLink where " +
-						"classNameId = ? and classPK = ?");
+						"classNameId = ? and classPK = ?")) {
 
 				ps.setLong(1, fileEntryTypeClassNameId);
 				ps.setLong(2, fileEntryTypeId);
 
-				rs = ps.executeQuery();
+				try (ResultSet rs = ps.executeQuery()) {
+					String selectedFieldName = GetterUtil.getString(
+						portletPreferences.getValue(
+							_DDM_STRUCTURE_FIELD_NAME, null));
 
-				String selectedFieldName = GetterUtil.getString(
-					portletPreferences.getValue(
-						_DDM_STRUCTURE_FIELD_NAME, null));
+					while (rs.next()) {
+						long structureId = rs.getLong("structureId");
 
-				while (rs.next()) {
-					long structureId = rs.getLong("structureId");
+						JSONObject ddmStructureJSONObject =
+							getDDMStructureJSONObject(structureId);
 
-					JSONObject ddmStructureJSONObject =
-						getDDMStructureJSONObject(structureId);
+						if (isDateField(
+								ddmStructureJSONObject, selectedFieldName)) {
 
-					if (isDateField(
-							ddmStructureJSONObject, selectedFieldName)) {
+							transformDateFieldValue(portletPreferences);
 
-						transformDateFieldValue(portletPreferences);
-
-						break;
+							break;
+						}
 					}
 				}
-			}
-			finally {
-				DataAccess.cleanUp(ps, rs);
 			}
 		}
 	}

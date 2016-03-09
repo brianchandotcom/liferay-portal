@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -29,34 +28,28 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		sb.append("select Group_.groupId, Group_.liveGroupId, ");
+		sb.append("LayoutSet.layoutSetId from LayoutSet inner join ");
+		sb.append("Group_ on (LayoutSet.groupId = Group_.groupId and ");
+		sb.append("Group_.liveGroupId > 0 and LayoutSet.logo = ?)");
 
-			sb.append("select Group_.groupId, Group_.liveGroupId, ");
-			sb.append("LayoutSet.layoutSetId from LayoutSet inner join ");
-			sb.append("Group_ on (LayoutSet.groupId = Group_.groupId and ");
-			sb.append("Group_.liveGroupId > 0 and LayoutSet.logo = ?)");
-
-			ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
 
 			ps.setBoolean(1, true);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long groupId = rs.getLong("Group_.groupId");
+					long layoutSetId = rs.getLong("LayoutSet.layoutSetId");
 
-			while (rs.next()) {
-				long groupId = rs.getLong("Group_.groupId");
-				long layoutSetId = rs.getLong("LayoutSet.layoutSetId");
-
-				runSQL(
-					"update LayoutSet set logoId = 0 where groupId = " +
-						groupId + " and layoutSetId = " + layoutSetId);
+					runSQL(
+						"update LayoutSet set logoId = 0 where groupId = " +
+							groupId + " and layoutSetId = " + layoutSetId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

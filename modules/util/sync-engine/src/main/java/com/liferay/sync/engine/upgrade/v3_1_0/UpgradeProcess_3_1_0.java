@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.upgrade.v3_1_0;
 
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
@@ -68,71 +69,77 @@ public class UpgradeProcess_3_1_0 extends BaseUpgradeProcess {
 	}
 
 	protected void upgradeLogger() throws Exception {
-		Path logsFolderPath = Paths.get(
-			PropsValues.SYNC_CONFIGURATION_DIRECTORY, "logs");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			Path logsFolderPath = Paths.get(
+				PropsValues.SYNC_CONFIGURATION_DIRECTORY, "logs");
 
-		Path archiveFilePath = logsFolderPath.resolve("archive");
+			Path archiveFilePath = logsFolderPath.resolve("archive");
 
-		Files.createDirectories(archiveFilePath);
+			Files.createDirectories(archiveFilePath);
 
-		Path archiveZipFilePath = archiveFilePath.resolve(
-			"sync-" + System.currentTimeMillis() + ".log.zip");
+			Path archiveZipFilePath = archiveFilePath.resolve(
+				"sync-" + System.currentTimeMillis() + ".log.zip");
 
-		FileOutputStream fileOutputStream = new FileOutputStream(
-			archiveZipFilePath.toFile());
+			FileOutputStream fileOutputStream = new FileOutputStream(
+				archiveZipFilePath.toFile());
 
-		ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+			ZipOutputStream zipOutputStream = new ZipOutputStream(
+				fileOutputStream);
 
-		try (DirectoryStream<Path> filePaths =
-				Files.newDirectoryStream(logsFolderPath)) {
+			try (DirectoryStream<Path> filePaths =
+					Files.newDirectoryStream(logsFolderPath)) {
 
-			for (Path filePath : filePaths) {
-				if (filePath.equals(archiveFilePath)) {
-					continue;
-				}
-
-				ZipEntry zipEntry = new ZipEntry(
-					String.valueOf(filePath.getFileName()));
-
-				zipOutputStream.putNextEntry(zipEntry);
-
-				InputStream inputStream = null;
-
-				try {
-					inputStream = Files.newInputStream(filePath);
-
-					byte[] bytes = new byte[4096];
-					int length = 0;
-
-					while ((length = inputStream.read(bytes)) > 0) {
-						zipOutputStream.write(bytes, 0, length);
+				for (Path filePath : filePaths) {
+					if (filePath.equals(archiveFilePath)) {
+						continue;
 					}
 
-					zipOutputStream.closeEntry();
+					ZipEntry zipEntry = new ZipEntry(
+						String.valueOf(filePath.getFileName()));
 
-					Files.delete(filePath);
+					zipOutputStream.putNextEntry(zipEntry);
+
+					InputStream inputStream = null;
+
+					try {
+						inputStream = Files.newInputStream(filePath);
+
+						byte[] bytes = new byte[4096];
+						int length = 0;
+
+						while ((length = inputStream.read(bytes)) > 0) {
+							zipOutputStream.write(bytes, 0, length);
+						}
+
+						zipOutputStream.closeEntry();
+
+						Files.delete(filePath);
+					}
+					catch (Exception e) {
+					}
+					finally {
+						StreamUtil.cleanUp(inputStream);
+					}
 				}
-				catch (Exception e) {
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
+
+				zipOutputStream.close();
+			}
+			finally {
+				StreamUtil.cleanUp(zipOutputStream);
 			}
 
-			zipOutputStream.close();
+			UpgradeUtil.copyLoggerConfiguration();
 		}
-		finally {
-			StreamUtil.cleanUp(zipOutputStream);
-		}
-
-		UpgradeUtil.copyLoggerConfiguration();
 	}
 
 	protected void upgradeSyncFiles() throws Exception {
-		runSQL(
-			"UPDATE SyncFile SET uiEvent = " + SyncFile.UI_EVENT_DOWNLOADING +
-				" WHERE type = '" + SyncFile.TYPE_FILE + "' AND uiEvent = " +
-					SyncFile.UI_EVENT_ADDED_REMOTE + ";");
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"UPDATE SyncFile SET uiEvent = " +
+					SyncFile.UI_EVENT_DOWNLOADING + " WHERE type = '" +
+						SyncFile.TYPE_FILE + "' AND uiEvent = " +
+							SyncFile.UI_EVENT_ADDED_REMOTE + ";");
+		}
 	}
 
 }

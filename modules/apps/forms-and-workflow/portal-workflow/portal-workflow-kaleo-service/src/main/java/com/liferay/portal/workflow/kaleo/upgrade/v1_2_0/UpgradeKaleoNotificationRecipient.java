@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -27,20 +26,14 @@ public class UpgradeKaleoNotificationRecipient extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"update KaleoNotificationRecipient set recipientClassName = " +
 					"'ADDRESS' where recipientClassName is null or " +
-						"recipientClassName = ''");
+						"recipientClassName = ''")) {
 
 			ps.executeUpdate();
 		}
 		catch (SQLException sqle) {
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

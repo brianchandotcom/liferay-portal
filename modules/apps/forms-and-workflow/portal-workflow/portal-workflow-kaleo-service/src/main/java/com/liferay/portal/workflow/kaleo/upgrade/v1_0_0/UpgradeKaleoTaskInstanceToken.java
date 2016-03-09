@@ -59,40 +59,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				"updateKaleoTaskInstanceToken");
-			PreparedStatement ps = connection.prepareStatement(
-				"select kaleoTaskInstanceTokenId, kaleoInstanceTokenId from " +
-					"KaleoTaskInstanceToken");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long kaleoTaskInstanceTokenId = rs.getLong(
-					"kaleoTaskInstanceTokenId");
-				long oldKaleoInstanceTokenId = rs.getLong(
-					"kaleoInstanceTokenId");
-
-				long newKaleoInstanceTokenId = getKaleoInstanceTokenId(
-					oldKaleoInstanceTokenId);
-
-				if (oldKaleoInstanceTokenId == newKaleoInstanceTokenId) {
-					continue;
-				}
-
-				StringBundler sb = new StringBundler();
-
-				sb.append("update KaleoTaskInstanceToken set ");
-				sb.append("kaleoInstanceTokenId = ");
-				sb.append(newKaleoInstanceTokenId);
-				sb.append(" where kaleoTaskInstanceTokenId = ");
-				sb.append(kaleoTaskInstanceTokenId);
-
-				String sql = sb.toString();
-
-				runSQL(sql);
-			}
-		}
-
+		updateKaleoTaskInstanceTokens();
 		deleteKaleoInstanceTokens();
 	}
 
@@ -133,6 +100,41 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 				else {
 					return kaleoInstanceTokenId;
 				}
+			}
+		}
+	}
+
+	protected void updateKaleoTaskInstanceTokens() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select kaleoTaskInstanceTokenId, kaleoInstanceTokenId from " +
+					"KaleoTaskInstanceToken");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long kaleoTaskInstanceTokenId = rs.getLong(
+					"kaleoTaskInstanceTokenId");
+				long oldKaleoInstanceTokenId = rs.getLong(
+					"kaleoInstanceTokenId");
+
+				long newKaleoInstanceTokenId = getKaleoInstanceTokenId(
+					oldKaleoInstanceTokenId);
+
+				if (oldKaleoInstanceTokenId == newKaleoInstanceTokenId) {
+					continue;
+				}
+
+				StringBundler sb = new StringBundler();
+
+				sb.append("update KaleoTaskInstanceToken set ");
+				sb.append("kaleoInstanceTokenId = ");
+				sb.append(newKaleoInstanceTokenId);
+				sb.append(" where kaleoTaskInstanceTokenId = ");
+				sb.append(kaleoTaskInstanceTokenId);
+
+				String sql = sb.toString();
+
+				runSQL(sql);
 			}
 		}
 	}

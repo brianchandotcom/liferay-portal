@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 
@@ -38,25 +38,21 @@ public class UpgradeRepository extends UpgradeProcess {
 	}
 
 	protected void updateRepositoryPortletId() throws Exception {
-		for (String[] renamePortletNames : getRenamePortletNamesArray()) {
-			String oldPortletName = renamePortletNames[0];
-			String newPortletName = renamePortletNames[1];
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (String[] renamePortletNames : getRenamePortletNamesArray()) {
+				String oldPortletName = renamePortletNames[0];
+				String newPortletName = renamePortletNames[1];
 
-			PreparedStatement ps = null;
+				try (PreparedStatement ps = connection.prepareStatement(
+						"update Repository set portletId = ?, name = ? where " +
+							"portletId = ?")) {
 
-			try {
-				ps = connection.prepareStatement(
-					"update Repository set portletId = ?, name = ? where " +
-						"portletId = ?");
+					ps.setString(1, newPortletName);
+					ps.setString(2, newPortletName);
+					ps.setString(3, oldPortletName);
 
-				ps.setString(1, newPortletName);
-				ps.setString(2, newPortletName);
-				ps.setString(3, oldPortletName);
-
-				ps.executeUpdate();
-			}
-			finally {
-				DataAccess.cleanUp(ps);
+					ps.executeUpdate();
+				}
 			}
 		}
 	}

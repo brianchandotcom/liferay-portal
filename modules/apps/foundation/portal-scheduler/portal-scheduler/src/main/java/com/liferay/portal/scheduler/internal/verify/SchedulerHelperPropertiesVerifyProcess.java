@@ -16,6 +16,7 @@ package com.liferay.portal.scheduler.internal.verify;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration;
@@ -40,24 +41,31 @@ public class SchedulerHelperPropertiesVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		String audiMessageScheduleJobString = props.get(
-			LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB);
+		upgradeConfiguration();
+	}
 
-		if (Validator.isNull(audiMessageScheduleJobString)) {
-			return;
+	protected void upgradeConfiguration() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String audiMessageScheduleJobString = props.get(
+				LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB);
+
+			if (Validator.isNull(audiMessageScheduleJobString)) {
+				return;
+			}
+
+			Configuration configuration = configurationAdmin.getConfiguration(
+				SchedulerEngineHelperConfiguration.class.getName());
+
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			boolean auditMessageScheduleJob = GetterUtil.getBoolean(
+				audiMessageScheduleJobString);
+
+			properties.put(
+				AUDIT_SCHEDULER_JOB_ENABLED, auditMessageScheduleJob);
+
+			configuration.update(properties);
 		}
-
-		Configuration configuration = configurationAdmin.getConfiguration(
-			SchedulerEngineHelperConfiguration.class.getName());
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		boolean auditMessageScheduleJob = GetterUtil.getBoolean(
-			audiMessageScheduleJobString);
-
-		properties.put(AUDIT_SCHEDULER_JOB_ENABLED, auditMessageScheduleJob);
-
-		configuration.update(properties);
 	}
 
 	protected static final String AUDIT_SCHEDULER_JOB_ENABLED =

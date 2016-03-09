@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.rtl.servlet;
+package com.liferay.frontend.css.rtl.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

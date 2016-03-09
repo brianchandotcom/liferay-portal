@@ -598,7 +598,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName,
 				"Use StringUtil." + method + "(String, char, char) or " +
 					"StringUtil." + method +
-						"(String, char, String) instead: " + fileName);
+						"(String, char, String) instead: " + fileName + " " +
+							getLineCount(newContent, matcher.start()));
 
 			return;
 		}

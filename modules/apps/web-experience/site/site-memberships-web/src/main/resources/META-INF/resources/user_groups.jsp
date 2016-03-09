@@ -170,7 +170,7 @@ userGroupSearch.setResults(userGroups);
 							}
 						}
 					},
-					title: '<liferay-ui:message key="add-user-groups-to-this-site" />',
+					title: '<liferay-ui:message key="assign-user-groups-to-this-site" />',
 					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_user_groups.jsp" /></portlet:renderURL>'
 				}
 			);

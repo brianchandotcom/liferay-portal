@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Frontend Common CSS
-Bundle-SymbolicName: com.liferay.frontend.common.css
+Bundle-Name: Liferay Frontend CSS Common
+Bundle-SymbolicName: com.liferay.frontend.css.common
 Bundle-Version: 1.0.5
 Include-Resource: META-INF/resources=tmp/META-INF/resources
 Liferay-Releng-Module-Group-Description:

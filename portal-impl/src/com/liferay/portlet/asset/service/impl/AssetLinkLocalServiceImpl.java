@@ -483,23 +483,20 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	protected List<AssetLink> filterAssetLinks(
 		List<AssetLink> assetLinks, boolean excludeNonVisibleLinks) {
 
-		if (excludeNonVisibleLinks) {
-			if (!assetLinks.isEmpty()) {
-				List<AssetLink> filteredAssetLinks = new ArrayList<>(
-					assetLinks.size());
+		if (!assetLinks.isEmpty() && excludeNonVisibleLinks) {
+			List<AssetLink> filteredAssetLinks = new ArrayList<>(
+				assetLinks.size());
 
-				for (AssetLink assetLink : assetLinks) {
-					AssetEntry assetEntry =
-						assetEntryPersistence.fetchByPrimaryKey(
-							assetLink.getEntryId2());
+			for (AssetLink assetLink : assetLinks) {
+				AssetEntry assetEntry = assetEntryPersistence.fetchByPrimaryKey(
+					assetLink.getEntryId2());
 
-					if ((assetEntry != null) && assetEntry.isVisible()) {
-						filteredAssetLinks.add(assetLink);
-					}
+				if ((assetEntry != null) && assetEntry.isVisible()) {
+					filteredAssetLinks.add(assetLink);
 				}
-
-				assetLinks = Collections.unmodifiableList(filteredAssetLinks);
 			}
+
+			assetLinks = Collections.unmodifiableList(filteredAssetLinks);
 		}
 
 		return assetLinks;

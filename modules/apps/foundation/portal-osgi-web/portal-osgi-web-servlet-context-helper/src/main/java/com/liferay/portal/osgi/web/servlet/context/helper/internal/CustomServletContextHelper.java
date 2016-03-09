@@ -39,19 +39,11 @@ import org.osgi.service.http.context.ServletContextHelper;
 public class CustomServletContextHelper
 	extends ServletContextHelper implements ServletContextListener {
 
-	public CustomServletContextHelper(Bundle bundle) {
+	public CustomServletContextHelper(Bundle bundle, Boolean wabShappedBundle) {
 		super(bundle);
 
 		_bundle = bundle;
-
-		URL url = bundle.getEntry("WEB-INF/");
-
-		if (url == null) {
-			_wabShapedBundle = false;
-		}
-		else {
-			_wabShapedBundle = true;
-		}
+		_wabShapedBundle = wabShappedBundle;
 
 		Class<?> clazz = getClass();
 

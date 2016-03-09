@@ -307,6 +307,13 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getDirectLinks(entryId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getDirectLinks(
+		long entryId, boolean excludeNonVisibleLinks) {
+		return _assetLinkLocalService.getDirectLinks(entryId,
+			excludeNonVisibleLinks);
+	}
+
 	/**
 	* Returns all the asset links of the given link type whose first entry ID
 	* is the given entry ID.
@@ -324,6 +331,13 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getDirectLinks(
 		long entryId, int typeId) {
 		return _assetLinkLocalService.getDirectLinks(entryId, typeId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getDirectLinks(
+		long entryId, int typeId, boolean excludeNonVisibleLinks) {
+		return _assetLinkLocalService.getDirectLinks(entryId, typeId,
+			excludeNonVisibleLinks);
 	}
 
 	@Override

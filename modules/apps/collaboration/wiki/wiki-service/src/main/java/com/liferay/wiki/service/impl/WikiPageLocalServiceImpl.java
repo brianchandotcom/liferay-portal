@@ -2018,7 +2018,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					List<AssetLink> assetLinks =
 						assetLinkLocalService.getDirectLinks(
 							draftAssetEntry.getEntryId(),
-							AssetLinkConstants.TYPE_RELATED);
+							AssetLinkConstants.TYPE_RELATED, false);
 
 					long[] assetLinkEntryIds = ListUtil.toLongArray(
 						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);

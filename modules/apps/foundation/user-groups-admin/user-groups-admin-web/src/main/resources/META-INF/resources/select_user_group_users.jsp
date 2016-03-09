@@ -111,6 +111,11 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 			modelVar="user2"
 			rowIdProperty="screenName"
 		>
+
+			<%
+			boolean showActions = false;
+			%>
+
 			<%@ include file="/user_search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

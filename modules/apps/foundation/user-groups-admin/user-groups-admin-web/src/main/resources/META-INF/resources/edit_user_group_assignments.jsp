@@ -136,6 +136,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
 			modelVar="user2"
 			rowIdProperty="screenName"
 		>
+
+			<%
+			boolean showActions = true;
+			%>
+
 			<%@ include file="/user_search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

@@ -33,9 +33,11 @@
 			</h6>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/user_action.jsp"
-		/>
+		<c:if test="<%= showActions %>">
+			<liferay-ui:search-container-column-jsp
+				path="/user_action.jsp"
+			/>
+		</c:if>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -45,7 +47,7 @@
 
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:user-vertical-card
-				actionJsp="/user_action.jsp"
+				actionJsp='<%= showActions ? "/user_action.jsp" : StringPool.BLANK %>'
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
 				resultRow="<%= row %>"
@@ -67,9 +69,11 @@
 			property="screenName"
 		/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="list-group-item-field"
-			path="/user_action.jsp"
-		/>
+		<c:if test="<%= showActions %>">
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/user_action.jsp"
+			/>
+		</c:if>
 	</c:otherwise>
 </c:choose>

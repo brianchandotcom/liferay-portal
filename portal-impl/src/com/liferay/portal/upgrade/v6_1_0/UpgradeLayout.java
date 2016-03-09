@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -38,15 +37,10 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select plid, companyId, name, title, typeSettings from " +
 					"Layout");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long plid = rs.getLong("plid");
@@ -57,9 +51,6 @@ public class UpgradeLayout extends UpgradeProcess {
 
 				updateLayout(plid, companyId, name, title, typeSettings);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -191,70 +182,47 @@ public class UpgradeLayout extends UpgradeProcess {
 			}
 		}
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Layout set " + columName + " = ? where plid = " + plid);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Layout set " + columName + " = ? where plid = " +
+					plid)) {
 
 			ps.setString(1, xml);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 
 		return typeSettingsProperties;
 	}
 
 	protected void updateName(long plid, String name) throws Exception {
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Layout set name = ? where plid = " + plid);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Layout set name = ? where plid = " + plid)) {
 
 			ps.setString(1, name);
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	protected void updateTitle(long plid, String title) throws Exception {
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Layout set title = ? where plid = " + plid);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Layout set title = ? where plid = " + plid)) {
 
 			ps.setString(1, title);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateTypeSettings(long plid, String typeSettings)
 		throws Exception {
 
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update Layout set typeSettings = ? where plid = " + plid);
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Layout set typeSettings = ? where plid = " + plid)) {
 
 			ps.setString(1, typeSettings);
 
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

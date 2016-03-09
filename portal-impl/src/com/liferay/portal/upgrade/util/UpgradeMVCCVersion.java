@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -86,23 +87,8 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		List<Element> classElements = getClassElements();
-
-		for (Element classElement : classElements) {
-			if (classElement.element("version") == null) {
-				continue;
-			}
-
-			upgradeMVCCVersion(databaseMetaData, classElement);
-		}
-
-		String[] moduleTableNames = getModuleTableNames();
-
-		for (String moduleTableName : moduleTableNames) {
-			upgradeMVCCVersion(databaseMetaData, moduleTableName);
-		}
+		upgradeClassElementMVCCVersions();
+		upgradeModuleTableMVCCVersions();
 	}
 
 	protected List<Element> getClassElements() throws Exception {
@@ -126,6 +112,34 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 	protected String[] getModuleTableNames() {
 		return new String[] {"BackgroundTask", "Lock_"};
+	}
+
+	protected void upgradeClassElementMVCCVersions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			List<Element> classElements = getClassElements();
+
+			for (Element classElement : classElements) {
+				if (classElement.element("version") == null) {
+					continue;
+				}
+
+				upgradeMVCCVersion(databaseMetaData, classElement);
+			}
+		}
+	}
+
+	protected void upgradeModuleTableMVCCVersions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			String[] moduleTableNames = getModuleTableNames();
+
+			for (String moduleTableName : moduleTableNames) {
+				upgradeMVCCVersion(databaseMetaData, moduleTableName);
+			}
+		}
 	}
 
 	protected void upgradeMVCCVersion(

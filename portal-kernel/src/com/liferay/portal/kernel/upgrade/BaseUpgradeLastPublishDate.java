@@ -36,17 +36,20 @@ import java.util.List;
 public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 	protected void addLastPublishDateColumn(String tableName) throws Exception {
-		if (hasColumn(tableName, "lastPublishDate")) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Table " + tableName +
-						" already has the column lastPublishDate");
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			if (hasColumn(tableName, "lastPublishDate")) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Table " + tableName +
+							" already has the column lastPublishDate");
+				}
+
+				return;
 			}
 
-			return;
+			runSQL(
+				"alter table " + tableName + " add lastPublishDate DATE null");
 		}
-
-		runSQL("alter table " + tableName + " add lastPublishDate DATE null");
 	}
 
 	protected Date getLayoutSetLastPublishDate(long groupId) throws Exception {
@@ -138,7 +141,7 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 	protected void updateLastPublishDates(String portletId, String tableName)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
 			List<Long> stagedGroupIds = getStagedGroupIds();
 
 			for (long stagedGroupId : stagedGroupIds) {

@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.journal.kernel.util.JournalConverterManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -57,22 +56,18 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			String storageType, int type)
 		throws Exception {
 
-		PreparedStatement ps = null;
+		StringBundler sb = new StringBundler(6);
 
-		try {
-			StringBundler sb = new StringBundler(6);
+		sb.append("insert into DDMStructure (uuid_, structureId, ");
+		sb.append("groupId, companyId, userId, userName, createDate, ");
+		sb.append("modifiedDate, parentStructureId, classNameId, ");
+		sb.append("structureKey, name, description, xsd, storageType, ");
+		sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?)");
 
-			sb.append("insert into DDMStructure (uuid_, structureId, ");
-			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("modifiedDate, parentStructureId, classNameId, ");
-			sb.append("structureKey, name, description, xsd, storageType, ");
-			sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?)");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, uuid_);
 			ps.setLong(2, ddmStructureId);
 			ps.setLong(3, groupId);
@@ -101,9 +96,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					uuid_);
 
 			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -143,22 +135,18 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			boolean smallImage, long smallImageId, String smallImageURL)
 		throws Exception {
 
-		PreparedStatement ps = null;
+		StringBundler sb = new StringBundler(6);
 
-		try {
-			StringBundler sb = new StringBundler(6);
+		sb.append("insert into DDMTemplate (uuid_, templateId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, modifiedDate,");
+		sb.append("classNameId, classPK , templateKey, name, description,");
+		sb.append("type_, mode_, language, script, cacheable, smallImage,");
+		sb.append("smallImageId, smallImageURL) values (?, ?, ?, ?, ?, ?,");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			sb.append("insert into DDMTemplate (uuid_, templateId, groupId, ");
-			sb.append("companyId, userId, userName, createDate, modifiedDate,");
-			sb.append("classNameId, classPK , templateKey, name, description,");
-			sb.append("type_, mode_, language, script, cacheable, smallImage,");
-			sb.append("smallImageId, smallImageURL) values (?, ?, ?, ?, ?, ?,");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, uuid_);
 			ps.setLong(2, ddmTemplateId);
 			ps.setLong(3, groupId);
@@ -190,9 +178,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			throw e;
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	@Override
@@ -210,29 +195,22 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long getCompanyGroupId(long companyId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select groupId from Group_ where classNameId = ? and " +
-					"classPK = ?");
+					"classPK = ?")) {
 
 			ps.setLong(
 				1,
 				PortalUtil.getClassNameId("com.liferay.portal.model.Company"));
 			ps.setLong(2, companyId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("groupId");
+				}
 
-			if (rs.next()) {
-				return rs.getLong("groupId");
+				return 0;
 			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -291,27 +269,20 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected Locale getDefaultLocale(long companyId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select languageId from User_ where companyId = ? and " +
-					"defaultUser = ?");
+					"defaultUser = ?")) {
 
 			ps.setLong(1, companyId);
 			ps.setBoolean(2, true);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					String languageId = rs.getString("languageId");
 
-			if (rs.next()) {
-				String languageId = rs.getString("languageId");
-
-				return LocaleUtil.fromLanguageId(languageId);
+					return LocaleUtil.fromLanguageId(languageId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return LocaleUtil.getSiteDefault();
@@ -458,22 +429,18 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long updateStructure(String structureId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select * from JournalStructure where structureId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from JournalStructure where structureId = ?")) {
 
 			ps.setString(1, structureId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return updateStructure(rs);
+				}
 
-			if (rs.next()) {
-				return updateStructure(rs);
+				return 0;
 			}
-
-			return 0;
 		}
 		catch (Exception e) {
 			_log.error(
@@ -481,9 +448,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					structureId);
 
 			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

@@ -19,6 +19,7 @@ import com.liferay.contacts.service.EntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.util.List;
 
@@ -29,17 +30,23 @@ public class UpgradeEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<Entry> entries = EntryLocalServiceUtil.getEntries(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		updateEntries();
+	}
 
-		for (Entry entry : entries) {
-			try {
-				UserLocalServiceUtil.getUserByEmailAddress(
-					entry.getCompanyId(), entry.getEmailAddress());
+	protected void updateEntries() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Entry> entries = EntryLocalServiceUtil.getEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				EntryLocalServiceUtil.deleteEntry(entry);
-			}
-			catch (Exception e) {
+			for (Entry entry : entries) {
+				try {
+					UserLocalServiceUtil.getUserByEmailAddress(
+						entry.getCompanyId(), entry.getEmailAddress());
+
+					EntryLocalServiceUtil.deleteEntry(entry);
+				}
+				catch (Exception e) {
+				}
 			}
 		}
 	}

@@ -28,6 +28,25 @@ public class UpgradeRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		upgradeSchemaVersion();
+	}
+
+	protected String toSchemaVersion(String buildNumber) {
+		StringBuilder sb = new StringBuilder(2 * buildNumber.length());
+
+		for (int i = 0; i < buildNumber.length(); i++) {
+			sb.append(buildNumber.charAt(i));
+			sb.append(CharPool.PERIOD);
+		}
+
+		if (buildNumber.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	protected void upgradeSchemaVersion() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
 				"select distinct buildNumber from Release_ " +
@@ -45,21 +64,6 @@ public class UpgradeRelease extends UpgradeProcess {
 							" and schemaVersion is null");
 			}
 		}
-	}
-
-	protected String toSchemaVersion(String buildNumber) {
-		StringBuilder sb = new StringBuilder(2 * buildNumber.length());
-
-		for (int i = 0; i < buildNumber.length(); i++) {
-			sb.append(buildNumber.charAt(i));
-			sb.append(CharPool.PERIOD);
-		}
-
-		if (buildNumber.length() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
-
-		return sb.toString();
 	}
 
 }

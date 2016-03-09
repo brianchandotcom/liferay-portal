@@ -44,12 +44,14 @@ public class VerifyPortletPreferences extends VerifyProcess {
 	public static void cleanUpLayoutRevisionPortletPreferences()
 		throws Exception {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			getPortletPreferencesActionableDynamicQuery();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ActionableDynamicQuery actionableDynamicQuery =
+				getPortletPreferencesActionableDynamicQuery();
 
-		actionableDynamicQuery.setParallel(true);
+			actionableDynamicQuery.setParallel(true);
 
-		actionableDynamicQuery.performActions();
+			actionableDynamicQuery.performActions();
+		}
 	}
 
 	protected static ActionableDynamicQuery
@@ -128,15 +130,13 @@ public class VerifyPortletPreferences extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			CacheRegistryUtil.setActive(true);
+		CacheRegistryUtil.setActive(true);
 
-			try {
-				cleanUpLayoutRevisionPortletPreferences();
-			}
-			finally {
-				CacheRegistryUtil.setActive(false);
-			}
+		try {
+			cleanUpLayoutRevisionPortletPreferences();
+		}
+		finally {
+			CacheRegistryUtil.setActive(false);
 		}
 	}
 

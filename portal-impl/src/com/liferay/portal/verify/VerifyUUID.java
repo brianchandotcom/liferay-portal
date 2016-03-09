@@ -77,45 +77,37 @@ public class VerifyUUID extends VerifyProcess {
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
-		PreparedStatement ps1 = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(6);
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			ps1 = con.prepareStatement(
+		sb.append("update ");
+		sb.append(verifiableUUIDModel.getTableName());
+		sb.append(" set uuid_ = ?");
+		sb.append(" where ");
+		sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
+		sb.append(" = ?");
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				verifiableUUIDModel.getTableName());
+			Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps1 = con.prepareStatement(
 				"select " + verifiableUUIDModel.getPrimaryKeyColumnName() +
 					" from " + verifiableUUIDModel.getTableName() +
 						" where uuid_ is null or uuid_ = ''");
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				con.prepareStatement(sb.toString()))) {
 
-			rs = ps1.executeQuery();
+			while (rs.next()) {
+				long pk = rs.getLong(
+					verifiableUUIDModel.getPrimaryKeyColumnName());
 
-			StringBundler sb = new StringBundler(6);
+				ps2.setString(1, PortalUUIDUtil.generate());
+				ps2.setLong(2, pk);
 
-			sb.append("update ");
-			sb.append(verifiableUUIDModel.getTableName());
-			sb.append(" set uuid_ = ?");
-			sb.append(" where ");
-			sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
-			sb.append(" = ?");
-
-			try (PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						con.prepareStatement(sb.toString()))) {
-
-				while (rs.next()) {
-					long pk = rs.getLong(
-						verifiableUUIDModel.getPrimaryKeyColumnName());
-
-					ps2.setString(1, PortalUUIDUtil.generate());
-					ps2.setLong(2, pk);
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
+				ps2.addBatch();
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps1, rs);
+
+			ps2.executeBatch();
 		}
 	}
 
@@ -127,9 +119,7 @@ public class VerifyUUID extends VerifyProcess {
 
 		@Override
 		protected void doRun() throws Exception {
-			try (LoggingTimer loggingTimer = new LoggingTimer()) {
-				verifyUUID(_verifiableUUIDModel);
-			}
+			verifyUUID(_verifiableUUIDModel);
 		}
 
 		private final VerifiableUUIDModel _verifiableUUIDModel;

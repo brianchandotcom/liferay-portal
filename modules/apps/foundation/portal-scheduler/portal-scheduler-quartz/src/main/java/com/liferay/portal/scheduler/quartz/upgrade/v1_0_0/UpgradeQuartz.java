@@ -14,10 +14,10 @@
 
 package com.liferay.portal.scheduler.quartz.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,12 +29,14 @@ public class UpgradeQuartz extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
+		updateJobDetails();
+	}
 
-		try {
-			ps = connection.prepareStatement(
+	protected void updateJobDetails() {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"update QUARTZ_JOB_DETAILS set job_class_name = ? " +
-					"where job_class_name = ?");
+					"where job_class_name = ?")) {
 
 			ps.setString(
 				1,
@@ -49,9 +51,6 @@ public class UpgradeQuartz extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(sqle, sqle);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

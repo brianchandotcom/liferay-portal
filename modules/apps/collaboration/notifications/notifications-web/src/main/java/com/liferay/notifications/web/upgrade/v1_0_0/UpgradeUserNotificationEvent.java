@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -36,56 +37,63 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<UserNotificationEvent> userNotificationEvents =
-			_userNotificationEventLocalService.getTypeNotificationEvents(
-				"6_WAR_soportlet");
+		updateUserNotificationEvents();
+	}
 
-		for (UserNotificationEvent userNotificationEvent :
-				userNotificationEvents) {
+	protected void updateUserNotificationEvents() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<UserNotificationEvent> userNotificationEvents =
+				_userNotificationEventLocalService.getTypeNotificationEvents(
+					"6_WAR_soportlet");
 
-			JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
-				userNotificationEvent.getPayload());
+			for (UserNotificationEvent userNotificationEvent :
+					userNotificationEvents) {
 
-			String type = payloadJSONObject.getString("portletId");
+				JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
+					userNotificationEvent.getPayload());
 
-			if (Validator.isNull(type)) {
-				return;
-			}
+				String type = payloadJSONObject.getString("portletId");
 
-			payloadJSONObject.remove("portletId");
-
-			long entryId = payloadJSONObject.getLong("entryId");
-
-			if (entryId > 0) {
-				payloadJSONObject.put("classPK", entryId);
-
-				payloadJSONObject.remove("entryId");
-			}
-			else if (type.equals("1_WAR_contactsportlet")) {
-				long socialRequestId = payloadJSONObject.getLong("requestId");
-
-				if (socialRequestId > 0) {
-					payloadJSONObject.put("classPK", socialRequestId);
-
-					payloadJSONObject.remove("socialRequestId");
+				if (Validator.isNull(type)) {
+					return;
 				}
-			}
-			else if (type.equals("2_WAR_soportlet")) {
-				long memberRequestId = payloadJSONObject.getLong(
-					"memberRequestId");
 
-				if (memberRequestId > 0) {
-					payloadJSONObject.put("classPK", memberRequestId);
+				payloadJSONObject.remove("portletId");
 
-					payloadJSONObject.remove("memberRequestId");
+				long entryId = payloadJSONObject.getLong("entryId");
+
+				if (entryId > 0) {
+					payloadJSONObject.put("classPK", entryId);
+
+					payloadJSONObject.remove("entryId");
 				}
+				else if (type.equals("1_WAR_contactsportlet")) {
+					long socialRequestId = payloadJSONObject.getLong(
+						"requestId");
+
+					if (socialRequestId > 0) {
+						payloadJSONObject.put("classPK", socialRequestId);
+
+						payloadJSONObject.remove("socialRequestId");
+					}
+				}
+				else if (type.equals("2_WAR_soportlet")) {
+					long memberRequestId = payloadJSONObject.getLong(
+						"memberRequestId");
+
+					if (memberRequestId > 0) {
+						payloadJSONObject.put("classPK", memberRequestId);
+
+						payloadJSONObject.remove("memberRequestId");
+					}
+				}
+
+				userNotificationEvent.setType(type);
+				userNotificationEvent.setPayload(payloadJSONObject.toString());
+
+				_userNotificationEventLocalService.updateUserNotificationEvent(
+					userNotificationEvent);
 			}
-
-			userNotificationEvent.setType(type);
-			userNotificationEvent.setPayload(payloadJSONObject.toString());
-
-			_userNotificationEventLocalService.updateUserNotificationEvent(
-				userNotificationEvent);
 		}
 	}
 

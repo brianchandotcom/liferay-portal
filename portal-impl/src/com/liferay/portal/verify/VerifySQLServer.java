@@ -17,9 +17,9 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,12 +36,9 @@ import java.util.List;
 public class VerifySQLServer extends VerifyProcess {
 
 	protected void convertColumnsToUnicode() {
-		dropNonunicodeTableIndexes();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			dropNonunicodeTableIndexes();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
 			StringBundler sb = new StringBundler(12);
 
 			sb.append("select sysobjects.name as table_name, syscolumns.name ");
@@ -59,40 +56,39 @@ public class VerifySQLServer extends VerifyProcess {
 
 			String sql = sb.toString();
 
-			ps = connection.prepareStatement(sql);
+			try (PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
 
-			rs = ps.executeQuery();
+				while (rs.next()) {
+					String tableName = rs.getString("table_name");
 
-			while (rs.next()) {
-				String tableName = rs.getString("table_name");
+					if (!isPortalTableName(tableName)) {
+						continue;
+					}
 
-				if (!isPortalTableName(tableName)) {
-					continue;
+					String columnName = rs.getString("column_name");
+					String dataType = rs.getString("data_type");
+					int length = rs.getInt("length");
+					boolean nullable = rs.getBoolean("is_nullable");
+
+					if (dataType.equals("varchar")) {
+						convertVarcharColumn(
+							tableName, columnName, length, nullable);
+					}
+					else if (dataType.equals("ntext") ||
+							 dataType.equals("text")) {
+
+						convertTextColumn(tableName, columnName, nullable);
+					}
 				}
 
-				String columnName = rs.getString("column_name");
-				String dataType = rs.getString("data_type");
-				int length = rs.getInt("length");
-				boolean nullable = rs.getBoolean("is_nullable");
-
-				if (dataType.equals("varchar")) {
-					convertVarcharColumn(
-						tableName, columnName, length, nullable);
-				}
-				else if (dataType.equals("ntext") || dataType.equals("text")) {
-					convertTextColumn(tableName, columnName, nullable);
+				for (String addPrimaryKeySQL : _addPrimaryKeySQLs) {
+					runSQL(addPrimaryKeySQL);
 				}
 			}
-
-			for (String addPrimaryKeySQL : _addPrimaryKeySQLs) {
-				runSQL(addPrimaryKeySQL);
+			catch (Exception e) {
+				_log.error(e, e);
 			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
@@ -173,33 +169,28 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected void dropNonunicodeTableIndexes() {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(15);
 
-		try {
-			StringBundler sb = new StringBundler(15);
+		sb.append("select distinct sysobjects.name as table_name, ");
+		sb.append("sysindexes.name as index_name FROM sysobjects inner ");
+		sb.append("join sysindexes on sysobjects.id = sysindexes.id ");
+		sb.append("inner join syscolumns on sysobjects.id = ");
+		sb.append("syscolumns.id inner join sysindexkeys on ");
+		sb.append("((sysobjects.id = sysindexkeys.id) and ");
+		sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
+		sb.append("(sysindexes.indid = sysindexkeys.indid)) inner join ");
+		sb.append("systypes on syscolumns.xtype = systypes.xtype where ");
+		sb.append("(sysobjects.type = 'U') and (sysobjects.category != ");
+		sb.append("2) and ");
+		sb.append(_FILTER_NONUNICODE_DATA_TYPES);
+		sb.append(" and ");
+		sb.append(_FILTER_EXCLUDED_TABLES);
+		sb.append(" order by sysobjects.name, sysindexes.name");
 
-			sb.append("select distinct sysobjects.name as table_name, ");
-			sb.append("sysindexes.name as index_name FROM sysobjects inner ");
-			sb.append("join sysindexes on sysobjects.id = sysindexes.id ");
-			sb.append("inner join syscolumns on sysobjects.id = ");
-			sb.append("syscolumns.id inner join sysindexkeys on ");
-			sb.append("((sysobjects.id = sysindexkeys.id) and ");
-			sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
-			sb.append("(sysindexes.indid = sysindexkeys.indid)) inner join ");
-			sb.append("systypes on syscolumns.xtype = systypes.xtype where ");
-			sb.append("(sysobjects.type = 'U') and (sysobjects.category != ");
-			sb.append("2) and ");
-			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
-			sb.append(" and ");
-			sb.append(_FILTER_EXCLUDED_TABLES);
-			sb.append(" order by sysobjects.name, sysindexes.name");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
@@ -236,36 +227,28 @@ public class VerifySQLServer extends VerifyProcess {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
 	}
 
 	protected List<String> getPrimaryKeyColumnNames(String indexName) {
 		List<String> columnNames = new ArrayList<>();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(10);
 
-		try {
-			StringBundler sb = new StringBundler(10);
+		sb.append("select distinct syscolumns.name as column_name from ");
+		sb.append("sysobjects inner join syscolumns on sysobjects.id = ");
+		sb.append("syscolumns.id inner join sysindexes on ");
+		sb.append("sysobjects.id = sysindexes.id inner join sysindexkeys ");
+		sb.append("on ((sysobjects.id = sysindexkeys.id) and ");
+		sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
+		sb.append("(sysindexes.indid = sysindexkeys.indid)) where ");
+		sb.append("sysindexes.name = '");
+		sb.append(indexName);
+		sb.append("'");
 
-			sb.append("select distinct syscolumns.name as column_name from ");
-			sb.append("sysobjects inner join syscolumns on sysobjects.id = ");
-			sb.append("syscolumns.id inner join sysindexes on ");
-			sb.append("sysobjects.id = sysindexes.id inner join sysindexkeys ");
-			sb.append("on ((sysobjects.id = sysindexkeys.id) and ");
-			sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
-			sb.append("(sysindexes.indid = sysindexkeys.indid)) where ");
-			sb.append("sysindexes.name = '");
-			sb.append(indexName);
-			sb.append("'");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				String columnName = rs.getString("column_name");
@@ -275,9 +258,6 @@ public class VerifySQLServer extends VerifyProcess {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return columnNames;

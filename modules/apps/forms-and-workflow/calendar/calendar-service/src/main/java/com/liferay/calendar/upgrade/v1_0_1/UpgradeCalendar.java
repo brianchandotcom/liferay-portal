@@ -32,11 +32,16 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("Calendar", "timeZoneId")) {
-			runSQL("alter table Calendar add timeZoneId VARCHAR(75) null");
-		}
-
+		updateCalendarTable();
 		updateCalendarTimeZoneIds();
+	}
+
+	protected void updateCalendarTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			if (!hasColumn("Calendar", "timeZoneId")) {
+				runSQL("alter table Calendar add timeZoneId VARCHAR(75) null");
+			}
+		}
 	}
 
 	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)

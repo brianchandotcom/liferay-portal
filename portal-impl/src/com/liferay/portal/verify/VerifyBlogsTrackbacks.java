@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -44,26 +45,32 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		List<MBDiscussion> mbDiscussions =
-			MBMessageLocalServiceUtil.getDiscussions(
-				BlogsEntry.class.getName());
+		verifyMBDiscussions();
+	}
 
-		for (MBDiscussion mbDiscussion : mbDiscussions) {
-			try {
-				BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-					mbDiscussion.getClassPK());
+	protected void verifyMBDiscussions() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<MBDiscussion> mbDiscussions =
+				MBMessageLocalServiceUtil.getDiscussions(
+					BlogsEntry.class.getName());
 
-				List<MBMessage> mbMessages =
-					MBMessageLocalServiceUtil.getThreadMessages(
-						mbDiscussion.getThreadId(),
-						WorkflowConstants.STATUS_APPROVED);
+			for (MBDiscussion mbDiscussion : mbDiscussions) {
+				try {
+					BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+						mbDiscussion.getClassPK());
 
-				for (MBMessage mbMessage : mbMessages) {
-					_verifyPost(entry, mbMessage);
+					List<MBMessage> mbMessages =
+						MBMessageLocalServiceUtil.getThreadMessages(
+							mbDiscussion.getThreadId(),
+							WorkflowConstants.STATUS_APPROVED);
+
+					for (MBMessage mbMessage : mbMessages) {
+						_verifyPost(entry, mbMessage);
+					}
 				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 		}
 	}

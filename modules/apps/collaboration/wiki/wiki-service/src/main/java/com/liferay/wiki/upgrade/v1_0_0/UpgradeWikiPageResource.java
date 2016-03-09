@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,14 +27,32 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		updateWikiPageResources();
+	}
 
-		try {
-			ps = connection.prepareStatement(
+	protected long getGroupId(long resourcePrimKey) throws Exception {
+		long groupId = 0;
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId from WikiPage where resourcePrimKey = ?")) {
+
+			ps.setLong(1, resourcePrimKey);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					groupId = rs.getLong("groupId");
+				}
+			}
+		}
+
+		return groupId;
+	}
+
+	protected void updateWikiPageResources() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select resourcePrimKey from WikiPageResource");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
@@ -46,34 +64,6 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 						" where resourcePrimKey = " + resourcePrimKey);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-	}
-
-	protected long getGroupId(long resourcePrimKey) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		long groupId = 0;
-
-		try {
-			ps = connection.prepareStatement(
-				"select groupId from WikiPage where resourcePrimKey = ?");
-
-			ps.setLong(1, resourcePrimKey);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				groupId = rs.getLong("groupId");
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-
-		return groupId;
 	}
 
 }

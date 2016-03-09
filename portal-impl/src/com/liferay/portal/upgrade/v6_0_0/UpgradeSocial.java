@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -80,64 +79,43 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected Object[] getGroup(long groupId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(_GET_GROUP);
-
+		try (PreparedStatement ps = connection.prepareStatement(_GET_GROUP)) {
 			ps.setLong(1, groupId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					long classNameId = rs.getLong("classNameId");
+					long classPK = rs.getLong("classPK");
 
-			if (rs.next()) {
-				long classNameId = rs.getLong("classNameId");
-				long classPK = rs.getLong("classPK");
+					return new Object[] {classNameId, classPK};
+				}
 
-				return new Object[] {classNameId, classPK};
+				return null;
 			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected Object[] getLayout(long plid) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(_GET_LAYOUT);
-
+		try (PreparedStatement ps = connection.prepareStatement(_GET_LAYOUT)) {
 			ps.setLong(1, plid);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					long groupId = rs.getLong("groupId");
 
-			if (rs.next()) {
-				long groupId = rs.getLong("groupId");
+					return new Object[] {groupId};
+				}
 
-				return new Object[] {groupId};
+				return null;
 			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 
 	protected void updateGroupId() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct(groupId) from SocialActivity where groupId " +
 					"> 0");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
@@ -151,9 +129,6 @@ public class UpgradeSocial extends UpgradeProcess {
 					}
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

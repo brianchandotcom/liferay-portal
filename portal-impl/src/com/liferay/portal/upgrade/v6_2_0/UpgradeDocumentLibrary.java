@@ -68,14 +68,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFileEntryType
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				"DLFileEntryTypeTable")) {
-
-			alter(
-				DLFileEntryTypeTable.class,
-				new AlterTableAddColumn("fileEntryTypeKey STRING"),
-				new AlterColumnType("name", "STRING null"));
-		}
+		alter(
+			DLFileEntryTypeTable.class,
+			new AlterTableAddColumn("fileEntryTypeKey STRING"),
+			new AlterColumnType("name", "STRING null"));
 
 		updateFileEntryTypes();
 

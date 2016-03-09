@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -38,27 +37,20 @@ import javax.portlet.PortletPreferences;
 public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 	protected long getIGImageFileEntryType(long companyId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select fileEntryTypeId from DLFileEntryType " +
-					"where name = ? AND companyId = ?");
+					"where name = ? AND companyId = ?")) {
 
 			ps.setString(1, DLFileEntryTypeConstants.NAME_IG_IMAGE);
 			ps.setLong(2, companyId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("fileEntryTypeId");
+				}
 
-			if (rs.next()) {
-				return rs.getLong("fileEntryTypeId");
+				return 0;
 			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

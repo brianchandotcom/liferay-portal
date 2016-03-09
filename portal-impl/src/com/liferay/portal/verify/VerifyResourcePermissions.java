@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.util.PortalInstances;
@@ -94,17 +95,19 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	}
 
 	protected void verifyLayout(Role role) throws Exception {
-		List<Layout> layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
-			role.getRoleId());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Layout> layouts =
+				LayoutLocalServiceUtil.getNoPermissionLayouts(role.getRoleId());
 
-		int total = layouts.size();
+			int total = layouts.size();
 
-		for (int i = 0; i < total; i++) {
-			Layout layout = layouts.get(i);
+			for (int i = 0; i < total; i++) {
+				Layout layout = layouts.get(i);
 
-			verifyResourcedModel(
-				role.getCompanyId(), Layout.class.getName(), layout.getPlid(),
-				role, 0, i, total);
+				verifyResourcedModel(
+					role.getCompanyId(), Layout.class.getName(),
+					layout.getPlid(), role, 0, i, total);
+			}
 		}
 	}
 
@@ -173,48 +176,39 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		int total = 0;
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			try {
-				ps = con.prepareStatement(
-					"select count(*) from " +
-						verifiableResourcedModel.getTableName() +
-							" where companyId = " + role.getCompanyId());
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				verifiableResourcedModel.getTableName());
+			Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps1 = con.prepareStatement(
+				"select count(*) from " +
+					verifiableResourcedModel.getTableName() +
+						" where companyId = " + role.getCompanyId());
+			ResultSet rs1 = ps1.executeQuery()) {
 
-				rs = ps.executeQuery();
-
-				if (rs.next()) {
-					total = rs.getInt(1);
-				}
-			}
-			finally {
-				DataAccess.cleanUp(ps, rs);
+			if (rs1.next()) {
+				total = rs1.getInt(1);
 			}
 
-			try {
-				StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(8);
 
-				sb.append("select ");
-				sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-				sb.append(", ");
-				sb.append(verifiableResourcedModel.getUserIdColumnName());
-				sb.append(" from ");
-				sb.append(verifiableResourcedModel.getTableName());
-				sb.append(" where companyId = ");
-				sb.append(role.getCompanyId());
+			sb.append("select ");
+			sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
+			sb.append(", ");
+			sb.append(verifiableResourcedModel.getUserIdColumnName());
+			sb.append(" from ");
+			sb.append(verifiableResourcedModel.getTableName());
+			sb.append(" where companyId = ");
+			sb.append(role.getCompanyId());
 
-				ps = con.prepareStatement(sb.toString());
+			try (PreparedStatement ps2 = con.prepareStatement(sb.toString());
+				ResultSet rs2 = ps2.executeQuery()) {
 
-				rs = ps.executeQuery();
-
-				for (int i = 0; rs.next(); i++) {
-					long primKey = rs.getLong(
+				for (int i = 0; rs2.next(); i++) {
+					long primKey = rs2.getLong(
 						verifiableResourcedModel.getPrimaryKeyColumnName());
-					long userId = rs.getLong(
+					long userId = rs2.getLong(
 						verifiableResourcedModel.getUserIdColumnName());
 
 					verifyResourcedModel(
@@ -222,9 +216,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 						verifiableResourcedModel.getModelName(), primKey, role,
 						userId, i, total);
 				}
-			}
-			finally {
-				DataAccess.cleanUp(ps, rs);
 			}
 		}
 	}

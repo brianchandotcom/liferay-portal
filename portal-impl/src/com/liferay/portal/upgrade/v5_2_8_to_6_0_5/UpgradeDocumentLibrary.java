@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v5_2_8_to_6_0_5;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -52,21 +51,17 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 
-		PreparedStatement ps = null;
+		StringBundler sb = new StringBundler(5);
 
-		try {
-			StringBundler sb = new StringBundler(5);
+		sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, folderId, ");
+		sb.append("name, version, size_, status, statusByUserId, ");
+		sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
-			sb.append("companyId, userId, userName, createDate, folderId, ");
-			sb.append("name, version, size_, status, statusByUserId, ");
-			sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, increment());
 			ps.setLong(2, groupId);
 			ps.setLong(3, companyId);
@@ -84,20 +79,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement("select * from DLFileEntry");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from DLFileEntry");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
@@ -128,9 +116,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					}
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		synchronizeFileVersions();
@@ -201,23 +186,18 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void synchronizeFileVersions() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(5);
 
-		try {
-			StringBundler sb = new StringBundler(5);
+		sb.append("select * from DLFileEntry dlFileEntry where version ");
+		sb.append("not in (select version from DLFileVersion ");
+		sb.append("dlFileVersion where (dlFileVersion.folderId = ");
+		sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
+		sb.append("dlFileEntry.name))");
 
-			sb.append("select * from DLFileEntry dlFileEntry where version ");
-			sb.append("not in (select version from DLFileVersion ");
-			sb.append("dlFileVersion where (dlFileVersion.folderId = ");
-			sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
-			sb.append("dlFileEntry.name))");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
@@ -233,9 +213,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					groupId, companyId, userId, userName, folderId, name,
 					version, size);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

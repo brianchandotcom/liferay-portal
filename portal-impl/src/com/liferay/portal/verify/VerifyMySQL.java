@@ -45,11 +45,8 @@ public class VerifyMySQL extends VerifyProcess {
 			return;
 		}
 
-		Statement statement = connection.createStatement();
-
-		verifyTableEngine(statement);
-
-		verifyDatetimePrecision(connection.getMetaData(), statement);
+		verifyTableEngine();
+		verifyDatetimePrecision();
 	}
 
 	protected String getActualColumnType(
@@ -75,11 +72,11 @@ public class VerifyMySQL extends VerifyProcess {
 		}
 	}
 
-	protected void verifyDatetimePrecision(
-			DatabaseMetaData databaseMetaData, Statement statement)
-		throws Exception {
+	protected void verifyDatetimePrecision() throws Exception {
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+			Statement statement = connection.createStatement();
 			ResultSet rs = databaseMetaData.getTables(
 				null, null, null, null)) {
 
@@ -134,8 +131,9 @@ public class VerifyMySQL extends VerifyProcess {
 		}
 	}
 
-	protected void verifyTableEngine(Statement statement) throws Exception {
+	protected void verifyTableEngine() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("show table status")) {
 
 			while (rs.next()) {

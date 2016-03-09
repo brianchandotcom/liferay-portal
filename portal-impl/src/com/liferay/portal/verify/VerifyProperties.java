@@ -38,74 +38,9 @@ public class VerifyProperties extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-
-		// system.properties
-
-		for (String[] keys : _MIGRATED_SYSTEM_KEYS) {
-			String oldKey = keys[0];
-			String newKey = keys[1];
-
-			verifyMigratedSystemProperty(oldKey, newKey);
-		}
-
-		for (String[] keys : _RENAMED_SYSTEM_KEYS) {
-			String oldKey = keys[0];
-			String newKey = keys[1];
-
-			verifyRenamedSystemProperty(oldKey, newKey);
-		}
-
-		for (String key : _OBSOLETE_SYSTEM_KEYS) {
-			verifyObsoleteSystemProperty(key);
-		}
-
-		Properties systemProperties = SystemProperties.getProperties();
-
-		for (String[] keys : _MODULARIZED_SYSTEM_KEYS) {
-			String oldKey = keys[0];
-			String newKey = keys[1];
-			String moduleName = keys[2];
-
-			verifyModularizedSystemProperty(
-				systemProperties, oldKey, newKey, moduleName);
-		}
-
-		// portal.properties
-
-		Properties portalProperties = loadPortalProperties();
-
-		for (String[] keys : _MIGRATED_PORTAL_KEYS) {
-			String oldKey = keys[0];
-			String newKey = keys[1];
-
-			verifyMigratedPortalProperty(portalProperties, oldKey, newKey);
-		}
-
-		for (String[] keys : _RENAMED_PORTAL_KEYS) {
-			String oldKey = keys[0];
-			String newKey = keys[1];
-
-			verifyRenamedPortalProperty(portalProperties, oldKey, newKey);
-		}
-
-		for (String key : _OBSOLETE_PORTAL_KEYS) {
-			verifyObsoletePortalProperty(portalProperties, key);
-		}
-
-		for (String[] keys : _MODULARIZED_PORTAL_KEYS) {
-			String oldKey = keys[0];
-			String newKey = keys[1];
-			String moduleName = keys[2];
-
-			verifyModularizedPortalProperty(
-				portalProperties, oldKey, newKey, moduleName);
-		}
-
-		// Document library
-
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		storeFactory.checkProperties();
+		verifySystemProperties();
+		verifyPortalProperties();
+		verifyDocumentLibrary();
 	}
 
 	protected InputStream getPropertiesResourceAsStream(String resourceName)
@@ -147,32 +82,36 @@ public class VerifyProperties extends VerifyProcess {
 		return properties;
 	}
 
+	protected void verifyDocumentLibrary() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StoreFactory storeFactory = StoreFactory.getInstance();
+
+			storeFactory.checkProperties();
+		}
+	}
+
 	protected void verifyMigratedPortalProperty(
 			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (portalProperties.containsKey(oldKey)) {
-				_log.error(
-					"Portal property \"" + oldKey +
-						"\" was migrated to the system property \"" + newKey +
-							"\"");
-			}
+		if (portalProperties.containsKey(oldKey)) {
+			_log.error(
+				"Portal property \"" + oldKey +
+					"\" was migrated to the system property \"" + newKey +
+						"\"");
 		}
 	}
 
 	protected void verifyMigratedSystemProperty(String oldKey, String newKey)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String value = SystemProperties.get(oldKey);
+		String value = SystemProperties.get(oldKey);
 
-			if (value != null) {
-				_log.error(
-					"System property \"" + oldKey +
-						"\" was migrated to the portal property \"" + newKey +
-							"\"");
-			}
+		if (value != null) {
+			_log.error(
+				"System property \"" + oldKey +
+					"\" was migrated to the portal property \"" + newKey +
+						"\"");
 		}
 	}
 
@@ -181,12 +120,10 @@ public class VerifyProperties extends VerifyProcess {
 			String moduleName)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (portalProperties.containsKey(oldKey)) {
-				_log.error(
-					"Portal property \"" + oldKey + "\" was modularized to " +
-						moduleName + " as \"" + newKey + "\"");
-			}
+		if (portalProperties.containsKey(oldKey)) {
+			_log.error(
+				"Portal property \"" + oldKey + "\" was modularized to " +
+					moduleName + " as \"" + newKey + "\"");
 		}
 	}
 
@@ -195,12 +132,10 @@ public class VerifyProperties extends VerifyProcess {
 			String moduleName)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (systemProperties.containsKey(oldKey)) {
-				_log.error(
-					"System property \"" + oldKey + "\" was modularized to " +
-						moduleName + " as \"" + newKey + "\"");
-			}
+		if (systemProperties.containsKey(oldKey)) {
+			_log.error(
+				"System property \"" + oldKey + "\" was modularized to " +
+					moduleName + " as \"" + newKey + "\"");
 		}
 	}
 
@@ -208,19 +143,48 @@ public class VerifyProperties extends VerifyProcess {
 			Properties portalProperties, String key)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (portalProperties.containsKey(key)) {
-				_log.error("Portal property \"" + key + "\" is obsolete");
-			}
+		if (portalProperties.containsKey(key)) {
+			_log.error("Portal property \"" + key + "\" is obsolete");
 		}
 	}
 
 	protected void verifyObsoleteSystemProperty(String key) throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String value = SystemProperties.get(key);
+		String value = SystemProperties.get(key);
 
-			if (value != null) {
-				_log.error("System property \"" + key + "\" is obsolete");
+		if (value != null) {
+			_log.error("System property \"" + key + "\" is obsolete");
+		}
+	}
+
+	protected void verifyPortalProperties() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			Properties portalProperties = loadPortalProperties();
+
+			for (String[] keys : _MIGRATED_PORTAL_KEYS) {
+				String oldKey = keys[0];
+				String newKey = keys[1];
+
+				verifyMigratedPortalProperty(portalProperties, oldKey, newKey);
+			}
+
+			for (String[] keys : _RENAMED_PORTAL_KEYS) {
+				String oldKey = keys[0];
+				String newKey = keys[1];
+
+				verifyRenamedPortalProperty(portalProperties, oldKey, newKey);
+			}
+
+			for (String key : _OBSOLETE_PORTAL_KEYS) {
+				verifyObsoletePortalProperty(portalProperties, key);
+			}
+
+			for (String[] keys : _MODULARIZED_PORTAL_KEYS) {
+				String oldKey = keys[0];
+				String newKey = keys[1];
+				String moduleName = keys[2];
+
+				verifyModularizedPortalProperty(
+					portalProperties, oldKey, newKey, moduleName);
 			}
 		}
 	}
@@ -229,25 +193,54 @@ public class VerifyProperties extends VerifyProcess {
 			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (portalProperties.containsKey(oldKey)) {
-				_log.error(
-					"Portal property \"" + oldKey + "\" was renamed to \"" +
-						newKey + "\"");
-			}
+		if (portalProperties.containsKey(oldKey)) {
+			_log.error(
+				"Portal property \"" + oldKey + "\" was renamed to \"" +
+					newKey + "\"");
 		}
 	}
 
 	protected void verifyRenamedSystemProperty(String oldKey, String newKey)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String value = SystemProperties.get(oldKey);
+		String value = SystemProperties.get(oldKey);
 
-			if (value != null) {
-				_log.error(
-					"System property \"" + oldKey + "\" was renamed to \"" +
-						newKey + "\"");
+		if (value != null) {
+			_log.error(
+				"System property \"" + oldKey + "\" was renamed to \"" +
+					newKey + "\"");
+		}
+	}
+
+	protected void verifySystemProperties() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (String[] keys : _MIGRATED_SYSTEM_KEYS) {
+				String oldKey = keys[0];
+				String newKey = keys[1];
+
+				verifyMigratedSystemProperty(oldKey, newKey);
+			}
+
+			for (String[] keys : _RENAMED_SYSTEM_KEYS) {
+				String oldKey = keys[0];
+				String newKey = keys[1];
+
+				verifyRenamedSystemProperty(oldKey, newKey);
+			}
+
+			for (String key : _OBSOLETE_SYSTEM_KEYS) {
+				verifyObsoleteSystemProperty(key);
+			}
+
+			Properties systemProperties = SystemProperties.getProperties();
+
+			for (String[] keys : _MODULARIZED_SYSTEM_KEYS) {
+				String oldKey = keys[0];
+				String newKey = keys[1];
+				String moduleName = keys[2];
+
+				verifyModularizedSystemProperty(
+					systemProperties, oldKey, newKey, moduleName);
 			}
 		}
 	}

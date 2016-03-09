@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -25,19 +26,26 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portal.model.User");
+		updateContact();
+	}
 
-		runSQL("update Contact_ set classNameId = " + classNameId);
+	protected void updateContact() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				"com.liferay.portal.model.User");
 
-		StringBundler sb = new StringBundler(4);
+			runSQL("update Contact_ set classNameId = " + classNameId);
 
-		sb.append("update Contact_ set classPK = (select User_.userId from ");
-		sb.append("User_ where User_.contactId = Contact_.contactId), ");
-		sb.append("emailAddress = (select User_.emailAddress from User_ ");
-		sb.append("where User_.contactId = Contact_.contactId)");
+			StringBundler sb = new StringBundler(4);
 
-		runSQL(sb.toString());
+			sb.append(
+				"update Contact_ set classPK = (select User_.userId from ");
+			sb.append("User_ where User_.contactId = Contact_.contactId), ");
+			sb.append("emailAddress = (select User_.emailAddress from User_ ");
+			sb.append("where User_.contactId = Contact_.contactId)");
+
+			runSQL(sb.toString());
+		}
 	}
 
 }

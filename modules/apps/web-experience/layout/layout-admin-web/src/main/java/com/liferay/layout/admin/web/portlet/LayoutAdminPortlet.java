@@ -291,19 +291,14 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layout.getTypeSettingsProperties());
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 
-		if (Validator.isNull(redirect)) {
-			if (!layout.isTypeURL()) {
-				redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
-			}
-			else {
-				redirect = PortalUtil.getGroupFriendlyURL(
-					layout.getLayoutSet(), themeDisplay);
-			}
-
-			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
+		if (layout.isTypeURL()) {
+			redirect = PortalUtil.getGroupFriendlyURL(
+				layout.getLayoutSet(), themeDisplay);
 		}
+
+		MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}

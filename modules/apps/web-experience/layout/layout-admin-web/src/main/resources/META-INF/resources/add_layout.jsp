@@ -51,15 +51,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 </portlet:actionURL>
 
 <aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
-
-	<%
-	String redirect = ParamUtil.getString(request, "redirect");
-	%>
-
-	<c:if test="<%= Validator.isNotNull(redirect) %>">
-		<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= redirect %>" />
-	</c:if>
-
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />

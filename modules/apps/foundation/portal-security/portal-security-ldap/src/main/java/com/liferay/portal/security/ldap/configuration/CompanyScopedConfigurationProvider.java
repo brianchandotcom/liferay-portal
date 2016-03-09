@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.constants.LDAPConstants;
@@ -133,7 +132,7 @@ public abstract class CompanyScopedConfigurationProvider
 		List<Dictionary<String, Object>> configurationsProperties =
 			getConfigurationsProperties(companyId, useDefault);
 
-		if (ListUtil.isEmpty(configurationsProperties)) {
+		if (configurationsProperties.isEmpty()) {
 			return Collections.emptyList();
 		}
 

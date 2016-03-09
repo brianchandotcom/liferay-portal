@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -39,6 +38,11 @@ import java.util.List;
  * @author Raymond Augé
  */
 public class UpgradeCustomizablePortlets extends UpgradeProcess {
+
+	public static String namespacePlid(long plid) {
+		return "com.liferay.portal.model.CustomizedPages".concat(
+			String.valueOf(plid));
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -193,7 +197,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 
 		while (x != -1) {
 
-			// <name>com.liferay.portal.kernel.model.CustomizedPages10415#
+			// <name>com.liferay.portal.model.CustomizedPages10415#
 			// column-1</name>
 
 			String[] parts = StringUtil.split(
@@ -204,7 +208,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 
 			if (key.startsWith(LayoutTypePortletConstants.COLUMN_PREFIX)) {
 				String value = portalPreferencesImpl.getValue(
-					CustomizedPages.namespacePlid(plid), key);
+					namespacePlid(plid), key);
 
 				List<String> newPortletIds = new ArrayList<>();
 
@@ -218,8 +222,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 
 				value = StringUtil.merge(newPortletIds);
 
-				portalPreferencesImpl.setValue(
-					CustomizedPages.namespacePlid(plid), key, value);
+				portalPreferencesImpl.setValue(namespacePlid(plid), key, value);
 			}
 
 			x = preferences.indexOf(_PREFIX, y);

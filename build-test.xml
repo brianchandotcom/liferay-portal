@@ -7296,6 +7296,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<or>
 				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
 			</or>
 			<then>
 				<if>
@@ -7453,6 +7454,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<or>
 				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
 			</or>
 			<then>
 				<property file="${project.dir}/${test.ext.properties.file}" />

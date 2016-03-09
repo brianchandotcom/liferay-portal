@@ -15,9 +15,10 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="text-strong"
+	cssClass="content-column name-column title-column"
 	name="name"
 	orderable="<%= true %>"
+	truncate="<%= true %>"
 >
 
 	<%
@@ -96,11 +97,13 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="membership-type-column text-column"
 	name="membership-type"
 	value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="members-column text-column"
 	name="members"
 >
 
@@ -144,24 +147,28 @@
 
 <c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
 	<liferay-ui:search-container-column-text
+		cssClass="online-now-column"
 		name="online-now"
 		value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), curGroup.getGroupId())) %>"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-text
+	cssClass="group-active-column"
 	name="active"
 	value='<%= LanguageUtil.get(request, (curGroup.isActive() ? "yes" : "no")) %>'
 />
 
 <c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">
 	<liferay-ui:search-container-column-text
+		cssClass="pending-requests-column text-column"
 		name="pending-requests"
 		value="<%= (curGroup.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(curGroup.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-text
+	cssClass="tags-column text-column"
 	name="tags"
 >
 	<liferay-ui:asset-tags-summary
@@ -171,7 +178,6 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
+	cssClass="entry-action-column"
 	path="/site_action.jsp"
 />

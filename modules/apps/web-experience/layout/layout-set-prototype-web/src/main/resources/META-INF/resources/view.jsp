@@ -219,8 +219,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 					>
 
 						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
@@ -235,23 +236,25 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
 						name="description"
+						truncate="<%= true %>"
 						value="<%= layoutSetPrototype.getDescription(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="create-date-column text-column"
 						name="create-date"
 						property="createDate"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="list-group-item-field"
+						cssClass="site-active-column"
 						name="active"
 						value='<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>'
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
 						href="<%= rowURL %>"
 						path="/layout_set_prototype_action.jsp"
 					/>

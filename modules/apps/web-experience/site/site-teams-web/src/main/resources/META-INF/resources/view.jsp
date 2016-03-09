@@ -177,20 +177,23 @@ teamSearchContainer.setTotal(teamsCount);
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						href="<%= rowURL %>"
 						name="name"
 						property="name"
+						truncate="<%= true %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
 						href="<%= rowURL %>"
 						name="description"
 						property="description"
+						truncate="<%= true %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
+						cssClass="entry-action-column"
 						path="/team_action.jsp"
 					/>
 				</c:when>

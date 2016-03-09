@@ -224,7 +224,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column title-column"
 						name="title"
+						truncate="<%= true %>"
 					>
 						<span id="<%= liferayPortletResponse.getNamespace() + "backgroundTaskName" + String.valueOf(backgroundTask.getBackgroundTaskId()) %>">
 							<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
@@ -232,24 +234,29 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
+						cssClass="status-column text-column"
 						name="status"
 						path="/publish_process_message.jsp"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="create-date-column text-column"
 						name="create-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="completion-date-column text-column"
 						name="completion-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column download-column"
 						name="download"
+						truncate="<%= true %>"
 					>
 
 						<%
@@ -284,9 +291,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				</c:when>
 			</c:choose>
 
-			<liferay-ui:search-container-column-text
-				align="right"
-			>
+			<liferay-ui:search-container-column-text>
 				<c:if test="<%= !backgroundTask.isInProgress() %>">
 					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 						<portlet:actionURL name="editExportConfiguration" var="relaunchURL">

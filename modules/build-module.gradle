@@ -15,6 +15,16 @@ configurations {
 	}
 }
 
+printArtifactPublishCommands {
+	onlyIf {
+		if (buildFile.text.contains("project(\"")) {
+			return false
+		}
+
+		return true
+	}
+}
+
 configurations.provided.dependencies.withType(ProjectDependency) {
 	configurations.default.exclude module: it.name
 }

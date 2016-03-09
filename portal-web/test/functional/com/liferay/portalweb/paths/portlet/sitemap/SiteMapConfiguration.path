@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>SiteMapConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteMapConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ROOT_PAGE_MENU_SELECT</td>
+	<td>//select[contains(@id,'rootLayoutUuid')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DEPTH_MENU_SELECT</td>
+	<td>//select[contains(@id,'displayDepth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INCLUDE_ROOT_IN_TREE_TOGGLE</td>
+	<td>//label[contains(@for,'includeRootInTree')]//span[contains(@class,&quot;toggle-switch-bar&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_CURRENT_PAGE_TOGGLE</td>
+	<td>//label[contains(@for,'showCurrentPage')]//span[contains(@class,&quot;toggle-switch-bar&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USE_HTML_TITLE_TOGGLE</td>
+	<td>//label[contains(@for,'useHtmlTitle')]//span[contains(@class,&quot;toggle-switch-bar&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_HIDDEN_PAGES_TOGGLE</td>
+	<td>//label[contains(@for,'showHiddenPages')]//span[contains(@class,&quot;toggle-switch-bar&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_LINK</td>
+	<td>//a[contains(@id,'selectDDMTemplate') and contains(.,'Manage Display Templates')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

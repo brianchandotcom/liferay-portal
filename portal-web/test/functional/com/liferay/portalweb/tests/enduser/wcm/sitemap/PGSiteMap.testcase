@@ -1,0 +1,76 @@
+<definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="Sitemap" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#addChild">
+			<var name="childSitepageName" value="true" />
+			<var name="page" value="Private Pages" />
+			<var name="siteChildPageName" value="Child Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP">
+					<var name="siteName" value="Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="DisplayPrivatePageWithChildPage" priority="4">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Site Map" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Site Map" />
+		</execute>
+
+		<execute macro="SiteMapPortlet#viewDefaultPG">
+			<var name="listChildPageName" value="Child Page Name" />
+			<var name="listPageName" value="Site Page Name" />
+		</execute>
+	</command>
+</definition>

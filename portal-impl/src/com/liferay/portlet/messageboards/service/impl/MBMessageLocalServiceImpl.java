@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1852,9 +1853,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					JSONObject extraDataJSONObject =
 						JSONFactoryUtil.createJSONObject();
 
-					extraDataJSONObject.put("title", message.getSubject());
+					String title = message.getSubject();
 
 					if (!message.isDiscussion()) {
+						extraDataJSONObject.put("title", title);
+
 						if (!message.isAnonymous() && !user.isDefaultUser()) {
 							long receiverUserId = 0;
 
@@ -1882,6 +1885,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						}
 					}
 					else {
+						title = HtmlUtil.stripHtml(title);
+
+						extraDataJSONObject.put("title", title);
+
 						String className = (String)serviceContext.getAttribute(
 							"className");
 						long classPK = ParamUtil.getLong(

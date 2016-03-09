@@ -95,7 +95,6 @@ roleSearch.setResults(roles);
 			keyProperty="roleId"
 			modelVar="role"
 		>
-
 			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

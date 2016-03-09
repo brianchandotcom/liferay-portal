@@ -86,13 +86,13 @@ for (long defaultTeamId : defaultTeamIds) {
 		modelVar="role"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="content-column title-column"
 			name="title"
+			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="list-group-item-field"
-		>
+		<liferay-ui:search-container-column-text>
 			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
@@ -125,13 +125,13 @@ for (long defaultTeamId : defaultTeamIds) {
 		modelVar="team"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="content-column title-column"
 			name="title"
+			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(team.getName()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="list-group-item-field"
-		>
+		<liferay-ui:search-container-column-text>
 			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

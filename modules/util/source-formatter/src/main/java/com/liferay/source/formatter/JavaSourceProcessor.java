@@ -455,21 +455,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkUpgradeClass(String fileName, String content) {
-		Matcher matcher = _upgradeExtendsPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return;
-		}
-
-		if (content.contains("\tupgradeTable(") &&
-			!content.contains("void upgradeTable(")) {
-
-			processErrorMessage(
-				fileName, "Use UpgradeProcess.alter: " + fileName);
-		}
-	}
-
 	protected void checkXMLSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -964,10 +949,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);
-
-		// LPS-63652
-
-		checkUpgradeClass(fileName, newContent);
 
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
@@ -4178,8 +4159,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
-	private Pattern _upgradeExtendsPattern = Pattern.compile(
-		"extends (BaseUpgrade|UpgradeProcess )");
 	private List<String> _upgradeServiceUtilExcludes;
 
 }

@@ -27,6 +27,10 @@ portletURL.setParameter("p_u_i_d", String.valueOf(siteMembershipsDisplayContext.
 
 RoleSearch roleSearch = new RoleSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
+RowChecker rowChecker = new UserGroupRoleRoleChecker(renderResponse, siteMembershipsDisplayContext.getSelUser(), siteMembershipsDisplayContext.getGroup());
+
+roleSearch.setRowChecker(rowChecker);
+
 RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearch.getSearchTerms();
 
 List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
@@ -70,7 +74,7 @@ roleSearch.setResults(roles);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -82,7 +86,6 @@ roleSearch.setResults(roles);
 
 	<liferay-ui:search-container
 		id="userGroupRoleRole"
-		rowChecker="<%= new UserGroupRoleRoleChecker(renderResponse, siteMembershipsDisplayContext.getSelUser(), siteMembershipsDisplayContext.getGroup()) %>"
 		searchContainer="<%= roleSearch %>"
 	>
 		<liferay-ui:search-container-row
@@ -91,6 +94,23 @@ roleSearch.setResults(roles);
 			modelVar="role"
 		>
 			<c:choose>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							cssClass="entry-display-style"
+							icon="users"
+							resultRow="<%= row %>"
+							rowChecker="<%= roleSearch.getRowChecker() %>"
+							subtitle="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
+							title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						icon="users"

@@ -523,7 +523,7 @@ AUI.add(
 
 							actionURL.setParameter('entryId', contact.entryId);
 							actionURL.setParameter('javax.portlet.action', 'deleteEntry');
-							actionURL.setPortletId('1_WAR_contactsportlet');
+							actionURL.setPortletId('com_liferay_contacts_web_portlet_ContactsCenterPortlet');
 							actionURL.setWindowState('NORMAL');
 
 							A.io.request(
@@ -552,7 +552,7 @@ AUI.add(
 						portletURL.setParameter('mvcPath', '/edit_entry.jsp');
 						portletURL.setParameter('redirect', contact.redirect);
 						portletURL.setParameter('entryId', contact.entryId);
-						portletURL.setPortletId('1_WAR_contactsportlet');
+						portletURL.setPortletId('com_liferay_contacts_web_portlet_ContactsCenterPortlet');
 						portletURL.setWindowState('EXCLUSIVE');
 
 						instance.showPopup(Liferay.Language.get('update-contact'), portletURL.toString());

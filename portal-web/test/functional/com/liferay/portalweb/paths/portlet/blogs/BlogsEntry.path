@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>CONTENT_INLINE_IMAGE</td>
-	<td>//div[contains(@class,'entry-body')]//img[contains(@src,'${key_uploadFileName}')]</td>
+	<td>//div[contains(@class,'entry-content')]//img[contains(@src,'${key_uploadFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

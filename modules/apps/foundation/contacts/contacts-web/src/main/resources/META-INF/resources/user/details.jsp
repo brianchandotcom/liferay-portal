@@ -47,26 +47,14 @@ User selUser = (User)request.getAttribute("user.selUser");
 		<c:if test="<%= selUser != null %>">
 			<c:choose>
 				<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "portrait") %>'>
-
-					<%
-					Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-					long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
-					%>
-
-					<liferay-portlet:renderURL plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.MY_ACCOUNT %>" refererPlid="<%= plid %>" var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/my_account/edit_user_portrait" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-						<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
-					</liferay-portlet:renderURL>
-
 					<liferay-ui:logo-selector
 						currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 						defaultLogo="<%= selUser.getPortraitId() == 0 %>"
 						defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
 						logoDisplaySelector=".user-logo"
+						maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
 						showBackground="<%= false %>"
+						tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 					/>
 				</c:when>
 				<c:otherwise>

@@ -15,7 +15,9 @@ configurations {
 	}
 }
 
-if (project.path.startsWith(":util:")) {
+if (project.path.startsWith(":third-party:") ||
+	project.path.startsWith(":util:")) {
+
 	copyLibs {
 		enabled = false
 	}

@@ -7,4 +7,4 @@ Import-Package:\
 	\
 	org.apache.taglibs.standard.*;version=1.2.3,\
 	*
-Include-Resource: @lib/javax.servlet.jsp.jstl.jar
+-includeresource: javax.servlet.jsp.jstl-*.jar

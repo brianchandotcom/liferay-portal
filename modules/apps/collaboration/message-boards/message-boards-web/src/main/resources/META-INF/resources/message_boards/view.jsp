@@ -317,7 +317,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 						pageSubtitle = "recent-posts";
 					}
 
-					PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(pageSubtitle, StringPool.UNDERLINE, StringPool.DASH)), request);
+					PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(pageSubtitle, CharPool.UNDERLINE, CharPool.DASH)), request);
 					PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(pageSubtitle, TextFormatter.O)), portletURL.toString());
 					%>
 
@@ -372,7 +372,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 			<%@ include file="/message_boards/view_threads.jspf" %>
 
 			<%
-			PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("my-subscriptions", StringPool.UNDERLINE, StringPool.DASH)), request);
+			PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("my-subscriptions", CharPool.UNDERLINE, CharPool.DASH)), request);
 			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("my-subscriptions", TextFormatter.O)), portletURL.toString());
 			%>
 

@@ -124,7 +124,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 							%>
 
 							<dt class="h4">
-								<%= StringUtil.replace(userTrackerPath.getPath(), "&", "& ") %>
+								<%= StringUtil.replace(userTrackerPath.getPath(), CharPool.AMPERSAND, "& ") %>
 							</dt>
 							<dd>
 								<%= dateFormatDateTime.format(userTrackerPath.getPathDate()) %>

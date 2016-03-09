@@ -573,7 +573,7 @@ private String _getPaletteItemTitle(HttpServletRequest request, String label, Cl
 	if (Validator.isNotNull(javadocURL)) {
 		sb.append("<a href=\"");
 		sb.append(javadocURL);
-		sb.append(StringUtil.replace(className, StringPool.PERIOD, StringPool.SLASH));
+		sb.append(StringUtil.replace(className, CharPool.PERIOD, CharPool.SLASH));
 		sb.append(".html\" target=\"_blank\">");
 	}
 

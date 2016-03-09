@@ -12,7 +12,7 @@
 	<target name="build-css">
 		<build-css
 			docrootDirName="css"
-			portalCommonDirName="../../../frontend/frontend-common-css/tmp/META-INF/resources"
+			portalCommonDirName="../../../frontend-css/frontend-css-common/tmp/META-INF/resources"
 		/>
 	</target>
 </project>

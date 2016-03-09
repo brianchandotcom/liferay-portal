@@ -49,7 +49,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			ps = connection.prepareStatement(
 				"select ownerId, ownerType, preferences from " +
 					"PortalPreferences where preferences like " +
-						"'%com.liferay.portal.kernel.model.CustomizedPages%'");
+						"'%com.liferay.portal.model.CustomizedPages%'");
 
 			rs = ps.executeQuery();
 
@@ -233,7 +233,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 	}
 
 	private static final String _PREFIX =
-		"<name>com.liferay.portal.kernel.model.CustomizedPages";
+		"<name>com.liferay.portal.model.CustomizedPages";
 
 	private static final String _SUFFIX = "</name>";
 

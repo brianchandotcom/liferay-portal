@@ -579,7 +579,82 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {
-			String fieldName = matcher.group(4);
+			String replaceCall = matcher.group();
+
+			int x = replaceCall.length();
+
+			while (true) {
+				x = replaceCall.lastIndexOf(
+					StringPool.CLOSE_PARENTHESIS, x - 1);
+
+				replaceCall = replaceCall.substring(0, x + 1);
+
+				String strippedQuotesCall = stripQuotes(replaceCall);
+
+				int closeParenthesesCount = StringUtil.count(
+					strippedQuotesCall, StringPool.CLOSE_PARENTHESIS);
+				int openParenthesesCount = StringUtil.count(
+					strippedQuotesCall, StringPool.OPEN_PARENTHESIS);
+
+				if (closeParenthesesCount == openParenthesesCount) {
+					break;
+				}
+			}
+
+			x = replaceCall.indexOf(StringPool.OPEN_PARENTHESIS);
+
+			String parameters = replaceCall.substring(
+				x + 1, replaceCall.length() - 1);
+
+			List<String> parametersList = new ArrayList<>();
+
+			x = -1;
+
+			while (true) {
+				x = parameters.indexOf(StringPool.COMMA, x + 1);
+
+				if (x == -1) {
+					parametersList.add(StringUtil.trim(parameters));
+
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(parameters, x)) {
+					continue;
+				}
+
+				String linePart = parameters.substring(0, x);
+
+				String strippedQuotesLinePart = stripQuotes(linePart);
+
+				int closeParenthesesCount = StringUtil.count(
+					strippedQuotesLinePart, StringPool.CLOSE_PARENTHESIS);
+				int openParenthesesCount = StringUtil.count(
+					strippedQuotesLinePart, StringPool.OPEN_PARENTHESIS);
+
+				if (closeParenthesesCount == openParenthesesCount) {
+					parametersList.add(StringUtil.trim(linePart));
+
+					parameters = parameters.substring(x + 1);
+
+					x = -1;
+				}
+			}
+
+			if (parametersList.size() != 3) {
+				return;
+			}
+
+			String secondParameter = parametersList.get(1);
+
+			Matcher singleLengthMatcher = singleLengthStringPattern.matcher(
+				secondParameter);
+
+			if (!singleLengthMatcher.find()) {
+				continue;
+			}
+
+			String fieldName = singleLengthMatcher.group(2);
 
 			if (fieldName != null) {
 				Field field = StringPool.class.getDeclaredField(fieldName);
@@ -2262,10 +2337,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
 		Pattern.MULTILINE);
+	protected static Pattern singleLengthStringPattern = Pattern.compile(
+		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	protected static Pattern stringUtilReplacePattern = Pattern.compile(
-		"StringUtil\\.(replace|replaceFirst|replaceLast)\\(\\s*[^,\\s\\)]+," +
-			"\\s+(\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)),\\s+[^,\\s\\)]+\\)" +
-				";");
+		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);

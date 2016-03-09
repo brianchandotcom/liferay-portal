@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
@@ -475,37 +476,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						_getGitCommitCommand(
 							project, "artifact properties", true));
 
-					// Convert module to project dependencies
-
-					File projectDir = project.getProjectDir();
-
-					File projectGroupDir = projectDir.getParentFile();
-
-					BasePluginConvention basePluginConvention =
-						GradleUtil.getConvention(
-							project, BasePluginConvention.class);
-
-					String archivesBaseName =
-						basePluginConvention.getArchivesBaseName();
-
-					commands.add(
-						String.format(
-							_MODULE_TO_PROJECT_DEPENDENCIES_COMMAND,
-							FileUtil.getAbsolutePath(projectGroupDir),
-							escapeBRE(project.getGroup()),
-							escapeBRE(archivesBaseName), project.getPath()));
-
-					// Convert project to module dependencies
-
-					commands.add(
-						String.format(
-							_PROJECT_TO_MODULE_DEPENDENCIES_COMMAND,
-							FileUtil.getAbsolutePath(rootDir),
-							FileUtil.getAbsolutePath(projectGroupDir),
-							escapeBRE(project.getPath()), project.getGroup(),
-							archivesBaseName,
-							String.valueOf(project.getVersion())));
-
 					// Commit other changed files
 
 					commands.add(
@@ -514,7 +484,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					System.out.println();
 					System.out.println('#');
 					System.out.println(
-						"# " + FileUtil.getAbsolutePath(projectDir));
+						"# " +
+							FileUtil.getAbsolutePath(project.getProjectDir()));
 					System.out.println('#');
 					System.out.println();
 
@@ -707,7 +678,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected ReplaceRegexTask addTaskUpdateFileVersions(
-		final Project project) {
+		final Project project, File portalRootDir) {
 
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
@@ -733,6 +704,39 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+
+		if (portalRootDir != null) {
+			File projectDir = project.getProjectDir();
+
+			final File projectGroupDir = projectDir.getParentFile();
+
+			replaceRegexTask.pre(
+				new Closure<String>(null) {
+
+					@SuppressWarnings("unused")
+					public String doCall(String content, File file) {
+						String fileName = file.getName();
+
+						if (!fileName.equals("build.gradle")) {
+							return content;
+						}
+
+						if (FileUtil.isChild(file, projectGroupDir)) {
+							return content.replaceAll(
+								getModuleDependencyRegex(project),
+								Matcher.quoteReplacement(
+									getProjectDependency(project)));
+						}
+						else {
+							return content.replaceAll(
+								Pattern.quote(getProjectDependency(project)),
+								Matcher.quoteReplacement(
+									getModuleDependency(project)));
+						}
+					}
+
+				});
+		}
 
 		replaceRegexTask.setDescription(
 			"Updates the project version in external files.");
@@ -1016,7 +1020,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			recordArtifactTask, antJGitConfiguration, portalRootDir);
 
 		final ReplaceRegexTask updateFileVersionsTask =
-			addTaskUpdateFileVersions(project);
+			addTaskUpdateFileVersions(project, portalRootDir);
 
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
@@ -1537,13 +1541,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		Project project = updateFileVersionsTask.getProject();
 
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
-
-		String archivesBaseName = basePluginConvention.getArchivesBaseName();
-
-		String regex =
-			"\"" + Pattern.quote(archivesBaseName) + "\", version: \"(\\d.+)\"";
+		String regex = getModuleDependencyRegex(project);
 
 		Map<String, Object> args = new HashMap<>();
 
@@ -1689,6 +1687,42 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return project.file("lib");
 	}
 
+	protected String getModuleDependency(Project project) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("group: \"");
+		sb.append(project.getGroup());
+		sb.append("\", name: \"");
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		sb.append(basePluginConvention.getArchivesBaseName());
+
+		sb.append("\", version: \"");
+		sb.append(project.getVersion());
+		sb.append('"');
+
+		return sb.toString();
+	}
+
+	protected String getModuleDependencyRegex(Project project) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("group: \"");
+		sb.append(project.getGroup());
+		sb.append("\", name: \"");
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		sb.append(basePluginConvention.getArchivesBaseName());
+
+		sb.append("\", version: \"");
+
+		return Pattern.quote(sb.toString()) + "(\\d.+)\"";
+	}
+
 	@Override
 	protected Class<LiferayPlugin> getPluginClass() {
 		return LiferayPlugin.class;
@@ -1712,6 +1746,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				return null;
 			}
 		}
+	}
+
+	protected String getProjectDependency(Project project) {
+		return "project(\"" + project.getPath() + "\")";
 	}
 
 	protected boolean isPublishing(Project project) {
@@ -1751,16 +1789,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
 		"maven.local.ignore");
-
-	private static final String _MODULE_TO_PROJECT_DEPENDENCIES_COMMAND =
-		"find %s -name 'build.gradle' -type f -exec sed -i " +
-			"'s/group: \"%s\", name: \"%s\", version: \".*\"/" +
-				"project(\"%s\")/' {} \\;";
-
-	private static final String _PROJECT_TO_MODULE_DEPENDENCIES_COMMAND =
-		"find %s -name 'build.gradle' -not -path '%s/*' -type f -exec sed -i " +
-			"'s/project(\"%s\")/" +
-				"group: \"%s\", name: \"%s\", version: \"%s\"/' {} \\;";
 
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url", DEFAULT_REPOSITORY_URL);

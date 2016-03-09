@@ -19,7 +19,7 @@ dependencies {
 	compile project(":apps:web-experience:journal:journal-api")
 	compile project(":apps:web-experience:journal:journal-service")
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1-SNAPSHOT"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
 	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 }

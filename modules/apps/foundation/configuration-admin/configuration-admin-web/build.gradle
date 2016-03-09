@@ -16,7 +16,7 @@ dependencies {
 	provided project(":apps:foundation:osgi-service-tracker-collections")
 	provided project(":apps:web-experience:application-list:application-list-api")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1-SNAPSHOT"
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 

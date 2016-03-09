@@ -382,8 +382,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			portlet.setReady(ready);
 		}
 
-		registerClpMessageListeners(servletContext, classLoader);
-
 		JavadocManagerUtil.load(servletContextName, classLoader);
 
 		DirectServletRegistryUtil.clearServlets();
@@ -453,8 +451,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		PortletContextBagPool.remove(servletContextName);
 
 		unbindDataSource(servletContextName);
-
-		unregisterClpMessageListeners(servletContext);
 
 		JavadocManagerUtil.unload(servletContextName);
 

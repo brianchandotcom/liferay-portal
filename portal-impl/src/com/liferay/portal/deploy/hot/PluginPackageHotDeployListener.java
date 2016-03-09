@@ -129,8 +129,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		initPortletProps(classLoader);
 		initServiceComponent(servletContext, classLoader);
 
-		registerClpMessageListeners(servletContext, classLoader);
-
 		reconfigureCaches(servletContext, classLoader);
 
 		if (_log.isInfoEnabled()) {
@@ -167,8 +165,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		destroyServiceComponent(
 			new ServletServiceContextComponentConfiguration(servletContext),
 			servletContext.getClassLoader());
-
-		unregisterClpMessageListeners(servletContext);
 
 		ServiceRegistrar<PortalCacheConfiguratorSettings> serviceRegistrar =
 			(ServiceRegistrar<PortalCacheConfiguratorSettings>)

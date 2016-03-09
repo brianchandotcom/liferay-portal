@@ -1040,7 +1040,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				public void execute(Project project) {
 					configureArtifacts(
 						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
-					configureProjectBndProperties(project);
 					configureProjectVersion(project);
 					configureTaskUpdateFileVersions(
 						updateFileVersionsTask, portalRootDir);
@@ -1051,6 +1050,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					configureTaskUploadArchives(
 						project, recordArtifactTask, updateFileVersionsTask);
+
+					if (hasPlugin(project, BundlePlugin.class)) {
+						configureProjectBndProperties(project);
+					}
 				}
 
 			});

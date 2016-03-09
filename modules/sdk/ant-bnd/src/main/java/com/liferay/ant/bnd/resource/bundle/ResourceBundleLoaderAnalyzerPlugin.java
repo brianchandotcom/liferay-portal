@@ -41,6 +41,7 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 
 		Attrs attrs = new Attrs();
 
+		attrs.put("bundle.symbolic.name", analyzer.getBsn());
 		attrs.put("resource.bundle.base.name", "content.Language");
 
 		parameters.add("liferay.resource.bundle", attrs);

@@ -51,13 +51,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 </portlet:actionURL>
 
 <aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
-	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
-	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />
-	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= parentLayoutId %>" />
-	<aui:input id="addLayoutType" name="type" type="hidden" value="portlet" />
-	<aui:input id="addLayoutPrototypeId" name="layoutPrototypeId" type="hidden" value="" />
-	<aui:input id="addLayoutExplicitCreation" name="explicitCreation" type="hidden" value="<%= true %>" />
+	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
+	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
+	<aui:input name="parentPlid" type="hidden" value="<%= parentPlid %>" />
+	<aui:input name="parentLayoutId" type="hidden" value="<%= parentLayoutId %>" />
+	<aui:input name="type" type="hidden" value="portlet" />
+	<aui:input name="layoutPrototypeId" type="hidden" value="" />
+	<aui:input name="explicitCreation" type="hidden" value="<%= true %>" />
 
 	<liferay-ui:error exception="<%= LayoutTypeException.class %>">
 
@@ -101,9 +101,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" id="addLayoutName" name="name" />
+			<aui:input autoFocus="<%= true %>" name="name" />
 
-			<aui:input helpMessage="if-enabled-this-page-does-not-show-up-in-the-navigation-menu" id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
+			<aui:input helpMessage="if-enabled-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
 
 			<aui:select name="type">
 				<c:if test='<%= ArrayUtil.contains(types, "portlet") %>'>
@@ -225,9 +225,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 </aui:form>
 
 <aui:script use="aui-base">
-	var addLayoutType = A.one('#<portlet:namespace />addLayoutType');
+	var type = A.one('#<portlet:namespace />type');
 
-	var addLayoutPrototypeId = A.one('#<portlet:namespace />addLayoutPrototypeId');
+	var layoutPrototypeId = A.one('#<portlet:namespace />layoutPrototypeId');
 
 	var nodeList = A.one('#<portlet:namespace />templateList');
 
@@ -246,9 +246,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 			var selectedPrototypeId = currentContent.attr('data-prototype-id');
 
-			addLayoutType.attr('value', selectedType);
+			type.attr('value', selectedType);
 
-			addLayoutPrototypeId.attr('value', selectedPrototypeId);
+			layoutPrototypeId.attr('value', selectedPrototypeId);
 		}
 	);
 </aui:script>

@@ -77,6 +77,15 @@ public class VerifyUUID extends VerifyProcess {
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("update ");
+		sb.append(verifiableUUIDModel.getTableName());
+		sb.append(" set uuid_ = ?");
+		sb.append(" where ");
+		sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
+		sb.append(" = ?");
+
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableUUIDModel.getTableName());
 			Connection con = DataAccess.getUpgradeOptimizedConnection();
@@ -84,33 +93,21 @@ public class VerifyUUID extends VerifyProcess {
 				"select " + verifiableUUIDModel.getPrimaryKeyColumnName() +
 					" from " + verifiableUUIDModel.getTableName() +
 						" where uuid_ is null or uuid_ = ''");
-			ResultSet rs = ps1.executeQuery()) {
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				con.prepareStatement(sb.toString()))) {
 
-			StringBundler sb = new StringBundler(6);
+			while (rs.next()) {
+				long pk = rs.getLong(
+					verifiableUUIDModel.getPrimaryKeyColumnName());
 
-			sb.append("update ");
-			sb.append(verifiableUUIDModel.getTableName());
-			sb.append(" set uuid_ = ?");
-			sb.append(" where ");
-			sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
-			sb.append(" = ?");
+				ps2.setString(1, PortalUUIDUtil.generate());
+				ps2.setLong(2, pk);
 
-			try (PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						con.prepareStatement(sb.toString()))) {
-
-				while (rs.next()) {
-					long pk = rs.getLong(
-						verifiableUUIDModel.getPrimaryKeyColumnName());
-
-					ps2.setString(1, PortalUUIDUtil.generate());
-					ps2.setLong(2, pk);
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

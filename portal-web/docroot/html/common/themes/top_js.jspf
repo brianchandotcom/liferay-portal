@@ -81,31 +81,31 @@
 			}
 		};
 
-		Liferay.Data = {
-			NAV_SELECTOR: '#navigation',
+		Liferay.Data = Liferay.Data || {};
 
-			isCustomizationView: function() {
-				return <%= (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
-			},
+		Liferay.Data.NAV_SELECTOR = '#navigation';
 
-			notices: [
-				null
-
-				<c:if test="<%= permissionChecker.isOmniadmin() && PortalUtil.isUpdateAvailable() %>">
-					,{
-						content: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager() %>"><liferay-ui:message key="updates-are-available-for-liferay" /></a>',
-						toggleText: false
-					}
-				</c:if>
-
-				<c:if test="<%= ShutdownUtil.isInProcess() %>">
-					,{
-						node: '#lfrShutdownMessage',
-						toggleText: false
-					}
-				</c:if>
-			]
+		Liferay.Data.isCustomizationView = function() {
+			return <%= (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
 		};
+
+		Liferay.Data.notices = [
+			null
+
+			<c:if test="<%= permissionChecker.isOmniadmin() && PortalUtil.isUpdateAvailable() %>">
+				, {
+					content: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager() %>"><liferay-ui:message key="updates-are-available-for-liferay" /></a>',
+					toggleText: false
+				}
+			</c:if>
+
+			<c:if test="<%= ShutdownUtil.isInProcess() %>">
+				, {
+					node: '#lfrShutdownMessage',
+					toggleText: false
+				}
+			</c:if>
+		];
 
 		Liferay.PortletKeys = {
 			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
@@ -309,7 +309,7 @@
 					filterConfig = {
 						replaceStr: '.js' + instance.getStaticResourceURLParams(),
 						searchExp: '\\.js$'
-					}
+					};
 				}
 
 				return filterConfig;

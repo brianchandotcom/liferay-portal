@@ -592,7 +592,7 @@ if (portletTitleBasedNavigation) {
 		if (!title) {
 			var filePath = $('#<portlet:namespace />file').val();
 
-			var fileName = filePath.replace(/^.*[\\\/]/, '')
+			var fileName = filePath.replace(/^.*[\\\/]/, '');
 
 			$('#<portlet:namespace />title').val(fileName);
 		}

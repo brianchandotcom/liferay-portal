@@ -640,7 +640,7 @@ AUI.add(
 						}
 
 						if (!title) {
-							title = Liferay.Language.get("process-details");
+							title = Liferay.Language.get('process-details');
 						}
 
 						Liferay.Util.openWindow(

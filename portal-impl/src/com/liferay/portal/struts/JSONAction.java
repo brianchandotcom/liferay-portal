@@ -95,7 +95,7 @@ public abstract class JSONAction extends Action {
 			json = JSONFactoryUtil.serializeThrowable(se);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(e.getMessage());
 
 			PortalUtil.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,

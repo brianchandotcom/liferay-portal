@@ -2258,14 +2258,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
-	protected static Pattern stringUtilReplacePattern = Pattern.compile(
-		"StringUtil\\.(replace|replaceFirst|replaceLast)\\(\\s*[^,\\s\\)]+," +
-			"\\s+(\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)),\\s+[^,\\s\\)]+\\)" +
-				";");
 	protected static Pattern sessionKeyPattern = Pattern.compile(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
 		Pattern.MULTILINE);
+	protected static Pattern stringUtilReplacePattern = Pattern.compile(
+		"StringUtil\\.(replace|replaceFirst|replaceLast)\\(\\s*[^,\\s\\)]+," +
+			"\\s+(\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)),\\s+[^,\\s\\)]+\\)" +
+				";");
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);

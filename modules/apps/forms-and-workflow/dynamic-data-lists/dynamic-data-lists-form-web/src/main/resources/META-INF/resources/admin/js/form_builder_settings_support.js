@@ -103,9 +103,9 @@ AUI.add(
 
 				var settingsForm = instance.get('settingsForm');
 
-				instance._updateSettingsFormValues();
-
 				settingsForm.render();
+
+				instance._updateSettingsFormValues();
 			},
 
 			saveSettings: function() {

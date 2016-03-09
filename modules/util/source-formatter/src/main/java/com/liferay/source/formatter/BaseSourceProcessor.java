@@ -243,6 +243,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sb.toString();
 	}
 
+	protected void checkChaining(String line, String fileName, int lineCount) {
+		if (line.startsWith("this(")) {
+			return;
+		}
+
+		if (line.contains(".getClass().")) {
+			processErrorMessage(
+				fileName, "chaining: " + fileName + " " + lineCount);
+		}
+	}
+
 	protected void checkEmptyCollection(
 		String line, String fileName, int lineCount) {
 
@@ -501,37 +512,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkStringUtilReplace(
-			String fileName, String newContent)
-		throws Exception {
-
-		Matcher matcher = stringUtilReplacePattern.matcher(newContent);
-
-		while (matcher.find()) {
-			String fieldName = matcher.group(4);
-
-			if (fieldName != null) {
-				Field field = StringPool.class.getDeclaredField(fieldName);
-
-				String value = (String)field.get(null);
-
-				if (value.length() != 1) {
-					continue;
-				}
-			}
-
-			String method = matcher.group(1);
-
-			processErrorMessage(
-				fileName,
-				"Use StringUtil." + method + "(String, char, char) or " +
-					"StringUtil." + method +
-						"(String, char, String) instead: " + fileName);
-
-			return;
-		}
-	}
-
 	protected void checkResourceUtil(
 		String line, String fileName, int lineCount) {
 
@@ -551,17 +531,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName,
 				"Use ResourceBundleUtil.getString instead of " +
 					"resourceBundle.getString: " + fileName + " " + lineCount);
-		}
-	}
-
-	protected void checkChaining(String line, String fileName, int lineCount) {
-		if (line.startsWith("this(")) {
-			return;
-		}
-
-		if (line.contains(".getClass().")) {
-			processErrorMessage(
-				fileName, "chaining: " + fileName + " " + lineCount);
 		}
 	}
 
@@ -602,6 +571,37 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
+	}
+
+	protected void checkStringUtilReplace(
+			String fileName, String newContent)
+		throws Exception {
+
+		Matcher matcher = stringUtilReplacePattern.matcher(newContent);
+
+		while (matcher.find()) {
+			String fieldName = matcher.group(4);
+
+			if (fieldName != null) {
+				Field field = StringPool.class.getDeclaredField(fieldName);
+
+				String value = (String)field.get(null);
+
+				if (value.length() != 1) {
+					continue;
+				}
+			}
+
+			String method = matcher.group(1);
+
+			processErrorMessage(
+				fileName,
+				"Use StringUtil." + method + "(String, char, char) or " +
+					"StringUtil." + method +
+						"(String, char, String) instead: " + fileName);
+
+			return;
+		}
 	}
 
 	protected void checkUTF8(File file, String fileName) throws Exception {

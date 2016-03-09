@@ -77,7 +77,9 @@ public class VerifyUUID extends VerifyProcess {
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				verifiableUUIDModel.getTableName());
+			Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps1 = con.prepareStatement(
 				"select " + verifiableUUIDModel.getPrimaryKeyColumnName() +
 					" from " + verifiableUUIDModel.getTableName() +
@@ -120,9 +122,7 @@ public class VerifyUUID extends VerifyProcess {
 
 		@Override
 		protected void doRun() throws Exception {
-			try (LoggingTimer loggingTimer = new LoggingTimer()) {
-				verifyUUID(_verifiableUUIDModel);
-			}
+			verifyUUID(_verifiableUUIDModel);
 		}
 
 		private final VerifiableUUIDModel _verifiableUUIDModel;

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.util.PortalInstances;
@@ -94,17 +95,19 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	}
 
 	protected void verifyLayout(Role role) throws Exception {
-		List<Layout> layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
-			role.getRoleId());
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Layout> layouts =
+				LayoutLocalServiceUtil.getNoPermissionLayouts(role.getRoleId());
 
-		int total = layouts.size();
+			int total = layouts.size();
 
-		for (int i = 0; i < total; i++) {
-			Layout layout = layouts.get(i);
+			for (int i = 0; i < total; i++) {
+				Layout layout = layouts.get(i);
 
-			verifyResourcedModel(
-				role.getCompanyId(), Layout.class.getName(), layout.getPlid(),
-				role, 0, i, total);
+				verifyResourcedModel(
+					role.getCompanyId(), Layout.class.getName(),
+					layout.getPlid(), role, 0, i, total);
+			}
 		}
 	}
 
@@ -173,9 +176,12 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
-		int total = 0;
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				verifiableResourcedModel.getTableName());
+			Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			int total = 0;
+
 			try (PreparedStatement ps = con.prepareStatement(
 					"select count(*) from " +
 						verifiableResourcedModel.getTableName() +

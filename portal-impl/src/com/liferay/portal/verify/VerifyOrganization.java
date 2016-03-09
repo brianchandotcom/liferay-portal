@@ -87,40 +87,44 @@ public class VerifyOrganization extends VerifyProcess {
 	}
 
 	protected void updateOrganizationAssetEntries() throws Exception {
-		StringBundler sb = new StringBundler();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler();
 
-		sb.append("select AssetEntry.entryId, Organization_.uuid_ from ");
-		sb.append("AssetEntry, Organization_ where AssetEntry.classNameId = ");
+			sb.append("select AssetEntry.entryId, Organization_.uuid_ from ");
+			sb.append(
+				"AssetEntry, Organization_ where AssetEntry.classNameId = ");
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			Organization.class.getName());
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				Organization.class.getName());
 
-		sb.append(classNameId);
+			sb.append(classNameId);
 
-		sb.append(" and AssetEntry.classPK = Organization_.organizationId ");
-		sb.append("and AssetEntry.classUuid is null");
+			sb.append(
+				" and AssetEntry.classPK = Organization_.organizationId ");
+			sb.append("and AssetEntry.classUuid is null");
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps1.executeQuery()) {
+			try (PreparedStatement ps1 = connection.prepareStatement(
+					sb.toString());
+				ResultSet rs = ps1.executeQuery()) {
 
-			try (PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update AssetEntry set classUuid = ? where " +
-								"entryId = ?"))) {
+				try (PreparedStatement ps2 =
+						AutoBatchPreparedStatementUtil.autoBatch(
+							connection.prepareStatement(
+								"update AssetEntry set classUuid = ? where " +
+									"entryId = ?"))) {
 
-				while (rs.next()) {
-					long entryId = rs.getLong("AssetEntry.entryId");
-					String uuid = rs.getString("Organization_.uuid_");
+					while (rs.next()) {
+						long entryId = rs.getLong("AssetEntry.entryId");
+						String uuid = rs.getString("Organization_.uuid_");
 
-					ps2.setString(1, uuid);
-					ps2.setLong(2, entryId);
+						ps2.setString(1, uuid);
+						ps2.setLong(2, entryId);
 
-					ps2.addBatch();
+						ps2.addBatch();
+					}
+
+					ps2.executeBatch();
 				}
-
-				ps2.executeBatch();
 			}
 		}
 	}

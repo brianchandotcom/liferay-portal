@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -54,106 +55,116 @@ public class VerifyUser extends VerifyProcess {
 	}
 
 	protected void verifyInactive() throws Exception {
-		StringBundler sb = null;
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = null;
 
-		DB db = DBManagerUtil.getDB();
+			DB db = DBManagerUtil.getDB();
 
-		if (db.getDBType() == DBType.MYSQL) {
-			sb = new StringBundler(7);
+			if (db.getDBType() == DBType.MYSQL) {
+				sb = new StringBundler(7);
 
-			sb.append("update Group_ inner join User_ on Group_.companyId = ");
-			sb.append("User_.companyId and Group_.classPK = User_.userId ");
-			sb.append("set active_ = [$FALSE$] ");
-			sb.append("where Group_.classNameId = ");
-			sb.append(PortalUtil.getClassNameId(User.class));
-			sb.append(" and User_.status = ");
-			sb.append(WorkflowConstants.STATUS_INACTIVE);
+				sb.append(
+					"update Group_ inner join User_ on Group_.companyId = ");
+				sb.append("User_.companyId and Group_.classPK = User_.userId ");
+				sb.append("set active_ = [$FALSE$] ");
+				sb.append("where Group_.classNameId = ");
+				sb.append(PortalUtil.getClassNameId(User.class));
+				sb.append(" and User_.status = ");
+				sb.append(WorkflowConstants.STATUS_INACTIVE);
+			}
+			else {
+				sb = new StringBundler(9);
+
+				sb.append(
+					"update Group_ set active_ = [$FALSE$] where groupId in");
+				sb.append(
+					" (select Group_.groupId from Group_ inner join User_ ");
+				sb.append("on Group_.companyId = User_.companyId and ");
+				sb.append("Group_.classPK = User_.userId ");
+				sb.append("where Group_.classNameId = ");
+				sb.append(PortalUtil.getClassNameId(User.class));
+				sb.append(" and User_.status = ");
+				sb.append(WorkflowConstants.STATUS_INACTIVE);
+				sb.append(")");
+			}
+
+			runSQL(sb.toString());
+
+			EntityCacheUtil.clearCache(UserImpl.class);
+			FinderCacheUtil.clearCache(UserImpl.class.getName());
 		}
-		else {
-			sb = new StringBundler(9);
-
-			sb.append("update Group_ set active_ = [$FALSE$] where groupId in");
-			sb.append(" (select Group_.groupId from Group_ inner join User_ ");
-			sb.append("on Group_.companyId = User_.companyId and ");
-			sb.append("Group_.classPK = User_.userId ");
-			sb.append("where Group_.classNameId = ");
-			sb.append(PortalUtil.getClassNameId(User.class));
-			sb.append(" and User_.status = ");
-			sb.append(WorkflowConstants.STATUS_INACTIVE);
-			sb.append(")");
-		}
-
-		runSQL(sb.toString());
-
-		EntityCacheUtil.clearCache(UserImpl.class);
-		FinderCacheUtil.clearCache(UserImpl.class.getName());
 	}
 
 	protected void verifyNoContacts() throws PortalException {
-		List<User> users = UserLocalServiceUtil.getNoContacts();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<User> users = UserLocalServiceUtil.getNoContacts();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Processing " + users.size() + " users with no contacts");
-		}
-
-		for (User user : users) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Creating contact for user " + user.getUserId());
+				_log.debug(
+					"Processing " + users.size() + " users with no contacts");
 			}
 
-			long contactId = CounterLocalServiceUtil.increment();
+			for (User user : users) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Creating contact for user " + user.getUserId());
+				}
 
-			Contact contact = ContactLocalServiceUtil.createContact(contactId);
+				long contactId = CounterLocalServiceUtil.increment();
 
-			Company company = CompanyLocalServiceUtil.getCompanyById(
-				user.getCompanyId());
+				Contact contact = ContactLocalServiceUtil.createContact(
+					contactId);
 
-			contact.setCompanyId(user.getCompanyId());
-			contact.setUserId(user.getUserId());
-			contact.setUserName(StringPool.BLANK);
-			contact.setAccountId(company.getAccountId());
-			contact.setParentContactId(
-				ContactConstants.DEFAULT_PARENT_CONTACT_ID);
-			contact.setFirstName(user.getFirstName());
-			contact.setMiddleName(user.getMiddleName());
-			contact.setLastName(user.getLastName());
-			contact.setPrefixId(0);
-			contact.setSuffixId(0);
-			contact.setJobTitle(user.getJobTitle());
+				Company company = CompanyLocalServiceUtil.getCompanyById(
+					user.getCompanyId());
 
-			ContactLocalServiceUtil.updateContact(contact);
+				contact.setCompanyId(user.getCompanyId());
+				contact.setUserId(user.getUserId());
+				contact.setUserName(StringPool.BLANK);
+				contact.setAccountId(company.getAccountId());
+				contact.setParentContactId(
+					ContactConstants.DEFAULT_PARENT_CONTACT_ID);
+				contact.setFirstName(user.getFirstName());
+				contact.setMiddleName(user.getMiddleName());
+				contact.setLastName(user.getLastName());
+				contact.setPrefixId(0);
+				contact.setSuffixId(0);
+				contact.setJobTitle(user.getJobTitle());
 
-			user.setContactId(contactId);
+				ContactLocalServiceUtil.updateContact(contact);
 
-			UserLocalServiceUtil.updateUser(user);
-		}
+				user.setContactId(contactId);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Contacts verified for users");
-		}
-
-		users = UserLocalServiceUtil.getNoGroups();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Processing " + users.size() + " users with no groups");
-		}
-
-		for (User user : users) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Creating group for user " + user.getUserId());
+				UserLocalServiceUtil.updateUser(user);
 			}
 
-			GroupLocalServiceUtil.addGroup(
-				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				User.class.getName(), user.getUserId(),
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, (Map<Locale, String>)null,
-				null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-				StringPool.SLASH + user.getScreenName(), false, true, null);
-		}
+			if (_log.isDebugEnabled()) {
+				_log.debug("Contacts verified for users");
+			}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Groups verified for users");
+			users = UserLocalServiceUtil.getNoGroups();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing " + users.size() + " users with no groups");
+			}
+
+			for (User user : users) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Creating group for user " + user.getUserId());
+				}
+
+				GroupLocalServiceUtil.addGroup(
+					user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					User.class.getName(), user.getUserId(),
+					GroupConstants.DEFAULT_LIVE_GROUP_ID,
+					(Map<Locale, String>)null, null, 0, true,
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+					StringPool.SLASH + user.getScreenName(), false, true, null);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Groups verified for users");
+			}
 		}
 	}
 

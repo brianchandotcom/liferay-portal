@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,55 +36,59 @@ import java.util.List;
 public class VerifySQLServer extends VerifyProcess {
 
 	protected void convertColumnsToUnicode() {
-		dropNonunicodeTableIndexes();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			dropNonunicodeTableIndexes();
 
-		StringBundler sb = new StringBundler(12);
+			StringBundler sb = new StringBundler(12);
 
-		sb.append("select sysobjects.name as table_name, syscolumns.name ");
-		sb.append("AS column_name, systypes.name as data_type, ");
-		sb.append("syscolumns.length, syscolumns.isnullable as ");
-		sb.append("is_nullable FROM sysobjects inner join syscolumns on ");
-		sb.append("sysobjects.id = syscolumns.id inner join systypes on ");
-		sb.append("syscolumns.xtype = systypes.xtype where ");
-		sb.append("(sysobjects.xtype = 'U') and (sysobjects.category != ");
-		sb.append("2) and ");
-		sb.append(_FILTER_NONUNICODE_DATA_TYPES);
-		sb.append(" and ");
-		sb.append(_FILTER_EXCLUDED_TABLES);
-		sb.append(" order by sysobjects.name, syscolumns.colid");
+			sb.append("select sysobjects.name as table_name, syscolumns.name ");
+			sb.append("AS column_name, systypes.name as data_type, ");
+			sb.append("syscolumns.length, syscolumns.isnullable as ");
+			sb.append("is_nullable FROM sysobjects inner join syscolumns on ");
+			sb.append("sysobjects.id = syscolumns.id inner join systypes on ");
+			sb.append("syscolumns.xtype = systypes.xtype where ");
+			sb.append("(sysobjects.xtype = 'U') and (sysobjects.category != ");
+			sb.append("2) and ");
+			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
+			sb.append(" and ");
+			sb.append(_FILTER_EXCLUDED_TABLES);
+			sb.append(" order by sysobjects.name, syscolumns.colid");
 
-		String sql = sb.toString();
+			String sql = sb.toString();
 
-		try (PreparedStatement ps = connection.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery()) {
+			try (PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
 
-			while (rs.next()) {
-				String tableName = rs.getString("table_name");
+				while (rs.next()) {
+					String tableName = rs.getString("table_name");
 
-				if (!isPortalTableName(tableName)) {
-					continue;
+					if (!isPortalTableName(tableName)) {
+						continue;
+					}
+
+					String columnName = rs.getString("column_name");
+					String dataType = rs.getString("data_type");
+					int length = rs.getInt("length");
+					boolean nullable = rs.getBoolean("is_nullable");
+
+					if (dataType.equals("varchar")) {
+						convertVarcharColumn(
+							tableName, columnName, length, nullable);
+					}
+					else if (dataType.equals("ntext") ||
+							 dataType.equals("text")) {
+
+						convertTextColumn(tableName, columnName, nullable);
+					}
 				}
 
-				String columnName = rs.getString("column_name");
-				String dataType = rs.getString("data_type");
-				int length = rs.getInt("length");
-				boolean nullable = rs.getBoolean("is_nullable");
-
-				if (dataType.equals("varchar")) {
-					convertVarcharColumn(
-						tableName, columnName, length, nullable);
-				}
-				else if (dataType.equals("ntext") || dataType.equals("text")) {
-					convertTextColumn(tableName, columnName, nullable);
+				for (String addPrimaryKeySQL : _addPrimaryKeySQLs) {
+					runSQL(addPrimaryKeySQL);
 				}
 			}
-
-			for (String addPrimaryKeySQL : _addPrimaryKeySQLs) {
-				runSQL(addPrimaryKeySQL);
+			catch (Exception e) {
+				_log.error(e, e);
 			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 	}
 

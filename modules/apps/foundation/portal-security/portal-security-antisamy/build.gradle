@@ -6,6 +6,7 @@ String sanitizerConfigurationUrl = "https://owaspantisamy.googlecode.com/files/a
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.2"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"

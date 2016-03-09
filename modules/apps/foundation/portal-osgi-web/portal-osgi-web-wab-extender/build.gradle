@@ -1,6 +1,7 @@
 dependencies {
 	provided files("lib-patch/org.eclipse.equinox.http.servlet.jar")
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.8"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.osgi.web.servlet.jsp.compiler", version: "1.0.8"

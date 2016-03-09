@@ -22,7 +22,7 @@ public class PrivateMessagingPortletKeys
 	extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String PRIVATE_MESSAGING =
-		"com.liferay.social.privatemessaging_web_portlet_" +
+		"com_liferay_social_privatemessaging_web_portlet_" +
 			"PrivateMessagingPortlet";
 
 }

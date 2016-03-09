@@ -264,7 +264,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
 			theme = entry.getValue();
 
-			if (theme != null) {
+			if ((theme != null) && !theme.isControlPanelTheme()) {
 				return theme;
 			}
 		}

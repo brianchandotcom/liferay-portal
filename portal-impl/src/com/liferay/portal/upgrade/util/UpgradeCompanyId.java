@@ -94,8 +94,9 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 		@Override
 		public final Void call() throws Exception {
-			try (LoggingTimer loggingTimer = new LoggingTimer(_tableName)) {
-				_con = DataAccess.getUpgradeOptimizedConnection();
+			try (LoggingTimer loggingTimer = new LoggingTimer(_tableName);
+				Connection connection =
+					DataAccess.getUpgradeOptimizedConnection()) {
 
 				if (_createCompanyIdColumn) {
 					if (_log.isInfoEnabled()) {
@@ -104,7 +105,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 					}
 
 					runSQL(
-						_con,
+						connection,
 						"alter table " + _tableName +" add companyId LONG");
 				}
 				else {
@@ -115,10 +116,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 					}
 				}
 
-				update();
-			}
-			finally {
-				DataAccess.cleanUp(_con);
+				update(connection);
 			}
 
 			return null;
@@ -132,16 +130,22 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			_createCompanyIdColumn = createCompanyIdColumn;
 		}
 
-		public void update() throws IOException, SQLException {
+		public void update(Connection connection)
+			throws IOException, SQLException {
+
 			for (String[] foreignNames : _foreignNamesArray) {
-				runSQL(_con, getUpdateSQL(foreignNames[0], foreignNames[1]));
+				runSQL(
+					connection,
+					getUpdateSQL(connection, foreignNames[0], foreignNames[1]));
 			}
 		}
 
-		protected List<Long> getCompanyIds() throws SQLException {
+		protected List<Long> getCompanyIds(Connection connection)
+			throws SQLException {
+
 			List<Long> companyIds = new ArrayList<>();
 
-			try (PreparedStatement ps = _con.prepareStatement(
+			try (PreparedStatement ps = connection.prepareStatement(
 					"select companyId from Company");
 				ResultSet rs = ps.executeQuery()) {
 
@@ -156,10 +160,11 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		}
 
 		protected String getSelectSQL(
-				String foreignTableName, String foreignColumnName)
+				Connection connection, String foreignTableName,
+				String foreignColumnName)
 			throws SQLException {
 
-			List<Long> companyIds = getCompanyIds();
+			List<Long> companyIds = getCompanyIds(connection);
 
 			if (companyIds.size() == 1) {
 				return String.valueOf(companyIds.get(0));
@@ -181,6 +186,15 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			return sb.toString();
 		}
 
+		protected String getUpdateSQL(
+				Connection connection, String foreignTableName,
+				String foreignColumnName)
+			throws SQLException {
+
+			return getUpdateSQL(
+				getSelectSQL(connection, foreignTableName, foreignColumnName));
+		}
+
 		protected String getUpdateSQL(String selectSQL) {
 			StringBundler sb = new StringBundler(5);
 
@@ -193,16 +207,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			return sb.toString();
 		}
 
-		protected String getUpdateSQL(
-				String foreignTableName, String foreignColumnName)
-			throws SQLException {
-
-			return getUpdateSQL(
-				getSelectSQL(foreignTableName, foreignColumnName));
-		}
-
 		private final String _columnName;
-		private Connection _con;
 		private boolean _createCompanyIdColumn;
 		private final String[][] _foreignNamesArray;
 		private final String _tableName;

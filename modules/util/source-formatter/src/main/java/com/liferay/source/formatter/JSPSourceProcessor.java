@@ -439,6 +439,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		checkPropertyUtils(fileName, newContent);
 
+		// LPS-63953
+
+		checkStringUtilReplace(fileName, newContent);
+
 		Matcher matcher = _javaClassPattern.matcher(newContent);
 
 		if (matcher.find()) {

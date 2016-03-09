@@ -42,7 +42,7 @@ public class JS {
 
 		// Adjust for JavaScript specific annoyances
 
-		s = StringUtil.replace(s, "+", "%2B");
+		s = StringUtil.replace(s, '+', "%2B");
 		s = StringUtil.replace(s, "%20", "+");
 
 		// Decode URL
@@ -68,7 +68,7 @@ public class JS {
 
 		// Adjust for JavaScript specific annoyances
 
-		s = StringUtil.replace(s, "+", "%20");
+		s = StringUtil.replace(s, '+', "%20");
 		s = StringUtil.replace(s, "%2B", "+");
 
 		return s;

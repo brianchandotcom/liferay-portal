@@ -262,7 +262,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 			sb.append(HtmlUtil.escape(orderItem.getName()));
 			sb.append(" (");
-			sb.append(HtmlUtil.escape(StringUtil.replace(StringUtil.merge(fieldsArray, ", "), "=", ": ")));
+			sb.append(HtmlUtil.escape(StringUtil.replace(StringUtil.merge(fieldsArray, ", "), '=', ": ")));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			row.addText(sb.toString(), rowURL);

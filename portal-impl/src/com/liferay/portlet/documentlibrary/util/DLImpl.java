@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -647,7 +648,7 @@ public class DLImpl implements DL {
 	@Override
 	public String getSanitizedFileName(String title, String extension) {
 		String fileName = StringUtil.replace(
-			title, StringPool.SLASH, StringPool.UNDERLINE);
+			title, CharPool.SLASH, CharPool.UNDERLINE);
 
 		if (Validator.isNotNull(extension) &&
 			!StringUtil.endsWith(fileName, StringPool.PERIOD + extension)) {

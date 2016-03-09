@@ -59,7 +59,7 @@ portletDisplay.setURLBack(redirect);
 
 	<aui:fieldset>
 		<span>
-			<%= StringUtil.replace(question.getDescription(locale), StringPool.NEW_LINE, "<br />") %>
+			<%= StringUtil.replace(question.getDescription(locale), CharPool.NEW_LINE, "<br />") %>
 		</span>
 
 		<br /><br />

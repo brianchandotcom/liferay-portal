@@ -222,7 +222,7 @@ else {
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, navigation), currentURL);
 	}
 
-	PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(navigation, StringPool.UNDERLINE, StringPool.DASH)), request);
+	PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(navigation, CharPool.UNDERLINE, CharPool.DASH)), request);
 }
 %>
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -80,8 +80,7 @@ public class ExtInfoBuilder {
 		for (String file : files) {
 			DocUtil.add(
 				filesElement, "file",
-				StringUtil.replace(
-					file, StringPool.BACK_SLASH, StringPool.SLASH));
+				StringUtil.replace(file, CharPool.BACK_SLASH, CharPool.SLASH));
 		}
 
 		_fileUtil.write(

@@ -187,7 +187,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 			>
 				<c:choose>
 					<c:when test="<%= item.isFields() %>">
-						<%= HtmlUtil.escape(item.getName()) %> (<%= HtmlUtil.escape(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), "=", ": ")) %>)
+						<%= HtmlUtil.escape(item.getName()) %> (<%= HtmlUtil.escape(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), '=', ": ")) %>)
 					</c:when>
 					<c:otherwise>
 						<%= HtmlUtil.escape(item.getName()) %>

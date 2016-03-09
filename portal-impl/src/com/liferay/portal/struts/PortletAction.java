@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -408,7 +409,7 @@ public class PortletAction extends Action {
 			}
 
 			redirect = StringUtil.replace(
-				redirect, StringPool.POUND, redirectToken);
+				redirect, CharPool.POUND, redirectToken);
 		}
 
 		redirect = PortalUtil.escapeRedirect(redirect);

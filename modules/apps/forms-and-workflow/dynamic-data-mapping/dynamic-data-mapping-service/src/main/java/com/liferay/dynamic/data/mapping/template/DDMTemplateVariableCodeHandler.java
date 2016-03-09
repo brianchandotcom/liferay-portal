@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -109,7 +110,7 @@ public class DDMTemplateVariableCodeHandler
 		Template template = getTemplate(getTemplatePath() + "repeatable.ftl");
 
 		templateContent = StringUtil.replace(
-			templateContent, StringPool.NEW_LINE,
+			templateContent, CharPool.NEW_LINE,
 			StringPool.NEW_LINE + StringPool.TAB + StringPool.TAB);
 
 		template.put("templateContent", templateContent);

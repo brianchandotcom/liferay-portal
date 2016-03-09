@@ -97,6 +97,7 @@ page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><
 page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%@
 page import="com.liferay.portal.kernel.template.TemplateVariableGroup" %><%@
 page import="com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator" %><%@
+page import="com.liferay.portal.kernel.util.CharPool" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@

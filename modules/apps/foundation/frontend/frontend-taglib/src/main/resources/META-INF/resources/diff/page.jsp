@@ -102,8 +102,8 @@ List<DiffResult> targetResults = diffResults[1];
 
 <%!
 private static String _processColumn(String changedLine) {
-	changedLine = StringUtil.replace(changedLine, " ", "&nbsp;");
-	changedLine = StringUtil.replace(changedLine, "\t", "&nbsp;&nbsp;&nbsp;");
+	changedLine = StringUtil.replace(changedLine, ' ', "&nbsp;");
+	changedLine = StringUtil.replace(changedLine, '\t', "&nbsp;&nbsp;&nbsp;");
 
 	String column = "<td>" + changedLine + "</td>";
 

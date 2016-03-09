@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.wsdd.builder;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class WSDDBuilderInvoker {
 		File file = new File(baseDir, fileName);
 
 		return StringUtil.replace(
-			file.getAbsolutePath(), StringPool.BACK_SLASH, StringPool.SLASH);
+			file.getAbsolutePath(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -74,8 +75,8 @@ public class LayoutExportBackgroundTaskExecutor
 
 		sb.append(
 			StringUtil.replace(
-				exportImportConfiguration.getName(), StringPool.SPACE,
-				StringPool.UNDERLINE));
+				exportImportConfiguration.getName(), CharPool.SPACE,
+				CharPool.UNDERLINE));
 		sb.append(StringPool.DASH);
 		sb.append(Time.getTimestamp());
 		sb.append(".lar");

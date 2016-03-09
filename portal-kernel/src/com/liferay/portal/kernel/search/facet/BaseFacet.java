@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.BaseFacetValueValidator;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -70,7 +70,7 @@ public abstract class BaseFacet implements Facet {
 	@Override
 	public String getFieldId() {
 		return StringUtil.replace(
-			getFieldName(), StringPool.SLASH, StringPool.UNDERLINE);
+			getFieldName(), CharPool.SLASH, CharPool.UNDERLINE);
 	}
 
 	@Override

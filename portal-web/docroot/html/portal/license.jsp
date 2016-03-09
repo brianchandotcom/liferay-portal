@@ -59,7 +59,7 @@ String orderUuid = ParamUtil.getString(request, "orderUuid");
 String[] releaseInfoArray = StringUtil.split(ReleaseInfo.getReleaseInfo(), "(");
 
 String versionInfo = releaseInfoArray[0];
-String buildInfo = StringUtil.replace(releaseInfoArray[1], ")", "");
+String buildInfo = StringUtil.replace(releaseInfoArray[1], ')', "");
 
 List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 

@@ -100,7 +100,7 @@ public class WSDDBuilder {
 		}
 
 		_outputPath +=
-			StringUtil.replace(packagePath, ".", "/") + "/service/http";
+			StringUtil.replace(packagePath, '.', '/') + "/service/http";
 
 		_packagePath = packagePath;
 
@@ -146,7 +146,7 @@ public class WSDDBuilder {
 		String className =
 			_packagePath + ".service.http." + entityName + "ServiceSoap";
 
-		String serviceName = StringUtil.replace(_portletShortName, " ", "_");
+		String serviceName = StringUtil.replace(_portletShortName, ' ', '_');
 
 		if (!_portletShortName.equals("Portal")) {
 			serviceName = _serviceNamespace + "_" + serviceName;

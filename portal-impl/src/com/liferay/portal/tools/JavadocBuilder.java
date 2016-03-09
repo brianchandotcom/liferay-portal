@@ -347,7 +347,7 @@ public class JavadocBuilder {
 
 		String srcFile = fileName.substring(pos + 1);
 		String className = StringUtil.replace(
-			srcFile.substring(0, srcFile.length() - 5), "/", ".");
+			srcFile.substring(0, srcFile.length() - 5), '/', '.');
 
 		JavaDocBuilder builder = new JavaDocBuilder();
 
@@ -586,7 +586,7 @@ public class JavadocBuilder {
 
 			for (String curLimit : limitArray) {
 				includes.add(
-					"**\\" + StringUtil.replace(curLimit, ".", "\\") +
+					"**\\" + StringUtil.replace(curLimit, '.', '\\') +
 						"\\**\\*.java");
 				includes.add("**\\" + curLimit + ".java");
 			}
@@ -602,7 +602,7 @@ public class JavadocBuilder {
 		String[] fileNames = ds.getIncludedFiles();
 
 		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(fileName, "\\", "/");
+			fileName = StringUtil.replace(fileName, '\\', '/');
 
 			/*if (!fileName.endsWith("Isolation.java")) {
 				continue;

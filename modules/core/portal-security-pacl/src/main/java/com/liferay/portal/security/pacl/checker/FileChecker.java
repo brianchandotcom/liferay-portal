@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
@@ -222,8 +223,7 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		path = StringUtil.replace(
-			path, StringPool.BACK_SLASH, StringPool.SLASH);
+		path = StringUtil.replace(path, CharPool.BACK_SLASH, CharPool.SLASH);
 
 		if (path.endsWith(StringPool.SLASH)) {
 			path = path + "-";

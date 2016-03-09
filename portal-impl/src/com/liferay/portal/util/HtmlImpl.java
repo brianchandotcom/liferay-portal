@@ -312,14 +312,14 @@ public class HtmlImpl implements Html {
 			String protocol = StringUtil.toLowerCase(href.substring(0, 4));
 
 			if (protocol.equals("data")) {
-				href = StringUtil.replaceFirst(href, StringPool.COLON, "%3a");
+				href = StringUtil.replaceFirst(href, CharPool.COLON, "%3a");
 			}
 		}
 		else if (index == 10) {
 			String protocol = StringUtil.toLowerCase(href.substring(0, 10));
 
 			if (protocol.equals("javascript")) {
-				href = StringUtil.replaceFirst(href, StringPool.COLON, "%3a");
+				href = StringUtil.replaceFirst(href, CharPool.COLON, "%3a");
 			}
 		}
 
@@ -349,7 +349,7 @@ public class HtmlImpl implements Html {
 			String protocol = StringUtil.toLowerCase(link.substring(0, 10));
 
 			if (protocol.equals("javascript")) {
-				link = StringUtil.replaceFirst(link, StringPool.COLON, "%3a");
+				link = StringUtil.replaceFirst(link, CharPool.COLON, "%3a");
 			}
 		}
 
@@ -562,7 +562,7 @@ public class HtmlImpl implements Html {
 
 		html = StringUtil.replace(html, StringPool.RETURN_NEW_LINE, "<br />");
 
-		return StringUtil.replace(html, StringPool.NEW_LINE, "<br />");
+		return StringUtil.replace(html, CharPool.NEW_LINE, "<br />");
 	}
 
 	/**

@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil;
@@ -159,7 +159,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 
 	@Override
 	public void setName(String name) {
-		name = StringUtil.replace(name, StringPool.SPACE, StringPool.UNDERLINE);
+		name = StringUtil.replace(name, CharPool.SPACE, CharPool.UNDERLINE);
 		name = StringUtil.toLowerCase(name);
 
 		_name = StringUtil.extract(name, _NAME_SUPPORTED_CHARS);

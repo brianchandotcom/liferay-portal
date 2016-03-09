@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -70,7 +70,7 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 	protected void activate(Map<String, Object> properties) {
 		_namespace = "urn:liferay.com:liferay-workflow_" + _version;
 		_schemaVersion = StringUtil.replace(
-			_version, StringPool.PERIOD, StringPool.UNDERLINE);
+			_version, CharPool.PERIOD, CharPool.UNDERLINE);
 	}
 
 	protected String doExport(Definition definition) {

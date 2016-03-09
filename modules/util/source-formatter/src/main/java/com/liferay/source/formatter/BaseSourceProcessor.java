@@ -507,36 +507,29 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		Matcher matcher = replaceSingleLengthStringPattern.matcher(newContent);
 
-		if (!matcher.find()) {
-			return;
-		}
-
-		String method = null;
-
-		do {
-			method = matcher.group(1);
-
+		while (matcher.find()) {
 			String fieldName = matcher.group(4);
 
-			if (fieldName == null) {
-				break;
+			if (fieldName != null) {
+				Field field = StringPool.class.getDeclaredField(fieldName);
+
+				String value = (String)field.get(null);
+
+				if (value.length() != 1) {
+					continue;
+				}
 			}
 
-			Field field = StringPool.class.getDeclaredField(fieldName);
+			String method = matcher.group(1);
 
-			String value = (String)field.get(null);
+			processErrorMessage(
+				fileName,
+				"Use StringUtil." + method + "(String, char, char) or " +
+					"StringUtil." + method +
+						"(String, char, String) instead: " + fileName);
 
-			if (value.length() == 1) {
-				break;
-			}
+			return;
 		}
-		while (matcher.find());
-
-		processErrorMessage(
-			fileName,
-			"Use StringUtil." + method + "(String, char, char) or " +
-				"StringUtil." + method + "(String, char, String) instead: "
-					+ fileName);
 	}
 
 	protected void checkResourceUtil(

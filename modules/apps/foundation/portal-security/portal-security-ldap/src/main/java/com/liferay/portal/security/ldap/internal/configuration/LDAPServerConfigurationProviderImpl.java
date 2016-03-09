@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.configuration.BaseConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
@@ -270,12 +269,6 @@ public class LDAPServerConfigurationProviderImpl
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
-		Tuple tuple = new Tuple(
-			ldapServerConfiguration.companyId(),
-			ldapServerConfiguration.ldapServerId());
-
-		_tuples.put(configuration.getPid(), tuple);
-
 		synchronized (_configurations) {
 			Map<Long, Configuration> ldapServerConfigurations =
 				_configurations.get(ldapServerConfiguration.companyId());
@@ -295,25 +288,24 @@ public class LDAPServerConfigurationProviderImpl
 
 	@Override
 	public void unregisterConfiguration(Configuration configuration) {
-		Tuple tuple = _tuples.get(configuration.getPid());
+		Dictionary<String, Object> properties = configuration.getProperties();
 
-		if (tuple == null) {
-			return;
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
 		}
 
-		long companyId = (Long)tuple.getObject(0);
+		LDAPServerConfiguration ldapServerConfiguration =
+			Configurable.createConfigurable(getMetatype(), properties);
 
 		Map<Long, Configuration> configurations = _configurations.get(
-			companyId);
+			ldapServerConfiguration.companyId());
 
 		synchronized (_configurations) {
 			if (!MapUtil.isEmpty(configurations)) {
-				long ldapServerId = (Long)tuple.getObject(1);
-
-				configurations.remove(ldapServerId);
+				configurations.remove(ldapServerConfiguration.ldapServerId());
 
 				if (configurations.isEmpty()) {
-					_configurations.remove(companyId);
+					_configurations.remove(ldapServerConfiguration.companyId());
 				}
 			}
 		}
@@ -376,6 +368,5 @@ public class LDAPServerConfigurationProviderImpl
 
 	private final Map<Long, Map<Long, Configuration>>
 		_configurations = new ConcurrentHashMap<>();
-	private final Map<String, Tuple> _tuples = new HashMap<>();
 
 }

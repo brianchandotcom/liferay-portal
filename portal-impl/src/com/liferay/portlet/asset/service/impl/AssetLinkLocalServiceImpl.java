@@ -225,26 +225,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1(entryId);
 
-		if (excludeNonVisibleLinks) {
-			if (!assetLinks.isEmpty()) {
-				List<AssetLink> filteredAssetLinks = new ArrayList<>(
-					assetLinks.size());
-
-				for (AssetLink assetLink : assetLinks) {
-					AssetEntry assetEntry =
-						assetEntryPersistence.fetchByPrimaryKey(
-							assetLink.getEntryId2());
-
-					if ((assetEntry != null) && assetEntry.isVisible()) {
-						filteredAssetLinks.add(assetLink);
-					}
-				}
-
-				assetLinks = Collections.unmodifiableList(filteredAssetLinks);
-			}
-		}
-
-		return assetLinks;
+		return filterAssetLinks(assetLinks, excludeNonVisibleLinks);
 	}
 
 	/**
@@ -272,26 +253,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1_T(
 			entryId, typeId);
 
-		if (excludeNonVisibleLinks) {
-			if (!assetLinks.isEmpty()) {
-				List<AssetLink> filteredAssetLinks = new ArrayList<>(
-					assetLinks.size());
-
-				for (AssetLink assetLink : assetLinks) {
-					AssetEntry assetEntry =
-						assetEntryPersistence.fetchByPrimaryKey(
-							assetLink.getEntryId2());
-
-					if ((assetEntry != null) && assetEntry.isVisible()) {
-						filteredAssetLinks.add(assetLink);
-					}
-				}
-
-				assetLinks = Collections.unmodifiableList(filteredAssetLinks);
-			}
-		}
-
-		return assetLinks;
+		return filterAssetLinks(assetLinks, excludeNonVisibleLinks);
 	}
 
 	@Override
@@ -516,6 +478,31 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	protected List<AssetLink> filterAssetLinks(
+		List<AssetLink> assetLinks, boolean excludeNonVisibleLinks) {
+
+		if (excludeNonVisibleLinks) {
+			if (!assetLinks.isEmpty()) {
+				List<AssetLink> filteredAssetLinks = new ArrayList<>(
+					assetLinks.size());
+
+				for (AssetLink assetLink : assetLinks) {
+					AssetEntry assetEntry =
+						assetEntryPersistence.fetchByPrimaryKey(
+							assetLink.getEntryId2());
+
+					if ((assetEntry != null) && assetEntry.isVisible()) {
+						filteredAssetLinks.add(assetLink);
+					}
+				}
+
+				assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+			}
+		}
+
+		return assetLinks;
 	}
 
 	private static final String _DELETE_BY_ASSET_ENTRY_GROUP_ID =

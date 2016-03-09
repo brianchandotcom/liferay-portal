@@ -67,6 +67,7 @@ page import="com.liferay.portal.kernel.security.permission.comparator.ModelResou
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.CharPool" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ContentTypes" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

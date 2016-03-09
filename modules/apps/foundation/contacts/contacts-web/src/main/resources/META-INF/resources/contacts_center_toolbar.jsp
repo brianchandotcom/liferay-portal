@@ -196,7 +196,7 @@ if (user2 != null) {
 					click: function(event) {
 						<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />
 
-						var uri = '<liferay-portlet:renderURL portletName="<%= ContactsPortletKeys.PRIVATE_MESSAGING %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
+						var uri = '<liferay-portlet:renderURL portletName="<%= PrivateMessagingPortletKeys.PRIVATE_MESSAGING %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
 
 						<c:choose>
 							<c:when test="<%= user2 != null %>">
@@ -207,7 +207,7 @@ if (user2 != null) {
 							</c:otherwise>
 						</c:choose>
 
-						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ContactsPortletKeys.PRIVATE_MESSAGING) %>userIds=' + userIds.join(), uri) || uri;
+						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>userIds=' + userIds.join(), uri) || uri;
 
 						Liferay.Util.openWindow(
 							{
@@ -221,7 +221,7 @@ if (user2 != null) {
 									plugins: [Liferay.WidgetZIndex],
 									width: 600
 								},
-								id: '<%= PortalUtil.getPortletNamespace(ContactsPortletKeys.PRIVATE_MESSAGING) %>Dialog',
+								id: '<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>Dialog',
 								title: '<%= UnicodeLanguageUtil.get(request, "new-message") %>',
 								uri: uri
 							}

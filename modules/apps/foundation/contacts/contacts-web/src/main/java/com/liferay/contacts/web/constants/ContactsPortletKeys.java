@@ -28,9 +28,6 @@ public class ContactsPortletKeys {
 	public static final String MY_CONTACTS =
 		"com_liferay_contacts_web_portlet_MyContactsPortlet";
 
-	public static final String PRIVATE_MESSAGING =
-		"1_WAR_privatemessagingportlet";
-
 	public static final String PROFILE =
 		"com_liferay_contacts_web_portlet_ProfilePortlet";
 

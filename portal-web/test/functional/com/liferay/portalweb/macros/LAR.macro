@@ -51,84 +51,9 @@
 		</if>
 
 		<if>
-			<isset var="checkApplicationNameList" />
-			<then>
-				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<for list="${checkApplicationNameList}" param="contentName">
-					<var name="key_applicationName" value="${applicationName}" />
-
-					<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="uncheckApplicationNameList" />
-			<then>
-				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<for list="${uncheckApplicationNameList}" param="applicationName">
-					<var name="key_applicationName" value="${contentName}" />
-
-					<execute function="Uncheck" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="uncheckSubApplicationList" />
-			<then>
-				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<var name="key_applicationName" value="${mainApplication}" />
-
-				<execute function="Check" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-
-				<var name="key_applicationName" value="${mainApplication}" />
-
-				<execute function="AssertClick" locator1="PagesConfiguration#APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK" value1="Change" />
-
-				<for list="${uncheckSubApplicationList}" param="uncheckSubApplication">
-					<var name="key_subApplication" value="${uncheckSubApplication}" />
-
-					<execute function="Uncheck" locator1="PagesConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX" />
-				</for>
-
-				<execute function="Click" locator1="PagesConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="checkApplicationNameList" />
-			<then>
-				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<for list="${checkApplicationNameList}" param="contentName">
-					<var name="key_applicationName" value="${applicationName}" />
-
-					<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="uncheckApplicationNameList" />
-			<then>
-				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-				<for list="${uncheckApplicationNameList}" param="applicationName">
-					<var name="key_applicationName" value="${contentName}" />
-
-					<execute function="Uncheck" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-				</for>
-			</then>
-		</if>
-
-		<if>
 			<isset var="checkContentNameList" />
 			<then>
-				<execute function="Check" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Check" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 
 				<for list="${checkContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
@@ -141,7 +66,7 @@
 		<if>
 			<isset var="uncheckContentNameList" />
 			<then>
-				<execute function="Check" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Check" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 
 				<for list="${uncheckContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
@@ -154,9 +79,9 @@
 		<if>
 			<isset var="uncheckSubContent" />
 			<then>
-				<execute function="Click" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 
-				<var name="key_contentName" value="${contentName}" />
+				<var name="key_contentName" value="${mainContent}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
@@ -171,7 +96,7 @@
 		<if>
 			<isset var="uncheckSubSubContent" />
 			<then>
-				<execute function="Check" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Check" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 
 				<var name="key_contentName" value="${contentName}" />
 
@@ -189,7 +114,7 @@
 		<if>
 			<isset var="contentDateRange" />
 			<then>
-				<execute function="Click" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
 				<execute function="AssertClick" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
@@ -439,15 +364,29 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute macro="LAR#_configureExportSiteOptions" />
+		<execute macro="LAR#_configureExportSiteOptions">
+			<var name="exportPermissions" value="${exportPermissions}" />
+			<var name="mainContent" value="${mainContent}" />
+			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+			<var name="uncheckSubContent" value="${uncheckSubContent}" />
+		</execute>
 	</command>
 
 	<command name="configureExportSiteOptions">
-		<execute macro="LAR#_configureExportSiteOptions" />
+		<execute macro="LAR#_configureExportSiteOptions">
+			<var name="checkContentNameList" value="${exportPermissions}" />
+			<var name="contentDeletion" value="${contentDeletion}" />
+			<var name="exportPermissions" value="${exportPermissions}" />
+			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+			<var name="uncheckSubContent" value="${uncheckSubContent}" />
+		</execute>
 	</command>
 
 	<command name="configureExportTemplateCP">
-		<execute macro="LAR#_configureExportSiteOptions" />
+		<execute macro="LAR#_configureExportSiteOptions">
+			<var name="checkContentNameList" value="${checkContentNameList}" />
+			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+		</execute>
 	</command>
 
 	<command name="editExportTemplateCP">

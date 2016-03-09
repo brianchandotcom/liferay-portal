@@ -169,21 +169,15 @@ public abstract class CompanyScopedConfigurationProvider
 			configuration = _configurations.get(CompanyConstants.SYSTEM);
 		}
 
-		List<Dictionary<String, Object>> configurationsProperties =
-			new ArrayList<>();
-
 		if ((configuration == null) && useDefault) {
-			configurationsProperties.add(
+			return Collections.<Dictionary<String, Object>>singletonList(
 				new HashMapDictionary<String, Object>());
 		}
 		else if (configuration != null) {
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			configurationsProperties.add(properties);
+			return Collections.singletonList(configuration.getProperties());
 		}
 
-		return configurationsProperties;
+		return Collections.emptyList();
 	}
 
 	@Override

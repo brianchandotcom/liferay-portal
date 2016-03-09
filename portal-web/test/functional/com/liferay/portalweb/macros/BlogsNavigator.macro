@@ -77,6 +77,9 @@
 		<execute function="Click" locator1="Blogs#ICON_VIEW_ENTRY_OPTIONS_DROPDOWN" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute function="AssertElementPresent" locator1="Icon#BACK" />
+		<execute function="AssertVisible" locator1="AlloyEditor#TITLE_FIELD" />
 	</command>
 
 	<command name="gotoEditPG">
@@ -85,6 +88,9 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
 		<execute macro="PortletEntry#clickEditFromEllipsis" />
+
+		<execute function="AssertElementPresent" locator1="Icon#BACK" />
+		<execute function="AssertVisible" locator1="AlloyEditor#TITLE_FIELD" />
 	</command>
 
 	<command name="gotoEntryCP">

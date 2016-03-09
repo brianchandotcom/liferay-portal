@@ -125,7 +125,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDocumentsAndMediaPG">
+		<execute macro="PermissionsInline#gotoDocumentsAndMediaHomeFolderPG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURLTemp" value="true" />
@@ -156,7 +156,7 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDocumentsAndMediaPG">
+		<execute macro="PermissionsInline#gotoDocumentsAndMediaHomeFolderPG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURLTemp" value="true" />
@@ -201,7 +201,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoDocumentsAndMediaPG">
+		<execute macro="PermissionsInline#gotoDocumentsAndMediaHomeFolderPG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURLTemp" value="true" />

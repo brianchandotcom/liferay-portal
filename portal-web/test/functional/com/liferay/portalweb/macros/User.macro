@@ -1719,6 +1719,8 @@
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="logoutAndLoginPG">

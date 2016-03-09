@@ -1251,6 +1251,7 @@
 
 		<execute macro="BlogsEntry#flagPG">
 			<var name="flagReason" value="Spam" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
 		</execute>
 
 		<execute function="Pause" locator1="30000" />

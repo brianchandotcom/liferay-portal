@@ -65,8 +65,8 @@
 	<command name="viewDefaultNotificationDeliveries">
 		<var name="key_contentType" value="Blogs" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new blog entry in a blog you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a blog entry you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new blog entry in a blog you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a blog entry you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
@@ -74,8 +74,8 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Bookmarks" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new bookmark in a folder you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a bookmark you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new bookmark in a folder you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a bookmark you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
@@ -83,8 +83,8 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Comments" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a comment to comments you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a comment you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a comment to comments you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a comment you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
@@ -94,8 +94,8 @@
 
 		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new document in a folder you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a document you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new document in a folder you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a document you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
@@ -113,8 +113,8 @@
 
 		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new post in a thread or category you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a post you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new post in a thread or category you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a post you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
@@ -122,11 +122,11 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Microblogs" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="comments on a microblog you commented on." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="comments on a microblog you are tagged in." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_3" value1="comments on your microblog." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_4" value1="tags you in a microblog." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="mobile" />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Comments on a microblog you commented on." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Comments on a microblog you are tagged in." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_3" value1="Comments on your microblog." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_4" value1="Tags you in a microblog." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_MOBILE_OPTION" value1="Mobile" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 
 		<var name="key_contentType" value="Web Content" />
@@ -144,8 +144,8 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Wiki" />
 
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="adds a new wiki page in a wiki you are subscribed to." />
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="updates a wiki page you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new wiki page in a wiki you are subscribed to." />
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a wiki page you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_EMAIL_OPTION" value1="Email" />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION" value1="Website" />
 	</command>

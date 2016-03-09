@@ -33,7 +33,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertVisible" locator1="Button#SAVE" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="New Role" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${roleName}" />
 

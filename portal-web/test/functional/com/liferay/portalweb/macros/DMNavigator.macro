@@ -74,6 +74,9 @@
 
 	<command name="gotoMetadataSets">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertElementPresent" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
+
 		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
 	</command>
 

@@ -68,6 +68,11 @@
 						items: {
 							validator: isArray,
 							value: []
+						},
+
+						toggler: {
+							setter: A.one,
+							value: null
 						}
 					},
 
@@ -135,6 +140,16 @@
 							}
 						},
 
+						_onClickOutside: function(event) {
+							var instance = this;
+
+							var toggler = instance.get('toggler');
+
+							if (!toggler || !toggler.contains(event.target)) {
+								instance._closeMenu();
+							}
+						},
+
 						_onVisibleChange: function(event) {
 							var instance = this;
 
@@ -143,7 +158,7 @@
 
 								instance._outsideHandler = contentBox.on(
 									['mouseupoutside', 'touchendoutside'],
-									instance._closeMenu,
+									instance._onClickOutside,
 									instance
 								);
 
@@ -526,6 +541,7 @@
 								simpleMenu.setAttrs(
 									{
 										alignNode: target,
+										toggler: target,
 										visible: simpleMenu.get('align.node') !== target || !simpleMenu.get('visible')
 									}
 								);

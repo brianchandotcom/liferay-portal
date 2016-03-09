@@ -38,6 +38,16 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 		super(request);
 	}
 
+	public int getEnd() {
+		if (_end != null) {
+			return _end;
+		}
+
+		_end = ParamUtil.getInteger(getRequest(), "end", getMax());
+
+		return _end;
+	}
+
 	public int getMax() {
 		if (_max != null) {
 			return _max;
@@ -143,6 +153,7 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 		return _rssEnabled;
 	}
 
+	private Integer _end;
 	private Integer _max;
 	private Integer _rssDelta;
 	private String _rssDisplayStyle;

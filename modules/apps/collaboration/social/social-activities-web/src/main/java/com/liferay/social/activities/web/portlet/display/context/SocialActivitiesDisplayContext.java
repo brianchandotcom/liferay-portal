@@ -28,6 +28,8 @@ public interface SocialActivitiesDisplayContext {
 
 	public int getMax();
 
+	public String getPaginationURL();
+
 	public int getRSSDelta();
 
 	public String getRSSDisplayStyle();
@@ -47,6 +49,8 @@ public interface SocialActivitiesDisplayContext {
 	public String getTaglibFeedTitle() throws PortalException;
 
 	public boolean isRSSEnabled();
+
+	public boolean isSeeMoreControlVisible();
 
 	public boolean isTabsVisible();
 

@@ -19,6 +19,7 @@
 <c:if test="<%= socialActivitiesDisplayContext.isTabsVisible() %>">
 	<liferay-ui:tabs
 		names="<%= socialActivitiesDisplayContext.getTabsNames() %>"
+		type="tabs nav-tabs-default"
 		url="<%= socialActivitiesDisplayContext.getTabsURL() %>"
 		value="<%= socialActivitiesDisplayContext.getSelectedTabName() %>"
 	/>
@@ -33,3 +34,14 @@
 	feedType="<%= socialActivitiesDisplayContext.getRSSFeedType() %>"
 	feedURLMessage="<%= socialActivitiesDisplayContext.getTaglibFeedTitle() %>"
 />
+
+<c:if test="<%= socialActivitiesDisplayContext.isSeeMoreControlVisible() %>">
+	<div class="social-activities-see-more">
+		<aui:a
+			cssClass="btn btn-default"
+			href="<%= socialActivitiesDisplayContext.getPaginationURL() %>"
+		>
+			<liferay-ui:message key="see-more" />
+		</aui:a>
+	</div>
+</c:if>

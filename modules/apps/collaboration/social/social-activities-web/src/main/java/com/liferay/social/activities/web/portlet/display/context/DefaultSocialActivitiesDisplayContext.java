@@ -54,6 +54,22 @@ public class DefaultSocialActivitiesDisplayContext
 	}
 
 	@Override
+	public String getPaginationURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_socialActivitiesRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		int end =
+			_socialActivitiesRequestHelper.getEnd() +
+				_socialActivitiesRequestHelper.getMax();
+
+		portletURL.setParameter("end", String.valueOf(end));
+
+		return portletURL.toString();
+	}
+
+	@Override
 	public int getRSSDelta() {
 		return _socialActivitiesRequestHelper.getRSSDelta();
 	}
@@ -97,14 +113,24 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public List<SocialActivitySet> getSocialActivitySets() {
+		if (_socialActivitySets != null) {
+			return _socialActivitySets;
+		}
+
 		Group group = _socialActivitiesRequestHelper.getScopeGroup();
 		Layout layout = _socialActivitiesRequestHelper.getLayout();
 
 		SocialActivitiesQueryHelper.Scope scope =
 			SocialActivitiesQueryHelper.Scope.fromValue(getSelectedTabName());
 
-		return _socialActivitiesQueryHelper.getSocialActivitySets(
-			group, layout, scope, 0, _socialActivitiesRequestHelper.getMax());
+		int start = _socialActivitiesRequestHelper.getEnd();
+
+		_socialActivitySets =
+			_socialActivitiesQueryHelper.getSocialActivitySets(
+				group, layout, scope, 0,
+				start + _socialActivitiesRequestHelper.getMax());
+
+		return _socialActivitySets;
 	}
 
 	@Override
@@ -143,6 +169,13 @@ public class DefaultSocialActivitiesDisplayContext
 	}
 
 	@Override
+	public boolean isSeeMoreControlVisible() {
+		List<SocialActivitySet> socialActivitySets = getSocialActivitySets();
+
+		return socialActivitySets.size() == getMax();
+	}
+
+	@Override
 	public boolean isTabsVisible() {
 		Group group = _socialActivitiesRequestHelper.getScopeGroup();
 
@@ -178,5 +211,6 @@ public class DefaultSocialActivitiesDisplayContext
 	private ResourceBundle _resourceBundle;
 	private final SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
 	private final SocialActivitiesRequestHelper _socialActivitiesRequestHelper;
+	private List<SocialActivitySet> _socialActivitySets;
 
 }

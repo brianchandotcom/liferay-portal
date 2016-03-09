@@ -169,7 +169,7 @@ organizationSearch.setResults(organizations);
 							}
 						}
 					},
-					title: '<liferay-ui:message key="add-organizations-to-this-site" />',
+					title: '<liferay-ui:message key="assign-organizations-to-this-site" />',
 					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organizations.jsp" /></portlet:renderURL>'
 				}
 			);

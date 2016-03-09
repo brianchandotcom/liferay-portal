@@ -3,7 +3,6 @@ dependencies {
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile project(":apps:foundation:contacts:contacts-api")
-	compile project(":apps:foundation:contacts:contacts-service")
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

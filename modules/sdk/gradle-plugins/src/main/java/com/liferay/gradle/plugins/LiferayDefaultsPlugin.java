@@ -520,7 +520,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						System.out.println(command);
 					}
 
-					throw new GradleException();
+					if (GradleUtil.getProperty(project, "first", false)) {
+						throw new GradleException();
+					}
 				}
 
 			});

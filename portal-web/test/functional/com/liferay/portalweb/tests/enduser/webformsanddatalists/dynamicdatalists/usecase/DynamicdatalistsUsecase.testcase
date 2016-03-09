@@ -887,8 +887,8 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute macro="TestCase#getAdminViewURL">
-			<return from="adminViewURL" name="adminViewURL" />
+		<execute macro="Navigator#getLocationURL">
+			<return from="locationURL" name="adminViewURL" />
 			<var name="adminViewURL" value="${adminViewURL}" />
 		</execute>
 
@@ -900,8 +900,8 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute macro="TestCase#getAdminEditURL">
-			<return from="adminEditURL" name="adminEditURL" />
+		<execute macro="Navigator#getLocationURL">
+			<return from="locationURL" name="adminEditURL" />
 			<var name="adminEditURL" value="${adminEditURL}" />
 		</execute>
 

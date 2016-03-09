@@ -19,6 +19,12 @@
 		<execute function="Close#closeWindow" />
 	</command>
 
+	<command name="getLocationURL" returns="locationURL">
+		<var method="selenium#getLocation()" name="locationURL" />
+
+		<return name="locationURL" value="${locationURL}" />
+	</command>
+
 	<command name="gotoBack">
 		<execute function="Click" locator1="Icon#BACK" />
 	</command>

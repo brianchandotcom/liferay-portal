@@ -43,6 +43,14 @@ public abstract class BaseDefaultsPlugin<T extends Plugin<Project>>
 
 	protected abstract Class<T> getPluginClass();
 
+	protected boolean hasPlugin(
+		Project project, Class<? extends Plugin<?>> pluginClass) {
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		return pluginContainer.hasPlugin(pluginClass);
+	}
+
 	protected void withLiferayPlugin(
 		Project project, Action<LiferayPlugin> action) {
 

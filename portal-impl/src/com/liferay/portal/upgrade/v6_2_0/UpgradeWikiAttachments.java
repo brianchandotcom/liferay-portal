@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -71,20 +70,15 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected void updateAttachments() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(4);
 
-		try {
-			StringBundler sb = new StringBundler(4);
+		sb.append("select resourcePrimKey, groupId, companyId, ");
+		sb.append("MIN(userId) as userId, MIN(userName) as userName, ");
+		sb.append("nodeId from WikiPage group by resourcePrimKey, ");
+		sb.append("groupId, companyId, nodeId");
 
-			sb.append("select resourcePrimKey, groupId, companyId, ");
-			sb.append("MIN(userId) as userId, MIN(userName) as userName, ");
-			sb.append("nodeId from WikiPage group by resourcePrimKey, ");
-			sb.append("groupId, companyId, nodeId");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
@@ -98,9 +92,6 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 					companyId, groupId, resourcePrimKey, nodeId, userId,
 					userName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

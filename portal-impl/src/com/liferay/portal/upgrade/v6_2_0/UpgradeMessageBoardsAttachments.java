@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
 
 import java.sql.PreparedStatement;
@@ -70,16 +69,11 @@ public class UpgradeMessageBoardsAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected void updateAttachments() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select messageId, groupId, companyId, userId, userName, " +
 					"threadId from MBMessage where classNameId = 0 and " +
 						"classPK = 0");
-
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long messageId = rs.getLong("messageId");
@@ -92,9 +86,6 @@ public class UpgradeMessageBoardsAttachments extends BaseUpgradeAttachments {
 				updateEntryAttachments(
 					companyId, groupId, messageId, threadId, userId, userName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

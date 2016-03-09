@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -43,25 +42,20 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		StringBundler sb = new StringBundler(7);
 
-		try {
-			StringBundler sb = new StringBundler(7);
+		sb.append("select PortletPreferences.portletPreferencesId, ");
+		sb.append("PortletPreferences.plid,");
+		sb.append("PortletPreferences.portletId, Layout.typeSettings ");
+		sb.append("from PortletPreferences inner join Layout on ");
+		sb.append("PortletPreferences.plid = Layout.plid where ");
+		sb.append("preferences like '%<portlet-preferences />%' or ");
+		sb.append("preferences like '' or preferences is null");
 
-			sb.append("select PortletPreferences.portletPreferencesId, ");
-			sb.append("PortletPreferences.plid,");
-			sb.append("PortletPreferences.portletId, Layout.typeSettings ");
-			sb.append("from PortletPreferences inner join Layout on ");
-			sb.append("PortletPreferences.plid = Layout.plid where ");
-			sb.append("preferences like '%<portlet-preferences />%' or ");
-			sb.append("preferences like '' or preferences is null");
+		String sql = sb.toString();
 
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");
@@ -76,9 +70,6 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 				deletePortletPreferences(portletPreferencesId);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

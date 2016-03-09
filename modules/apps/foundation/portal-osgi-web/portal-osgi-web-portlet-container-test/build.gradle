@@ -1,4 +1,6 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.3"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "1.0.0"
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"

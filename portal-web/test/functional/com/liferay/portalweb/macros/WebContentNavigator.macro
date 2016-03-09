@@ -158,22 +158,4 @@
 
 		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
 	</command>
-
-	<command name="showStructureDetails">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
-			<then>
-				<execute function="Click" locator1="DDMEditStructure#DETAILS" />
-			</then>
-		</if>
-	</command>
-
-	<command name="showTemplateDetails">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="TextArea#DESCRIPTION" />
-			<then>
-				<execute function="Click" locator1="DDMEditTemplate#DETAILS" />
-			</then>
-		</if>
-	</command>
 </definition>

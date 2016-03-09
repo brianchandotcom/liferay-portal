@@ -6,7 +6,9 @@
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${templateName}" />
 
-		<execute macro="WebContentNavigator#showTemplateDetails" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
 
 		<if>
 			<isset var="templateDescription" />
@@ -24,10 +26,38 @@
 				<equals arg1="${templateLanguage}" arg2="xsl" />
 				<then>
 					<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+
+					<var name="key_panelHeading" value="Details" />
+
+					<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="Details" />
 				</then>
 			</elseif>
 			<else>
 				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
+
+				<var name="key_panelHeading" value="Details" />
+
+				<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="Details" />
+			</else>
+		</if>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
+
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+			</then>
+			<elseif>
+				<equals arg1="${templateLanguage}" arg2="xsl" />
+				<then>
+					<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 			</else>
 		</if>
 
@@ -276,7 +306,9 @@
 
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
-		<execute macro="WebContentNavigator#showTemplateDetails" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
 

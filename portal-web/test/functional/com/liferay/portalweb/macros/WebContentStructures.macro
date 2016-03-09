@@ -24,7 +24,9 @@
 			</then>
 		</if>
 
-		<execute macro="WebContentNavigator#showStructureDetails" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
 
 		<if>
 			<isset var="structureDescription" />

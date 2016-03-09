@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.ldap.internal.configuration;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -121,7 +120,7 @@ public class LDAPServerConfigurationProviderImpl
 			ldapServerConfiguration = ldapServerConfigurations.get(0);
 		}
 		else {
-			ldapServerConfiguration = Configurable.createConfigurable(
+			ldapServerConfiguration = ConfigurableUtil.createConfigurable(
 				getMetatype(), new HashMapDictionary<>());
 		}
 
@@ -306,7 +305,7 @@ public class LDAPServerConfigurationProviderImpl
 		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
-			Configurable.createConfigurable(getMetatype(), properties);
+			ConfigurableUtil.createConfigurable(getMetatype(), properties);
 
 		synchronized (_configurations) {
 			Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
@@ -336,7 +335,7 @@ public class LDAPServerConfigurationProviderImpl
 		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
-			Configurable.createConfigurable(getMetatype(), properties);
+			ConfigurableUtil.createConfigurable(getMetatype(), properties);
 
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
 			objectValuePairs = _configurations.get(
@@ -413,7 +412,7 @@ public class LDAPServerConfigurationProviderImpl
 	private final Map<Long, Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>>
 		_configurations = new ConcurrentHashMap<>();
 	private final LDAPServerConfiguration _defaultLDAPServerConfiguration =
-		Configurable.createConfigurable(
+		ConfigurableUtil.createConfigurable(
 			LDAPServerConfiguration.class, Collections.emptyMap());
 
 }

@@ -68,6 +68,11 @@
 						items: {
 							validator: isArray,
 							value: []
+						},
+
+						toggler: {
+							setter: A.one,
+							value: null
 						}
 					},
 
@@ -526,6 +531,7 @@
 								simpleMenu.setAttrs(
 									{
 										alignNode: target,
+										toggler: target,
 										visible: simpleMenu.get('align.node') !== target || !simpleMenu.get('visible')
 									}
 								);

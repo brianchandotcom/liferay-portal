@@ -672,7 +672,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected ReplaceRegexTask addTaskUpdateFileVersions(
-		final Project project, File portalRootDir) {
+		final Project project) {
 
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
@@ -699,11 +699,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			});
 
-		if (portalRootDir != null) {
-			File projectDir = project.getProjectDir();
+		final File gitRepoDir = getRootDir(project, ".gitrepo");
 
-			final File projectGroupDir = projectDir.getParentFile();
-
+		if (gitRepoDir != null) {
 			replaceRegexTask.pre(
 				new Closure<String>(null) {
 
@@ -715,7 +713,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							return content;
 						}
 
-						if (FileUtil.isChild(file, projectGroupDir)) {
+						if (FileUtil.isChild(file, gitRepoDir)) {
 							return content.replaceAll(
 								getModuleDependencyRegex(project),
 								Matcher.quoteReplacement(
@@ -977,7 +975,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
-		final File portalRootDir = getPortalRootDir(project);
+		final File portalRootDir = getRootDir(
+			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
 		boolean testProject = isTestProject(project);
 
@@ -1014,7 +1013,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			recordArtifactTask, antJGitConfiguration, portalRootDir);
 
 		final ReplaceRegexTask updateFileVersionsTask =
-			addTaskUpdateFileVersions(project, portalRootDir);
+			addTaskUpdateFileVersions(project);
 
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
@@ -1722,15 +1721,19 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return LiferayPlugin.class;
 	}
 
-	protected File getPortalRootDir(Project project) {
-		File dir = project.getRootDir();
+	protected String getProjectDependency(Project project) {
+		return "project(\"" + project.getPath() + "\")";
+	}
+
+	protected File getRootDir(Project project, String markerFileName) {
+		File dir = project.getProjectDir();
 
 		dir = dir.getParentFile();
 
 		while (true) {
-			File portalImplDir = new File(dir, "portal-impl");
+			File markerFile = new File(dir, markerFileName);
 
-			if (portalImplDir.exists()) {
+			if (markerFile.exists()) {
 				return dir;
 			}
 
@@ -1740,10 +1743,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				return null;
 			}
 		}
-	}
-
-	protected String getProjectDependency(Project project) {
-		return "project(\"" + project.getPath() + "\")";
 	}
 
 	protected boolean isPublishing(Project project) {

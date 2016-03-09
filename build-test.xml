@@ -2671,9 +2671,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 
-					<antcall target="delete-liferay-home">
-						<param name="keep.hypersonicdb" value="true" />
-					</antcall>
+					<get-testcase-property property.name="portal.version" />
+
+					<if>
+						<not>
+							<isset property="portal.version" />
+						</not>
+						<then>
+							<antcall target="delete-liferay-home">
+								<param name="keep.hypersonicdb" value="true" />
+							</antcall>
+						</then>
+					</if>
 
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />

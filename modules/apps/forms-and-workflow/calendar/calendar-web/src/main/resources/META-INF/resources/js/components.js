@@ -140,6 +140,16 @@
 							}
 						},
 
+						_onClickOutside: function(event) {
+							var instance = this;
+
+							var toggler = instance.get('toggler');
+
+							if (!toggler || !toggler.contains(event.target)) {
+								instance._closeMenu();
+							}
+						},
+
 						_onVisibleChange: function(event) {
 							var instance = this;
 
@@ -148,7 +158,7 @@
 
 								instance._outsideHandler = contentBox.on(
 									['mouseupoutside', 'touchendoutside'],
-									instance._closeMenu,
+									instance._onClickOutside,
 									instance
 								);
 

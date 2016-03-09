@@ -25,6 +25,10 @@ public abstract class BaseConfigurationProvider<T>
 	implements ConfigurationProvider<T> {
 
 	protected String getMetatypeId() {
+		if (_factoryPid != null) {
+			return _factoryPid;
+		}
+
 		Class<T> metatype = getMetatype();
 
 		Meta.OCD metaOCD = metatype.getAnnotation(Meta.OCD.class);
@@ -33,19 +37,20 @@ public abstract class BaseConfigurationProvider<T>
 			return null;
 		}
 
-		String id = metaOCD.id();
+		_factoryPid = metaOCD.id();
 
-		if (id == null) {
-			id = metatype.getName();
+		if (_factoryPid == null) {
+			_factoryPid = metatype.getName();
 		}
 
-		return id;
+		return _factoryPid;
 	}
 
 	protected abstract void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin);
 
 	protected ConfigurationAdmin configurationAdmin;
-	protected String factoryPid;
+
+	private String _factoryPid;
 
 }

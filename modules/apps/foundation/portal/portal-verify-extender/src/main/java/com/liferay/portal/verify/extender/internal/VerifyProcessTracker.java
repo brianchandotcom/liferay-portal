@@ -14,14 +14,13 @@
 
 package com.liferay.portal.verify.extender.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -132,8 +131,9 @@ public class VerifyProcessTracker {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_verifyProcessTrackerConfiguration = Configurable.createConfigurable(
-			VerifyProcessTrackerConfiguration.class, properties);
+		_verifyProcessTrackerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				VerifyProcessTrackerConfiguration.class, properties);
 
 		ServiceTrackerMapListener<String, VerifyProcess, List<VerifyProcess>>
 			verifyServiceTrackerMapListener = null;

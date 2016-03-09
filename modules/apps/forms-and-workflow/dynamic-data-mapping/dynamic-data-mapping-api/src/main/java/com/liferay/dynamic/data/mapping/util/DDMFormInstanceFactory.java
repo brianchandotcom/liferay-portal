@@ -14,10 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.configuration.ConfigurableUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -47,7 +46,7 @@ public class DDMFormInstanceFactory {
 		Map<String, Object> properties =
 			ddmFormInstanceFactoryHelper.getProperties();
 
-		return Configurable.createConfigurable(clazz, properties);
+		return ConfigurableUtil.createConfigurable(clazz, properties);
 	}
 
 }

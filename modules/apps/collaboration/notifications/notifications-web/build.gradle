@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1-SNAPSHOT"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "1.0.0"

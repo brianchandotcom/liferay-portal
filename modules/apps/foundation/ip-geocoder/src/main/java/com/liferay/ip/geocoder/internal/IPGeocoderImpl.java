@@ -14,10 +14,9 @@
 
 package com.liferay.ip.geocoder.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
+import com.liferay.portal.configuration.ConfigurableUtil;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -87,7 +86,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 	}
 
 	protected void configure(Map<String, String> properties) {
-		_igGeocoderConfiguration = Configurable.createConfigurable(
+		_igGeocoderConfiguration = ConfigurableUtil.createConfigurable(
 			IPGeocoderConfiguration.class, properties);
 
 		String filePath = _igGeocoderConfiguration.filePath();

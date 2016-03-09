@@ -14,13 +14,12 @@
 
 package com.liferay.social.privatemessaging.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
@@ -318,7 +317,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_privateMessagingConfiguration = Configurable.createConfigurable(
+		_privateMessagingConfiguration = ConfigurableUtil.createConfigurable(
 			PrivateMessagingConfiguration.class, properties);
 	}
 

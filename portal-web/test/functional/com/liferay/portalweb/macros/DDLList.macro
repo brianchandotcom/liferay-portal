@@ -116,6 +116,8 @@
 	<command name="editViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_EDIT_LIST" value1="Edit List" />
 
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
 
 		<if>

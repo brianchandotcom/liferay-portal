@@ -146,7 +146,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Productivity" />
+			<var name="category" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -173,7 +173,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="category" value="Productivity" />
+			<var name="category" value="Forms and Workflow" />
 			<var name="configurationName" value="Forms" />
 		</execute>
 

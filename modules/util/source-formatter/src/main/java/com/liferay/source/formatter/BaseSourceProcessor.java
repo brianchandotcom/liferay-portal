@@ -573,11 +573,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
-	protected void checkStringUtilReplace(
-			String fileName, String newContent)
+	protected void checkStringUtilReplace(String fileName, String content)
 		throws Exception {
 
-		Matcher matcher = stringUtilReplacePattern.matcher(newContent);
+		Matcher matcher = stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {
 			String fieldName = matcher.group(4);
@@ -594,12 +593,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String method = matcher.group(1);
 
-			processErrorMessage(
-				fileName,
-				"Use StringUtil." + method + "(String, char, char) or " +
-					"StringUtil." + method +
-						"(String, char, String) instead: " + fileName + " " +
-							getLineCount(newContent, matcher.start()));
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("Use StringUtil.");
+			sb.append(method);
+			sb.append("(String, char, char) or StringUtil.");
+			sb.append(method);
+			sb.append("(String, char, String) instead: ");
+			sb.append(fileName);
+			sb.append(StringPool.SPACE);
+			sb.append(getLineCount(content, matcher.start()));
+
+			processErrorMessage(fileName, sb.toString());
 
 			return;
 		}

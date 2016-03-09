@@ -226,6 +226,8 @@ public abstract class CompanyScopedConfigurationProvider
 			properties = new HashMapDictionary<>();
 		}
 
+		properties.put(LDAPConstants.COMPANY_ID, companyId);
+
 		Configuration configuration = _configurations.get(companyId);
 
 		try {
@@ -237,8 +239,6 @@ public abstract class CompanyScopedConfigurationProvider
 				configuration = configurationAdmin.createFactoryConfiguration(
 					factoryPid, StringPool.QUESTION);
 			}
-
-			properties.put(LDAPConstants.COMPANY_ID, companyId);
 
 			configuration.update(properties);
 

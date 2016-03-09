@@ -44,6 +44,8 @@ String portletURLString = portletURL.toString();
 SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, portletURL);
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-groups"), null);
 %>
 
 <liferay-ui:error exception="<%= RequiredUserGroupException.class %>" message="you-cannot-delete-user-groups-that-have-users" />
@@ -99,6 +101,10 @@ UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContai
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="deleteUserGroupIds" type="hidden" />
+
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
 
 	<%@ include file="/view_flat_user_groups.jspf" %>
 

@@ -30,7 +30,6 @@ import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
@@ -68,9 +67,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	protected void configureIdeaModuleExcludeDirs(
 		Project project, IdeaPlugin ideaPlugin) {
 
-		PluginContainer pluginContainer = project.getPlugins();
-
-		if (!pluginContainer.hasPlugin(JavaPlugin.class)) {
+		if (!hasPlugin(project, JavaPlugin.class)) {
 			return;
 		}
 
@@ -109,9 +106,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 			@SuppressWarnings("unused")
 			public void doCall(XmlProvider xmlProvider) throws Exception {
-				PluginContainer pluginContainer = project.getPlugins();
-
-				if (!pluginContainer.hasPlugin(JavaPlugin.class)) {
+				if (!hasPlugin(project, JavaPlugin.class)) {
 					return;
 				}
 
@@ -180,9 +175,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	}
 
 	protected File getClassesDir(Project project) {
-		PluginContainer pluginContainer = project.getPlugins();
-
-		if (!pluginContainer.hasPlugin(JavaPlugin.class)) {
+		if (!hasPlugin(project, JavaPlugin.class)) {
 			return null;
 		}
 

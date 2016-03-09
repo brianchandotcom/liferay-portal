@@ -11,13 +11,18 @@ buildPluginDescriptor {
 	goalPrefix = "liferay"
 }
 
+copyLibs {
+	enabled = false
+}
+
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.3"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
-	provided group: "org.slf4j", name: "slf4j-simple", version: "1.6.6"
+	provided group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.6.6"
+	provided group: "org.slf4j", name: "slf4j-simple", transitive: false, version: "1.6.6"
 	provided group: "org.zeroturnaround", name: "zt-zip", version: "1.8"
 }
 

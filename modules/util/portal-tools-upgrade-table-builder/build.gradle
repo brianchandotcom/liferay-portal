@@ -11,6 +11,10 @@ buildPluginDescriptor {
 	goalPrefix = "liferay"
 }
 
+copyLibs {
+	enabled = false
+}
+
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.3"

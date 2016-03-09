@@ -34,16 +34,18 @@
 }
 
 .lfr-page-layouts {
-	.radio {
-		margin-top: 4px;
-
-		input[type="radio"]:checked + img {
-			border: $toggle-card-border-width solid $toggle-card-on-border;
-		}
+	input[type="radio"]:checked + .card-horizontal {
+		box-shadow: inset 0 0 0 $toggle-card-border-width $toggle-card-on-border;
 	}
 
-	.lfr-layout-template .layout-template-entry {
-		height: 28px;
-		width: 28px;
+	.lfr-layout-template {
+		label {
+			cursor: pointer;
+		}
+
+		.layout-template-entry {
+			height: 28px;
+			width: 28px;
+		}
 	}
 }

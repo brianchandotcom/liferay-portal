@@ -327,6 +327,9 @@ public class LDAPServerConfigurationProviderImpl
 			properties = new HashMapDictionary<>();
 		}
 
+		properties.put(LDAPConstants.COMPANY_ID, companyId);
+		properties.put(LDAPConstants.LDAP_SERVER_ID, ldapServerId);
+
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
 
@@ -347,9 +350,6 @@ public class LDAPServerConfigurationProviderImpl
 				configuration = configurationAdmin.createFactoryConfiguration(
 					factoryPid, StringPool.QUESTION);
 			}
-
-			properties.put(LDAPConstants.COMPANY_ID, companyId);
-			properties.put(LDAPConstants.LDAP_SERVER_ID, ldapServerId);
 
 			configuration.update(properties);
 		}

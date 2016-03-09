@@ -10,7 +10,6 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
-	{META-INF/maven/plugin.xml=src/main/resources/META-INF/maven/plugin.xml},\
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/web-experience/journal/journal-service/service.xml,\

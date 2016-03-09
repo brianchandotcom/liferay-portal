@@ -2578,6 +2578,639 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _FINDER_COLUMN_C_N_S_NAME_2 = "resourcePermission.name = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_S_NAME_3 = "(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_N_S_SCOPE_2 = "resourcePermission.scope = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S_P = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourcePermissionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_P",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S_P = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
+			ResourcePermissionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_P",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				String.class.getName()
+			},
+			ResourcePermissionModelImpl.COMPANYID_COLUMN_BITMASK |
+			ResourcePermissionModelImpl.SCOPE_COLUMN_BITMASK |
+			ResourcePermissionModelImpl.PRIMKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_S_P = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_P",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @return the matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByC_S_P(long companyId, int scope,
+		String primKey) {
+		return findByC_S_P(companyId, scope, primKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @return the range of matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByC_S_P(long companyId, int scope,
+		String primKey, int start, int end) {
+		return findByC_S_P(companyId, scope, primKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByC_S_P(long companyId, int scope,
+		String primKey, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator) {
+		return findByC_S_P(companyId, scope, primKey, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByC_S_P(long companyId, int scope,
+		String primKey, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S_P;
+			finderArgs = new Object[] { companyId, scope, primKey };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_S_P;
+			finderArgs = new Object[] {
+					companyId, scope, primKey,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<ResourcePermission> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ResourcePermission>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+							(scope != resourcePermission.getScope()) ||
+							!Validator.equals(primKey,
+								resourcePermission.getPrimKey())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_S_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_P_SCOPE_2);
+
+			boolean bindPrimKey = false;
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_1);
+			}
+			else if (primKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_3);
+			}
+			else {
+				bindPrimKey = true;
+
+				query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(scope);
+
+				if (bindPrimKey) {
+					qPos.add(primKey);
+				}
+
+				if (!pagination) {
+					list = (List<ResourcePermission>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ResourcePermission>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission
+	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
+	 */
+	@Override
+	public ResourcePermission findByC_S_P_First(long companyId, int scope,
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator)
+		throws NoSuchResourcePermissionException {
+		ResourcePermission resourcePermission = fetchByC_S_P_First(companyId,
+				scope, primKey, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 */
+	@Override
+	public ResourcePermission fetchByC_S_P_First(long companyId, int scope,
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator) {
+		List<ResourcePermission> list = findByC_S_P(companyId, scope, primKey,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission
+	 * @throws NoSuchResourcePermissionException if a matching resource permission could not be found
+	 */
+	@Override
+	public ResourcePermission findByC_S_P_Last(long companyId, int scope,
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator)
+		throws NoSuchResourcePermissionException {
+		ResourcePermission resourcePermission = fetchByC_S_P_Last(companyId,
+				scope, primKey, orderByComparator);
+
+		if (resourcePermission != null) {
+			return resourcePermission;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", scope=");
+		msg.append(scope);
+
+		msg.append(", primKey=");
+		msg.append(primKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResourcePermissionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
+	 */
+	@Override
+	public ResourcePermission fetchByC_S_P_Last(long companyId, int scope,
+		String primKey, OrderByComparator<ResourcePermission> orderByComparator) {
+		int count = countByC_S_P(companyId, scope, primKey);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ResourcePermission> list = findByC_S_P(companyId, scope, primKey,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the resource permissions before and after the current resource permission in the ordered set where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param resourcePermissionId the primary key of the current resource permission
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next resource permission
+	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	 */
+	@Override
+	public ResourcePermission[] findByC_S_P_PrevAndNext(
+		long resourcePermissionId, long companyId, int scope, String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator)
+		throws NoSuchResourcePermissionException {
+		ResourcePermission resourcePermission = findByPrimaryKey(resourcePermissionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ResourcePermission[] array = new ResourcePermissionImpl[3];
+
+			array[0] = getByC_S_P_PrevAndNext(session, resourcePermission,
+					companyId, scope, primKey, orderByComparator, true);
+
+			array[1] = resourcePermission;
+
+			array[2] = getByC_S_P_PrevAndNext(session, resourcePermission,
+					companyId, scope, primKey, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ResourcePermission getByC_S_P_PrevAndNext(Session session,
+		ResourcePermission resourcePermission, long companyId, int scope,
+		String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_RESOURCEPERMISSION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_S_P_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_S_P_SCOPE_2);
+
+		boolean bindPrimKey = false;
+
+		if (primKey == null) {
+			query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_1);
+		}
+		else if (primKey.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_3);
+		}
+		else {
+			bindPrimKey = true;
+
+			query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(scope);
+
+		if (bindPrimKey) {
+			qPos.add(primKey);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(resourcePermission);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ResourcePermission> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 */
+	@Override
+	public void removeByC_S_P(long companyId, int scope, String primKey) {
+		for (ResourcePermission resourcePermission : findByC_S_P(companyId,
+				scope, primKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(resourcePermission);
+		}
+	}
+
+	/**
+	 * Returns the number of resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @return the number of matching resource permissions
+	 */
+	@Override
+	public int countByC_S_P(long companyId, int scope, String primKey) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S_P;
+
+		Object[] finderArgs = new Object[] { companyId, scope, primKey };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_RESOURCEPERMISSION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_S_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_P_SCOPE_2);
+
+			boolean bindPrimKey = false;
+
+			if (primKey == null) {
+				query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_1);
+			}
+			else if (primKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_3);
+			}
+			else {
+				bindPrimKey = true;
+
+				query.append(_FINDER_COLUMN_C_S_P_PRIMKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(scope);
+
+				if (bindPrimKey) {
+					qPos.add(primKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_S_P_COMPANYID_2 = "resourcePermission.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_S_P_SCOPE_2 = "resourcePermission.scope = ? AND ";
+	private static final String _FINDER_COLUMN_C_S_P_PRIMKEY_1 = "resourcePermission.primKey IS NULL";
+	private static final String _FINDER_COLUMN_C_S_P_PRIMKEY_2 = "resourcePermission.primKey = ?";
+	private static final String _FINDER_COLUMN_C_S_P_PRIMKEY_3 = "(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N_S_P = new FinderPath(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED,
 			ResourcePermissionImpl.class,
@@ -5595,6 +6228,29 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_S, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N_S,
+					args);
+			}
+
+			if ((resourcePermissionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						resourcePermissionModelImpl.getOriginalCompanyId(),
+						resourcePermissionModelImpl.getOriginalScope(),
+						resourcePermissionModelImpl.getOriginalPrimKey()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S_P,
+					args);
+
+				args = new Object[] {
+						resourcePermissionModelImpl.getCompanyId(),
+						resourcePermissionModelImpl.getScope(),
+						resourcePermissionModelImpl.getPrimKey()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_S_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S_P,
 					args);
 			}
 

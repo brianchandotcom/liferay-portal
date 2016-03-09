@@ -2185,6 +2185,11 @@
 			<finder-column name="name" />
 			<finder-column name="scope" />
 		</finder>
+		<finder name="C_S_P" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="scope" />
+			<finder-column name="primKey" />
+		</finder>
 		<finder name="C_N_S_P" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

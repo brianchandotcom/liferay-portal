@@ -800,20 +800,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Resources
 
 			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_LikeP(
-					group.getCompanyId(), String.valueOf(group.getGroupId()));
+				resourcePermissionPersistence.findByC_S_P(
+					group.getCompanyId(), ResourceConstants.SCOPE_GROUP,
+					String.valueOf(group.getGroupId()));
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
 				resourcePermissionLocalService.deleteResourcePermission(
 					resourcePermission);
-			}
-
-			if (!group.isStagingGroup() &&
-				(group.isOrganization() || group.isRegularSite())) {
-
-				resourceLocalService.deleteResource(
-					group.getCompanyId(), Group.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
 			}
 
 			// Trash
@@ -878,6 +871,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 					userGroupGroupRoleLocalService.
 						deleteUserGroupGroupRolesByGroupId(group.getGroupId());
+				}
+
+				if (!group.isStagingGroup() &&
+					(group.isOrganization() || group.isRegularSite())) {
+
+					resourceLocalService.deleteResource(
+						group.getCompanyId(), Group.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
 				}
 
 				groupPersistence.remove(group);

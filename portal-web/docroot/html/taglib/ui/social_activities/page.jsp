@@ -18,21 +18,20 @@
 
 <div class="taglib-social-activities">
 	<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
-		<div class="pull-right">
-			<liferay-ui:rss
-				delta="<%= feedDelta %>"
-				displayStyle="<%= feedDisplayStyle %>"
-				feedType="<%= feedType %>"
-				message="<%= feedURLMessage %>"
-				name="<%= feedTitle %>"
-				resourceURL="<%= feedResourceURL %>"
-				url="<%= feedURL %>"
-			/>
+		<div class="clearfix">
+			<div class="pull-right">
+				<liferay-ui:rss
+					delta="<%= feedDelta %>"
+					displayStyle="<%= feedDisplayStyle %>"
+					feedType="<%= feedType %>"
+					message="<%= feedURLMessage %>"
+					name="<%= feedTitle %>"
+					resourceURL="<%= feedResourceURL %>"
+					url="<%= feedURL %>"
+				/>
+			</div>
 		</div>
 	</c:if>
-
-
-	<table>
 
 	<%
 	ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
@@ -50,12 +49,6 @@
 			continue;
 		}
 
-		if (!hasActivities) {
-			hasActivities = true;
-		}
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), activityFeedEntry.getPortletId());
-
 		int curDaysBetween = DateUtil.getDaysBetween(new Date(activityDescriptor.getCreateDate()), now, timeZone);
 	%>
 
@@ -63,10 +56,18 @@
 
 			<%
 			daysBetween = curDaysBetween;
+
+			if (hasActivities) {
 			%>
 
-			<tr>
-				<td class="day-separator" colspan="2">
+				</ul>
+
+			<%
+			}
+			%>
+
+			<ul class="list-group-card list-unstyled">
+				<li class="splitter">
 					<c:choose>
 						<c:when test="<%= curDaysBetween == 0 %>">
 							<liferay-ui:message key="today" />
@@ -78,36 +79,41 @@
 							<%= dateFormatDate.format(activityDescriptor.getCreateDate()) %>
 						</c:otherwise>
 					</c:choose>
-				</td>
-			</tr>
+				</li>
 		</c:if>
 
-		<tr>
-			<td class="portlet-icon">
-				<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
-			</td>
-			<td class="activity-data">
-				<div class="activity-title">
-					<%= activityFeedEntry.getTitle() %>
-				</div>
-				<div class="activity-body">
-					<span class="time"><%= timeFormatDate.format(activityDescriptor.getCreateDate()) %></span>
+		<li class="list-group-item">
+			<div class="card card-horizontal">
+				<div class="card-row card-row-padded">
+					<div class="card-col-field">
+						<liferay-ui:user-portrait userId="<%= activityDescriptor.getUserId() %>" />
+					</div>
+					<div class="card-col-content card-col-gutters">
+						<h5 class="text-default">
+							<%= timeFormatDate.format(activityDescriptor.getCreateDate()) %>
+						</h5>
 
-					<%= activityFeedEntry.getBody() %>
+						<%= activityFeedEntry.getTitle() %>
+
+						<%= activityFeedEntry.getBody() %>
+					</div>
 				</div>
-			</td>
-		</tr>
+			</div>
+		</li>
 
 	<%
+		if (!hasActivities) {
+			hasActivities = true;
+		}
 	}
 	%>
 
-	</table>
-
-	<c:if test="<%= !hasActivities %>">
-		<liferay-ui:message key="there-are-no-recent-activities" />
-	</c:if>
+	<c:choose>
+		<c:when test="<%= hasActivities %>">
+			</ul>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="there-are-no-recent-activities" />
+		</c:otherwise>
+	</c:choose>
 </div>
-
-<%!
-%>

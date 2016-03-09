@@ -43,6 +43,14 @@ public class SocialActivityDescriptor {
 		return _activitySet.getCreateDate();
 	}
 
+	public long getUserId() {
+		if (_activity != null) {
+			return _activity.getUserId();
+		}
+
+		return _activitySet.getUserId();
+	}
+
 	public SocialActivityFeedEntry interpret(
 		String selector, ServiceContext serviceContext) {
 

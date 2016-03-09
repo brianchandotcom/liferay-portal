@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
@@ -178,13 +179,23 @@ public class VerifyProcessTracker {
 		List<VerifyProcess> verifyProcesses = getVerifyProcesses(
 			verifyProcessName);
 
-		for (VerifyProcess verifyProcess : verifyProcesses) {
-			try {
-				verifyProcess.verify();
+		boolean indexReadOnly = IndexWriterHelperUtil.isIndexReadOnly();
+
+		IndexWriterHelperUtil.setIndexReadOnly(
+			_verifyProcessTrackerConfiguration.indexReadOnly());
+
+		try {
+			for (VerifyProcess verifyProcess : verifyProcesses) {
+				try {
+					verifyProcess.verify();
+				}
+				catch (VerifyException ve) {
+					_log.error(ve, ve);
+				}
 			}
-			catch (VerifyException ve) {
-				_log.error(ve, ve);
-			}
+		}
+		finally {
+			IndexWriterHelperUtil.setIndexReadOnly(indexReadOnly);
 		}
 	}
 

@@ -229,6 +229,14 @@ public class DDMFormEvaluatorHelper {
 		return ddmFormFieldValidation.getExpression();
 	}
 
+	protected String getValueString(Value value, Locale locale) {
+		if (value == null) {
+			return null;
+		}
+
+		return value.getString(_locale);
+	}
+
 	protected boolean isDDMFormFieldValueEmpty(
 		DDMFormFieldValue ddmFormFieldValue) {
 
@@ -280,12 +288,13 @@ public class DDMFormEvaluatorHelper {
 				continue;
 			}
 
-			Value value = ddmFormFieldValue.getValue();
+			String valueString = getValueString(
+				ddmFormFieldValue.getValue(), _locale);
 
-			if (value != null) {
+			if (valueString != null) {
 				setExpressionVariableValue(
 					ddmExpression, name, ddmFormField.getDataType(),
-					value.getString(_locale));
+					valueString);
 			}
 
 			setDDMExpressionVariables(

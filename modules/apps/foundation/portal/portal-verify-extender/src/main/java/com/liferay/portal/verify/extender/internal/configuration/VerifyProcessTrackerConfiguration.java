@@ -32,4 +32,7 @@ public interface VerifyProcessTrackerConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean autoVerify();
 
+	@Meta.AD(deflt = "true", required = false)
+	public boolean indexReadOnly();
+
 }

@@ -27,7 +27,6 @@ import com.liferay.portal.security.ldap.constants.LDAPConstants;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -136,19 +135,9 @@ public abstract class CompanyScopedConfigurationProvider
 			return Collections.emptyList();
 		}
 
-		List<T> configurables = new ArrayList<>(
-			configurationsProperties.size());
-
-		for (Dictionary<String, Object> configurationProperties :
-				configurationsProperties) {
-
-			T configurable = Configurable.createConfigurable(
-				getMetatype(), configurationProperties);
-
-			configurables.add(configurable);
-		}
-
-		return configurables;
+		return Collections.singletonList(
+			Configurable.createConfigurable(
+				getMetatype(), configurationsProperties.get(0)));
 	}
 
 	@Override

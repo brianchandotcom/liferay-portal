@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-field-support',
 	function(A) {
-		var Lang = A.Lang;
-
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
@@ -13,15 +11,7 @@ AUI.add(
 
 		var CSS_FIELD_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
 
-		var CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'confirmation', 'message');
-
-		var CSS_FIELD_SETTINGS_MODAL = A.getClassName('lfr', 'ddl', 'field', 'settings', 'modal');
-
-		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'save');
-
 		var CSS_FORM_GROUP = A.getClassName('form', 'group');
-
-		var TPL_CONFIRMATION_MESSAGE = '<div class="' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE + '">' + Liferay.Language.get('cancel-without-saving') + '</div>';
 
 		var FormBuilderSettingsSupport = function() {
 		};
@@ -42,10 +32,6 @@ AUI.add(
 			dataProviders: {
 			},
 
-			footerToolbar: {
-				setter: '_setFooterToolbar'
-			},
-
 			settingsForm: {
 				valueFn: '_valueSettingsForm'
 			}
@@ -54,8 +40,6 @@ AUI.add(
 		FormBuilderSettingsSupport.prototype = {
 			initializer: function() {
 				var instance = this;
-
-				instance._confirmationMessage = A.Node.create(TPL_CONFIRMATION_MESSAGE);
 
 				instance._eventHandlers.push(
 					instance.after(instance._renderFormBuilderField, instance, 'render')
@@ -106,6 +90,14 @@ AUI.add(
 				settingsModal.hide();
 			},
 
+			isNew: function() {
+				var instance = this;
+
+				var builder = instance.get('builder');
+
+				return !builder.contains(instance);
+			},
+
 			renderSettingsPanel: function() {
 				var instance = this;
 
@@ -114,8 +106,6 @@ AUI.add(
 				instance._updateSettingsFormValues();
 
 				settingsForm.render();
-
-				instance._renderSettingsModal();
 			},
 
 			saveSettings: function() {
@@ -129,64 +119,6 @@ AUI.add(
 						field: instance
 					}
 				);
-
-				instance._previousSettings = JSON.stringify(instance.getSettings());
-			},
-
-			setPrimaryButtonLabel: function(label) {
-				var instance = this;
-
-				instance.set(
-					'footerToolbar',
-					[
-						{
-							label: label
-						}
-					]
-				);
-			},
-
-			validate: Lang.emptyFn,
-
-			_bindModalUI: function(settingsModal) {
-				var instance = this;
-
-				instance._modalEventHandlers = [
-					settingsModal.on('visibleChange', A.bind('_onModalVisibleChange', instance))
-				];
-			},
-
-			_onClickModalClose: function() {
-				var instance = this;
-
-				instance.hideSettingsModal();
-			},
-
-			_onClickModalSave: function() {
-				var instance = this;
-
-				var settingsForm = instance.get('settingsForm');
-
-				settingsForm.clearValidationStatus();
-				settingsForm.hideErrorMessages();
-
-				settingsForm.submit();
-			},
-
-			_onModalVisibleChange: function(event) {
-				var instance = this;
-
-				if (!event.newVal) {
-					var settings = JSON.stringify(instance.getSettings());
-
-					if (instance._previousSettings !== settings) {
-						instance._showConfirmationToolbar();
-
-						event.preventDefault();
-					}
-
-					(new A.EventHandle(instance._modalEventHandlers)).detach();
-				}
 			},
 
 			_renderFormBuilderField: function() {
@@ -211,105 +143,6 @@ AUI.add(
 						toolbar.hide();
 					}
 				}
-			},
-
-			_renderSettingsModal: function() {
-				var instance = this;
-
-				var settingsModal = instance.getSettingsModal()._modal;
-
-				var settingsModalBoundingBox = settingsModal.get('boundingBox');
-
-				settingsModalBoundingBox.addClass(CSS_FIELD_SETTINGS_MODAL);
-
-				instance._bindModalUI(settingsModal);
-
-				instance._previousSettings = JSON.stringify(instance.getSettings());
-
-				instance._showDefaultToolbar();
-
-				var closeButton = settingsModal.toolbars.header.item(0);
-
-				closeButton.set('labelHTML', Liferay.Util.getLexiconIconTpl('times'));
-			},
-
-			_setFooterToolbar: function(toolbarItem) {
-				var instance = this;
-
-				var toolbar = [
-					{
-						cssClass: ['btn-lg btn-primary', CSS_FIELD_SETTINGS_SAVE].join(' '),
-						label: Liferay.Language.get('save'),
-						on: {
-							click: A.bind('_onClickModalSave', instance)
-						}
-					},
-					{
-						cssClass: 'btn-lg btn-link',
-						label: Liferay.Language.get('cancel'),
-						on: {
-							click: A.bind('_onClickModalClose', instance)
-						}
-					}
-				];
-
-				if (toolbarItem) {
-					toolbar.forEach(
-						function(item, index) {
-							if (toolbarItem[index]) {
-								toolbar[index] = A.merge(item, toolbarItem[index]);
-							}
-						}
-					);
-				}
-
-				return toolbar;
-			},
-
-			_showConfirmationToolbar: function() {
-				var instance = this;
-
-				var settingsModal = instance.getSettingsModal()._modal;
-
-				settingsModal.addToolbar(
-					[
-						{
-							cssClass: 'btn-lg btn-primary',
-							label: Liferay.Language.get('yes'),
-							on: {
-								click: function() {
-									instance._confirmationMessage.remove();
-
-									instance.hideSettingsModal();
-								}
-							}
-						},
-						{
-							cssClass: 'btn-lg btn-link',
-							label: Liferay.Language.get('no'),
-							on: {
-								click: function() {
-									instance._confirmationMessage.remove();
-
-									instance._showDefaultToolbar();
-								}
-							}
-						}
-					],
-					'footer'
-				);
-
-				var footerNode = settingsModal.getStdModNode(A.WidgetStdMod.FOOTER);
-
-				footerNode.prepend(instance._confirmationMessage);
-			},
-
-			_showDefaultToolbar: function(label) {
-				var instance = this;
-
-				var settingsModal = instance.getSettingsModal()._modal;
-
-				settingsModal.addToolbar(instance.get('footerToolbar'), 'footer');
 			},
 
 			_updateSettingsFormValues: function() {

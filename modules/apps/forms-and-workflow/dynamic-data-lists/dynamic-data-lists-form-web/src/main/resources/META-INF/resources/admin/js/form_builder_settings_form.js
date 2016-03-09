@@ -81,6 +81,10 @@ AUI.add(
 										}
 									);
 
+									var builder = field.get('builder');
+
+									builder.appendChild(field);
+
 									settingsModal.hide();
 								}
 
@@ -175,10 +179,6 @@ AUI.add(
 							{
 								id: formName
 							}
-						);
-
-						instance._eventHandlers.push(
-							container.on('submit', A.bind('_onDOMSubmitForm', instance))
 						);
 
 						var labelField = instance.getField('label');
@@ -297,14 +297,6 @@ AUI.add(
 						instance._syncModeToggler();
 					},
 
-					_onDOMSubmitForm: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						instance.submit();
-					},
-
 					_onLabelFieldKeyChange: function(event) {
 						var instance = this;
 
@@ -317,6 +309,14 @@ AUI.add(
 						var instance = this;
 
 						return new A.Do.AlterArgs(null, [instance._generateFieldName(key)]);
+					},
+
+					_onSubmitForm: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						instance.submit();
 					},
 
 					_syncModeToggler: function() {

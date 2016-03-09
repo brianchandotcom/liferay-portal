@@ -106,6 +106,29 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
+					contains: function(field) {
+						var instance = this;
+
+						var contains = false;
+
+						var visitor = instance.get('visitor');
+
+						visitor.set('pages', instance.get('layouts'));
+
+						visitor.set(
+							'fieldHandler',
+							function(currentField) {
+								if (currentField === field) {
+									contains = true;
+								}
+							}
+						);
+
+						visitor.visit();
+
+						return contains;
+					},
+
 					createField: function(fieldType) {
 						var instance = this;
 
@@ -134,8 +157,6 @@ AUI.add(
 						var instance = this;
 
 						var fieldType = instance.findTypeOfField(field);
-
-						field.setPrimaryButtonLabel(Liferay.Language.get('save'));
 
 						instance.showFieldSettingsPanel(
 							field,
@@ -268,8 +289,6 @@ AUI.add(
 						var field = instance.createField(fieldType);
 
 						instance.hideFieldsPanel();
-
-						field.setPrimaryButtonLabel(Liferay.Language.get('add'));
 
 						instance.showFieldSettingsPanel(
 							field,

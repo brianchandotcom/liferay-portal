@@ -857,14 +857,21 @@ $horizontal-spacing: 35px;
 		}
 	}
 
+	.form-control[readonly],
+	.form-control[disabled],
+	input[type='checkbox'],
+	input[type='radio'] {
+		background-color: transparent;
+		border-color: #869CAD;
+		color: initial;
+		cursor: default;
+		opacity: 1;
+	}
+
 	.form-builder-field-list-add-button-label,
 	.form-builder-field-move-target-label,
 	.layout-builder-move-target-label {
 		font-size: 11px;
-	}
-
-	.form-control[readonly] {
-		background-color: transparent;
 	}
 
 	.layout-builder-move-cut-button.layout-builder-move-cut-row-button,

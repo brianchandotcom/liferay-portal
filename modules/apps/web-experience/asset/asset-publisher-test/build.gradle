@@ -5,6 +5,8 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.3"
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-publisher-web")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
+	testIntegrationCompile project(":core:registry-api")
 }

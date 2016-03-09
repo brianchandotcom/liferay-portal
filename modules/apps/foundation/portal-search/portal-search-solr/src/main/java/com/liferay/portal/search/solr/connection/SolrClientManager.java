@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.solr.connection;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -68,7 +67,7 @@ public class SolrClientManager {
 			}
 		}
 
-		_solrConfiguration = Configurable.createConfigurable(
+		_solrConfiguration = ConfigurableUtil.createConfigurable(
 			SolrConfiguration.class, properties);
 
 		String clientType = _solrConfiguration.clientType();

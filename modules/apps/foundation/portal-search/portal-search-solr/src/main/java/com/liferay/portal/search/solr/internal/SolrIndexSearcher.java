@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.solr.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -201,7 +200,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_solrConfiguration = Configurable.createConfigurable(
+		_solrConfiguration = ConfigurableUtil.createConfigurable(
 			SolrConfiguration.class, properties);
 
 		_logExceptionsOnly = _solrConfiguration.logExceptionsOnly();

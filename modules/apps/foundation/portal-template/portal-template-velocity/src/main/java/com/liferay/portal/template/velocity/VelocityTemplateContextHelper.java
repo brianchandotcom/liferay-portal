@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.velocity;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
@@ -139,7 +138,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_velocityEngineConfiguration = Configurable.createConfigurable(
+		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
 			VelocityEngineConfiguration.class, properties);
 	}
 

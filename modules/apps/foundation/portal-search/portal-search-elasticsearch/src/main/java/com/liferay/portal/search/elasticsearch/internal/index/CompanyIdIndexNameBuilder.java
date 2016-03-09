@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
@@ -45,7 +44,7 @@ public class CompanyIdIndexNameBuilder implements IndexNameBuilder {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		ElasticsearchConfiguration elasticsearchConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				ElasticsearchConfiguration.class, properties);
 
 		setIndexNamePrefix(elasticsearchConfiguration.indexNamePrefix());

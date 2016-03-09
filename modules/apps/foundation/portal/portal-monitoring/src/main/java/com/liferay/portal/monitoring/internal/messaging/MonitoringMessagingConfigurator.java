@@ -14,8 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.DiscardOldestPolicy;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
@@ -53,7 +52,7 @@ public class MonitoringMessagingConfigurator {
 			componentContext.getProperties();
 
 		MonitoringConfiguration monitoringConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				MonitoringConfiguration.class, properties);
 
 		DestinationConfiguration destinationConfiguration =

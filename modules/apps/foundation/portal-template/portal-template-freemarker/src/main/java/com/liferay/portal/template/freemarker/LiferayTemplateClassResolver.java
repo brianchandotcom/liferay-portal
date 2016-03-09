@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -132,7 +131,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_freemarkerEngineConfiguration = Configurable.createConfigurable(
+		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
 	}
 

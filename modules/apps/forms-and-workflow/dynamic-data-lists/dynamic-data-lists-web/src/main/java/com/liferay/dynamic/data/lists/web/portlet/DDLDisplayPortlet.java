@@ -14,8 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
@@ -170,7 +169,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ddlWebConfiguration = Configurable.createConfigurable(
+		_ddlWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDLWebConfiguration.class, properties);
 	}
 

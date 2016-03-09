@@ -14,8 +14,7 @@
 
 package com.liferay.document.library.web.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +55,7 @@ public class TempFileEntriesMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlConfiguration = Configurable.createConfigurable(
+		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(

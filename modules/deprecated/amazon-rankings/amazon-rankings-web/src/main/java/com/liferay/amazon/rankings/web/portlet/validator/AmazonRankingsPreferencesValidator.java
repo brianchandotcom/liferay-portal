@@ -14,12 +14,11 @@
 
 package com.liferay.amazon.rankings.web.portlet.validator;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
 import com.liferay.amazon.rankings.web.model.AmazonRankings;
 import com.liferay.amazon.rankings.web.util.AmazonRankingsUtil;
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -95,7 +94,7 @@ public class AmazonRankingsPreferencesValidator
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_amazonRankingsConfiguration = Configurable.createConfigurable(
+		_amazonRankingsConfiguration = ConfigurableUtil.createConfigurable(
 			AmazonRankingsConfiguration.class, properties);
 	}
 

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -312,7 +311,7 @@ public class FreeMarkerTemplateTest {
 
 	private Configuration _configuration;
 	private final FreeMarkerEngineConfiguration _freemarkerEngineConfiguration =
-		Configurable.createConfigurable(
+		ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, Collections.emptyMap());
 	private TemplateContextHelper _templateContextHelper;
 

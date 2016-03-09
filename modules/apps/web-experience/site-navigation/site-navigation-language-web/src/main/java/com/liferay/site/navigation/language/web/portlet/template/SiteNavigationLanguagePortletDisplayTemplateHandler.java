@@ -14,8 +14,7 @@
 
 package com.liferay.site.navigation.language.web.portlet.template;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
@@ -103,7 +102,7 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_siteNavigationLanguageWebTemplateConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				SiteNavigationLanguageWebTemplateConfiguration.class,
 				properties);
 	}

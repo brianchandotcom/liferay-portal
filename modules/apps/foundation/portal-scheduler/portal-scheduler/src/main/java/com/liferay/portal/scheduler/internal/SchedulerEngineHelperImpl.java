@@ -14,8 +14,7 @@
 
 package com.liferay.portal.scheduler.internal;
 
-import aQute.configurable.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
@@ -828,8 +827,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		_schedulerEngineHelperConfiguration = Configurable.createConfigurable(
-			SchedulerEngineHelperConfiguration.class, properties);
+		_schedulerEngineHelperConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SchedulerEngineHelperConfiguration.class, properties);
 
 		_bundleContext = componentContext.getBundleContext();
 
@@ -914,8 +914,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Modified
 	protected void modified(Map<String, Object> properties) throws Exception {
-		_schedulerEngineHelperConfiguration = Configurable.createConfigurable(
-			SchedulerEngineHelperConfiguration.class, properties);
+		_schedulerEngineHelperConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SchedulerEngineHelperConfiguration.class, properties);
 	}
 
 	protected Destination registerDestination(

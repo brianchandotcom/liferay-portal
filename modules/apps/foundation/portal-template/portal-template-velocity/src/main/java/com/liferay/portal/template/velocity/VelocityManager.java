@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.velocity;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -261,7 +260,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_velocityEngineConfiguration = Configurable.createConfigurable(
+		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
 			VelocityEngineConfiguration.class, properties);
 	}
 

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -157,8 +156,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_searchPermissionCheckerConfiguration = Configurable.createConfigurable(
-			SearchPermissionCheckerConfiguration.class, properties);
+		_searchPermissionCheckerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SearchPermissionCheckerConfiguration.class, properties);
 	}
 
 	protected void addRequiredMemberRole(

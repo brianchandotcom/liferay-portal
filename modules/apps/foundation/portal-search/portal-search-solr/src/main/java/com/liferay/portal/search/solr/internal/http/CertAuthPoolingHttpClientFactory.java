@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.solr.internal.http;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 import com.liferay.portal.search.solr.http.SSLSocketFactoryBuilder;
@@ -54,8 +53,9 @@ public class CertAuthPoolingHttpClientFactory
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_solrHttpClientFactoryConfiguration = Configurable.createConfigurable(
-			SolrHttpClientFactoryConfiguration.class, properties);
+		_solrHttpClientFactoryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SolrHttpClientFactoryConfiguration.class, properties);
 
 		int defaultMaxConnectionsPerRoute =
 			_solrHttpClientFactoryConfiguration.defaultMaxConnectionsPerRoute();

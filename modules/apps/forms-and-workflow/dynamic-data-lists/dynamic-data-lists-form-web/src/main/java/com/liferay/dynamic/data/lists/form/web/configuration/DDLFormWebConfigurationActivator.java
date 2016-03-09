@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.configuration;
 
-import aQute.bnd.annotation.metatype.Configurable;
+import com.liferay.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class DDLFormWebConfigurationActivator {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ddlFormWebConfiguration = Configurable.createConfigurable(
+		_ddlFormWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDLFormWebConfiguration.class, properties);
 	}
 

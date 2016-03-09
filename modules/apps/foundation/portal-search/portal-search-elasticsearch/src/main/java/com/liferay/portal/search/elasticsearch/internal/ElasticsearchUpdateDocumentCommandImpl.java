@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -106,7 +105,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_elasticsearchConfiguration = Configurable.createConfigurable(
+		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 	}
 

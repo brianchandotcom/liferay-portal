@@ -14,8 +14,7 @@
 
 package com.liferay.portlet.tck.bridge;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -66,7 +65,7 @@ public class PortletTCKBridge {
 
 		FutureTask<Void> futureTask = new FutureTask<>(
 			new HandshakeServerCallable(
-				Configurable.createConfigurable(
+				ConfigurableUtil.createConfigurable(
 					PortletTCKBridgeConfiguration.class,
 					componentContext.getProperties())));
 

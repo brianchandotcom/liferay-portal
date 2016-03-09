@@ -14,8 +14,7 @@
 
 package com.liferay.portal.remote.soap.extender.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.soap.extender.SoapDescriptorBuilder;
 import com.liferay.portal.remote.soap.extender.configuration.SoapExtenderConfiguration;
@@ -54,7 +53,7 @@ public class SoapExtender {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_soapExtenderConfiguration = Configurable.createConfigurable(
+		_soapExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			SoapExtenderConfiguration.class, properties);
 
 		_dependencyManager = new TCCLDependencyManager(bundleContext);

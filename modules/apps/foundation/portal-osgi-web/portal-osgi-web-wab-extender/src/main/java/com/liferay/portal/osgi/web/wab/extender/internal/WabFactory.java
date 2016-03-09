@@ -14,8 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
@@ -84,7 +83,7 @@ public class WabFactory extends AbstractExtender {
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		_wabExtenderConfiguration = Configurable.createConfigurable(
+		_wabExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			WabExtenderConfiguration.class, properties);
 
 		try {

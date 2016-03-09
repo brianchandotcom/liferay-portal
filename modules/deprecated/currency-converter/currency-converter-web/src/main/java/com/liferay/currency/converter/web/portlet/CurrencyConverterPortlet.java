@@ -14,8 +14,7 @@
 
 package com.liferay.currency.converter.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -93,7 +92,7 @@ public class CurrencyConverterPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_currencyConverterConfiguration = Configurable.createConfigurable(
+		_currencyConverterConfiguration = ConfigurableUtil.createConfigurable(
 			CurrencyConverterConfiguration.class, properties);
 	}
 

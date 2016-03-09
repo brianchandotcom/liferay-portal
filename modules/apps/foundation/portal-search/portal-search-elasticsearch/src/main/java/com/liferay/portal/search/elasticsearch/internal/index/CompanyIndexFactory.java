@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -112,7 +111,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		ElasticsearchConfiguration elasticsearchConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				ElasticsearchConfiguration.class, properties);
 
 		setAdditionalIndexConfigurations(

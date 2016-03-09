@@ -14,8 +14,7 @@
 
 package com.liferay.portal.security.sso.opensso.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -87,7 +86,7 @@ public class SSOImpl implements SSO {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_openSSOConfiguration = Configurable.createConfigurable(
+		_openSSOConfiguration = ConfigurableUtil.createConfigurable(
 			OpenSSOConfiguration.class, properties);
 	}
 

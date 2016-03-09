@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -209,7 +208,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_elasticsearchConfiguration = Configurable.createConfigurable(
+		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
 		_logExceptionsOnly = _elasticsearchConfiguration.logExceptionsOnly();

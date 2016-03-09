@@ -14,8 +14,7 @@
 
 package com.liferay.xsl.content.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -97,7 +96,7 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_xslContentConfiguration = Configurable.createConfigurable(
+		_xslContentConfiguration = ConfigurableUtil.createConfigurable(
 			XSLContentConfiguration.class, properties);
 	}
 

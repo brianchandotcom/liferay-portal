@@ -14,8 +14,7 @@
 
 package com.liferay.translator.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -124,7 +123,7 @@ public class TranslatorPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_translatorConfiguration = Configurable.createConfigurable(
+		_translatorConfiguration = ConfigurableUtil.createConfigurable(
 			TranslatorConfiguration.class, properties);
 	}
 

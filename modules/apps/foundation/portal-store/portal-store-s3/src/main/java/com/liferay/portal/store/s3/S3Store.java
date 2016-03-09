@@ -14,8 +14,6 @@
 
 package com.liferay.portal.store.s3;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
@@ -41,6 +39,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
 
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
@@ -358,7 +357,7 @@ public class S3Store extends BaseStore {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_s3StoreConfiguration = Configurable.createConfigurable(
+		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(
 			S3StoreConfiguration.class, properties);
 
 		_awsCredentialsProvider = getAWSCredentialsProvider();

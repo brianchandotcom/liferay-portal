@@ -14,8 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -78,7 +77,7 @@ public class FreeMarkerTemplateResourceLoader
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_freemarkerEngineConfiguration = Configurable.createConfigurable(
+		_freemarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
 			FreeMarkerEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(

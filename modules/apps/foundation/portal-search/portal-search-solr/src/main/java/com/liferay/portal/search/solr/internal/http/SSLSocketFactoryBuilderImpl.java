@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.solr.internal.http;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.solr.configuration.SolrSSLSocketFactoryConfiguration;
@@ -118,8 +117,9 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_solrSSLSocketFactoryConfiguration = Configurable.createConfigurable(
-			SolrSSLSocketFactoryConfiguration.class, properties);
+		_solrSSLSocketFactoryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SolrSSLSocketFactoryConfiguration.class, properties);
 
 		String keyStorePassword =
 			_solrSSLSocketFactoryConfiguration.keyStorePassword();

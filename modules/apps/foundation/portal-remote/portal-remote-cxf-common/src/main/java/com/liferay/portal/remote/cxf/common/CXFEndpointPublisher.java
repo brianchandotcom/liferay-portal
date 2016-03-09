@@ -14,8 +14,7 @@
 
 package com.liferay.portal.remote.cxf.common;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.remote.cxf.common.configuration.CXFEndpointPublisherConfiguration;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
@@ -73,7 +72,7 @@ public class CXFEndpointPublisher {
 			_dependencyManager.createComponent();
 
 		CXFEndpointPublisherConfiguration cxfEndpointPublisherConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				CXFEndpointPublisherConfiguration.class, properties);
 
 		ServicesRegistrator servicesRegistrator = new ServicesRegistrator(

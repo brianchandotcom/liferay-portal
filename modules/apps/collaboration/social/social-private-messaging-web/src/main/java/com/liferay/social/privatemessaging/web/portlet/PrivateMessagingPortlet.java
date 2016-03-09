@@ -14,8 +14,7 @@
 
 package com.liferay.social.privatemessaging.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -318,7 +317,7 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_privateMessagingConfiguration = Configurable.createConfigurable(
+		_privateMessagingConfiguration = ConfigurableUtil.createConfigurable(
 			PrivateMessagingConfiguration.class, properties);
 	}
 

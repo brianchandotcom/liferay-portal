@@ -14,8 +14,7 @@
 
 package com.liferay.portal.scripting.ruby.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.ExecutionException;
@@ -119,7 +118,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_rubyScriptingConfiguration = Configurable.createConfigurable(
+		_rubyScriptingConfiguration = ConfigurableUtil.createConfigurable(
 			RubyScriptingConfiguration.class, properties);
 
 		initialize();

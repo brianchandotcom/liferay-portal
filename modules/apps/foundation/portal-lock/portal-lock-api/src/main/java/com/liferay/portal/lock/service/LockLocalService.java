@@ -263,12 +263,10 @@ public interface LockLocalService extends BaseLocalService,
 	public boolean isLocked(java.lang.String className, long key);
 
 	@MasterDataSource
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(java.lang.String className, java.lang.String key,
 		java.lang.String expectedOwner, java.lang.String updatedOwner);
 
 	@MasterDataSource
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(java.lang.String className, java.lang.String key,
 		java.lang.String owner);
 
@@ -288,7 +286,6 @@ public interface LockLocalService extends BaseLocalService,
 	public void unlock(java.lang.String className, java.lang.String key);
 
 	@MasterDataSource
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner);
 

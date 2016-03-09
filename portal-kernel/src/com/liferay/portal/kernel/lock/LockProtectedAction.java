@@ -39,51 +39,36 @@ public class LockProtectedAction<T> {
 	}
 
 	public void performAction() throws PortalException {
-		Lock lock = null;
+		Lock lock = LockManagerUtil.lock(_className, _lockKey, _lockKey);
 
-		while (true) {
+		if (lock.isNew()) {
 			try {
-				lock = LockManagerUtil.lock(_className, _lockKey, _lockKey);
+				_returnValue = performProtectedAction();
 			}
-			catch (Exception e) {
+			finally {
+				LockManagerUtil.unlock(_className, _lockKey, _lockKey);
+			}
+
+			return;
+		}
+
+		Date createDate = lock.getCreateDate();
+
+		if ((System.currentTimeMillis() - createDate.getTime()) >= _timeout) {
+			LockManagerUtil.unlock(_className, _lockKey, lock.getOwner());
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Removed lock " + lock + " due to timeout");
+			}
+		}
+		else {
+			try {
+				Thread.sleep(_retryDelay);
+			}
+			catch (InterruptedException ie) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to acquire lock. Retrying.");
-				}
-
-				continue;
-			}
-
-			if (lock.isNew()) {
-				try {
-					_returnValue = performProtectedAction();
-				}
-				finally {
-					LockManagerUtil.unlock(_className, _lockKey, _lockKey);
-				}
-
-				break;
-			}
-
-			Date createDate = lock.getCreateDate();
-
-			if ((System.currentTimeMillis() - createDate.getTime()) >=
-					_timeout) {
-
-				LockManagerUtil.unlock(_className, _lockKey, lock.getOwner());
-
-				if (_log.isWarnEnabled()) {
-					_log.warn("Removed lock " + lock + " due to timeout");
-				}
-			}
-			else {
-				try {
-					Thread.sleep(_retryDelay);
-				}
-				catch (InterruptedException ie) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Interrupted while waiting to reacquire lock", ie);
-					}
+					_log.warn(
+						"Interrupted while waiting to reacquire lock", ie);
 				}
 			}
 		}

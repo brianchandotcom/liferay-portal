@@ -19,6 +19,7 @@ import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDa
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskNameComparator;
 import com.liferay.portal.background.task.internal.messaging.BackgroundTaskMessageListener;
 import com.liferay.portal.background.task.internal.messaging.BackgroundTaskQueuingMessageListener;
+import com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
@@ -582,6 +583,13 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 		backgroundTaskStatusDestination.register(
 			backgroundTaskQueuingMessageListener);
+
+		RemoveOnCompletionBackgroundTaskStatusMessageListener
+			removeOnCompletionBackgroundTaskStatusMessageListener =
+				new RemoveOnCompletionBackgroundTaskStatusMessageListener(this);
+
+		backgroundTaskStatusDestination.register(
+			removeOnCompletionBackgroundTaskStatusMessageListener);
 
 		if (!_clusterMasterExecutor.isEnabled()) {
 			cleanUpBackgroundTasks();

@@ -15,13 +15,15 @@
 package com.liferay.portal.lock.service.impl;
 
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
-import com.liferay.portal.kernel.dao.orm.LockMode;
+import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lock.exception.DuplicateLockException;
@@ -32,6 +34,10 @@ import com.liferay.portal.lock.service.base.LockLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.LockAcquisitionException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -181,50 +187,73 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@MasterDataSource
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(String className, String key, String owner) {
 		return lock(className, key, null, owner);
 	}
 
 	@MasterDataSource
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
-		String className, String key, String expectedOwner,
-		String updatedOwner) {
+		final String className, final String key, final String expectedOwner,
+		final String updatedOwner) {
 
-		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
+		while (true) {
+			try {
+				return TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new Callable<Lock>() {
 
-		if (lock == null) {
-			long lockId = counterLocalService.increment();
+						@Override
+						public Lock call() {
+							Lock lock = lockPersistence.fetchByC_K(
+								className, key, false);
 
-			lock = lockPersistence.create(lockId);
+							if (lock == null) {
+								long lockId = counterLocalService.increment();
 
-			lock.setCreateDate(new Date());
-			lock.setClassName(className);
-			lock.setKey(key);
-			lock.setOwner(updatedOwner);
+								lock = lockPersistence.create(lockId);
 
-			lockPersistence.update(lock);
+								lock.setCreateDate(new Date());
+								lock.setClassName(className);
+								lock.setKey(key);
+								lock.setOwner(updatedOwner);
 
-			lock.setNew(true);
+								lockPersistence.update(lock);
 
-			lockPersistence.flush();
+								lock.setNew(true);
+							}
+							else if (Validator.equals(
+										lock.getOwner(), expectedOwner)) {
+
+								lock.setCreateDate(new Date());
+								lock.setClassName(className);
+								lock.setKey(key);
+								lock.setOwner(updatedOwner);
+
+								lockPersistence.update(lock);
+
+								lock.setNew(true);
+							}
+
+							return lock;
+						}
+
+					});
+			}
+			catch (Throwable t) {
+				if (t instanceof ORMException) {
+					Throwable cause = t.getCause();
+
+					if ((cause instanceof ConstraintViolationException) ||
+						(cause instanceof LockAcquisitionException)) {
+
+						continue;
+					}
+				}
+
+				ReflectionUtil.throwException(t);
+			}
 		}
-		else if (Validator.equals(lock.getOwner(), expectedOwner)) {
-			lock.setCreateDate(new Date());
-			lock.setClassName(className);
-			lock.setKey(key);
-			lock.setOwner(updatedOwner);
-
-			lockPersistence.update(lock);
-
-			lock.setNew(true);
-
-			lockPersistence.flush();
-		}
-
-		return lock;
 	}
 
 	@Override
@@ -296,17 +325,49 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@MasterDataSource
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void unlock(String className, String key, String owner) {
-		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
+	public void unlock(
+		final String className, final String key, final String owner) {
 
-		if (lock == null) {
-			return;
-		}
+		while (true) {
+			try {
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new Callable<Void>() {
 
-		if (Validator.equals(lock.getOwner(), owner)) {
-			lockPersistence.remove(lock);
-			lockPersistence.flush();
+						@Override
+						public Void call() {
+							Lock lock = lockPersistence.fetchByC_K(
+								className, key, false);
+
+							if (lock == null) {
+								return null;
+							}
+
+							if (Validator.equals(lock.getOwner(), owner)) {
+								lockPersistence.remove(lock);
+								lockPersistence.flush();
+							}
+
+							return null;
+						}
+
+					});
+
+				return;
+			}
+			catch (Throwable t) {
+				if (t instanceof ORMException) {
+					Throwable cause = t.getCause();
+
+					if ((cause instanceof ConstraintViolationException) ||
+						(cause instanceof LockAcquisitionException)) {
+
+						continue;
+					}
+				}
+
+				ReflectionUtil.throwException(t);
+			}
 		}
 	}
 
@@ -343,5 +404,9 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		return lock;
 	}
+
+	private final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 }

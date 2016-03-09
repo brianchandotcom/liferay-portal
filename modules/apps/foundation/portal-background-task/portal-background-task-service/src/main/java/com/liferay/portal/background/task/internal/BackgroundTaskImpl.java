@@ -175,6 +175,11 @@ public class BackgroundTaskImpl implements BackgroundTask {
 		_backgroundTask.setTaskContextMap(taskContextMap);
 	}
 
+	@Override
+	public String toString() {
+		return _backgroundTask.toString();
+	}
+
 	private final com.liferay.portal.background.task.model.BackgroundTask
 		_backgroundTask;
 

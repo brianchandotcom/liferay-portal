@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.lock.service.persistence;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.background.task.constants;
 
 /**
- * @author Brian Wing Shun Chan
- * @generated
+ * @author Michael C. Han
  */
-@ProviderType
-public interface LockFinder {
-	public com.liferay.portal.lock.model.Lock fetchByC_K(
-		java.lang.String className, java.lang.String key,
-		com.liferay.portal.kernel.dao.orm.LockMode lockMode);
+public class BackgroundTaskContextMapConstants {
+
+	public static final String DELETE_ON_SUCCESS = "deleteOnSuccess";
+
 }

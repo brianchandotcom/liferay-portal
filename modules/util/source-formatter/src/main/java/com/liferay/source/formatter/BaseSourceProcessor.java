@@ -605,8 +605,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			sb.append(getLineCount(content, matcher.start()));
 
 			processErrorMessage(fileName, sb.toString());
-
-			return;
 		}
 	}
 

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
@@ -133,13 +132,37 @@ public class LDAPServerConfigurationProviderImpl
 	public LDAPServerConfiguration getConfiguration(
 		long companyId, long ldapServerId) {
 
-		Dictionary<String, Object> properties = getConfigurationProperties(
-			companyId, ldapServerId);
+		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
+			objectValuePairs = _configurations.get(companyId);
 
-		LDAPServerConfiguration ldapServerConfiguration =
-			Configurable.createConfigurable(getMetatype(), properties);
+		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
+			defaultObjectValuePairs = _configurations.get(
+				CompanyConstants.SYSTEM);
 
-		return ldapServerConfiguration;
+		if (MapUtil.isEmpty(objectValuePairs) &&
+			MapUtil.isEmpty(defaultObjectValuePairs)) {
+
+			return _defaultLDAPServerConfiguration;
+		}
+		else if (MapUtil.isEmpty(objectValuePairs)) {
+			objectValuePairs = defaultObjectValuePairs;
+		}
+
+		ObjectValuePair<Configuration, LDAPServerConfiguration>
+			objectValuePair = objectValuePairs.get(ldapServerId);
+
+		if ((objectValuePair == null) &&
+			!MapUtil.isEmpty(defaultObjectValuePairs)) {
+
+			objectValuePair = defaultObjectValuePairs.get(
+				LDAPServerConfiguration.LDAP_SERVER_ID_DEFAULT);
+		}
+
+		if (objectValuePair == null) {
+			return _defaultLDAPServerConfiguration;
+		}
+
+		return objectValuePair.getValue();
 	}
 
 	@Override
@@ -204,24 +227,25 @@ public class LDAPServerConfigurationProviderImpl
 	public List<LDAPServerConfiguration> getConfigurations(
 		long companyId, boolean useDefault) {
 
-		List<Dictionary<String, Object>> configurationsProperties =
-			getConfigurationsProperties(companyId, useDefault);
+		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
+			objectValuePairs = _configurations.get(companyId);
 
-		if (ListUtil.isEmpty(configurationsProperties)) {
-			return Collections.emptyList();
+		if (MapUtil.isEmpty(objectValuePairs) && useDefault) {
+			objectValuePairs = _configurations.get(CompanyConstants.SYSTEM);
 		}
 
 		List<LDAPServerConfiguration> ldapServerConfigurations =
-			new ArrayList<>(configurationsProperties.size());
+			new ArrayList<>();
 
-		for (Dictionary<String, Object> configurationProperties :
-				configurationsProperties) {
+		if (MapUtil.isEmpty(objectValuePairs) && useDefault) {
+			ldapServerConfigurations.add(_defaultLDAPServerConfiguration);
+		}
+		else if (!MapUtil.isEmpty(objectValuePairs)) {
+			for (ObjectValuePair<Configuration, LDAPServerConfiguration>
+					objectValuePair : objectValuePairs.values()) {
 
-			LDAPServerConfiguration ldapServerConfiguration =
-				Configurable.createConfigurable(
-					getMetatype(), configurationProperties);
-
-			ldapServerConfigurations.add(ldapServerConfiguration);
+				ldapServerConfigurations.add(objectValuePair.getValue());
+			}
 		}
 
 		return ldapServerConfigurations;
@@ -388,5 +412,8 @@ public class LDAPServerConfigurationProviderImpl
 
 	private final Map<Long, Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>>
 		_configurations = new ConcurrentHashMap<>();
+	private final LDAPServerConfiguration _defaultLDAPServerConfiguration =
+		Configurable.createConfigurable(
+			LDAPServerConfiguration.class, Collections.emptyMap());
 
 }

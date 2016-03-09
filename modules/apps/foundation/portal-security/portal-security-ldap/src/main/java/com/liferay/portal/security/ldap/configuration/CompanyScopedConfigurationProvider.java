@@ -81,13 +81,18 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
-		Dictionary<String, Object> properties = getConfigurationProperties(
+		ObjectValuePair<Configuration, T> objectValuePair = _configurations.get(
 			companyId);
 
-		T configurable = Configurable.createConfigurable(
-			getMetatype(), properties);
+		if (objectValuePair == null) {
+			objectValuePair = _configurations.get(CompanyConstants.SYSTEM);
+		}
 
-		return configurable;
+		if (objectValuePair == null) {
+			return _defaultConfiguration;
+		}
+
+		return objectValuePair.getValue();
 	}
 
 	@Override
@@ -130,16 +135,21 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public List<T> getConfigurations(long companyId, boolean useDefault) {
-		List<Dictionary<String, Object>> configurationsProperties =
-			getConfigurationsProperties(companyId, useDefault);
+		ObjectValuePair<Configuration, T> objectValuePair = _configurations.get(
+			companyId);
 
-		if (configurationsProperties.isEmpty()) {
-			return Collections.emptyList();
+		if ((objectValuePair == null) && useDefault) {
+			objectValuePair = _configurations.get(CompanyConstants.SYSTEM);
 		}
 
-		return Collections.singletonList(
-			Configurable.createConfigurable(
-				getMetatype(), configurationsProperties.get(0)));
+		if ((objectValuePair == null) && useDefault) {
+			return Collections.singletonList(_defaultConfiguration);
+		}
+		else if (objectValuePair != null) {
+			return Collections.singletonList(objectValuePair.getValue());
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -257,5 +267,7 @@ public abstract class CompanyScopedConfigurationProvider
 
 	private final Map<Long, ObjectValuePair<Configuration, T>> _configurations =
 		new HashMap<>();
+	private final T _defaultConfiguration = Configurable.createConfigurable(
+		getMetatype(), Collections.emptyMap());
 
 }

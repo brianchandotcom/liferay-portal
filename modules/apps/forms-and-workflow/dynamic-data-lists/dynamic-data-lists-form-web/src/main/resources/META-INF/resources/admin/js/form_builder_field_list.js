@@ -21,12 +21,12 @@ AUI.add(
 
 				prototype: {
 					TPL_ADD_FIELD: '<div class="' + CSS_FIELD_LIST_ADD_CONTAINER + '">' +
-							'<div class="' + CSS_FIELD_LIST_ADD_BUTTON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_VISIBLE + '">' +
+							'<button class="' + CSS_FIELD_LIST_ADD_BUTTON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_VISIBLE + '" type="button">' +
 								'<span class="' + CSS_FIELD_LIST_ADD_BUTTON_ICON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_PLUS_ICON + '">' +
 									Liferay.Util.getLexiconIconTpl('plus') +
 								'</span>' +
 								'<label class="' + CSS_FIELD_LIST_ADD_BUTTON_LABEL + '"> ADD FIELD </label>' +
-							'</div>' +
+							'</button>' +
 						'</div>'
 				}
 			}

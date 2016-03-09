@@ -78,6 +78,8 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.PublishArtifactSet;
+import org.gradle.api.artifacts.ResolvedConfiguration;
+import org.gradle.api.artifacts.ResolvedDependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
@@ -895,6 +897,37 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			bundleDefaultInstructions);
 	}
 
+	protected void configureBundleInstructions(Project project) {
+		Map<String, String> bundleInstructions = getBundleInstructions(project);
+
+		String includeResource = bundleInstructions.get(
+			Constants.INCLUDERESOURCE);
+
+		if (Validator.isNull(includeResource) ||
+			!includeResource.contains("-*.")) {
+
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+
+		ResolvedConfiguration resolvedConfiguration =
+			configuration.getResolvedConfiguration();
+
+		for (ResolvedDependency resolvedDependency :
+				resolvedConfiguration.getFirstLevelModuleDependencies()) {
+
+			String name = resolvedDependency.getModuleName();
+			String version = resolvedDependency.getModuleVersion();
+
+			includeResource = includeResource.replace(
+				name + "-*.", name + "-" + version + ".");
+		}
+
+		bundleInstructions.put(Constants.INCLUDERESOURCE, includeResource);
+	}
+
 	protected void configureConfiguration(Configuration configuration) {
 		DependencySet dependencySet = configuration.getDependencies();
 
@@ -1052,6 +1085,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						project, recordArtifactTask, updateFileVersionsTask);
 
 					if (hasPlugin(project, BundlePlugin.class)) {
+						configureBundleInstructions(project);
 						configureProjectBndProperties(project);
 					}
 				}

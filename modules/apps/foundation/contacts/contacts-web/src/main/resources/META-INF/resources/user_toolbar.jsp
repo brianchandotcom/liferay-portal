@@ -178,9 +178,9 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 		function() {
 			<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />
 
-			var uri = '<liferay-portlet:renderURL portletName="<%= ContactsPortletKeys.PRIVATE_MESSAGING %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
+			var uri = '<liferay-portlet:renderURL portletName="<%= PrivateMessagingPortletKeys.PRIVATE_MESSAGING %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
 
-			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ContactsPortletKeys.PRIVATE_MESSAGING) %>userIds=' + '<%= user2.getUserId() %>', uri) || uri;
+			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>userIds=' + '<%= user2.getUserId() %>', uri) || uri;
 
 			Liferay.Util.openWindow(
 				{
@@ -194,7 +194,7 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 						plugins: [Liferay.WidgetZIndex],
 						width: 600
 					},
-					id: '<%= PortalUtil.getPortletNamespace(ContactsPortletKeys.PRIVATE_MESSAGING) %>Dialog',
+					id: '<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>Dialog',
 					title: '<%= UnicodeLanguageUtil.get(request, "new-message") %>',
 					uri: uri
 				}

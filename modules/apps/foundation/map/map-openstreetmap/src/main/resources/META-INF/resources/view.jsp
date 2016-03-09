@@ -32,7 +32,7 @@ name = namespace + name;
 
 <liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
 	<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-	<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js" type="text/javascript"></script>
 </liferay-util:html-top>
 
 <aui:script use="liferay-map-openstreetmap">

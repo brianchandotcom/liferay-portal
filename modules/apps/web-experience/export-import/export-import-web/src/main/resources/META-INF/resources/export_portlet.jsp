@@ -90,7 +90,7 @@ portletURL.setParameter("portletResource", portletResource);
 			<div class="export-dialog-tree">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" required="<%= true %>" showRequiredLabel="<%= false %>" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), CharPool.SPACE, CharPool.UNDERLINE) + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
+						<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" required="<%= true %>" showRequiredLabel="<%= false %>" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), ' ', '_') + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
 					</aui:fieldset>
 
 					<%

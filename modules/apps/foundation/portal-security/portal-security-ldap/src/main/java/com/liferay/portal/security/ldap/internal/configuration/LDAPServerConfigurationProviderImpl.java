@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.configuration.BaseConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
@@ -343,12 +342,8 @@ public class LDAPServerConfigurationProviderImpl
 			Configuration configuration = configurations.get(ldapServerId);
 
 			if (configuration == null) {
-				if (Validator.isNull(factoryPid)) {
-					factoryPid = getMetatypeId();
-				}
-
 				configuration = configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
+					getMetatypeId(), StringPool.QUESTION);
 			}
 
 			configuration.update(properties);

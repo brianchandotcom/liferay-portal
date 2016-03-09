@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.constants.LDAPConstants;
 
 import java.io.IOException;
@@ -214,12 +213,8 @@ public abstract class CompanyScopedConfigurationProvider
 
 		try {
 			if (configuration == null) {
-				if (Validator.isNull(factoryPid)) {
-					factoryPid = getMetatypeId();
-				}
-
 				configuration = configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
+					getMetatypeId(), StringPool.QUESTION);
 			}
 
 			configuration.update(properties);

@@ -14,10 +14,9 @@
 
 package com.liferay.message.boards.web.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.message.boards.configuration.MBConfiguration;
 import com.liferay.message.boards.kernel.service.MBBanLocalService;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -49,7 +48,7 @@ public class ExpireBanMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_mbConfiguration = Configurable.createConfigurable(
+		_mbConfiguration = ConfigurableUtil.createConfigurable(
 			MBConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(

@@ -14,9 +14,8 @@
 
 package com.liferay.recent.documents.web.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.document.library.kernel.service.DLFileRankLocalService;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -67,7 +66,7 @@ public class RecentDocumentsMessageListener
 		}
 
 		RecentDocumentsConfiguration recentDocumentsConfiguration =
-			Configurable.createConfigurable(
+			ConfigurableUtil.createConfigurable(
 				RecentDocumentsConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(

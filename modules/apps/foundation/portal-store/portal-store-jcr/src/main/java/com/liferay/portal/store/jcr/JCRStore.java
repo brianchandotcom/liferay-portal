@@ -14,12 +14,11 @@
 
 package com.liferay.portal.store.jcr;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -853,7 +852,7 @@ public class JCRStore extends BaseStore {
 	protected void activate(Map<String, Object> properties)
 		throws RepositoryException {
 
-		_jcrStoreConfiguration = Configurable.createConfigurable(
+		_jcrStoreConfiguration = ConfigurableUtil.createConfigurable(
 			JCRStoreConfiguration.class, properties);
 
 		try {

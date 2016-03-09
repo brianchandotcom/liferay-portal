@@ -14,12 +14,11 @@
 
 package com.liferay.journal.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.display.context.util.JournalWebRequestHelper;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -184,7 +183,7 @@ public class JournalConfigurationAction
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_journalWebConfiguration = Configurable.createConfigurable(
+		_journalWebConfiguration = ConfigurableUtil.createConfigurable(
 			JournalWebConfiguration.class, properties);
 	}
 

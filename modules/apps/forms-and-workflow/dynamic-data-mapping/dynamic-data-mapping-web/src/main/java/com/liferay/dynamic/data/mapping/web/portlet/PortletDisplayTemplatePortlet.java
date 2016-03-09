@@ -14,9 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;
@@ -66,7 +65,7 @@ public class PortletDisplayTemplatePortlet extends DDMPortlet {
 	@Modified
 	@Override
 	protected void activate(Map<String, Object> properties) {
-		this.ddmWebConfiguration = Configurable.createConfigurable(
+		this.ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
 	}
 

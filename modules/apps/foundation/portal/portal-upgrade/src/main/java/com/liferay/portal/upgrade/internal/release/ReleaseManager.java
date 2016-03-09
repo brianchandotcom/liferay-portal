@@ -14,13 +14,12 @@
 
 package com.liferay.portal.upgrade.internal.release;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.portal.configuration.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -124,7 +123,7 @@ public class ReleaseManager {
 		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
 			serviceTrackerMapListener = null;
 
-		_releaseManagerConfiguration = Configurable.createConfigurable(
+		_releaseManagerConfiguration = ConfigurableUtil.createConfigurable(
 			ReleaseManagerConfiguration.class, properties);
 
 		if (_releaseManagerConfiguration.autoUpgrade()) {

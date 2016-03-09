@@ -14,10 +14,9 @@
 
 package com.liferay.document.library.display.context.impl;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.portal.configuration.ConfigurableUtil;
 
 import java.util.Map;
 
@@ -78,7 +77,7 @@ public class DefaultDLMimeTypeDisplayContext
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlConfiguration = Configurable.createConfigurable(
+		_dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 	}
 

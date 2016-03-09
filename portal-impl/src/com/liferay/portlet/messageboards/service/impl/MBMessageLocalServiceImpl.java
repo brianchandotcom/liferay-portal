@@ -1855,9 +1855,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					String title = message.getSubject();
 
-					if (!message.isDiscussion()) {
-						extraDataJSONObject.put("title", title);
+					if (message.isDiscussion()) {
+						title = HtmlUtil.stripHtml(title);
+					}
 
+					extraDataJSONObject.put("title", title);
+
+					if (!message.isDiscussion()) {
 						if (!message.isAnonymous() && !user.isDefaultUser()) {
 							long receiverUserId = 0;
 
@@ -1885,10 +1889,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						}
 					}
 					else {
-						title = HtmlUtil.stripHtml(title);
-
-						extraDataJSONObject.put("title", title);
-
 						String className = (String)serviceContext.getAttribute(
 							"className");
 						long classPK = ParamUtil.getLong(

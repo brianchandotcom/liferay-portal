@@ -78,17 +78,6 @@ public class TransactionInterceptor implements MethodInterceptor {
 		this.transactionExecutor = transactionExecutor;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link
-	 *             #setPlatformTransactionManager(PlatformTransactionManager)}
-	 */
-	@Deprecated
-	public void setTransactionManager(
-		PlatformTransactionManager platformTransactionManager) {
-
-		setPlatformTransactionManager(platformTransactionManager);
-	}
-
 	protected PlatformTransactionManager platformTransactionManager;
 	protected TransactionAttributeSource transactionAttributeSource;
 	protected TransactionExecutor transactionExecutor;

@@ -316,14 +316,6 @@ public interface Localization {
 	 */
 	public String getLocalizedName(String name, String languageId);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getLocalizationMap(PortletRequest, String)}
-	 */
-	@Deprecated
-	public Map<Locale, String> getLocalizedParameter(
-		PortletRequest portletRequest, String parameter);
-
 	public Map<Locale, String> getMap(LocalizedValuesMap localizedValuesMap);
 
 	/**

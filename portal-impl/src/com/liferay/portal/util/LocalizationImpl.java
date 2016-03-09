@@ -613,17 +613,6 @@ public class LocalizationImpl implements Localization {
 		return name.concat(StringPool.UNDERLINE).concat(languageId);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	@Override
-	public Map<Locale, String> getLocalizedParameter(
-		PortletRequest portletRequest, String parameter) {
-
-		return getLocalizationMap(portletRequest, parameter);
-	}
-
 	@Override
 	public Map<Locale, String> getMap(LocalizedValuesMap localizedValuesMap) {
 		Map<Locale, String> map = localizedValuesMap.getValues();

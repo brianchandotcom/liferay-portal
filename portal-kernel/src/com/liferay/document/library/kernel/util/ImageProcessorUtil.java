@@ -204,11 +204,4 @@ public class ImageProcessorUtil {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setImageProcessor(ImageProcessor imageProcessor) {
-	}
-
 }

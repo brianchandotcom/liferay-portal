@@ -275,17 +275,6 @@ public class PortletAction extends Action {
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 {@link
-	 *             #hideDefaultSuccessMessage(PortletRequest)}
-	 */
-	@Deprecated
-	protected void hideDefaultSuccessMessage(
-		PortletConfig portletConfig, PortletRequest portletRequest) {
-
-		hideDefaultSuccessMessage(portletRequest);
-	}
-
 	protected void hideDefaultSuccessMessage(PortletRequest portletRequest) {
 		SessionMessages.add(
 			portletRequest,

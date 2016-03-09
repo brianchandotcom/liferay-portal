@@ -766,20 +766,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return totalModelCount;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	protected void setAlwaysExportable(boolean alwaysExportable) {
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	protected void setAlwaysStaged(boolean alwaysStaged) {
-	}
-
 	protected void setDataAlwaysStaged(boolean dataAlwaysStaged) {
 		_dataAlwaysStaged = dataAlwaysStaged;
 	}

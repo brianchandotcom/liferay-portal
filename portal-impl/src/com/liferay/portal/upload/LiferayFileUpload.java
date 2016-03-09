@@ -15,10 +15,8 @@
 package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -56,27 +54,6 @@ public class LiferayFileUpload extends ServletFileUpload {
 		_session.removeAttribute(LiferayFileUpload.PERCENT);
 
 		return super.parseRequest(request);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	@SuppressWarnings("rawtypes")
-	protected FileItem createItem(Map headers, boolean formField)
-		throws FileUploadException {
-
-		LiferayFileItem item = (LiferayFileItem)super.createItem(
-			headers, formField);
-
-		String fileName = item.getFileName();
-
-		if (Validator.isNotNull(fileName)) {
-			_session.setAttribute(LiferayFileUpload.FILE_NAME, fileName);
-		}
-
-		return item;
 	}
 
 	private final HttpSession _session;

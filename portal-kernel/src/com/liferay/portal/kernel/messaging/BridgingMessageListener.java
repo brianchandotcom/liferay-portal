@@ -24,16 +24,6 @@ public class BridgingMessageListener implements MessageListener {
 	public BridgingMessageListener() {
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public BridgingMessageListener(
-		SingleDestinationMessageSender singleDestinationMessageSender) {
-
-		_singleDestinationMessageSender = singleDestinationMessageSender;
-	}
-
 	@Override
 	public void receive(Message message) {
 		_singleDestinationMessageSender.send(message);

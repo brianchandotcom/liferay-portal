@@ -270,18 +270,6 @@ public interface WebKeys {
 
 	public static final String LAYOUTS = "LAYOUTS";
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #VISITED_GROUP_ID_PREVIOUS}
-	 */
-	@Deprecated
-	public static final String LIFERAY_SHARED_VISITED_GROUP_ID_PREVIOUS = "LIFERAY_SHARED_VISITED_GROUP_ID_PREVIOUS";
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #VISITED_GROUP_ID_RECENT}
-	 */
-	@Deprecated
-	public static final String LIFERAY_SHARED_VISITED_GROUP_ID_RECENT = "LIFERAY_SHARED_VISITED_GROUP_ID_RECENT";
-
 	public static final String LOGOUT = "LOGOUT";
 
 	public static final String MAIL_CURRENT_ACCOUNT = "MAIL_CURRENT_ACCOUNT";

@@ -34,16 +34,6 @@ public class JNDIUtil {
 		return _lookup(context, location);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #lookup(Context, String)}
-	 */
-	@Deprecated
-	public static Object lookup(Context context, String location, boolean cache)
-		throws NamingException {
-
-		return _lookup(context, location);
-	}
-
 	private static Object _lookup(Context context, String location)
 		throws NamingException {
 

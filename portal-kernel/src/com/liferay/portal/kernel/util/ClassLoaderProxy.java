@@ -25,9 +25,6 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -62,111 +59,6 @@ public class ClassLoaderProxy {
 			currentThread.setContextClassLoader(_classLoader);
 
 			return _invoke(methodHandler);
-		}
-		catch (InvocationTargetException ite) {
-			throw translateThrowable(ite.getCause(), contextClassLoader);
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-
-			throw t;
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public Object invoke(String methodName, Object[] args) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			currentThread.setContextClassLoader(_classLoader);
-
-			Class<?> clazz = Class.forName(_className, true, _classLoader);
-
-			List<Class<?>> parameterTypes = new ArrayList<>();
-
-			for (int i = 0; i < args.length; i++) {
-				Object arg = args[i];
-
-				Class<?> argClazz = arg.getClass();
-
-				Class<?> argClass = Class.forName(
-					argClazz.getName(), true, _classLoader);
-
-				if (ClassUtil.isSubclass(argClass, PrimitiveWrapper.class)) {
-					MethodKey methodKey = new MethodKey(argClass, "getValue");
-
-					Method method = methodKey.getMethod();
-
-					args[i] = method.invoke(arg, (Object[])null);
-
-					argClass = (Class<?>)argClass.getField("TYPE").get(arg);
-				}
-
-				if (ClassUtil.isSubclass(argClass, NullWrapper.class)) {
-					NullWrapper nullWrapper = (NullWrapper)arg;
-
-					argClass = Class.forName(
-						nullWrapper.getClassName(), true, _classLoader);
-
-					args[i] = null;
-				}
-
-				parameterTypes.add(argClass);
-			}
-
-			Method method = null;
-
-			try {
-				method = clazz.getMethod(
-					methodName,
-					parameterTypes.toArray(new Class[parameterTypes.size()]));
-			}
-			catch (NoSuchMethodException nsme) {
-				Method[] methods = ((Class<?>)clazz).getMethods();
-
-				for (int i = 0; i < methods.length; i++) {
-					Class<?>[] methodParameterTypes =
-						methods[i].getParameterTypes();
-
-					if (methods[i].getName().equals(methodName) &&
-						(methodParameterTypes.length ==
-							parameterTypes.size())) {
-
-						boolean correctParams = true;
-
-						for (int j = 0; j < parameterTypes.size(); j++) {
-							Class<?> a = parameterTypes.get(j);
-							Class<?> b = methodParameterTypes[j];
-
-							if (!ClassUtil.isSubclass(a, b)) {
-								correctParams = false;
-
-								break;
-							}
-						}
-
-						if (correctParams) {
-							method = methods[i];
-
-							break;
-						}
-					}
-				}
-
-				if (method == null) {
-					throw nsme;
-				}
-			}
-
-			return method.invoke(_obj, args);
 		}
 		catch (InvocationTargetException ite) {
 			throw translateThrowable(ite.getCause(), contextClassLoader);

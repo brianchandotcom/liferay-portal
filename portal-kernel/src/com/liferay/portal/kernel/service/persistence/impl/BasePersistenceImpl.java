@@ -356,55 +356,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return model;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #update(BaseModel)}}
-	 */
-	@Deprecated
-	@Override
-	public T update(T model, boolean merge) {
-		if (model instanceof ModelWrapper) {
-			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
-
-			model = modelWrapper.getWrappedModel();
-		}
-
-		boolean isNew = model.isNew();
-
-		ModelListener<T>[] listeners = getListeners();
-
-		for (ModelListener<T> listener : listeners) {
-			if (isNew) {
-				listener.onBeforeCreate(model);
-			}
-			else {
-				listener.onBeforeUpdate(model);
-			}
-		}
-
-		model = updateImpl(model, merge);
-
-		for (ModelListener<T> listener : listeners) {
-			if (isNew) {
-				listener.onAfterCreate(model);
-			}
-			else {
-				listener.onAfterUpdate(model);
-			}
-		}
-
-		return model;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #update(BaseModel,
-	 *             ServiceContext)}}
-	 */
-	@Deprecated
-	@Override
-	public T update(T model, boolean merge, ServiceContext serviceContext) {
-		return update(model, serviceContext);
-	}
-
 	@Override
 	public T update(T model, ServiceContext serviceContext) {
 		try {
@@ -545,14 +496,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 */
 	protected T updateImpl(T model) {
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateImpl(BaseModel)}
-	 */
-	@Deprecated
-	protected T updateImpl(T model, boolean merge) {
-		return updateImpl(model);
 	}
 
 	protected static final String CAST_CLOB_TEXT_OPEN = "CAST_CLOB_TEXT(";

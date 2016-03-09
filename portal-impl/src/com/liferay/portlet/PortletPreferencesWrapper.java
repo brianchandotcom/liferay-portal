@@ -69,14 +69,6 @@ public class PortletPreferencesWrapper
 		return (PortletPreferencesImpl)_portletPreferences;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getPortletPreferencesImpl}
-	 */
-	@Deprecated
-	public PortletPreferencesImpl getPreferencesImpl() {
-		return getPortletPreferencesImpl();
-	}
-
 	@Override
 	public String getValue(String key, String def) {
 		return _portletPreferences.getValue(key, def);

@@ -39,11 +39,4 @@ public class ClusterableChainableMethodAdviceInjector
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setServletContextName(String servletContextName) {
-	}
-
 }

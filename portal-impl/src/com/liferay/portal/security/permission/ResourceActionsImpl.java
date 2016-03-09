@@ -562,18 +562,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		return actions;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getRoles(long, Group,
-	 *             String, int[])}
-	 */
-	@Deprecated
-	@Override
-	public List<Role> getRoles(
-		long companyId, Group group, String modelResource) {
-
-		return getRoles(companyId, group, modelResource, null);
-	}
-
 	@Override
 	public List<Role> getRoles(
 		long companyId, Group group, String modelResource, int[] roleTypes) {

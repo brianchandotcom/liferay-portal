@@ -39,12 +39,6 @@ public class PortletCategoryKeys {
 	@Deprecated
 	public static final String CONFIGURATION = "control_panel.configuration";
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public static final String CONTENT = "content";
-
 	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
 
 	public static final String CONTROL_PANEL_CONFIGURATION =
@@ -59,31 +53,12 @@ public class PortletCategoryKeys {
 	public static final String CURRENT_SITE = "current_site";
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #APPS}
-	 */
-	@Deprecated
-	public static final String MARKETPLACE = "marketplace";
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #USER_MY_ACCOUNT}
 	 */
 	@Deprecated
 	public static final String MY = "user";
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #CONFIGURATION}, {@link
-	 *             #SITES}, or {@link #USERS}.
-	 */
-	@Deprecated
-	public static final String PORTAL = CONFIGURATION;
-
 	public static final String PORTLET = "portlet";
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #APPS}
-	 */
-	@Deprecated
-	public static final String SERVER = APPS;
 
 	public static final String SITE_ADMINISTRATION = "site_administration.";
 

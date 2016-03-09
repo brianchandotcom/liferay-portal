@@ -247,21 +247,6 @@ public class CapabilityRepository
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
-	@Deprecated
-	@Override
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		Repository repository = getRepository();
-
-		repository.checkInFileEntry(fileEntryId, lockUuid);
-
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
 	 *             String, ServiceContext)}

@@ -15,7 +15,6 @@
 package com.liferay.expando.kernel.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
@@ -38,30 +37,6 @@ public class ExpandoBridgeFactoryUtil {
 
 		return getExpandoBridgeFactory().getExpandoBridge(
 			companyId, className, classPK);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getExpandoBridge(long,
-	 *             String)}
-	 */
-	@Deprecated
-	public static ExpandoBridge getExpandoBridge(String className) {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return getExpandoBridge(companyId, className);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getExpandoBridge(long,
-	 *             String, long)}
-	 */
-	@Deprecated
-	public static ExpandoBridge getExpandoBridge(
-		String className, long classPK) {
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return getExpandoBridge(companyId, className, classPK);
 	}
 
 	public static ExpandoBridgeFactory getExpandoBridgeFactory() {

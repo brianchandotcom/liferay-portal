@@ -28,8 +28,6 @@ import com.liferay.portlet.admin.util.OmniadminUtil;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.PortletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -128,24 +126,6 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		return checkGuest;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunityAdmin(long groupId) {
-		return isGroupAdmin(groupId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunityOwner(long groupId) {
-		return isGroupOwner(groupId);
-	}
-
 	@Override
 	public boolean isOmniadmin() {
 		if (omniadmin == null) {
@@ -158,22 +138,6 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	@Override
 	public boolean isSignedIn() {
 		return signedIn;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	@Override
-	public void resetValues() {
-	}
-
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	@Override
-	public void setValues(PortletRequest portletRequest) {
 	}
 
 	protected boolean checkGuest = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;

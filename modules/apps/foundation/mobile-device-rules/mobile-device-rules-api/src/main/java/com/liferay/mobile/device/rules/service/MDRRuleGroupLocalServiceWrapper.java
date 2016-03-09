@@ -407,19 +407,6 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupIds);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,
-	LinkedHashMap, boolean, int, int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name, boolean andOperator, int start,
-		int end) {
-		return _mdrRuleGroupLocalService.search(groupId, name, andOperator,
-			start, end);
-	}
-
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
 		long groupId, java.lang.String name,

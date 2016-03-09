@@ -195,22 +195,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns <code>true</code> if this service context is being passed as a
-	 * parameter to a method which manipulates a resource to which default group
-	 * permissions apply.
-	 *
-	 * @return     <code>true</code> if this service context is being passed as
-	 *             a parameter to a method which manipulates a resource to which
-	 *             default community permissions apply; <code>false</code>
-	 *             otherwise
-	 * @deprecated As of 6.1.0, renamed to {@link #isAddGroupPermissions()}
-	 */
-	@Deprecated
-	public boolean getAddCommunityPermissions() {
-		return isAddGroupPermissions();
-	}
-
-	/**
 	 * Returns the asset category IDs to be applied to an asset entry if the
 	 * service context is being passed as a parameter to a method which
 	 * manipulates the asset entry.
@@ -282,19 +266,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public String getCommand() {
 		return _command;
-	}
-
-	/**
-	 * Returns the specific community permissions for a resource if the service
-	 * context is being passed as a parameter to a method which manipulates the
-	 * resource.
-	 *
-	 * @return     the community permissions
-	 * @deprecated As of 6.1.0, renamed to {@link #getGroupPermissions()}
-	 */
-	@Deprecated
-	public String[] getCommunityPermissions() {
-		return getGroupPermissions();
 	}
 
 	/**
@@ -1060,21 +1031,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Sets whether or not default community permissions should apply to a
-	 * resource being manipulated by a method to which this service context is
-	 * passed as a parameter.
-	 *
-	 * @param      addCommunityPermissions indicates whether or not to apply
-	 *             default community permissions
-	 * @deprecated As of 6.1.0, renamed to {@link
-	 *             #setAddGroupPermissions(boolean)}
-	 */
-	@Deprecated
-	public void setAddCommunityPermissions(boolean addCommunityPermissions) {
-		setAddGroupPermissions(addCommunityPermissions);
-	}
-
-	/**
 	 * Sets whether or not default group permissions should apply to a resource
 	 * being manipulated by a method to which this service context is passed as
 	 * a parameter.
@@ -1175,21 +1131,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public void setCommand(String command) {
 		_command = command;
-	}
-
-	/**
-	 * Sets an array containing specific community permissions for a resource if
-	 * this service context is being passed as a parameter to a method which
-	 * manipulates the resource.
-	 *
-	 * @param      communityPermissions the community permissions (optionally
-	 *             <code>null</code>)
-	 * @deprecated As of 6.1.0, renamed to {@link
-	 *             #setGroupPermissions(String[])}
-	 */
-	@Deprecated
-	public void setCommunityPermissions(String[] communityPermissions) {
-		setGroupPermissions(communityPermissions);
 	}
 
 	/**

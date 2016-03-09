@@ -23,24 +23,8 @@ public class NotificationThreadLocal {
 		return _enabled.get();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #isEnabled}
-	 */
-	@Deprecated
-	public static boolean isNotificationEnabled() {
-		return isEnabled();
-	}
-
 	public static void setEnabled(boolean enabled) {
 		_enabled.set(enabled);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setEnabled(boolean)}
-	 */
-	@Deprecated
-	public static void setNotificationEnabled(boolean notificationEnabled) {
-		setEnabled(notificationEnabled);
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =

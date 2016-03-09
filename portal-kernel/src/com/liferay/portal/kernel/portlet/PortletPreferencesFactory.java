@@ -49,13 +49,6 @@ public interface PortletPreferencesFactory {
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String xml);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
-	 */
-	@Deprecated
-	public PortalPreferences fromXML(
-		long companyId, long ownerId, int ownerType, String xml);
-
 	public PortletPreferences getExistingPortletSetup(
 			Layout layout, String portletId)
 		throws PortalException;
@@ -79,24 +72,8 @@ public interface PortletPreferencesFactory {
 	public PortalPreferences getPortalPreferences(
 		HttpSession session, long userId, boolean signedIn);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getPortalPreferences(HttpSession, long, boolean)}
-	 */
-	@Deprecated
-	public PortalPreferences getPortalPreferences(
-		HttpSession session, long companyId, long userId, boolean signedIn);
-
 	public PortalPreferences getPortalPreferences(
 		long userId, boolean signedIn);
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPortalPreferences(long,
-	 *             boolean)}
-	 */
-	@Deprecated
-	public PortalPreferences getPortalPreferences(
-		long companyId, long userId, boolean signedIn);
 
 	public PortalPreferences getPortalPreferences(
 		PortletRequest portletRequest);

@@ -102,7 +102,7 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testEncryptCRYPT() throws Exception {
-		String algorithm = PasswordEncryptorUtil.TYPE_CRYPT;
+		String algorithm = PasswordEncryptorUtil.TYPE_UFC_CRYPT;
 
 		testEncrypt(algorithm);
 

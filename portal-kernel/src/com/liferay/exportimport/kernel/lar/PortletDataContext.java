@@ -72,27 +72,6 @@ public interface PortletDataContext extends Serializable {
 	public static final String REFERENCE_TYPE_WEAK = "weak";
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#PATH_PREFIX_GROUP}
-	 */
-	@Deprecated
-	public static final String ROOT_PATH_GROUPS = "/groups/";
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#PATH_PREFIX_LAYOUT}
-	 */
-	@Deprecated
-	public static final String ROOT_PATH_LAYOUTS = "/layouts/";
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             ExportImportPathUtil#PATH_PREFIX_PORTLET}
-	 */
-	@Deprecated
-	public static final String ROOT_PATH_PORTLETS = "/portlets/";
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportAssetCategories(
 	 *             PortletDataContext, StagedModel)}

@@ -70,16 +70,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CASAutoLogin extends BaseAutoLogin {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             UserImporter#importUser(long, String, String)}
-	 */
-	@Deprecated
-	protected User addUser(long companyId, String screenName) throws Exception {
-		return _userImporter.importUser(
-			companyId, StringPool.BLANK, screenName);
-	}
-
 	@Override
 	protected String[] doHandleException(
 		HttpServletRequest request, HttpServletResponse response, Exception e) {

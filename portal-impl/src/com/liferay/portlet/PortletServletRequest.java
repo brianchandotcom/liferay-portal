@@ -438,15 +438,6 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		return _request.isRequestedSessionIdFromCookie();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public boolean isRequestedSessionIdFromUrl() {
-		return _request.isRequestedSessionIdFromUrl();
-	}
-
 	@Override
 	public boolean isRequestedSessionIdFromURL() {
 		return _request.isRequestedSessionIdFromURL();

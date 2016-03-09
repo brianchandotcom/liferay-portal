@@ -761,6 +761,8 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.fix.pack.zip.name="${test.fix.pack.zip.name}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
@@ -942,6 +944,8 @@ ${output.content}</echo>
 			app.server.type="tomcat"
 			database.type="mysql"
 			test.license.xml.url="${test.license.xml.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.fix.pack.zip.name="${test.fix.pack.zip.name}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>

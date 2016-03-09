@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.plugins.util.GradleUtil;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -23,9 +25,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -40,6 +44,7 @@ import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,6 +59,10 @@ public class ReplaceRegexTask extends DefaultTask {
 	@SkipWhenEmpty
 	public Map<String, FileCollection> getMatches() {
 		return _matches;
+	}
+
+	public List<Closure<String>> getPre() {
+		return _preClosures;
 	}
 
 	@Input
@@ -88,6 +97,16 @@ public class ReplaceRegexTask extends DefaultTask {
 		return match(regex, Arrays.asList(files));
 	}
 
+	public ReplaceRegexTask pre(Closure<String> ... preClosures) {
+		return pre(Arrays.asList(preClosures));
+	}
+
+	public ReplaceRegexTask pre(Iterable<Closure<String>> preClosures) {
+		GUtil.addToCollection(_preClosures, preClosures);
+
+		return this;
+	}
+
 	@TaskAction
 	public void replaceRegex() throws IOException {
 		_matchedFiles.clear();
@@ -115,6 +134,16 @@ public class ReplaceRegexTask extends DefaultTask {
 		_matches.putAll(matches);
 	}
 
+	public void setPre(Closure<String> ... preClosures) {
+		setPre(Arrays.asList(preClosures));
+	}
+
+	public void setPre(Iterable<Closure<String>> preClosures) {
+		_preClosures.clear();
+
+		pre(preClosures);
+	}
+
 	public void setReplacement(Object replacement) {
 		_replacement = replacement;
 	}
@@ -127,9 +156,22 @@ public class ReplaceRegexTask extends DefaultTask {
 		String content = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		Matcher matcher = pattern.matcher(content);
+		String newContent = content;
 
-		if (!matcher.find()) {
+		for (Closure<String> closure : getPre()) {
+			newContent = closure.call(newContent, file);
+		}
+
+		Matcher matcher = pattern.matcher(newContent);
+
+		if (matcher.find()) {
+			int groupCount = matcher.groupCount();
+
+			newContent =
+				newContent.substring(0, matcher.start(groupCount)) +
+					replacement + newContent.substring(matcher.end(groupCount));
+		}
+		else if (content.equals(newContent)) {
 			String message = "Unable to match " + pattern + " in " + file;
 
 			if (isIgnoreUnmatched()) {
@@ -143,16 +185,6 @@ public class ReplaceRegexTask extends DefaultTask {
 			throw new GradleException(message);
 		}
 
-		int groupCount = matcher.groupCount();
-
-		String newContent =
-			content.substring(0, matcher.start(groupCount)) + replacement +
-				content.substring(matcher.end(groupCount));
-
-		if (content.equals(newContent)) {
-			return;
-		}
-
 		Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
 
 		_matchedFiles.add(file);
@@ -164,6 +196,7 @@ public class ReplaceRegexTask extends DefaultTask {
 	private boolean _ignoreUnmatched;
 	private final Set<File> _matchedFiles = new LinkedHashSet<>();
 	private final Map<String, FileCollection> _matches = new LinkedHashMap<>();
+	private final List<Closure<String>> _preClosures = new ArrayList<>();
 	private Object _replacement;
 
 }

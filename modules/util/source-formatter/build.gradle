@@ -12,10 +12,6 @@ buildPluginDescriptor {
 	goalPrefix = "liferay"
 }
 
-copyLibs {
-	enabled = false
-}
-
 dependencies {
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
 	compile group: "commons-io", name: "commons-io", version: "2.1"

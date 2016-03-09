@@ -721,6 +721,11 @@
 	<td>//td[contains(@class,'scheduler-view-day') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCHEDULER_VIEW_EVENT_NOT_TODAY</td>
+	<td>//td[not(contains(@class,'scheduler-today')) and contains(@class,'scheduler-view') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

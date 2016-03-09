@@ -778,12 +778,12 @@
 		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData1" value="Text" />
+		<var name="ddlRecordFieldData1Edit" value="Text Edit" />
 		<var name="ddlRecordFieldData2" value="Document_1.doc" />
 		<var name="document" value="Document_1.doc" />
 		<var name="field1" value="Text" />
 		<var name="field2" value="Documents and Media" />
 		<var name="fieldFieldLabel1" value="Text" />
-		<var name="fieldFieldLabel1Edit" value="Text Edit" />
 		<var name="fieldFieldLabel2" value="Document" />
 		<var name="fieldName1" value="Text" />
 		<var name="fieldName2" value="Document" />
@@ -883,12 +883,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+		<execute macro="DDLNavigator#gotoView" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 		<execute function="Pause" locator1="1000" />
 
-		<var method="selenium#getLocation()" name="adminViewURL" />
+		<execute macro="Navigator#getCurrentURL">
+			<return from="currentURL" name="adminViewURL" />
+			<var name="adminViewURL" value="${adminViewURL}" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -898,7 +900,10 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<var method="selenium#getLocation()" name="adminEditURL" />
+		<execute macro="Navigator#getCurrentURL">
+			<return from="currentURL" name="adminEditURL" />
+			<var name="adminEditURL" value="${adminEditURL}" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 
@@ -926,7 +931,9 @@
 
 		<execute macro="Portlet#viewCannotEdit" />
 
-		<execute function="Open" locator1="${adminEditURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${adminEditURL}" />
+		</execute>
 
 		<execute macro="DDLRecord#editTranslation">
 			<var name="localizedLanguage" value="Catalan (Spain)" />
@@ -938,9 +945,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Open" locator1="${adminEditURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${adminEditURL}" />
+		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
+		<execute macro="DDLRecord#viewTranslationNotAvailable">
+			<var name="localizedLanguage" value="${localizedLanguage}" />
+		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1Edit}" />
@@ -950,26 +961,30 @@
 
 		<execute macro="Portlet#viewCannotPublish" />
 
-		<execute function="Open" locator1="${adminEditURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${adminEditURL}" />
+		</execute>
 
-		<var name="key_fieldName" value="${fieldName2}" />
+		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
+			<var name="fieldName" value="${fieldName2}" />
+			<var name="userRole" value="Guest" />
+		</execute>
 
-		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${adminEditURL}" />
+		</execute>
 
-		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
+		<execute macro="DDLRecord#clearFieldDocumentsAndMedia">
+			<var name="fieldName" value="${fieldName2}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Button#SIGN_IN" value1="Sign In" />
+		<execute macro="Portlet#viewCannotPublish" />
 
-		<execute function="Open" locator1="${adminEditURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${adminEditURL}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CLEAR_BUTTON" value1="Clear" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
-
-		<execute function="Open" locator1="${adminEditURL}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute macro="Portlet#viewCannotSaveAsDraft" />
 	</command>
 
 	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="3">

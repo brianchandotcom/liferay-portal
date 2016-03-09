@@ -63,4 +63,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#SPREADSHEET_VIEW" value1="Spreadsheet View" />
 	</command>
+
+	<command name="gotoView">
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+	</command>
 </definition>

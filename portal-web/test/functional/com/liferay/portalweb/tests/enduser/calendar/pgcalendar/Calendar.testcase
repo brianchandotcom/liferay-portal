@@ -1502,7 +1502,7 @@
 			<var name="viewType" value="Month" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewAllDay">
 			<var name="eventTitle" value="Calendar Event Today Month" />
 		</execute>
 	</command>
@@ -2509,9 +2509,8 @@
 			<var name="dateNumber" value="2" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
+		<execute macro="CalendarEvent#viewEventNotToday">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="frequency" value="Daily" />
 			<var name="numberOfOccurrences" value="2" />
 		</execute>
 
@@ -2533,15 +2532,7 @@
 			<var name="dateNumber" value="3" />
 		</execute>
 
-		<execute macro="CalendarScheduler#viewWeek">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewMonth">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewAgenda">
+		<execute macro="CalendarEvent#viewEventNotToday">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>

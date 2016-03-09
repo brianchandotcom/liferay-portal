@@ -240,6 +240,10 @@
 		<execute function="AssertClick" locator1="BasePortlet#MAXIMIZE" value1="Maximize" />
 	</command>
 
+	<command name="openAdminURL">
+		<execute function="Open" locator1="${adminURL}" />
+	</command>
+
 	<command name="shutdownServer">
 		<description message="This will shutdown the server at ${base_branch}-bundles\tomcat." />
 
@@ -329,6 +333,10 @@
 
 	<command name="viewCannotPublish">
 		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
+
+	<command name="viewCannotSaveAsDraft">
+		<execute function="AssertElementNotPresent" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 	</command>
 
 	<command name="viewCustomStylesViaLookandfeelPG">

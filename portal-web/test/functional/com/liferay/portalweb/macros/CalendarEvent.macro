@@ -1724,6 +1724,23 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewEventNotToday">
+		<for list="${viewType}" param="Day,Week,Month">
+			<execute macro="CalendarNavigator#gotoView">
+				<var name="viewType" value="${viewType}" />
+			</execute>
+
+			<var name="key_eventTitle" value="${eventTitle}" />
+
+			<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" value1="${eventTitle}" />
+		</for>
+
+		<execute macro="CalendarScheduler#viewAgenda">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
+		</execute>
+	</command>
+
 	<command name="viewInvitationResourceNotPresent">
 		<execute macro="CalendarEvent#_expandInvitationsPanel" />
 

@@ -93,7 +93,7 @@ public class UnstableMessageUtil {
 			runBuildURLs.add(buildURL);
 		}
 
-		int failureCount = _getUnstableMessage(sb, runBuildURLs);
+		int failureCount = _getUnstableMessage(runBuildURLs, sb);
 
 		sb.append("</ol>");
 
@@ -107,13 +107,63 @@ public class UnstableMessageUtil {
 		return sb.toString();
 	}
 
+	private static void _getFailureMessage(
+			String failureBuildURL, StringBuilder sb)
+		throws Exception {
+
+		GenericFailureMessageGenerator genericFailureMessageGenerator =
+			new GenericFailureMessageGenerator();
+
+		String consoleOutput = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(
+				failureBuildURL + "/logText/progressiveText"));
+
+		JSONObject failureJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(failureBuildURL + "api/json"));
+
+		sb.append("<li><strong><a href=\"");
+		sb.append(failureBuildURL);
+		sb.append("\">");
+		sb.append(
+			JenkinsResultsParserUtil.fixJSON(
+				failureJSONObject.getString("fullDisplayName")));
+		sb.append("</a></strong>");
+		sb.append(
+			genericFailureMessageGenerator.getMessage(
+				failureBuildURL, consoleOutput, null));
+		sb.append("</li>");
+	}
+
 	private static int _getUnstableMessage(
-			StringBuilder sb, List<String> runBuildURLs)
+			List<String> runBuildURLs, StringBuilder sb)
 		throws Exception {
 
 		int failureCount = 0;
 
 		for (String runBuildURL : runBuildURLs) {
+			JSONObject runBuildURLJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						runBuildURL + "api/json"));
+
+			String result = runBuildURLJSONObject.getString("result");
+
+			if (result.equals("FAILURE")) {
+				if (failureCount == 3) {
+					failureCount++;
+
+					sb.append("<li>...</li>");
+
+					return failureCount;
+				}
+
+				_getFailureMessage(runBuildURL, sb);
+
+				failureCount++;
+
+				continue;
+			}
+
 			JSONObject testReportJSONObject =
 				JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
@@ -194,11 +244,6 @@ public class UnstableMessageUtil {
 					sb.append(testSimpleClassName);
 					sb.append(".");
 					sb.append(testMethodName);
-
-					JSONObject runBuildURLJSONObject =
-						JenkinsResultsParserUtil.toJSONObject(
-							JenkinsResultsParserUtil.getLocalURL(
-								runBuildURL + "api/json"));
 
 					String jobVariant = JenkinsResultsParserUtil.getJobVariant(
 						runBuildURLJSONObject);

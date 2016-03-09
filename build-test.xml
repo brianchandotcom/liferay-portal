@@ -2694,16 +2694,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
 						</then>
 						<else>
-							<parallel>
-								<sequential>
-									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
-								</sequential>
-								<daemons>
-									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
-										<arg line="${app.server.start.executable.arg.line}" />
-									</exec>
-								</daemons>
-							</parallel>
+							<forget>
+								<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
+									<arg line="${app.server.start.executable.arg.line}" />
+								</exec>
+							</forget>
+
+							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
 						</else>
 					</if>
 				</then>
@@ -2998,11 +2995,47 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<local name="app.server.waiting.timeout" />
 
+			<echo>Waiting for ${app.server.waiting.url} to load</echo>
+
 			<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
 				<http url="${app.server.waiting.url}" />
 			</waitfor>
 
-			<fail if="app.server.waiting.timeout" message="App server waiting timeout on ${app.server.waiting.url}" />
+			<if>
+				<isset property="app.server.waiting.timeout" />
+				<then>
+					<execute>
+						jps > jps_output
+					</execute>
+
+					<var name="jps.output" unset="true" />
+
+					<loadfile property="jps.output" srcfile="jps_output" />
+
+					<if>
+						<contains string="${jps.output}" substring="Bootstrap" />
+						<then>
+							<propertyregex
+								input="${jps.output}"
+								override="true"
+								property="bootstrap.pid"
+								regexp="(|[\S\s]*\n)([0-9]+) Bootstrap[\S\s]*"
+								replace="\2"
+							/>
+
+							<execute>
+								jstack ${bootstrap.pid}
+							</execute>
+						</then>
+					</if>
+
+					<delete file="jps_output" />
+
+					<fail if="app.server.waiting.timeout" message="${app.server.waiting.url} failed to load" />
+				</then>
+			</if>
+
+			<echo>${app.server.waiting.url} has loaded</echo>
 		</sequential>
 	</macrodef>
 

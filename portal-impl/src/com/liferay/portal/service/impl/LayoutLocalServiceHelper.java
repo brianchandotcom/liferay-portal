@@ -397,8 +397,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			if (friendlyURL.startsWith(i18nPathLanguageId + StringPool.SLASH) ||
 				friendlyURL.startsWith(
 					StringPool.SLASH + languageId + StringPool.SLASH) ||
-				friendlyURL.endsWith(i18nPathLanguageId) ||
-				friendlyURL.endsWith(StringPool.SLASH + languageId)) {
+				friendlyURL.equals(i18nPathLanguageId) ||
+				friendlyURL.equals(StringPool.SLASH + languageId)) {
 
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(

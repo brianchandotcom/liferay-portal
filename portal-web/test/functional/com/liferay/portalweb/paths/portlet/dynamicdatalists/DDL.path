@@ -214,6 +214,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_ACTIONS_EDIT_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit List')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

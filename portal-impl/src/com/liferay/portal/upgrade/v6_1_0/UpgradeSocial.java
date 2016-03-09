@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -391,13 +389,13 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append("value = 'true' and classNameId in (");
 
 			long mbMessageClassNameId = PortalUtil.getClassNameId(
-				MBMessage.class);
+				"com.liferay.portlet.messageboards.model.MBMessage");
 
 			sb.append(mbMessageClassNameId);
 			sb.append(", ");
 
 			long mbThreadClassNameId = PortalUtil.getClassNameId(
-				MBThread.class);
+				"com.liferay.portlet.messageboards.model.MBThread");
 
 			sb.append(mbThreadClassNameId);
 			sb.append(StringPool.CLOSE_PARENTHESIS);

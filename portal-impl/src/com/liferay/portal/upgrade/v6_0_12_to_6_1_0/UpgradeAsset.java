@@ -84,7 +84,7 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateIGImageClassName() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-				"com.liferay.document.library.kernel.model.DLFileEntry");
+				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 			long igImageClassNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.imagegallery.model.IGImage");
 

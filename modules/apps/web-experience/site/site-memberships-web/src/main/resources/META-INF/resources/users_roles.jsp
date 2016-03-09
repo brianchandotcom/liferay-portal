@@ -70,7 +70,7 @@ roleSearch.setResults(roles);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -90,21 +90,45 @@ roleSearch.setResults(roles);
 			keyProperty="roleId"
 			modelVar="role"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
-				name="title"
-				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="users"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= HtmlUtil.escape(role.getTitle(locale)) %></h5>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
-			/>
+						<h6 class="text-default">
+							<span><%= HtmlUtil.escape(role.getDescription(locale)) %></span>
+						</h6>
+
+						<h6 class="text-default">
+							<%= LanguageUtil.get(request, role.getTypeLabel()) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
+						name="title"
+						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="description"
+						value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

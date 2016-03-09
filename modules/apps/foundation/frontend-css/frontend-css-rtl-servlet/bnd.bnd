@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Frontend RTL Servlet
-Bundle-SymbolicName: com.liferay.frontend.rtl.servlet
+Bundle-SymbolicName: com.liferay.frontend.css.rtl.servlet
 Bundle-Version: 1.0.0
 Include-Resource:\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\

@@ -14,14 +14,13 @@
 
 package com.liferay.portal.remote.soap.extender.test;
 
+import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.remote.soap.extender.test.service.Greeter;
 
 import java.net.URL;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
-
-import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;

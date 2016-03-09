@@ -75,6 +75,10 @@ configurations {
 	jnaerator
 }
 
+copyLibs {
+	enabled = false
+}
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0"
 

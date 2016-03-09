@@ -6,12 +6,12 @@ Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
-Include-Resource:\
-	@lib/slf4j-api.jar,\
-	@lib/slf4j-simple.jar,\
-	@lib/zt-zip.jar,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/Validator.class
 Main-Class: com.liferay.deployment.helper.DeploymentHelper
+-includeresource:\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Validator.class,\
+	@slf4j-api-*.jar,\
+	@slf4j-simple-*.jar,\
+	@zt-zip-*.jar

@@ -85,6 +85,7 @@ page import="com.liferay.social.kernel.model.SocialRequestConstants" %><%@
 page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %><%@
 page import="com.liferay.social.kernel.service.SocialRelationLocalServiceUtil" %><%@
 page import="com.liferay.social.kernel.service.SocialRequestLocalServiceUtil" %><%@
+page import="com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

@@ -516,7 +516,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		do {
 			method = matcher.group(1);
 
-			String fieldName = matcher.group(5);
+			String fieldName = matcher.group(4);
 
 			if (fieldName == null) {
 				break;
@@ -2262,8 +2262,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
 	protected static Pattern replaceSingleLengthStringPattern = Pattern.compile(
-		"StringUtil\\.(replace|replaceFirst|replaceLast)\\((\\s)?[^,\\s\\)]+," +
-			" (\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)), [^,\\s\\)]+\\);");
+		"StringUtil\\.(replace|replaceFirst|replaceLast)\\(\\s*[^,\\s\\)]+," +
+			"\\s+(\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)),\\s+[^,\\s\\)]+\\)" +
+				";");
 	protected static Pattern sessionKeyPattern = Pattern.compile(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),

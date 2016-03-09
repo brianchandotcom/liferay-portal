@@ -501,11 +501,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkReplaceSingleLengthString(
+	protected void checkStringUtilReplace(
 			String fileName, String newContent)
 		throws Exception {
 
-		Matcher matcher = replaceSingleLengthStringPattern.matcher(newContent);
+		Matcher matcher = stringUtilReplacePattern.matcher(newContent);
 
 		while (matcher.find()) {
 			String fieldName = matcher.group(4);
@@ -2254,7 +2254,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
-	protected static Pattern replaceSingleLengthStringPattern = Pattern.compile(
+	protected static Pattern stringUtilReplacePattern = Pattern.compile(
 		"StringUtil\\.(replace|replaceFirst|replaceLast)\\(\\s*[^,\\s\\)]+," +
 			"\\s+(\\\"(\\\\)?.\\\"|StringPool\\.([A-Z_]+)),\\s+[^,\\s\\)]+\\)" +
 				";");

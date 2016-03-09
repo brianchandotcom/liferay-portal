@@ -974,7 +974,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (!absolutePath.contains("poshi") &&
 			!fileName.endsWith("StringUtilTest.java")) {
 
-			checkReplaceSingleLengthString(fileName, newContent);
+			checkStringUtilReplace(fileName, newContent);
 		}
 
 		newContent = getCombinedLinesContent(

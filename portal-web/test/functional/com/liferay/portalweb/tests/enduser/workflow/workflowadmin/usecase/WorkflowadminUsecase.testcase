@@ -644,6 +644,12 @@
 			<var name="workflowDefinition" value="Scripted Single Approver (Version 1)" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMDocument#addWithWorkflowCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.txt" />
@@ -658,6 +664,12 @@
 
 		<execute macro="Workflow#configureWorkflowViaPortlet">
 			<var name="workflowDefinition" value="Scripted Single Approver (Version 1)" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMDocument#addWithWorkflowCP">

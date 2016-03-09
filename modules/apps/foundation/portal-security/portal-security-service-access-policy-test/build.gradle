@@ -3,5 +3,5 @@ dependencies {
 	testCompile project(":apps:foundation:portal-security:portal-security-service-access-policy-api")
 	testCompile project(":apps:foundation:portal-security:portal-security-service-access-policy-service")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.4"
 }

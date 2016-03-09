@@ -2,7 +2,7 @@ dependencies {
 	testCompile project(":deprecated:shopping:shopping-api")
 	testCompile project(":deprecated:shopping:shopping-service")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.4"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.3"
 }

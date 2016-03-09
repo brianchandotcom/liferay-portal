@@ -129,6 +129,10 @@ public class WabProcessor {
 			transformToOSGiBundle();
 		}
 
+		if (_file.isDirectory()) {
+			return _file;
+		}
+
 		File file = _file.getParentFile();
 
 		File outputFile = new File(file, "output.zip");
@@ -255,6 +259,10 @@ public class WabProcessor {
 			_context = autoDeploymentContext.getContext();
 		}
 
+		if (_file.isDirectory()) {
+			return _file;
+		}
+
 		File deployDir = autoDeploymentContext.getDeployDir();
 
 		if (!deployDir.exists()) {
@@ -297,13 +305,17 @@ public class WabProcessor {
 
 		autoDeploymentContext.setContext(context);
 
+		autoDeploymentContext.setFile(_file);
+
+		if (_file.isDirectory()) {
+			return autoDeploymentContext;
+		}
+
 		File file = new File(_file.getParentFile(), "deploy");
 
 		file.mkdirs();
 
 		autoDeploymentContext.setDestDir(file.getAbsolutePath());
-
-		autoDeploymentContext.setFile(_file);
 
 		return autoDeploymentContext;
 	}

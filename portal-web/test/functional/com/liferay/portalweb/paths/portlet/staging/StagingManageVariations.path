@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>UPDATE_BUTTON</td>
-	<td>xpath=(//button[contains(.,'Update')]))[2]</td>
+	<td>xpath=(//button[contains(.,'Update')])[2]</td>
 	<td></td>
 </tr>
 <tr>

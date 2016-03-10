@@ -17,7 +17,7 @@ configurations {
 
 printArtifactPublishCommands {
 	onlyIf {
-		if (buildFile.text.contains("project(\"")) {
+		if (project.name.endsWith("-test") || buildFile.text.contains("project(\"")) {
 			return false
 		}
 

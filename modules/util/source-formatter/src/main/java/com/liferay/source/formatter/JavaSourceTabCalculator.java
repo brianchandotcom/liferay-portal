@@ -249,13 +249,10 @@ public class JavaSourceTabCalculator {
 				}
 			}
 
-			if (matchingText.equals(",\n")) {
-				int greaterThanCount = StringUtil.count(s, ">");
-				int lessThanCount = StringUtil.count(s, "<");
+			if (matchingText.equals(",\n") &&
+				(BaseSourceProcessor.getLevel(s, "<", ">") > 0)) {
 
-				if (lessThanCount > greaterThanCount) {
-					continue;
-				}
+				continue;
 			}
 
 			int extra = StringUtil.count(s, "\n");
@@ -341,16 +338,14 @@ public class JavaSourceTabCalculator {
 	}
 
 	protected int calculateTabLevel(int level, String text) {
-		level = BaseSourceProcessor.adjustLevel(
-			level, text, StringPool.OPEN_CURLY_BRACE, 1);
-		level = BaseSourceProcessor.adjustLevel(
-			level, text, StringPool.CLOSE_CURLY_BRACE, -1);
-		level = BaseSourceProcessor.adjustLevel(
-			level, text, StringPool.OPEN_PARENTHESIS, 1);
-		level = BaseSourceProcessor.adjustLevel(
-			level, text, StringPool.CLOSE_PARENTHESIS, -1);
-
-		return level;
+		return BaseSourceProcessor.getLevel(
+			text,
+			new String[] {
+				StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_PARENTHESIS
+			},
+			new String[] {
+				StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS},
+			level);
 	}
 
 	protected void checkTabLevel(

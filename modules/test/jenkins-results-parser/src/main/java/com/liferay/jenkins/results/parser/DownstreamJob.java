@@ -129,7 +129,9 @@ public class DownstreamJob extends BaseJob {
 				JSONObject build = builds.getJSONObject(i);
 
 				if (parameters.equals(getParameters(build))) {
-					setNumber(build.getInt("number"));
+					number = build.getInt("number");
+
+					status = "running";
 
 					System.out.println(getBuildMessage());
 

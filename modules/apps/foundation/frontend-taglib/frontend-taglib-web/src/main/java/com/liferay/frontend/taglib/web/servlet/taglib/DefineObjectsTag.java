@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib;
+package com.liferay.frontend.taglib.web.servlet.taglib;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

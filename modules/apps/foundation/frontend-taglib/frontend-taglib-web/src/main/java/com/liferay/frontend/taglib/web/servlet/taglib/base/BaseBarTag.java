@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib.base;
+package com.liferay.frontend.taglib.web.servlet.taglib.base;
 
-import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.frontend.taglib.servlet.taglib.BarTag;
+import com.liferay.frontend.taglib.web.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.web.servlet.taglib.BarTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.jsp.PageContext;

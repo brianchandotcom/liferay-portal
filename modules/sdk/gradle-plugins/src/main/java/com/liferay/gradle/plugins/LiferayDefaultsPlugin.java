@@ -398,6 +398,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					StringBuilder sb = new StringBuilder();
 
+					if (all) {
+						sb.append("(git diff-index --quiet HEAD || ");
+					}
+
 					sb.append("git commit ");
 
 					if (all) {
@@ -418,6 +422,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					sb.append(message);
 
 					sb.append('"');
+
+					if (all) {
+						sb.append(')');
+					}
 
 					return sb.toString();
 				}

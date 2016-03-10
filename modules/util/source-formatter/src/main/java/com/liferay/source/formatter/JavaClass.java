@@ -705,7 +705,7 @@ public class JavaClass {
 	protected String fixLeadingTabs(
 		String content, String line, int expectedTabCount) {
 
-		int leadingTabCount = JavaSourceProcessor.getLeadingTabCount(line);
+		int leadingTabCount = _javaSourceProcessor.getLeadingTabCount(line);
 
 		String newLine = line;
 
@@ -804,7 +804,7 @@ public class JavaClass {
 			if (expectedTabCount == -1) {
 				if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 					expectedTabCount = Math.max(
-						JavaSourceProcessor.getLeadingTabCount(line),
+						_javaSourceProcessor.getLeadingTabCount(line),
 						_indent.length()) + 1;
 
 					if (throwsException &&
@@ -826,7 +826,7 @@ public class JavaClass {
 				else {
 					newMethodNameAndParameters = fixLeadingTabs(
 						newMethodNameAndParameters, line,
-						JavaSourceProcessor.getLeadingTabCount(previousLine) +
+						_javaSourceProcessor.getLeadingTabCount(previousLine) +
 							1);
 				}
 			}
@@ -965,7 +965,7 @@ public class JavaClass {
 		int lastCommentOrAnnotationPos = -1;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (JavaSourceProcessor.getLeadingTabCount(line) !=
+			if (_javaSourceProcessor.getLeadingTabCount(line) !=
 					_indent.length()) {
 
 				index = index + line.length() + 1;

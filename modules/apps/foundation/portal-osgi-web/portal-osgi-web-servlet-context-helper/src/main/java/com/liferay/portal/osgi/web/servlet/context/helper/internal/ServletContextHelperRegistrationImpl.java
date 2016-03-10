@@ -113,10 +113,11 @@ public class ServletContextHelperRegistrationImpl
 		_servletContextListenerServiceRegistration =
 			createServletContextListener(bundleContext, servletContextName);
 
+		initServletContainerInitializers(
+			bundle, getServletContext(), wabShapedBundle);
+
 		_defaultServletServiceRegistration = createDefaultServlet(
 			bundleContext, servletContextName, wabShapedBundle);
-
-		initServletContainerInitializers(bundleContext);
 
 		_jspServletServiceRegistration = createJspServlet(
 			bundleContext, servletContextName);
@@ -193,6 +194,121 @@ public class ServletContextHelperRegistrationImpl
 		}
 
 		_servletContextHelperServiceRegistration.setProperties(properties);
+	}
+
+	protected void collectAnnotatedClasses(
+		String classResource, Bundle bundle, Class<?>[] handledTypesArray,
+		Set<Class<?>> annotatedClasses) {
+
+		String className = classResource.replaceAll("\\.class$", "");
+
+		className = className.replaceAll("/", ".");
+
+		Class<?> annotatedClass = null;
+
+		try {
+			annotatedClass = bundle.loadClass(className);
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_DEBUG, t.getMessage());
+
+			return;
+		}
+
+		// Class extends/implements
+
+		for (Class<?> handledType : handledTypesArray) {
+			if (handledType.isAssignableFrom(annotatedClass)) {
+				annotatedClasses.add(annotatedClass);
+
+				return;
+			}
+		}
+
+		// Class annotation
+
+		Annotation[] classAnnotations = new Annotation[0];
+
+		try {
+			classAnnotations = annotatedClass.getAnnotations();
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_DEBUG, t.getMessage());
+		}
+
+		for (Annotation classAnnotation : classAnnotations) {
+			if (ArrayUtil.contains(
+					handledTypesArray, classAnnotation.annotationType())) {
+
+				annotatedClasses.add(annotatedClass);
+
+				return;
+			}
+		}
+
+		// Method annotation
+
+		Method[] classMethods = new Method[0];
+
+		try {
+			classMethods = annotatedClass.getDeclaredMethods();
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_DEBUG, t.getMessage());
+		}
+
+		for (Method method : classMethods) {
+			Annotation[] methodAnnotations = new Annotation[0];
+
+			try {
+				methodAnnotations = method.getDeclaredAnnotations();
+			}
+			catch (Throwable t) {
+				_logger.log(Logger.LOG_DEBUG, t.getMessage());
+			}
+
+			for (Annotation methodAnnotation : methodAnnotations) {
+				if (ArrayUtil.contains(
+						handledTypesArray, methodAnnotation.annotationType())) {
+
+					annotatedClasses.add(annotatedClass);
+
+					return;
+				}
+			}
+		}
+
+		// Field annotation
+
+		Field[] declaredFields = new Field[0];
+
+		try {
+			declaredFields = annotatedClass.getDeclaredFields();
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_DEBUG, t.getMessage());
+		}
+
+		for (Field field : declaredFields) {
+			Annotation[] fieldAnnotations = new Annotation[0];
+
+			try {
+				fieldAnnotations = field.getDeclaredAnnotations();
+			}
+			catch (Throwable t) {
+				_logger.log(Logger.LOG_DEBUG, t.getMessage());
+			}
+
+			for (Annotation fieldAnnotation : fieldAnnotations) {
+				if (ArrayUtil.contains(
+						handledTypesArray, fieldAnnotation.annotationType())) {
+
+					annotatedClasses.add(annotatedClass);
+
+					return;
+				}
+			}
+		}
 	}
 
 	protected String createContextSelectFilterString(
@@ -387,9 +503,12 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	protected void initServletContainerInitializers(
-		BundleContext bundleContext) {
+		Bundle bundle, ServletContext servletContext, boolean wabShapedBundle) {
 
-		Bundle bundle = bundleContext.getBundle();
+		if (!wabShapedBundle) {
+			return;
+		}
+
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		Collection<String> initializerResources = bundleWiring.listResources(
@@ -408,212 +527,10 @@ public class ServletContextHelperRegistrationImpl
 			}
 
 			try (InputStream inputStream = url.openStream()) {
-				String fdqn = StringUtil.read(inputStream);
+				String fqcn = StringUtil.read(inputStream);
 
-				Class<? extends ServletContainerInitializer> initializerClass =
-					null;
-
-				try {
-					initializerClass =
-						(Class<? extends ServletContainerInitializer>)
-							bundle.loadClass(fdqn);
-				}
-				catch (Exception e) {
-					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
-					continue;
-				}
-
-				HandlesTypes handledTypesAnnotation =
-					initializerClass.getAnnotation(HandlesTypes.class);
-
-				if (handledTypesAnnotation == null) {
-					handledTypesAnnotation = new HandlesTypes() {
-
-						@Override
-						public Class<? extends Annotation> annotationType() {
-							return null;
-						}
-
-						@Override
-						public Class<?>[] value() {
-							return new Class[0];
-						}
-
-					};
-				}
-
-				Class<?>[] handledTypesArray = handledTypesAnnotation.value();
-
-				if (handledTypesArray == null) {
-					handledTypesArray = new Class[0];
-				}
-
-				Collection<String> classResources = bundleWiring.listResources(
-					"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
-
-				if (classResources == null) {
-					classResources = new ArrayList<>(0);
-				}
-
-				Set<Class<?>> annotatedClasses = new HashSet<>();
-
-				for (String classResource : classResources) {
-					boolean found = false;
-
-					URL urlClassResource = bundle.getResource(classResource);
-
-					if (urlClassResource == null) {
-						continue;
-					}
-
-					String className = classResource.replaceAll(".class", "");
-					className = className.replaceAll("/", ".");
-
-					Class<?> annotatedClass = null;
-
-					try {
-						annotatedClass = bundle.loadClass(className);
-					}
-					catch (Throwable t) {
-						_logger.log(Logger.LOG_DEBUG, t.getMessage());
-						continue;
-					}
-
-					//Class extends/implements
-
-					for (Class<?> handledType : handledTypesArray) {
-						if (handledType.isAssignableFrom(annotatedClass)) {
-							annotatedClasses.add(annotatedClass);
-							found = true;
-							break;
-						}
-					}
-
-					if (found) {
-						continue;
-					}
-
-					//Class annotation
-
-					Annotation[] classAnnotations = new Annotation[0];
-
-					try {
-						classAnnotations = annotatedClass.getAnnotations();
-					}
-					catch (Throwable t) {
-						_logger.log(Logger.LOG_DEBUG, t.getMessage());
-					}
-
-					for (Annotation classAnnotation : classAnnotations) {
-						if (ArrayUtil.contains(
-								handledTypesArray,
-								classAnnotation.annotationType())) {
-
-							annotatedClasses.add(annotatedClass);
-							found = true;
-							break;
-						}
-					}
-
-					if (found) {
-						continue;
-					}
-
-					//Method annotation
-
-					Method[] classMethods = new Method[0];
-
-					try {
-						classMethods = annotatedClass.getDeclaredMethods();
-					}
-					catch (Throwable t) {
-						_logger.log(Logger.LOG_DEBUG, t.getMessage());
-					}
-
-					for (Method method : classMethods) {
-						if (found) {
-							break;
-						}
-
-						Annotation[] methodAnnotations = new Annotation[0];
-
-						try {
-							methodAnnotations = method.getDeclaredAnnotations();
-						}
-						catch (Throwable t) {
-							_logger.log(Logger.LOG_DEBUG, t.getMessage());
-						}
-
-						for (Annotation methodAnnotation : methodAnnotations) {
-							if (ArrayUtil.contains(
-									handledTypesArray,
-									methodAnnotation.annotationType())) {
-
-								annotatedClasses.add(annotatedClass);
-								found = true;
-								break;
-							}
-						}
-					}
-
-					if (found) {
-						continue;
-					}
-
-					//Field annotation
-
-					Field[] declaredFields = new Field[0];
-
-					try {
-						declaredFields = annotatedClass.getDeclaredFields();
-					}
-					catch (Throwable t) {
-						_logger.log(Logger.LOG_DEBUG, t.getMessage());
-					}
-
-					for (Field field : declaredFields) {
-						if (found) {
-							break;
-						}
-
-						Annotation[] fieldAnnotations = new Annotation[0];
-
-						try {
-							fieldAnnotations = field.getDeclaredAnnotations();
-						}
-						catch (Throwable t) {
-							_logger.log(Logger.LOG_DEBUG, t.getMessage());
-						}
-
-						for (Annotation fieldAnnotation : fieldAnnotations) {
-							if (ArrayUtil.contains(
-									handledTypesArray,
-									fieldAnnotation.annotationType())) {
-
-								annotatedClasses.add(annotatedClass);
-								found = true;
-								break;
-							}
-						}
-					}
-				}
-
-				if (annotatedClasses.isEmpty()) {
-					annotatedClasses = null;
-				}
-
-				ServletContext servletContext = getServletContext();
-
-				try {
-					ServletContainerInitializer servletContainerInitializer =
-						initializerClass.newInstance();
-
-					servletContainerInitializer.onStartup(
-						annotatedClasses, servletContext);
-				}
-				catch (Throwable t) {
-					_logger.log(Logger.LOG_ERROR, t.getMessage(), t);
-				}
+				processServletContainerInitializerClass(
+					fqcn, bundle, bundleWiring, servletContext);
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
@@ -621,8 +538,93 @@ public class ServletContextHelperRegistrationImpl
 		}
 	}
 
+	protected void processServletContainerInitializerClass(
+		String fqcn, Bundle bundle, BundleWiring bundleWiring,
+		ServletContext servletContext) {
+
+		Class<? extends ServletContainerInitializer> initializerClass = null;
+
+		try {
+			Class<?> clazz = bundle.loadClass(fqcn);
+
+			if (!ServletContainerInitializer.class.isAssignableFrom(clazz)) {
+				return;
+			}
+
+			initializerClass = clazz.asSubclass(
+				ServletContainerInitializer.class);
+		}
+		catch (Exception e) {
+			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+
+			return;
+		}
+
+		HandlesTypes handledTypesAnnotation = initializerClass.getAnnotation(
+			HandlesTypes.class);
+
+		if (handledTypesAnnotation == null) {
+			handledTypesAnnotation = _NULL_HANDLES_TYPES;
+		}
+
+		Class<?>[] handledTypesArray = handledTypesAnnotation.value();
+
+		if (handledTypesArray == null) {
+			handledTypesArray = new Class[0];
+		}
+
+		Collection<String> classResources = bundleWiring.listResources(
+			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (classResources == null) {
+			classResources = new ArrayList<>(0);
+		}
+
+		Set<Class<?>> annotatedClasses = new HashSet<>();
+
+		for (String classResource : classResources) {
+			URL urlClassResource = bundle.getResource(classResource);
+
+			if (urlClassResource == null) {
+				continue;
+			}
+
+			collectAnnotatedClasses(
+				classResource, bundle, handledTypesArray, annotatedClasses);
+		}
+
+		if (annotatedClasses.isEmpty()) {
+			annotatedClasses = null;
+		}
+
+		try {
+			ServletContainerInitializer servletContainerInitializer =
+				initializerClass.newInstance();
+
+			servletContainerInitializer.onStartup(
+				annotatedClasses, servletContext);
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_ERROR, t.getMessage(), t);
+		}
+	}
+
 	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
 		"jsp.servlet.init.param.";
+
+	private static final HandlesTypes _NULL_HANDLES_TYPES = new HandlesTypes() {
+
+		@Override
+		public Class<? extends Annotation> annotationType() {
+			return null;
+		}
+
+		@Override
+		public Class<?>[] value() {
+			return new Class[0];
+		}
+
+	};
 
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;

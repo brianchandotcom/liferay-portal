@@ -14,17 +14,21 @@
 
 package com.liferay.portal.app.license.resolver;
 
-import aQute.bnd.header.Attrs;
-import aQute.bnd.header.OSGiHeader;
-
 import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.SortedMap;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Filter;
@@ -91,17 +95,9 @@ public class AppResolverHook implements ResolverHook {
 
 		Bundle bundle = bundleRevision.getBundle();
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Properties properties = _getAppLicenseProperties(bundle);
 
-		String xLiferayMarketplace = headers.get("X-Liferay-Marketplace");
-
-		if (xLiferayMarketplace == null) {
-			return;
-		}
-
-		Attrs attrs = OSGiHeader.parseProperties(xLiferayMarketplace);
-
-		String productId = attrs.get("productId");
+		String productId = (String)properties.get("product-id");
 
 		if (productId == null) {
 			return;
@@ -109,7 +105,7 @@ public class AppResolverHook implements ResolverHook {
 
 		boolean verified = false;
 
-		String licenseVersion = attrs.get("licenseVersion");
+		String licenseVersion = (String)properties.get("license-version");
 
 		Filter filter = FrameworkUtil.createFilter(
 			"(version=" + licenseVersion + ")");
@@ -127,11 +123,12 @@ public class AppResolverHook implements ResolverHook {
 			AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
 				serviceReference);
 
-			String productType = attrs.get("productType");
-			String productVersion = attrs.get("productVersion");
+			String productType = (String)properties.get("product-type");
+			String productVersionId = (String)properties.get(
+				"product-version-id");
 
 			appLicenseVerifier.verify(
-				bundle, productId, productType, productVersion);
+				bundle, productId, productType, productVersionId);
 
 			verified = true;
 
@@ -141,6 +138,54 @@ public class AppResolverHook implements ResolverHook {
 		if (!verified) {
 			throw new Exception(
 				"Unable to resolve " + AppLicenseVerifier.class.getName());
+		}
+	}
+
+	private Properties _getAppLicenseProperties(Bundle bundle) {
+		Properties properties = new Properties();
+
+		InputStream inputStream = null;
+		ZipFile zipFile = null;
+
+		try {
+			String location = bundle.getLocation();
+
+			String protocol = "file:";
+
+			if (location.startsWith(protocol)) {
+				location = location.substring(protocol.length());
+			}
+
+			File file = new File(location);
+
+			zipFile = new ZipFile(file);
+
+			ZipEntry zipEntry = zipFile.getEntry(
+				"META-INF/marketplace.properties");
+
+			if (zipEntry == null) {
+				return properties;
+			}
+
+			inputStream = zipFile.getInputStream(zipEntry);
+
+			properties.load(inputStream);
+
+			return properties;
+		}
+		catch (Exception e) {
+			return properties;
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+
+			if (zipFile != null) {
+				try {
+					zipFile.close();
+				}
+				catch (IOException ioe) {
+				}
+			}
 		}
 	}
 

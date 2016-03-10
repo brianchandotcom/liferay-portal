@@ -114,7 +114,7 @@ public class DownstreamJob extends BaseJob {
 	}
 
 	public Map<String, String> getParameters() {
-		return this.parameters;
+		return parameters;
 	}
 
 	public TopLevelJob getTopLevelJob() {

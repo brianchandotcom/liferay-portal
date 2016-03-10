@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,40 +82,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from DLFileEntry");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long groupId = rs.getLong("groupId");
-				long folderId = rs.getLong("folderId");
-				String name = rs.getString("name");
-
-				long repositoryId = folderId;
-
-				if (repositoryId ==
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-					repositoryId = groupId;
-				}
-
-				String newName = DLFileEntryNameUpgradeColumnImpl.getNewName(
-					name);
-
-				if (!newName.equals(name)) {
-					try {
-						DLStoreUtil.updateFile(
-							companyId, repositoryId, name, newName);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to update file for " + name, e);
-						}
-					}
-				}
-			}
-		}
+		updateFiles();
 
 		synchronizeFileVersions();
 
@@ -169,32 +137,72 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void synchronizeFileVersions() throws Exception {
-		StringBundler sb = new StringBundler(5);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
 
-		sb.append("select * from DLFileEntry dlFileEntry where version ");
-		sb.append("not in (select version from DLFileVersion ");
-		sb.append("dlFileVersion where (dlFileVersion.folderId = ");
-		sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
-		sb.append("dlFileEntry.name))");
+			sb.append("select * from DLFileEntry dlFileEntry where version ");
+			sb.append("not in (select version from DLFileVersion ");
+			sb.append("dlFileVersion where (dlFileVersion.folderId = ");
+			sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
+			sb.append("dlFileEntry.name))");
 
-		String sql = sb.toString();
+			String sql = sb.toString();
 
-		try (PreparedStatement ps = connection.prepareStatement(sql);
+			try (PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long groupId = rs.getLong("groupId");
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					long folderId = rs.getLong("folderId");
+					String name = rs.getString("name");
+					double version = rs.getDouble("version");
+					int size = rs.getInt("size_");
+
+					addFileVersion(
+						groupId, companyId, userId, userName, folderId, name,
+						version, size);
+				}
+			}
+		}
+	}
+
+	protected void updateFiles() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer("updateFile");
+			PreparedStatement ps = connection.prepareStatement(
+				"select * from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
 				long groupId = rs.getLong("groupId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
-				double version = rs.getDouble("version");
-				int size = rs.getInt("size_");
 
-				addFileVersion(
-					groupId, companyId, userId, userName, folderId, name,
-					version, size);
+				long repositoryId = folderId;
+
+				if (repositoryId ==
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					repositoryId = groupId;
+				}
+
+				String newName = DLFileEntryNameUpgradeColumnImpl.getNewName(
+					name);
+
+				if (!newName.equals(name)) {
+					try {
+						DLStoreUtil.updateFile(
+							companyId, repositoryId, name, newName);
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Unable to update file for " + name, e);
+						}
+					}
+				}
 			}
 		}
 	}

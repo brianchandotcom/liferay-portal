@@ -57,7 +57,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	}
 
 	private static final Pattern _friendlyURLHyphenPattern = Pattern.compile(
-		"(-)\\1+");
+		"-{2,}");
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9./_-]");
 

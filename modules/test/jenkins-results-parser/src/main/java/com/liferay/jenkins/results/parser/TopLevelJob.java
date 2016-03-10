@@ -36,8 +36,8 @@ public class TopLevelJob extends BaseJob {
 
 	public static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
 
-	public TopLevelJob(String buildURL) {
-		super(buildURL);
+	public TopLevelJob(String url) {
+		super(url);
 
 		downstreamJobs = new ArrayList<>();
 	}
@@ -146,25 +146,25 @@ public class TopLevelJob extends BaseJob {
 
 		List<DownstreamJob> completedJobs = getDownstreamJobs("completed");
 
-		String completedBuildURLs = StringUtils.join(
-			getBuildURLs(completedJobs), ",");
+		String completedDownstreamURLs = StringUtils.join(
+			getDownstreamURLs(completedJobs), ",");
 
 		project.setProperty(
-			COMPLETED_BUILD_URLS_PROPERTY_NAME, completedBuildURLs);
+			COMPLETED_BUILD_URLS_PROPERTY_NAME, completedDownstreamURLs);
 	}
 
 	protected List<DownstreamJob> downstreamJobs;
 
-	private static List<String> getBuildURLs(List<DownstreamJob> downstreamJobs)
+	private static List<String> getDownstreamURLs(List<DownstreamJob> downstreamJobs)
 		throws Exception {
 
-		List<String> buildURLs = new ArrayList<>();
+		List<String> downstreamURLs = new ArrayList<>();
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
-			buildURLs.add(downstreamJob.getBuildURL());
+			downstreamURLs.add(downstreamJob.getURL());
 		}
 
-		return buildURLs;
+		return downstreamURLs;
 	}
 
 }

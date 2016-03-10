@@ -17,18 +17,15 @@ package com.liferay.portal.app.license.resolver;
 import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.SortedMap;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Filter;
@@ -141,52 +138,18 @@ public class AppResolverHook implements ResolverHook {
 		}
 	}
 
-	private Properties _getAppLicenseProperties(Bundle bundle) {
+	private Properties _getAppLicenseProperties(Bundle bundle)
+		throws IOException {
+
 		Properties properties = new Properties();
 
-		InputStream inputStream = null;
-		ZipFile zipFile = null;
+		URL url = bundle.getEntry("/META-INF/marketplace.properties");
 
-		try {
-			String location = bundle.getLocation();
-
-			String protocol = "file:";
-
-			if (location.startsWith(protocol)) {
-				location = location.substring(protocol.length());
-			}
-
-			File file = new File(location);
-
-			zipFile = new ZipFile(file);
-
-			ZipEntry zipEntry = zipFile.getEntry(
-				"META-INF/marketplace.properties");
-
-			if (zipEntry == null) {
-				return properties;
-			}
-
-			inputStream = zipFile.getInputStream(zipEntry);
-
-			properties.load(inputStream);
-
-			return properties;
+		if (url != null) {
+			properties.load(url.openStream());
 		}
-		catch (Exception e) {
-			return properties;
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 
-			if (zipFile != null) {
-				try {
-					zipFile.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
-		}
+		return properties;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -20,6 +20,8 @@
 PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_QUESTION);
 %>
 
+<%@ include file="/html/portlet/polls_display/view_options.jspf" %>
+
 <c:choose>
 	<c:when test="<%= question == null %>">
 
@@ -29,14 +31,14 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_
 
 		<c:choose>
 			<c:when test="<%= !layout.isLayoutPrototypeLinkActive() %>">
-				<div class="alert alert-info portlet-configuration">
+				<div class="alert alert-info main-content-body portlet-configuration">
 					<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
 						<liferay-ui:message key="please-configure-this-portlet-to-make-it-visible-to-all-users" />
 					</a>
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="alert alert-info">
+				<div class="alert alert-info main-content-body">
 					<liferay-ui:message key="please-configure-this-portlet-to-make-it-visible-to-all-users" />
 				</div>
 			</c:otherwise>
@@ -103,90 +105,3 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_
 		</aui:form>
 	</c:otherwise>
 </c:choose>
-
-<%
-boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.CONFIGURATION);
-
-boolean hasViewPermission = true;
-
-if (question != null) {
-	hasViewPermission = PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.VIEW);
-}
-
-boolean showAddPollIcon = hasConfigurationPermission && PollsResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
-boolean showEditPollIcon = (question != null) && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE);
-boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototypeLinkActive() && (hasConfigurationPermission || showEditPollIcon || showAddPollIcon);
-%>
-
-<c:if test="<%= hasViewPermission && showIconsActions %>">
-
-	<%
-	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-	redirectURL.setParameter("struts_action", "/polls_display/add_question_redirect");
-	redirectURL.setWindowState(LiferayWindowState.POP_UP);
-	%>
-
-	<div class="icons-container lfr-meta-actions">
-		<div class="lfr-icon-actions">
-			<c:if test="<%= showEditPollIcon %>">
-
-				<%
-				PortletURL editQuestionURL = PortalUtil.getControlPanelPortletURL(request, PollsPortletKeys.POLLS, PortletRequest.RENDER_PHASE);
-
-				editQuestionURL.setParameter("struts_action", "/polls/edit_question");
-				editQuestionURL.setParameter("redirect", redirectURL.toString());
-				editQuestionURL.setParameter("referringPortletResource", portletDisplay.getId());
-				editQuestionURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
-				editQuestionURL.setParameter("showHeader", Boolean.FALSE.toString());
-				editQuestionURL.setWindowState(LiferayWindowState.POP_UP);
-
-				String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName())) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL.toString()) + "'});";
-				%>
-
-				<liferay-ui:icon
-					cssClass="lfr-icon-action"
-					iconCssClass="icon-pencil"
-					label="<%= true %>"
-					message="edit-question"
-					url="<%= taglibEditQuestionURL %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= hasConfigurationPermission %>">
-				<liferay-ui:icon
-					cssClass="lfr-icon-action"
-					iconCssClass="icon-cog"
-					label="<%= true %>"
-					message="select-poll"
-					method="get"
-					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
-					url="<%= portletDisplay.getURLConfiguration() %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= showAddPollIcon %>">
-
-				<%
-				PortletURL editQuestionURL = PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), PollsPortletKeys.POLLS, 0, plid, PortletRequest.RENDER_PHASE);
-
-				editQuestionURL.setParameter("struts_action", "/polls/edit_question");
-				editQuestionURL.setParameter("redirect", redirectURL.toString());
-				editQuestionURL.setParameter("referringPortletResource", portletDisplay.getId());
-				editQuestionURL.setParameter("showHeader", Boolean.FALSE.toString());
-				editQuestionURL.setWindowState(LiferayWindowState.POP_UP);
-
-				String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "new-poll")) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL.toString()) + "'});";
-				%>
-
-				<liferay-ui:icon
-					cssClass="lfr-icon-action"
-					iconCssClass="icon-plus"
-					label="<%= true %>"
-					message="add"
-					url="<%= taglibEditQuestionURL %>"
-				/>
-			</c:if>
-		</div>
-	</div>
-</c:if>

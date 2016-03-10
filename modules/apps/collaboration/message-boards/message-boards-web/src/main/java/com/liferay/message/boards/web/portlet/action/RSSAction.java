@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -42,7 +43,12 @@ public class RSSAction extends BaseRSSStrutsAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String plid = ParamUtil.getString(request, "p_l_id");
+		long plid = ParamUtil.getLong(request, "p_l_id");
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = themeDisplay.getPlid();
+		}
+
 		long companyId = ParamUtil.getLong(request, "companyId");
 		long groupId = ParamUtil.getLong(request, "groupId");
 		long userId = ParamUtil.getLong(request, "userId");

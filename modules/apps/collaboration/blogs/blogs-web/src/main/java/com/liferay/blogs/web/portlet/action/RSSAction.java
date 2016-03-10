@@ -18,6 +18,7 @@ import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -53,6 +54,11 @@ public class RSSAction extends BaseRSSStrutsAction {
 		Layout layout = themeDisplay.getLayout();
 
 		long plid = ParamUtil.getLong(request, "p_l_id");
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			plid = themeDisplay.getPlid();
+		}
+
 		long companyId = ParamUtil.getLong(request, "companyId");
 		long groupId = ParamUtil.getLong(request, "groupId");
 		long organizationId = ParamUtil.getLong(request, "organizationId");

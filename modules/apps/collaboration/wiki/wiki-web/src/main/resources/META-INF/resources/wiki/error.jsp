@@ -16,7 +16,28 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<liferay-ui:error-header />
+<%
+WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+
+String title = ParamUtil.getString(request, "title");
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
+
+	PortletURL backToViewPagesURL = wikiURLHelper.getBackToViewPagesURL(node);
+
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backToViewPagesURL.toString());
+
+	renderResponse.setTitle(title);
+}
+%>
+
+<c:if test="<%= !portletTitleBasedNavigation %>">
+	<liferay-ui:error-header />
+</c:if>
 
 <liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="please-enter-a-valid-page-title" />
 
@@ -26,21 +47,10 @@
 	long nodeId = ParamUtil.getLong(request, "nodeId");
 
 	if (nodeId == 0) {
-		WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
-
 		if (node != null) {
 			nodeId = node.getNodeId();
 		}
 	}
-
-	String title = ParamUtil.getString(request, "title");
-
-	PortletURL searchURL = renderResponse.createRenderURL();
-
-	searchURL.setParameter("mvcRenderCommandName", "/wiki/search");
-	searchURL.setParameter("redirect", currentURL);
-	searchURL.setParameter("nodeId", String.valueOf(nodeId));
-	searchURL.setParameter("keywords", title);
 
 	PortletURL editPageURL = renderResponse.createRenderURL();
 
@@ -48,25 +58,38 @@
 	editPageURL.setParameter("redirect", currentURL);
 	editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 	editPageURL.setParameter("title", title);
+
+	PortletURL searchURL = renderResponse.createRenderURL();
+
+	searchURL.setParameter("mvcRenderCommandName", "/wiki/search");
+	searchURL.setParameter("redirect", currentURL);
+	searchURL.setParameter("nodeId", String.valueOf(nodeId));
+	searchURL.setParameter("keywords", title);
 	%>
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
-	</div>
+	<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+		<div class="main-content-card panel">
+			<div class="panel-body">
+				<div class="alert alert-info">
+					<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
+				</div>
 
-	<div class="btn-toolbar">
+				<div class="btn-toolbar">
 
-		<%
-		String taglibSearch = "location.href = '" + searchURL.toString() + "';";
-		%>
+					<%
+					String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
+					%>
 
-		<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
+					<aui:button cssClass="btn-lg btn-primary" onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
 
-		<%
-		String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
-		%>
+					<%
+					String taglibSearch = "location.href = '" + searchURL.toString() + "';";
+					%>
 
-		<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
+					<aui:button cssClass="btn-default btn-lg" onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				</div>
+			</div>
+		</div>
 	</div>
 </c:if>
 

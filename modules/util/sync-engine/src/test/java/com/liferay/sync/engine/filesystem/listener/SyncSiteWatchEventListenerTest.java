@@ -24,8 +24,6 @@ import com.liferay.sync.engine.util.test.SyncSiteTestUtil;
 
 import java.nio.file.Paths;
 
-import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,27 +42,20 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 		_syncSite1 = SyncSiteTestUtil.addSyncSite(
 			10158, FileUtil.getFilePathName(filePathName, "test-site1"), 10185,
 			syncAccount.getSyncAccountId());
+
+		SyncSiteService.activateSyncSite(_syncSite1.getSyncSiteId(), true);
+
 		_syncSite2 = SyncSiteTestUtil.addSyncSite(
 			10158, FileUtil.getFilePathName(filePathName, "test-site2"), 10186,
 			syncAccount.getSyncAccountId());
 
-		Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
-			syncAccount.getSyncAccountId());
-
-		activeSyncSiteIds.add(_syncSite1.getSyncSiteId());
-		activeSyncSiteIds.add(_syncSite2.getSyncSiteId());
+		SyncSiteService.activateSyncSite(_syncSite2.getSyncSiteId(), true);
 	}
 
 	@After
 	@Override
 	public void tearDown() throws Exception {
 		try {
-			Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
-				syncAccount.getSyncAccountId());
-
-			activeSyncSiteIds.remove(_syncSite1.getSyncSiteId());
-			activeSyncSiteIds.remove(_syncSite2.getSyncSiteId());
-
 			SyncSiteService.deleteSyncSite(_syncSite1.getSyncSiteId());
 			SyncSiteService.deleteSyncSite(_syncSite2.getSyncSiteId());
 		}

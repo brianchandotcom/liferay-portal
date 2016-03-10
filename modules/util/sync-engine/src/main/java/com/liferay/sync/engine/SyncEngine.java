@@ -28,6 +28,7 @@ import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
@@ -229,6 +230,8 @@ public class SyncEngine {
 		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
 			ServerEventUtil.synchronizeSyncSites(syncAccountId);
 		}
+
+		SyncWatchEventService.deleteSyncWatchEvents(syncAccountId);
 
 		Watcher watcher = WatcherManager.getWatcher(syncAccountId);
 

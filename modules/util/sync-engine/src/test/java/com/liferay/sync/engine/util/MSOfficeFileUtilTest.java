@@ -36,6 +36,8 @@ public class MSOfficeFileUtilTest {
 		}
 
 		Assert.assertFalse(
+			MSOfficeFileUtil.isTempCreatedFile(Paths.get("1234567")));
+		Assert.assertFalse(
 			MSOfficeFileUtil.isTempCreatedFile(Paths.get("test.tmp")));
 	}
 

@@ -375,7 +375,6 @@ public abstract class Watcher implements Runnable {
 			if (_downloadedFilePathNames.remove(filePath.toString()) ||
 				FileUtil.isIgnoredFileName(
 					String.valueOf(filePath.getFileName())) ||
-				Files.notExists(filePath) || Files.isDirectory(filePath) ||
 				FileUtil.isHidden(filePath) || FileUtil.isShortcut(filePath)) {
 
 				if (_logger.isDebugEnabled()) {

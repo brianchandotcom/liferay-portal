@@ -91,7 +91,7 @@ public class MSOfficeFileUtil {
 			return true;
 		}
 
-		Matcher matcher = _pattern.matcher(
+		Matcher matcher = _tempCreatedFilePattern.matcher(
 			String.valueOf(filePath.getFileName()));
 
 		if (matcher.matches() && !Files.isDirectory(filePath)) {
@@ -117,7 +117,7 @@ public class MSOfficeFileUtil {
 		else if (hasExtension(extension, _excelExtensions) ||
 				 hasExtension(extension, _powerpointExtensions)) {
 
-			Matcher matcher = _pattern.matcher(
+			Matcher matcher = _tempRenamedFilePattern.matcher(
 				String.valueOf(targetFilePath.getFileName()));
 
 			if (matcher.matches()) {
@@ -147,17 +147,19 @@ public class MSOfficeFileUtil {
 		return false;
 	}
 
-	private static final Set<String> _excelExtensions = new HashSet(
+	private static final Set<String> _excelExtensions = new HashSet<>(
 		Arrays.asList(
 			"csv", "xla", "xlam", "xls", "xlsb", "xlsm", "xlsx", "xlt", "xltm",
 			"xltx"));
-	private static final Pattern _pattern = Pattern.compile(
-		"[0-9A-F]{7,8}(.tmp)?");
-	private static final Set<String> _powerpointExtensions = new HashSet(
+	private static final Set<String> _powerpointExtensions = new HashSet<>(
 		Arrays.asList(
 			"pot", "potm", "potx", "ppa", "ppam", "pps", "ppsm", "ppsx", "ppt",
 			"pptm", "pptx"));
-	private static final Set<String> _wordExtensions = new HashSet(
+	private static final Pattern _tempCreatedFilePattern = Pattern.compile(
+		"[0-9A-F]{6,8}\\.tmp");
+	private static final Pattern _tempRenamedFilePattern = Pattern.compile(
+		"[0-9A-F]{6,8}(\\.tmp)?");
+	private static final Set<String> _wordExtensions = new HashSet<>(
 		Arrays.asList("doc", "docb", "docm", "docx", "dot", "dotm", "dotx"));
 
 }

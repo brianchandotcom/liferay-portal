@@ -18,7 +18,6 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
-import com.liferay.sync.engine.service.persistence.SyncSitePersistence;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -44,10 +43,7 @@ public class SyncSiteTestUtil {
 		syncSite.setName(filePathName);
 		syncSite.setSyncAccountId(syncAccountId);
 
-		SyncSitePersistence syncSitePersistence =
-			SyncSiteService.getSyncSitePersistence();
-
-		syncSitePersistence.create(syncSite);
+		SyncSiteService.update(syncSite);
 
 		// Sync file
 

@@ -32,8 +32,6 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,10 +83,7 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 			SyncSite syncSite = SyncSiteService.fetchSyncSite(
 				repositoryId, getSyncAccountId());
 
-			Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
-				getSyncAccountId());
-
-			if (!activeSyncSiteIds.contains(syncSite.getSyncSiteId())) {
+			if (!syncSite.isActive()) {
 				return;
 			}
 

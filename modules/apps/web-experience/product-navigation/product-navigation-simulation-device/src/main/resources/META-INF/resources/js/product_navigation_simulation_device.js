@@ -160,6 +160,8 @@ AUI.add(
 						);
 
 						eventHandles.push(
+							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('hideDeviceDialog', instance)),
+							Liferay.on('SimulationMenu:openSimulationPanel', A.bind('showDeviceDialog', instance)),
 							instance._simulationDeviceContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance),
 							resizeHandle
 						);

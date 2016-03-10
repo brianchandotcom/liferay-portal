@@ -67,9 +67,7 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 	}
 
 	protected void verifyUUID() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer(
-				"VerifyUUID.verify")) {
-
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
 				new VerifiableUUIDModel() {
 

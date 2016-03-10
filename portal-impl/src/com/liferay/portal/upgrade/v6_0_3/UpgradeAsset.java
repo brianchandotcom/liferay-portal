@@ -43,34 +43,7 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		createIndex();
 
-		updateAssetEntry("com.liferay.portal.model.User", "User_", "userId");
-		updateAssetEntry(
-			"com.liferay.portlet.blogs.model.BlogsEntry", "BlogsEntry",
-			"entryId");
-		updateAssetEntry(
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
-			"BookmarksEntry", "entryId");
-		updateAssetEntry(
-			"com.liferay.portlet.calendar.model.CalEvent", "CalEvent",
-			"eventId");
-		updateAssetEntry(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry",
-			"DLFileEntry", "fileEntryId");
-		updateAssetEntry(
-			"com.liferay.portlet.documentlibrary.model.DLFileShortcut",
-			"DLFileShortcut", "fileShortcutId");
-		updateAssetEntry(
-			"com.liferay.portlet.imagegallery.model.IGImage", "IGImage",
-			"imageId");
-		updateAssetEntry(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"JournalArticle", "resourcePrimKey", "id_");
-		updateAssetEntry(
-			"com.liferay.portlet.messageboards.model.MBMessage", "MBMessage",
-			"messageId");
-		updateAssetEntry(
-			"com.liferay.portlet.wiki.model.WikiPage", "WikiPage",
-			"resourcePrimKey", "pageId");
+		updateAssetEntries();
 	}
 
 	protected String getUuid(
@@ -97,6 +70,40 @@ public class UpgradeAsset extends UpgradeProcess {
 		return uuid;
 	}
 
+	protected void updateAssetEntries() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			updateAssetEntry(
+				"com.liferay.portal.model.User", "User_", "userId");
+			updateAssetEntry(
+				"com.liferay.portlet.blogs.model.BlogsEntry", "BlogsEntry",
+				"entryId");
+			updateAssetEntry(
+				"com.liferay.portlet.bookmarks.model.BookmarksEntry",
+				"BookmarksEntry", "entryId");
+			updateAssetEntry(
+				"com.liferay.portlet.calendar.model.CalEvent", "CalEvent",
+				"eventId");
+			updateAssetEntry(
+				"com.liferay.portlet.documentlibrary.model.DLFileEntry",
+				"DLFileEntry", "fileEntryId");
+			updateAssetEntry(
+				"com.liferay.portlet.documentlibrary.model.DLFileShortcut",
+				"DLFileShortcut", "fileShortcutId");
+			updateAssetEntry(
+				"com.liferay.portlet.imagegallery.model.IGImage", "IGImage",
+				"imageId");
+			updateAssetEntry(
+				"com.liferay.portlet.journal.model.JournalArticle",
+				"JournalArticle", "resourcePrimKey", "id_");
+			updateAssetEntry(
+				"com.liferay.portlet.messageboards.model.MBMessage",
+				"MBMessage", "messageId");
+			updateAssetEntry(
+				"com.liferay.portlet.wiki.model.WikiPage", "WikiPage",
+				"resourcePrimKey", "pageId");
+		}
+	}
+
 	protected void updateAssetEntry(long classNameId, long classPK, String uuid)
 		throws Exception {
 
@@ -116,26 +123,23 @@ public class UpgradeAsset extends UpgradeProcess {
 			String className, String tableName, String columnName)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(className)) {
-			long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = PortalUtil.getClassNameId(className);
 
-			StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(11);
 
-			sb.append("update AssetEntry set classUuid = (select ");
-			sb.append(tableName);
-			sb.append(".uuid_ from ");
-			sb.append(tableName);
-			sb.append(" where ");
-			sb.append(tableName);
-			sb.append(".");
-			sb.append(columnName);
-			sb.append(
-				" = AssetEntry.classPK) where (AssetEntry.classNameId = ");
-			sb.append(classNameId);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append("update AssetEntry set classUuid = (select ");
+		sb.append(tableName);
+		sb.append(".uuid_ from ");
+		sb.append(tableName);
+		sb.append(" where ");
+		sb.append(tableName);
+		sb.append(".");
+		sb.append(columnName);
+		sb.append(" = AssetEntry.classPK) where (AssetEntry.classNameId = ");
+		sb.append(classNameId);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			runSQL(sb.toString());
-		}
+		runSQL(sb.toString());
 	}
 
 	protected void updateAssetEntry(

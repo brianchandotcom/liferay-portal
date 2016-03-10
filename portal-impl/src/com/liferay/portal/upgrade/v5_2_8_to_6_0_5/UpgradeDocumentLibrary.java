@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -128,61 +126,46 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		UpgradeColumn versionColumn = new DLFileEntryVersionUpgradeColumnImpl(
 			"version");
 
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
-			nameColumn, titleColumn, versionColumn);
-
-		upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			DLFileEntryTable.TABLE_SQL_CREATE,
+			DLFileEntryTable.TABLE_SQL_ADD_INDEXES, nameColumn, titleColumn,
+			versionColumn);
 
 		// DLFileRank
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
-			nameColumn);
-
-		upgradeTable.setCreateSQL(DLFileRankTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileRankTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			DLFileRankTable.TABLE_SQL_CREATE,
+			DLFileRankTable.TABLE_SQL_ADD_INDEXES, nameColumn);
 
 		// DLFileShortcut
 
 		UpgradeColumn toNameColumn = new DLFileEntryNameUpgradeColumnImpl(
 			"toName");
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			DLFileShortcutTable.TABLE_NAME, DLFileShortcutTable.TABLE_COLUMNS,
-			toNameColumn);
-
-		upgradeTable.setCreateSQL(DLFileShortcutTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileShortcutTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			DLFileShortcutTable.TABLE_SQL_CREATE,
+			DLFileShortcutTable.TABLE_SQL_ADD_INDEXES, toNameColumn);
 
 		// DLFileVersion
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		String tableSqlCreate = StringUtil.replace(
+			DLFileVersionTable.TABLE_SQL_CREATE,
+			new String[] {
+				",extraSettings VARCHAR(75) null",
+				",title VARCHAR(75) null"
+			},
+			new String[] {
+				",extraSettings STRING null",
+				",title VARCHAR(255) null"
+			});
+
+		upgradeTable(
 			DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
+			tableSqlCreate, DLFileVersionTable.TABLE_SQL_ADD_INDEXES,
 			nameColumn, versionColumn);
-
-		upgradeTable.setCreateSQL(
-			StringUtil.replace(
-				DLFileVersionTable.TABLE_SQL_CREATE,
-				new String[] {
-					",extraSettings VARCHAR(75) null",
-					",title VARCHAR(75) null"
-				},
-				new String[] {
-					",extraSettings STRING null",
-					",title VARCHAR(255) null"
-				}));
-
-		upgradeTable.setIndexesSQL(DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
 	}
 
 	protected void synchronizeFileVersions() throws Exception {

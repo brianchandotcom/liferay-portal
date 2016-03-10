@@ -138,39 +138,28 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFileRank
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
-			nameColumn);
-
-		upgradeTable.setCreateSQL(DLFileRankTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileRankTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			DLFileRankTable.TABLE_SQL_CREATE,
+			DLFileRankTable.TABLE_SQL_ADD_INDEXES, nameColumn);
 
 		// DLFileShortcut
 
 		UpgradeColumn toNameColumn = new DLFileEntryNameUpgradeColumnImpl(
 			"toName");
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			DLFileShortcutTable.TABLE_NAME, DLFileShortcutTable.TABLE_COLUMNS,
-			toNameColumn);
-
-		upgradeTable.setCreateSQL(DLFileShortcutTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileShortcutTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			DLFileShortcutTable.TABLE_SQL_CREATE,
+			DLFileShortcutTable.TABLE_SQL_ADD_INDEXES, toNameColumn);
 
 		// DLFileVersion
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
-			nameColumn, versionColumn);
-
-		upgradeTable.setCreateSQL(DLFileVersionTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			DLFileVersionTable.TABLE_SQL_CREATE,
+			DLFileVersionTable.TABLE_SQL_ADD_INDEXES, nameColumn,
+			versionColumn);
 	}
 
 	protected void synchronizeFileVersions() throws Exception {

@@ -16,7 +16,9 @@ Import-Package:\
 	org.apache.struts.config.impl,\
 	org.apache.struts.util,\
 	*
-Include-Resource:\
+Web-ContextPath: /shopping-web
+-donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
+-includeresource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
 	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/CreditCard.class,\
@@ -24,6 +26,4 @@ Include-Resource:\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/StateUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/portlet/PortletProps.class
-Web-ContextPath: /shopping-web
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot

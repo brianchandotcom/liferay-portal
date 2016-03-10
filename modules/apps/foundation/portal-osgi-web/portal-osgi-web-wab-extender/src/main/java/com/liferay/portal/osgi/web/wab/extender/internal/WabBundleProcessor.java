@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
+import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.FilterExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptionAdapter;
@@ -175,26 +176,23 @@ public class WabBundleProcessor {
 			throws IOException, ServletException {
 
 			String curJspFile = (String)servletRequest.getAttribute(
-				org.apache.jasper.Constants.JSP_FILE);
+				JspServlet.JSP_FILE);
 
 			if (jspFile != null) {
-				servletRequest.setAttribute(
-					org.apache.jasper.Constants.JSP_FILE, jspFile);
+				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
 			}
 
 			try {
 				_servlet.service(servletRequest, servletResponse);
 			}
 			finally {
-				servletRequest.setAttribute(
-					org.apache.jasper.Constants.JSP_FILE, curJspFile);
+				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
 			}
 		}
 
 		protected String jspFile;
 
-		private final Servlet _servlet =
-			new com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet();
+		private final Servlet _servlet = new JspServlet();
 
 	}
 

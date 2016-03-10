@@ -87,6 +87,8 @@ import org.osgi.framework.wiring.BundleWiring;
  */
 public class JspServlet extends HttpServlet {
 
+	public static final String JSP_FILE = org.apache.jasper.Constants.JSP_FILE;
+
 	@Override
 	public void destroy() {
 		_jspServlet.destroy();

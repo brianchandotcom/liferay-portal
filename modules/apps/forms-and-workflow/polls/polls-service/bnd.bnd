@@ -4,6 +4,9 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.polls.lar,\
 	com.liferay.polls.service.configuration.configurator
+Include-Resource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Liferay-Service: true

@@ -7,6 +7,7 @@
 	<bean id="com.liferay.polls.service.PollsQuestionLocalService" class="com.liferay.polls.service.impl.PollsQuestionLocalServiceImpl" />
 	<bean id="com.liferay.polls.service.PollsQuestionService" class="com.liferay.polls.service.impl.PollsQuestionServiceImpl" />
 	<bean id="com.liferay.polls.service.persistence.PollsQuestionPersistence" class="com.liferay.polls.service.persistence.impl.PollsQuestionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.polls.service.persistence.PollsQuestionFinder" class="com.liferay.polls.service.persistence.impl.PollsQuestionFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.polls.service.PollsVoteLocalService" class="com.liferay.polls.service.impl.PollsVoteLocalServiceImpl" />
 	<bean id="com.liferay.polls.service.PollsVoteService" class="com.liferay.polls.service.impl.PollsVoteServiceImpl" />
 	<bean id="com.liferay.polls.service.persistence.PollsVotePersistence" class="com.liferay.polls.service.persistence.impl.PollsVotePersistenceImpl" parent="basePersistence" />

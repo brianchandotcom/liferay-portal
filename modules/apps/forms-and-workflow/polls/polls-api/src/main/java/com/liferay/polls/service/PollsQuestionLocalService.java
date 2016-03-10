@@ -324,6 +324,26 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getQuestionsCount(long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PollsQuestion> search(long companyId, long[] groupIds,
+		java.lang.String keywords, int start, int end,
+		OrderByComparator<PollsQuestion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PollsQuestion> search(long companyId, long[] groupIds,
+		java.lang.String name, java.lang.String description,
+		boolean andOperator, int start, int end,
+		OrderByComparator<PollsQuestion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String title, java.lang.String description,
+		boolean andOperator);
+
 	/**
 	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -266,6 +266,8 @@ public class AlloyEditorConfigContributor
 		jsonArray.put("bold");
 		jsonArray.put("italic");
 		jsonArray.put("underline");
+		jsonArray.put("ol");
+		jsonArray.put("ul");
 		jsonArray.put("link");
 		jsonArray.put("twitter");
 

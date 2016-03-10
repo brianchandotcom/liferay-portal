@@ -35,6 +35,8 @@
 			}
 
 			.lfr-portlet-used {
+				opacity: 0.3;
+
 				&.drag-content-item {
 					cursor: default;
 				}

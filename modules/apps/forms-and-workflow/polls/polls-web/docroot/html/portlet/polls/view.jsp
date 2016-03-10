@@ -26,10 +26,13 @@ portletURL.setParameter("struts_action", "/polls/view");
 
 <liferay-util:include page="/html/portlet/polls/navigation_bar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280">
+<liferay-util:include page="/html/portlet/polls/management_bar.jsp" servletContext="<%= application %>" />
+
+<div class="container-fluid-1280 main-content-body">
 	<aui:form method="post" name="fm">
 
 		<liferay-ui:search-container
+			emptyResultsMessage="no-entries-were-found"
 			iteratorURL="<%= portletURL %>"
 			total="<%= PollsQuestionLocalServiceUtil.getQuestionsCount(scopeGroupId) %>"
 		>
@@ -105,6 +108,7 @@ portletURL.setParameter("struts_action", "/polls/view");
 				</c:choose>
 
 				<liferay-ui:search-container-column-jsp
+					align="right"
 					cssClass="entry-action-column"
 					path="/html/portlet/polls/question_action.jsp"
 				/>

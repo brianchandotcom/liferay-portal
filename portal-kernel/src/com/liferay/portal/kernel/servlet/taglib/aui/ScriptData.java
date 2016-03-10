@@ -244,19 +244,17 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		if (modified) {
 			safeName = sb.toString();
+
+			name = safeName;
 		}
 
-		if (!names.add(safeName)) {
-			int i = 1;
+		int i = 1;
 
-			while (!names.add(safeName.concat(String.valueOf(i)))) {
-				i++;
-			}
-
-			return safeName.concat(String.valueOf(i));
+		while (!names.add(name)) {
+			name = safeName.concat(String.valueOf(i++));
 		}
 
-		return safeName;
+		return name;
 	}
 
 	private PortletData _getPortletData(String portletId) {

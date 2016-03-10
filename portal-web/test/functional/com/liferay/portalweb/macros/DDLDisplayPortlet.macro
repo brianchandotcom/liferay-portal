@@ -34,6 +34,22 @@
 		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
+	<command name="viewConfigurationCheckbox">
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+
+		<if>
+			<equals arg1="${configureChecked}" arg2="false" />
+			<then>
+				<execute function="AssertNotChecked" locator1="DDLConfiguration#${configureCheckBoxName}" />
+			</then>
+			<else>
+				<execute function="AssertChecked" locator1="DDLConfiguration#${configureCheckBoxName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewDDLTemplateRecordFieldData">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 

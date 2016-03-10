@@ -1343,11 +1343,9 @@
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
-
-		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
-
-		<execute function="AssertChecked" locator1="DDLConfiguration#TEMPLATES_EDITABLE_CHECKBOX" />
+		<execute macro="DDLDisplayPortlet#viewConfigurationCheckbox">
+			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
+		</execute>
 	</command>
 
 	<command name="ViewBooleanFieldPredefinedValue" priority="3">

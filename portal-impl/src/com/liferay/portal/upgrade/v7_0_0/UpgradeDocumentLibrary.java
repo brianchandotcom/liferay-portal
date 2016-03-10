@@ -209,12 +209,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					ps2.addBatch();
 
 					if (Validator.isNotNull(uniqueTitle)) {
-						ps3.setString(1, title);
+						ps3.setString(1, uniqueTitle);
 						ps3.setLong(2, fileEntryId);
 
 						ps3.addBatch();
 
-						ps4.setString(1, title);
+						ps4.setString(1, uniqueTitle);
 						ps4.setLong(2, fileEntryId);
 						ps4.setString(3, version);
 

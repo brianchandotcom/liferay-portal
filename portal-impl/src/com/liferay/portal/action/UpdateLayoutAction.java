@@ -213,9 +213,6 @@ public class UpdateLayoutAction extends JSONAction {
 
 			updateLayout = false;
 		}
-		else if (cmd.equals("toggle_customized_view")) {
-			updateLayout = false;
-		}
 		else if (cmd.equals("update_type_settings")) {
 			UnicodeProperties layoutTypeSettingsProperties =
 				layout.getTypeSettingsProperties();

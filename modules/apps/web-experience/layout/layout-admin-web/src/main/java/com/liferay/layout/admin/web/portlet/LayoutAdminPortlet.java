@@ -684,6 +684,18 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 	}
 
+	public void toggleCustomizedView(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT,
+			PortalUtil.getLayoutURL(themeDisplay.getLayout(), themeDisplay));
+	}
+
 	protected void deleteThemeSettingsProperties(
 		UnicodeProperties typeSettingsProperties, String device) {
 

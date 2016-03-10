@@ -76,7 +76,8 @@ public class LayoutSetPrototypeLayoutModelListener
 
 			layoutSetPrototype.setModifiedDate(modifiedDate);
 
-			LayoutSetPrototypeUtil.update(layoutSetPrototype);
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				layoutSetPrototype);
 
 			LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 

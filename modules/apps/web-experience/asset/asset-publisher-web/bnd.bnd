@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.asset.publisher.web,\
 	com.liferay.asset.publisher.web.constants,\
 	com.liferay.asset.publisher.web.display.context,\
+	com.liferay.asset.publisher.web.upgrade.v1_0_0,\
 	com.liferay.asset.publisher.web.util
 Include-Resource:\
 	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\

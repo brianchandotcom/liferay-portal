@@ -1,13 +1,13 @@
 task buildAlloyTheme(type: Copy)
 
 buildAlloyTheme {
-	dependsOn ":apps:foundation:frontend:frontend-js-web:buildAlloyUI"
+	dependsOn ":apps:foundation:frontend-js:frontend-js-web:buildAlloyUI"
 
 	ext {
 		autoClean = false
 	}
 
-	from "../frontend-js-web/tmp/META-INF/resources/aui/aui_deprecated.css"
+	from "../../frontend-js/frontend-js-web/tmp/META-INF/resources/aui/aui_deprecated.css"
 	into "src/main/resources/META-INF/resources/portal"
 }
 

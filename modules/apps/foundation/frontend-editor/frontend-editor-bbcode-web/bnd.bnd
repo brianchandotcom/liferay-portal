@@ -6,4 +6,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-bbcode-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)
--include: ../../../app.bnd
+-include: ../../app.bnd

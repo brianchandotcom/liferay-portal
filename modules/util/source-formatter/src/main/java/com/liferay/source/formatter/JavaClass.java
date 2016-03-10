@@ -1403,7 +1403,7 @@ public class JavaClass {
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
 	private final Pattern _chainingPattern = Pattern.compile(
-		"[\t\n](?!this\\().*\\WgetClass\\(\\)\\..+");
+		"^((?!this\\().)*\\WgetClass\\(\\)\\..", Pattern.DOTALL);
 	private String _classContent;
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +

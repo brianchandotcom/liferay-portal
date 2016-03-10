@@ -31,7 +31,4 @@ public interface TreeModelTasks<T extends TreeModel> {
 			long parentPrimaryKey, String treePath)
 		throws PortalException;
 
-	public void reindexTreeModels(List<TreeModel> treeModels)
-		throws PortalException;
-
 }

@@ -91,7 +91,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:otherwise>
 		<span class="<%= cssClass %>"
 			<c:if test="<%= !label && Validator.isNotNull(message) %>">
-				title="<liferay-ui:message key="<%= HtmlUtil.escapeAttribute(message) %>" />"
+				title="<liferay-ui:message key="<%= HtmlUtil.stripHtml(message) %>" />"
 			</c:if>
 		>
 			<c:choose>

@@ -44,6 +44,22 @@
 			}
 		);
 
+		var simulationPanel = $('#<%= portletNamespace %>simulationPanelId');
+
+		simulationPanel.on(
+			'open.lexicon.sidenav',
+			function(event) {
+				Liferay.fire('SimulationMenu:openSimulationPanel');
+			}
+		);
+
+		simulationPanel.on(
+			'closed.lexicon.sidenav',
+			function(event) {
+				Liferay.fire('SimulationMenu:closeSimulationPanel');
+			}
+		);
+
 		Liferay.once(
 			'screenLoad',
 			function() {

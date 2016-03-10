@@ -113,4 +113,11 @@
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	Liferay.once(
+		'screenLoad',
+		function() {
+			simulationDevice.destroy();
+		}
+	);
 </aui:script>

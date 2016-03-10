@@ -20,6 +20,7 @@ AUI.add(
 		};
 
 		var DIALOG_IFRAME_DEFAULTS = {
+			closeOnEscape: false,
 			gutter: {
 				bottom: 0,
 				left: 0,
@@ -126,6 +127,22 @@ AUI.add(
 						instance._simulationDeviceNode.remove();
 					},
 
+					hideDeviceDialog: function() {
+						var instance = this;
+
+					    var dialog = Liferay.Util.getWindow(instance._dialogId);
+
+					    dialog.hide();
+				    },
+
+					showDeviceDialog: function() {
+						var instance = this;
+
+						var dialog = Liferay.Util.getWindow(instance._dialogId);
+
+					    dialog.show();
+				    },
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -143,6 +160,8 @@ AUI.add(
 						);
 
 						eventHandles.push(
+							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('hideDeviceDialog', instance)),
+							Liferay.on('SimulationMenu:openSimulationPanel', A.bind('showDeviceDialog', instance)),
 							instance._simulationDeviceContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance),
 							resizeHandle
 						);
@@ -261,16 +280,6 @@ AUI.add(
 						}
 					},
 
-					_onDialogVisibleChange: function(event) {
-						var instance = this;
-
-						if (!event.newVal) {
-							instance._closePanel();
-						}
-
-						event.preventDefault();
-					},
-
 					_onResize: function(event) {
 						var instance = this;
 
@@ -387,6 +396,7 @@ AUI.add(
 								autoSizeNode: simulationDeviceNode,
 								constrain: simulationDeviceNode,
 								height: height,
+								hideOn: [],
 								render: simulationDeviceNode,
 								width: width
 							};
@@ -441,8 +451,7 @@ AUI.add(
 											{
 												'resize:end': A.bind('_onResizeEnd', instance),
 												'resize:resize': A.bind('_onResize', instance),
-												'resize:start': A.bind('_onResizeStart', instance),
-												'visibleChange': A.bind('_onDialogVisibleChange', instance)
+												'resize:start': A.bind('_onResizeStart', instance)
 											}
 										),
 										instance.on('destroy', A.bind('destroy', dialogWindow))

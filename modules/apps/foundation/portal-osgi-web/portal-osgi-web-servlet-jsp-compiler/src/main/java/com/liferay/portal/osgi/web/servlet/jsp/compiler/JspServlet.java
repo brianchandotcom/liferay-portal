@@ -418,6 +418,15 @@ public class JspServlet extends HttpServlet {
 	}
 
 	protected void scanTLDs(ServletContext servletContext) {
+		Boolean analyzedTlds = (Boolean)servletContext.getAttribute(
+			_ANALYZED_TLDS);
+
+		if ((analyzedTlds != null) && analyzedTlds.booleanValue()) {
+			return;
+		}
+
+		servletContext.setAttribute(_ANALYZED_TLDS, Boolean.TRUE);
+
 		BundleWiring bundleWiring =_bundle.adapt(BundleWiring.class);
 
 		Collection<String> resources = bundleWiring.listResources(
@@ -468,6 +477,9 @@ public class JspServlet extends HttpServlet {
 			}
 		}
 	}
+
+	private static final String _ANALYZED_TLDS =
+		JspServlet.class.getName().concat("#ANALYZED_TLDS");
 
 	private static final String _DEBUG = "DEBUG";
 

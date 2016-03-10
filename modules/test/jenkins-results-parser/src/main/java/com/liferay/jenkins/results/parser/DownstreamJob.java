@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -29,48 +30,25 @@ import org.json.JSONObject;
  */
 public class DownstreamJob extends BaseJob {
 
-	public static Map<String, String> getParametersFromString(
-		String parametersString) {
+	public static Map<String, String> getParametersFromQueryString(
+		String queryString) {
+
+		if (!queryString.contains("=")) {
+			return Collections.emptyMap();
+		}
 
 		Map<String, String> parameters = new HashMap<>();
 
-		Matcher parameterMatcher = _parameterPattern.matcher(parametersString);
-
-		if (!parameterMatcher.find()) {
-			return parameters;
-		}
-
-		parameterMatcher.reset();
-
-		while (parameterMatcher.find()) {
-			String parameter = parameterMatcher.group("parameter");
-
-			Matcher keyValueMatcher = _keyValuePattern.matcher(parameter);
-
-			if (keyValueMatcher.find()) {
-				String key = keyValueMatcher.group("key");
-				String value = keyValueMatcher.group("value");
-
-				parameters.put(key, value);
+		for (String parameter : queryString.split("&")) {
+			if (parameter.contains("=")) {
+				String[] stringArray = parameter.split("=");
+				parameters.put(stringArray[0], stringArray[1]);
 			}
-
-			parametersString = parameterMatcher.group("remainder");
-
-			parameterMatcher = _parameterPattern.matcher(parametersString);
-		}
-
-		Matcher keyValueMatcher = _keyValuePattern.matcher(parametersString);
-
-		if (keyValueMatcher.find()) {
-			String key = keyValueMatcher.group("key");
-			String value = keyValueMatcher.group("value");
-
-			parameters.put(key, value);
 		}
 
 		return parameters;
-	}
-
+	}	
+	
 	public DownstreamJob(String invocationURL, TopLevelJob topLevelJob)
 		throws Exception {
 
@@ -87,9 +65,9 @@ public class DownstreamJob extends BaseJob {
 		name = invocationURLMatcher.group("name");
 
 		String parametersString = invocationURLMatcher.group(
-			"parametersString");
+			"queryString");
 
-		Map<String, String> invokedParameters = getParametersFromString(
+		Map<String, String> invokedParameters = getParametersFromQueryString(
 			parametersString);
 
 		Set<String> parameterNames = getParameterNames(getJobURL());
@@ -315,10 +293,6 @@ public class DownstreamJob extends BaseJob {
 
 	private static final Pattern _invocationURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/" +
-			"buildWithParameters\\?(?<parametersString>.*)");
-	private static final Pattern _keyValuePattern = Pattern.compile(
-		"(?<key>[^=]+)=(?<value>.*)");
-	private static final Pattern _parameterPattern = Pattern.compile(
-		"(?<parameter>[^&]*)&(?<remainder>.*)");
+			"buildWithParameters\\?(?<queryString>.*)");
 
 }

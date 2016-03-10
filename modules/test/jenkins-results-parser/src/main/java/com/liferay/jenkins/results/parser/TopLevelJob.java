@@ -26,16 +26,6 @@ import org.apache.tools.ant.Project;
  */
 public class TopLevelJob extends BaseJob {
 
-	protected static final String COMPLETED_BUILD_URLS_PROPERTY_NAME =
-		"completed.build.urls";
-
-	protected static final String MAX_STARTING_TIME_PROPERTY_NAME =
-		"max.starting.time";
-
-	protected static final String MAX_WAIT_TIME_PROPERTY_NAME = "max.wait.time";
-
-	protected static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
-
 	public TopLevelJob(String url) throws Exception {
 		super(url);
 
@@ -155,12 +145,7 @@ public class TopLevelJob extends BaseJob {
 			COMPLETED_BUILD_URLS_PROPERTY_NAME, completedDownstreamURLs);
 	}
 
-	protected List<DownstreamJob> downstreamJobs;
-
-	protected List<String> getDownstreamURLs(
-			String status)
-		throws Exception {
-
+	protected List<String> getDownstreamURLs(String status) throws Exception {
 		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status);
 		List<String> downstreamURLs = new ArrayList<>(downstreamJobs.size());
 
@@ -170,5 +155,17 @@ public class TopLevelJob extends BaseJob {
 
 		return downstreamURLs;
 	}
+
+	protected static final String COMPLETED_BUILD_URLS_PROPERTY_NAME =
+		"completed.build.urls";
+
+	protected static final String MAX_STARTING_TIME_PROPERTY_NAME =
+		"max.starting.time";
+
+	protected static final String MAX_WAIT_TIME_PROPERTY_NAME = "max.wait.time";
+
+	protected static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
+
+	protected List<DownstreamJob> downstreamJobs;
 
 }

@@ -204,27 +204,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--APPLICATION_CONFIGURATION-->
-<tr>
-	<td>APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO</td>
-	<td>//input[contains(@id,'allApplications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO</td>
-	<td>//input[contains(@id,'chooseApplications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX</td>
-	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_GENERAL_CHECKBOX</td>
@@ -253,7 +232,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX</td>
-	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_contentName}')]//div[contains(@class,'modal-body')]//input[contains(@data-name,'${key_subContent}')]</td>
+	<td>//input[contains(@data-name,'${key_subContent}')]</td>
 	<td></td>
 </tr>
 <tr>

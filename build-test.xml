@@ -7146,8 +7146,9 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<if>
 					<and>
 						<available file="${jenkins.results.xml.file}" />
-						<isset property="env.BUILD_FLOW_BUILD_NUMBER" />
-						<isset property="env.BUILD_FLOW_JOB_NAME" />
+						<not>
+							<isset property="env.JENKINS_GITHUB_PULL_REQUEST_USERNAME" />
+						</not>
 					</and>
 					<then>
 						<copy

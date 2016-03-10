@@ -36,6 +36,9 @@ public class WikiWebKeys {
 
 	public static final String WIKI_PAGE = "WIKI_PAGE";
 
+	public static final String WIKI_PAGE_TITLE_VALIDATOR =
+		"WIKI_PAGE_TITLE_VALIDATOR";
+
 	public static final String WIKI_PAGES = "WIKI_PAGES";
 
 	public static final String WIKI_PORTLET_TOOLBAR_CONTRIBUTOR =

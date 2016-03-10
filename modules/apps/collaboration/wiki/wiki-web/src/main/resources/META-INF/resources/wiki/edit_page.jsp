@@ -51,7 +51,9 @@ else if ((wikiPage == null) && editTitle) {
 
 if (Validator.isNotNull(title)) {
 	try {
-		WikiPageLocalServiceUtil.validateTitle(title);
+		WikiPageTitleValidator wikiPageTitleValidator = (WikiPageTitleValidator)request.getAttribute(WikiWebKeys.WIKI_PAGE_TITLE_VALIDATOR);
+
+		wikiPageTitleValidator.validate(title);
 
 		editable = true;
 	}

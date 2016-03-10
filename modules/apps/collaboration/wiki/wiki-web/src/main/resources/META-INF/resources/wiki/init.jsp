@@ -58,6 +58,7 @@ page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.util.WikiUtil" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
+page import="com.liferay.wiki.validator.WikiPageTitleValidator" %><%@
 page import="com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.web.display.context.WikiDisplayContextProvider" %><%@
 page import="com.liferay.wiki.web.display.context.logic.MailTemplatesHelper" %><%@

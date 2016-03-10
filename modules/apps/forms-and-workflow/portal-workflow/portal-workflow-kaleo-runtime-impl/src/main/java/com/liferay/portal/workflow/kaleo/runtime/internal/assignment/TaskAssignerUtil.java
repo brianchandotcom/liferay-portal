@@ -43,8 +43,15 @@ public class TaskAssignerUtil {
 			new ArrayList<>();
 
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
+			String assigneeClassName =
+				kaleoTaskAssignment.getAssigneeClassName();
+
+			TaskAssignmentSelector taskAssignmentSelector =
+				_taskAssignmentSelectorTracker.getTaskAssignmentSelector(
+					assigneeClassName);
+
 			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				_taskAssignmentSelector.calculateTaskAssignments(
+				taskAssignmentSelector.calculateTaskAssignments(
 					kaleoTaskAssignment, executionContext);
 
 			reassignedKaleoTaskAssignments.addAll(
@@ -68,6 +75,6 @@ public class TaskAssignerUtil {
 		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
-	private TaskAssignmentSelector _taskAssignmentSelector;
+	private TaskAssignmentSelectorTracker _taskAssignmentSelectorTracker;
 
 }

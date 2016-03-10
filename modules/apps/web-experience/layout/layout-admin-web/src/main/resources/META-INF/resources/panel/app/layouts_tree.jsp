@@ -20,7 +20,7 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div id="<portlet:namespace/>layoutsTreeContainer">
+<div class="layouts-tree-container" id="<portlet:namespace/>layoutsTreeContainer">
 	<c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
 
 		<%

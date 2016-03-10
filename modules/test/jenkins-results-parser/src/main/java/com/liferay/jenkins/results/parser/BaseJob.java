@@ -128,10 +128,10 @@ public abstract class BaseJob {
 
 		buildURLMatcher.find();
 
-		this.master = buildURLMatcher.group("master");
-		this.name = buildURLMatcher.group("name");
-		this.number = Integer.parseInt(buildURLMatcher.group("number"));
-		this.status = "running";
+		master = buildURLMatcher.group("master");
+		name = buildURLMatcher.group("name");
+		number = Integer.parseInt(buildURLMatcher.group("number"));
+		status = "running";
 	}
 
 	protected String master;

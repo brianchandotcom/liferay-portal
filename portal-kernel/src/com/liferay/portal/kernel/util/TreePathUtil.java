@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TreeModel;
 
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,8 +30,6 @@ public class TreePathUtil {
 			long companyId, long parentPrimaryKey, String parentTreePath,
 			TreeModelTasks<?> treeModelTasks)
 		throws PortalException {
-
-		List<TreeModel> modifiedTreeModels = new ArrayList<>();
 
 		Deque<Object[]> traces = new LinkedList<>();
 
@@ -76,12 +73,8 @@ public class TreePathUtil {
 
 				traces.push(
 					new Object[] {treeModel.getPrimaryKeyObj(), treePath, 0L});
-
-				modifiedTreeModels.add(treeModel);
 			}
 		}
-
-		treeModelTasks.reindexTreeModels(modifiedTreeModels);
 	}
 
 	private static final int _MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE =

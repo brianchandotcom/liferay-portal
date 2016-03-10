@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.Indexable;
@@ -693,24 +692,6 @@ public class JournalFolderLocalServiceImpl
 
 					journalArticleLocalService.setTreePaths(
 						parentPrimaryKey, treePath, false);
-				}
-
-				@Override
-				public void reindexTreeModels(List<TreeModel> treeModels)
-					throws PortalException {
-
-					if (!reindex) {
-						return;
-					}
-
-					Indexer<JournalFolder> indexer =
-						IndexerRegistryUtil.nullSafeGetIndexer(
-							JournalFolder.class);
-
-					for (TreeModel treeModel : treeModels) {
-						JournalFolder journalFolder = (JournalFolder)treeModel;
-						indexer.reindex(journalFolder);
-					}
 				}
 
 			});

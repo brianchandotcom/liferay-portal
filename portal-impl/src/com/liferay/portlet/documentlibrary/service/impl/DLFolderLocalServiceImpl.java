@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
@@ -742,24 +741,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 						parentPrimaryKey, treePath);
 					dlFileVersionLocalService.setTreePaths(
 						parentPrimaryKey, treePath);
-				}
-
-				@Override
-				public void reindexTreeModels(List<TreeModel> treeModels)
-					throws PortalException {
-
-					if (!reindex) {
-						return;
-					}
-
-					Indexer<DLFolder> indexer =
-						IndexerRegistryUtil.nullSafeGetIndexer(DLFolder.class);
-
-					for (TreeModel treeModel : treeModels) {
-						DLFolder dlFolder = (DLFolder)treeModel;
-
-						indexer.reindex(dlFolder);
-					}
 				}
 
 			});

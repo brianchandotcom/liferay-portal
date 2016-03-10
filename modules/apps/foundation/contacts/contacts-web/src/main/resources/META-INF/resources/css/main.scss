@@ -520,20 +520,33 @@ $section-header-bg: #CCE6F7;
 	.my-profile .field-group {
 		position: relative;
 
+		&.user-tags-wrapper {
+			width: initial;
+		}
+
 		.icon-edit {
 			position: absolute;
-			right: 5px;
+			left: 100%;
 			top: 5px;
 		}
 
 		&:hover {
-			background: #E9E8E8;
 			cursor: pointer;
 
 			.icon-edit {
 				display: block;
 			}
 		}
+
+		.user-tags {
+			padding-left: 0;
+
+			li {
+				display: inline;
+				margin-right: 5px;
+			}
+		}
+
 	}
 
 	.profile-actions {

@@ -163,9 +163,10 @@ public class InputAssetLinksDisplayContext {
 			return _randomNamespace;
 		}
 
-		_randomNamespace = PortalUtil.generateRandomKey(
-			_request, "taglib_ui_input_asset_links_page") +
-				StringPool.UNDERLINE;
+		String randomKey = PortalUtil.generateRandomKey(
+			_request, "taglib_ui_input_asset_links_page");
+
+		_randomNamespace = randomKey + StringPool.UNDERLINE;
 
 		return _randomNamespace;
 	}

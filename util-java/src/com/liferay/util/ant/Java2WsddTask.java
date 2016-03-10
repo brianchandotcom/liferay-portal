@@ -126,11 +126,11 @@ public class Java2WsddTask {
 
 		// Get content
 
+		String packagePathWithSlashes = StringUtil.replace(
+			packagePath, CharPool.PERIOD, CharPool.SLASH);
+
 		File deployFile = new File(
-			tempDir + "/" +
-				StringUtil.replace(
-					packagePath, CharPool.PERIOD, CharPool.SLASH) +
-						"/deploy.wsdd");
+			tempDir + "/" + packagePathWithSlashes + "/deploy.wsdd");
 
 		String deployContent = new String(
 			Files.readAllBytes(deployFile.toPath()));
@@ -142,10 +142,7 @@ public class Java2WsddTask {
 		deployContent = _format(deployContent);
 
 		File undeployFile = new File(
-			tempDir + "/" +
-				StringUtil.replace(
-					packagePath, CharPool.PERIOD, CharPool.SLASH) +
-						"/undeploy.wsdd");
+			tempDir + "/" + packagePathWithSlashes + "/undeploy.wsdd");
 
 		String undeployContent = new String(
 			Files.readAllBytes(undeployFile.toPath()));

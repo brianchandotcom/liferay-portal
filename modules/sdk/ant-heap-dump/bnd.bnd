@@ -3,9 +3,9 @@ Bundle-SymbolicName: com.liferay.ant.heap.dump
 Bundle-Version: 1.0.2
 Export-Package: com.liferay.ant.heap.dump
 -includeresource:\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/concurrent/*,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/log/*,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/io/unsync/*,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/process/*,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission*.class,\
-	@../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/*
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/concurrent/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/process/*,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission*.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/*

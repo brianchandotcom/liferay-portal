@@ -59,11 +59,6 @@ public abstract class BaseJob {
 		return sb.toString();
 	}
 
-	public void setCompleted(String result) {
-		this.result = result;
-		this.status = "completed";
-	}
-
 	public void setNumber(int number) {
 		if (status.equals("starting") || status.equals("queued")) {
 			this.number = number;

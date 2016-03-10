@@ -34,19 +34,21 @@
 				{/if}
 			{/if}
 
-			<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {$multiple} {if $multiple == 'multiple'}size="{length($options)}"{/if}>
-				{if not $readOnly}
-					<option dir="{$dir}" disabled {if not $value}selected{/if} value="">
-						{$strings.chooseAnOption}
-					</option>
-				{/if}
+			<div class="input-group-container">
+				<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {$multiple} {if $multiple == 'multiple'}size="{length($options)}"{/if}>
+					{if not $readOnly}
+						<option dir="{$dir}" disabled {if not $value}selected{/if} value="">
+							{$strings.chooseAnOption}
+						</option>
+					{/if}
 
-				{foreach $option in $options}
-					<option dir="{$dir}" {$option.status} value="{$option.value}">
-						{$option.label}
-					</option>
-				{/foreach}
-			</select>
+					{foreach $option in $options}
+						<option dir="{$dir}" {$option.status} value="{$option.value}">
+							{$option.label}
+						</option>
+					{/foreach}
+				</select>
+			</div>
 
 			{$childElementsHTML|noAutoescape}
 		</div>

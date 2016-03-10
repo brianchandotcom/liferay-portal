@@ -18,7 +18,7 @@
  * @param visible
  */
 {template .text}
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-text" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-text {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}

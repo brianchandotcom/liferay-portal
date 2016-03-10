@@ -35,6 +35,31 @@
 				<span><%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %></span>
 			</h6>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			align="right"
+			cssClass="entry-action"
+			path="/user_group_action.jsp"
+		/>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:icon-vertical-card
+				actionJsp="/user_group_action.jsp"
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				icon="users"
+				resultRow="<%= row %>"
+				rowChecker="<%= userGroupSearchContainer.getRowChecker() %>"
+				subtitle="<%= userGroup.getDescription() %>"
+				title="<%= userGroup.getName() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
@@ -56,5 +81,11 @@
 		>
 			<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			align="right"
+			cssClass="entry-action"
+			path="/user_group_action.jsp"
+		/>
 	</c:otherwise>
 </c:choose>

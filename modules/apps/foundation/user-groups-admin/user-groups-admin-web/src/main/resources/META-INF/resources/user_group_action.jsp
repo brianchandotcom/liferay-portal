@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UserGroupSearch searchContainer = (UserGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
-
-String redirect = searchContainer.getIteratorURL().toString();
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 UserGroup userGroup = (UserGroup)row.getObject();
@@ -30,7 +26,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.UPDATE) && UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.VIEW) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
 
@@ -89,7 +85,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		<%
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, userGroupGroup, Layout.class.getName(), PortletProvider.Action.EDIT);
 
-		managePagesURL.setParameter("redirect", redirect);
+		managePagesURL.setParameter("redirect", currentURL);
 		%>
 
 		<liferay-ui:icon
@@ -121,7 +117,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="mvcPath" value="/edit_user_group_assignments.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
 

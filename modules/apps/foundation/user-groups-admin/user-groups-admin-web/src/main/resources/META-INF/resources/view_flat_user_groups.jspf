@@ -45,12 +45,6 @@
 		%>
 
 		<%@ include file="/search_columns.jspf" %>
-
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/user_group_action.jsp"
-		/>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

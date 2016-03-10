@@ -122,7 +122,7 @@ data.put("qa-id", "customizations");
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
 							<div class="layout-customizable-controls">
 								<span title="<liferay-ui:message key="customizable-help" />">
-									<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="no-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
+									<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="non-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
 								</span>
 							</div>
 						</div>

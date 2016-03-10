@@ -63,8 +63,6 @@ portletDisplay.setURLBack(redirect);
 				<%= StringUtil.replace(question.getDescription(locale), CharPool.NEW_LINE, "<br />") %>
 			</span>
 
-			<br /><br />
-
 			<c:choose>
 				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 					<aui:field-wrapper>

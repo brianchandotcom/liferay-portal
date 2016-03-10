@@ -56,9 +56,16 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		return friendlyURL;
 	}
 
+	@Override
+	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
+		return normalize(friendlyURL, _friendlyURLPatternWithPeriodsAndSlashes);
+	}
+
 	private static final Pattern _friendlyURLHyphenPattern = Pattern.compile(
 		"-{2,}");
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9./_-]");
+	private static final Pattern _friendlyURLPatternWithPeriodsAndSlashes =
+		Pattern.compile("[^a-z0-9_-]");
 
 }

@@ -42,6 +42,11 @@ public class FriendlyURLNormalizerUtil {
 			friendlyURL, friendlyURLPattern);
 	}
 
+	public static String normalizeWithPeriodsAndSlashes(String friendlyURL) {
+		return getFriendlyURLNormalizer().normalizeWithPeriodsAndSlashes(
+			friendlyURL);
+	}
+
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
 

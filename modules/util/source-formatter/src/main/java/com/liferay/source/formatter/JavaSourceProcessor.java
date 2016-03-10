@@ -1626,9 +1626,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String previousLine = null;
 		int previousLineLength = 0;
 
-		int previousLineCloseParenthesesCount = 0;
 		int previousLineLeadingWhitespace = 0;
-		int previousLineOpenParenthesesCount = 0;
+		int previousLineLevel = 0;
 
 		int baseLeadingWhitespace = 0;
 		int insideMethodCallExpectedWhitespace = 0;
@@ -1654,12 +1653,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			line = StringUtil.replace(
 				line, StringPool.TAB, StringPool.FOUR_SPACES);
 
-			String strippedQuotesLine = stripQuotes(trimmedLine);
-
-			int closeParenthesesCount = StringUtil.count(
-				strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-			int openParenthesesCount = StringUtil.count(
-				strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
+			int lineLevel = getLevel(trimmedLine);
 
 			if ((previousLineLength > 0) &&
 				(line.endsWith("|") || line.endsWith("&&") ||
@@ -1667,9 +1661,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				(previousLine.endsWith("|") || previousLine.endsWith("&&")) &&
 				(previousLineLength + trimmedLine.length() <
 					_MAX_LINE_LENGTH) &&
-				(openParenthesesCount <= closeParenthesesCount) &&
-				(previousLineCloseParenthesesCount <=
-					previousLineOpenParenthesesCount)) {
+				(lineLevel <= 0) && (previousLineLevel >= 0)) {
 
 				return StringUtil.replace(
 					ifClause, previousLine + "\n" + originalLine,
@@ -1709,9 +1701,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (previousLine.endsWith(StringPool.COMMA) &&
 					(insideMethodCallExpectedWhitespace > 0)) {
 
-					if (previousLineCloseParenthesesCount >
-							previousLineOpenParenthesesCount) {
-
+					if (previousLineLevel < 0) {
 						insideMethodCallExpectedWhitespace -= 4;
 					}
 
@@ -1741,14 +1731,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return ifClause;
 			}
 
-			level = level + openParenthesesCount - closeParenthesesCount;
+			level += lineLevel;
 
 			previousLine = originalLine;
 			previousLineLength = line.length();
 
-			previousLineCloseParenthesesCount = closeParenthesesCount;
+			previousLineLevel = lineLevel;
 			previousLineLeadingWhitespace = leadingWhitespace;
-			previousLineOpenParenthesesCount = openParenthesesCount;
 		}
 
 		return ifClause;

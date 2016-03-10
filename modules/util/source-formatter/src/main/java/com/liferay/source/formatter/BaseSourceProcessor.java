@@ -124,9 +124,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
-	protected static int adjustLevel(
-		int level, String text, String s, int diff) {
-
+	protected int adjustLevel(int level, String text, String s, int diff) {
 		String[] lines = StringUtil.splitLines(text);
 
 		forLoop:
@@ -155,7 +153,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return level;
 	}
 
-	protected static int getLeadingTabCount(String line) {
+	protected int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
 		while (line.startsWith(StringPool.TAB)) {
@@ -167,13 +165,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return leadingTabCount;
 	}
 
-	protected static int getLevel(String s) {
+	protected int getLevel(String s) {
 		return getLevel(
 			s, new String[] {StringPool.OPEN_PARENTHESIS},
 			new String[] {StringPool.CLOSE_PARENTHESIS}, 0);
 	}
 
-	protected static int getLevel(
+	protected int getLevel(
 		String s, String increaseLevelString, String decreaseLevelString) {
 
 		return getLevel(
@@ -181,14 +179,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			new String[] {decreaseLevelString}, 0);	
 	}
 
-	protected static int getLevel(
+	protected int getLevel(
 		String s, String[] increaseLevelStrings,
 		String[] decreaseLevelStrings) {
 
 		return getLevel(s, increaseLevelStrings, decreaseLevelStrings, 0);
 	}
 
-	protected static int getLevel(
+	protected int getLevel(
 		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
 		int startLevel) {
 
@@ -205,19 +203,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return level;
 	}
 
-	protected static boolean isExcludedPath(
-		List<String> excludes, String path) {
-
+	protected boolean isExcludedPath(List<String> excludes, String path) {
 		return isExcludedPath(excludes, path, -1);
 	}
 
-	protected static boolean isExcludedPath(
+	protected boolean isExcludedPath(
 		List<String> excludes, String path, int lineCount) {
 
 		return isExcludedPath(excludes, path, lineCount, null);
 	}
 
-	protected static boolean isExcludedPath(
+	protected boolean isExcludedPath(
 		List<String> excludes, String path, int lineCount,
 		String javaTermName) {
 
@@ -265,11 +261,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected static String stripQuotes(String s) {
+	protected String stripQuotes(String s) {
 		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
 	}
 
-	protected static String stripQuotes(String s, char... delimeters) {
+	protected String stripQuotes(String s, char... delimeters) {
 		List<Character> delimetersList = ListUtil.toList(delimeters);
 
 		char delimeter = CharPool.SPACE;

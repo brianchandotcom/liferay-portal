@@ -75,11 +75,10 @@ public class LiferayURLConstructor implements URLConstructor {
 						"[$END_PAGE_TITLE_EDIT$]";
 		}
 		else if (context.equals(WikiContext.VIEW)) {
-			path =
-				"[$BEGIN_PAGE_TITLE$]" +
-					WikiEscapeUtil.escapeName(
-						JSPWikiEngine.decodeJSPWikiName(name)) +
-						"[$END_PAGE_TITLE$]";
+			String escapedName = WikiEscapeUtil.escapeName(
+				JSPWikiEngine.decodeJSPWikiName(name));
+
+			path = "[$BEGIN_PAGE_TITLE$]" + escapedName + "[$END_PAGE_TITLE$]";
 		}
 		else if (context.equals(WikiContext.ATTACH)) {
 			if (name.indexOf(CharPool.SLASH) == -1) {

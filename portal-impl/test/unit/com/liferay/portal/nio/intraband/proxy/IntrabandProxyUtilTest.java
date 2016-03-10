@@ -264,11 +264,12 @@ public class IntrabandProxyUtilTest {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
+			Method method = TestExtractMethodsClass2.class.getMethod(
+				"getId", Object.class);
+
 			Assert.assertEquals(
-				"The @Id annotated method " +
-					TestExtractMethodsClass2.class.getMethod(
-							"getId", Object.class) +
-						" must not have parameters",
+				"The @Id annotated method " + method +
+					" must not have parameters",
 				iae.getMessage());
 		}
 

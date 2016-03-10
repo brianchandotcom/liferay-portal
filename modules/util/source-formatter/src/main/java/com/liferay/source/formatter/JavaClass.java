@@ -108,7 +108,10 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
-			checkChaining(javaTerm);
+			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
+				checkChaining(javaTerm);
+				checkLineBreak(javaTerm);
+			}
 
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
 				javaTerm.hasAnnotation("Indexable") &&
@@ -250,10 +253,6 @@ public class JavaClass {
 	}
 
 	protected void checkChaining(JavaTerm javaTerm) {
-		if (!javaTerm.isMethod() && !javaTerm.isConstructor()) {
-			return;
-		}
-
 		Matcher matcher = _chainingPattern.matcher(javaTerm.getContent());
 
 		while (matcher.find()) {
@@ -485,6 +484,26 @@ public class JavaClass {
 		else {
 			checkFinalableFieldType(
 				javaTerm, annotationsExclusions, modifierDefinition);
+		}
+	}
+
+	protected void checkLineBreak(JavaTerm javaTerm) {
+		Matcher matcher = _lineBreakPattern.matcher(javaTerm.getContent());
+
+		while (matcher.find()) {
+			if (_javaSourceProcessor.getLevel(matcher.group(2)) >= 0) {
+				continue;
+			}
+
+			int lineCount =
+				javaTerm.getLineCount() +
+					_javaSourceProcessor.getLineCount(
+						javaTerm.getContent(), matcher.end(1));
+
+			_javaSourceProcessor.processErrorMessage(
+				_fileName,
+				"Create a new var for " + StringUtil.trim(matcher.group(1)) +
+					" for better readability: " + _fileName + " " + lineCount);
 		}
 	}
 
@@ -1419,6 +1438,8 @@ public class JavaClass {
 	private final JavaSourceProcessor _javaSourceProcessor;
 	private final List<String> _javaTermAccessLevelModifierExcludes;
 	private Set<JavaTerm> _javaTerms;
+	private final Pattern _lineBreakPattern = Pattern.compile(
+		"\n(.*)\\(\n((.+,\n)*.*\\)) \\+\n");
 	private final int _lineCount;
 	private final String _name;
 	private final JavaClass _outerClass;

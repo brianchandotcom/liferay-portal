@@ -100,9 +100,12 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 			XSLContentConfiguration.class, properties);
 	}
 
-	protected String[] getValidUrlPrefixes(ThemeDisplay themeDisplay) {
+	protected String[] getValidUrlPrefixes(
+		ThemeDisplay themeDisplay, String contextPath) {
+
 		String validUrlPrefixes = XSLContentUtil.replaceUrlTokens(
-			themeDisplay, _xslContentConfiguration.validUrlPrefixes());
+			themeDisplay, contextPath,
+			_xslContentConfiguration.validUrlPrefixes());
 
 		return StringUtil.split(validUrlPrefixes);
 	}
@@ -125,11 +128,13 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String[] validUrlPrefixes = getValidUrlPrefixes(themeDisplay);
+		String[] validUrlPrefixes = getValidUrlPrefixes(
+			themeDisplay, actionRequest.getContextPath());
 
 		String xmlUrl = getParameter(actionRequest, "xmlUrl");
 
-		xmlUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xmlUrl);
+		xmlUrl = XSLContentUtil.replaceUrlTokens(
+			themeDisplay, actionRequest.getContextPath(), xmlUrl);
 
 		if (!hasValidUrlPrefix(validUrlPrefixes, xmlUrl)) {
 			SessionErrors.add(actionRequest, "xmlUrl");
@@ -137,7 +142,8 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 
 		String xslUrl = getParameter(actionRequest, "xslUrl");
 
-		xslUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xslUrl);
+		xslUrl = XSLContentUtil.replaceUrlTokens(
+			themeDisplay, actionRequest.getContextPath(), xslUrl);
 
 		if (!hasValidUrlPrefix(validUrlPrefixes, xslUrl)) {
 			SessionErrors.add(actionRequest, "xslUrl");

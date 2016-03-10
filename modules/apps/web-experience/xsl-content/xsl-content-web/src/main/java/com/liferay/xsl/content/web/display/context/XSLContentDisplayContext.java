@@ -24,6 +24,7 @@ import com.liferay.xsl.content.web.util.XSLContentUtil;
 
 import java.net.URL;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -48,16 +49,22 @@ public class XSLContentDisplayContext {
 				XSLContentPortletInstanceConfiguration.class);
 	}
 
-	public String getContent() throws Exception {
+	public String getContent(ServletRequest servletRequest) throws Exception {
 		if (_content != null) {
 			return _content;
 		}
 
+		HttpServletRequest request = (HttpServletRequest)servletRequest;
+
+		String contextPath = request.getContextPath();
+
 		String xmlUrl = XSLContentUtil.replaceUrlTokens(
-			_themeDisplay, _xslContentPortletInstanceConfiguration.xmlUrl());
+			_themeDisplay, contextPath,
+			_xslContentPortletInstanceConfiguration.xmlUrl());
 
 		String xslUrl = XSLContentUtil.replaceUrlTokens(
-			_themeDisplay, _xslContentPortletInstanceConfiguration.xslUrl());
+			_themeDisplay, contextPath,
+			_xslContentPortletInstanceConfiguration.xslUrl());
 
 		_content = XSLContentUtil.transform(
 			_xslContentConfiguration, new URL(xmlUrl), new URL(xslUrl));

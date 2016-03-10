@@ -14,7 +14,7 @@ dependencies {
 	provided project(":apps:collaboration:message-boards:message-boards-web")
 	provided project(":apps:collaboration:social:social-private-messaging-api")
 	provided project(":apps:collaboration:social:social-private-messaging-service")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 }
 
 liferay {

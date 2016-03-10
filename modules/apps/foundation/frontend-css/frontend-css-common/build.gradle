@@ -1,0 +1,63 @@
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
+
+configurations {
+	bourbon
+}
+
+task buildBourbon(type: Copy)
+task buildCssCommon(type: Copy)
+task publishNodeModule(type: PublishNodeModuleTask)
+
+String bourbonVersion = "4.2.3"
+File commonCssDestinationDir = file("tmp/META-INF/resources")
+
+buildBourbon {
+	File bourbonDestinationDir = new File(commonCssDestinationDir, "bourbon")
+
+	from("src/main/resources/META-INF/resources") {
+		exclude "**.npmignore"
+		exclude "**.json"
+	}
+
+	includeEmptyDirs = false
+	into commonCssDestinationDir
+
+	into(bourbonDestinationDir.name) {
+		eachFile new ReplaceLeadingPathAction("bourbon/META-INF/resources/webjars/bourbon/${bourbonVersion}/app/assets/stylesheets": "bourbon")
+
+		from {
+			zipTree(configurations.bourbon.singleFile)
+		}
+
+		includeEmptyDirs = false
+	}
+}
+
+buildCssCommon {
+	dependsOn buildBourbon
+	from commonCssDestinationDir
+	into new File(liferay.appServerPortalDir, "html/css/common")
+}
+
+classes {
+	dependsOn buildCssCommon
+}
+
+dependencies {
+	bourbon group: "org.webjars.bower", name: "bourbon", transitive: false, version: bourbonVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+publishNodeModule {
+	dependsOn jar
+	workingDir = "src/main/resources/META-INF/resources"
+}
+
+updateFileVersions {
+	match(/com\.liferay\.frontend\.css\.common=(\d.+)/, "../../../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

@@ -28,7 +28,6 @@ import com.liferay.social.activities.web.util.SocialActivitiesQueryHelper;
 import com.liferay.social.kernel.model.SocialActivitySet;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -152,15 +151,7 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public String getTaglibFeedTitle() throws PortalException {
-		Group group = _socialActivitiesRequestHelper.getScopeGroup();
-		Locale locale = _socialActivitiesRequestHelper.getLocale();
-
-		String groupDescriptiveName = HtmlUtil.escape(
-			group.getDescriptiveName(locale));
-
-		return LanguageUtil.format(
-			getResourceBundle(), "subscribe-to-x's-activities",
-			groupDescriptiveName, false);
+		return LanguageUtil.get(getResourceBundle(), "rss");
 	}
 
 	@Override

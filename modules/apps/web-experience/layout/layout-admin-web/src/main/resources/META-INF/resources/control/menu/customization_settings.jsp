@@ -157,7 +157,7 @@ data.put("qa-id", "customizations");
 				<li class="control-menu-nav-item hidden-xs">
 					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 						<liferay-ui:icon
-							linkCssClass="toggle-customized-view"
+							id='<%= portletNamespace + "toggleCustomizedViewButtonXL" %>'
 							message="<%= toggleCustomizedViewMessage %>"
 							url="javascript:;"
 						/>
@@ -173,7 +173,7 @@ data.put("qa-id", "customizations");
 
 				<li class="control-menu-nav-item visible-xs">
 					<div class="btn-group dropdown">
-						<button class="btn btn-primary toggle-customized-view" type="button"><liferay-ui:message key="<%= toggleCustomizedViewMessage %>" /></button>
+						<button class="btn btn-primary" id="<%= portletNamespace %>toggleCustomizedViewButtonXS" type="button"><liferay-ui:message key="<%= toggleCustomizedViewMessage %>" /></button>
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
@@ -199,8 +199,7 @@ data.put("qa-id", "customizations");
 						}
 					);
 
-					$('#<%= portletNamespace %>customizationBar').delegate(
-						'.toggle-customized-view',
+					$('#<%= portletNamespace %>toggleCustomizedViewButtonXL, #<%= portletNamespace %>toggleCustomizedViewButtonXS').on(
 						'click',
 						function(event) {
 							$.ajax(

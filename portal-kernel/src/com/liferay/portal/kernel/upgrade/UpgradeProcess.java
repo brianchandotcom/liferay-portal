@@ -498,20 +498,6 @@ public abstract class UpgradeProcess
 	}
 
 	protected void upgradeTable(
-			String tableName, Object[][] tableColumns, String sqlCreate,
-			String[] sqlAddIndexes)
-		throws Exception {
-
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			tableName, tableColumns);
-
-		upgradeTable.setCreateSQL(sqlCreate);
-		upgradeTable.setIndexesSQL(sqlAddIndexes);
-
-		upgradeTable.updateTable();
-	}
-
-	protected void upgradeTable(
 			String tableName, Object[][] tableColumns, String createSQL,
 			String[] indexesSQL, UpgradeColumn... upgradeColumns)
 		throws Exception {

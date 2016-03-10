@@ -1,6 +1,6 @@
 <definition default="waitForSPARefresh">
 	<command name="waitForSPARefresh">
-		<execute argument1="//body[contains(@class,'lfr-surface-loading')]" selenium="waitForElementNotPresent" />
+		<execute argument1="//html[contains(@class,'lfr-spa-loading')]" selenium="waitForElementNotPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

@@ -170,7 +170,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFiles() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer("updateFile");
+		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
 				"select * from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {

@@ -893,7 +893,7 @@ public class JavaClass {
 	}
 
 	protected JavaTerm getJavaTerm(
-			String name, int type, int lineCount, int startPos, int endPos)
+			String name, int type, int startPos, int endPos)
 		throws Exception {
 
 		String javaTermContent = _classContent.substring(startPos, endPos);
@@ -901,6 +901,10 @@ public class JavaClass {
 		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
 			return null;
 		}
+
+		int lineCount =
+			_lineCount +
+				_javaSourceProcessor.getLineCount(_classContent, startPos) - 1;
 
 		JavaTerm javaTerm = new JavaTerm(
 			name, type, javaTermContent, lineCount, _indent);
@@ -931,20 +935,16 @@ public class JavaClass {
 			new UnsyncStringReader(_classContent));
 
 		int index = 0;
-		int lineCount = _lineCount - 1;
 
 		String line = null;
 
 		String javaTermName = null;
-		int javaTermLineCount = -1;
 		int javaTermStartPosition = -1;
 		int javaTermType = -1;
 
 		int lastCommentOrAnnotationPos = -1;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
-
 			if (JavaSourceProcessor.getLeadingTabCount(line) !=
 					_indent.length()) {
 
@@ -980,8 +980,8 @@ public class JavaClass {
 					(javaTermEndPosition < _classContent.length())) {
 
 					JavaTerm javaTerm = getJavaTerm(
-						javaTermName, javaTermType, javaTermLineCount,
-						javaTermStartPosition, javaTermEndPosition);
+						javaTermName, javaTermType, javaTermStartPosition,
+						javaTermEndPosition);
 
 					if (javaTerm == null) {
 						return null;
@@ -995,7 +995,6 @@ public class JavaClass {
 					}
 				}
 
-				javaTermLineCount = lineCount;
 				javaTermName = (String)tuple.getObject(0);
 				javaTermStartPosition = javaTermEndPosition;
 				javaTermType = (Integer)tuple.getObject(1);
@@ -1022,6 +1021,11 @@ public class JavaClass {
 					if (insideClass.contains(line) &&
 						!isEnumType(line, matcher.group(4))) {
 
+						int lineCount =
+							_lineCount +
+								_javaSourceProcessor.getLineCount(
+									_classContent, index) - 1;
+
 						_javaSourceProcessor.processErrorMessage(
 							_fileName,
 							"Missing access level modifier: " + _fileName +
@@ -1039,8 +1043,8 @@ public class JavaClass {
 					_indent.length() + 1;
 
 			JavaTerm javaTerm = getJavaTerm(
-				javaTermName, javaTermType, javaTermLineCount,
-				javaTermStartPosition, javaTermEndPosition);
+				javaTermName, javaTermType, javaTermStartPosition,
+				javaTermEndPosition);
 
 			if (javaTerm == null) {
 				return null;

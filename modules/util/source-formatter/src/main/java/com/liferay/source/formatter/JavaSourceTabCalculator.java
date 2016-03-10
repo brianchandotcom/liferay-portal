@@ -341,13 +341,13 @@ public class JavaSourceTabCalculator {
 	}
 
 	protected int calculateTabLevel(int level, String text) {
-		level = BaseSourceProcessor.adjustTabLevel(
+		level = BaseSourceProcessor.adjustLevel(
 			level, text, StringPool.OPEN_CURLY_BRACE, 1);
-		level = BaseSourceProcessor.adjustTabLevel(
+		level = BaseSourceProcessor.adjustLevel(
 			level, text, StringPool.CLOSE_CURLY_BRACE, -1);
-		level = BaseSourceProcessor.adjustTabLevel(
+		level = BaseSourceProcessor.adjustLevel(
 			level, text, StringPool.OPEN_PARENTHESIS, 1);
-		level = BaseSourceProcessor.adjustTabLevel(
+		level = BaseSourceProcessor.adjustLevel(
 			level, text, StringPool.CLOSE_PARENTHESIS, -1);
 
 		return level;

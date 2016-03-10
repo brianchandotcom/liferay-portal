@@ -124,7 +124,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
-	protected static int adjustTabLevel(
+	protected static int adjustLevel(
 		int level, String text, String s, int diff) {
 
 		String[] lines = StringUtil.splitLines(text);

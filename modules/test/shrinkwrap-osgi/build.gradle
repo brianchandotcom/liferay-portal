@@ -1,0 +1,7 @@
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compile group: "org.jboss.shrinkwrap", name: "shrinkwrap-api", version: "1.2.2"
+	compile group: "org.jboss.shrinkwrap", name: "shrinkwrap-depchain", version: "1.2.2", ext: 'pom'
+}
+
+project.group = 'com.liferay.shrinkwrap'

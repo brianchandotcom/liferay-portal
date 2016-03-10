@@ -36,7 +36,7 @@ public class TopLevelJob extends BaseJob {
 
 	protected static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
 
-	public TopLevelJob(String url) {
+	public TopLevelJob(String url) throws Exception {
 		super(url);
 
 		downstreamJobs = new ArrayList<>();

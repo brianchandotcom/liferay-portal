@@ -76,9 +76,9 @@ public class JavaClass {
 		throws Exception {
 
 		if (_javaTerms == null) {
-			if (!BaseSourceProcessor.isExcludedPath(
+			if (!_javaSourceProcessor.isExcludedPath(
 					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
-				!BaseSourceProcessor.isExcludedPath(
+				!_javaSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath)) {
 
 				_javaSourceProcessor.processErrorMessage(
@@ -120,7 +120,7 @@ public class JavaClass {
 						_fileName + " " + javaTerm.getLineCount());
 			}
 
-			if (!BaseSourceProcessor.isExcludedPath(
+			if (!_javaSourceProcessor.isExcludedPath(
 					checkJavaFieldTypesExcludes, _absolutePath)) {
 
 				checkJavaFieldType(
@@ -422,7 +422,7 @@ public class JavaClass {
 			Set<String> immutableFieldTypes)
 		throws Exception {
 
-		if (!BaseSourceProcessor.portalSource || !javaTerm.isVariable()) {
+		if (!_javaSourceProcessor.portalSource || !javaTerm.isVariable()) {
 			return;
 		}
 
@@ -627,7 +627,7 @@ public class JavaClass {
 
 			String javaTermName = javaTerm.getName();
 
-			if (BaseSourceProcessor.isExcludedPath(
+			if (_javaSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath,
 					javaTerm.getLineCount(), javaTermName)) {
 
@@ -841,7 +841,7 @@ public class JavaClass {
 		throws Exception {
 
 		if ((_indent.length() == 1) &&
-			!BaseSourceProcessor.isExcludedPath(
+			!_javaSourceProcessor.isExcludedPath(
 				testAnnotationsExcludes, _absolutePath) &&
 			_fileName.endsWith("Test.java")) {
 
@@ -1030,7 +1030,7 @@ public class JavaClass {
 					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
 					 !line.startsWith(_indent + "extends") &&
 					 !line.startsWith(_indent + "implements") &&
-					 !BaseSourceProcessor.isExcludedPath(
+					 !_javaSourceProcessor.isExcludedPath(
 						 _javaTermAccessLevelModifierExcludes, _absolutePath)) {
 
 				Matcher matcher = _classPattern.matcher(_classContent);
@@ -1346,7 +1346,7 @@ public class JavaClass {
 
 		String javaTermName = javaTerm.getName();
 
-		if (BaseSourceProcessor.isExcludedPath(
+		if (_javaSourceProcessor.isExcludedPath(
 				javaTermSortExcludes, _absolutePath, -1, javaTermName)) {
 
 			return;

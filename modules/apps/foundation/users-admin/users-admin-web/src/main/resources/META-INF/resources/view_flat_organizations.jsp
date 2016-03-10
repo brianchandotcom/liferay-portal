@@ -140,8 +140,7 @@ if (filterManageableOrganizations) {
 					<%@ include file="/organization/search_columns.jspf" %>
 
 					<liferay-ui:search-container-column-jsp
-						align="right"
-						cssClass="entry-action"
+						cssClass="entry-action-column"
 						path="/organization_action.jsp"
 					/>
 				</liferay-ui:search-container-row>

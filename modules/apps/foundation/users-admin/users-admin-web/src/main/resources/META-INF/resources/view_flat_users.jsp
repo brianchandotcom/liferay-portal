@@ -299,8 +299,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 			<%@ include file="/user/search_columns.jspf" %>
 
 			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
+				cssClass="entry-action-column"
 				path="/user_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

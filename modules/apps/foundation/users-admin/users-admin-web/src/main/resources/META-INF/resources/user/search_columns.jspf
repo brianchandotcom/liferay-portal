@@ -15,30 +15,38 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column first-name-column"
 	href="<%= rowURL %>"
 	name="first-name"
 	orderable="<%= true %>"
 	property="firstName"
+	truncate="<%= true %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column last-name-column"
 	href="<%= rowURL %>"
 	name="last-name"
 	orderable="<%= true %>"
 	property="lastName"
+	truncate="<%= true %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column screen-name-column"
 	href="<%= rowURL %>"
 	name="screen-name"
 	orderable="<%= true %>"
 	property="screenName"
+	truncate="<%= true %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column job-title-column"
 	href="<%= rowURL %>"
 	name="job-title"
 	orderable="<%= true %>"
+	truncate="<%= true %>"
 	value="<%= user2.getJobTitle() %>"
 />
 
@@ -51,6 +59,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text
+			cssClass="organization-roles-column text-column"
 			href="<%= rowURL %>"
 			name="organization-roles"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
@@ -64,6 +73,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text
+			cssClass="organizations-column text-column"
 			href="<%= rowURL %>"
 			name="organizations"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
@@ -77,6 +87,7 @@ int userUserGroupsCount = UserGroupLocalServiceUtil.getUserUserGroupsCount(user2
 %>
 
 <liferay-ui:search-container-column-text
+	cssClass="text-column user-groups-column"
 	href="<%= rowURL %>"
 	name="user-groups"
 	value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userUserGroups, UserGroup.NAME_ACCESSOR, userUserGroupsCount)) %>"

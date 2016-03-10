@@ -26,15 +26,15 @@ import org.apache.tools.ant.Project;
  */
 public class TopLevelJob extends BaseJob {
 
-	public static final String COMPLETED_BUILD_URLS_PROPERTY_NAME =
+	protected static final String COMPLETED_BUILD_URLS_PROPERTY_NAME =
 		"completed.build.urls";
 
-	public static final String MAX_STARTING_TIME_PROPERTY_NAME =
+	protected static final String MAX_STARTING_TIME_PROPERTY_NAME =
 		"max.starting.time";
 
-	public static final String MAX_WAIT_TIME_PROPERTY_NAME = "max.wait.time";
+	protected static final String MAX_WAIT_TIME_PROPERTY_NAME = "max.wait.time";
 
-	public static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
+	protected static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
 
 	public TopLevelJob(String url) {
 		super(url);
@@ -55,10 +55,14 @@ public class TopLevelJob extends BaseJob {
 	}
 
 	public List<DownstreamJob> getDownstreamJobs() {
-		return downstreamJobs;
+		return getDownstreamJobs(null);
 	}
 
 	public List<DownstreamJob> getDownstreamJobs(String status) {
+		if (status == null) {
+			return downstreamJobs;
+		}
+
 		List<DownstreamJob> downstreamJobWithStatus = new ArrayList<>();
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
@@ -144,10 +148,8 @@ public class TopLevelJob extends BaseJob {
 
 		waitForDownstreamJobs(updatePeriod, maxStartingTime, maxWaitTime);
 
-		List<DownstreamJob> completedJobs = getDownstreamJobs("completed");
-
 		String completedDownstreamURLs = StringUtils.join(
-			getDownstreamURLs(completedJobs), ",");
+			getDownstreamURLs("completed"), ",");
 
 		project.setProperty(
 			COMPLETED_BUILD_URLS_PROPERTY_NAME, completedDownstreamURLs);
@@ -155,11 +157,12 @@ public class TopLevelJob extends BaseJob {
 
 	protected List<DownstreamJob> downstreamJobs;
 
-	private static List<String> getDownstreamURLs(
-			List<DownstreamJob> downstreamJobs)
+	protected List<String> getDownstreamURLs(
+			String status)
 		throws Exception {
 
-		List<String> downstreamURLs = new ArrayList<>();
+		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status);
+		List<String> downstreamURLs = new ArrayList<>(downstreamJobs.size());
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
 			downstreamURLs.add(downstreamJob.getURL());

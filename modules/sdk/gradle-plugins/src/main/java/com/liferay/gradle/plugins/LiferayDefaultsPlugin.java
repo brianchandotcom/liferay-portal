@@ -91,7 +91,9 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
+import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -125,7 +127,9 @@ import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
 import org.gradle.api.tasks.testing.logging.TestLogEvent;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
+import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.MinimalJavadocOptions;
+import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
@@ -879,6 +883,34 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		Configuration configuration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+
+		DependencySet dependencySet = configuration.getAllDependencies();
+
+		GradleInternal gradle = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradle.getServices();
+
+		ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		for (ProjectDependency projectDependency :
+				dependencySet.withType(ProjectDependency.class)) {
+
+			ProjectInternal dependencyProject =
+				(ProjectInternal)projectDependency.getDependencyProject();
+
+			projectConfigurer.configure(dependencyProject);
+
+			if (!hasPlugin(dependencyProject, BasePlugin.class)) {
+				continue;
+			}
+
+			String name = getArchivesBaseName(dependencyProject);
+			String version = String.valueOf(dependencyProject.getVersion());
+
+			includeResource = includeResource.replace(
+				name + "-*.", name + "-" + version + ".");
+		}
 
 		ResolvedConfiguration resolvedConfiguration =
 			configuration.getResolvedConfiguration();

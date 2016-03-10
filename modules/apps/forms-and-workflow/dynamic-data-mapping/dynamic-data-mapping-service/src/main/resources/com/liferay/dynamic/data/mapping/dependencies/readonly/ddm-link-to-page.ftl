@@ -20,7 +20,7 @@
 
 		<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutLocalService")>
 
-		<#if fieldLayoutJSONObject.getLong("groupId") > 0>
+		<#if fieldLayoutJSONObject.getLong("groupId") gt 0> 
 			<#assign fieldLayoutGroupId = fieldLayoutJSONObject.getLong("groupId")>
 		<#else>
 			<#assign fieldLayoutGroupId = scopeGroupId>

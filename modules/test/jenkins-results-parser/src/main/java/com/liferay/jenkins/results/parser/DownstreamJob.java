@@ -148,7 +148,8 @@ public class DownstreamJob extends BaseJob {
 					(build.get("result") != null) &&
 					!build.getBoolean("building")) {
 
-					setCompleted(build.getString("result"));
+					result = build.optString("result");
+					status = "completed";
 
 					break;
 				}

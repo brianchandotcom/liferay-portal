@@ -65,9 +65,23 @@ public class TopLevelJob extends BaseJob {
 	}
 
 	public void update() throws Exception {
-		for (DownstreamJob downstreamJob : downstreamJobs) {
-			downstreamJob.update();
+		if (downstreamJobs != null) {
+			for (DownstreamJob downstreamJob : downstreamJobs) {
+				downstreamJob.update();
+			}
+
+			if (getDownstreamJobs().size() ==
+					getDownstreamJobs("completed").size()) {
+
+				status = "completed";
+
+				return;
+			}
 		}
+
+		status = "running";
+
+		return;
 	}
 
 	public void waitForDownstreamJobs(

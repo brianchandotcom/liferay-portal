@@ -48,8 +48,8 @@ copyFavicon {
 }
 
 dependencies {
-	frontendThemes project(":apps:foundation:frontend:frontend-theme:frontend-theme-styled")
-	frontendThemes project(":apps:foundation:frontend:frontend-theme:frontend-theme-unstyled")
+	frontendThemes project(":apps:foundation:frontend-theme:frontend-theme-styled")
+	frontendThemes project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "1.0.3"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

@@ -51,7 +51,9 @@ public class PortletBagFactoryTest extends TestCase {
 		try {
 			PortletBagFactory portletBagFactory = new PortletBagFactory();
 
-			portletBagFactory.setClassLoader(getClass().getClassLoader());
+			Class<?> clazz = getClass();
+
+			portletBagFactory.setClassLoader(clazz.getClassLoader());
 
 			portletBagFactory.create(new PortletImpl());
 
@@ -66,7 +68,10 @@ public class PortletBagFactoryTest extends TestCase {
 		try {
 			PortletBagFactory portletBagFactory = new PortletBagFactory();
 
-			portletBagFactory.setClassLoader(getClass().getClassLoader());
+			Class<?> clazz = getClass();
+
+			portletBagFactory.setClassLoader(clazz.getClassLoader());
+
 			portletBagFactory.setServletContext(new MockServletContext());
 
 			portletBagFactory.create(new PortletImpl());
@@ -86,7 +91,10 @@ public class PortletBagFactoryTest extends TestCase {
 
 			PortletBagFactory portletBagFactory = new PortletBagFactory();
 
-			portletBagFactory.setClassLoader(getClass().getClassLoader());
+			Class<?> clazz = getClass();
+
+			portletBagFactory.setClassLoader(clazz.getClassLoader());
+
 			portletBagFactory.setServletContext(new MockServletContext());
 			portletBagFactory.setWARFile(false);
 
@@ -118,7 +126,9 @@ public class PortletBagFactoryTest extends TestCase {
 
 			};
 
-			portletBagFactory.setClassLoader(getClass().getClassLoader());
+			Class<?> clazz = getClass();
+
+			portletBagFactory.setClassLoader(clazz.getClassLoader());
 			portletBagFactory.setServletContext(new MockServletContext());
 			portletBagFactory.setWARFile(false);
 

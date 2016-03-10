@@ -30,7 +30,10 @@ public class AutoDeployScanner extends Thread {
 
 		_autoDeployDir = autoDeployDir;
 
-		setContextClassLoader(getClass().getClassLoader());
+		Class<?> clazz = getClass();
+
+		setContextClassLoader(clazz.getClassLoader());
+
 		setDaemon(true);
 		setPriority(MIN_PRIORITY);
 	}

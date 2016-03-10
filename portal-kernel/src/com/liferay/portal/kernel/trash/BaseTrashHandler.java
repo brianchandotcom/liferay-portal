@@ -408,8 +408,9 @@ public abstract class BaseTrashHandler implements TrashHandler {
 			restoreTrashEntry(userId, classPK);
 		}
 
-		_log.error(
-			"moveTrashEntry() is not implemented in " + getClass().getName());
+		Class<?> clazz = getClass();
+
+		_log.error("moveTrashEntry() is not implemented in " + clazz.getName());
 
 		throw new SystemException();
 	}

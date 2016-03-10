@@ -31,7 +31,9 @@ public class RequestParameterAuthVerifier
 
 	@Override
 	public String getAuthType() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override

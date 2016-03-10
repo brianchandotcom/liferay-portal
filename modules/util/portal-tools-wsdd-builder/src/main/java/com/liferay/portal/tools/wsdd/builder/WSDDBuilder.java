@@ -69,7 +69,9 @@ public class WSDDBuilder {
 		File serverConfigFile = new File(_serverConfigFileName);
 
 		if (!serverConfigFile.exists()) {
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			String serverConfigContent = StringUtil.read(
 				classLoader,

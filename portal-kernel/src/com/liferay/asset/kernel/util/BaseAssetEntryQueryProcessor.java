@@ -22,7 +22,9 @@ public abstract class BaseAssetEntryQueryProcessor
 
 	@Override
 	public String getKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 }

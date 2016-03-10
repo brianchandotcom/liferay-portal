@@ -143,7 +143,9 @@ public class DefaultPortalKaleoManager
 				return;
 			}
 
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			InputStream inputStream = classLoader.getResourceAsStream(fileName);
 

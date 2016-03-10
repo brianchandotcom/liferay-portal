@@ -47,7 +47,9 @@ public class ClassLoaderTest {
 	@Test
 	public void testCreate1() throws Exception {
 		try {
-			new URLClassLoader(new URL[0], getClass().getClassLoader());
+			Class<?> clazz = getClass();
+
+			new URLClassLoader(new URL[0], clazz.getClassLoader());
 
 			Assert.fail();
 		}

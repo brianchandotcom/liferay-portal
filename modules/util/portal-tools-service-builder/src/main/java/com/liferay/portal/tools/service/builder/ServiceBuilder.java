@@ -1074,7 +1074,9 @@ public class ServiceBuilder {
 			refFileName = String.valueOf(System.currentTimeMillis());
 			refFile = new File(_TMP_DIR, refFileName);
 
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			String refContent = null;
 
@@ -4268,7 +4270,9 @@ public class ServiceBuilder {
 		if (javaClass == null) {
 			ClassLibrary classLibrary = new ClassLibrary();
 
-			classLibrary.addClassLoader(getClass().getClassLoader());
+			Class<?> clazz = getClass();
+
+			classLibrary.addClassLoader(clazz.getClassLoader());
 
 			JavaDocBuilder builder = new JavaDocBuilder(classLibrary);
 
@@ -5159,7 +5163,9 @@ public class ServiceBuilder {
 	}
 
 	private Set<String> _readLines(String fileName) throws Exception {
-		ClassLoader classLoader = getClass().getClassLoader();
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
 
 		Set<String> lines = new HashSet<>();
 

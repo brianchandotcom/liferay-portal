@@ -53,8 +53,9 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseOpenSearchImpl implements OpenSearch {
 
 	public BaseOpenSearchImpl() {
-		_enabled = GetterUtil.getBoolean(
-			PropsUtil.get(getClass().getName()), true);
+		Class<?> clazz = getClass();
+
+		_enabled = GetterUtil.getBoolean(PropsUtil.get(clazz.getName()), true);
 
 		_openSearchURL = StringPool.BLANK;
 		_openSearchDescriptionURL = StringPool.BLANK;

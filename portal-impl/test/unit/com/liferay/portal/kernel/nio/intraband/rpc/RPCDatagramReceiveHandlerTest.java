@@ -68,7 +68,9 @@ public class RPCDatagramReceiveHandlerTest {
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testDoReceive() throws Exception {
-		PortalClassLoaderUtil.setClassLoader(getClass().getClassLoader());
+		Class<?> clazz = getClass();
+
+		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
 
 		RPCDatagramReceiveHandler rpcDatagramReceiveHandler =
 			new RPCDatagramReceiveHandler();

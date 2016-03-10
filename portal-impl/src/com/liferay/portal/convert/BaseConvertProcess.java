@@ -37,14 +37,18 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 			stopWatch.start();
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Starting conversion for " + getClass().getName());
+				Class<?> clazz = getClass();
+
+				_log.info("Starting conversion for " + clazz.getName());
 			}
 
 			doConvert();
 
 			if (_log.isInfoEnabled()) {
+				Class<?> clazz = getClass();
+
 				_log.info(
-					"Finished conversion for " + getClass().getName() + " in " +
+					"Finished conversion for " + clazz.getName() + " in " +
 						stopWatch.getTime() + " ms");
 			}
 		}

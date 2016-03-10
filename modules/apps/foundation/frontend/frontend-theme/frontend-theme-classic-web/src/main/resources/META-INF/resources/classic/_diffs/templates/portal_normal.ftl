@@ -34,17 +34,19 @@
 					</span>
 				</#if>
 
-				<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-					<span class="icon-bar"></span>
+				<#if is_setup_complete>
+					<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+						<span class="icon-bar"></span>
 
-					<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 
-					<span class="icon-bar"></span>
-				</button>
+						<span class="icon-bar"></span>
+					</button>
 
-				<div class="pull-right user-personal-bar">
-					<@liferay.user_personal_bar />
-				</div>
+					<div class="pull-right user-personal-bar">
+						<@liferay.user_personal_bar />
+					</div>
+				</#if>
 			</div>
 
 			<#include "${full_templates_path}/navigation.ftl" />

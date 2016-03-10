@@ -37,6 +37,8 @@ public interface ServletContextHelperRegistration {
 	public ServiceReference<ServletContextListener>
 		getServletContextListenerSeviceReference();
 
+	public void initDefaults();
+
 	public void setProperties(Map<String, String> contextParameters);
 
 }

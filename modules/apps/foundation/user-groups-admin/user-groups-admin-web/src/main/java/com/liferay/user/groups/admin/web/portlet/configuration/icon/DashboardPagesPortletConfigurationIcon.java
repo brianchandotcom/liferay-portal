@@ -91,7 +91,7 @@ public class DashboardPagesPortletConfigurationIcon
 			Group group = userGroup.getGroup();
 
 			if (GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), userGroupGroup,
+					themeDisplay.getPermissionChecker(), group,
 					ActionKeys.VIEW) &&
 				(group.getPrivateLayoutsPageCount() > 0)) {
 

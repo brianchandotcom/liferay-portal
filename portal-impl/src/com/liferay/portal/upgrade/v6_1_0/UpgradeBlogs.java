@@ -24,22 +24,30 @@ import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
  */
 public class UpgradeBlogs extends UpgradeProcess {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgradeBlogsEntryTable();
+	protected void alterTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("alter table BlogsEntry drop column draft");
 
-		alter(
-			BlogsEntryTable.class,
-			new AlterColumnType("smallImageURL", "STRING null"));
+			alter(
+				BlogsEntryTable.class,
+				new AlterColumnType("smallImageURL", "STRING null"));
+		}
+		catch (Exception e) {
+		}
 	}
 
-	protected void upgradeBlogsEntryTable() {
+	@Override
+	protected void doUpgrade() throws Exception {
+		dropIndexes();
+
+		alterTable();
+	}
+
+	protected void dropIndexes() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL("drop index IX_E0D90212 on BlogsEntry");
 			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
 			runSQL("drop index IX_B88E740E on BlogsEntry");
-
-			runSQL("alter table BlogsEntry drop column draft");
 		}
 		catch (Exception e) {
 		}

@@ -115,7 +115,7 @@ if (extension) {
 					long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
 					%>
 
-					uri = '<liferay-portlet:actionURL name="updateFieldGroup" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.MY_ACCOUNT %>" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="struts_action" value="/my_account/edit_user" /></liferay-portlet:actionURL>';
+					uri = '<liferay-portlet:actionURL name="updateFieldGroup" plid="<%= controlPanelPlid %>" portletName="<%= PortletKeys.MY_ACCOUNT %>" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="mvcActionCommand" value="/users_admin/edit_user" /></liferay-portlet:actionURL>';
 				</c:when>
 				<c:otherwise>
 					uri = '<liferay-portlet:actionURL name="updateFieldGroup" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />';

@@ -1854,8 +1854,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					@Override
 					public void execute(ExecSpec execSpec) {
 						execSpec.commandLine(
-							"git", "log", "--invert-grep",
-							"--grep=\"" + _IGNORED_MESSAGE_PATTERN + "\"",
+							"git", "log", "--format=%s",
 							artifactGitId + "..HEAD", ".");
 
 						execSpec.setStandardOutput(byteArrayOutputStream);
@@ -1866,8 +1865,20 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			String output = byteArrayOutputStream.toString();
 
-			if (Validator.isNotNull(output.trim())) {
-				return true;
+			String[] lines = output.split("\\r?\\n");
+
+			for (String line : lines) {
+				if (_logger.isInfoEnabled()) {
+					_logger.info(line);
+				}
+
+				if (Validator.isNull(line)) {
+					continue;
+				}
+
+				if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
+					return true;
+				}
 			}
 
 			return false;

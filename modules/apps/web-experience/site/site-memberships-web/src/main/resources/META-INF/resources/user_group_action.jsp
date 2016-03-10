@@ -40,7 +40,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		<liferay-ui:icon
 			cssClass="assign-site-roles"
 			data="<%= data %>"
-			id="<%= row.getRowId() %>"
+			id='<%= row.getRowId() + "assignSiteRoles" %>'
 			message="assign-site-roles"
 			url="javascript:;"
 		/>
@@ -61,7 +61,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 </liferay-ui:icon-menu>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace /><%= row.getRowId() %>').on(
+	$('#<portlet:namespace /><%= row.getRowId() %>assignSiteRoles').on(
 		'click',
 		function(event) {
 			event.preventDefault();

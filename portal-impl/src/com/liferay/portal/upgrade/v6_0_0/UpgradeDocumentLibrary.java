@@ -88,46 +88,32 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFileEntry
 
-		UpgradeColumn nameColumn = new DLFileEntryNameUpgradeColumnImpl("name");
-		UpgradeColumn titleColumn = new DLFileEntryTitleUpgradeColumnImpl(
-			nameColumn, "title");
-		UpgradeColumn versionColumn = new DLFileEntryVersionUpgradeColumnImpl(
-			"version");
-
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
-			nameColumn, titleColumn, versionColumn);
-
-		upgradeTable.setAllowUniqueIndexes(true);
-		upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+		updateDLFileEntryTable();
 
 		// DLFileRank
 
 		upgradeTable(
 			DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
 			DLFileRankTable.TABLE_SQL_CREATE,
-			DLFileRankTable.TABLE_SQL_ADD_INDEXES, nameColumn);
+			DLFileRankTable.TABLE_SQL_ADD_INDEXES,
+			new DLFileEntryNameUpgradeColumnImpl("name"));
 
 		// DLFileShortcut
-
-		UpgradeColumn toNameColumn = new DLFileEntryNameUpgradeColumnImpl(
-			"toName");
 
 		upgradeTable(
 			DLFileShortcutTable.TABLE_NAME, DLFileShortcutTable.TABLE_COLUMNS,
 			DLFileShortcutTable.TABLE_SQL_CREATE,
-			DLFileShortcutTable.TABLE_SQL_ADD_INDEXES, toNameColumn);
+			DLFileShortcutTable.TABLE_SQL_ADD_INDEXES,
+			new DLFileEntryNameUpgradeColumnImpl("toName"));
 
 		// DLFileVersion
 
 		upgradeTable(
 			DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
 			DLFileVersionTable.TABLE_SQL_CREATE,
-			DLFileVersionTable.TABLE_SQL_ADD_INDEXES, nameColumn,
-			versionColumn);
+			DLFileVersionTable.TABLE_SQL_ADD_INDEXES,
+			new DLFileEntryNameUpgradeColumnImpl("name"),
+			new DLFileEntryVersionUpgradeColumnImpl("version"));
 	}
 
 	protected void synchronizeFileVersions() throws Exception {
@@ -163,8 +149,29 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
+	protected void updateDLFileEntryTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			UpgradeColumn nameColumn = new DLFileEntryNameUpgradeColumnImpl(
+				"name");
+			UpgradeColumn titleColumn = new DLFileEntryTitleUpgradeColumnImpl(
+				nameColumn, "title");
+			UpgradeColumn versionColumn =
+				new DLFileEntryVersionUpgradeColumnImpl("version");
+
+			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
+				nameColumn, titleColumn, versionColumn);
+
+			upgradeTable.setAllowUniqueIndexes(true);
+			upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
+			upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
+
+			upgradeTable.updateTable();
+		}
+	}
+
 	protected void updateFiles() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer("updateFile");
+		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
 				"select * from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {

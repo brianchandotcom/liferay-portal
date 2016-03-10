@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -28,20 +29,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, layoutSetBranchId, privateLayout from " +
-					"LayoutSetBranch");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long layoutSetBranchId = rs.getLong("layoutSetBranchId");
-				long groupId = rs.getLong("groupId");
-				boolean privateLayout = rs.getBoolean("privateLayout");
-
-				upgradeLayoutSetBranch(
-					layoutSetBranchId, groupId, privateLayout);
-			}
-		}
+		updateLayoutSetBranches();
 	}
 
 	protected void updateLayoutSetBranch(
@@ -73,6 +61,24 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 			ps.setLong(9, layoutSetBranchId);
 
 			ps.executeUpdate();
+		}
+	}
+
+	protected void updateLayoutSetBranches() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select groupId, layoutSetBranchId, privateLayout from " +
+					"LayoutSetBranch");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long layoutSetBranchId = rs.getLong("layoutSetBranchId");
+				long groupId = rs.getLong("groupId");
+				boolean privateLayout = rs.getBoolean("privateLayout");
+
+				upgradeLayoutSetBranch(
+					layoutSetBranchId, groupId, privateLayout);
+			}
 		}
 	}
 

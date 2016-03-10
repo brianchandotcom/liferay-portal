@@ -40,6 +40,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		<liferay-ui:icon
 			cssClass="assign-site-roles"
 			data="<%= data %>"
+			id="<%= row.getRowId() %>"
 			message="assign-site-roles"
 			url="javascript:;"
 		/>
@@ -58,3 +59,39 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace /><%= row.getRowId() %>').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var currentTarget = $(event.currentTarget);
+
+			var editUserGroupGroupRoleFm = $(document.<portlet:namespace />editUserGroupGroupRoleFm);
+
+			editUserGroupGroupRoleFm.fm('userGroupId').val(currentTarget.data('usergroupid'));
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectUserGroupsRoles',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								editUserGroupGroupRoleFm.append(selectedItem);
+
+								submitForm(editUserGroupGroupRoleFm);
+							}
+						}
+					},
+					title: '<liferay-ui:message key="assign-site-roles" />',
+					url: currentTarget.data('href')
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+</aui:script>

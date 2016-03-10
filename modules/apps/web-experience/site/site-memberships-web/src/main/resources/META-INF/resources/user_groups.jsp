@@ -151,40 +151,6 @@ userGroupSearch.setResults(userGroups);
 		}
 	);
 
-	$('.assign-site-roles a').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			var currentTarget = $(event.currentTarget);
-
-			var editUserGroupGroupRoleFm = $(document.<portlet:namespace />editUserGroupGroupRoleFm);
-
-			editUserGroupGroupRoleFm.fm('userGroupId').val(currentTarget.data('usergroupid'));
-
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectUserGroupsRoles',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								editUserGroupGroupRoleFm.append(selectedItem);
-
-								submitForm(editUserGroupGroupRoleFm);
-							}
-						}
-					},
-					title: '<liferay-ui:message key="assign-site-roles" />',
-					url: currentTarget.data('href')
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-
 	$('#<portlet:namespace />selectUserGroups').on(
 		'click',
 		function(event) {

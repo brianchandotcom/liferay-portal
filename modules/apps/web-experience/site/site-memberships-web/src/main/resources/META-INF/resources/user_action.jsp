@@ -43,6 +43,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		<liferay-ui:icon
 			cssClass="assign-site-roles"
 			data="<%= data %>"
+			id="<%= row.getRowId() %>"
 			message="assign-site-roles"
 			url="javascript:;"
 		/>
@@ -61,3 +62,39 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace /><%= row.getRowId() %>').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var currentTarget = $(event.currentTarget);
+
+			var editUserGroupRoleFm = $(document.<portlet:namespace />editUserGroupRoleFm);
+
+			editUserGroupRoleFm.fm('p_u_i_d').val(currentTarget.data('userid'));
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectUsersRoles',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								editUserGroupRoleFm.append(selectedItem);
+
+								submitForm(editUserGroupRoleFm);
+							}
+						}
+					},
+					title: '<liferay-ui:message key="assign-site-roles" />',
+					url: currentTarget.data('href')
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+</aui:script>

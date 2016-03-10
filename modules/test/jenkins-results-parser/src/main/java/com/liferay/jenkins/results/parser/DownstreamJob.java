@@ -83,7 +83,7 @@ public class DownstreamJob extends BaseJob {
 			throw new IllegalArgumentException("Invalid invocation URL");
 		}
 
-		masterURL = invocationURLMatcher.group("masterURL");
+		master = invocationURLMatcher.group("master");
 		name = invocationURLMatcher.group("name");
 
 		String parametersString = invocationURLMatcher.group(
@@ -127,7 +127,7 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		if (status.equals("starting")) {
-			JSONArray queueItems = getQueueItemsJSONArray(masterURL);
+			JSONArray queueItems = getQueueItemsJSONArray(master);
 
 			for (int i = 0; i < queueItems.length(); i++) {
 				JSONObject queueItem = queueItems.getJSONObject(i);
@@ -314,7 +314,7 @@ public class DownstreamJob extends BaseJob {
 	}
 
 	private static final Pattern _invocationURLPattern = Pattern.compile(
-		"(?<masterURL>\\w+://[^/]+)/+job/+(?<name>[^/]+).*/" +
+		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/" +
 			"buildWithParameters\\?(?<parametersString>.*)");
 	private static final Pattern _keyValuePattern = Pattern.compile(
 		"(?<key>[^=]+)=(?<value>.*)");

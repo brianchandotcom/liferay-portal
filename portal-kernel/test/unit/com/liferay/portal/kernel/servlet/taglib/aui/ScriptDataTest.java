@@ -14,10 +14,12 @@
 
 package com.liferay.portal.kernel.servlet.taglib.aui;
 
-import com.liferay.portal.kernel.io.DummyWriter;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,11 +39,11 @@ public class ScriptDataTest {
 			"portletId", "content", "_Var,1Var,*Var,/Var",
 			ScriptData.ModulesType.ES6);
 
-		TestScriptDataWriter testScriptDataWriter = new TestScriptDataWriter();
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		scriptData.writeTo(null, testScriptDataWriter);
+		scriptData.writeTo(null, unsyncStringWriter);
 
-		testScriptDataWriter.assertStrings("_VAR", "_VAR1", "_VAR2", "_VAR3");
+		assertVariables(unsyncStringWriter, "_VAR", "_VAR1", "_VAR2", "_VAR3");
 	}
 
 	@Test
@@ -52,30 +54,25 @@ public class ScriptDataTest {
 			"portletId", "content", "Var,V ar,Va*r,Var/",
 			ScriptData.ModulesType.ES6);
 
-		TestScriptDataWriter testScriptDataWriter = new TestScriptDataWriter();
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		scriptData.writeTo(null, testScriptDataWriter);
+		scriptData.writeTo(null, unsyncStringWriter);
 
-		testScriptDataWriter.assertStrings("VAR", "VAR1", "VAR2", "VAR3");
+		assertVariables(unsyncStringWriter, "VAR", "VAR1", "VAR2", "VAR3");
 	}
 
-	private static class TestScriptDataWriter extends DummyWriter {
+	protected void assertVariables(
+		UnsyncStringWriter unsyncStringWriter, String... variables) {
 
-		public void assertStrings(String... expectedStrings) {
-			for (String expected : expectedStrings) {
-				Assert.assertTrue(
-					expected + " was not found.",
-					_writtenStrings.contains(expected));
-			}
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		Set<String> strings = new HashSet<>(
+			Arrays.asList(Arrays.copyOf(sb.getStrings(), sb.index())));
+
+		for (String variable : variables) {
+			Assert.assertTrue(
+				variable + " was not found.", strings.contains(variable));
 		}
-
-		@Override
-		public void write(String s) {
-			_writtenStrings.add(s);
-		}
-
-		private final List<String> _writtenStrings = new ArrayList<>();
-
 	}
 
 }

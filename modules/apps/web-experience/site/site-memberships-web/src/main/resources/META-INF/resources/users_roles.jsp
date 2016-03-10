@@ -100,62 +100,7 @@ roleSearch.setResults(roles);
 			keyProperty="roleId"
 			modelVar="role"
 		>
-			<c:choose>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
-
-					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							cssClass="entry-display-style"
-							icon="users"
-							resultRow="<%= row %>"
-							rowChecker="<%= roleSearch.getRowChecker() %>"
-							subtitle="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-							title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-						/>
-					</liferay-ui:search-container-column-text>
-				</c:when>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-icon
-						icon="users"
-						toggleRowChecker="<%= true %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
-						<h5><%= HtmlUtil.escape(role.getTitle(locale)) %></h5>
-
-						<h6 class="text-default">
-							<span><%= HtmlUtil.escape(role.getDescription(locale)) %></span>
-						</h6>
-
-						<h6 class="text-default">
-							<%= LanguageUtil.get(request, role.getTypeLabel()) %>
-						</h6>
-					</liferay-ui:search-container-column-text>
-				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
-					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
-						name="title"
-						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="description"
-						value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
-					/>
-				</c:when>
-			</c:choose>
+			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

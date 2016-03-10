@@ -227,7 +227,11 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return super.getRootNodeName(privateLayout);
 	}
 
-	public boolean isShowAddBothRootLayoutButtons() {
+	public boolean isShowAddBothRootLayoutButtons() throws PortalException {
+		if (!super.isShowAddRootLayoutButton()) {
+			return false;
+		}
+
 		Group selGroup = getSelGroup();
 
 		if (selGroup.hasPublicLayouts() && selGroup.hasPrivateLayouts()) {

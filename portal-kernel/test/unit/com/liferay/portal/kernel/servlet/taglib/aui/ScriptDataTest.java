@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,40 +27,37 @@ import org.junit.Test;
  */
 public class ScriptDataTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_scriptData = new ScriptData();
-	}
-
 	@Test
 	public void testGenerateVariableStripsReplacesFirstCharacter()
 		throws Exception {
 
-		_scriptData.append(
+		ScriptData scriptData = new ScriptData();
+
+		scriptData.append(
 			"portletId", "content", "_Var,1Var,*Var,/Var",
 			ScriptData.ModulesType.ES6);
 
 		TestScriptDataWriter testScriptDataWriter = new TestScriptDataWriter();
 
-		_scriptData.writeTo(null, testScriptDataWriter);
+		scriptData.writeTo(null, testScriptDataWriter);
 
 		testScriptDataWriter.assertStrings("_VAR", "_VAR1", "_VAR2", "_VAR3");
 	}
 
 	@Test
 	public void testGenerateVariableStripsSpecialCharacters() throws Exception {
-		_scriptData.append(
+		ScriptData scriptData = new ScriptData();
+
+		scriptData.append(
 			"portletId", "content", "Var,V ar,Va*r,Var/",
 			ScriptData.ModulesType.ES6);
 
 		TestScriptDataWriter testScriptDataWriter = new TestScriptDataWriter();
 
-		_scriptData.writeTo(null, testScriptDataWriter);
+		scriptData.writeTo(null, testScriptDataWriter);
 
 		testScriptDataWriter.assertStrings("VAR", "VAR1", "VAR2", "VAR3");
 	}
-
-	private ScriptData _scriptData;
 
 	private static class TestScriptDataWriter extends DummyWriter {
 

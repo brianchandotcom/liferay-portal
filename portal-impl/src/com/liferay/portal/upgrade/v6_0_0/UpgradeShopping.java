@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_0_0.util.ShoppingItemTable;
 
@@ -25,19 +26,26 @@ public class UpgradeShopping extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("update ShoppingItem set groupId = (select groupId from ");
-		sb.append("ShoppingCategory where ShoppingCategory.categoryId = ");
-		sb.append("ShoppingItem.categoryId)");
-
-		runSQL(sb.toString());
+		updateShoppingItem();
 
 		alter(
 			ShoppingItemTable.class,
 			new AlterColumnType("smallImageURL", "STRING null"),
 			new AlterColumnType("mediumImageURL", "STRING null"),
 			new AlterColumnType("largeImageURL", "STRING null"));
+	}
+
+	protected void updateShoppingItem() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(
+				"update ShoppingItem set groupId = (select groupId from ");
+			sb.append("ShoppingCategory where ShoppingCategory.categoryId = ");
+			sb.append("ShoppingItem.categoryId)");
+
+			runSQL(sb.toString());
+		}
 	}
 
 }

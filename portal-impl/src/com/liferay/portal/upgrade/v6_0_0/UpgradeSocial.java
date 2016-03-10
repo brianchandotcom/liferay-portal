@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.DateUpgradeColumnImpl;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialActivityTable;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialRelationTable;
@@ -99,7 +100,8 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateGroupId() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select distinct(groupId) from SocialActivity where groupId " +
 					"> 0");
 			ResultSet rs = ps.executeQuery()) {

@@ -173,8 +173,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-gr
 
 		form.attr('method', 'post');
 		form.fm('deleteUserGroupIds').val(userGroupIds);
+		form.fm('redirect').val('<portlet:renderURL><portlet:param name="mvcPath" value="/view.jsp" /></portlet:renderURL>');
 
-		document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+		var p_p_lifecycle = document.<portlet:namespace />fm.p_p_lifecycle;
+
+		if (p_p_lifecycle) {
+			p_p_lifecycle.value = '1';
+		}
 
 		submitForm(form, '<portlet:actionURL name="deleteUserGroups" />');
 	}

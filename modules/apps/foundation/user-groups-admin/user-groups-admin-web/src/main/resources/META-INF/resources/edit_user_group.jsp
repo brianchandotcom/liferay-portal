@@ -41,6 +41,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 
 <aui:form action="<%= editUserGroupURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="deleteUserGroupIds" type="hidden" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateUserGroupException.class %>" message="please-enter-a-unique-name" />

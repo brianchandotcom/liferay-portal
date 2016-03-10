@@ -104,7 +104,7 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		if (status.equals("starting")) {
-			JSONArray queueItems = getQueueItemsJSONArray(master);
+			JSONArray queueItems = getQueueItemsJSONArray();
 
 			for (int i = 0; i < queueItems.length(); i++) {
 				JSONObject queueItem = queueItems.getJSONObject(i);
@@ -193,6 +193,16 @@ public class DownstreamJob extends BaseJob {
 		return parameterNames;
 	}
 
+	protected JSONArray getQueueItemsJSONArray() throws Exception {
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			"http://" + master +
+				"/queue/api/json?tree=items[actions[parameters" +
+					"[name,value]],task[name,url]]",
+			false);
+
+		return jsonObject.getJSONArray("items");
+	}
+
 	protected String invocationURL;
 	protected Map<String, String> parameters;
 	protected TopLevelJob topLevelJob;
@@ -232,17 +242,6 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		return new HashMap<>();
-	}
-
-	private static JSONArray getQueueItemsJSONArray(String masterURL)
-		throws Exception {
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			masterURL + "/queue/api/json?tree=items[actions[parameters" +
-				"[name,value]],task[name,url]]",
-			false);
-
-		return jsonObject.getJSONArray("items");
 	}
 
 	private String getBuildMessage() {

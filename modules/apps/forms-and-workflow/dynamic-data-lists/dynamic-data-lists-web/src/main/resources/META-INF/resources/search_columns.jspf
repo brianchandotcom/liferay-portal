@@ -15,7 +15,7 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="text-strong"
+	cssClass="id-column"
 	href="<%= rowURL %>"
 	name="id"
 	orderable="<%= false %>"
@@ -23,20 +23,24 @@
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="text-strong"
+	cssClass="content-column name-column title-column"
 	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= false %>"
+	truncate="<%= true %>"
 	value="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column description-column"
 	name="description"
 	orderable="<%= false %>"
+	truncate="<%= true %>"
 	value="<%= HtmlUtil.escape(StringUtil.shorten(recordSet.getDescription(locale), 100)) %>"
 />
 
 <liferay-ui:search-container-column-date
+	cssClass="modified-date-column text-column"
 	name="modified-date"
 	orderable="<%= false %>"
 	value="<%= recordSet.getModifiedDate() %>"

@@ -24,6 +24,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/polls/view");
 %>
 
+<liferay-util:include page="/html/portlet/polls/navigation_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="fm">

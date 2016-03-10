@@ -37,10 +37,6 @@ if (reminderAttempts == null) {
 <aui:form action="<%= forgotPasswordURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
-	<portlet:renderURL var="redirectURL" />
-
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-
 	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= NoSuchUserException.class %>" message='<%= "the-" + TextFormatter.format(authType, TextFormatter.K) + "-you-requested-is-not-registered-in-our-database" %>' />
@@ -87,6 +83,13 @@ if (reminderAttempts == null) {
 				%>
 
 				<aui:input name="step" type="hidden" value="1" />
+				
+				<c:if test="<%= !PropsValues.USERS_REMINDER_QUERIES_ENABLED %>">
+					<portlet:renderURL var="redirectURL" >
+						<portlet:param name="mvcRenderCommandName" value="/login/login" />
+					</portlet:renderURL>
+					<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+				</c:if>
 
 				<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>">
 					<aui:validator name="required" />
@@ -105,6 +108,13 @@ if (reminderAttempts == null) {
 			<c:when test="<%= (user2 != null) && Validator.isNotNull(user2.getEmailAddress()) %>">
 				<aui:input name="step" type="hidden" value="2" />
 				<aui:input name="emailAddress" type="hidden" value="<%= user2.getEmailAddress() %>" />
+
+				<portlet:renderURL var="redirectURL" >
+					<portlet:param name="mvcRenderCommandName" value="/login/login" />
+				</portlet:renderURL>
+
+
+				<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
 				<c:if test="<%= Validator.isNotNull(user2.getReminderQueryQuestion()) && Validator.isNotNull(user2.getReminderQueryAnswer()) %>">
 

@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>SITES_TABLE_CHOOSE_SITE_LINK</td>
-	<td>//td[contains(.,'${key_siteName}')]/a</td>
+	<td>//td[contains(.,'${key_siteName}')]//a</td>
 	<td></td>
 </tr>
 </tbody>

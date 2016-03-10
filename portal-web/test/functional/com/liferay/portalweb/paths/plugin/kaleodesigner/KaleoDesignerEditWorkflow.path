@@ -98,7 +98,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_SCRIPT</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Script')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Script')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,22 +108,22 @@
 </tr>
 <tr>
 	<td>SETTINGS_SCRIPT_LANGUAGE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Script Language')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Script Language')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_ACTIONS</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_NOTIFICATIONS</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Notifications')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Notifications')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_DESCRIPTION</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Description')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Description')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_NAME</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -143,12 +143,12 @@
 </tr>
 <tr>
 	<td>SETTINGS_TYPE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_ASSIGNMENTS</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Assignments')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Assignments')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>

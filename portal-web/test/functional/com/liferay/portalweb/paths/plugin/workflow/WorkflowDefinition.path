@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_DEACTIVATED_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'WorkflowDefinitionPortlet_workflowDefinitionsSearchContainer')]//tr/td[(4 and contains(.,'No'))]/following-sibling::td/div/a</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_workflowDefinitionsSearchContainer')]//tr/td[(4 and contains(.,'No'))]//following-sibling::td/div/a</td>
 	<td></td>
 </tr>
 <tr>

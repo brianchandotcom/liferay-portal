@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>FORM_ENTRY_WORKFLOW_STATUS</td>
-	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]/..//strong[contains(.,'${key_workflowStatus}')]</td>
+	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]//..//strong[contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

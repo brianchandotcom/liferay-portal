@@ -137,77 +137,77 @@
 </tr>
 <tr>
 	<td>SETTINGS_TYPE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_FIELD_LABEL</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_SHOW_LABEL</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Show Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Show Label')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_READ_ONLY</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Read Only')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Read Only')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_REQUIRED</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Required')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Required')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_NAME</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_PREDEFINED_VALUE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_TIP</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_INDEXABLE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Indexable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Indexable')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_LOCALIZABLE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Localizable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Localizable')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_REPEATABLE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Repeatable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Repeatable')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_OPTIONS</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_TEXT</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Text')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Text')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_STYLE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Style')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Style')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_WIDTH</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Width')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Width')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>

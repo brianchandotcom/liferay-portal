@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>GMAIL_EMAIL_MESSAGE_TITLE</td>
-	<td>//tr/td[contains(.,'${key_gmailMessageTitle}')]/a/span</td>
+	<td>//tr/td[contains(.,'${key_gmailMessageTitle}')]//a/span</td>
 	<td></td>
 </tr>
 <tr>

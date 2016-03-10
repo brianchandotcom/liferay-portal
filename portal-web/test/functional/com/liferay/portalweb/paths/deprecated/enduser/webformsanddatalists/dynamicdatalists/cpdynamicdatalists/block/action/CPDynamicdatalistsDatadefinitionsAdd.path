@@ -164,22 +164,22 @@
 </tr>
 <tr>
 	<td>SETTINGS_TYPE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_FIELD_LABEL</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_NAME</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_PREDEFINED_VALUE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>

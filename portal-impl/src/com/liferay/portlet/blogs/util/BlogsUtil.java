@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 
@@ -275,15 +274,12 @@ public class BlogsUtil {
 			title = String.valueOf(entryId);
 		}
 		else {
-			title = FriendlyURLNormalizerUtil.normalize(
-				title, _friendlyURLPattern);
+			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				title);
 		}
 
 		return ModelHintsUtil.trimString(
 			BlogsEntry.class.getName(), "urlTitle", title);
 	}
-
-	private static final Pattern _friendlyURLPattern = Pattern.compile(
-		"[^a-z0-9_-]");
 
 }

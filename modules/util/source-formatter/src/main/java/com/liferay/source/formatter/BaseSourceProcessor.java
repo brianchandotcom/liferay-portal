@@ -124,6 +124,37 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
+	protected static int adjustTabLevel(
+		int level, String text, String s, int diff) {
+
+		String[] lines = StringUtil.splitLines(text);
+
+		forLoop:
+		for (String line : lines) {
+			line = StringUtil.trim(line);
+
+			if (line.startsWith("//")) {
+				continue;
+			}
+
+			int x = -1;
+
+			while (true) {
+				x = line.indexOf(s, x + 1);
+
+				if (x == -1) {
+					continue forLoop;
+				}
+
+				if (!ToolsUtil.isInsideQuotes(line, x)) {
+					level += diff;
+				}
+			}
+		}
+
+		return level;
+	}
+
 	protected static int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 

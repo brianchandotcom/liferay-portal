@@ -142,35 +142,6 @@ public class JavaSourceTabCalculator {
 		}
 	}
 
-	protected int adjustTabLevel(int level, String text, String s, int diff) {
-		String[] lines = StringUtil.splitLines(text);
-
-		forLoop:
-		for (String line : lines) {
-			line = StringUtil.trim(line);
-
-			if (line.startsWith("//")) {
-				continue;
-			}
-
-			int x = -1;
-
-			while (true) {
-				x = line.indexOf(s, x + 1);
-
-				if (x == -1) {
-					continue forLoop;
-				}
-
-				if (!ToolsUtil.isInsideQuotes(line, x)) {
-					level += diff;
-				}
-			}
-		}
-
-		return level;
-	}
-
 	protected void calculateExtraTabs(
 		String line, int lineCount, String remainingContent, boolean forClause,
 		boolean ifClause) {
@@ -370,10 +341,14 @@ public class JavaSourceTabCalculator {
 	}
 
 	protected int calculateTabLevel(int level, String text) {
-		level = adjustTabLevel(level, text, StringPool.OPEN_CURLY_BRACE, 1);
-		level = adjustTabLevel(level, text, StringPool.CLOSE_CURLY_BRACE, -1);
-		level = adjustTabLevel(level, text, StringPool.OPEN_PARENTHESIS, 1);
-		level = adjustTabLevel(level, text, StringPool.CLOSE_PARENTHESIS, -1);
+		level = BaseSourceProcessor.adjustTabLevel(
+			level, text, StringPool.OPEN_CURLY_BRACE, 1);
+		level = BaseSourceProcessor.adjustTabLevel(
+			level, text, StringPool.CLOSE_CURLY_BRACE, -1);
+		level = BaseSourceProcessor.adjustTabLevel(
+			level, text, StringPool.OPEN_PARENTHESIS, 1);
+		level = BaseSourceProcessor.adjustTabLevel(
+			level, text, StringPool.CLOSE_PARENTHESIS, -1);
 
 		return level;
 	}

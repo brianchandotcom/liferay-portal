@@ -20,7 +20,10 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -193,8 +196,18 @@ public class AssetCategoriesNavigationDisplayContext {
 		}
 
 		for (long assetVocabularyId : getAssetVocabularyIds()) {
-			_ddmTemplateAssetVocabularies.add(
-				AssetVocabularyServiceUtil.fetchVocabulary(assetVocabularyId));
+			try {
+				_ddmTemplateAssetVocabularies.add(
+					AssetVocabularyServiceUtil.fetchVocabulary(
+						assetVocabularyId));
+			}
+			catch (PrincipalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"User does not have permission to access asset " +
+							"vocabulary ID " + assetVocabularyId);
+				}
+			}
 		}
 
 		return _ddmTemplateAssetVocabularies;
@@ -231,6 +244,9 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		return title;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoriesNavigationDisplayContext.class);
 
 	private final AssetCategoriesNavigationPortletInstanceConfiguration
 		_assetCategoriesNavigationPortletInstanceConfiguration;

@@ -41,7 +41,7 @@ public class ScriptDataTest {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		scriptData.writeTo(null, unsyncStringWriter);
+		scriptData.writeTo(unsyncStringWriter);
 
 		assertVariables(unsyncStringWriter, "_VAR", "_VAR1", "_VAR2", "_VAR3");
 	}
@@ -56,7 +56,7 @@ public class ScriptDataTest {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		scriptData.writeTo(null, unsyncStringWriter);
+		scriptData.writeTo(unsyncStringWriter);
 
 		assertVariables(unsyncStringWriter, "VAR", "VAR1", "VAR2", "VAR3");
 	}

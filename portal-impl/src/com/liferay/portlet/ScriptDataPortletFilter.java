@@ -70,8 +70,7 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isIsolated() || themeDisplay.isStateExclusive()) {
-			_flushScriptData(
-				request, scriptData, _getMimeResponseImpl(renderResponse));
+			_flushScriptData(scriptData, _getMimeResponseImpl(renderResponse));
 		}
 	}
 
@@ -93,8 +92,7 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			return;
 		}
 
-		_flushScriptData(
-			request, scriptData, _getMimeResponseImpl(resourceResponse));
+		_flushScriptData(scriptData, _getMimeResponseImpl(resourceResponse));
 	}
 
 	@Override
@@ -102,8 +100,7 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 	}
 
 	private void _flushScriptData(
-			HttpServletRequest request, ScriptData scriptData,
-			MimeResponseImpl mimeResponseImpl)
+			ScriptData scriptData, MimeResponseImpl mimeResponseImpl)
 		throws IOException {
 
 		if (mimeResponseImpl.isCalledGetPortletOutputStream()) {
@@ -113,12 +110,12 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 				outputStream);
 
-			scriptData.writeTo(request, outputStreamWriter);
+			scriptData.writeTo(outputStreamWriter);
 
 			outputStreamWriter.flush();
 		}
 		else {
-			scriptData.writeTo(request, mimeResponseImpl.getWriter());
+			scriptData.writeTo(mimeResponseImpl.getWriter());
 		}
 	}
 

@@ -34,8 +34,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -90,9 +88,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		return new ScriptData();
 	}
 
-	public void writeTo(HttpServletRequest request, Writer writer)
-		throws IOException {
-
+	public void writeTo(Writer writer) throws IOException {
 		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
 
 		StringBundler auiModulesSB = new StringBundler(_portletDataMap.size());

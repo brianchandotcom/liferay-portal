@@ -95,7 +95,7 @@ public class ScriptTag extends BaseScriptTag {
 
 		request.removeAttribute(WebKeys.AUI_SCRIPT_DATA);
 
-		scriptData.writeTo(request, pageContext.getOut());
+		scriptData.writeTo(pageContext.getOut());
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class ScriptTag extends BaseScriptTag {
 					PortalIncludeUtil.include(pageContext, page);
 				}
 				else {
-					scriptData.writeTo(request, pageContext.getOut());
+					scriptData.writeTo(pageContext.getOut());
 				}
 			}
 			else {

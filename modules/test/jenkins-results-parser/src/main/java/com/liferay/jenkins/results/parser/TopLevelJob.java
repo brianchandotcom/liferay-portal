@@ -155,7 +155,8 @@ public class TopLevelJob extends BaseJob {
 
 	protected List<DownstreamJob> downstreamJobs;
 
-	private static List<String> getDownstreamURLs(List<DownstreamJob> downstreamJobs)
+	private static List<String> getDownstreamURLs(
+			List<DownstreamJob> downstreamJobs)
 		throws Exception {
 
 		List<String> downstreamURLs = new ArrayList<>();

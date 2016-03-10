@@ -68,7 +68,6 @@ import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
-import org.gradle.api.AntBuilder;
 import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
@@ -134,6 +133,7 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
+import org.gradle.process.JavaExecSpec;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -1849,7 +1849,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		@Override
 		public boolean isSatisfiedBy(Task task) {
-			Project project = task.getProject();
+			final Project project = task.getProject();
 
 			Properties artifactProperties;
 
@@ -1862,7 +1862,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					"Unable to read artifact properties", ioe);
 			}
 
-			String artifactGitId = artifactProperties.getProperty(
+			final String artifactGitId = artifactProperties.getProperty(
 				"artifact.git.id");
 
 			if (Validator.isNull(artifactGitId)) {
@@ -1873,31 +1873,30 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				return true;
 			}
 
-			AntBuilder antBuilder = project.createAntBuilder();
+			final ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
 
-			antBuilder.setProperty("project.dir", _rootDir);
+			project.javaexec(
+				new Action<JavaExecSpec>() {
 
-			Map<String, String> args = new HashMap<>();
+					@Override
+					public void execute(JavaExecSpec javaExecSpec) {
+						File gitDir = new File(_rootDir, ".git");
 
-			args.put("classpath", _antJGitFileCollection.getAsPath());
-			args.put(
-				"resource", "com/liferay/ant/jgit/ant-jgit-tasks.properties");
+						javaExecSpec.args(
+							FileUtil.getAbsolutePath(gitDir),
+							FileUtil.getAbsolutePath(project.getProjectDir()),
+							artifactGitId, _IGNORED_MESSAGE_PATTERN);
 
-			antBuilder.invokeMethod("taskdef", args);
+						javaExecSpec.setClasspath(_antJGitFileCollection);
+						javaExecSpec.setMain(
+							"com.liferay.ant.jgit.GitUpToDateTask");
+						javaExecSpec.setStandardOutput(byteArrayOutputStream);
+					}
 
-			args.clear();
+				});
 
-			args.put("ignoredMessagePattern", _IGNORED_MESSAGE_PATTERN);
-			args.put("path", FileUtil.getAbsolutePath(project.getProjectDir()));
-			args.put("property", "git.up.to.date");
-			args.put("since", artifactGitId);
-
-			antBuilder.invokeMethod("git-up-to-date", args);
-
-			Map<String, Object> properties = antBuilder.getProperties();
-
-			return !Boolean.parseBoolean(
-				String.valueOf(properties.get("git.up.to.date")));
+			return !Boolean.parseBoolean(byteArrayOutputStream.toString());
 		}
 
 		private final FileCollection _antJGitFileCollection;

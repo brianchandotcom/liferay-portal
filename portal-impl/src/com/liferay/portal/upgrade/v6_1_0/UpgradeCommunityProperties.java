@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,17 +30,8 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (int i = 0; i < _OLD_PORTLET_PREFERENCES.length; i++) {
-			updatePreferences(
-				"PortletPreferences", "portletPreferencesId",
-				_OLD_PORTLET_PREFERENCES[i], _NEW_PORTLET_PREFERENCES[i]);
-		}
-
-		for (int i = 0; i < _OLD_PORTAL_PREFERENCES.length; i++) {
-			updatePreferences(
-				"PortalPreferences", "portalPreferencesId",
-				_OLD_PORTAL_PREFERENCES[i], _NEW_PORTAL_PREFERENCES[i]);
-		}
+		upgradePortletPreferences();
+		upgradePortalPreferences();
 	}
 
 	protected void updatePreferences(
@@ -111,6 +103,26 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			ps.setLong(2, primaryKey);
 
 			ps.executeUpdate();
+		}
+	}
+
+	protected void upgradePortalPreferences() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (int i = 0; i < _OLD_PORTAL_PREFERENCES.length; i++) {
+				updatePreferences(
+					"PortalPreferences", "portalPreferencesId",
+					_OLD_PORTAL_PREFERENCES[i], _NEW_PORTAL_PREFERENCES[i]);
+			}
+		}
+	}
+
+	protected void upgradePortletPreferences() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (int i = 0; i < _OLD_PORTLET_PREFERENCES.length; i++) {
+				updatePreferences(
+					"PortletPreferences", "portletPreferencesId",
+					_OLD_PORTLET_PREFERENCES[i], _NEW_PORTLET_PREFERENCES[i]);
+			}
 		}
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.upgrade.v6_0_0.util.DLFileEntryNameUpgradeColumnImpl;
@@ -81,7 +82,97 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		updateFiles();
+
+		synchronizeFileVersions();
+
+		// DLFileEntry
+
+		updateDLFileEntryTable();
+
+		// DLFileRank
+
+		upgradeTable(
+			DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
+			DLFileRankTable.TABLE_SQL_CREATE,
+			DLFileRankTable.TABLE_SQL_ADD_INDEXES,
+			new DLFileEntryNameUpgradeColumnImpl("name"));
+
+		// DLFileShortcut
+
+		upgradeTable(
+			DLFileShortcutTable.TABLE_NAME, DLFileShortcutTable.TABLE_COLUMNS,
+			DLFileShortcutTable.TABLE_SQL_CREATE,
+			DLFileShortcutTable.TABLE_SQL_ADD_INDEXES,
+			new DLFileEntryNameUpgradeColumnImpl("toName"));
+
+		// DLFileVersion
+
+		upgradeTable(
+			DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
+			DLFileVersionTable.TABLE_SQL_CREATE,
+			DLFileVersionTable.TABLE_SQL_ADD_INDEXES,
+			new DLFileEntryNameUpgradeColumnImpl("name"),
+			new DLFileEntryVersionUpgradeColumnImpl("version"));
+	}
+
+	protected void synchronizeFileVersions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select * from DLFileEntry dlFileEntry where version ");
+			sb.append("not in (select version from DLFileVersion ");
+			sb.append("dlFileVersion where (dlFileVersion.folderId = ");
+			sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
+			sb.append("dlFileEntry.name))");
+
+			String sql = sb.toString();
+
+			try (PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					long companyId = rs.getLong("companyId");
+					long groupId = rs.getLong("groupId");
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					long folderId = rs.getLong("folderId");
+					String name = rs.getString("name");
+					double version = rs.getDouble("version");
+					int size = rs.getInt("size_");
+
+					addFileVersion(
+						groupId, companyId, userId, userName, folderId, name,
+						version, size);
+				}
+			}
+		}
+	}
+
+	protected void updateDLFileEntryTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			UpgradeColumn nameColumn = new DLFileEntryNameUpgradeColumnImpl(
+				"name");
+			UpgradeColumn titleColumn = new DLFileEntryTitleUpgradeColumnImpl(
+				nameColumn, "title");
+			UpgradeColumn versionColumn =
+				new DLFileEntryVersionUpgradeColumnImpl("version");
+
+			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+				DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
+				nameColumn, titleColumn, versionColumn);
+
+			upgradeTable.setAllowUniqueIndexes(true);
+			upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
+			upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
+
+			upgradeTable.updateTable();
+		}
+	}
+
+	protected void updateFiles() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select * from DLFileEntry");
 			ResultSet rs = ps.executeQuery()) {
 
@@ -113,93 +204,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						}
 					}
 				}
-			}
-		}
-
-		synchronizeFileVersions();
-
-		// DLFileEntry
-
-		UpgradeColumn nameColumn = new DLFileEntryNameUpgradeColumnImpl("name");
-		UpgradeColumn titleColumn = new DLFileEntryTitleUpgradeColumnImpl(
-			nameColumn, "title");
-		UpgradeColumn versionColumn = new DLFileEntryVersionUpgradeColumnImpl(
-			"version");
-
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			DLFileEntryTable.TABLE_NAME, DLFileEntryTable.TABLE_COLUMNS,
-			nameColumn, titleColumn, versionColumn);
-
-		upgradeTable.setAllowUniqueIndexes(true);
-		upgradeTable.setCreateSQL(DLFileEntryTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileEntryTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
-
-		// DLFileRank
-
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			DLFileRankTable.TABLE_NAME, DLFileRankTable.TABLE_COLUMNS,
-			nameColumn);
-
-		upgradeTable.setCreateSQL(DLFileRankTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileRankTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
-
-		// DLFileShortcut
-
-		UpgradeColumn toNameColumn = new DLFileEntryNameUpgradeColumnImpl(
-			"toName");
-
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			DLFileShortcutTable.TABLE_NAME, DLFileShortcutTable.TABLE_COLUMNS,
-			toNameColumn);
-
-		upgradeTable.setCreateSQL(DLFileShortcutTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileShortcutTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
-
-		// DLFileVersion
-
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			DLFileVersionTable.TABLE_NAME, DLFileVersionTable.TABLE_COLUMNS,
-			nameColumn, versionColumn);
-
-		upgradeTable.setCreateSQL(DLFileVersionTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(DLFileVersionTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
-	}
-
-	protected void synchronizeFileVersions() throws Exception {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("select * from DLFileEntry dlFileEntry where version ");
-		sb.append("not in (select version from DLFileVersion ");
-		sb.append("dlFileVersion where (dlFileVersion.folderId = ");
-		sb.append("dlFileEntry.folderId) and (dlFileVersion.name = ");
-		sb.append("dlFileEntry.name))");
-
-		String sql = sb.toString();
-
-		try (PreparedStatement ps = connection.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long groupId = rs.getLong("groupId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				long folderId = rs.getLong("folderId");
-				String name = rs.getString("name");
-				double version = rs.getDouble("version");
-				int size = rs.getInt("size_");
-
-				addFileVersion(
-					groupId, companyId, userId, userName, folderId, name,
-					version, size);
 			}
 		}
 	}

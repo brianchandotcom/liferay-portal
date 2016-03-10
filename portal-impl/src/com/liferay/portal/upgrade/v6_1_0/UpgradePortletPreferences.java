@@ -67,6 +67,14 @@ public class UpgradePortletPreferences
 		}
 	}
 
+	protected void createIndex() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"create index IX_D1F795F1 on PortalPreferences (ownerId, " +
+					"ownerType)");
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
@@ -76,9 +84,7 @@ public class UpgradePortletPreferences
 
 		upgrade(UpgradeCommunityProperties.class);
 
-		runSQL(
-			"create index IX_D1F795F1 on PortalPreferences (ownerId, " +
-				"ownerType)");
+		createIndex();
 	}
 
 	protected long getOwnerId(long plid) throws Exception {

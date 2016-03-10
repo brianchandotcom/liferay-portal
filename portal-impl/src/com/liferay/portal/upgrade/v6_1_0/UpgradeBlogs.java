@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
 
 /**
@@ -23,21 +24,33 @@ import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
  */
 public class UpgradeBlogs extends UpgradeProcess {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("drop index IX_E0D90212 on BlogsEntry");
-			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
-			runSQL("drop index IX_B88E740E on BlogsEntry");
-
+	protected void alterTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL("alter table BlogsEntry drop column draft");
+
+			alter(
+				BlogsEntryTable.class,
+				new AlterColumnType("smallImageURL", "STRING null"));
 		}
 		catch (Exception e) {
 		}
+	}
 
-		alter(
-			BlogsEntryTable.class,
-			new AlterColumnType("smallImageURL", "STRING null"));
+	@Override
+	protected void doUpgrade() throws Exception {
+		dropIndexes();
+
+		alterTable();
+	}
+
+	protected void dropIndexes() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("drop index IX_E0D90212 on BlogsEntry");
+			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
+			runSQL("drop index IX_B88E740E on BlogsEntry");
+		}
+		catch (Exception e) {
+		}
 	}
 
 }

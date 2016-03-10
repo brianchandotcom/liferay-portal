@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_5;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,18 +28,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, liveGroupId from Group_ where liveGroupId " +
-					"!= 0");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long liveGroupId = rs.getLong("liveGroupId");
-
-				updateUUID(groupId, liveGroupId);
-			}
-		}
+		updateUUIDs();
 	}
 
 	protected void updateUUID(long groupId, long liveGroupId) throws Exception {
@@ -98,6 +88,22 @@ public class UpgradeLayout extends UpgradeProcess {
 				runSQL(
 					"update Layout set uuid_ = '" + uuid + "' where plid = " +
 						plid);
+			}
+		}
+	}
+
+	protected void updateUUIDs() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select groupId, liveGroupId from Group_ where liveGroupId " +
+					"!= 0");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long liveGroupId = rs.getLong("liveGroupId");
+
+				updateUUID(groupId, liveGroupId);
 			}
 		}
 	}

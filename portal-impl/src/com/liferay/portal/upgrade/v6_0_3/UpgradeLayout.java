@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
@@ -27,7 +28,12 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		updateLayouts();
+	}
+
+	protected void updateLayouts() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select plid from Layout where uuid_ is null");
 			ResultSet rs = ps.executeQuery()) {
 

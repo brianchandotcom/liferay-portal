@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.util.TempUpgradeColumnImpl;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.util.BlogsEntryUrlTitleUpgradeColumnImpl;
 import com.liferay.portal.upgrade.v6_0_0.util.BlogsEntryTable;
 
@@ -29,28 +30,35 @@ public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("drop index IX_E0D90212 on BlogsEntry");
-			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
-			runSQL("drop index IX_B88E740E on BlogsEntry");
+		upgradeBlogEntryTable();
+	}
 
-			runSQL("alter table BlogsEntry drop column draft");
+	protected void upgradeBlogEntryTable() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			try {
+				runSQL("drop index IX_E0D90212 on BlogsEntry");
+				runSQL("drop index IX_DA53AFD4 on BlogsEntry");
+				runSQL("drop index IX_B88E740E on BlogsEntry");
+
+				runSQL("alter table BlogsEntry drop column draft");
+			}
+			catch (Exception e) {
+			}
+
+			UpgradeColumn entryIdColumn = new TempUpgradeColumnImpl("entryId");
+
+			UpgradeColumn titleColumn = new TempUpgradeColumnImpl("title");
+
+			UpgradeColumn urlTitleColumn =
+				new BlogsEntryUrlTitleUpgradeColumnImpl(
+					entryIdColumn, titleColumn);
+
+			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+				BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS,
+				entryIdColumn, titleColumn, urlTitleColumn);
+
+			upgradeTable.updateTable();
 		}
-		catch (Exception e) {
-		}
-
-		UpgradeColumn entryIdColumn = new TempUpgradeColumnImpl("entryId");
-
-		UpgradeColumn titleColumn = new TempUpgradeColumnImpl("title");
-
-		UpgradeColumn urlTitleColumn = new BlogsEntryUrlTitleUpgradeColumnImpl(
-			entryIdColumn, titleColumn);
-
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
-			BlogsEntryTable.TABLE_NAME, BlogsEntryTable.TABLE_COLUMNS,
-			entryIdColumn, titleColumn, urlTitleColumn);
-
-		upgradeTable.updateTable();
 	}
 
 }

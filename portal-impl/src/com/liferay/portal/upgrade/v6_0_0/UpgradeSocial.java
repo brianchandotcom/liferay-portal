@@ -19,8 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.DateUpgradeColumnImpl;
 import com.liferay.portal.kernel.upgrade.util.UpgradeColumn;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
-import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialActivityTable;
 import com.liferay.portal.upgrade.v6_0_0.util.SocialRelationTable;
@@ -46,36 +45,25 @@ public class UpgradeSocial extends UpgradeProcess {
 		UpgradeColumn modifiedDateColumn = new DateUpgradeColumnImpl(
 			"modifiedDate");
 
-		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			SocialActivityTable.TABLE_NAME, SocialActivityTable.TABLE_COLUMNS,
-			createDateColumn);
-
-		upgradeTable.setCreateSQL(SocialActivityTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(SocialActivityTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			SocialActivityTable.TABLE_SQL_CREATE,
+			SocialActivityTable.TABLE_SQL_ADD_INDEXES, createDateColumn);
 
 		// SocialRelation
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			SocialRelationTable.TABLE_NAME, SocialRelationTable.TABLE_COLUMNS,
-			createDateColumn);
-
-		upgradeTable.setCreateSQL(SocialRelationTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(SocialRelationTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			SocialRelationTable.TABLE_SQL_CREATE,
+			SocialRelationTable.TABLE_SQL_ADD_INDEXES, createDateColumn);
 
 		// SocialRequest
 
-		upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
+		upgradeTable(
 			SocialRequestTable.TABLE_NAME, SocialRequestTable.TABLE_COLUMNS,
-			createDateColumn, modifiedDateColumn);
-
-		upgradeTable.setCreateSQL(SocialRequestTable.TABLE_SQL_CREATE);
-		upgradeTable.setIndexesSQL(SocialRequestTable.TABLE_SQL_ADD_INDEXES);
-
-		upgradeTable.updateTable();
+			SocialRequestTable.TABLE_SQL_CREATE,
+			SocialRequestTable.TABLE_SQL_ADD_INDEXES, createDateColumn,
+			modifiedDateColumn);
 	}
 
 	protected Object[] getGroup(long groupId) throws Exception {
@@ -112,7 +100,8 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateGroupId() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
 				"select distinct(groupId) from SocialActivity where groupId " +
 					"> 0");
 			ResultSet rs = ps.executeQuery()) {

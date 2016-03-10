@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -37,21 +38,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select plid, companyId, name, title, typeSettings from " +
-					"Layout");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-				long companyId = rs.getLong("companyId");
-				String name = rs.getString("name");
-				String title = rs.getString("title");
-				String typeSettings = rs.getString("typeSettings");
-
-				updateLayout(plid, companyId, name, title, typeSettings);
-			}
-		}
+		updateLayouts();
 	}
 
 	protected void updateJavaScript(
@@ -159,6 +146,25 @@ public class UpgradeLayout extends UpgradeProcess {
 		}
 
 		updateTypeSettings(plid, typeSettingsProperties.toString());
+	}
+
+	protected void updateLayouts() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select plid, companyId, name, title, typeSettings from " +
+					"Layout");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long plid = rs.getLong("plid");
+				long companyId = rs.getLong("companyId");
+				String name = rs.getString("name");
+				String title = rs.getString("title");
+				String typeSettings = rs.getString("typeSettings");
+
+				updateLayout(plid, companyId, name, title, typeSettings);
+			}
+		}
 	}
 
 	protected UnicodeProperties updateMetaField(

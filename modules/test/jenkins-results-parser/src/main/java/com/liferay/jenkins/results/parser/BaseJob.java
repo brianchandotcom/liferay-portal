@@ -87,17 +87,15 @@ public abstract class BaseJob {
 	}
 
 	public void setBuildURL(String buildURL) {
-		if (status.equals("starting") || status.equals("queued")) {
-			buildURL = formatBuildURL(buildURL);
+		buildURL = formatBuildURL(buildURL);
 
-			Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
+		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
 
-			buildURLMatcher.find();
+		buildURLMatcher.find();
 
-			number = Integer.parseInt(buildURLMatcher.group("number"));
+		number = Integer.parseInt(buildURLMatcher.group("number"));
 
-			status = "running";
-		}
+		status = "running";
 	}
 
 	public void setCompleted(String result) {

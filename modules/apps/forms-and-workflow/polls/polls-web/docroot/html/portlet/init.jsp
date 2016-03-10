@@ -47,6 +47,7 @@ page import="com.liferay.polls.web.polls.portlet.action.EditQuestionAction" %><%
 page import="com.liferay.polls.web.polls.portlet.display.context.PollsDisplayContext" %><%@
 page import="com.liferay.polls.web.util.PollsUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@

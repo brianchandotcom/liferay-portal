@@ -19,7 +19,7 @@
 <%
 boolean showAddPollButton = PollsResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = pollsDisplayContext.getBasePortletURL();
 
 portletURL.setParameter("struts_action", "/polls/view");
 %>
@@ -34,12 +34,13 @@ portletURL.setParameter("struts_action", "/polls/view");
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entries-were-found"
 			iteratorURL="<%= portletURL %>"
-			total="<%= PollsQuestionLocalServiceUtil.getQuestionsCount(scopeGroupId) %>"
+			orderByComparator="<%= pollsDisplayContext.getPollsQuestionOrderByComparator() %>"
+			searchTerms="<%= new DisplayTerms(renderRequest) %>"
 		>
 
-			<liferay-ui:search-container-results
-				results="<%= PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
+			<liferay-ui:search-container-results>
+				<%@ include file="/html/portlet/polls/question_search_results.jspf" %>
+			</liferay-ui:search-container-results>
 
 			<liferay-ui:search-container-row
 				className="com.liferay.polls.model.PollsQuestion"

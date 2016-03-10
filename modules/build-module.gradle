@@ -15,16 +15,6 @@ configurations {
 	}
 }
 
-printArtifactPublishCommands {
-	onlyIf {
-		if (project.name.endsWith("-test") || buildFile.text.contains("project(\"")) {
-			return false
-		}
-
-		return true
-	}
-}
-
 configurations.provided.dependencies.withType(ProjectDependency) {
 	configurations.default.exclude module: it.name
 }

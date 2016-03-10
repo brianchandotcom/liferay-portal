@@ -19,8 +19,6 @@ Import-Package:\
 Web-ContextPath: /shopping-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -includeresource:\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/CreditCard.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/State.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/StateUtil.class,\

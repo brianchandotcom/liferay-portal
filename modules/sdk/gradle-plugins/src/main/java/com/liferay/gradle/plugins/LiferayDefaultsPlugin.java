@@ -88,7 +88,6 @@ import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
@@ -133,7 +132,6 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
-import org.gradle.process.JavaExecSpec;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -503,9 +501,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			});
 
-		task.onlyIf(
-			new OutOfDateArtifactSpec(
-				antJGitConfiguration, recordArtifactTask, portalRootDir));
+		task.onlyIf(new OutOfDateArtifactSpec(recordArtifactTask));
 
 		task.setDescription(
 			"Prints the artifact publish commands if this project has been " +
@@ -536,9 +532,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			});
 
-		task.onlyIf(
-			new OutOfDateArtifactSpec(
-				antJGitConfiguration, recordArtifactTask, portalRootDir));
+		task.onlyIf(new OutOfDateArtifactSpec(recordArtifactTask));
 
 		task.setDescription(
 			"Prints the project directory if this project has been changed " +
@@ -1821,30 +1815,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static class OutOfDateArtifactSpec implements Spec<Task> {
 
-		public OutOfDateArtifactSpec(
-			FileCollection antJGitFileCollection,
-			WritePropertiesTask recordArtifactTask, File rootDir) {
-
-			_antJGitFileCollection = antJGitFileCollection;
+		public OutOfDateArtifactSpec(WritePropertiesTask recordArtifactTask) {
 			_recordArtifactTask = recordArtifactTask;
-
-			if (rootDir == null) {
-				Project project = recordArtifactTask.getProject();
-
-				rootDir = project.getRootDir();
-
-				while (true) {
-					File gitDir = new File(rootDir, ".git");
-
-					if (gitDir.exists()) {
-						break;
-					}
-
-					rootDir = rootDir.getParentFile();
-				}
-			}
-
-			_rootDir = rootDir;
 		}
 
 		@Override
@@ -1876,32 +1848,32 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			final ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			project.javaexec(
-				new Action<JavaExecSpec>() {
+			project.exec(
+				new Action<ExecSpec>() {
 
 					@Override
-					public void execute(JavaExecSpec javaExecSpec) {
-						File gitDir = new File(_rootDir, ".git");
+					public void execute(ExecSpec execSpec) {
+						execSpec.commandLine(
+							"git", "log", "--invert-grep",
+							"--grep=\"" + _IGNORED_MESSAGE_PATTERN + "\"",
+							artifactGitId + "..HEAD", ".");
 
-						javaExecSpec.args(
-							FileUtil.getAbsolutePath(gitDir),
-							FileUtil.getAbsolutePath(project.getProjectDir()),
-							artifactGitId, _IGNORED_MESSAGE_PATTERN);
-
-						javaExecSpec.setClasspath(_antJGitFileCollection);
-						javaExecSpec.setMain(
-							"com.liferay.ant.jgit.GitUpToDateTask");
-						javaExecSpec.setStandardOutput(byteArrayOutputStream);
+						execSpec.setStandardOutput(byteArrayOutputStream);
+						execSpec.setWorkingDir(project.getProjectDir());
 					}
 
 				});
 
-			return !Boolean.parseBoolean(byteArrayOutputStream.toString());
+			String output = byteArrayOutputStream.toString();
+
+			if (Validator.isNotNull(output.trim())) {
+				return true;
+			}
+
+			return false;
 		}
 
-		private final FileCollection _antJGitFileCollection;
 		private final WritePropertiesTask _recordArtifactTask;
-		private final File _rootDir;
 
 	}
 

@@ -108,6 +108,8 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
+			checkChaining(javaTerm);
+
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
 				javaTerm.hasAnnotation("Indexable") &&
 				!javaTerm.hasReturnType()) {
@@ -244,6 +246,24 @@ public class JavaClass {
 				fileName,
 				"Annotation @" + annotation + " required for " + methodName +
 					" " + fileName);
+		}
+	}
+
+	protected void checkChaining(JavaTerm javaTerm) {
+		if (!javaTerm.isMethod() && !javaTerm.isConstructor()) {
+			return;
+		}
+
+		Matcher matcher = _chainingPattern.matcher(javaTerm.getContent());
+
+		while (matcher.find()) {
+			int lineCount =
+				javaTerm.getLineCount() +
+					_javaSourceProcessor.getLineCount(
+						javaTerm.getContent(), matcher.end()) - 1;
+
+			_javaSourceProcessor.processErrorMessage(
+				_fileName, "chaining: " + _fileName + " " + lineCount);
 		}
 	}
 
@@ -1382,6 +1402,8 @@ public class JavaClass {
 	private final String _absolutePath;
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
+	private final Pattern _chainingPattern = Pattern.compile(
+		"[\t\n](?!this\\().*\\WgetClass\\(\\)\\..+");
 	private String _classContent;
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +

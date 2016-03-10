@@ -312,17 +312,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sb.toString();
 	}
 
-	protected void checkChaining(String line, String fileName, int lineCount) {
-		if (line.startsWith("this(")) {
-			return;
-		}
-
-		if (line.contains(".getClass().")) {
-			processErrorMessage(
-				fileName, "chaining: " + fileName + " " + lineCount);
-		}
-	}
-
 	protected void checkEmptyCollection(
 		String line, String fileName, int lineCount) {
 

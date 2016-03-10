@@ -1882,8 +1882,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							lineCount);
 				}
 
-				checkChaining(trimmedLine, fileName, lineCount);
-
 				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);

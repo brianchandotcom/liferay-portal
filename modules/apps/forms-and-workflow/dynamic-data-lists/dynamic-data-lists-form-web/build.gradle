@@ -27,7 +27,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider-web")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 }
 
 liferay {

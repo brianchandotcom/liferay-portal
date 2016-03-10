@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib;
+package com.liferay.frontend.taglib.web.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
+import com.liferay.frontend.taglib.web.servlet.taglib.base.BaseBarTag;
 
 import javax.servlet.jsp.JspException;
 

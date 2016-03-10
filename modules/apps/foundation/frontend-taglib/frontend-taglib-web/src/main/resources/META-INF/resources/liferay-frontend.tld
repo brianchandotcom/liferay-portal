@@ -12,7 +12,7 @@
 	<tag>
 		<description>Creates an add menu component that contains a list of menu items.</description>
 		<name>add-menu</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.AddMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>A list of menu items.</description>
@@ -24,7 +24,7 @@
 	<tag>
 		<description>Creates a menu item component.</description>
 		<name>add-menu-item</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuItemTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.AddMenuItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>Miscellaneous data to be stored via a map. The map holds key value pairs of type <![CDATA[<code>&lt;String, Object&gt;</code>]]>. For example, a <![CDATA[<code>HashMap</code>]]> entry <![CDATA[<code>&lt;"class-name", foo&gt;</code>]]> renders as an HTML attribute <![CDATA[<code>data-class-name = foo;</code>]]>. Note that the prefix <![CDATA[<code>data-</code>]]> is added to the key's name automatically.</description>
@@ -53,8 +53,8 @@
 	</tag>
 	<tag>
 		<name>defineObjects</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.DefineObjectsTag</tag-class>
-		<tei-class>com.liferay.frontend.taglib.servlet.taglib.DefineObjectsTei</tei-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.DefineObjectsTag</tag-class>
+		<tei-class>com.liferay.frontend.taglib.web.servlet.taglib.DefineObjectsTei</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>overrideResourceBundle</name>
@@ -64,7 +64,7 @@
 	</tag>
 	<tag>
 		<name>diff</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.DiffTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.DiffTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>diffResults</name>
@@ -84,7 +84,7 @@
 	</tag>
 	<tag>
 		<name>diff-version-comparator</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.DiffVersionComparatorTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.DiffVersionComparatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>availableLocales</name>
@@ -129,7 +129,7 @@
 	</tag>
 	<tag>
 		<name>email-notification-settings</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EmailNotificationSettingsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.EmailNotificationSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>bodyLabel</name>
@@ -200,7 +200,7 @@
 	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>horizontal-card</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.HorizontalCardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>The path to an action JSP. It is generally the JSP for the card dropdown menu.</description>
@@ -300,12 +300,12 @@
 	</tag>
 	<tag>
 		<name>horizontal-card-col</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardColTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.HorizontalCardColTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>horizontal-card-icon</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardIconTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.HorizontalCardIconTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>icon</name>
@@ -316,7 +316,7 @@
 	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>icon-vertical-card</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.IconVerticalCardTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.IconVerticalCardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>The path to an action JSP. It is generally the JSP for the card dropdown menu.</description>
@@ -427,7 +427,7 @@
 	</tag>
 	<tag>
 		<name>image-card</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ImageCardTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ImageCardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>cssClass</name>
@@ -452,12 +452,12 @@
 	</tag>
 	<tag>
 		<name>info-bar</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.InfoBarTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.InfoBarTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>info-bar-button</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.InfoBarButtonTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.InfoBarButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>active</name>
@@ -507,12 +507,12 @@
 	</tag>
 	<tag>
 		<name>info-bar-buttons</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.InfoBarButtonsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.InfoBarButtonsTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>info-bar-sidenav-toggler-button</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.InfoBarSidenavTogglerButtonTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.InfoBarSidenavTogglerButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>cssClass</name>
@@ -562,7 +562,7 @@
 	</tag>
 	<tag>
 		<name>management-bar</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>disabled</name>
@@ -582,12 +582,12 @@
 	</tag>
 	<tag>
 		<name>management-bar-action-buttons</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarActionButtonsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarActionButtonsTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>management-bar-button</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarButtonTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>active</name>
@@ -637,12 +637,12 @@
 	</tag>
 	<tag>
 		<name>management-bar-buttons</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarButtonsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarButtonsTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>management-bar-display-buttons</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarDisplayButtonsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarDisplayButtonsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>disabled</name>
@@ -667,7 +667,7 @@
 	</tag>
 	<tag>
 		<name>management-bar-filter</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarFilterTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>disabled</name>
@@ -692,7 +692,7 @@
 	</tag>
 	<tag>
 		<name>management-bar-filter-item</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItemTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarFilterItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>active</name>
@@ -717,12 +717,12 @@
 	</tag>
 	<tag>
 		<name>management-bar-filters</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFiltersTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarFiltersTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>management-bar-navigation</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarNavigationTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarNavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>disabled</name>
@@ -752,7 +752,7 @@
 	</tag>
 	<tag>
 		<name>management-bar-sidenav-toggler-button</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarSidenavTogglerButtonTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarSidenavTogglerButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>cssClass</name>
@@ -802,7 +802,7 @@
 	</tag>
 	<tag>
 		<name>management-bar-sort</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarSortTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.ManagementBarSortTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>disabled</name>
@@ -833,7 +833,7 @@
 	<tag>
 		<description>Creates a lexicon-based sidebar panel component.</description>
 		<name>sidebar-panel</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.SidebarPanelTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.SidebarPanelTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>searchContainerId</name>
@@ -849,7 +849,7 @@
 	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>user-vertical-card</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.UserVerticalCardTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.UserVerticalCardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>The path to an action JSP. It is generally the JSP for the card dropdown menu.</description>
@@ -962,7 +962,7 @@
 	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>vertical-card</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.VerticalCardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>The path to an action JSP. It is generally the JSP for the card dropdown menu.</description>
@@ -1087,17 +1087,17 @@
 	</tag>
 	<tag>
 		<name>vertical-card-footer</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardFooterTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.VerticalCardFooterTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>vertical-card-header</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardHeaderTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.VerticalCardHeaderTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>vertical-card-small-image</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardSmallImageTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.VerticalCardSmallImageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>A CSS class for styling the small image.</description>
@@ -1114,7 +1114,7 @@
 	</tag>
 	<tag>
 		<name>vertical-card-sticker-bottom</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardStickerBottomTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.VerticalCardStickerBottomTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 </taglib>

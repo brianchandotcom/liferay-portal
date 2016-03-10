@@ -25,4 +25,6 @@ public interface FriendlyURLNormalizer {
 
 	public String normalize(String friendlyURL, Pattern friendlyURLPattern);
 
+	public String normalizeWithPeriodsAndSlashes(String friendlyURL);
+
 }

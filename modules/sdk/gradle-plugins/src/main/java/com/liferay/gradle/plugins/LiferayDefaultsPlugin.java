@@ -376,7 +376,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected Task addTaskPrintArtifactPublishCommands(
 		final WritePropertiesTask recordArtifactTask,
-		Configuration antJGitConfiguration, final File portalRootDir) {
+		Configuration antJGitConfiguration, final File portalRootDir,
+		final boolean testProject) {
 
 		Project project = recordArtifactTask.getProject();
 
@@ -455,16 +456,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					String gradlewRelativePath = project.relativePath(
 						gradlewFile);
 
+					String gradlewForcedCache = "";
+
+					if (testProject) {
+						gradlewForcedCache = " -Dforced.cache.enabled=true";
+					}
+
 					commands.add(
 						gradlewRelativePath + " " +
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME + " -P" +
-								_SNAPSHOT_PROPERTY_NAME);
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME +
+								gradlewForcedCache + " -P" +
+									_SNAPSHOT_PROPERTY_NAME);
 
 					// Publish release
 
 					commands.add(
 						gradlewRelativePath + " " +
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME +
+								gradlewForcedCache);
 
 					// Commit "prep next"
 
@@ -1017,7 +1026,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			project);
 
 		addTaskPrintArtifactPublishCommands(
-			recordArtifactTask, antJGitConfiguration, portalRootDir);
+			recordArtifactTask, antJGitConfiguration, portalRootDir,
+			testProject);
 		addTaskPrintStaleArtifact(
 			recordArtifactTask, antJGitConfiguration, portalRootDir);
 

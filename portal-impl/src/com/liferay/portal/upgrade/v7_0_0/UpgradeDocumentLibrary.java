@@ -149,13 +149,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
-						"update DLFileEntry set fileName = ? where " +
-							"fileEntryId = ?");
-				PreparedStatement ps3 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update DLFileEntry set title = ? where fileEntryId " +
-							"= ?");
+						"update DLFileEntry set fileName = ?, title = ? " +
+							"where fileEntryId = ?");
 				PreparedStatement ps4 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
@@ -204,16 +199,19 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					}
 
 					ps2.setString(1, uniqueFileName);
-					ps2.setLong(2, fileEntryId);
+
+					if (Validator.isNotNull(uniqueTitle)) {
+						ps2.setString(1, uniqueTitle);
+					}
+					else {
+						ps2.setString(2, title);
+					}
+
+					ps2.setLong(3, fileEntryId);
 
 					ps2.addBatch();
 
 					if (Validator.isNotNull(uniqueTitle)) {
-						ps3.setString(1, uniqueTitle);
-						ps3.setLong(2, fileEntryId);
-
-						ps3.addBatch();
-
 						ps4.setString(1, uniqueTitle);
 						ps4.setLong(2, fileEntryId);
 						ps4.setString(3, version);
@@ -223,8 +221,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				}
 
 				ps2.executeBatch();
-
-				ps3.executeBatch();
 
 				ps4.executeBatch();
 			}

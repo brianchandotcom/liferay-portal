@@ -133,15 +133,6 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		return StringPool.BLANK;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #processMax()}
-	 */
-	@Deprecated
-	@Override
-	public String processMax(String classNames) throws Exception {
-		return processMax();
-	}
-
 	@Override
 	public String processPortlet(String portletId) throws Exception {
 		_writer.append("<div class=\"portlet\">");

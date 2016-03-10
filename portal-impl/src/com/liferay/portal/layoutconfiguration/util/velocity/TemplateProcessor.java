@@ -181,15 +181,6 @@ public class TemplateProcessor implements ColumnProcessor {
 		return bufferCacheServletResponse.getString();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #processMax()}
-	 */
-	@Deprecated
-	@Override
-	public String processMax(String classNames) throws Exception {
-		return processMax();
-	}
-
 	@Override
 	public String processPortlet(String portletId) throws Exception {
 		_request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);

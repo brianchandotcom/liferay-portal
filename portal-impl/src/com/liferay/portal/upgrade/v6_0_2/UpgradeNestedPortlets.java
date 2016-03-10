@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,7 +36,24 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(_GET_LAYOUT);
+		updateLayouts();
+	}
+
+	protected void updateLayout(long plid, String typeSettings)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update Layout set typeSettings = ? where plid = " + plid)) {
+
+			ps.setString(1, typeSettings);
+
+			ps.executeUpdate();
+		}
+	}
+
+	protected void updateLayouts() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(_GET_LAYOUT);
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -66,18 +84,6 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 					updateLayout(plid, newTypeSettings);
 				}
 			}
-		}
-	}
-
-	protected void updateLayout(long plid, String typeSettings)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update Layout set typeSettings = ? where plid = " + plid)) {
-
-			ps.setString(1, typeSettings);
-
-			ps.executeUpdate();
 		}
 	}
 

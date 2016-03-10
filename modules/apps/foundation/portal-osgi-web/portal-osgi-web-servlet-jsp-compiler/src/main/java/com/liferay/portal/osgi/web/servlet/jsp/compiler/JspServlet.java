@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -417,14 +418,21 @@ public class JspServlet extends HttpServlet {
 	}
 
 	protected void scanTLDs(ServletContext servletContext) {
-		Enumeration<URL> urls = _bundle.findEntries("META-INF/", "*.tld", true);
+		BundleWiring bundleWiring =_bundle.adapt(BundleWiring.class);
 
-		if (urls == null) {
+		Collection<String> resources = bundleWiring.listResources(
+			"META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (resources == null) {
 			return;
 		}
 
-		while (urls.hasMoreElements()) {
-			URL url = urls.nextElement();
+		for (String resource : resources) {
+			URL url = _bundle.getResource(resource);
+
+			if (url == null) {
+				continue;
+			}
 
 			try (InputStream inputStream = url.openStream()) {
 				ParserUtils parserUtils = new ParserUtils(true);

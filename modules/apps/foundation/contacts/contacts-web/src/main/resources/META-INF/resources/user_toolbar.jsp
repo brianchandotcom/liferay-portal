@@ -204,7 +204,7 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 	);
 </aui:script>
 
-<aui:script use="aui-base,aui-io-request-deprecated">
+<aui:script use="aui-base,aui-io-request-deprecated,aui-io-plugin-deprecated">
 	var contactAction = A.one('.contacts-portlet .contacts-action');
 
 	if (contactAction) {

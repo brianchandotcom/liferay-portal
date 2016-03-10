@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v6_1_0.util.BlogsEntryTable;
 
 /**
@@ -25,7 +26,15 @@ public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
+		upgradeBlogsEntryTable();
+
+		alter(
+			BlogsEntryTable.class,
+			new AlterColumnType("smallImageURL", "STRING null"));
+	}
+
+	protected void upgradeBlogsEntryTable() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL("drop index IX_E0D90212 on BlogsEntry");
 			runSQL("drop index IX_DA53AFD4 on BlogsEntry");
 			runSQL("drop index IX_B88E740E on BlogsEntry");
@@ -34,10 +43,6 @@ public class UpgradeBlogs extends UpgradeProcess {
 		}
 		catch (Exception e) {
 		}
-
-		alter(
-			BlogsEntryTable.class,
-			new AlterColumnType("smallImageURL", "STRING null"));
 	}
 
 }

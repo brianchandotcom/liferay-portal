@@ -205,8 +205,12 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		char c = name.charAt(0);
 
+		boolean modified = false;
+
 		if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) {
 			sb.append((char)(c - 32));
+
+			modified = true;
 		}
 		else if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z) ||
 				 (c == CharPool.UNDERLINE)) {
@@ -215,6 +219,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 		else {
 			sb.append(CharPool.UNDERLINE);
+
+			modified = true;
 		}
 
 		for (int i = 1; i < name.length(); i++) {
@@ -222,6 +228,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 			if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) {
 				sb.append((char)(c - 32));
+
+				modified = true;
 			}
 			else if ((CharPool.UPPER_CASE_A <= c) &&
 					 (c <= CharPool.UPPER_CASE_Z) ||
@@ -232,7 +240,11 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			}
 		}
 
-		String safeName = sb.toString();
+		String safeName = name;
+
+		if (modified) {
+			safeName = sb.toString();
+		}
 
 		if (!names.add(safeName)) {
 			int i = 1;

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -318,8 +317,9 @@ public class SearchContainerRowTag<R>
 				rowId = String.valueOf(_rowIndex + 1);
 			}
 			else {
-				rowId = FriendlyURLNormalizerUtil.normalize(
-					String.valueOf(rowIdObj), _friendlyURLPattern);
+				rowId =
+					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+						String.valueOf(rowIdObj));
 			}
 		}
 
@@ -330,9 +330,6 @@ public class SearchContainerRowTag<R>
 		pageContext.setAttribute(_modelVar, model);
 		pageContext.setAttribute(_rowVar, _resultRow);
 	}
-
-	private static final Pattern _friendlyURLPattern = Pattern.compile(
-		"[^a-z0-9_-]");
 
 	private boolean _bold;
 	private String _className;

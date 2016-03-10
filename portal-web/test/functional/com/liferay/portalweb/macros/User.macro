@@ -1573,7 +1573,7 @@
 
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="MenuItem#IMPERSONATE_USER" value1="Impersonate User (Opens New Window)" />
+		<execute function="AssertClick" locator1="MenuItem#IMPERSONATE_USER" value1="Impersonate User" />
 
 		<execute function="SelectWindow" locator1="title=Welcome - Liferay" />
 

@@ -74,7 +74,11 @@ if (Validator.isNotNull(portletResource)) {
 }
 
 String domainName = portletPreferences.getValue("domain-name", "Personalized Content ".concat(instanceId));
-String rules = portletPreferences.getValue("rules", StringUtil.read(getClass().getClassLoader(), PortletProps.get("sample.drools.rules.personalized.content")));
+
+Class<?> clazz = getClass();
+
+String rules = portletPreferences.getValue("rules", StringUtil.read(clazz.getClassLoader(), PortletProps.get("sample.drools.rules.personalized.content")));
+
 String userCustomAttributeNames = portletPreferences.getValue("user-custom-attribute-names", StringPool.BLANK);
 long[] classNameIds = GetterUtil.getLongValues(portletPreferences.getValues("class-name-ids", null), AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId()));
 %>

@@ -60,7 +60,9 @@ public class ThreadTest {
 	@Test
 	public void testCurrent3() throws Exception {
 		try {
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			Thread.currentThread().setContextClassLoader(classLoader);
 
@@ -311,7 +313,9 @@ public class ThreadTest {
 
 	@Test
 	public void testNew10() throws Exception {
-		final ClassLoader classLoader = getClass().getClassLoader();
+		Class<?> clazz = getClass();
+
+		final ClassLoader classLoader = clazz.getClassLoader();
 
 		FutureTask<Exception> futureTask = new FutureTask<Exception>(
 			new Callable<Exception>() {

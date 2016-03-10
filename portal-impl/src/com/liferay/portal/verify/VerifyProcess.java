@@ -117,8 +117,10 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			}
 
 			if (!throwables.isEmpty()) {
+				Class<?> clazz = getClass();
+
 				throw new BulkException(
-					"Verification error: " + getClass().getName(), throwables);
+					"Verification error: " + clazz.getName(), throwables);
 			}
 		}
 		else {

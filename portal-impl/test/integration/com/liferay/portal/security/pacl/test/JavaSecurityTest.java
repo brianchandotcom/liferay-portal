@@ -326,7 +326,9 @@ public class JavaSecurityTest {
 	@Test
 	public void testProtectionDomain2() throws Exception {
 		try {
-			getClass().getProtectionDomain();
+			Class<?> clazz = getClass();
+
+			clazz.getProtectionDomain();
 
 			Assert.fail();
 		}

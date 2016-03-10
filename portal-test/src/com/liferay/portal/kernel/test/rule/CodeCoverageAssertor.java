@@ -164,8 +164,9 @@ public class CodeCoverageAssertor implements TestRule {
 		}
 
 		if (getClass() != CodeCoverageAssertor.class) {
-			Class<?> reloadedClass = classLoader.loadClass(
-				getClass().getName());
+			Class<?> clazz = getClass();
+
+			Class<?> reloadedClass = classLoader.loadClass(clazz.getName());
 
 			Method appendAssertClassesMethod = reloadedClass.getMethod(
 				"appendAssertClasses", List.class);

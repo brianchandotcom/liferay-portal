@@ -397,9 +397,11 @@ public class LocalizationImpl implements Localization {
 			defaultPropertyValue = PropsUtil.get(propertyName);
 		}
 
+		Class<?> clazz = getClass();
+
 		return getLocalizationMap(
 			preferences, preferenceName, propertyName, defaultPropertyValue,
-			getClass().getClassLoader());
+			clazz.getClassLoader());
 	}
 
 	@Override

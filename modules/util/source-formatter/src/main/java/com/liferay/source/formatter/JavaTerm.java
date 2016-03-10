@@ -302,7 +302,7 @@ public class JavaTerm {
 
 			parameters = _content.substring(x + 1, y);
 
-			if (BaseSourceProcessor.getLevel(parameters) == 0) {
+			if (_javaSourceProcessor.getLevel(parameters) == 0) {
 				break;
 			}
 		}
@@ -330,7 +330,7 @@ public class JavaTerm {
 
 			String parameterType = parameters.substring(0, x);
 
-			if (BaseSourceProcessor.getLevel(parameterType, "<", ">") != 0) {
+			if (_javaSourceProcessor.getLevel(parameterType, "<", ">") != 0) {
 				continue;
 			}
 
@@ -364,8 +364,8 @@ public class JavaTerm {
 
 			String annotation = parameters.substring(0, pos);
 
-			if ((BaseSourceProcessor.getLevel(annotation) == 0) &&
-				(BaseSourceProcessor.getLevel(annotation, "<", ">") == 0)) {
+			if ((_javaSourceProcessor.getLevel(annotation) == 0) &&
+				(_javaSourceProcessor.getLevel(annotation, "<", ">") == 0)) {
 
 				return parameters.substring(pos + 1);
 			}
@@ -374,6 +374,8 @@ public class JavaTerm {
 
 	private String _content;
 	private String _indent;
+	private JavaSourceProcessor _javaSourceProcessor =
+		new JavaSourceProcessor();
 	private int _lineCount;
 	private String _name;
 	private List<String> _parameterNames;

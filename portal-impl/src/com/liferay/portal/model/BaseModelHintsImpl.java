@@ -61,7 +61,9 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 		_models = new TreeSet<>();
 
 		try {
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			for (String config : getModelHintsConfigs()) {
 				if (config.startsWith("classpath*:")) {

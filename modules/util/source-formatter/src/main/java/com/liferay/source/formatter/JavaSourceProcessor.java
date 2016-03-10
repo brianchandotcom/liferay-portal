@@ -1882,8 +1882,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							lineCount);
 				}
 
-				checkChaining(trimmedLine, fileName, lineCount);
-
 				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
@@ -2086,8 +2084,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 							linePart = previousLine.substring(x);
 
-							linePart = BaseSourceProcessor.stripQuotes(
-								linePart, CharPool.QUOTE);
+							linePart = stripQuotes(linePart, CharPool.QUOTE);
 
 							if ((getLevel(linePart, "(", ")") != 0) ||
 								(getLevel(linePart, "<", ">") != 0)) {

@@ -64,7 +64,7 @@ public class JavaSourceTabCalculator {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				int leadingTabCount = BaseSourceProcessor.getLeadingTabCount(
+				int leadingTabCount = _javaSourceProcessor.getLeadingTabCount(
 					line);
 
 				if (trimmedLine.startsWith("/*") &&
@@ -250,7 +250,7 @@ public class JavaSourceTabCalculator {
 			}
 
 			if (matchingText.equals(",\n") &&
-				(BaseSourceProcessor.getLevel(s, "<", ">") > 0)) {
+				(_javaSourceProcessor.getLevel(s, "<", ">") > 0)) {
 
 				continue;
 			}
@@ -338,7 +338,7 @@ public class JavaSourceTabCalculator {
 	}
 
 	protected int calculateTabLevel(int level, String text) {
-		return BaseSourceProcessor.getLevel(
+		return _javaSourceProcessor.getLevel(
 			text,
 			new String[] {
 				StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_PARENTHESIS
@@ -493,6 +493,8 @@ public class JavaSourceTabCalculator {
 
 	private Map<Integer, Integer> _extraTabMap;
 	private Set<Integer> _ignoreTabCheck;
+	private JavaSourceProcessor _javaSourceProcessor =
+		new JavaSourceProcessor();
 	private Pattern _methodDeclarationPattern = Pattern.compile(
 		"^\\s*(private|protected|public) .*?(\\{|;)\n", Pattern.DOTALL);
 	private boolean _printIncorrectTabMessage;

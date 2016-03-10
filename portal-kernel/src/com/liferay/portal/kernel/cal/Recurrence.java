@@ -616,7 +616,10 @@ public class Recurrence implements Serializable {
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
-		sb.append(getClass().getName());
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getName());
+
 		sb.append("[dtStart=");
 		sb.append((dtStart != null) ? dtStart.toString() : "null");
 		sb.append(",duration=");

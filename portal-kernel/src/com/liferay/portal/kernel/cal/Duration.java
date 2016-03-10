@@ -275,7 +275,10 @@ public class Duration implements Cloneable, Serializable {
 	public String toString() {
 		StringBundler sb = new StringBundler(12);
 
-		sb.append(getClass().getName());
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getName());
+
 		sb.append("[weeks=");
 		sb.append(_weeks);
 		sb.append(",days=");

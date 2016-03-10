@@ -55,7 +55,9 @@ public abstract class BaseAssetAddonEntry implements AssetAddonEntry {
 
 	@Override
 	public String getKey() {
-		return getClass().getSimpleName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override

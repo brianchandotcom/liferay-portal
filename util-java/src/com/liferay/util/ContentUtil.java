@@ -69,7 +69,9 @@ public class ContentUtil {
 	}
 
 	private String _get(String location, boolean all) {
-		return _get(getClass().getClassLoader(), location, all);
+		Class<?> clazz = getClass();
+
+		return _get(clazz.getClassLoader(), location, all);
 	}
 
 	private void _put(String location, String content) {

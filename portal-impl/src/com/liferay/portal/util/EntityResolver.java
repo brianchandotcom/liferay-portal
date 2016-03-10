@@ -32,7 +32,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 
 	@Override
 	public InputSource resolveEntity(String publicId, String systemId) {
-		ClassLoader classLoader = getClass().getClassLoader();
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Resolving entity " + publicId + " " + systemId);

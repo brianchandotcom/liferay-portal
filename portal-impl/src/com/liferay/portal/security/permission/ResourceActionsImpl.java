@@ -94,7 +94,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		_modelResourceActionsBags = new HashMap<>();
 
 		try {
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			for (String config : PropsValues.RESOURCE_ACTIONS_CONFIGS) {
 				read(null, classLoader, config);

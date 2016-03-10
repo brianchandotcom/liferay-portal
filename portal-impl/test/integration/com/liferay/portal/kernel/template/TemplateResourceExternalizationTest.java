@@ -115,8 +115,10 @@ public class TemplateResourceExternalizationTest {
 		String ddmTemplateKey = "testKey";
 		final long templateId = 100;
 
+		Class<?> clazz = getClass();
+
 		DDMTemplate ddmTemplate = (DDMTemplate)ProxyUtil.newProxyInstance(
-			getClass().getClassLoader(), new Class<?>[] {DDMTemplate.class},
+			clazz.getClassLoader(), new Class<?>[] {DDMTemplate.class},
 			new InvocationHandler() {
 
 				@Override

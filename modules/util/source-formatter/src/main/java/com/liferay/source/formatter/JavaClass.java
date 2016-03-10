@@ -76,9 +76,9 @@ public class JavaClass {
 		throws Exception {
 
 		if (_javaTerms == null) {
-			if (!BaseSourceProcessor.isExcludedPath(
+			if (!_javaSourceProcessor.isExcludedPath(
 					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
-				!BaseSourceProcessor.isExcludedPath(
+				!_javaSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath)) {
 
 				_javaSourceProcessor.processErrorMessage(
@@ -108,6 +108,8 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
+			checkChaining(javaTerm);
+
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
 				javaTerm.hasAnnotation("Indexable") &&
 				!javaTerm.hasReturnType()) {
@@ -118,7 +120,7 @@ public class JavaClass {
 						_fileName + " " + javaTerm.getLineCount());
 			}
 
-			if (!BaseSourceProcessor.isExcludedPath(
+			if (!_javaSourceProcessor.isExcludedPath(
 					checkJavaFieldTypesExcludes, _absolutePath)) {
 
 				checkJavaFieldType(
@@ -244,6 +246,24 @@ public class JavaClass {
 				fileName,
 				"Annotation @" + annotation + " required for " + methodName +
 					" " + fileName);
+		}
+	}
+
+	protected void checkChaining(JavaTerm javaTerm) {
+		if (!javaTerm.isMethod() && !javaTerm.isConstructor()) {
+			return;
+		}
+
+		Matcher matcher = _chainingPattern.matcher(javaTerm.getContent());
+
+		while (matcher.find()) {
+			int lineCount =
+				javaTerm.getLineCount() +
+					_javaSourceProcessor.getLineCount(
+						javaTerm.getContent(), matcher.end()) - 1;
+
+			_javaSourceProcessor.processErrorMessage(
+				_fileName, "chaining: " + _fileName + " " + lineCount);
 		}
 	}
 
@@ -402,7 +422,7 @@ public class JavaClass {
 			Set<String> immutableFieldTypes)
 		throws Exception {
 
-		if (!BaseSourceProcessor.portalSource || !javaTerm.isVariable()) {
+		if (!_javaSourceProcessor.portalSource || !javaTerm.isVariable()) {
 			return;
 		}
 
@@ -607,7 +627,7 @@ public class JavaClass {
 
 			String javaTermName = javaTerm.getName();
 
-			if (BaseSourceProcessor.isExcludedPath(
+			if (_javaSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath,
 					javaTerm.getLineCount(), javaTermName)) {
 
@@ -685,7 +705,7 @@ public class JavaClass {
 	protected String fixLeadingTabs(
 		String content, String line, int expectedTabCount) {
 
-		int leadingTabCount = JavaSourceProcessor.getLeadingTabCount(line);
+		int leadingTabCount = _javaSourceProcessor.getLeadingTabCount(line);
 
 		String newLine = line;
 
@@ -784,7 +804,7 @@ public class JavaClass {
 			if (expectedTabCount == -1) {
 				if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 					expectedTabCount = Math.max(
-						JavaSourceProcessor.getLeadingTabCount(line),
+						_javaSourceProcessor.getLeadingTabCount(line),
 						_indent.length()) + 1;
 
 					if (throwsException &&
@@ -806,7 +826,7 @@ public class JavaClass {
 				else {
 					newMethodNameAndParameters = fixLeadingTabs(
 						newMethodNameAndParameters, line,
-						JavaSourceProcessor.getLeadingTabCount(previousLine) +
+						_javaSourceProcessor.getLeadingTabCount(previousLine) +
 							1);
 				}
 			}
@@ -821,7 +841,7 @@ public class JavaClass {
 		throws Exception {
 
 		if ((_indent.length() == 1) &&
-			!BaseSourceProcessor.isExcludedPath(
+			!_javaSourceProcessor.isExcludedPath(
 				testAnnotationsExcludes, _absolutePath) &&
 			_fileName.endsWith("Test.java")) {
 
@@ -893,7 +913,7 @@ public class JavaClass {
 	}
 
 	protected JavaTerm getJavaTerm(
-			String name, int type, int lineCount, int startPos, int endPos)
+			String name, int type, int startPos, int endPos)
 		throws Exception {
 
 		String javaTermContent = _classContent.substring(startPos, endPos);
@@ -901,6 +921,10 @@ public class JavaClass {
 		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
 			return null;
 		}
+
+		int lineCount =
+			_lineCount +
+				_javaSourceProcessor.getLineCount(_classContent, startPos) - 1;
 
 		JavaTerm javaTerm = new JavaTerm(
 			name, type, javaTermContent, lineCount, _indent);
@@ -931,21 +955,17 @@ public class JavaClass {
 			new UnsyncStringReader(_classContent));
 
 		int index = 0;
-		int lineCount = _lineCount - 1;
 
 		String line = null;
 
 		String javaTermName = null;
-		int javaTermLineCount = -1;
 		int javaTermStartPosition = -1;
 		int javaTermType = -1;
 
 		int lastCommentOrAnnotationPos = -1;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
-
-			if (JavaSourceProcessor.getLeadingTabCount(line) !=
+			if (_javaSourceProcessor.getLeadingTabCount(line) !=
 					_indent.length()) {
 
 				index = index + line.length() + 1;
@@ -980,8 +1000,8 @@ public class JavaClass {
 					(javaTermEndPosition < _classContent.length())) {
 
 					JavaTerm javaTerm = getJavaTerm(
-						javaTermName, javaTermType, javaTermLineCount,
-						javaTermStartPosition, javaTermEndPosition);
+						javaTermName, javaTermType, javaTermStartPosition,
+						javaTermEndPosition);
 
 					if (javaTerm == null) {
 						return null;
@@ -995,7 +1015,6 @@ public class JavaClass {
 					}
 				}
 
-				javaTermLineCount = lineCount;
 				javaTermName = (String)tuple.getObject(0);
 				javaTermStartPosition = javaTermEndPosition;
 				javaTermType = (Integer)tuple.getObject(1);
@@ -1011,7 +1030,7 @@ public class JavaClass {
 					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
 					 !line.startsWith(_indent + "extends") &&
 					 !line.startsWith(_indent + "implements") &&
-					 !BaseSourceProcessor.isExcludedPath(
+					 !_javaSourceProcessor.isExcludedPath(
 						 _javaTermAccessLevelModifierExcludes, _absolutePath)) {
 
 				Matcher matcher = _classPattern.matcher(_classContent);
@@ -1021,6 +1040,11 @@ public class JavaClass {
 
 					if (insideClass.contains(line) &&
 						!isEnumType(line, matcher.group(4))) {
+
+						int lineCount =
+							_lineCount +
+								_javaSourceProcessor.getLineCount(
+									_classContent, index) - 1;
 
 						_javaSourceProcessor.processErrorMessage(
 							_fileName,
@@ -1039,8 +1063,8 @@ public class JavaClass {
 					_indent.length() + 1;
 
 			JavaTerm javaTerm = getJavaTerm(
-				javaTermName, javaTermType, javaTermLineCount,
-				javaTermStartPosition, javaTermEndPosition);
+				javaTermName, javaTermType, javaTermStartPosition,
+				javaTermEndPosition);
 
 			if (javaTerm == null) {
 				return null;
@@ -1322,7 +1346,7 @@ public class JavaClass {
 
 		String javaTermName = javaTerm.getName();
 
-		if (BaseSourceProcessor.isExcludedPath(
+		if (_javaSourceProcessor.isExcludedPath(
 				javaTermSortExcludes, _absolutePath, -1, javaTermName)) {
 
 			return;
@@ -1378,6 +1402,8 @@ public class JavaClass {
 	private final String _absolutePath;
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
+	private final Pattern _chainingPattern = Pattern.compile(
+		"^((?!this\\().)*\\WgetClass\\(\\)\\..", Pattern.DOTALL);
 	private String _classContent;
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +

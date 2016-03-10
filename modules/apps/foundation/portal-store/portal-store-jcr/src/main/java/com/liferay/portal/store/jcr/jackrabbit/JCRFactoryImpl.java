@@ -147,7 +147,9 @@ public class JCRFactoryImpl implements JCRFactory {
 				"com/liferay/portal/store/jcr/jackrabbit/dependencies" +
 					"/repository-ext.xml";
 
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			if (classLoader.getResource(repositoryXmlPath) == null) {
 				repositoryXmlPath =

@@ -625,16 +625,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String[] lineParts = StringUtil.split(line, " + ");
 
 		for (String linePart : lineParts) {
-			int closeParenthesesCount = StringUtil.count(
-				linePart, StringPool.CLOSE_PARENTHESIS);
-			int openParenthesesCount = StringUtil.count(
-				linePart, StringPool.OPEN_PARENTHESIS);
-
-			if (closeParenthesesCount != openParenthesesCount) {
-				return;
-			}
-
-			if (Validator.isNumber(linePart)) {
+			if ((getLevel(linePart) != 0) || Validator.isNumber(linePart)) {
 				return;
 			}
 		}
@@ -658,14 +649,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				replaceCall = replaceCall.substring(0, x + 1);
 
-				String strippedQuotesCall = stripQuotes(replaceCall);
-
-				int closeParenthesesCount = StringUtil.count(
-					strippedQuotesCall, StringPool.CLOSE_PARENTHESIS);
-				int openParenthesesCount = StringUtil.count(
-					strippedQuotesCall, StringPool.OPEN_PARENTHESIS);
-
-				if (closeParenthesesCount == openParenthesesCount) {
+				if (getLevel(replaceCall) == 0) {
 					break;
 				}
 			}
@@ -694,14 +678,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				String linePart = parameters.substring(0, x);
 
-				String strippedQuotesLinePart = stripQuotes(linePart);
-
-				int closeParenthesesCount = StringUtil.count(
-					strippedQuotesLinePart, StringPool.CLOSE_PARENTHESIS);
-				int openParenthesesCount = StringUtil.count(
-					strippedQuotesLinePart, StringPool.OPEN_PARENTHESIS);
-
-				if (closeParenthesesCount == openParenthesesCount) {
+				if (getLevel(linePart) == 0) {
 					parametersList.add(StringUtil.trim(linePart));
 
 					parameters = parameters.substring(x + 1);
@@ -1991,12 +1968,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				String linePart = s.substring(x, y + 1);
 
-				int closeParenthesesCount = StringUtil.count(
-					linePart, StringPool.CLOSE_PARENTHESIS);
-				int openParenthesesCount = StringUtil.count(
-					linePart, StringPool.OPEN_PARENTHESIS);
-
-				if (closeParenthesesCount == openParenthesesCount) {
+				if (getLevel(linePart) == 0) {
 					break;
 				}
 			}
@@ -2018,12 +1990,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				continue;
 			}
 
-			int closeParenthesesCount = StringUtil.count(
-				part, StringPool.CLOSE_PARENTHESIS);
-			int openParenthesesCount = StringUtil.count(
-				part, StringPool.OPEN_PARENTHESIS);
-
-			if (Math.abs(closeParenthesesCount - openParenthesesCount) == 1) {
+			if (Math.abs(getLevel(part)) == 1) {
 				return true;
 			}
 		}
@@ -2182,22 +2149,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				value = s.substring(0, y);
 
 				if (value.startsWith("<%")) {
-					int endJavaCodeSignCount = StringUtil.count(value, "%>");
-					int startJavaCodeSignCount = StringUtil.count(value, "<%");
-
-					if (endJavaCodeSignCount == startJavaCodeSignCount) {
+					if (getLevel(value, "<%", "%>") == 0) {
 						break;
 					}
 				}
-				else {
-					int greaterThanCount = StringUtil.count(
-						value, StringPool.GREATER_THAN);
-					int lessThanCount = StringUtil.count(
-						value, StringPool.LESS_THAN);
+				else if (getLevel(
+							value, StringPool.LESS_THAN,
+							StringPool.GREATER_THAN) ==
+								0) {
 
-					if (greaterThanCount == lessThanCount) {
-						break;
-					}
+					break;
 				}
 			}
 

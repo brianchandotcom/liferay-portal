@@ -753,6 +753,7 @@
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="LAR#configureExportSiteCP">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="mainContent" value="Blogs" />
 			<var name="uncheckContentNameList" value="Documents and Media" />
 			<var name="uncheckSubContent" value="Referenced Content" />
@@ -772,6 +773,15 @@
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#deleteCP">
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="recycleBinDisabled" value="true" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

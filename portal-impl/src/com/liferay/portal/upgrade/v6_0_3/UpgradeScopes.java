@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_0_3;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.verify.VerifyUUID;
 
@@ -31,20 +32,7 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
 
-		VerifyUUID.verify(
-			new VerifiableUUIDModel() {
-
-				@Override
-				public String getPrimaryKeyColumnName() {
-					return "plid";
-				}
-
-				@Override
-				public String getTableName() {
-					return "Layout";
-				}
-
-			});
+		verifyUUID();
 	}
 
 	@Override
@@ -76,6 +64,27 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	protected void verifyUUID() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"VerifyUUID.verify")) {
+
+			VerifyUUID.verify(
+				new VerifiableUUIDModel() {
+
+					@Override
+					public String getPrimaryKeyColumnName() {
+						return "plid";
+					}
+
+					@Override
+					public String getTableName() {
+						return "Layout";
+					}
+
+				});
+		}
 	}
 
 }

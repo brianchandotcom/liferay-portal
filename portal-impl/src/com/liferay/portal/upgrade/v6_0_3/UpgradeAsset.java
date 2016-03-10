@@ -29,15 +29,19 @@ import java.sql.ResultSet;
  */
 public class UpgradeAsset extends UpgradeProcess {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer("createIndex")) {
+	protected void createIndex() {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"create unique index IX_1E9D371D on AssetEntry (classNameId, " +
 					"classPK)");
 		}
 		catch (Exception e) {
 		}
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		createIndex();
 
 		updateAssetEntry("com.liferay.portal.model.User", "User_", "userId");
 		updateAssetEntry(

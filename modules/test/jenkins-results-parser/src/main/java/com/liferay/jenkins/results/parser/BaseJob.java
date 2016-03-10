@@ -59,15 +59,7 @@ public abstract class BaseJob {
 		return sb.toString();
 	}
 
-	public void setNumber(int number) {
-		if (status.equals("starting") || status.equals("queued")) {
-			this.number = number;
-
-			status = "running";
-		}
-	}
-
-	public void setURL(String url) {
+	public void setURL(String url) throws Exception {
 		url = decodeURL(url);
 
 		Matcher buildURLMatcher = _buildURLPattern.matcher(url);
@@ -80,7 +72,7 @@ public abstract class BaseJob {
 		name = buildURLMatcher.group("name");
 		number = Integer.parseInt(buildURLMatcher.group("number"));
 
-		status = "running";
+		update();
 	}
 
 	public abstract void update() throws Exception;
@@ -100,7 +92,7 @@ public abstract class BaseJob {
 		status = "starting";
 	}
 
-	protected BaseJob(String buildURL) {
+	protected BaseJob(String buildURL) throws Exception {
 		setURL(buildURL);
 	}
 

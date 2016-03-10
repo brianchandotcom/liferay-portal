@@ -19,7 +19,7 @@ dependencies {
 	provided group: "rome", name: "rome", version: "1.0"
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:journal:journal-api")
 	provided project(":apps:web-experience:journal:journal-lang")

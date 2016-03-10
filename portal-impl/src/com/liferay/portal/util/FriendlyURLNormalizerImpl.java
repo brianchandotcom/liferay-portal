@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,9 +34,13 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalize(String friendlyURL) {
-		return normalize(friendlyURL, _friendlyURLPattern);
+		return normalize(friendlyURL, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String normalize(String friendlyURL, Pattern friendlyURLPattern) {
 		if (Validator.isNull(friendlyURL)) {
@@ -58,14 +63,59 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
-		return normalize(friendlyURL, _friendlyURLPatternWithPeriodsAndSlashes);
+		return normalize(friendlyURL, true);
+	}
+
+	protected String normalize(String friendlyURL, boolean periodsAndSlashes) {
+		if (Validator.isNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
+
+		StringBuilder sb = new StringBuilder(friendlyURL.length());
+
+		boolean modified = false;
+
+		for (int i = 0; i < friendlyURL.length(); i++) {
+			char c = friendlyURL.charAt(i);
+
+			if (((CharPool.LOWER_CASE_A <= c) &&
+				 (c <= CharPool.LOWER_CASE_Z)) ||
+				((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
+				(c == CharPool.UNDERLINE)) {
+
+				sb.append(c);
+			}
+			else if ((CharPool.UPPER_CASE_A <= c) &&
+					 (c <= CharPool.UPPER_CASE_Z)) {
+
+				sb.append((char)(c + 32));
+
+				modified = true;
+			}
+			else if (!periodsAndSlashes &&
+					 ((c == CharPool.SLASH) || (c == CharPool.PERIOD))) {
+
+				sb.append(c);
+			}
+			else {
+				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
+					sb.append(CharPool.DASH);
+				}
+
+				modified = true;
+			}
+		}
+
+		if (modified) {
+			return sb.toString();
+		}
+
+		return friendlyURL;
 	}
 
 	private static final Pattern _friendlyURLHyphenPattern = Pattern.compile(
 		"-{2,}");
-	private static final Pattern _friendlyURLPattern = Pattern.compile(
-		"[^a-z0-9./_-]");
-	private static final Pattern _friendlyURLPatternWithPeriodsAndSlashes =
-		Pattern.compile("[^a-z0-9_-]");
 
 }

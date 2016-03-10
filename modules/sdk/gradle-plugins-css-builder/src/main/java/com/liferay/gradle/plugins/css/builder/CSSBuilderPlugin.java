@@ -102,7 +102,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			project, PORTAL_COMMON_CSS_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures com.liferay.frontend.common.css for compiling CSS " +
+			"Configures com.liferay.frontend.css.common for compiling CSS " +
 				"files.");
 		configuration.setTransitive(false);
 		configuration.setVisible(false);
@@ -130,7 +130,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	protected void addDependenciesPortalCommonCSS(Project project) {
 		GradleUtil.addDependency(
 			project, PORTAL_COMMON_CSS_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.frontend.common.css", "latest.release", false);
+			"com.liferay.frontend.css.common", "latest.release", false);
 	}
 
 	protected BuildCSSTask addTaskBuildCSS(Project project) {

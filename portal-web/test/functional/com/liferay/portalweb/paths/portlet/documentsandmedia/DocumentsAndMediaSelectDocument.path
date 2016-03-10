@@ -72,7 +72,7 @@
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_FOLDER</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]/span/a</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]//span/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>FOLDER_TABLE_FOLDER_CHOOSE</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,7 +98,7 @@
 <!--DOCUMENTS_TABLE-->
 <tr>
 	<td>DOCUMENTS_TABLE_DOCUMENT</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]/a | //tr[contains(.,'${key_documentTitle}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]//a | //tr[contains(.,'${key_documentTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,7 +118,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td/button[contains(.,'Choose')] | //tr[contains(.,'${key_documentTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td//button[contains(.,'Choose')] | //tr[contains(.,'${key_documentTitle}')]/td//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

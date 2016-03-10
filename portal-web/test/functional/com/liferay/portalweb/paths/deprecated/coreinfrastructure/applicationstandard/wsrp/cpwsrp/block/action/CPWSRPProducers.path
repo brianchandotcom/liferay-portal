@@ -41,12 +41,12 @@
 <!--PRODUCER_TABLE-->
 <tr>
 	<td>PRODUCER_TABLE_PRODUCER</td>
-	<td>//tr[contains(.,'${key_producerName}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[1]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCER_TABLE_URL</td>
-	<td>//tr[contains(.,'${key_producerName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>

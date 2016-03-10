@@ -175,7 +175,7 @@
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_contentTitle}')]//td/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]//td//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

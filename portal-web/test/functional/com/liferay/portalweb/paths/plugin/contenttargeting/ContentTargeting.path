@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>CAMPAIGN_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[8]/div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[8]//div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[4]/div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[4]//div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 </tbody>

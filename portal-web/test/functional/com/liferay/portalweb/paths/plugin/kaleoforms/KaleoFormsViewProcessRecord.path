@@ -120,7 +120,7 @@
 <!--TASKS_TABLE_REVIEW-->
 <tr>
 	<td>TASKS_TABLE_REVIEW_TASK</td>
-	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[1]/span</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[1]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,7 +136,7 @@
 <!--TASKS_TABLE_UPDATE-->
 <tr>
 	<td>TASKS_TABLE_UPDATE_TASK</td>
-	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Update')]/td[1]/span</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Update')]/td[1]//span</td>
 	<td></td>
 </tr>
 <tr>

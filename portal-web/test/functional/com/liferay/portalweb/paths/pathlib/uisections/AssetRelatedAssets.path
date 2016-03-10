@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>RELATED_ASSETS_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]/a</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,7 +121,7 @@
 <!--KB_ASSET_TABLE-->
 <tr>
 	<td>KB_ASSET_TABLE_TITLE_LINK</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]//a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,7 +132,7 @@
 <!--ASSET_TABLE-->
 <tr>
 	<td>ASSET_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]/td/a</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td//a</td>
 	<td></td>
 </tr>
 </tbody>

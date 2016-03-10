@@ -268,7 +268,7 @@
 </tr>
 <tr>
 	<td>SITES_TABLE</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[3]//a/span[contains(.,'Remove')]/span</td>
 	<td></td>
 </tr>
 <tr>

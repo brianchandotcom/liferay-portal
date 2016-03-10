@@ -21,22 +21,22 @@
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_HIDDEN</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[5]/a</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[5]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[2]/a/strong</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[2]//a/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_SEARCHABLE</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[6]/a</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[6]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[4]/a</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[4]//a</td>
 	<td></td>
 </tr>
 </tbody>

@@ -52,12 +52,12 @@
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'WorkflowDefinitionPortlet_workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[5]/div/a</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_workflowDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[5]//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'WorkflowDefinitionPortlet_workflowDefinitionsSearchContainer')]//tr[not (contains(.,'Single Approver'))]/td[5]/div/a</td>
+	<td>//div[contains(@id,'WorkflowDefinitionPortlet_workflowDefinitionsSearchContainer')]//tr[not (contains(.,'Single Approver'))]/td[5]//div/a</td>
 	<td></td>
 </tr>
 <tr>

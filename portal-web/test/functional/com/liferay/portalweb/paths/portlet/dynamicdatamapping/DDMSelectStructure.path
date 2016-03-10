@@ -117,12 +117,12 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td/button[contains(.,'Choose')])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td//button[contains(.,'Choose')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ACTIONS</td>
-	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td/div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
+	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td//div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>

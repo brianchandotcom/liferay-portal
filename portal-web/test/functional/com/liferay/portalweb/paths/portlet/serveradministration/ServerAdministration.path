@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>RESOURCES_ACTIONS_TABLE_EXECUTE</td>
-	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td/button[contains(.,'Execute')]</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td//button[contains(.,'Execute')]</td>
 	<td></td>
 </tr>
 <tr>

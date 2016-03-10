@@ -110,37 +110,37 @@
 <!--THREAD_TABLE-->
 <tr>
 	<td>THREAD_TABLE_SUBJECT_1</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]/a)[1]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_SUBJECT_2</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]/a)[2]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]//a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_SUBJECT_3</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]/a)[3]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]//a)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_SUBJECT_4</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]/a)[4]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[1]//a)[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_AUTHOR_1</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]/a)[1]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_AUTHOR_2</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]/a)[2]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]//a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_TABLE_AUTHOR_3</td>
-	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]/a)[3]</td>
+	<td>xpath=(//div[@id='toggle_id_message_boards_view_message_thread']/table/tbody/tr/td[2]//a)[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -416,17 +416,17 @@
 </tr>
 <tr>
 	<td>MESSAGE_EDIT_1</td>
-	<td>xpath=(//td/ul/li[2]/span/a/span)[1]</td>
+	<td>xpath=(//td//ul/li[2]/span/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_EDIT_2</td>
-	<td>xpath=(//td/ul/li[2]/span/a/span)[2]</td>
+	<td>xpath=(//td//ul/li[2]/span/a/span)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_EDIT_3</td>
-	<td>xpath=(//td/ul/li[2]/span/a/span)[3]</td>
+	<td>xpath=(//td//ul/li[2]/span/a/span)[3]</td>
 	<td></td>
 </tr>
 <tr>

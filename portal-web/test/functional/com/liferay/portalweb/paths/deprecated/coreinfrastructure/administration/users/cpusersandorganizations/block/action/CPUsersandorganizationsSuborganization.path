@@ -16,22 +16,22 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_suborgName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_suborgName}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_suborgName}')]/td[4]/div/a</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[4]//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_SUBORGANIZATION</td>
-	<td>//tr[contains(.,'${key_suborgName}')]/td[2]/em</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[2]//em</td>
 	<td></td>
 </tr>
 

@@ -103,37 +103,37 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_PARENT_ORGANIZATION</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[4]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[4]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_CITY</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[5]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[5]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_REGION</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[6]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[6]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_COUNTRY</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[7]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[7]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[8]/div/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[8]//div/a</td>
 	<td></td>
 </tr>
 </tbody>

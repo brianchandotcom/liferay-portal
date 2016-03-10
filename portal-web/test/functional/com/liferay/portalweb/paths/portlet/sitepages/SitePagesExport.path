@@ -164,7 +164,7 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_ACTIONS</td>
-	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[6]/div/a</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[6]//div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -207,7 +207,7 @@
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_NAME</td>
-	<td>//div[contains(@id,'exportImportConfigurationsSearch')]//tr[contains(.,'${key_exportTemplateName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'exportImportConfigurationsSearch')]//tr[contains(.,'${key_exportTemplateName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>

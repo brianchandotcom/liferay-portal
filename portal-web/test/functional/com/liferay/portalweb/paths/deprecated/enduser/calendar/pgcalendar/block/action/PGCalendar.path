@@ -663,7 +663,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_WHEN_FIELD</td>
-	<td>//tr/td/label[@class='scheduler-event-recorder-date']</td>
+	<td>//tr/td//label[@class='scheduler-event-recorder-date']</td>
 	<td></td>
 </tr>
 <tr>
@@ -683,7 +683,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD</td>
-	<td>//tr/td/label[@class='calendar-portlet-invitees']</td>
+	<td>//tr/td//label[@class='calendar-portlet-invitees']</td>
 	<td></td>
 </tr>
 <tr>

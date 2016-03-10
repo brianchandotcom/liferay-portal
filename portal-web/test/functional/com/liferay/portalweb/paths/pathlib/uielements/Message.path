@@ -130,12 +130,12 @@
 </tr>
 <tr>
 	<td>LOGIN_URL_SUCCESS</td>
-	<td>//tr[contains(.,'Login URL')]/td/span[contains(@class,'lfr-status-success')]</td>
+	<td>//tr[contains(.,'Login URL')]/td//span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGOUT_URL_SUCCESS</td>
-	<td>//tr[contains(.,'Logout URL')]/td/span[contains(@class,'lfr-status-success')]</td>
+	<td>//tr[contains(.,'Logout URL')]/td//span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>SERVER_URL_SUCCESS</td>
-	<td>//tr[contains(.,'Server URL')]/td/span[contains(@class,'lfr-status-success')]</td>
+	<td>//tr[contains(.,'Server URL')]/td//span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 <tr>

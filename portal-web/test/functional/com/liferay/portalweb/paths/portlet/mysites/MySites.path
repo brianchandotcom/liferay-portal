@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_SITE_NAME_LINK</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]//a</td>
 	<td></td>
 </tr>
 <tr>

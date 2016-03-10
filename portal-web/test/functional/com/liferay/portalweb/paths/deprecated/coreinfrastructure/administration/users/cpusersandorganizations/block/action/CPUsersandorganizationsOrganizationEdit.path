@@ -150,17 +150,17 @@
 <!--PARENT_ORGANIZATION_TABLE-->
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_NAME</td>
-	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[1]/a</td>
+	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[1]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_TYPE</td>
-	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[2]/a</td>
+	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_REMOVE</td>
-	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[3]/a</td>
+	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>

@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[3]/div/a</td>
+	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[3]//div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_pageVariationName}')]/td[3]/div/a</td>
+	<td>//tr[contains(.,'${key_pageVariationName}')]/td[3]//div/a</td>
 	<td></td>
 </tr>
 <tr>

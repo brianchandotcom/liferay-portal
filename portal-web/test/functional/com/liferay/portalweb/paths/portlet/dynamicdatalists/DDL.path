@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[2]/a)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[2]//a)</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,22 +82,22 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]/a)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]//a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]/span)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]//span)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_VIEW</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]/span)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[3]//span)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_PREVIEW_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[2]/a[contains(.,'Preview')])</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSearchContainer')]//tr/td[2]//a[contains(.,'Preview')])</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,7 +149,7 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
-	<td>//div[contains(@id,'ddlRecordSetSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[3]/a</td>
+	<td>//div[contains(@id,'ddlRecordSetSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -159,22 +159,22 @@
 </tr>
 <tr>
 	<td>LIST_TABLE_ID_1</td>
-	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[1]/a)</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td//following-sibling::td[1]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
-	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[2]/a)</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td//following-sibling::td[2]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION</td>
-	<td>//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[contains(.,'${key_ddlListDescription}')]</td>
+	<td>//table[contains(@class,'table-list')]//tr[1]/td//following-sibling::td[contains(.,'${key_ddlListDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td/following-sibling::td[3])</td>
+	<td>xpath=(//table[contains(@class,'table-list')]//tr[1]/td//following-sibling::td[3])</td>
 	<td></td>
 </tr>
 <tr>

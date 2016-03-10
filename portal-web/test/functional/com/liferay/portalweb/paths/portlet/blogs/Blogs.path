@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_CREATE_DATE</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]/span</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td/div/a</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td//div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -206,7 +206,7 @@
 </tr>
 <tr>
 	<td>SCHEDULED_ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/.//td/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/.//td//div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

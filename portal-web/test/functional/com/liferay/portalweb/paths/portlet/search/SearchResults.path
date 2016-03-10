@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>RESULTS_TABLE_LANGUAGE</td>
-	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[2]/span/img</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[2]//span/img</td>
 	<td></td>
 </tr>
 <tr>

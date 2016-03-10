@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>FORM_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmTemplates')]//tr[contains(.,'${key_kfFormName}')]/td[3]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmTemplates')]//tr[contains(.,'${key_kfFormName}')]/td[3]//div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>

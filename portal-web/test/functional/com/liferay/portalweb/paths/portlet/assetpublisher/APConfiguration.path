@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_DELETE</td>
-	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]/span/a</td>
+	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]//span/a</td>
 	<td></td>
 </tr>
 <tr>

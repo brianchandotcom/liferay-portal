@@ -1321,9 +1321,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinition1Name}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinition1Name}" />
+		<execute macro="DDLDisplayPortlet#viewAddToolbar">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinition1Name}" />
+		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />

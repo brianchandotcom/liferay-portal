@@ -28,6 +28,12 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="viewAddToolbar">
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+
+		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+	</command>
+
 	<command name="viewDDLTemplateRecordFieldData">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 

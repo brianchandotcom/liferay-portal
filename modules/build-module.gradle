@@ -15,7 +15,8 @@ configurations {
 	}
 }
 
-if (project.path.startsWith(":sdk:") ||
+if (project.path.startsWith(":deprecated:") ||
+	project.path.startsWith(":sdk:") ||
 	project.path.startsWith(":test:") ||
 	project.path.startsWith(":third-party:") ||
 	project.path.startsWith(":util:")) {

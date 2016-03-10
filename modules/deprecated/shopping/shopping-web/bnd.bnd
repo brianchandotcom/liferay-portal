@@ -19,9 +19,9 @@ Import-Package:\
 Web-ContextPath: /shopping-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -includeresource:\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/CreditCard.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/State.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/StateUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/portlet/PortletProps.class
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class,\
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/State.class,\
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/StateUtil.class,\
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -wab: docroot

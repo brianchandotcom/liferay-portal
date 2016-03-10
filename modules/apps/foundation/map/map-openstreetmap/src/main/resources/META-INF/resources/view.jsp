@@ -32,40 +32,40 @@ name = namespace + name;
 
 <liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
 	<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-	<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js" type="text/javascript"></script>
 </liferay-util:html-top>
 
 <aui:script use="liferay-map-openstreetmap">
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
-	boundingBox: '#<%= name %>Map',
+		boundingBox: '#<%= name %>Map',
 
-	<c:if test="<%= geolocation %>">
-		<c:choose>
-			<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-				controls: [MapControls.HOME, MapControls.SEARCH],
-			</c:when>
-			<c:otherwise>
-				controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
-			</c:otherwise>
-		</c:choose>
-	</c:if>
+		<c:if test="<%= geolocation %>">
+			<c:choose>
+				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+					controls: [MapControls.HOME, MapControls.SEARCH],
+				</c:when>
+				<c:otherwise>
+					controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 
-	<c:if test="<%= Validator.isNotNull(points) %>">
-		data: <%= points %>,
-	</c:if>
+		<c:if test="<%= Validator.isNotNull(points) %>">
+			data: <%= points %>,
+		</c:if>
 
-	geolocation: <%= geolocation %>
+		geolocation: <%= geolocation %>
 
-	<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-		,position: {
-			location: {
-				lat: <%= latitude %>,
-				lng: <%= longitude %>
+		<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
+			, position: {
+				location: {
+					lat: <%= latitude %>,
+					lng: <%= longitude %>
+				}
 			}
-		}
-	</c:if>
+		</c:if>
 	};
 
 	var destroyMap = function(event, map) {
@@ -85,5 +85,4 @@ name = namespace + name;
 	};
 
 	createMap();
-
 </aui:script>

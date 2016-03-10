@@ -438,7 +438,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 			<liferay-ui:message key="ports-are-not-initialized-until-the-server-has-processed-a-request" />
 		</div>
 
-		<script type="text/javascript">
+		<aui:script>
 			Liferay.provide(
 				window,
 				'sendClusterRequest',
@@ -451,8 +451,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 						url,
 						{
 							data: {
-								<%= Constants.CMD %>: cmd,
-								clusterNodeId: clusterNodeId
+								clusterNodeId: clusterNodeId,
+								<%= Constants.CMD %>: cmd
 							},
 							dataType: 'JSON',
 							on: {
@@ -603,7 +603,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 					}
 				}
 			}
-		</script>
+		</aui:script>
 	</c:otherwise>
 </c:choose>
 

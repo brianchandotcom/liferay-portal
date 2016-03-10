@@ -53,13 +53,13 @@ public abstract class BaseJob {
 				"Staring job does not have build URL");
 		}
 
-		return getBuildURL(masterURL, name, number);
+		return getBuildURL(master, name, number);
 	}
 
 	public String getJobURL() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(masterURL);
+		sb.append(master);
 		sb.append("/job/");
 		sb.append(name);
 
@@ -67,7 +67,7 @@ public abstract class BaseJob {
 	}
 
 	public String getMasterURL() {
-		return masterURL;
+		return master;
 	}
 
 	public String getName() {
@@ -116,7 +116,7 @@ public abstract class BaseJob {
 	public abstract void update() throws Exception;
 
 	protected BaseJob() {
-		masterURL = "";
+		master = "";
 		name = "";
 		status = "starting";
 	}
@@ -128,13 +128,13 @@ public abstract class BaseJob {
 
 		buildURLMatcher.find();
 
-		this.masterURL = buildURLMatcher.group("masterURL");
+		this.master = buildURLMatcher.group("master");
 		this.name = buildURLMatcher.group("name");
 		this.number = Integer.parseInt(buildURLMatcher.group("number"));
 		this.status = "running";
 	}
 
-	protected String masterURL;
+	protected String master;
 	protected String name;
 	protected int number;
 	protected String result;
@@ -145,6 +145,7 @@ public abstract class BaseJob {
 
 		StringBuilder sb = new StringBuilder();
 
+		sb.append("http://");
 		sb.append(masterURL);
 		sb.append("/job/");
 		sb.append(name);
@@ -155,6 +156,6 @@ public abstract class BaseJob {
 	}
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
-		"(?<masterURL>\\w+://[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
+		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
 
 }

@@ -68,27 +68,27 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME_GENERIC</td>
-	<td>//div[@id='usersAdminOrganizationsPanelContent']//tr/td[2]/a</td>
+	<td>//div[@id='usersAdminOrganizationsPanelContent']//tr/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[4]/div/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[4]//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_SUBORGANIZATION_COUNT</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[2]/em</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]//em</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,22 +150,22 @@
 </tr>
 <tr>
 	<td>USER_TABLE_FIRST_NAME</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_LAST_NAME</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_SCREEN_NAME</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]/a</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]/div/a</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]//div/a</td>
 	<td></td>
 </tr>
 <tr>

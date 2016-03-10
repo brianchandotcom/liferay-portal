@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>LIST_DOCUMENT_TITLE</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]/td[2]/div/span</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]/td[2]//div/span</td>
 	<td></td>
 </tr>
 <tr>

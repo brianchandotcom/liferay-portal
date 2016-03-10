@@ -413,17 +413,17 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_DAY_CURRENT_DAY</td>
-	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]//td[contains(@class,'scheduler-today')]/div</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]//td[contains(@class,'scheduler-today')]//div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_DAY_FIRST_HOUR</td>
-	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]//div[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_DAY_LAST_HOUR</td>
-	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[24]</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]//div[24]</td>
 	<td></td>
 </tr>
 <tr>
@@ -449,17 +449,17 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_WEEK_CURRENT_DAY</td>
-	<td>//td[contains(@class,'scheduler-today')]/div</td>
+	<td>//td[contains(@class,'scheduler-today')]//div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_WEEK_FIRST_HOUR</td>
-	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]//div[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_WEEK_LAST_HOUR</td>
-	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[24]</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]//div[24]</td>
 	<td></td>
 </tr>
 <tr>
@@ -663,7 +663,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_WHEN_FIELD</td>
-	<td>//tr/td/label[@class='scheduler-event-recorder-date']</td>
+	<td>//tr/td//label[@class='scheduler-event-recorder-date']</td>
 	<td></td>
 </tr>
 <tr>
@@ -683,7 +683,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD</td>
-	<td>//tr/td/label[@class='calendar-portlet-invitees']</td>
+	<td>//tr/td//label[@class='calendar-portlet-invitees']</td>
 	<td></td>
 </tr>
 <tr>

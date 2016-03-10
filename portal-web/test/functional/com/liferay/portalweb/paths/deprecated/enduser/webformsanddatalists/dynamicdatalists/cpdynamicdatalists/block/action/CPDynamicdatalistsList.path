@@ -83,12 +83,12 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]//a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_PREVIEW_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a[contains(.,'Preview')])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]//a[contains(.,'Preview')])</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,12 +98,12 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/a)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]//a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/span)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]//span)</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,17 +113,17 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_THREE_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3]/a)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3]//a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]/td/div[contains(@class,'btn-group')]/a</td>
+	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]/td//div[contains(@class,'btn-group')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_ACTIONS_1</td>
-	<td>//tr/td[5]/div/a</td>
+	<td>//tr/td[5]//div/a</td>
 	<td></td>
 </tr>
 <tr>

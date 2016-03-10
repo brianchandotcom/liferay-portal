@@ -51,7 +51,7 @@
 <!--RECYCLE_BIN_TABLE-->
 <tr>
 	<td>RECYCLE_BIN_TABLE_NAME</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[6]/div/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[6]//div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,12 +108,12 @@
 <!--RECYCLE_BIN_FOLDER-->
 <tr>
 	<td>RECYCLE_BIN_FOLDER_DOCUMENT_NAME</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[1]/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[1]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_FOLDER_ACTIONS</td>
-	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]/div/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]//div/a</td>
 	<td></td>
 </tr>
 <tr>

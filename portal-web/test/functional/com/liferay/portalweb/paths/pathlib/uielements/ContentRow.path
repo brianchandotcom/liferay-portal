@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ROW_1_BUTTON</td>
-	<td>//*[@data-qa-id='row']//td/button</td>
+	<td>//*[@data-qa-id='row']//td//button</td>
 	<td></td>
 </tr>
 <tr>

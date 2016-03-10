@@ -104,7 +104,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATIONS_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]//a/span[contains(.,'Remove')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>SITES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[3]//a/span[contains(.,'Remove')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@
 </tr>
 <tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>

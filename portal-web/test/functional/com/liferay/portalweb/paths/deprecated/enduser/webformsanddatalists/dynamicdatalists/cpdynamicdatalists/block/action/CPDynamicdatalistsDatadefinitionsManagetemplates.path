@@ -82,52 +82,52 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ID</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[2]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[3]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[3]/a)[2]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[3]//a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_DESCRIPTION</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[4]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[4]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_MODE</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[5]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[5]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_LANGUAGE</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[6]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[6]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_MODIFIED_DATE</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[8]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[8]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[9]/div/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[9]//div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[3]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[9]/div/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[9]//div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

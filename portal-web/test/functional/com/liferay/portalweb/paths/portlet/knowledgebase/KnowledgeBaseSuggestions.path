@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/../td[@class='kb-article-comment-user']/div/a</td>
+	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/..//td[@class='kb-article-comment-user']//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS</td>
-	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/div[@class='kb-article-comment-date']/span[@class='taglib-workflow-status']</td>
+	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]//div[@class='kb-article-comment-date']/span[@class='taglib-workflow-status']</td>
 	<td></td>
 </tr>
 <tr>

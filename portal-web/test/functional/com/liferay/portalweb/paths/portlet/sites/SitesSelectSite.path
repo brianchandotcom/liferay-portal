@@ -22,7 +22,7 @@
 <!--CHOOSE_BUTTON-->
 <tr>
 	<td>CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'Liferay')]/td/button</td>
+	<td>//tr[contains(.,'Liferay')]/td//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>SITES_TABLE_CHOOSE_SITE_LINK</td>
-	<td>//td[contains(.,'${key_siteName}')]/a</td>
+	<td>//td[contains(.,'${key_siteName}')]//a</td>
 	<td></td>
 </tr>
 </tbody>

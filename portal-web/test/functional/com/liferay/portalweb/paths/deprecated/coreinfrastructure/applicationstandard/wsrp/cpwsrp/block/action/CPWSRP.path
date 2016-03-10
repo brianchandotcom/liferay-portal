@@ -41,7 +41,7 @@
 <!--CONSUMER_TABLE-->
 <tr>
 	<td>CONSUMER_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_consumerName}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_consumerName}')]/td[1]//a</td>
 	<td></td>
 </tr>
 <tr>

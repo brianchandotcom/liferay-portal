@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DOWNLOAD_FILE</td>
-	<td>//tr/td/span/a</td>
+	<td>//tr/td//span/a</td>
 	<td></td>
 </tr>
 </tbody>

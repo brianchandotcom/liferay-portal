@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY</td>
-	<td>xpath=(//td[contains(@class,'calendar-recurrence-weekday-checkbox')]/div/label)[1]</td>
+	<td>xpath=(//td[contains(@class,'calendar-recurrence-weekday-checkbox')]//div/label)[1]</td>
 	<td></td>
 </tr>
 <tr>

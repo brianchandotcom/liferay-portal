@@ -11,7 +11,7 @@
 <!--BANNED_USERS_TABLE-->
 <tr>
 	<td>BANNED_USERS_TABLE_BANNED_USER</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>BANNED_USERS_TABLE_UNBAN_THIS_USER</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[5]/span/a/i[contains(@class,'icon-ok-sign')]</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[5]//span/a/i[contains(@class,'icon-ok-sign')]</td>
 	<td></td>
 </tr>
 </tbody>

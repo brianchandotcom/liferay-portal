@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>MOCKMOCK_SUBJECT_FIELD_LINK</td>
-	<td>//tr[contains(.,'${key_columnEntry}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>

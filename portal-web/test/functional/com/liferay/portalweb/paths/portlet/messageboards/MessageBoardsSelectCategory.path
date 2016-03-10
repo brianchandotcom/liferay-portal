@@ -36,12 +36,12 @@
 <!--CATEGORY_TABLE-->
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]/a</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,17 +51,17 @@
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CATEGORIES_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_THREADS</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[3]/a</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_THREADS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_POSTS_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,12 +81,12 @@
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CHOOSE_BUTTON_1</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]/button)[1]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]//button)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CHOOSE_BUTTON_2</td>
-	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]/button)[2]</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]//button)[2]</td>
 	<td></td>
 </tr>
 <tr>

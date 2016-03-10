@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td//button</td>
 	<td></td>
 </tr>
 <tr>

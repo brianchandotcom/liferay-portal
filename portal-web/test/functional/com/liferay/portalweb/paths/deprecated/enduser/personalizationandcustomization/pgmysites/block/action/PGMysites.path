@@ -46,7 +46,7 @@
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_SITE_NAME</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[1]/strong</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]//strong</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_SITE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[4]/div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[4]//div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 </tbody>

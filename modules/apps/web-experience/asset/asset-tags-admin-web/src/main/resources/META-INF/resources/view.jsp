@@ -84,19 +84,20 @@
 			modelVar="tag"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
+				cssClass="content-column title-column name-column"
 				name="name"
 				truncate="<%= true %>"
 				value="<%= tag.getName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="usages-column"
 				name="usages"
 				value="<%= String.valueOf(tag.getAssetCount()) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
+				cssClass="entry-action-column"
 				path="/tag_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

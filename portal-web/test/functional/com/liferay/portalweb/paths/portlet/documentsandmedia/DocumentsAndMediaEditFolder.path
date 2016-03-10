@@ -61,7 +61,7 @@
 </tr>
 <tr>
   <td>WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT</td>
-  <td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[2]/div/select</td>
+  <td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[2]//div/select</td>
   <td></td>
 </tr>
 <tr>

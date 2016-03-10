@@ -26,7 +26,7 @@
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_FOLDER_1</td>
-	<td>xpath=(//tbody/tr/td[1]/span/a[contains(@href,'select_folder')]/span)[1]</td>
+	<td>xpath=(//tbody/tr/td[1]//span/a[contains(@href,'select_folder')]/span)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,12 +41,12 @@
 </tr>
 <tr>
 	<td>FOLDER_TABLE_CHOOSE_1</td>
-	<td>xpath=(//tbody/tr/td[4]/button[contains(.,'Choose')])[1]</td>
+	<td>xpath=(//tbody/tr/td[4]//button[contains(.,'Choose')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_TABLE_FOLDER_2</td>
-	<td>xpath=(//tbody/tr/td[1]/span/a[contains(@href,'select_folder')]/span)[2]</td>
+	<td>xpath=(//tbody/tr/td[1]//span/a[contains(@href,'select_folder')]/span)[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>FOLDER_TABLE_CHOOSE_2</td>
-	<td>xpath=(//tbody/tr/td[4]/button[contains(.,'Choose')])[2]</td>
+	<td>xpath=(//tbody/tr/td[4]//button[contains(.,'Choose')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

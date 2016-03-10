@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>BOOKMARKS_ENTRY_LINK</td>
-	<td>//tr[contains(.,'${key_bookmarksEntryName}')]/td/a</td>
+	<td>//tr[contains(.,'${key_bookmarksEntryName}')]/td//a</td>
 	<td></td>
 </tr>
 <tr>

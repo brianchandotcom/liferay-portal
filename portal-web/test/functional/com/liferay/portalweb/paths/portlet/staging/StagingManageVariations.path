@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[3]/div/a</td>
+	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[3]//div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK</td>
-	<td>//tbody[@class='table-data']//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td[contains(.,'Select')]/a</td>
+	<td>//tbody[@class='table-data']//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td[contains(.,'Select')]//a</td>
 	<td></td>
 </tr>
 <!--PAGE_VARIATION-->
@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_pageVariationName}')]/td[3]/div/a</td>
+	<td>//tr[contains(.,'${key_pageVariationName}')]/td[3]//div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -151,7 +151,7 @@
 <!--HISTORY-->
 <tr>
 	<td>HISTORY_VERSION</td>
-	<td>//td/span[@class='layout-revision-current']</td>
+	<td>//td//span[@class='layout-revision-current']</td>
 	<td></td>
 </tr>
 <tr>

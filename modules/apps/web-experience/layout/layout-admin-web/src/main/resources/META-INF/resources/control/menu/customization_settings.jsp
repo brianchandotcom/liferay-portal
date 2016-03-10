@@ -28,7 +28,6 @@
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
-<%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
@@ -152,14 +151,19 @@ data.put("qa-id", "customizations");
 				resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "resetCustomizationView");
 
 				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL.toString()) + "');}";
+
+				PortletURL toggleCustomizationViewPortletURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+
+				toggleCustomizationViewPortletURL.setParameter(ActionRequest.ACTION_NAME, "toggleCustomizedView");
+
+				String toggleCustomizationViewURL = HttpUtil.addParameter(toggleCustomizationViewPortletURL.toString(), "customized_view", !layoutTypePortlet.isCustomizedView());
 				%>
 
 				<li class="control-menu-nav-item hidden-xs">
 					<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 						<liferay-ui:icon
-							id='<%= portletNamespace + "toggleCustomizedViewButtonXL" %>'
 							message="<%= toggleCustomizedViewMessage %>"
-							url="javascript:;"
+							url="<%= toggleCustomizationViewURL %>"
 						/>
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
@@ -173,7 +177,7 @@ data.put("qa-id", "customizations");
 
 				<li class="control-menu-nav-item visible-xs">
 					<div class="btn-group dropdown">
-						<button class="btn btn-primary" id="<%= portletNamespace %>toggleCustomizedViewButtonXS" type="button"><liferay-ui:message key="<%= toggleCustomizedViewMessage %>" /></button>
+						<aui:a cssClass="btn btn-primary" href="<%= toggleCustomizationViewURL %>" label="<%= toggleCustomizedViewMessage %>" />
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
@@ -196,25 +200,6 @@ data.put("qa-id", "customizations");
 						'click',
 						function(event) {
 							$('#<%= portletNamespace %>customizationBar .control-menu-level-2').toggleClass('open');
-						}
-					);
-
-					$('#<%= portletNamespace %>toggleCustomizedViewButtonXL, #<%= portletNamespace %>toggleCustomizedViewButtonXS').on(
-						'click',
-						function(event) {
-							$.ajax(
-								themeDisplay.getPathMain() + '/portal/update_layout',
-								{
-									data: {
-										cmd: 'toggle_customized_view',
-										customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-										p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-									},
-									success: function() {
-										window.location.href = themeDisplay.getLayoutURL();
-									}
-								}
-							);
 						}
 					);
 				</aui:script>

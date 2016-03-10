@@ -451,8 +451,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 						url,
 						{
 							data: {
-								<%= Constants.CMD %>: cmd,
-								clusterNodeId: clusterNodeId
+								clusterNodeId: clusterNodeId,
+								<%= Constants.CMD %>: cmd
 							},
 							dataType: 'JSON',
 							on: {

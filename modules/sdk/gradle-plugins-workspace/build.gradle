@@ -1,7 +1,7 @@
 dependencies {
 	compile gradleApi()
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.191"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.1"
-	compile project(":sdk:gradle-plugins")
 }
 
 jarSources {

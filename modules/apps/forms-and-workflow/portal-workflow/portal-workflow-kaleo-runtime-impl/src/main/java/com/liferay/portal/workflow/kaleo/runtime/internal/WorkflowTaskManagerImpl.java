@@ -47,6 +47,7 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.TaskManager;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.internal.assignment.TaskAssignmentSelectorTracker;
 import com.liferay.portal.workflow.kaleo.runtime.internal.util.comparator.KaleoTaskInstanceTokenOrderByComparator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
@@ -822,8 +823,15 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 				configuredKaleoTaskAssignments) {
 
+			String assigneeClassName =
+				configuredKaleoTaskAssignment.getAssigneeClassName();
+
+			TaskAssignmentSelector taskAssignmentSelector =
+				_taskAssignmentSelectorTracker.getTaskAssignmentSelector(
+					assigneeClassName);
+
 			Collection<KaleoTaskAssignment> kaleoTaskAssignments =
-				_taskAssignmentSelector.calculateTaskAssignments(
+				taskAssignmentSelector.calculateTaskAssignments(
 					configuredKaleoTaskAssignment, executionContext);
 
 			calculatedKaleoTaskAssignments.addAll(kaleoTaskAssignments);
@@ -874,7 +882,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	private RoleLocalService _roleLocalService;
 
 	@Reference
-	private TaskAssignmentSelector _taskAssignmentSelector;
+	private TaskAssignmentSelectorTracker _taskAssignmentSelectorTracker;
 
 	@Reference
 	private TaskManager _taskManager;

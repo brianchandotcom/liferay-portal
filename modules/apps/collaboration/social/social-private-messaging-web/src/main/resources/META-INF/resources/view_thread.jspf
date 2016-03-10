@@ -300,7 +300,7 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 	</div>
 </c:if>
 
-<aui:script use="aui-image-viewer-gallery,aui-io-request-deprecated">
+<aui:script use="aui-image-viewer,aui-io-request-deprecated">
 	var form = A.one('#<portlet:namespace />fm');
 
 	if (form) {
@@ -354,13 +354,14 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 
 	var viewportRegion = A.getDoc().get('viewportRegion');
 
-	new A.ImageGallery(
+	new A.ImageViewer(
 		{
 			caption: '<%= HtmlUtil.escapeJS(subject) %>',
 			delay: 2000,
 			links: '.body .image-thumbnail a',
 			maxHeight: viewportRegion.height * 0.7,
-			maxWidth: viewportRegion.width * 0.7
+			maxWidth: viewportRegion.width * 0.7,
+			zIndex: ++Liferay.zIndex.WINDOW
 		}
 	).render();
 </aui:script>

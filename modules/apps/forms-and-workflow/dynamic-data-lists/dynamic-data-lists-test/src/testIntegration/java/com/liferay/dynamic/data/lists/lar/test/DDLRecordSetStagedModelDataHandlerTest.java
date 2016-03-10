@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -158,7 +159,14 @@ public class DDLRecordSetStagedModelDataHandlerTest
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+		Assert.assertTrue(
+			stagedModel.getCreateDate() + " " +
+				importedStagedModel.getCreateDate(),
+			DateUtil.equals(
+				stagedModel.getCreateDate(),
+				importedStagedModel.getCreateDate()));
+		Assert.assertEquals(
+			stagedModel.getUuid(), importedStagedModel.getUuid());
 
 		DDLRecordSet recordSet = (DDLRecordSet)stagedModel;
 		DDLRecordSet importedRecordSet = (DDLRecordSet)importedStagedModel;
@@ -172,8 +180,6 @@ public class DDLRecordSetStagedModelDataHandlerTest
 			recordSet.getMinDisplayRows(),
 			importedRecordSet.getMinDisplayRows());
 		Assert.assertEquals(recordSet.getScope(), importedRecordSet.getScope());
-		Assert.assertEquals(
-			recordSet.getSettings(), importedRecordSet.getSettings());
 	}
 
 }

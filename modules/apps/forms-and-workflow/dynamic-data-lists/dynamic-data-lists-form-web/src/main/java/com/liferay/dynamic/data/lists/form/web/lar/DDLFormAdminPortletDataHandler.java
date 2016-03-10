@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -236,16 +235,6 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmStructureElement);
 			}
-
-			Element ddmTemplatesElement =
-				portletDataContext.getImportDataGroupElement(DDMTemplate.class);
-
-			List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
-
-			for (Element ddmTemplateElement : ddmTemplateElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, ddmTemplateElement);
-			}
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "form-entries")) {
@@ -360,13 +349,6 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, ddmStructure);
-
-					for (DDMTemplate ddmTemplate :
-							ddmStructure.getTemplates()) {
-
-						StagedModelDataHandlerUtil.exportStagedModel(
-							portletDataContext, ddmTemplate);
-					}
 				}
 
 			});

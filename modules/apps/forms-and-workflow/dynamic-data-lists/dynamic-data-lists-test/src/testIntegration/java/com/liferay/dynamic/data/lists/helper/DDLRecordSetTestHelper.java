@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -42,6 +44,13 @@ public class DDLRecordSetTestHelper {
 	public DDLRecordSet addRecordSet(DDMStructure ddmStructure)
 		throws Exception {
 
+		return addRecordSet(
+			ddmStructure, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+	}
+
+	public DDLRecordSet addRecordSet(DDMStructure ddmStructure, int scope)
+		throws Exception {
+
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
@@ -52,8 +61,16 @@ public class DDLRecordSetTestHelper {
 		return DDLRecordSetLocalServiceUtil.addRecordSet(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), null, nameMap, null,
-			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
-			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, serviceContext);
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
+			serviceContext);
+	}
+
+	public DDLRecordSet updateRecordSet(
+			long recordSetId, DDMFormValues settingsDDMFormValues)
+		throws PortalException {
+
+		return DDLRecordSetLocalServiceUtil.updateRecordSet(
+			recordSetId, settingsDDMFormValues);
 	}
 
 	public DDLRecordSet updateRecordSet(

@@ -26,7 +26,6 @@ import aQute.bnd.osgi.Domain;
 import aQute.bnd.osgi.Instruction;
 import aQute.bnd.osgi.Instructions;
 import aQute.bnd.osgi.Jar;
-import aQute.bnd.osgi.JarResource;
 import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.AnalyzerPlugin;
@@ -419,18 +418,29 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		Jar jar = analyzer.getJar();
 
 		for (String entry : parameters.keySet()) {
-			Resource resource = jar.getResource(entry);
+			String entryLowerCase = entry.toLowerCase();
 
-			if (!(resource instanceof JarResource)) {
+			if (!entryLowerCase.endsWith(".jar") &&
+				!entryLowerCase.endsWith(".zip")) {
+
 				continue;
 			}
 
-			JarResource jarResource = (JarResource)resource;
+			Resource resource = jar.getResource(entry);
 
-			Jar classPathJar = jarResource.getJar();
+			if (resource == null) {
+				continue;
+			}
 
-			if (containsTld(analyzer, classPathJar, root, uri)) {
-				return true;
+			try {
+				Jar classPathJar = new Jar(entry, resource.openInputStream());
+
+				if (containsTld(analyzer, classPathJar, root, uri)) {
+					return true;
+				}
+			}
+			catch (Exception e) {
+				continue;
 			}
 		}
 

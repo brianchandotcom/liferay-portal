@@ -20,7 +20,7 @@ dependencies {
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:collaboration:document-library:document-library-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }
 

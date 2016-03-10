@@ -31,29 +31,21 @@ public abstract class BaseJob {
 		return url;
 	}
 
-	public static String formatBuildURL(String buildURL) {
-		buildURL = decodeURL(buildURL);
-
-		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
-
-		if (!buildURLMatcher.find()) {
-			throw new IllegalArgumentException("Invalid build URL");
-		}
-
-		String masterURL = buildURLMatcher.group("masterURL");
-		String name = buildURLMatcher.group("name");
-		int number = Integer.parseInt(buildURLMatcher.group("number"));
-
-		return getBuildURL(masterURL, name, number);
-	}
-
 	public String getBuildURL() {
-		if (!status.equals("running") && !status.equals("completed")) {
-			throw new IllegalStateException(
-				"Staring job does not have build URL");
+		if ((master == null) || (master.length() == 0)) {
+			return null;
 		}
 
-		return getBuildURL(master, name, number);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("http://");
+		sb.append(master);
+		sb.append("/job/");
+		sb.append(name);
+		sb.append("/");
+		sb.append(number);
+
+		return sb.toString();
 	}
 
 	public String getJobURL() {
@@ -87,12 +79,16 @@ public abstract class BaseJob {
 	}
 
 	public void setBuildURL(String buildURL) {
-		buildURL = formatBuildURL(buildURL);
+		buildURL = decodeURL(buildURL);
 
 		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
 
-		buildURLMatcher.find();
+		if (!buildURLMatcher.find()) {
+			throw new IllegalArgumentException("Invalid build URL. " + buildURL);
+		}
 
+		master = buildURLMatcher.group("master");
+		name = buildURLMatcher.group("name");
 		number = Integer.parseInt(buildURLMatcher.group("number"));
 
 		status = "running";
@@ -120,16 +116,7 @@ public abstract class BaseJob {
 	}
 
 	protected BaseJob(String buildURL) {
-		buildURL = formatBuildURL(buildURL);
-
-		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
-
-		buildURLMatcher.find();
-
-		master = buildURLMatcher.group("master");
-		name = buildURLMatcher.group("name");
-		number = Integer.parseInt(buildURLMatcher.group("number"));
-		status = "running";
+		setBuildURL(buildURL);
 	}
 
 	protected String master;
@@ -138,20 +125,6 @@ public abstract class BaseJob {
 	protected String result;
 	protected String status;
 
-	private static String getBuildURL(
-		String masterURL, String name, int number) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("http://");
-		sb.append(masterURL);
-		sb.append("/job/");
-		sb.append(name);
-		sb.append("/");
-		sb.append(number);
-
-		return sb.toString();
-	}
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");

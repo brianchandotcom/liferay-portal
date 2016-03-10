@@ -44,12 +44,10 @@ import com.liferay.portal.kernel.servlet.ServletContextProvider;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,7 +60,6 @@ import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.util.bridges.php.PHPPortlet;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,8 +76,6 @@ import javax.naming.NamingException;
 import javax.portlet.PortletURLGenerationListener;
 
 import javax.servlet.ServletContext;
-
-import javax.sql.DataSource;
 
 import org.apache.portals.bridges.struts.StrutsPortlet;
 
@@ -115,55 +110,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		catch (Throwable t) {
 			throwHotDeployException(
 				hotDeployEvent, "Error unregistering portlets for ", t);
-		}
-	}
-
-	protected void bindDataSource(String servletContextName) throws Exception {
-		if (ServerDetector.isGlassfish() || ServerDetector.isJOnAS()) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Dynamically binding the Liferay data source");
-		}
-
-		DataSource dataSource = InfrastructureUtil.getDataSource();
-
-		if (dataSource == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Abort dynamically binding the Liferay data source " +
-						"because it is not available");
-			}
-
-			return;
-		}
-
-		Context context = new InitialContext();
-
-		try {
-			try {
-				context.lookup(_JNDI_JDBC);
-			}
-			catch (NamingException ne) {
-				context.createSubcontext(_JNDI_JDBC);
-			}
-
-			try {
-				context.lookup(_JNDI_JDBC_LIFERAY_POOL);
-			}
-			catch (NamingException ne) {
-				context.bind(_JNDI_JDBC_LIFERAY_POOL, dataSource);
-			}
-
-			_dataSourceBindStates.put(servletContextName, true);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to dynamically bind the Liferay data source: " +
-						e.getMessage());
-			}
 		}
 	}
 
@@ -267,7 +213,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		boolean portletAppInitialized = false;
 
-		boolean phpPortlet = false;
 		boolean strutsBridges = false;
 
 		ClassLoader classLoader = servletContext.getClassLoader();
@@ -291,21 +236,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				portletBag.getPortletInstance();
 
 			if (ClassUtil.isSubclass(
-					portletInstance.getClass(), PHPPortlet.class.getName())) {
-
-				phpPortlet = true;
-			}
-
-			if (ClassUtil.isSubclass(
 					portletInstance.getClass(),
 					StrutsPortlet.class.getName())) {
 
 				strutsBridges = true;
 			}
-		}
-
-		if (phpPortlet) {
-			bindDataSource(servletContextName);
 		}
 
 		if (!strutsBridges) {
@@ -449,8 +384,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 
 		PortletContextBagPool.remove(servletContextName);
-
-		unbindDataSource(servletContextName);
 
 		JavadocManagerUtil.unload(servletContextName);
 

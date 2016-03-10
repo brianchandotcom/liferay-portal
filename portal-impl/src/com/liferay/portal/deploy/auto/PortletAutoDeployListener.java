@@ -42,9 +42,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		else if (_mvcDeployer) {
 			autoDeployer = new MVCPortletAutoDeployer();
 		}
-		else if (_phpDeployer) {
-			autoDeployer = new PHPPortletAutoDeployer();
-		}
 		else if (_waiDeployer) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Deploying package as a web application");
@@ -95,12 +92,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			return true;
 		}
 
-		if (pluginAutoDeployListenerHelper.isMatchingFile("index.php")) {
-			_phpDeployer = true;
-
-			return true;
-		}
-
 		if (!pluginAutoDeployListenerHelper.isExtPlugin() &&
 			!pluginAutoDeployListenerHelper.isHookPlugin() &&
 			!pluginAutoDeployListenerHelper.isMatchingFile(
@@ -121,7 +112,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		PortletAutoDeployListener.class);
 
 	private boolean _mvcDeployer;
-	private boolean _phpDeployer;
 	private boolean _portletDeployer;
 	private boolean _waiDeployer;
 

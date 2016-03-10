@@ -724,21 +724,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/resin.jar</file-name>
-				<version>4.0.11</version>
-				<project-name>Resin</project-name>
-				<project-url>http://www.caucho.com/resin-4.0</project-url>
-				<licenses>
-					<license>
-						<license-name>GPL 2.0</license-name>
-						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See LEP-5048 and LPS-15805.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/development/saxpath.jar</file-name>
 				<version>1.0 FCS</version>
 				<project-name>SAXPath</project-name>
@@ -746,18 +731,6 @@
 				<licenses>
 					<license>
 						<license-name>Werkin Digital License</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/script-10.jar</file-name>
-				<version>3.1.9</version>
-				<project-name>Resin</project-name>
-				<project-url>http://www.caucho.com/resin-3.1</project-url>
-				<licenses>
-					<license>
-						<license-name>GPL 2.0</license-name>
-						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2599,12 +2572,6 @@
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 						<copyright-notice>Copyright (c) 2005-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-					<license>
-						<bundled-project-name>phpportlet</bundled-project-name>
-						<license-name>PHP License 2.02</license-name>
-						<license-url>http://www.php.net/license/2_02.txt</license-url>
-						<copyright-notice>Copyright (c) 1999-2002 The PHP Group. All rights reserved.</copyright-notice>
 					</license>
 				</licenses>
 			</library>

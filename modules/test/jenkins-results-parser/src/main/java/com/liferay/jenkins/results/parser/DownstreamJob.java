@@ -70,7 +70,7 @@ public class DownstreamJob extends BaseJob {
 		Map<String, String> invokedParameters = getParametersFromQueryString(
 			parametersString);
 
-		Set<String> parameterNames = getParameterNames(getJobURL());
+		Set<String> parameterNames = getParameterNames();
 
 		parameters = new HashMap<>();
 
@@ -123,7 +123,7 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		if (status.equals("starting") || status.equals("queued")) {
-			JSONArray builds = getBuildsJSONArray(getJobURL());
+			JSONArray builds = getBuildsJSONArray();
 
 			for (int i = 0; i < builds.length(); i++) {
 				JSONObject build = builds.getJSONObject(i);
@@ -139,7 +139,7 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		if (status.equals("running")) {
-			JSONArray builds = getBuildsJSONArray(getJobURL());
+			JSONArray builds = getBuildsJSONArray();
 
 			for (int i = 0; i < builds.length(); i++) {
 				JSONObject build = builds.getJSONObject(i);
@@ -160,25 +160,27 @@ public class DownstreamJob extends BaseJob {
 	protected Map<String, String> parameters;
 	protected TopLevelJob topLevelJob;
 
-	private static JSONArray getBuildsJSONArray(String jobURL)
+	protected JSONArray getBuildsJSONArray()
 		throws Exception {
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			jobURL + "/api/json?tree=builds[actions[parameters" +
-				"[name,type,value]],building,duration,number,result,url]",
+			"http://" + master + "/job/" + name +
+				"/api/json?tree=builds[actions[parameters" +
+					"[name,type,value]],building,duration,number,result,url]",
 			false);
 
 		return jsonObject.getJSONArray("builds");
 	}
 
-	private static Set<String> getParameterNames(String jobURL)
+	protected Set<String> getParameterNames()
 		throws Exception {
 
 		Set<String> parameterNames = new HashSet<>();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			jobURL + "/api/json?tree=actions[parameterDefinitions" +
-				"[name,type,value]]");
+			"http://" + master + "/job/" + name +
+				"/api/json?tree=actions[parameterDefinitions" +
+					"[name,type,value]]");
 
 		JSONArray parameterDefinitions = jsonObject.getJSONArray(
 			"actions").getJSONObject(0).getJSONArray("parameterDefinitions");
@@ -261,8 +263,11 @@ public class DownstreamJob extends BaseJob {
 		}
 
 		if (status.equals("queued")) {
-			sb.append(" is queued ");
-			sb.append(getJobURL());
+			sb.append(" is queued at ");
+			sb.append("http://");
+			sb.append(master);
+			sb.append("/job/");
+			sb.append(name);
 			sb.append(".");
 			return sb.toString();
 		}
@@ -276,14 +281,20 @@ public class DownstreamJob extends BaseJob {
 
 		if (status.equals("starting")) {
 			sb.append(" invoked at ");
-			sb.append(getJobURL());
+			sb.append("http://");
+			sb.append(master);
+			sb.append("/job/");
+			sb.append(name);
 			sb.append(".");
 			return sb.toString();
 		}
 
 		if (status.equals("invalid")) {
 			sb.append(" is invalid ");
-			sb.append(getJobURL());
+			sb.append("http://");
+			sb.append(master);
+			sb.append("/job/");
+			sb.append(name);
 			sb.append(".");
 			return sb.toString();
 		}

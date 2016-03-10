@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseJob {
 
-	public static String decodeURL(String url) {
+	protected static String decodeURL(String url) {
 		url = url.replace("%28", "(");
 		url = url.replace("%29", ")");
 		url = url.replace("%5B", "[");
@@ -31,7 +31,7 @@ public abstract class BaseJob {
 		return url;
 	}
 
-	public String getBuildURL() {
+	public String getURL() {
 		if ((master == null) || (master.length() == 0)) {
 			return null;
 		}
@@ -48,17 +48,7 @@ public abstract class BaseJob {
 		return sb.toString();
 	}
 
-	public String getJobURL() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(master);
-		sb.append("/job/");
-		sb.append(name);
-
-		return sb.toString();
-	}
-
-	public String getMasterURL() {
+	public String getMaster() {
 		return master;
 	}
 
@@ -78,13 +68,13 @@ public abstract class BaseJob {
 		return status;
 	}
 
-	public void setBuildURL(String buildURL) {
-		buildURL = decodeURL(buildURL);
+	public void setURL(String url) {
+		url = decodeURL(url);
 
-		Matcher buildURLMatcher = _buildURLPattern.matcher(buildURL);
+		Matcher buildURLMatcher = _buildURLPattern.matcher(url);
 
 		if (!buildURLMatcher.find()) {
-			throw new IllegalArgumentException("Invalid build URL. " + buildURL);
+			throw new IllegalArgumentException("Invalid build URL. " + url);
 		}
 
 		master = buildURLMatcher.group("master");
@@ -116,7 +106,7 @@ public abstract class BaseJob {
 	}
 
 	protected BaseJob(String buildURL) {
-		setBuildURL(buildURL);
+		setURL(buildURL);
 	}
 
 	protected String master;

@@ -16,25 +16,36 @@ package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -44,19 +55,24 @@ import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.HandlesTypes;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
@@ -86,6 +102,8 @@ public class ServletContextHelperRegistrationImpl
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		_logger = new Logger(bundleContext);
+
 		_customServletContextHelper = new CustomServletContextHelper(
 			bundle, wabShapedBundle);
 
@@ -97,6 +115,8 @@ public class ServletContextHelperRegistrationImpl
 
 		_defaultServletServiceRegistration = createDefaultServlet(
 			bundleContext, servletContextName, wabShapedBundle);
+
+		initServletContainerInitializers(bundleContext);
 
 		_jspServletServiceRegistration = createJspServlet(
 			bundleContext, servletContextName);
@@ -366,6 +386,241 @@ public class ServletContextHelperRegistrationImpl
 		return contextPath.replaceAll("[^a-zA-Z0-9\\-]", "");
 	}
 
+	protected void initServletContainerInitializers(
+		BundleContext bundleContext) {
+
+		Bundle bundle = bundleContext.getBundle();
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		Collection<String> initializerResources = bundleWiring.listResources(
+			"META-INF/services", "javax.servlet.ServletContainerInitializer",
+			BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (initializerResources == null) {
+			return;
+		}
+
+		for (String initializerResource : initializerResources) {
+			URL url = bundle.getResource(initializerResource);
+
+			if (url == null) {
+				continue;
+			}
+
+			try (InputStream inputStream = url.openStream()) {
+				String fdqn = StringUtil.read(inputStream);
+
+				Class<? extends ServletContainerInitializer> initializerClass =
+					null;
+
+				try {
+					initializerClass =
+						(Class<? extends ServletContainerInitializer>)
+							bundle.loadClass(fdqn);
+				}
+				catch (Exception e) {
+					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+					continue;
+				}
+
+				HandlesTypes handledTypesAnnotation =
+					initializerClass.getAnnotation(HandlesTypes.class);
+
+				if (handledTypesAnnotation == null) {
+					handledTypesAnnotation = new HandlesTypes() {
+
+						@Override
+						public Class<? extends Annotation> annotationType() {
+							return null;
+						}
+
+						@Override
+						public Class<?>[] value() {
+							return new Class[0];
+						}
+
+					};
+				}
+
+				Class<?>[] handledTypesArray = handledTypesAnnotation.value();
+
+				if (handledTypesArray == null) {
+					handledTypesArray = new Class[0];
+				}
+
+				Collection<String> classResources = bundleWiring.listResources(
+					"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
+
+				if (classResources == null) {
+					classResources = new ArrayList<>(0);
+				}
+
+				Set<Class<?>> annotatedClasses = new HashSet<>();
+
+				for (String classResource : classResources) {
+					boolean found = false;
+
+					URL urlClassResource = bundle.getResource(classResource);
+
+					if (urlClassResource == null) {
+						continue;
+					}
+
+					String className = classResource.replaceAll(".class", "");
+					className = className.replaceAll("/", ".");
+
+					Class<?> annotatedClass = null;
+
+					try {
+						annotatedClass = bundle.loadClass(className);
+					}
+					catch (Throwable t) {
+						_logger.log(Logger.LOG_DEBUG, t.getMessage());
+						continue;
+					}
+
+					//Class extends/implements
+
+					for (Class<?> handledType : handledTypesArray) {
+						if (handledType.isAssignableFrom(annotatedClass)) {
+							annotatedClasses.add(annotatedClass);
+							found = true;
+							break;
+						}
+					}
+
+					if (found) {
+						continue;
+					}
+
+					//Class annotation
+
+					Annotation[] classAnnotations = new Annotation[0];
+
+					try {
+						classAnnotations = annotatedClass.getAnnotations();
+					}
+					catch (Throwable t) {
+						_logger.log(Logger.LOG_DEBUG, t.getMessage());
+					}
+
+					for (Annotation classAnnotation : classAnnotations) {
+						if (ArrayUtil.contains(
+								handledTypesArray,
+								classAnnotation.annotationType())) {
+
+							annotatedClasses.add(annotatedClass);
+							found = true;
+							break;
+						}
+					}
+
+					if (found) {
+						continue;
+					}
+
+					//Method annotation
+
+					Method[] classMethods = new Method[0];
+
+					try {
+						classMethods = annotatedClass.getDeclaredMethods();
+					}
+					catch (Throwable t) {
+						_logger.log(Logger.LOG_DEBUG, t.getMessage());
+					}
+
+					for (Method method : classMethods) {
+						if (found) {
+							break;
+						}
+
+						Annotation[] methodAnnotations = new Annotation[0];
+
+						try {
+							methodAnnotations = method.getDeclaredAnnotations();
+						}
+						catch (Throwable t) {
+							_logger.log(Logger.LOG_DEBUG, t.getMessage());
+						}
+
+						for (Annotation methodAnnotation : methodAnnotations) {
+							if (ArrayUtil.contains(
+									handledTypesArray,
+									methodAnnotation.annotationType())) {
+
+								annotatedClasses.add(annotatedClass);
+								found = true;
+								break;
+							}
+						}
+					}
+
+					if (found) {
+						continue;
+					}
+
+					//Field annotation
+
+					Field[] declaredFields = new Field[0];
+
+					try {
+						declaredFields = annotatedClass.getDeclaredFields();
+					}
+					catch (Throwable t) {
+						_logger.log(Logger.LOG_DEBUG, t.getMessage());
+					}
+
+					for (Field field : declaredFields) {
+						if (found) {
+							break;
+						}
+
+						Annotation[] fieldAnnotations = new Annotation[0];
+
+						try {
+							fieldAnnotations = field.getDeclaredAnnotations();
+						}
+						catch (Throwable t) {
+							_logger.log(Logger.LOG_DEBUG, t.getMessage());
+						}
+
+						for (Annotation fieldAnnotation : fieldAnnotations) {
+							if (ArrayUtil.contains(
+									handledTypesArray,
+									fieldAnnotation.annotationType())) {
+
+								annotatedClasses.add(annotatedClass);
+								found = true;
+								break;
+							}
+						}
+					}
+				}
+
+				if (annotatedClasses.isEmpty()) {
+					annotatedClasses = null;
+				}
+
+				ServletContext servletContext = getServletContext();
+
+				try {
+					ServletContainerInitializer servletContainerInitializer =
+						initializerClass.newInstance();
+
+					servletContainerInitializer.onStartup(
+						annotatedClasses, servletContext);
+				}
+				catch (Throwable t) {
+					_logger.log(Logger.LOG_ERROR, t.getMessage(), t);
+				}
+			}
+			catch (IOException ioe) {
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+			}
+		}
+	}
+
 	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
 		"jsp.servlet.init.param.";
 
@@ -375,6 +630,7 @@ public class ServletContextHelperRegistrationImpl
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private final Logger _logger;
 	private final ServiceRegistration<?>
 		_portletServletRequestFilterServiceRegistration;
 	private final ServiceRegistration<Servlet>

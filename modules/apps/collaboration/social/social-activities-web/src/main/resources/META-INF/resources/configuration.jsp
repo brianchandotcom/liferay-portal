@@ -25,7 +25,7 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<aui:fieldset>
-		<aui:select label="maximum-activities-to-display" name="preferences--max--" value="<%= socialActivitiesDisplayContext.getMax() %>">
+		<aui:select label="maximum-activities-to-load-at-once" name="preferences--max--" value="<%= socialActivitiesDisplayContext.getMax() %>">
 			<aui:option label="1" />
 			<aui:option label="2" />
 			<aui:option label="3" />

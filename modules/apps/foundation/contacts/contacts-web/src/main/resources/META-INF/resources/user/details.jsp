@@ -24,7 +24,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <h3><liferay-ui:message key="details" /></h3>
 
-<aui:fieldset column="<%= true %>" cssClass="w50">
+<aui:fieldset markupview="lexicon">
 	<aui:input autocapitalize="off" autocorrect="off" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "screenName") %>' name="screenName" type="text" />
 
 	<aui:input bean="<%= user %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "emailAddress") %>' model="<%= User.class %>" name="emailAddress" type="email">
@@ -42,7 +42,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 	<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "jobTitle") %>' name="jobTitle" />
 </aui:fieldset>
 
-<aui:fieldset column="<%= true %>" cssClass="w50">
+<aui:fieldset markupview="lexicon">
 	<div class="user-profile-image" id="<portlet:namespace />userProfileImage">
 		<c:if test="<%= selUser != null %>">
 			<c:choose>

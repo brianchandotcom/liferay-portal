@@ -250,10 +250,10 @@ public class BaselineJarTask extends BaseBndTask {
 					}
 				}
 
-				generatePackageInfo(info, warnings);
+				generatePackageInfo(info, delta, warnings);
 
 				if (((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
-					 warnings.equals("-")) ||
+					warnings.equals("-")) ||
 					(_reportOnlyDirtyPackages && (delta == Delta.REMOVED))) {
 
 					continue;
@@ -342,7 +342,7 @@ public class BaselineJarTask extends BaseBndTask {
 			"==========", "==========");
 	}
 
-	protected void generatePackageInfo(Info info, String warnings)
+	protected void generatePackageInfo(Info info,Delta delta, String warnings)
 		throws Exception {
 
 		String sourceDirName = project.getProperty("plugin.source.dir");
@@ -366,7 +366,11 @@ public class BaselineJarTask extends BaseBndTask {
 
 		File packageInfoFile = new File(packageDir, "packageinfo");
 
-		if (packageInfoFile.exists()) {
+		if (delta == Delta.REMOVED) {
+			if (packageInfoFile.exists()) {
+				packageInfoFile.delete();
+			}
+
 			return;
 		}
 

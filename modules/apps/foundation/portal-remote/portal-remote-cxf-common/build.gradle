@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
@@ -25,11 +27,13 @@ dependencies {
 }
 
 deploy {
-	from("lib") {
-		include "org.apache.felix.dependencymanager.jar"
-		include "org.apache.felix.dependencymanager.shell.jar"
-		include "stax2-api.jar"
-		include "woodstox-core-asl.jar"
+	from(configurations.provided) {
+		include "org.apache.felix.dependencymanager-*.jar"
+		include "org.apache.felix.dependencymanager.shell-*.jar"
+		include "stax2-api-*.jar"
+		include "woodstox-core-asl-*.jar"
+
+		rename new RenameDependencyClosure(project, configurations.provided.name)
 	}
 }
 

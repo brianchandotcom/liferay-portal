@@ -340,11 +340,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"_log.is" + StringUtil.upperCaseFirstLetter(matcher.group(2)) +
 					"Enabled()";
 
-			if (!codeBlock.contains(s)) {
+			if (codeBlock.contains(s) ^ !s.equals("_log.isErrorEnabled()")) {
 				int lineCount = getLineCount(content, matcher.start(1));
 
-				processErrorMessage(
-					fileName, "Use " + s + ": " + fileName + " " + lineCount);
+				if (codeBlock.contains(s)) {
+					processErrorMessage(
+						fileName,
+						"Do not use _log.isErrorEnabled(): " + fileName + " " +
+							lineCount);
+				}
+				else {
+					processErrorMessage(
+						fileName, "Use " + s + ": " + fileName + " " + lineCount);
+				}
 			}
 		}
 	}
@@ -4000,7 +4008,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _javaTermSortExcludes;
 	private List<String> _lineLengthExcludes;
 	private Pattern _logLevelPattern = Pattern.compile(
-		"\n(\t+)_log.(debug|info|trace|warn)\\(");
+		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");

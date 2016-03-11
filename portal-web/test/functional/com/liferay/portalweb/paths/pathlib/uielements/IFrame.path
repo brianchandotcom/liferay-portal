@@ -94,8 +94,13 @@
 	<td></td>
 </tr>
 <tr>
-    <td>MANAGE_SITE_PAGES</td>
-    <td>//iframe[contains(@id,'iframe') and contains(@class,'dialog-iframe-node')]</td>
+	<td>MANAGE_SITE_PAGES</td>
+	<td>//iframe[contains(@id,'iframe') and contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>MODAL_IFRAME</td>
+    <td>//div[contains(@class,'modal')]//iframe</td>
     <td></td>
 </tr>
 <tr>

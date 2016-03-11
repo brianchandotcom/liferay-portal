@@ -1652,7 +1652,7 @@
 	</command>
 
 	<command name="viewTranslationPGViaWCD">
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 		<if>
 			<isset var="structureLocalizationName" />
@@ -1681,7 +1681,7 @@
 			<then>
 				<var name="key_localizedLanguage" value="${webContentTranslationLanguage}" />
 
-				<execute function="AssertClick" locator1="Translation#AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
+				<execute function="Click" locator1="Translation#AVAILABLE_TRANSLATION" />
 
 				<if>
 					<isset var="localizedTitle" />

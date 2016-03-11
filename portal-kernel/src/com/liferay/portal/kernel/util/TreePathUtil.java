@@ -69,7 +69,9 @@ public class TreePathUtil {
 					String.valueOf(treeModel.getPrimaryKeyObj())).concat(
 						StringPool.SLASH);
 
-				treeModel.updateTreePath(treePath);
+				if (!treePath.equals(treeModel.getTreePath())) {
+					treeModel.updateTreePath(treePath);
+				}
 
 				traces.push(
 					new Object[] {treeModel.getPrimaryKeyObj(), treePath, 0L});

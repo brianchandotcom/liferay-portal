@@ -157,7 +157,7 @@ public class ServletContextHelperRegistrationImpl
 
 		if (_portletServletServiceRegistration == null) {
 			_portletServletServiceRegistration = createPortletServlet(
-				_bundleContext, _servletContextName, _wabShapedBundle);
+				_bundleContext, _servletContextName);
 		}
 
 		if (_portletServletRequestFilterServiceRegistration == null) {
@@ -265,12 +265,7 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	protected ServiceRegistration<Servlet> createPortletServlet(
-		BundleContext bundleContext, String servletContextName,
-		boolean wabShapedBundle) {
-
-		if (wabShapedBundle) {
-			return null;
-		}
+		BundleContext bundleContext, String servletContextName) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 

@@ -53,7 +53,7 @@ if (ddmStructureId > 0) {
 	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId);
 }
 else if (Validator.isNotNull(ddmStructureKey)) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
+	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(PortalUtil.getSiteGroupId(groupId), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 }
 
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
@@ -70,7 +70,7 @@ if (ddmTemplateId > 0) {
 	ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
 }
 else if (Validator.isNotNull(ddmTemplateKey)) {
-	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
+	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(PortalUtil.getSiteGroupId(groupId), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 }
 
 if (ddmTemplate == null) {

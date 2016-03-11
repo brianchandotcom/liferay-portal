@@ -359,6 +359,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						project, message, false, ignored);
 				}
 
+				private String _getGradlewCommand(
+					String gradlewRelativePath, String command, boolean daemon,
+					String ... arguments) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(gradlewRelativePath);
+					sb.append(' ');
+					sb.append(command);
+
+					if (daemon) {
+						sb.append(" --daemon");
+					}
+
+					for (String argument : arguments) {
+						sb.append(' ');
+						sb.append(argument);
+					}
+
+					return sb.toString();
+				}
+
 				private String _getGitCommitCommand(
 					Project project, String message, boolean all,
 					boolean ignored) {
@@ -422,16 +444,27 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					String gradlewRelativePath = project.relativePath(
 						gradlewFile);
 
+					boolean daemon = true;
+
+					String daemonString = GradleUtil.getTaskPrefixedProperty(
+						task, "daemon");
+
+					if (Validator.isNotNull(daemonString)) {
+						daemon = Boolean.parseBoolean(daemonString);
+					}
+
 					commands.add(
-						gradlewRelativePath + " " +
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME + " -P" +
-								_SNAPSHOT_PROPERTY_NAME);
+						_getGradlewCommand(
+							gradlewRelativePath,
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, daemon,
+							"-P" + _SNAPSHOT_PROPERTY_NAME));
 
 					// Publish release
 
 					commands.add(
-						gradlewRelativePath + " " +
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+						_getGradlewCommand(
+							gradlewRelativePath,
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, daemon));
 
 					// Commit "prep next"
 
@@ -470,19 +503,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			});
 
+		if (gitRepoDir != null) {
+			task.onlyIf(new LeafArtifactSpec(gitRepoDir));
+		}
+
 		task.setDescription(
 			"Prints the artifact publish commands if this project has been " +
 				"changed since the last publish.");
 
-		configureTaskEnabledIfStale(
-			task, gitRepoDir, recordArtifactTask, testProject);
+		configureTaskEnabledIfStale(task, recordArtifactTask, testProject);
 
 		return task;
 	}
 
 	protected Task addTaskPrintStaleArtifact(
-		File gitRepoDir, File portalRootDir,
-		WritePropertiesTask recordArtifactTask, boolean testProject) {
+		File portalRootDir, WritePropertiesTask recordArtifactTask,
+		boolean testProject) {
 
 		Project project = recordArtifactTask.getProject();
 
@@ -507,8 +543,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				"since the last publish.");
 		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
-		configureTaskEnabledIfStale(
-			task, gitRepoDir, recordArtifactTask, testProject);
+		configureTaskEnabledIfStale(task, recordArtifactTask, testProject);
 
 		return task;
 	}
@@ -982,7 +1017,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		addTaskPrintArtifactPublishCommands(
 			gitRepoDir, portalRootDir, recordArtifactTask, testProject);
 		addTaskPrintStaleArtifact(
-			gitRepoDir, portalRootDir, recordArtifactTask, testProject);
+			portalRootDir, recordArtifactTask, testProject);
 
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project, gitRepoDir);
@@ -1280,15 +1315,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskEnabledIfStale(
-		Task task, File gitRepoDir, WritePropertiesTask recordArtifactTask,
+		Task task, WritePropertiesTask recordArtifactTask,
 		boolean testProject) {
 
 		if (testProject) {
 			task.setEnabled(false);
-		}
-
-		if (gitRepoDir != null) {
-			task.onlyIf(new LeafArtifactSpec(gitRepoDir));
 		}
 
 		task.onlyIf(new OutOfDateArtifactSpec(recordArtifactTask));

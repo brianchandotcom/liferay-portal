@@ -53,7 +53,7 @@ if (ddmStructureId > 0) {
 	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId);
 }
 else if (Validator.isNotNull(ddmStructureKey)) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(PortalUtil.getSiteGroupId(groupId), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
+	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure((article != null) ? article.getGroupId() : themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 }
 
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
@@ -70,11 +70,11 @@ if (ddmTemplateId > 0) {
 	ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTemplateId);
 }
 else if (Validator.isNotNull(ddmTemplateKey)) {
-	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(PortalUtil.getSiteGroupId(groupId), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
+	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate((article != null) ? article.getGroupId() : themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 }
 
 if (ddmTemplate == null) {
-	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(company.getCompanyId(), groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), PortalUtil.getClassNameId(JournalArticle.class), true, WorkflowConstants.STATUS_APPROVED);
+	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(company.getCompanyId(), ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), PortalUtil.getClassNameId(JournalArticle.class), true, WorkflowConstants.STATUS_APPROVED);
 
 	if (!ddmTemplates.isEmpty()) {
 		ddmTemplate = ddmTemplates.get(0);

@@ -315,6 +315,10 @@ $horizontal-spacing: 35px;
 		top: 0;
 		width: 100%;
 	}
+
+	.radio-inline {
+		margin-right: 125px;
+	}
 }
 
 .lfr-ddl-field-settings-modal,
@@ -338,8 +342,7 @@ $horizontal-spacing: 35px;
 		margin-left: 4px;
 	}
 
-	label.radio-inline {
-		margin-right: 125px;
+	.radio-inline {
 		padding-top: 11px;
 
 		& + .radio-inline {
@@ -626,6 +629,10 @@ $horizontal-spacing: 35px;
 
 	.multi-step-progress-bar .progress-bar-title {
 		word-break: break-all;
+	}
+
+	.radio-inline {
+		margin-right: 10%;
 	}
 
 	.required-warning {

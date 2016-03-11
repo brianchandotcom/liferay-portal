@@ -534,6 +534,10 @@ $horizontal-spacing: 35px;
 		margin-left: 34px;
 		margin-right: 34px;
 	}
+
+	.lfr-ddm-form-page .required-warning {
+		margin-top: -16px;
+	}
 }
 
 .portlet-forms {
@@ -590,6 +594,10 @@ $horizontal-spacing: 35px;
 		margin: 0;
 	}
 
+	.lfr-ddm-form-page-description {
+		margin-top: 9px;
+	}
+
 	.lfr-ddm-form-field-container {
 		border-radius: 0;
 		border-width: 0;
@@ -617,6 +625,7 @@ $horizontal-spacing: 35px;
 
 	.lfr-ddm-form-page-title {
 		font-size: 19px;
+		margin-bottom: 9px;
 		margin-top: 0;
 	}
 
@@ -632,7 +641,7 @@ $horizontal-spacing: 35px;
 	.required-warning {
 		display: block;
 		font-weight: inherit;
-		margin-top: -11px;
+		margin-top: -17px;
 		text-align: left;
 	}
 }
@@ -822,7 +831,7 @@ $horizontal-spacing: 35px;
 		}
 
 		.form-builder-page-header-description {
-			margin-top: -15px;
+			margin-top: -19px;
 			padding-top: 0;
 		}
 

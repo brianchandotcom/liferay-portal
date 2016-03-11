@@ -135,6 +135,11 @@ public class UpgradePortletId extends UpgradeProcess {
 		sb.append("_USER_%_INSTANCE_%'");
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update PortletPreferences set portletId = ? where " +
+						"portletPreferencesId = ?");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -144,8 +149,13 @@ public class UpgradePortletId extends UpgradeProcess {
 				String newPortletId = StringUtil.replace(
 					portletId, oldRootPortletId, newRootPortletId);
 
-				updatePortletPreference(portletPreferencesId, newPortletId);
+				ps2.setString(1, newPortletId);
+				ps2.setLong(2, portletPreferencesId);
+
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

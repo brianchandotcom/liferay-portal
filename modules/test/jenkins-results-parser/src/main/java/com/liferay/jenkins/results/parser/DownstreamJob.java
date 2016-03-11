@@ -246,7 +246,7 @@ public class DownstreamJob extends BaseJob {
 		for (int i = 0; i < parametersJSONArray.length(); i++) {
 			JSONObject parameter = parametersJSONArray.getJSONObject(i);
 
-			if (parameter.has("value")) {
+			if (parameter.opt("value") instanceof String) {
 				String name = parameter.getString("name");
 				String value = parameter.getString("value");
 

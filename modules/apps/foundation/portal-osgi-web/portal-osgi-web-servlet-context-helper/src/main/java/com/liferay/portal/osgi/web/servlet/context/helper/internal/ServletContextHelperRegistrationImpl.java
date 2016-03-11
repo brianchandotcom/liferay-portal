@@ -74,50 +74,46 @@ public class ServletContextHelperRegistrationImpl
 
 		String contextPath = getContextPath(bundle);
 
-		String servletContextName = getServletContextName(bundle, contextPath);
-
-		boolean wabShapedBundle = false;
+		_servletContextName = getServletContextName(bundle, contextPath);
 
 		URL url = bundle.getEntry("WEB-INF/");
 
 		if (url != null) {
-			wabShapedBundle = true;
+			_wabShapedBundle = true;
+		}
+		else {
+			_wabShapedBundle = false;
 		}
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 
 		_customServletContextHelper = new CustomServletContextHelper(
-			bundle, wabShapedBundle);
+			bundle, _wabShapedBundle);
 
 		_servletContextHelperServiceRegistration = createServletContextHelper(
-			bundleContext, servletContextName, contextPath);
+			_bundleContext, _servletContextName, contextPath);
 
 		_servletContextListenerServiceRegistration =
-			createServletContextListener(bundleContext, servletContextName);
-
-		_defaultServletServiceRegistration = createDefaultServlet(
-			bundleContext, servletContextName, wabShapedBundle);
-
-		_jspServletServiceRegistration = createJspServlet(
-			bundleContext, servletContextName);
-
-		_portletServletServiceRegistration = createPortletServlet(
-			bundleContext, servletContextName, wabShapedBundle);
-
-		_portletServletRequestFilterServiceRegistration =
-			createRestrictPortletServletRequestFilter(
-				bundleContext, servletContextName);
+			createServletContextListener(_bundleContext, _servletContextName);
 	}
 
 	@Override
 	public void close() {
-		_servletContextHelperServiceRegistration.unregister();
+		if (_servletContextHelperServiceRegistration != null) {
+			_servletContextHelperServiceRegistration.unregister();
+		}
 
-		_servletContextListenerServiceRegistration.unregister();
+		if (_servletContextListenerServiceRegistration != null) {
+			_servletContextListenerServiceRegistration.unregister();
+		}
 
-		_defaultServletServiceRegistration.unregister();
+		if (_defaultServletServiceRegistration != null) {
+			_defaultServletServiceRegistration.unregister();
+		}
 
-		_jspServletServiceRegistration.unregister();
+		if (_jspServletServiceRegistration != null) {
+			_jspServletServiceRegistration.unregister();
+		}
 
 		if (_portletServletServiceRegistration != null) {
 			_portletServletServiceRegistration.unregister();
@@ -145,6 +141,30 @@ public class ServletContextHelperRegistrationImpl
 		getServletContextListenerSeviceReference() {
 
 		return _servletContextListenerServiceRegistration.getReference();
+	}
+
+	@Override
+	public void initDefaults() {
+		if (_defaultServletServiceRegistration == null) {
+			_defaultServletServiceRegistration = createDefaultServlet(
+				_bundleContext, _servletContextName, _wabShapedBundle);
+		}
+
+		if (_jspServletServiceRegistration == null) {
+			_jspServletServiceRegistration = createJspServlet(
+				_bundleContext, _servletContextName);
+		}
+
+		if (_portletServletServiceRegistration == null) {
+			_portletServletServiceRegistration = createPortletServlet(
+				_bundleContext, _servletContextName);
+		}
+
+		if (_portletServletRequestFilterServiceRegistration == null) {
+			_portletServletRequestFilterServiceRegistration =
+				createRestrictPortletServletRequestFilter(
+					_bundleContext, _servletContextName);
+		}
 	}
 
 	@Override
@@ -245,12 +265,7 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	protected ServiceRegistration<Servlet> createPortletServlet(
-		BundleContext bundleContext, String servletContextName,
-		boolean wabShapedBundle) {
-
-		if (wabShapedBundle) {
-			return null;
-		}
+		BundleContext bundleContext, String servletContextName) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -372,19 +387,21 @@ public class ServletContextHelperRegistrationImpl
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
+	private final BundleContext _bundleContext;
 	private final CustomServletContextHelper _customServletContextHelper;
-	private final ServiceRegistration<?> _defaultServletServiceRegistration;
-	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private final ServiceRegistration<?>
+	private ServiceRegistration<?> _defaultServletServiceRegistration;
+	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private ServiceRegistration<?>
 		_portletServletRequestFilterServiceRegistration;
-	private final ServiceRegistration<Servlet>
-		_portletServletServiceRegistration;
+	private ServiceRegistration<Servlet> _portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
 	private final Props _props;
 	private final ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final ServiceRegistration<ServletContextListener>
 		_servletContextListenerServiceRegistration;
+	private final String _servletContextName;
+	private final boolean _wabShapedBundle;
 
 	private static class JspServletWrapper extends HttpServlet {
 

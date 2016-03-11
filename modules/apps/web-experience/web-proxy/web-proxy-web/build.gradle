@@ -16,7 +16,7 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	provided group: "xalan", name: "serializer", version: "2.7.2"
 	provided group: "xalan", name: "xalan", version: "2.7.2"
-	provided project(":apps:foundation:frontend:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 }
 
 liferay {

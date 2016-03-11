@@ -24,32 +24,6 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-String rootNodeName = StringPool.BLANK;
-
-if (privateLayout) {
-	rootNodeName = LanguageUtil.get(request, "private-pages");
-}
-else {
-	rootNodeName = LanguageUtil.get(request, "public-pages");
-}
-
-String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
-
-String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
-
-long[] selectedLayoutIds = null;
-
-if (openNodes == null) {
-	selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
-
-	for (long selectedLayoutId : selectedLayoutIds) {
-		SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
-	}
-}
-else {
-	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
-}
-
 long exportImportConfigurationId = 0;
 
 ExportImportConfiguration exportImportConfiguration = null;
@@ -82,6 +56,41 @@ else {
 }
 
 boolean configuredExport = (exportImportConfiguration == null) ? false : true;
+
+String rootNodeName = StringPool.BLANK;
+
+if (configuredExport) {
+	privateLayout = MapUtil.getBoolean(exportImportConfigurationSettingsMap, "privateLayout", privateLayout);
+}
+
+if (privateLayout) {
+	rootNodeName = LanguageUtil.get(request, "private-pages");
+}
+else {
+	rootNodeName = LanguageUtil.get(request, "public-pages");
+}
+
+String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
+
+long[] selectedLayoutIds = null;
+
+if (configuredExport) {
+	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
+}
+else {
+	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
+
+	if (openNodes == null) {
+		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
+
+		for (long selectedLayoutId : selectedLayoutIds) {
+			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
+		}
+	}
+	else {
+		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
+	}
+}
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
@@ -163,7 +172,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 						<liferay-util:include page="/export/new_export/select_pages.jsp" servletContext="<%= application %>">
 							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 							<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-							<liferay-util:param name="privateLayout" value='<%= MapUtil.getString(exportImportConfigurationSettingsMap, "privateLayout", String.valueOf(privateLayout)) %>' />
+							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 							<liferay-util:param name="treeId" value="<%= treeId %>" />
 							<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
 							<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredExport) %>" />

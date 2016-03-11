@@ -42,12 +42,12 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 		<c:choose>
 		<c:when test="<%= privateLayout %>">
 			<li>
-				<aui:button disabled="<%= disableInputs %>" id="changeToPrivateLayoutsButton" value="change-to-public-pages" />
+				<aui:button disabled="<%= disableInputs %>" id="changeToPublicLayoutsButton" value="change-to-public-pages" />
 			</li>
 	</c:when>
 	<c:otherwise>
 		<li>
-			<aui:button disabled="<%= disableInputs %>" id="changeToPublicLayoutsButton" value="change-to-private-pages" />
+			<aui:button disabled="<%= disableInputs %>" id="changeToPrivateLayoutsButton" value="change-to-private-pages" />
 		</li>
 	</c:otherwise>
 	</c:choose>

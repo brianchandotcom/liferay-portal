@@ -34,7 +34,7 @@ public class PublishLayoutsMVCRenderCommand extends GetGroupMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/publish_layouts.jsp";
+		return "/publish/view.jsp";
 	}
 
 }

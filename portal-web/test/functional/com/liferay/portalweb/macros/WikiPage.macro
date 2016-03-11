@@ -153,8 +153,6 @@
 	<command name="addFrontPageCP">
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiFrontPageContent}" />
 
 		<execute macro="PortletEntry#publish" />
@@ -171,8 +169,6 @@
 		</if>
 
 		<execute function="AssertClick#assertTextClickAtAndPause" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 
 		<if>
 			<equals arg1="${creoleSource}" arg2="true" />

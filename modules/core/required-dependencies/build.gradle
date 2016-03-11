@@ -31,5 +31,5 @@ deploy {
 
 	from configurations.provided
 	into new File(liferay.liferayHome, "osgi/static")
-	rename new RenameDependencyClosure(project, "provided")
+	rename new RenameDependencyClosure(project, configurations.provided.name)
 }

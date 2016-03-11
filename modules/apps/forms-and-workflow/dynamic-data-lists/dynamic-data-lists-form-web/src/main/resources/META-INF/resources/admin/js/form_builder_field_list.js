@@ -25,7 +25,7 @@ AUI.add(
 								'<span class="' + CSS_FIELD_LIST_ADD_BUTTON_ICON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_PLUS_ICON + '">' +
 									Liferay.Util.getLexiconIconTpl('plus') +
 								'</span>' +
-								'<label class="' + CSS_FIELD_LIST_ADD_BUTTON_LABEL + '"> ADD FIELD </label>' +
+								'<label class="' + CSS_FIELD_LIST_ADD_BUTTON_LABEL + '"> {addField} </label>' +
 							'</button>' +
 						'</div>'
 				}

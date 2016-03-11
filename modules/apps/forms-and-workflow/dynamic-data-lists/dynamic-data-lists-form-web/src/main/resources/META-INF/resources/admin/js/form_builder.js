@@ -58,6 +58,20 @@ AUI.add(
 					portletNamespace: {
 					},
 
+					strings: {
+						value: {
+							addColumn: Liferay.Language.get('add-column'),
+							addField: Liferay.Language.get('add-field'),
+							cancelRemoveRow: Liferay.Language.get('cancel'),
+							confirmRemoveRow: Liferay.Language.get('yes-delete'),
+							formTitle: Liferay.Language.get('build-your-form'),
+							modalHeader: Liferay.Language.get('remove-confirmation'),
+							pasteHere: Liferay.Language.get('paste-here'),
+							removeRowModal: Liferay.Language.get('you-will-also-delete-fields-with-this-row-are-you-sure-you-want-delete-it')
+						},
+						writeOnce: true
+					},
+
 					visitor: {
 						getter: '_getVisitor',
 						valueFn: '_valueVisitor'

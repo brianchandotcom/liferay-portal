@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -83,20 +84,17 @@ public class CMISParameterValueUtil {
 			if (Validator.isNotNull(productName) &&
 				productName.startsWith("Alfresco")) {
 
-				value = StringUtil.replace(
-					value, new String[] {StringPool.APOSTROPHE},
-					new String[] {"\\'"});
+				value = StringUtil.replace(value, CharPool.APOSTROPHE, "\\'");
 			}
 			else {
 				value = StringUtil.replace(
-					value,
-					new String[] {StringPool.APOSTROPHE, StringPool.UNDERLINE},
+					value, new char[] {CharPool.APOSTROPHE, CharPool.UNDERLINE},
 					new String[] {"\\'", "\\_"});
 			}
 
 			if (wildcard) {
 				value = StringUtil.replace(
-					value, new String[] {StringPool.PERCENT, StringPool.STAR},
+					value, new char[] {CharPool.PERCENT, CharPool.STAR},
 					new String[] {"\\%", StringPool.PERCENT});
 			}
 		}

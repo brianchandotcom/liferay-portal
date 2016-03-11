@@ -108,8 +108,8 @@ public class SourceFormatterHelper {
 		File basedirFile = new File("./");
 
 		String basedirAbsolutePath = StringUtil.replace(
-			basedirFile.getAbsolutePath(), new String[] {".", ":", "/", "\\"},
-			new String[] {"_", "_", "_", "_"});
+			basedirFile.getAbsolutePath(), new char[] {'.', ':', '/', '\\'},
+			new char[] {'_', '_', '_', '_'});
 
 		String propertiesFileName =
 			System.getProperty("java.io.tmpdir") + "/SourceFormatter." +

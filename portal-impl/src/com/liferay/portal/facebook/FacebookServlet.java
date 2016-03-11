@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.gzip.GZipFilter;
@@ -90,11 +89,7 @@ public class FacebookServlet extends HttpServlet {
 	}
 
 	protected String fixFbml(String fbml) {
-		fbml = StringUtil.replace(
-			fbml, new String[] {"<nobr>", "</nobr>"},
-			new String[] {StringPool.BLANK, StringPool.BLANK});
-
-		return fbml;
+		return StringUtil.removeSubstrings(fbml, "<nobr>", "</nobr>");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

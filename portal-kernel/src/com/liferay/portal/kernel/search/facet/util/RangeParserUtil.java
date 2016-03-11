@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search.facet.util;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -25,10 +26,8 @@ public class RangeParserUtil {
 	public static String[] parserRange(String range) {
 		range = StringUtil.replace(
 			range,
-			new String[] {
-				StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE
-			},
-			new String[] {StringPool.OPEN_BRACKET, StringPool.CLOSE_BRACKET});
+			new char[] {CharPool.OPEN_CURLY_BRACE, CharPool.CLOSE_CURLY_BRACE},
+			new char[] {CharPool.OPEN_BRACKET, CharPool.CLOSE_BRACKET});
 
 		int x = range.indexOf(StringPool.OPEN_BRACKET);
 		int y = range.indexOf(" TO ");

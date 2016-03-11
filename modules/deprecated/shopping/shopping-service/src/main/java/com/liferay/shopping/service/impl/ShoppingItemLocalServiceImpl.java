@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -573,16 +574,9 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	protected String checkItemField(String value) {
-		return StringUtil.replace(
-			value,
-			new String[] {
-				StringPool.AMPERSAND, StringPool.APOSTROPHE, StringPool.EQUAL,
-				StringPool.PIPE, StringPool.QUOTE
-			},
-			new String[] {
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK
-			});
+		return StringUtil.removeChars(
+			value, CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.EQUAL,
+			CharPool.PIPE, CharPool.QUOTE);
 	}
 
 	protected long getCategory(ShoppingItem item, long categoryId) {

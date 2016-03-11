@@ -307,9 +307,9 @@ public class JavaTerm {
 			}
 		}
 
+		parameters = StringUtil.removeChar(parameters, CharPool.TAB);
 		parameters = StringUtil.replace(
-			parameters, new String[] {StringPool.TAB, StringPool.NEW_LINE},
-			new String[] {StringPool.BLANK, StringPool.SPACE});
+			parameters, CharPool.NEW_LINE, StringPool.SPACE);
 
 		for (x = 0;;) {
 			parameters = StringUtil.trim(parameters);

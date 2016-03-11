@@ -188,7 +188,7 @@ public class CodeCoverageAssertor implements TestRule {
 			Class<?> assertClass = assertClasses.get(i);
 
 			includes[i] = StringUtil.replace(
-				assertClass.getName(), new String[] {".", "$"},
+				assertClass.getName(), new char[] {'.', '$'},
 				new String[] {"/", "\\$"});
 		}
 

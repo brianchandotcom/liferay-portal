@@ -93,7 +93,7 @@ if (Validator.isNotNull(exception)) {
 		%>
 
 		<div>
-			<%= StringUtil.replace(te.getMessage(), new String[] {"<", "\n"}, new String[] {"&lt;", "<br />\n"}) %>
+			<%= StringUtil.replace(te.getMessage(), new char[] {'<', '\n'}, new String[] {"&lt;", "<br />\n"}) %>
 		</div>
 	</c:when>
 	<c:when test="<%= noSuchResourceException %>">

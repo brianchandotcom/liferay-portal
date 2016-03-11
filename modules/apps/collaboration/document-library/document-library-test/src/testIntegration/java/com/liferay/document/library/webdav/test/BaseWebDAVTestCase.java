@@ -106,9 +106,8 @@ public class BaseWebDAVTestCase {
 					String testName = StringUtil.extractLast(
 						stackTraceElement.getClassName(), CharPool.PERIOD);
 
-					testName = StringUtil.replace(
-						testName, new String[] {"WebDAV", "Test"},
-						new String[] {"", ""});
+					testName = StringUtil.removeSubstrings(
+						testName, "WebDAV", "Test");
 
 					headers.put(
 						"X-Litmus",

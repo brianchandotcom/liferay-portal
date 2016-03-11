@@ -583,8 +583,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	protected String sterilizeQueryString(String queryString) {
 		return StringUtil.replace(
-			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
-			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
+			queryString, new char[] {CharPool.SLASH, CharPool.BACK_SLASH},
+			new char[] {CharPool.UNDERLINE, CharPool.UNDERLINE});
 	}
 
 	private static final String _BASE_URL = "@base_url@";

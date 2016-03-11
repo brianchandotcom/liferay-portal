@@ -9,9 +9,9 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.test" />
 
 	<path id="portal.test.classpath">
+		<pathelement location="${project.dir}/portal-kernel/classes" />
 		<path refid="lib.classpath" />
 		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
-		<pathelement location="${project.dir}/portal-kernel/classes" />
 	</path>
 
 	<macrodef name="compile-java">

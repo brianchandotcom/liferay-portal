@@ -455,8 +455,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		}
 
 		screenName = StringUtil.replace(
-			screenName, new String[] {StringPool.SLASH, StringPool.UNDERLINE},
-			new String[] {StringPool.PERIOD, StringPool.PERIOD});
+			screenName, new char[] {CharPool.SLASH, CharPool.UNDERLINE},
+			new char[] {CharPool.PERIOD, CharPool.PERIOD});
 
 		return screenName;
 	}

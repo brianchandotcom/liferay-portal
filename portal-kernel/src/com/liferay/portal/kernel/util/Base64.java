@@ -82,10 +82,8 @@ public class Base64 {
 	public static String fromURLSafe(String base64) {
 		return StringUtil.replace(
 			base64,
-			new String[] {
-				StringPool.MINUS, StringPool.STAR, StringPool.UNDERLINE
-			},
-			new String[] {StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH});
+			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE},
+			new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH});
 	}
 
 	public static String objectToString(Object o) {
@@ -126,11 +124,8 @@ public class Base64 {
 
 	public static String toURLSafe(String base64) {
 		return StringUtil.replace(
-			base64,
-			new String[] {StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH},
-			new String[] {
-				StringPool.MINUS, StringPool.STAR, StringPool.UNDERLINE
-			});
+			base64, new char[] {CharPool.PLUS, CharPool.EQUAL, CharPool.SLASH},
+			new char[] {CharPool.MINUS, CharPool.STAR, CharPool.UNDERLINE});
 	}
 
 	protected static char[] encodeBlock(byte[] raw, int offset, int lastIndex) {

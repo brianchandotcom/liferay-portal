@@ -16,6 +16,7 @@ package com.liferay.amazon.rankings.web.util;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,7 +104,7 @@ public class AmazonSignedRequestsUtil {
 		String signature = Base64.encode(bytes);
 
 		return StringUtil.replace(
-			signature, new String[] {StringPool.EQUAL, StringPool.PLUS},
+			signature, new char[] {CharPool.EQUAL, CharPool.PLUS},
 			new String[] {"%3D", "%2B"});
 	}
 

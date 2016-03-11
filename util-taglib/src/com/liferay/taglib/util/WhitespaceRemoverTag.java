@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.jsp.JspException;
@@ -51,10 +51,8 @@ public class WhitespaceRemoverTag extends BodyTagSupport {
 
 		String bodyContentString = StringUtil.trim(bodyContent.getString());
 
-		bodyContentString = StringUtil.replace(
-			bodyContentString,
-			new String[] {StringPool.NEW_LINE, StringPool.TAB},
-			new String[] {StringPool.BLANK, StringPool.BLANK});
+		bodyContentString = StringUtil.removeChars(
+			bodyContentString, CharPool.NEW_LINE, CharPool.TAB);
 
 		return bodyContentString;
 	}

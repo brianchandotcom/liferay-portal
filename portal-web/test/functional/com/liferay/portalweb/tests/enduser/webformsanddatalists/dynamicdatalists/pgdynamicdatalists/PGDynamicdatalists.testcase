@@ -1343,8 +1343,8 @@
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
-		<execute macro="DDLDisplayPortlet#viewConfigurationCheckbox">
-			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
+		<execute macro="DDLNavigator#gotoOptionalConfiguration" />
+
 		</execute>
 	</command>
 

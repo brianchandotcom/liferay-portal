@@ -267,9 +267,7 @@
 	</command>
 
 	<command name="selectDisplayTemplateViaDDLDisplayPG">
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
-
-		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+		<execute macro="DDLNavigator#gotoOptionalConfiguration" />
 
 		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 
@@ -283,9 +281,7 @@
 	</command>
 
 	<command name="selectFormTemplateViaDDLDisplayPG">
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
-
-		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+		<execute macro="DDLNavigator#gotoOptionalConfiguration" />
 
 		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT" value1="${ddlFormTemplateName}" />
 

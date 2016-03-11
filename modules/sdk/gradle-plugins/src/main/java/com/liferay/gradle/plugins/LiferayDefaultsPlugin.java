@@ -470,19 +470,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			});
 
+		if (gitRepoDir != null) {
+			task.onlyIf(new LeafArtifactSpec(gitRepoDir));
+		}
+
 		task.setDescription(
 			"Prints the artifact publish commands if this project has been " +
 				"changed since the last publish.");
 
-		configureTaskEnabledIfStale(
-			task, gitRepoDir, recordArtifactTask, testProject);
+		configureTaskEnabledIfStale(task, recordArtifactTask, testProject);
 
 		return task;
 	}
 
 	protected Task addTaskPrintStaleArtifact(
-		File gitRepoDir, File portalRootDir,
-		WritePropertiesTask recordArtifactTask, boolean testProject) {
+		File portalRootDir, WritePropertiesTask recordArtifactTask,
+		boolean testProject) {
 
 		Project project = recordArtifactTask.getProject();
 
@@ -507,8 +510,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				"since the last publish.");
 		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
-		configureTaskEnabledIfStale(
-			task, gitRepoDir, recordArtifactTask, testProject);
+		configureTaskEnabledIfStale(task, recordArtifactTask, testProject);
 
 		return task;
 	}
@@ -982,7 +984,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		addTaskPrintArtifactPublishCommands(
 			gitRepoDir, portalRootDir, recordArtifactTask, testProject);
 		addTaskPrintStaleArtifact(
-			gitRepoDir, portalRootDir, recordArtifactTask, testProject);
+			portalRootDir, recordArtifactTask, testProject);
 
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project, gitRepoDir);
@@ -1280,15 +1282,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskEnabledIfStale(
-		Task task, File gitRepoDir, WritePropertiesTask recordArtifactTask,
+		Task task, WritePropertiesTask recordArtifactTask,
 		boolean testProject) {
 
 		if (testProject) {
 			task.setEnabled(false);
-		}
-
-		if (gitRepoDir != null) {
-			task.onlyIf(new LeafArtifactSpec(gitRepoDir));
 		}
 
 		task.onlyIf(new OutOfDateArtifactSpec(recordArtifactTask));

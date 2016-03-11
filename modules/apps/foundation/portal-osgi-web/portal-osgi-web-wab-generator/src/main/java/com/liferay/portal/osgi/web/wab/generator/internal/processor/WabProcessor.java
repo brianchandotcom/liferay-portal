@@ -1155,6 +1155,8 @@ public class WabProcessor {
 
 		processRequiredDeploymentContexts(analyzer);
 
+		processExcludedJSPs(analyzer);
+
 		Manifest manifest = null;
 
 		try {
@@ -1171,6 +1173,30 @@ public class WabProcessor {
 		processWebContextPath(manifest);
 
 		writeManifest(manifest);
+	}
+
+	private void processExcludedJSPs(Analyzer analyzer) throws IOException {
+		File file = new File(_pluginDir, "/WEB-INF/liferay-hook.xml");
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Document document = readDocument(file);
+
+		Element rootElement = document.getRootElement();
+
+		List<Node> nodes = rootElement.selectNodes("//custom-jsp-dir");
+
+		String property = analyzer.getProperty("-jsp");
+
+		for (Node node : nodes) {
+			String text = node.getText();
+
+			property = "!" + text +"," + property;
+		}
+
+		analyzer.setProperty("-jsp", property);
 	}
 
 	protected void writeGeneratedWab(File file) throws IOException {

@@ -2702,7 +2702,22 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								</daemons>
 							</parallel>
 
-							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+							<trycatch>
+								<try>
+									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+								</try>
+								<catch>
+									<parallel>
+										<daemons>
+											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
+												<arg line="${app.server.start.executable.arg.line}" />
+											</exec>
+										</daemons>
+									</parallel>
+
+									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+								</catch>
+							</trycatch>
 						</else>
 					</if>
 				</then>

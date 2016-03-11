@@ -68,9 +68,27 @@
 
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
+		<if>
+			<equals arg1="${page}" arg2="Public Pages" />
+			<then>
+				<execute function="Click" locator1="SitePages#PUBLIC_PAGE_ELLIPSIS" />
 
-		<execute function="Click" locator1="SitePages#EDIT_SPECIFIC_PAGE" />
+				<execute function="Click" locator1="SitePages#EDIT_PUBLIC_PAGE_MENUITEM" />
+			</then>
+			<elseif>
+				<equals arg1="${page}" arg2="Private Pages" />
+				<then>
+					<execute function="Click" locator1="SitePages#PRIVATE_PAGE_ELLIPSIS" />
+
+					<execute function="Click" locator1="SitePages#EDIT_PRIVATE_PAGE_MENUITEM" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
+
+				<execute function="Click" locator1="SitePages#EDIT_SPECIFIC_PAGE" />
+			</else>
+		</if>
 	</command>
 
 	<command name="gotoPages">

@@ -349,14 +349,10 @@
 	</command>
 
 	<command name="gotoSiteTemplateCP">
-		<execute macro="SitePageNavigator#gotoPages">
+		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
-			<var name="site" value="${site}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
-
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" value1="${pageName}" />
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

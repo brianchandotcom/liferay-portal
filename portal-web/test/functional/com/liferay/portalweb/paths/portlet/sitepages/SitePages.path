@@ -317,6 +317,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOGO_UPLOAD_IMAGE_BUTTON</td>
+	<td>//label[contains(@for,'ImageUploaderPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -386,7 +391,7 @@
 </tr>
 <tr>
 	<td>EDIT_PUBLIC_PAGE_MENUITEM</td>
-	<td>//*[@data-qa-id='editPublicPage']</td>
+	<td>//*[@data-qa-id='editPublicPages']</td>
 	<td></td>
 </tr>
 <tr>
@@ -395,13 +400,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_PUBLIC_PAGE_MENUITEM</td>
-	<td>//*[@data-qa-id='editPrivatePage']</td>
+	<td>EDIT_PRIVATE_PAGE_MENUITEM</td>
+	<td>//*[@data-qa-id='editPrivatePages']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_CHILD_PAGE</td>
-	<td>//div[*[@aria-expanded='true']]//*[@data-qa-id='addChildPage']</td>
+	<td>//div[*[@data-qa-id='pageOptions' and @aria-expanded='true']]//*[@data-qa-id='addChildPage']</td>
 	<td></td>
 </tr>
 <tr>

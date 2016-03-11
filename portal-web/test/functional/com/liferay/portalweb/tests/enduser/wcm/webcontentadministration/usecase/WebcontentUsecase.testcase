@@ -651,8 +651,6 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SitePageNavigator#gotoAddPage" />
-
 		<execute macro="Page#add">
 			<var name="pageName" value="WCD Page" />
 		</execute>

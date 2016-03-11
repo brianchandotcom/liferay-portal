@@ -76,13 +76,9 @@
 	</command>
 
 	<command name="CannotDeleteLastPrivatePage" priority="3">
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Private Pages" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Private Pages" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoPages">

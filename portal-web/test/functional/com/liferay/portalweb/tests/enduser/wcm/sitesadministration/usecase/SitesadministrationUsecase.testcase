@@ -552,10 +552,6 @@
 			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Private Pages" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
 			<var name="sitePagePrivacy" value="Private" />
@@ -609,6 +605,10 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080/test-private-page" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.able.com:8080/test-private-page" />
 		</execute>
 
 		<execute function="AssertLocation" value1="http://www.able.com:8080/test-private-page" />
@@ -784,7 +784,6 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="page" value="Profile" />
 			<var name="pageName" value="site Page Name" />
 			<var name="sitePagePrivacy" value="Public" />
 			<var name="userGroupName" value="User Group Name" />
@@ -1004,15 +1003,11 @@
 			<var name="siteFriendlyURLEdit" value="/russia2018" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPublicPages" />
-
 		<for list="Home,Arenas" param="publicPageName" >
 			<execute macro="Page#add">
 				<var name="pageName" value="${publicPageName}" />
 			</execute>
 		</for>
-
-		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
 			<execute macro="Page#addChild">
@@ -1023,8 +1018,6 @@
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
-
-		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<for list="Accomodations,Maps" param="privatePageName" >
 			<execute macro="Page#add">
@@ -1039,8 +1032,6 @@
 			<var name="logoFile" value="Document_3.png" />
 			<var name="page" value="Public Pages" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<execute macro="Page#addJavaScript">
 			<var name="javaScript" value="alert('Welcome to Russia.');" />
@@ -1113,6 +1104,10 @@
 			<var name="virtualHostsURL" value="www.baker.com:8080/group/russia2018" />
 		</execute>
 
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.baker.com:8080/group/russia2018" />
+		</execute>
+
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Accomodations,Maps" />
 		</execute>
@@ -1129,6 +1124,10 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
 		<var method="selenium#getText('//tr/td[7]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
@@ -1136,6 +1135,10 @@
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="import file name ${larFileName}" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />

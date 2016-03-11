@@ -38,14 +38,17 @@
 	</command>
 
 	<command name="expandPageTree">
-		<if>
-			<condition function="IsElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
+		<while>
+			<and>
+				<condition function="IsElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
+				<condition function="IsVisible" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
+			</and>
 			<then>
 				<execute function="Click" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_EXPANDED" />
 			</then>
-		</if>
+		</while>
+
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
 	</command>
 
 	<command name="expandPanelControlPanel">

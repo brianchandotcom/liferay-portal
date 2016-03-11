@@ -77,9 +77,8 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
-			<var name="page" value="Dashboard" />
 			<var name="pageName" value="Test User Group Private Page" />
-			<var name="sitePagePrivacy" value="Public" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
@@ -101,7 +100,7 @@
 
 		<execute macro="UserBar#gotoDashboard" />
 
-		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+		<execute macro="SitePageNavigator#gotoPages" />
 
 		<var name="key_pageName" value="Test User Group Private Page" />
 

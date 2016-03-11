@@ -258,7 +258,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextNotPresent" locator1="Message#ERROR_2" value1="You must have at least one page." />
+		<execute function="AssertTextPresent" locator1="Message#ERROR_2" value1="You must have at least one page." />
 	</command>
 
 	<command name="assertNodePortPG">
@@ -272,17 +272,25 @@
 			<var name="page" value="${page}" />
 		</execute>
 
-		<execute function="Click" locator1="SitePages#DETAILS_NAVIGATION_ADVANCED" />
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Look and Feel" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Logo" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />
 
 		<execute function="SelectFrame" locator1="SitePages#LOGO_UPLOAD_IMAGE_IFRAME" />
 
-		<execute function="UploadCommonFile" locator1="Button#SELECT" value1="${logoFile}" />
+		<execute function="AssertClick" locator1="SitePages#LOGO_UPLOAD_IMAGE_BUTTON" value1="Select" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${logoFile}" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute macro="Button#clickSave" />
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 
 		<execute function="Pause" locator1="5000" />
 

@@ -107,9 +107,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="home" />
-			<var name="site" value="Site Name" />
+			<var name="page" value="home" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -123,9 +121,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="home" />
-			<var name="site" value="Site Name" />
+			<var name="page" value="home" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

@@ -73,37 +73,10 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<if>
-			<equals arg1="${sitePagePrivacy}" arg2="Private" />
-			<then>
-				<execute function="Click" locator1="SitePages#NAVIGATION_MY_DASHBOARD" />
-			</then>
-			<elseif>
-				<equals arg1="${sitePagePrivacy}" arg2="Public" />
-				<then>
-					<execute function="Click" locator1="SitePages#NAVIGATION_MY_PROFILE" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
-			</else>
-		</if>
-
-		<execute function="Click" locator1="Button#ADD_PAGE" />
-
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#PAGE_NAME_FIELD" value1="${pageName}" />
-
-		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Pages" />
+		<execute macro="Page#add">
+			<var name="pageName" value="${pageName}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
-
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 	</command>
 
 	<command name="addSiteCP">

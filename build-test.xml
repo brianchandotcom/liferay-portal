@@ -5349,10 +5349,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<isset property="test.portal.instance" />
 			<then>
 				<if>
-					<contains string="${poshi.test.name}" substring="," />
+					<contains string="${test.class}" substring="," />
 					<then>
 						<propertyregex
-							input="${poshi.test.name}"
+							input="${test.class}"
 							override="false"
 							property="test.name.skip.portal.instance"
 							regexp="(.*?),.*"

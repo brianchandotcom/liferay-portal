@@ -87,7 +87,14 @@ treeId = treeId + privateLayout + layoutSetBranchId;
 long[] selectedLayoutIds = null;
 
 if (configuredPublish) {
-	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
+	if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+		selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
+	}
+	else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
+
+		selectedLayoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
+	}
 }
 else {
 	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");

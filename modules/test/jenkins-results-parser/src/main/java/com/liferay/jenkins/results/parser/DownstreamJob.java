@@ -103,57 +103,36 @@ public class DownstreamJob extends BaseJob {
 			return;
 		}
 
-		if (status.equals("starting")) {
-			JSONArray queueItems = getQueueItemsJSONArray();
+		if (status.equals("queued") || status.equals("starting")) {
+			JSONObject build = getRunningBuildJSONObject();
 
-			for (int i = 0; i < queueItems.length(); i++) {
-				JSONObject queueItem = queueItems.getJSONObject(i);
+			if (build != null) {
+				number = build.getInt("number");
 
-				String queueItemName = queueItem.getJSONObject(
-					"task").getString("name");
-				Map<String, String> jobParameters = getParameters(queueItem);
+				status = "running";
 
-				if (queueItemName.equals(name) &&
-					jobParameters.equals(parameters)) {
+				System.out.println(getBuildMessage());
+			}
+			else {
+				JSONObject queueItem = getQueueItemJSONObject();
 
+				if (status.equals("started") && (queueItem != null)) {
 					status = "queued";
 				}
-			}
-		}
-
-		if (status.equals("starting") || status.equals("queued")) {
-			JSONArray builds = getBuildsJSONArray();
-
-			for (int i = 0; i < builds.length(); i++) {
-				JSONObject build = builds.getJSONObject(i);
-
-				if (parameters.equals(getParameters(build))) {
-					number = build.getInt("number");
-
-					status = "running";
-
-					System.out.println(getBuildMessage());
-
-					break;
+				else if (status.equals("queued") && (queueItem == null)) {
+					throw new IllegalStateException(
+						"Job " + name + " disappeared from queue");
 				}
 			}
 		}
 
 		if (status.equals("running")) {
-			JSONArray builds = getBuildsJSONArray();
+			JSONObject build = getCompletedBuildJSONObject();
 
-			for (int i = 0; i < builds.length(); i++) {
-				JSONObject build = builds.getJSONObject(i);
+			if (build != null) {
+				result = build.getString("result");
 
-				if ((number == build.getInt("number")) &&
-					(build.get("result") != null) &&
-					!build.getBoolean("building")) {
-
-					result = build.optString("result");
-					status = "completed";
-
-					break;
-				}
+				status = "completed";
 			}
 		}
 	}

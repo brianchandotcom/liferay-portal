@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntry;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
@@ -268,10 +267,8 @@ public class SocialActivityLocalServiceImpl
 				socialActivityPersistence.update(mirrorActivity);
 			}
 
-			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-				socialActivityInterpreterLocalService.updateActivitySet(
-					activity.getActivityId());
-			}
+			socialActivityInterpreterLocalService.updateActivitySet(
+				activity.getActivityId());
 		}
 
 		socialActivityCounterLocalService.addActivityCounters(activity);
@@ -366,9 +363,7 @@ public class SocialActivityLocalServiceImpl
 
 	@Override
 	public void deleteActivities(long groupId) {
-		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-			socialActivitySetPersistence.removeByGroupId(groupId);
-		}
+		socialActivitySetPersistence.removeByGroupId(groupId);
 
 		socialActivityPersistence.removeByGroupId(groupId);
 
@@ -415,10 +410,8 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public void deleteActivity(SocialActivity activity) throws PortalException {
-		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-			socialActivitySetLocalService.decrementActivityCount(
-				activity.getActivitySetId());
-		}
+		socialActivitySetLocalService.decrementActivityCount(
+			activity.getActivitySetId());
 
 		socialActivityPersistence.remove(activity);
 
@@ -448,10 +441,8 @@ public class SocialActivityLocalServiceImpl
 				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity activity : activities) {
-			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-				socialActivitySetLocalService.decrementActivityCount(
-					activity.getActivitySetId());
-			}
+			socialActivitySetLocalService.decrementActivityCount(
+				activity.getActivitySetId());
 
 			socialActivityPersistence.remove(activity);
 		}
@@ -460,10 +451,8 @@ public class SocialActivityLocalServiceImpl
 			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity activity : activities) {
-			if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-				socialActivitySetLocalService.decrementActivityCount(
-					activity.getActivitySetId());
-			}
+			socialActivitySetLocalService.decrementActivityCount(
+				activity.getActivitySetId());
 
 			socialActivityPersistence.remove(activity);
 		}
@@ -1085,10 +1074,8 @@ public class SocialActivityLocalServiceImpl
 	protected void deleteActivities(long classNameId, long classPK)
 		throws PortalException {
 
-		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-			socialActivitySetLocalService.decrementActivityCount(
-				classNameId, classPK);
-		}
+		socialActivitySetLocalService.decrementActivityCount(
+			classNameId, classPK);
 
 		socialActivityPersistence.removeByC_C(classNameId, classPK);
 

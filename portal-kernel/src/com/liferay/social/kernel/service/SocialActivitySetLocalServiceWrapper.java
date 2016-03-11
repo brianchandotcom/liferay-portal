@@ -253,6 +253,13 @@ public class SocialActivitySetLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.social.kernel.model.SocialActivitySet> getOrganizationActivitySets(
+		long organizationId, int start, int end) {
+		return _socialActivitySetLocalService.getOrganizationActivitySets(organizationId,
+			start, end);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

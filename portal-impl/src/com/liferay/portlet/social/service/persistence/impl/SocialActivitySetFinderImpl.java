@@ -46,6 +46,9 @@ public class SocialActivitySetFinderImpl
 	public static final String COUNT_BY_USER_GROUPS =
 		SocialActivitySetFinder.class.getName() + ".countByUserGroups";
 
+	public static final String FIND_BY_ORGANIZATION_ID =
+		SocialActivitySetFinder.class.getName() + ".findByOrganizationId";
+
 	public static final String FIND_BY_RELATION =
 		SocialActivitySetFinder.class.getName() + ".findByRelation";
 
@@ -204,6 +207,36 @@ public class SocialActivitySetFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<SocialActivitySet> findByOrganizationId(
+		long organizationId, int start, int end) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_ORGANIZATION_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("SocialActivitySet", SocialActivitySetImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(organizationId);
+
+			return (List<SocialActivitySet>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

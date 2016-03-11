@@ -30,6 +30,9 @@ public interface SocialActivitySetFinder {
 
 	public int countByUserGroups(long userId);
 
+	public java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByOrganizationId(
+		long organizationId, int start, int end);
+
 	public java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByRelation(
 		long userId, int start, int end);
 

@@ -16,37 +16,32 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-List<SocialActivity> socialActivities = null;
-
-if (group.isOrganization()) {
-	socialActivities = SocialActivityLocalServiceUtil.getOrganizationActivities(group.getOrganizationId(), 0, max);
-}
-else if (group.isRegularSite()) {
-	socialActivities = SocialActivityLocalServiceUtil.getGroupActivities(group.getGroupId(), 0, max);
-}
-else if (group.isUser()) {
-	socialActivities = SocialActivityLocalServiceUtil.getUserActivities(group.getClassPK(), 0, max);
-}
-
-String feedTitle = LanguageUtil.format(request, "x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
-
-ResourceURL rssURL = renderResponse.createResourceURL();
-
-rssURL.setParameter("feedTitle", feedTitle);
-rssURL.setResourceID("rss");
-
-String taglibFeedTitle = LanguageUtil.format(request, "subscribe-to-x's-activities", HtmlUtil.escape(group.getDescriptiveName(locale)), false);
-%>
+<c:if test="<%= socialActivitiesDisplayContext.isTabsVisible() %>">
+	<liferay-ui:tabs
+		names="<%= socialActivitiesDisplayContext.getTabsNames() %>"
+		type="tabs nav-tabs-default"
+		url="<%= socialActivitiesDisplayContext.getTabsURL() %>"
+		value="<%= socialActivitiesDisplayContext.getSelectedTabName() %>"
+	/>
+</c:if>
 
 <liferay-ui:social-activities
-	activities="<%= socialActivities %>"
-	feedDisplayStyle="<%= rssDisplayStyle %>"
-	feedEnabled="<%= enableRSS %>"
-	feedResourceURL="<%= rssURL %>"
-	feedTitle="<%= taglibFeedTitle %>"
-	feedType="<%= rssFeedType %>"
-	feedURLMessage="<%= taglibFeedTitle %>"
+	activitySets="<%= socialActivitiesDisplayContext.getSocialActivitySets() %>"
+	feedDisplayStyle="<%= socialActivitiesDisplayContext.getRSSDisplayStyle() %>"
+	feedEnabled="<%= socialActivitiesDisplayContext.isRSSEnabled() %>"
+	feedResourceURL="<%= socialActivitiesDisplayContext.getRSSResourceURL() %>"
+	feedTitle="<%= socialActivitiesDisplayContext.getTaglibFeedTitle() %>"
+	feedType="<%= socialActivitiesDisplayContext.getRSSFeedType() %>"
+	feedURLMessage="<%= socialActivitiesDisplayContext.getTaglibFeedTitle() %>"
 />
+
+<c:if test="<%= socialActivitiesDisplayContext.isSeeMoreControlVisible() %>">
+	<div class="social-activities-see-more">
+		<aui:a
+			cssClass="btn btn-default"
+			href="<%= socialActivitiesDisplayContext.getPaginationURL() %>"
+		>
+			<liferay-ui:message key="see-more" />
+		</aui:a>
+	</div>
+</c:if>

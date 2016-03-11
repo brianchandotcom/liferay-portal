@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Activities",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
 	},

@@ -48,6 +48,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeSocialActivitySets;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 
@@ -97,6 +98,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeRepositoryEntry.class);
 		upgrade(UpgradeResourcePermission.class);
 		upgrade(UpgradeSharding.class);
+		upgrade(UpgradeSocialActivitySets.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
 

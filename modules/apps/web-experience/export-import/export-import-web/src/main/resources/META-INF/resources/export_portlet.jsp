@@ -190,8 +190,9 @@ portletURL.setParameter("portletResource", portletResource);
 												</div>
 
 												<div class="flex-item-center range-options">
+													<liferay-ui:icon icon="reload" markupView="lexicon" />
 													<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
-														<liferay-ui:message key="apply-filter" />
+														<liferay-ui:message key="refresh-counts" />
 													</aui:a>
 												</div>
 											</div>

@@ -19,4 +19,16 @@
 <%
 String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:deletions:cmd"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:deletions:disableInputs"));
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:deletions:exportImportConfigurationId"));
+
+Map<String, Serializable> settingsMap = Collections.emptyMap();
+Map<String, String[]> parameterMap = Collections.emptyMap();
+
+ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.fetchExportImportConfiguration(exportImportConfigurationId);
+
+if (exportImportConfiguration != null) {
+	settingsMap = exportImportConfiguration.getSettingsMap();
+
+	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+}
 %>

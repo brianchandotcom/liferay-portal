@@ -20,7 +20,7 @@
 	<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content" markupView="lexicon">
 		<ul class="list-unstyled">
 			<li class="tree-item">
-				<aui:select inlineField="<%= true %>" label="" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>">
+				<aui:select disabled="<%= disableInputs %>" inlineField="<%= true %>" label="" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>">
 					<aui:option id="allContent" label="all-content" selected="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" value="<%= true %>" />
 					<aui:option id="chooseContent" label="choose-content" selected="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" value="<%= false %>" />
 				</aui:select>
@@ -55,12 +55,13 @@
 											</div>
 
 											<div class="flex-item-center range-options">
-												<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
+												<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" disabled="<%= disableInputs %>" id="rangeLast" label='<%= LanguageUtil.get(request, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
 											</div>
 
 											<div class="flex-item-center range-options <%= disableInputs ? "hide" : StringPool.BLANK %>">
+												<liferay-ui:icon icon="reload" markupView="lexicon" />
 												<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" method="get">
-													<liferay-ui:message key="apply-filter" />
+													<liferay-ui:message key="refresh-counts" />
 												</aui:a>
 											</div>
 										</div>
@@ -88,7 +89,7 @@
 													cssClass="form-group form-group-inline"
 													dayParam="startDateDay"
 													dayValue="<%= startCalendar.get(Calendar.DATE) %>"
-													disabled="<%= false %>"
+													disabled="<%= disableInputs %>"
 													firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
 													lastEnabledDate="<%= (!cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? null : new Date() %>"
 													monthParam="startDateMonth"
@@ -106,7 +107,7 @@
 													cssClass="form-group form-group-inline range-options"
 													dateParam="startDateTime"
 													dateValue="<%= startCalendar.getTime() %>"
-													disabled="<%= false %>"
+													disabled="<%= disableInputs %>"
 													hourParam='<%= "startDateHour" %>'
 													hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
 													minuteParam='<%= "startDateMinute" %>'
@@ -118,7 +119,7 @@
 													cssClass="form-group form-group-inline"
 													dayParam="endDateDay"
 													dayValue="<%= endCalendar.get(Calendar.DATE) %>"
-													disabled="<%= false %>"
+													disabled="<%= disableInputs %>"
 													firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
 													lastEnabledDate="<%= (!cmd.equals(Constants.PUBLISH_TO_LIVE) && !cmd.equals(Constants.PUBLISH_TO_REMOTE)) ? null : new Date() %>"
 													monthParam="endDateMonth"
@@ -136,7 +137,7 @@
 													cssClass="form-group form-group-inline"
 													dateParam="endDateTime"
 													dateValue="<%= endCalendar.getTime() %>"
-													disabled="<%= false %>"
+													disabled="<%= disableInputs %>"
 													hourParam='<%= "endDateHour" %>'
 													hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
 													minuteParam='<%= "endDateMinute" %>'
@@ -148,7 +149,7 @@
 
 										<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 											<li>
-												<aui:select cssClass="relative-range" label="" name="last">
+												<aui:select cssClass="relative-range" disabled="<%= disableInputs %>" label="" name="last">
 
 													<%
 													String last = MapUtil.getString(parameterMap, "last");
@@ -176,8 +177,6 @@
 	</aui:fieldset>
 </c:if>
 
-<c:if test="<%= !disableInputs %>">
-	<aui:script>
-		Liferay.Util.toggleSelectBox('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>', 'false', '<portlet:namespace />selectContents');
-	</aui:script>
-</c:if>
+<aui:script>
+	Liferay.Util.toggleSelectBox('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>', 'false', '<portlet:namespace />selectContents');
+</aui:script>

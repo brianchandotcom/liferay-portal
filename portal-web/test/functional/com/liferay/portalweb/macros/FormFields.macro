@@ -162,9 +162,11 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#OPTIONS_LABEL" value1="${fieldLabel}" />
 	</command>
 
-	<command name="viewParagraphBody">
-		<var name="key_fieldName" value="${fieldName}" />
+	<command name="viewParagraphField">
+		<var name="key_fieldName" value="${fieldTitle}" />
+		<var method="StringUtil#replace('${fieldTitle}',' ','')" name="key_fieldName" />
 
+		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_TITLE" value1="${fieldTitle}" />
 		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_BODY_TEXT_CONTENT" value1="${fieldValue}" />
 	</command>
 

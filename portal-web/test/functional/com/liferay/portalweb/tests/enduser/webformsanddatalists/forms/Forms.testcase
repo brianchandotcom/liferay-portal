@@ -1004,8 +1004,8 @@
 			<var name="pageName" value="Form Page" />
 		</execute>
 
-		<execute macro="FormFields#viewParagraphBody">
-			<var name="fieldName" value="ParagraphField" />
+		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldTitle" value="Paragraph Field" />
 			<var name="fieldValue" value="Paragraph field body text." />
 		</execute>
 
@@ -1027,7 +1027,7 @@
 		<execute macro="FormsAdminNavigator#gotoView" />
 
 		<execute macro="FormsAdmin#viewParagraphEntry">
-			<var name="fieldName" value="ParagraphField" />
+			<var name="fieldTitle" value="Paragraph Field" />
 			<var name="fieldValue" value="Paragraph field body text." />
 		</execute>
 	</command>

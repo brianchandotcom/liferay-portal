@@ -146,8 +146,8 @@
 	<command name="viewParagraphEntry">
 		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
 
-		<execute macro="FormFields#viewParagraphBody">
-			<var name="fieldName" value="${fieldName}" />
+		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldTitle" value="${fieldTitle}" />
 			<var name="fieldValue" value="${fieldValue}" />
 		</execute>
 	</command>

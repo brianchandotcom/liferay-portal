@@ -170,6 +170,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAGRAPH_TITLE</td>
+	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]/label</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

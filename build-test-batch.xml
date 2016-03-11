@@ -1016,6 +1016,53 @@ ${output.content}</echo>
 		</fail>
 	</target>
 
+	<target name="semantic-versioning-jdk7">
+		<run-batch-test>
+			<test-action>
+				<exec dir="${project.dir}" executable="git" outputproperty="git.status.log">
+					<arg line="status --short" />
+				</exec>
+
+				<propertyregex
+					input="${git.status.log}"
+					override="true"
+					property="git.status.log"
+					regexp="(.*)\n?\?\? bundles\/(.*)"
+					replace="\1\2"
+				/>
+
+				<propertyregex
+					input="${git.status.log}"
+					override="true"
+					property="git.status.log"
+					regexp="(.*)\n?\?\? git-commit-portal(.*)"
+					replace="\1\2"
+				/>
+
+				<if>
+					<not>
+						<equals arg1="${git.status.log}" arg2="" />
+					</not>
+					<then>
+						<echo></echo>
+						<echo>The semantic versioning was incorrect for the following packages:</echo>
+						<echo></echo>
+						<echo>${git.status.log}</echo>
+						<echo></echo>
+
+						<fail message="The semantic versioning was incorrect" />
+					</then>
+				</if>
+			</test-action>
+
+			<test-set-up>
+				<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
+
+				<prepare-test-build />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="service-builder-jdk7">
 		<run-batch-test>
 			<test-action>

@@ -2,6 +2,6 @@
 	<command name="isTestName">
 		<execute function="WaitForSPARefresh" />
 
-		<execute selenium="isTestName" />
+		<execute argument1="${value1}" selenium="isTestName" />
 	</command>
 </definition>

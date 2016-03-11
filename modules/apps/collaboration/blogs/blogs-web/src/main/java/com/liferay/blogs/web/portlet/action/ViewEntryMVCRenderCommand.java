@@ -14,8 +14,23 @@
 
 package com.liferay.blogs.web.portlet.action;
 
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,10 +47,51 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
+public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected String getPath() {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		long assetCategoryId = ParamUtil.getLong(renderRequest, "categoryId");
+		String assetCategoryName = ParamUtil.getString(renderRequest, "tag");
+
+		if ((assetCategoryId > 0) || Validator.isNotNull(assetCategoryName)) {
+			return "/blogs/view.jsp";
+		}
+
+		try {
+			ActionUtil.getEntry(renderRequest);
+
+			if (PropsValues.BLOGS_PINGBACK_ENABLED) {
+				BlogsEntry entry = (BlogsEntry)renderRequest.getAttribute(
+					WebKeys.BLOGS_ENTRY);
+
+				if ((entry != null) && entry.isAllowPingbacks()) {
+					HttpServletResponse response =
+						PortalUtil.getHttpServletResponse(renderResponse);
+
+					response.addHeader(
+						"X-Pingback",
+						PortalUtil.getPortalURL(renderRequest) +
+							"/xmlrpc/pingback");
+				}
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchEntryException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/blogs/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
 		return "/blogs/view_entry.jsp";
 	}
 

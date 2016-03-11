@@ -14,17 +14,17 @@
 
 package com.liferay.blogs.web.portlet.action;
 
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.web.BlogsItemSelectorHelper;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.constants.BlogsWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,20 +43,34 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
+public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
+		try {
+			ActionUtil.getEntry(renderRequest);
 
-		request.setAttribute(
-			BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER, _blogsItemSelectorHelper);
+			renderRequest.setAttribute(
+				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER,
+				_blogsItemSelectorHelper);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchEntryException ||
+				e instanceof PrincipalException) {
 
-		return super.render(renderRequest, renderResponse);
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/blogs/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		return "/blogs/edit_entry.jsp";
 	}
 
 	@Reference(unbind = "-")
@@ -64,11 +78,6 @@ public class EditEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
 		BlogsItemSelectorHelper blogsItemSelectorHelper) {
 
 		_blogsItemSelectorHelper = blogsItemSelectorHelper;
-	}
-
-	@Override
-	protected String getPath() {
-		return "/blogs/edit_entry.jsp";
 	}
 
 	private BlogsItemSelectorHelper _blogsItemSelectorHelper;

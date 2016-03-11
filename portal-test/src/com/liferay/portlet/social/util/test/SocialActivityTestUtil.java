@@ -102,9 +102,8 @@ public class SocialActivityTestUtil {
 			ownerType = SocialActivityCounterConstants.TYPE_CREATOR;
 		}
 
-		return
-			SocialActivityCounterLocalServiceUtil.fetchLatestActivityCounter(
-				groupId, classNameId, classPK, name, ownerType);
+		return SocialActivityCounterLocalServiceUtil.fetchLatestActivityCounter(
+			groupId, classNameId, classPK, name, ownerType);
 	}
 
 	public static SocialActivityLimit getActivityLimit(

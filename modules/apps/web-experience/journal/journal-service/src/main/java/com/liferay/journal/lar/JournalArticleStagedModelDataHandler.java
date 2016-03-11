@@ -125,9 +125,8 @@ public class JournalArticleStagedModelDataHandler
 	public JournalArticle fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return
-			_journalArticleLocalService.fetchJournalArticleByUuidAndGroupId(
-				uuid, groupId);
+		return _journalArticleLocalService.fetchJournalArticleByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override

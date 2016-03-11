@@ -98,10 +98,9 @@ public class AssignMembersPortletConfigurationIcon
 
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			return
-				UserGroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					userGroup.getUserGroupId(), ActionKeys.ASSIGN_MEMBERS);
+			return UserGroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), userGroup.getUserGroupId(),
+				ActionKeys.ASSIGN_MEMBERS);
 		}
 		catch (Exception e) {
 		}

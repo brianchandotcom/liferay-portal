@@ -966,25 +966,20 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureConfiguration(Configuration configuration) {
 		DependencySet dependencySet = configuration.getDependencies();
 
-		dependencySet.all(
-			new Action<Dependency>() {
+		dependencySet.withType(
+			ModuleDependency.class,
+			new Action<ModuleDependency>() {
 
 				@Override
-				public void execute(Dependency dependency) {
-					if (!(dependency instanceof ModuleDependency)) {
-						return;
-					}
-
-					ModuleDependency moduleDependency =
-						(ModuleDependency)dependency;
-
-					String group = moduleDependency.getGroup();
+				public void execute(ModuleDependency moduleDependency) {
 					String name = moduleDependency.getName();
 
-					if (group.equals("com.liferay") &&
-						(name.equals(
+					if (name.equals(
+							"com.liferay.arquillian.arquillian-container-" +
+								"liferay") ||
+						name.equals(
 							"com.liferay.arquillian.extension.junit.bridge") ||
-						 name.equals("com.liferay.jasper.jspc"))) {
+						name.equals("com.liferay.jasper.jspc")) {
 
 						moduleDependency.exclude(
 							Collections.singletonMap(

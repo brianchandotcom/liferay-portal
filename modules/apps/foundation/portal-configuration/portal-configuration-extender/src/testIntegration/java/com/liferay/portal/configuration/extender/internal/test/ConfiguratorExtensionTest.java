@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.extender.internal.test;
 
+import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.configuration.extender.ConfigurationDescription;
 import com.liferay.portal.configuration.extender.ConfigurationDescriptionFactory;
 import com.liferay.portal.configuration.extender.FactoryConfigurationDescription;
@@ -36,8 +37,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.apache.felix.utils.log.Logger;
-
-import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;

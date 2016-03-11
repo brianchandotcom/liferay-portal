@@ -8,7 +8,7 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-service")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-web")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.3"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.4"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "1.0.1"

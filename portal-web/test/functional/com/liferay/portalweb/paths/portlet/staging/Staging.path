@@ -193,7 +193,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_READY_FOR_PUBLICATION</td>
-	<td>//span[@class='workflow-status']/strong[contains(.,'Ready for Publication')]</td>
+	<td>//span[@class='toggle-switch-handle' and @data-label-on='Ready for Publication']</td>
 	<td></td>
 </tr>
 <tr>

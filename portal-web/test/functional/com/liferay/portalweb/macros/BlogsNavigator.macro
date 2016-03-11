@@ -15,6 +15,8 @@
 				<execute function="Click" locator1="Button#PLUS" />
 			</else>
 		</if>
+
+		<execute function="AssertVisible" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" />
 	</command>
 
 	<command name="gotoConfigurationPermissionsPG">
@@ -89,8 +91,7 @@
 
 		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
-		<execute function="AssertElementPresent" locator1="Icon#BACK" />
-		<execute function="AssertVisible" locator1="AlloyEditor#TITLE_FIELD" />
+		<execute function="AssertVisible" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" />
 	</command>
 
 	<command name="gotoEntryCP">

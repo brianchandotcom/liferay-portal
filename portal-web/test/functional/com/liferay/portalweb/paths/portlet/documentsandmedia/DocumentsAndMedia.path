@@ -276,7 +276,7 @@
 </tr>
 <tr>
 	<td>FILTER_REPOSITORY</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'${key_dmRepositoryName}')]</td>
+	<td>//li[@data-title='${key_dmRepositoryName}']//span[contains(@title,'${key_dmRepositoryName}')]/a</td>
 	<td></td>
 </tr>
 <tr>

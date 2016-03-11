@@ -237,13 +237,6 @@
 	<command name="banUser">
 		<var name="key_userName" value="${userName}" />
 
-		<if>
-			<condition function="IsNotVisible" locator1="MessageBoardsThread#MESSAGE_USER_DETAILS" />
-			<then>
-				<execute function="MakeVisible" locator1="MessageBoardsThread#MESSAGE_USER_DETAILS" />
-			</then>
-		</if>
-
 		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_BAN_THIS_USER" value1="Ban This User" />
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -409,7 +402,7 @@
 				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_POSTS" value1="${postCount} Post" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_LAST_POST" value1="${lastPostUserName}" />
-				<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
+				<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 	</command>

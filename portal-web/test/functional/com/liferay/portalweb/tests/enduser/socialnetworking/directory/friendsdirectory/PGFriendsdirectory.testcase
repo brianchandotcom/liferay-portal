@@ -84,15 +84,9 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<var name="key_page" value="My Profile" />
-
-		<execute function="Click" locator1="ProductMenu#ADD_PAGE_ICON" />
-
-		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="Friends Request Page" />
-
-		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Page#add">
+			<var name="pageName" value="Friends Request Page" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

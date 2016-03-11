@@ -2,8 +2,8 @@
 	AUI().applyConfig(
 		{
 			groups: {
-				components: {
-					base: MODULE_PATH + '/',
+				calendar: {
+					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-calendar-date-picker-util': {
@@ -34,11 +34,11 @@
 							]
 						},
 						'liferay-calendar-recurrence-converter': {
-							path: 'js/recurrence_converter.js',
+							path: 'recurrence_converter.js',
 							requires: []
 						},
 						'liferay-calendar-recurrence-dialog': {
-							path: 'js/recurrence.js',
+							path: 'recurrence.js',
 							requires: [
 								'aui-base',
 								'liferay-calendar-recurrence-util'
@@ -100,7 +100,7 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/'
+					root: MODULE_PATH + '/js/'
 				}
 			}
 		}

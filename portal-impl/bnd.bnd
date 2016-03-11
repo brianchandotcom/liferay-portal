@@ -78,6 +78,8 @@ Export-Package:\
 Import-Package: *
 Include-Resource: classes
 Private-Package: com.liferay.*.dependencies
-
--baseline:
+-baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/portal-impl-6.2.5.jar
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)
+-pluginpath.this:\
+	${project.dir}/../.bnd/ant-baseline-cache/portal-impl-6.2.5.jar;\
+		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/portal-impl/6.2.5/portal-impl-6.2.5.jar'

@@ -70,5 +70,8 @@ Provide-Capability:\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/util";\
 		version:Version="${Bundle-Version}"
--baseline: *;version="6.2.0"
+-baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/util-taglib-6.2.5.jar
 -include: ../modules/apps/foundation/app.bnd
+-pluginpath.this:\
+	${project.dir}/../.bnd/ant-baseline-cache/util-taglib-6.2.5.jar;\
+		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/util-taglib/6.2.5/util-taglib-6.2.5.jar'

@@ -8,4 +8,7 @@ Export-Package:\
 Import-Package: *
 Include-Resource: classes
 
--baseline: *;version="6.2.0"
+-baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/portal-service-6.2.5.jar
+-pluginpath.this:\
+	${project.dir}/../.bnd/ant-baseline-cache/portal-service-6.2.5.jar;\
+		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/portal-service/6.2.5/portal-service-6.2.5.jar'

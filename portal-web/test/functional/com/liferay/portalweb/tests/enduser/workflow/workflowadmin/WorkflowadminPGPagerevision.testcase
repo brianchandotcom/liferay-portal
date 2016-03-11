@@ -2,8 +2,8 @@
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<var name="page" value="Public Pages" />
+	<var name="pageName" value="Site Page Name" />
 	<var name="siteName" value="Site Name" />
-	<var name="sitePageName" value="Site Page Name" />
 	<var name="workflowAssetType" value="Page Revision" />
 
 	<set-up>

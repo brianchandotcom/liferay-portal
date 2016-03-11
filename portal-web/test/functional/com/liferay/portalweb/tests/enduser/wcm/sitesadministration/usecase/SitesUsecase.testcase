@@ -79,9 +79,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Home" />
 			<var name="siteChildPageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Home" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

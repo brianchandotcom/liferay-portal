@@ -3,7 +3,7 @@
 		<var name="key_columnId" value="${columnId}" />
 
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${sitePageName}" />
+			<var name="page" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoTab">

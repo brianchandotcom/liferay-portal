@@ -318,7 +318,7 @@
 	</command>
 
 	<command name="gotoSitepageCP">
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
@@ -352,9 +352,9 @@
 			<var name="site" value="${site}" />
 		</execute>
 
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
-		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" value1="${sitePageName}" />
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" value1="${pageName}" />
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

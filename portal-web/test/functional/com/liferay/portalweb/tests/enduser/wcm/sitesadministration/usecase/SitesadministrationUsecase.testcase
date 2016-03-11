@@ -785,7 +785,7 @@
 
 		<execute macro="UserGroup#addPageCP">
 			<var name="page" value="Profile" />
-			<var name="sitePageName" value="site Page Name" />
+			<var name="pageName" value="site Page Name" />
 			<var name="sitePagePrivacy" value="Public" />
 			<var name="userGroupName" value="User Group Name" />
 		</execute>
@@ -1018,8 +1018,8 @@
 			<execute macro="Page#addChild">
 				<var name="childSitepageName" value="true" />
 				<var name="page" value="Public Pages" />
+				<var name="pageName" value="Arenas" />
 				<var name="siteChildPageName" value="${childPageName}" />
-				<var name="sitePageName" value="Arenas" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
@@ -1044,7 +1044,7 @@
 
 		<execute macro="Page#addJavaScript">
 			<var name="javaScript" value="alert('Welcome to Russia.');" />
-			<var name="sitePageName" value="Arenas" />
+			<var name="pageName" value="Arenas" />
 		</execute>
 
 		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
@@ -1066,7 +1066,7 @@
 
 		<execute macro="Page#addJavaScript">
 			<var name="javaScript" value=" " />
-			<var name="sitePageName" value="Arenas" />
+			<var name="pageName" value="Arenas" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

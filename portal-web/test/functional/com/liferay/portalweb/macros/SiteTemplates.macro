@@ -11,7 +11,7 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 
@@ -60,7 +60,7 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
@@ -92,12 +92,12 @@
 			</then>
 		</if>
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${sitePageName}" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${pageName}" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 	</command>
 
 	<command name="allowChangesToPageTemplateCP">
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 
@@ -115,7 +115,7 @@
 	</command>
 
 	<command name="allowSiteAdminsToEditThisPageCP">
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 

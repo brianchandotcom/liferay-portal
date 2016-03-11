@@ -469,9 +469,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="ADT Test Page" />
 			<var name="siteChildPageName" value="ADT Child Page Name" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="sitePageName" value="ADT Test Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

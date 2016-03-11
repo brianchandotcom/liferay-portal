@@ -54,7 +54,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
-			<var name="sitePageName" value="Site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -64,8 +64,8 @@
 
 		<execute macro="SiteTemplates#addChildPageViaSiteTemplateCP">
 			<var name="childSitepageName" value="true" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteChildPageName" value="Site Child Page Name" />
-			<var name="sitePageName" value="Site Page Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -108,8 +108,8 @@
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="home" />
 			<var name="site" value="Site Name" />
-			<var name="sitePageName" value="home" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -124,8 +124,8 @@
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="home" />
 			<var name="site" value="Site Name" />
-			<var name="sitePageName" value="home" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -350,9 +350,9 @@
 		</execute>
 
 		<execute macro="UserGroup#viewPG">
+			<var name="pageName" value="home" />
 			<var name="portletName" value="Message Boards" />
 			<var name="siteName" value="UG UserGroup Name" />
-			<var name="sitePageName" value="home" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
@@ -376,9 +376,9 @@
 		</execute>
 
 		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
+			<var name="pageName" value="Test Page Name" />
 			<var name="pageTemplateAutoApplyChanges" value="true" />
 			<var name="pageType" value="Blog" />
-			<var name="sitePageName" value="Test Page Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -387,7 +387,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
-			<var name="sitePageName" value="Locked Page Name" />
+			<var name="pageName" value="Locked Page Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -400,7 +400,7 @@
 		</execute>
 
 		<execute macro="Page#disallowEditViaSiteAdminEditCP">
-			<var name="sitePageName" value="Locked Page Name" />
+			<var name="pageName" value="Locked Page Name" />
 		</execute>
 
 		<execute macro="Page#viewSiteTemplatePages">
@@ -447,7 +447,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#allowChangesToPageTemplateCP">
-			<var name="sitePageName" value="Test Page Name" />
+			<var name="pageName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="Page#viewSiteTemplatePages">
@@ -752,7 +752,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#allowSiteAdminsToEditThisPageCP">
-			<var name="sitePageName" value="Locked Page Name" />
+			<var name="pageName" value="Locked Page Name" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

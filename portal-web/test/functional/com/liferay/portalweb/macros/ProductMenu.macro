@@ -74,7 +74,7 @@
 			<var name="category" value="${category}" />
 		</execute>
 
-		<var name="key_pageName" value="${page}" />
+		<var name="key_page" value="${page}" />
 
 		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
 

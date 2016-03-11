@@ -75,9 +75,9 @@
 
 			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
+				<var name="pageName" value="Site Page" />
 				<var name="siteChildPageName" value="${childPageName}" />
 				<var name="siteName" value="Site Name" />
-				<var name="sitePageName" value="Site Page" />
 			</execute>
 		</for>
 
@@ -118,9 +118,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteChildPageName" value="Site Child Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -223,9 +223,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteChildPageName" value="Site Child Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -370,7 +370,7 @@
 
 		<execute macro="Page#copyApplicationsFromPageToPage">
 			<var name="pageName" value="Blog Page" />
-			<var name="sitePageName" value="Site Page" />
+			<var name="pageName" value="Site Page" />
 		</execute>
 	</command>
 

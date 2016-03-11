@@ -477,10 +477,10 @@
 		</execute>
 
 		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
+			<var name="pageName" value="URL Page Name" />
 			<var name="pageType" value="Link to URL" />
 			<var name="pageTypeDescription" value="URL Page Description" />
 			<var name="pageTypeURL" value="http://www.google.com" />
-			<var name="sitePageName" value="URL Page Name" />
 			<var name="siteTemplateName" value="Social Office User Home" />
 		</execute>
 

@@ -47,9 +47,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Parent Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
@@ -280,9 +280,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Parent Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
@@ -367,8 +367,8 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Welcome" />
 			<var name="siteChildPageName" value="Child Page Name" />
-			<var name="sitePageName" value="Welcome" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -470,9 +470,9 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Child SiteName" />
-			<var name="sitePageName" value="Parent Page Name" />
 		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
@@ -525,8 +525,8 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Welcome" />
 			<var name="siteChildPageName" value="Child Page Name" />
-			<var name="sitePageName" value="Welcome" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -571,8 +571,8 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Welcome" />
 			<var name="siteChildPageName" value="Child Page Name" />
-			<var name="sitePageName" value="Welcome" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -617,8 +617,8 @@
 
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Welcome" />
 			<var name="siteChildPageName" value="Child Page Name" />
-			<var name="sitePageName" value="Welcome" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

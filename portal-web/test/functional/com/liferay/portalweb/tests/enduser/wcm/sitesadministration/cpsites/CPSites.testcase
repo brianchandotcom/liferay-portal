@@ -128,8 +128,8 @@
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
+			<var name="pageName" value="Test Public Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Test Public Page" />
 			<var name="sitePageURL" value="http://www.able.com:8080/test-public-page" />
 		</execute>
 	</command>
@@ -357,8 +357,8 @@
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">
+			<var name="pageName" value="Public Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Public Page" />
 			<var name="sitePageURL" value="http://localhost:8080/web/alpha" />
 		</execute>
 
@@ -367,8 +367,8 @@
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">
+			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Page" />
 			<var name="sitePageURL" value="http://localhost:8080/group/alpha" />
 		</execute>
 	</command>
@@ -409,8 +409,8 @@
 		</execute>
 
 		<execute macro="Page#viewFriendlyURL">
+			<var name="pageName" value="Site Page" />
 			<var name="siteFriendlyURL" value="/site-name" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 	</command>
 

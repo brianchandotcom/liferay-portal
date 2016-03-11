@@ -78,7 +78,7 @@
 
 		<execute macro="UserGroup#addPageCP">
 			<var name="page" value="Dashboard" />
-			<var name="sitePageName" value="Test User Group Private Page" />
+			<var name="pageName" value="Test User Group Private Page" />
 			<var name="sitePagePrivacy" value="Public" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>

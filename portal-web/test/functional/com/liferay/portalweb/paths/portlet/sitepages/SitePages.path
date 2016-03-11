@@ -406,12 +406,12 @@
 </tr>
 <tr>
 	<td>EDIT_SPECIFIC_PAGE</td>
-	<td>//li[contains(.,'${key_pageName}')]/*[@data-qa-id='editPage']</td>
+	<td>//li[contains(.,'${key_page}')]/*[@data-qa-id='editPage']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE_SPECIFIC_PAGE</td>
-	<td>//li[contains(.,'${key_pageName}')]/*[@data-qa-id='deletePage']</td>
+	<td>//li[contains(.,'${key_page}')]/*[@data-qa-id='deletePage']</td>
 	<td></td>
 </tr>
 <!--ELLIPSIS-->
@@ -432,7 +432,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_PAGE_ELLIPSIS</td>
-	<td>//div[contains(.,'${key_pageName}')]/*[@data-qa-id='pageOptions']</td>
+	<td>//div[contains(.,'${key_page}')]/*[@data-qa-id='pageOptions']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -33,11 +33,10 @@
 		</execute>
 
 		<execute macro="Page#addChild">
-			<var name="childSitepageName" value="true" />
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 	</set-up>
 

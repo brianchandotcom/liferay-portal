@@ -91,7 +91,7 @@
 
 		<execute function="Click" locator1="Button#ADD_PAGE" />
 
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#PAGE_NAME_FIELD" value1="${pageName}" />
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
@@ -101,9 +101,9 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 	</command>
 
 	<command name="addSiteCP">

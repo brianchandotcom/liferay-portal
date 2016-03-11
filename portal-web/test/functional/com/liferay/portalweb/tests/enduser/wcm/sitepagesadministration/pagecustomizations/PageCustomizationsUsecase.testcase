@@ -471,7 +471,7 @@
 
 		<execute macro="PageCustomizations#enableSectionCustomizableCP">
 			<var name="columnId" value="1" />
-			<var name="sitePageName" value="Site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

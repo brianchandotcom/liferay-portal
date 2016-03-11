@@ -163,7 +163,7 @@
 		</execute>
 
 		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS">
-			<var name="key_pageName" value="${sitePageName}" />
+			<var name="key_page" value="${pageName}" />
 		</execute>
 
 		<execute function="Click" locator1="SitePages#ADD_CHILD_PAGE" />
@@ -184,7 +184,7 @@
 
 	<command name="addJavaScript">
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${sitePageName}" />
+			<var name="page" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoTab">
@@ -298,7 +298,7 @@
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
 
-		<execute function="Click" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${pageName}" />
 
 		<execute function="AssertClick" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_BUTTON" value1="Copy" />
 
@@ -324,7 +324,7 @@
 			<var name="page" value="${pageName}" />
 		</execute>
 
-		<var name="key_pageName" value="${pageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
 
@@ -336,9 +336,9 @@
 	</command>
 
 	<command name="disallowEditViaSiteAdminEditCP">
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}" />
+		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${pageName}" />
 
 		<execute function="Uncheck" locator1="Checkbox#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
 		<execute macro="Button#clickSave" />
@@ -398,7 +398,7 @@
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${sitePageName}" />
+			<var name="page" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
@@ -415,9 +415,9 @@
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<var name="key_page" value="${sitePageName}" />
+		<var name="key_page" value="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}" />
 	</command>
 
 	<command name="gotoChildPagePG">
@@ -722,7 +722,7 @@
 
 	<command name="viewFriendlyURL">
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${sitePageName}" />
+			<var name="page" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SitePages#DETAILS_FRIENDLY_BASE_URL" value1="http://localhost:8080/web${siteFriendlyURL}" />
@@ -931,7 +931,7 @@
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${sitePageName}" />
+			<var name="page" value="${pageName}" />
 		</execute>
 
 		<var name="key_componentName" value="${componentName}" />

@@ -456,8 +456,8 @@
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Blogs Page" />
 		</execute>
 
 		<var name="key_roleName" value="Guest" />
@@ -465,8 +465,8 @@
 		<execute function="AssertTextNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
 
 		<execute macro="Navigator#openPrivateSitePageURL">
+			<var name="pageName" value="Private Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Blogs Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

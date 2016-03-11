@@ -48,13 +48,23 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 		sb.append(project.getProperty("github.pull.request.head.branch"));
 		sb.append("</a></strong>.</p>");
 
-		int end = consoleOutput.indexOf("BUILD FAILED");
+		int end = consoleOutput.indexOf(_REBASE_END_STRING);
 
-		end = consoleOutput.indexOf("Total time:", end);
+		end = consoleOutput.lastIndexOf("\n", end);
 
-		sb.append(getConsoleOutputSnippet(consoleOutput, end));
+		int start = consoleOutput.lastIndexOf(_REBASE_START_STRING, end);
+
+		start = consoleOutput.lastIndexOf("\n", start);
+
+		sb.append(getConsoleOutputSnippet(consoleOutput, start, end));
 
 		return sb.toString();
 	}
+
+	private static final String _REBASE_END_STRING =
+		"The copy of the patch that failed is found in";
+
+	private static final String _REBASE_START_STRING =
+		"First, rewinding head to replay your work on top of it...";
 
 }

@@ -127,6 +127,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 	<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="exportImportConfigurationId" type="hidden" value="<%= String.valueOf(exportImportConfigurationId) %>" />
 		<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 		<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
 		<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />

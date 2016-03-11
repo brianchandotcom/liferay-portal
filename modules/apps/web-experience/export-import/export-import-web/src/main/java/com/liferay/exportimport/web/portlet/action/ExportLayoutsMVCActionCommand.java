@@ -58,6 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
 @Component(
 	immediate = true,
@@ -92,40 +93,8 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		setLayoutIdMap(actionRequest);
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-			long[] layoutIds = getLayoutIds(actionRequest);
-
-			Map<String, Serializable> exportLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactory.
-					buildExportLayoutSettingsMap(
-						themeDisplay.getUserId(), groupId, privateLayout,
-						layoutIds, actionRequest.getParameterMap(),
-						themeDisplay.getLocale(), themeDisplay.getTimeZone());
-
-			String taskName = ParamUtil.getString(actionRequest, "name");
-
-			if (Validator.isNull(taskName)) {
-				if (privateLayout) {
-					taskName = LanguageUtil.get(
-						actionRequest.getLocale(), "private-pages");
-				}
-				else {
-					taskName = LanguageUtil.get(
-						actionRequest.getLocale(), "public-pages");
-				}
-			}
-
 			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						themeDisplay.getUserId(), taskName,
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
+				getExportImportConfiguration(actionRequest);
 
 			_exportImportService.exportLayoutsAsFileInBackground(
 				exportImportConfiguration);
@@ -139,6 +108,68 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				_log.error(e, e);
 			}
 		}
+	}
+
+	protected ExportImportConfiguration getExportImportConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
+
+		Map<String, Serializable> exportLayoutSettingsMap = null;
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			ExportImportConfiguration exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					fetchExportImportConfiguration(exportImportConfigurationId);
+
+			if (exportImportConfiguration != null) {
+				exportLayoutSettingsMap =
+					exportImportConfiguration.getSettingsMap();
+			}
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		// This point we should have an exportImportConfigurationSettingsMap if
+		// exporting based on a configuration. If the settings map is null then
+		// fall back to the original logic
+
+		if (exportLayoutSettingsMap == null) {
+			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+			long[] layoutIds = getLayoutIds(actionRequest);
+
+			exportLayoutSettingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildExportLayoutSettingsMap(
+						themeDisplay.getUserId(), groupId, privateLayout,
+						layoutIds, actionRequest.getParameterMap(),
+						themeDisplay.getLocale(), themeDisplay.getTimeZone());
+		}
+
+		String taskName = ParamUtil.getString(actionRequest, "name");
+
+		if (Validator.isNull(taskName)) {
+			if (privateLayout) {
+				taskName = LanguageUtil.get(
+					actionRequest.getLocale(), "private-pages");
+			}
+			else {
+				taskName = LanguageUtil.get(
+					actionRequest.getLocale(), "public-pages");
+			}
+		}
+
+		return _exportImportConfigurationLocalService.
+			addDraftExportImportConfiguration(
+				themeDisplay.getUserId(), taskName,
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+				exportLayoutSettingsMap);
 	}
 
 	protected long[] getLayoutIds(PortletRequest portletRequest)

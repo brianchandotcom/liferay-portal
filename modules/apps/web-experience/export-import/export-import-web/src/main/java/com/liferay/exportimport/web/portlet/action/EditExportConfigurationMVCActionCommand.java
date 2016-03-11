@@ -165,13 +165,6 @@ public class EditExportConfigurationMVCActionCommand
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
 			}
-			else if (cmd.equals(Constants.EXPORT)) {
-				long exportImportConfigurationId = ParamUtil.getLong(
-					actionRequest, "exportImportConfigurationId");
-
-				exportImportService.exportLayoutsAsFileInBackground(
-					exportImportConfigurationId);
-			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteExportImportConfiguration(actionRequest, true);
 			}

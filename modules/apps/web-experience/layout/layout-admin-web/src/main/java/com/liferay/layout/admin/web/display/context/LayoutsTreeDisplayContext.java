@@ -249,6 +249,10 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			return false;
 		}
 
+		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
 		return true;
 	}
 

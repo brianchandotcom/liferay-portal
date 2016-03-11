@@ -101,6 +101,9 @@
 	</command>
 
 	<command name="searchPG">
+		<execute function="AssertElementPresent" locator1="Search#SEARCH_FIELD" />
+		<execute function="AssertElementPresent" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
+
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${searchTerm}" />
 
 		<if>
@@ -127,8 +130,6 @@
 				</then>
 			</elseif>
 		</if>
-
-		<var name="key_searchIDName" value="Search" />
 
 		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
 	</command>

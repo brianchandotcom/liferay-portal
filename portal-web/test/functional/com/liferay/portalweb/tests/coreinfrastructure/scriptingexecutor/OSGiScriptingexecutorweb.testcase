@@ -7,10 +7,10 @@
 	</set-up>
 
 	<command name="ScriptingExecutorWebSmoke" priority="4">
-		<property name="web.plugins.includes" value="scripting-executor-web" />
+		<property name="web.plugins.includes" value="sample-scripting-executor-hook" />
 
-		<var name="appName" value="Scripting Executor" />
-		<var name="portletName" value="scripting-executor-web" />
+		<var name="appName" value="sample-scripting-executor-hook" />
+		<var name="portletName" value="sample-scripting-executor-hook" />
 
 		<execute macro="OSGiSmoke#Smoke">
 			<var name="appName" value="${portletName}" />

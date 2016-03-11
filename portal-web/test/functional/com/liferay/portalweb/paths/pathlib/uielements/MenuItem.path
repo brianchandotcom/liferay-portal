@@ -89,8 +89,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_REGULAR_ORGANIZATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Regular Organization')]</td>
+	<td>ADD_ORGANIZATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Organization')]</td>
 	<td></td>
 </tr>
 <tr>

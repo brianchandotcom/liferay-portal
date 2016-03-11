@@ -15,7 +15,7 @@
 					<and>
 						<equals arg1="${testPortalInstance}" arg2="true" />
 						<not>
-							<condition function="IsTestName" locator1="${testNameSkipPortalInstance}" />
+							<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
 						</not>
 					</and>
 					<then>

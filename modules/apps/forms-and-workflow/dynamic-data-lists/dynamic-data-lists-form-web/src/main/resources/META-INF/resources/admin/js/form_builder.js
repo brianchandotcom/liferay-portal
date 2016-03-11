@@ -84,7 +84,7 @@ AUI.add(
 
 						instance._eventHandlers = [
 							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),
-							instance.after('form-builder-field-list:fieldsChange', instance._afterFieldListChange, instance),
+							instance.after('liferay-ddl-form-builder-field-list:fieldsChange', instance._afterFieldListChange, instance),
 							instance.after('render', instance._afterFormBuilderRender, instance),
 							instance.after(instance._afterRemoveField, instance, 'removeField'),
 							settingsModal.after('hide', A.bind(instance._afterFieldSettingsModalHide, instance)),
@@ -233,6 +233,8 @@ AUI.add(
 						var field = event.field;
 
 						instance.appendChild(field);
+
+						instance._syncRequiredFieldsWarning();
 
 						var row = instance.getFieldRow(field);
 

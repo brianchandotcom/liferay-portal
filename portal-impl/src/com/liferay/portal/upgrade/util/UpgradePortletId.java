@@ -265,25 +265,6 @@ public class UpgradePortletId extends UpgradeProcess {
 		}
 	}
 
-	protected void updatePortletPreference(
-			long portletPreferencesId, String portletId)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update PortletPreferences set portletId = ? where " +
-					"portletPreferencesId = " + portletPreferencesId)) {
-
-			ps.setString(1, portletId);
-
-			ps.executeUpdate();
-		}
-		catch (SQLException sqle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
-			}
-		}
-	}
-
 	protected void updateResourceAction(String oldName, String newName)
 		throws Exception {
 

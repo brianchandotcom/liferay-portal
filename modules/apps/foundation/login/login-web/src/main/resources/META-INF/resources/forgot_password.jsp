@@ -83,9 +83,9 @@ if (reminderAttempts == null) {
 				%>
 
 				<aui:input name="step" type="hidden" value="1" />
-				
+
 				<c:if test="<%= !PropsValues.USERS_REMINDER_QUERIES_ENABLED %>">
-					<portlet:renderURL var="redirectURL" >
+					<portlet:renderURL var="redirectURL">
 						<portlet:param name="mvcRenderCommandName" value="/login/login" />
 					</portlet:renderURL>
 					<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
@@ -109,10 +109,9 @@ if (reminderAttempts == null) {
 				<aui:input name="step" type="hidden" value="2" />
 				<aui:input name="emailAddress" type="hidden" value="<%= user2.getEmailAddress() %>" />
 
-				<portlet:renderURL var="redirectURL" >
+				<portlet:renderURL var="redirectURL">
 					<portlet:param name="mvcRenderCommandName" value="/login/login" />
 				</portlet:renderURL>
-
 
 				<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 

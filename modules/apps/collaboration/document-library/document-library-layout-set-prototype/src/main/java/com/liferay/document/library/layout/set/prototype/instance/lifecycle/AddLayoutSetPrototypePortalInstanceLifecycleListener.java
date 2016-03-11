@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.layout.set.prototype.instance.lifecycle;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -28,6 +29,10 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.rss.web.constants.RSSPortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
+import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,23 +80,94 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 
 		// Home layout
 
-		DefaultLayoutPrototypesUtil.addLayout(
+		Layout homeLayout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "home", "/home", "2_columns_i");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			homeLayout, SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES,
+			"column-1");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			homeLayout,
+			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE,
+			"column-2");
+
+		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
+			homeLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
+
+		Map<String, String> preferences = new HashMap<>();
+
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			homeLayout, portletId, preferences);
 
 		// Documents layout
 
-		Layout layout = DefaultLayoutPrototypesUtil.addLayout(
+		Layout documentsLayout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "documents-and-media", "/documents", "1_column");
 
-		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
-			layout, DLPortletKeys.DOCUMENT_LIBRARY, "column-1");
+		portletId = DefaultLayoutPrototypesUtil.addPortletId(
+			documentsLayout, DLPortletKeys.DOCUMENT_LIBRARY, "column-1");
 
-		Map<String, String> preferences = new HashMap<>();
+		preferences = new HashMap<>();
 
 		preferences.put("portletSetupPortletDecoratorId", "borderless");
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
-			layout, portletId, preferences);
+			documentsLayout, portletId, preferences);
+
+		// News layout
+
+		Layout newsLayout = DefaultLayoutPrototypesUtil.addLayout(
+			layoutSet, "News", "/news", "2_columns_iii");
+
+		portletId = DefaultLayoutPrototypesUtil.addPortletId(
+			newsLayout, RSSPortletKeys.RSS, "column-1");
+
+		preferences = new HashMap<>();
+
+		preferences.put("expandedEntriesPerFeed", "3");
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Technology news");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		preferences.put(
+			"urls", "http://partners.userland.com/nytRss/technology.xml");
+
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			newsLayout, portletId, preferences);
+
+		portletId = DefaultLayoutPrototypesUtil.addPortletId(
+			newsLayout, RSSPortletKeys.RSS, "column-2");
+
+		preferences = new HashMap<>();
+
+		preferences.put("expandedEntriesPerFeed", "0");
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Liferay news");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		preferences.put(
+			"urls", "http://www.liferay.com/en/about-us/news/-/blogs/rss");
+		preferences.put("titles", "Liferay Press Releases");
+
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			newsLayout, portletId, preferences);
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")",
+		unbind = "-"
+	)
+	protected void setAssetPublisherPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")",
+		unbind = "-"
+	)
+	protected void setDLPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")
@@ -107,10 +183,23 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")",
+		target = "(javax.portlet.name=" + RSSPortletKeys.RSS + ")", unbind = "-"
+	)
+	protected void setRSSPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE + ")",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	protected void setSiteNavigationLanguagePortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES + ")",
+		unbind = "-"
+	)
+	protected void setSocialActivitiesPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

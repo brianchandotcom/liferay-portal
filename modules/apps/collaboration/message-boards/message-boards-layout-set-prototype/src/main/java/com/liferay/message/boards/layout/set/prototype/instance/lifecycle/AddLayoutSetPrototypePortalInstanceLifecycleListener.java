@@ -15,6 +15,7 @@
 package com.liferay.message.boards.layout.set.prototype.instance.lifecycle;
 
 import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -35,10 +36,13 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,6 +88,7 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 
 		Layout homeLayout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "home", "/home", "2_columns_iii");
+
 		String portletId = PortletProviderUtil.getPortletId(
 			MBMessage.class.getName(), PortletProvider.Action.EDIT);
 
@@ -96,6 +101,19 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		DefaultLayoutPrototypesUtil.addPortletId(
 			homeLayout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
 			"column-2");
+
+		portletId = DefaultLayoutPrototypesUtil.addPortletId(
+			homeLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
+
+		Map<String, String> preferences = new HashMap<>();
+
+		preferences.put("anyAssetType", Boolean.FALSE.toString());
+		preferences.put(
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Upcoming Events");
+		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			homeLayout, portletId, preferences);
 
 		// Wiki layout
 
@@ -120,6 +138,13 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		unbind = "-"
 	)
 	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")",
+		unbind = "-"
+	)
+	protected void setAssetPublisherPortlet(Portlet portlet) {
 	}
 
 	@Reference(

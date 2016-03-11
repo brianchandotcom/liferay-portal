@@ -1321,9 +1321,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinition1Name}" />
-
-		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinition1Name}" />
+		<execute macro="DDLDisplayPortlet#viewAddToolbar">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinition1Name}" />
+		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />
@@ -1343,11 +1343,11 @@
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		<execute macro="DDLNavigator#gotoOptionalConfiguration" />
 
-		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
-
-		<execute function="AssertChecked" locator1="DDLConfiguration#TEMPLATES_EDITABLE_CHECKBOX" />
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="editable" />
+		</execute>
 	</command>
 
 	<command name="ViewBooleanFieldPredefinedValue" priority="3">

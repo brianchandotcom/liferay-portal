@@ -54,6 +54,12 @@
 		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Structures" />
 	</command>
 
+	<command name="gotoOptionalConfiguration">
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="AssertClick" locator1="DDLConfiguration#NAVIGATION_OPTIONAL_CONFIGURATION" value1="Optional Configuration" />
+	</command>
+
 	<command name="gotoSpreadsheetView">
 		<var name="key_ddlListName" value="${ddlListName}" />
 

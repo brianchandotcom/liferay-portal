@@ -1010,7 +1010,16 @@
 	<command name="viewWithWorkflowPG">
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${workflowStatus}" />
+		<if>
+			<equals arg1="${workflowStatus}" arg2="Ready for Publication" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${workflowStatus}" />
+			</else>
+		</if>
+
 		<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 		<var name="key_pageName" value="${pageName}" />

@@ -36,6 +36,10 @@
 		<execute function="AssertElementPresent" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${optionName}" />
 	</command>
 
+	<command name="editParagraphBody">
+		<execute function="Type" locator1="FormFields#PARAGRAPH_BODY_TEXT_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="editRepeatingText">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -107,16 +111,22 @@
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
 	</command>
 
+	<command name="viewCheckboxChecked">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertChecked" locator1="FormFields#CHECKBOX" />
+	</command>
+
 	<command name="viewCheckboxLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
 	</command>
 
-	<command name="viewCheckboxValue">
+	<command name="viewCheckboxNotChecked">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX" />
+		<execute function="AssertNotChecked" locator1="FormFields#CHECKBOX" />
 	</command>
 
 	<command name="viewDateField">
@@ -156,9 +166,11 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#OPTIONS_LABEL" value1="${fieldLabel}" />
 	</command>
 
-	<command name="viewParagraphBody">
-		<var name="key_fieldName" value="${fieldName}" />
+	<command name="viewParagraphField">
+		<var name="key_fieldName" value="${fieldTitle}" />
+		<var method="StringUtil#replace('${fieldTitle}',' ','')" name="key_fieldName" />
 
+		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_TITLE" value1="${fieldTitle}" />
 		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_BODY_TEXT_CONTENT" value1="${fieldValue}" />
 	</command>
 

@@ -166,7 +166,17 @@
 <!--PARAGRAPH-->
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_CONTENT</td>
-	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]/p</td>
+	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]//p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_BODY_TEXT_FIELD</td>
+	<td>//div[contains(@id,'text') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_TITLE</td>
+	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]/label</td>
 	<td></td>
 </tr>
 <tr>

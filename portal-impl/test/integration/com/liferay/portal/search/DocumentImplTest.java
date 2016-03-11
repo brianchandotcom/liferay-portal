@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -47,6 +49,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -234,6 +238,30 @@ public class DocumentImplTest {
 			"Smith", _SCREEN_NAMES_ASCENDING, _FIELD_LONG, Sort.LONG_TYPE);
 	}
 
+	protected void assertSort(
+			Sort sort, Query query, SearchContext searchContext,
+			String... screenNames)
+		throws Exception {
+
+		Hits results = IndexSearcherHelperUtil.search(searchContext, query);
+
+		List<String> names = new ArrayList<>(screenNames.length);
+
+		List<String> values = new ArrayList<>(screenNames.length);
+
+		for (int i = 0; i < screenNames.length; i++) {
+			Document document = results.doc(i);
+
+			names.add(document.get("screenName"));
+
+			values.add(document.get(sort.getFieldName()));
+		}
+
+		Assert.assertEquals(
+			StringUtil.merge(values), StringUtil.merge(screenNames),
+			StringUtil.merge(names));
+	}
+
 	protected SearchContext buildSearchContext(String keywords)
 		throws Exception {
 
@@ -298,7 +326,8 @@ public class DocumentImplTest {
 	}
 
 	protected void checkSearchContext(
-			SearchContext searchContext, Sort sort, String[] screenNames)
+			final SearchContext searchContext, final Sort sort,
+			final String[] screenNames)
 		throws Exception {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
@@ -307,17 +336,20 @@ public class DocumentImplTest {
 
 		searchContext.setSorts(sort);
 
-		Query query = _indexer.getFullQuery(searchContext);
+		final Query query = _indexer.getFullQuery(searchContext);
 
-		Hits results = IndexSearcherHelperUtil.search(searchContext, query);
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
-		Assert.assertEquals(screenNames.length, results.getLength());
+				@Override
+				public Void call() throws Exception {
+					assertSort(sort, query, searchContext, screenNames);
 
-		for (int i = 0; i < screenNames.length; i++) {
-			Document document = results.doc(i);
+					return null;
+				}
 
-			Assert.assertEquals(screenNames[i], document.get("screenName"));
-		}
+			});
 	}
 
 	protected void checkSearchContext(

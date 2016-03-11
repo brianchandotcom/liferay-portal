@@ -128,6 +128,6 @@ public class SectionTag extends IncludeTag {
 
 	private Map<String, Object> _data;
 	private Boolean _sectionSelected = Boolean.FALSE;
-	private TabsTag _tabsTag = null;
+	private TabsTag _tabsTag;
 
 }

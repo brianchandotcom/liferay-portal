@@ -146,7 +146,7 @@ public class RemotePluginPackageRepository {
 	private final Map<String, PluginPackage> _moduleIdIndex = new HashMap<>();
 	private final List<PluginPackage> _pluginPackages = new ArrayList<>();
 	private final String _repositoryURL;
-	private Properties _settings = null;
+	private Properties _settings;
 	private final Set<String> _tags = new TreeSet<>();
 
 }

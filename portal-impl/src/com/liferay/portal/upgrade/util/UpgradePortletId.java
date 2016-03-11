@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,6 +135,11 @@ public class UpgradePortletId extends UpgradeProcess {
 		sb.append("_USER_%_INSTANCE_%'");
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update PortletPreferences set portletId = ? where " +
+						"portletPreferencesId = ?");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -143,8 +149,13 @@ public class UpgradePortletId extends UpgradeProcess {
 				String newPortletId = StringUtil.replace(
 					portletId, oldRootPortletId, newRootPortletId);
 
-				updatePortletPreference(portletPreferencesId, newPortletId);
+				ps2.setString(1, newPortletId);
+				ps2.setLong(2, portletPreferencesId);
+
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 
@@ -254,51 +265,12 @@ public class UpgradePortletId extends UpgradeProcess {
 		}
 	}
 
-	protected void updatePortletPreference(
-			long portletPreferencesId, String portletId)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update PortletPreferences set portletId = ? where " +
-					"portletPreferencesId = " + portletPreferencesId)) {
-
-			ps.setString(1, portletId);
-
-			ps.executeUpdate();
-		}
-		catch (SQLException sqle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
-			}
-		}
-	}
-
 	protected void updateResourceAction(String oldName, String newName)
 		throws Exception {
 
 		runSQL(
 			"update ResourceAction set name = '" + newName +
 				"' where name = '" + oldName + "'");
-	}
-
-	protected void updateResourcePermission(
-			long resourcePermissionId, String name, String primKey)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update ResourcePermission set name = ?, primKey = ? where " +
-					"resourcePermissionId = " + resourcePermissionId)) {
-
-			ps.setString(1, name);
-			ps.setString(2, primKey);
-
-			ps.executeUpdate();
-		}
-		catch (SQLException sqle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
-			}
-		}
 	}
 
 	protected void updateResourcePermission(
@@ -310,6 +282,11 @@ public class UpgradePortletId extends UpgradeProcess {
 				"select resourcePermissionId, name, scope, primKey from " +
 					"ResourcePermission where name = '" + oldRootPortletId +
 						"'");
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update ResourcePermission set name = ?, primKey = ? " +
+						"where resourcePermissionId = ?");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -352,9 +329,14 @@ public class UpgradePortletId extends UpgradeProcess {
 					}
 				}
 
-				updateResourcePermission(
-					resourcePermissionId, newName, primKey);
+				ps2.setString(1, newName);
+				ps2.setString(2, primKey);
+				ps2.setLong(3, resourcePermissionId);
+
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 		catch (SQLException sqle) {
 			if (_log.isWarnEnabled()) {

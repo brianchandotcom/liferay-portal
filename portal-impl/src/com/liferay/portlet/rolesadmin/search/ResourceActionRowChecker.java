@@ -57,10 +57,9 @@ public class ResourceActionRowChecker extends RowChecker {
 					actionId);
 		}
 
-		return
-			ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(
-				role.getCompanyId(), resourceName, scope, role.getRoleId(),
-				actionId);
+		return ResourcePermissionLocalServiceUtil.hasScopeResourcePermission(
+			role.getCompanyId(), resourceName, scope, role.getRoleId(),
+			actionId);
 	}
 
 }

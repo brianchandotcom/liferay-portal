@@ -36,10 +36,17 @@ for (String displayStyle : defaultViews) {
 	else if (displayStyle.equals("icon")) {
 		icon = "cards2";
 	}
+
+	String cssClass = StringPool.BLANK;
+
+	if (displayStyle.equals("list")) {
+		cssClass = "hidden-xs";
+	}
 %>
 
 	<liferay-frontend:management-bar-button
 		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
+		cssClass="<%= cssClass %>"
 		disabled="<%= disabled || !ArrayUtil.contains(displayViews, displayStyle) %>"
 		href="<%= displayStyleURL.toString() %>"
 		icon="<%= icon %>"

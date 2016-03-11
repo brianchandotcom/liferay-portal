@@ -277,7 +277,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 									<c:choose>
 										<c:when test="<%= !assetTags.isEmpty() %>">
-											<div class="field-group" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
+											<div class="field-group user-tags-wrapper" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
 												<i class="icon-edit"></i>
 
 												<ul class="user-tags">

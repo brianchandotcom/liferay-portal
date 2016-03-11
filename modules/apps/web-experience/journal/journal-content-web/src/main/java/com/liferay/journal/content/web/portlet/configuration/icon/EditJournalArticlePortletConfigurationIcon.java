@@ -16,16 +16,9 @@ package com.liferay.journal.content.web.portlet.configuration.icon;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
 
@@ -54,45 +47,6 @@ public class EditJournalArticlePortletConfigurationIcon
 			"content.Language", getLocale(portletRequest), getClass());
 
 		return LanguageUtil.get(resourceBundle, "edit-web-content");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		StringBundler sb = new StringBundler(14);
-
-		JournalContentDisplayContext journalContentDisplayContext =
-			getJournalContentDisplayContext(portletRequest, portletResponse);
-
-		JournalArticle article = journalContentDisplayContext.getArticle();
-
-		if (article == null) {
-			return StringPool.BLANK;
-		}
-
-		sb.append("Liferay.Util.openWindow({bodyCssClass: ");
-		sb.append("'dialog-with-footer', destroyOnHide: true, id: '");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		sb.append(HtmlUtil.escape(portletDisplay.getNamespace()));
-		sb.append("editAsset', namespace: '");
-		sb.append(portletDisplay.getNamespace());
-		sb.append("', portlet: '#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', portletId: '");
-		sb.append(portletDisplay.getId());
-		sb.append("', title: '");
-		sb.append(article.getTitle(themeDisplay.getLocale()));
-		sb.append("', uri: '");
-		sb.append(HtmlUtil.escapeJS(journalContentDisplayContext.getURLEdit()));
-		sb.append("'}); return false;");
-
-		return sb.toString();
 	}
 
 	@Override
@@ -125,6 +79,11 @@ public class EditJournalArticlePortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }

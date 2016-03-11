@@ -2,11 +2,11 @@ Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.wiki.web.util
-Include-Resource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-web
 -include: ../../app.bnd
+-includeresource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class

@@ -1,10 +1,10 @@
 Bundle-Name: Liferay Social Activities Web
 Bundle-SymbolicName: com.liferay.social.activities.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-activities-web
 -include: ../../app.bnd
+-includeresource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class

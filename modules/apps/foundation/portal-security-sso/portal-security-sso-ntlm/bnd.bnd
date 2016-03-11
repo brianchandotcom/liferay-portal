@@ -7,7 +7,7 @@ Export-Package:\
 Import-Package:\
 	!javax.microedition.*,\
 	*
-Include-Resource: @lib/jcifs.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 -include: ../../app.bnd
+-includeresource: @lib/jcifs.jar

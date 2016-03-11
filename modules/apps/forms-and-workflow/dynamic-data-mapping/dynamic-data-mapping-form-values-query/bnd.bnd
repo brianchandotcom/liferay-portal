@@ -9,9 +9,9 @@ Import-Package:\
 	\
 	!javax.swing.*,\
 	*
-Include-Resource:\
-	@lib/antlr4-runtime.jar,\
-	@lib/org.abego.treelayout.core.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 -include: ../../app.bnd
+-includeresource:\
+	@lib/antlr4-runtime.jar,\
+	@lib/org.abego.treelayout.core.jar

@@ -17,7 +17,7 @@ Import-Package:\
 	\
 	!javax.transaction.*,\
 	*
-Include-Resource: @lib/quartz.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scheduling
 -include: ../../app.bnd
+-includeresource: @lib/quartz.jar

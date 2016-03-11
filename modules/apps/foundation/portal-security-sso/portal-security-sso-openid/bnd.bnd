@@ -16,7 +16,10 @@ Import-Package:\
 	\
 	!sun.io.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks
+-include: ../../app.bnd
+-includeresource:\
 	@lib/guice.jar,\
 	@lib/httpclient.jar,\
 	@lib/httpcore.jar,\
@@ -25,6 +28,3 @@ Include-Resource:\
 	@lib/org.apache.xml.resolver.jar,\
 	@lib/xercesImpl.jar,\
 	@lib/xml-apis.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Security Frameworks
--include: ../../app.bnd

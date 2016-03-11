@@ -15,7 +15,10 @@ Import-Package:\
 	\
 	!org.joda.convert,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Stores
+-include: ../../app.bnd
+-includeresource:\
 	@lib/aws-java-sdk-core.jar,\
 	@lib/aws-java-sdk-kms.jar,\
 	@lib/aws-java-sdk-s3.jar,\
@@ -27,6 +30,3 @@ Include-Resource:\
 	@lib/jackson-core.jar,\
 	@lib/jackson-databind.jar,\
 	@lib/joda-time.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Stores
--include: ../../app.bnd

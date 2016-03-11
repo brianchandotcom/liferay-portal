@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Portal Template Freemarker Test
 Bundle-SymbolicName: com.liferay.portal.template.freemarker.test
 Bundle-Version: 1.0.0
-Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Portal Templates
 -include: ../../../../../marketplace/platform/bnd.bnd
+-includeresource: test-classes/integration

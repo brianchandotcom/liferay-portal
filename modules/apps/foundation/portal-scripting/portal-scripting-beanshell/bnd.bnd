@@ -5,7 +5,7 @@ DynamicImport-Package: *
 Import-Package:\
 	!org.apache.bsf.*,\
 	*
-Include-Resource: @lib/bsh.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -include: ../../app.bnd
+-includeresource: @lib/bsh.jar

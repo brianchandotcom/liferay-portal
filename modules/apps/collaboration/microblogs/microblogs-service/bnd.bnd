@@ -5,11 +5,11 @@ Export-Package:\
 	com.liferay.microblogs.service.permission,\
 	com.liferay.microblogs.util,\
 	com.liferay.microblogs.util.comparator
-Include-Resource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Microblogs
 Liferay-Require-SchemaVersion: 1.0.2
 Liferay-Service: true
 -include: ../../app.bnd
+-includeresource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

@@ -12,7 +12,7 @@ Import-Package:\
 	\
 	!org.fusesource.jansi.*,\
 	*
-Include-Resource: @lib/groovy.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -include: ../../app.bnd
+-includeresource: @lib/groovy.jar

@@ -2,9 +2,9 @@ Bundle-Name: Liferay Marketplace Store Web
 Bundle-SymbolicName: com.liferay.marketplace.store.web
 Bundle-Version: 1.0.1
 Export-Package: com.liferay.marketplace.store.web.constants
-Include-Resource: @lib/scribe.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-store-web
 -dsannotations-options: inherit
 -include: ../app.bnd
+-includeresource: @lib/scribe.jar

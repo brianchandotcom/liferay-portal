@@ -20,13 +20,13 @@ Import-Package:\
 	\
 	!org.apache.http.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../app.bnd
+-includeresource:\
 	lib/google-api-client.jar=lib/google-api-client.jar,\
 	lib/google-api-services-oauth2.jar=lib/google-api-services-oauth2.jar,\
 	lib/google-http-client-jackson2.jar=lib/google-http-client-jackson2.jar,\
 	lib/google-http-client.jar=lib/google-http-client.jar,\
 	lib/google-oauth-client.jar=lib/google-oauth-client.jar,\
 	lib/jackson-core.jar=lib/jackson-core.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

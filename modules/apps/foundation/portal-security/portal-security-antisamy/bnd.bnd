@@ -8,7 +8,10 @@ Import-Package:\
 	\
 	!sun.io,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../app.bnd
+-includeresource:\
 	@lib/antisamy.jar,\
 	@lib/batik-css.jar,\
 	@lib/batik-ext.jar,\
@@ -18,6 +21,3 @@ Include-Resource:\
 	@lib/xercesImpl.jar,\
 	@lib/xml-apis.jar,\
 	@lib/xml-apis-ext.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

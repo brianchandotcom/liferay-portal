@@ -1,13 +1,13 @@
 Bundle-Name: Liferay Calendar Web
 Bundle-SymbolicName: com.liferay.calendar.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
 Web-ContextPath: /calendar-web
 -include: ../../app.bnd
+-includeresource:\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class

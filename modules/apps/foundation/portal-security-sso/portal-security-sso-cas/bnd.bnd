@@ -9,9 +9,9 @@ Import-Package:\
 	\
 	!junit.*,\
 	*
-Include-Resource:\
-	@lib/cas-client-core.jar,\
-	@lib/opensaml.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 -include: ../../app.bnd
+-includeresource:\
+	@lib/cas-client-core.jar,\
+	@lib/opensaml.jar

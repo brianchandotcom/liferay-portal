@@ -2,7 +2,7 @@ Bundle-Name: Liferay Portal Configuration Module Configuration
 Bundle-SymbolicName: com.liferay.portal.configuration.module.configuration
 Bundle-Version: 1.0.2
 Export-Package: aQute.bnd.annotation.metatype
-Include-Resource: @../../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
 -include: ../../app.bnd
+-includeresource: @../../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*

@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Frontend Editor BBCode Web
 Bundle-SymbolicName: com.liferay.frontend.editor.bbcode.web
 Bundle-Version: 1.0.0
-Include-Resource: content=../frontend-editor-lang/src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-bbcode-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)
 -include: ../../app.bnd
+-includeresource: content=../frontend-editor-lang/src/main/resources/content

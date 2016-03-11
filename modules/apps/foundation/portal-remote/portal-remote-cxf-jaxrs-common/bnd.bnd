@@ -45,13 +45,6 @@ Import-Package:\
 	\
 	!org.springframework.*,\
 	*
-Include-Resource:\
-	lib/=lib/cxf-rt-frontend-jaxrs.jar,\
-	lib/=lib/cxf-rt-rs-extension-providers.jar,\
-	lib/=lib/javax.annotation-api.jar,\
-	lib/=lib/javax.json-api.jar,\
-	lib/=lib/javax.ws.rs-api.jar,\
-	lib/=lib/jettison.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 Provide-Capability:\
@@ -64,3 +57,10 @@ Provide-Capability:\
 		uses:="javax.json,javax.json.spi,javax.json.stream";\
 		version:Version=1
 -include: ../../app.bnd
+-includeresource:\
+	lib/=lib/cxf-rt-frontend-jaxrs.jar,\
+	lib/=lib/cxf-rt-rs-extension-providers.jar,\
+	lib/=lib/javax.annotation-api.jar,\
+	lib/=lib/javax.json-api.jar,\
+	lib/=lib/javax.ws.rs-api.jar,\
+	lib/=lib/jettison.jar

@@ -99,7 +99,10 @@ Import-Package:\
 	\
 	!sun.security.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Elasticsearch
+-include: bnd.bnd
+-includeresource:\
 	lib/antlr-runtime.jar=lib/antlr-runtime.jar,\
 	lib/asm-commons.jar=lib/asm-commons.jar,\
 	lib/asm.jar=lib/asm.jar,\
@@ -133,6 +136,3 @@ Include-Resource:\
 	lib/snakeyaml.jar=lib/snakeyaml.jar,\
 	lib/spatial4j.jar=lib/spatial4j.jar,\
 	lib/t-digest.jar=lib/t-digest.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Elasticsearch
--include: bnd.bnd

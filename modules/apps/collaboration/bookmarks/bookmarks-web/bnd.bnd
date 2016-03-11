@@ -4,11 +4,11 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.social.kernel.model,\
 	*
-Include-Resource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-JS-Config: /META-INF/resources/bookmarks/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks
 Web-ContextPath: /bookmarks-web
 -include: ../../app.bnd
+-includeresource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class

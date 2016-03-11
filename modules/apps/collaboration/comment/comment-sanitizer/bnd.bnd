@@ -6,9 +6,9 @@ Import-Package:\
 	\
 	!sun.misc,\
 	*
-Include-Resource:\
-	@lib/guava.jar,\
-	@lib/owasp-java-html-sanitizer.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Comments
 -include: ../../app.bnd
+-includeresource:\
+	@lib/guava.jar,\
+	@lib/owasp-java-html-sanitizer.jar

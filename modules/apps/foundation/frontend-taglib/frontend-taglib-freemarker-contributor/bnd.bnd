@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.frontend.taglib.freemarker.contributor
 Bundle-Version: 1.0.0
 Fragment-Host: com.liferay.portal.template.freemarker
 Import-Package: com.liferay.frontend.taglib.web.servlet.taglib
-Include-Resource: @lib/com.liferay.frontend.taglib.jar!/META-INF/resources/liferay-frontend.tld
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
+-includeresource: @lib/com.liferay.frontend.taglib.jar!/META-INF/resources/liferay-frontend.tld

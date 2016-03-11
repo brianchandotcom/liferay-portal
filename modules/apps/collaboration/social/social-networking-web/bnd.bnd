@@ -1,10 +1,10 @@
 Bundle-Name: Liferay Social Networking Web
 Bundle-SymbolicName: com.liferay.social.networking.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-networking-web
 -include: ../../app.bnd
+-includeresource:\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class

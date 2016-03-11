@@ -8,7 +8,10 @@ Import-Package:\
 	!org.apache.pdfbox.*,\
 	!org.apache.tika.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Stores
+-include: ../../app.bnd
+-includeresource:\
 	@lib/concurrent.jar,\
 	@lib/jackrabbit-api.jar,\
 	@lib/jackrabbit-core.jar,\
@@ -16,6 +19,3 @@ Include-Resource:\
 	@lib/jackrabbit-spi.jar,\
 	@lib/jackrabbit-spi-commons.jar,\
 	@lib/jcr.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Stores
--include: ../../app.bnd

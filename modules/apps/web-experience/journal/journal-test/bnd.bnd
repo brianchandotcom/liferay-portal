@@ -6,9 +6,9 @@ Import-Package:\
 	\
 	!org.junit.experimental.theories,\
 	*
-Include-Resource:\
-	test-classes/integration,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 -include: ../../app.bnd
+-includeresource:\
+	test-classes/integration,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class

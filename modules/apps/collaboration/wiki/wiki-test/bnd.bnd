@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	!org.junit.experimental.theories,\
 	*
-Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 -include: ../../app.bnd
+-includeresource: test-classes/integration

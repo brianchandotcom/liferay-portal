@@ -16,7 +16,6 @@ Import-Package:\
 	\
 	!sun.nio.cs*,\
 	*
-Include-Resource: @lib/jruby-complete.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -fixupmessages:\
@@ -24,3 +23,4 @@ Liferay-Releng-Module-Group-Title: Scripting Engines
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
 -include: ../../app.bnd
+-includeresource: @lib/jruby-complete.jar

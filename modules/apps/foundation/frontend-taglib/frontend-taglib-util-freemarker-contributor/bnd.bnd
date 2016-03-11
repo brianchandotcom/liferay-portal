@@ -26,7 +26,7 @@ Import-Package:\
 	com.liferay.taglib.ui.display.context,\
 	com.liferay.taglib.ui.util,\
 	com.liferay.taglib.util
-Include-Resource: @lib/com.liferay.util.taglib.jar!/META-INF/*.tld
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
+-includeresource: @lib/com.liferay.util.taglib.jar!/META-INF/*.tld

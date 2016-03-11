@@ -46,7 +46,10 @@ Import-Package:\
 	\
 	!org.springframework.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Remote Service Engines
+-include: ../../app.bnd
+-includeresource:\
 	lib/=lib/cxf-core.jar,\
 	lib/=lib/cxf-rt-bindings-soap.jar,\
 	lib/=lib/cxf-rt-databinding-jaxb.jar,\
@@ -56,6 +59,3 @@ Include-Resource:\
 	lib/=lib/cxf-tools-validator.jar,\
 	lib/=lib/wsdl4j.jar,\
 	lib/=lib/xmlschema-core.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Remote Service Engines
--include: ../../app.bnd

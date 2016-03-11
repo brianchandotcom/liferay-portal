@@ -12,7 +12,10 @@ Import-Package:\
 	\
 	!org.relaxng.datatype.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+-include: ../../app.bnd
+-includeresource:\
 	@lib/chemistry-opencmis-client-api.jar,\
 	@lib/chemistry-opencmis-client-bindings.jar,\
 	@lib/chemistry-opencmis-client-impl.jar,\
@@ -20,6 +23,3 @@ Include-Resource:\
 	@lib/chemistry-opencmis-commons-impl.jar,\
 	@lib/stax2-api.jar,\
 	@lib/woodstox-core-asl.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library
--include: ../../app.bnd

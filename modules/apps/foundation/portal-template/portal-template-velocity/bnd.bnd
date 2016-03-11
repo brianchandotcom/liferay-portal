@@ -19,9 +19,9 @@ Import-Package:\
 	\
 	!org.zeroturnaround.javarebel,\
 	*
-Include-Resource:\
-	@lib/velocity.jar,\
-	@lib/velocity-tools.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
 -include: ../../app.bnd
+-includeresource:\
+	@lib/velocity.jar,\
+	@lib/velocity-tools.jar

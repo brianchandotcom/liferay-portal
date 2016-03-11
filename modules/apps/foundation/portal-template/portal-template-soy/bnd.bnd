@@ -8,7 +8,10 @@ Import-Package:\
 	\
 	!org.objectweb.asm.util,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Template Engines
+-include: ../../app.bnd
+-includeresource:\
 	@lib/aopalliance.jar,\
 	@lib/args4j.jar,\
 	@lib/asm.jar,\
@@ -21,6 +24,3 @@ Include-Resource:\
 	@lib/javax.inject.jar,\
 	@lib/jsr305.jar,\
 	@lib/soy.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Template Engines
--include: ../../app.bnd

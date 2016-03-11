@@ -59,10 +59,10 @@ Import-Package:\
 	org.apache.taglibs.standard.tei;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
 	*
-Include-Resource:\
-	WEB-INF=src/main/resources/WEB-INF,\
-	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
-	@lib/freemarker.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
 -include: ../../app.bnd
+-includeresource:\
+	WEB-INF=src/main/resources/WEB-INF,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@lib/freemarker.jar

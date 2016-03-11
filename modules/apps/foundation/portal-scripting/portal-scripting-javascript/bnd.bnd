@@ -7,7 +7,7 @@ Import-Package:\
 	\
 	!org.apache.xmlbeans.*,\
 	*
-Include-Resource: @lib/rhino.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -include: ../../app.bnd
+-includeresource: @lib/rhino.jar

@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Sync Security
 Bundle-SymbolicName: com.liferay.sync.security
 Bundle-Version: 1.0.1
-Include-Resource:\
+-includeresource:\
 	@lib/commons-codec.jar,\
 	@lib/google-collections.jar,\
 	@lib/gson.jar,\

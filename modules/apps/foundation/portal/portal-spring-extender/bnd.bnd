@@ -67,9 +67,6 @@ Import-Package:\
 	org.springframework.transaction.config,\
 	org.springframework.web.servlet.config,\
 	*
-Include-Resource:\
-	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
-	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
 Provide-Capability:\
@@ -77,3 +74,6 @@ Provide-Capability:\
 	liferay.extender="spring.extender";\
 	version:Version="${plugin.full.version}"
 -include: ../../app.bnd
+-includeresource:\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*

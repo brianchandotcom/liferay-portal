@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.configuration.extender
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.configuration.extender
 Import-Package: !javax.*,*
-Include-Resource:\
+-includeresource:\
 	classes,\
 	test-classes/integration,\
 	@lib/biz.aQute.bndlib.jar!/aQute/lib/filter/*,\

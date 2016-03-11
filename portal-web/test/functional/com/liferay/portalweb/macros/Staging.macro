@@ -311,13 +311,12 @@
 			<isset var="contentDateRange" />
 			<then>
 				<execute function="Click" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT" />
-				<execute function="AssertClick" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
+				<execute function="Click" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
-				<execute function="Click" locator1="StagingPublishToLive#DATE_RANGE_POPUP_RANGE_RADIO" />
-				<execute function="AssertClick" locator1="StagingPublishToLive#DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
-				<execute function="AssertTextEquals" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
+				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
+				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
 			</then>
 		</if>
 
@@ -781,14 +780,12 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" value1="Switch to Advanced Publication" />
 		<execute function="Check" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT" />
-		<execute function="Click" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" />
+		<execute function="Click" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 		<var name="key_contentDateRange" value="DateRange" />
 
-		<execute function="Click" locator1="StagingPublishToLive#DATE_RANGE_POPUP_RANGE_RADIO" />
 		<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
 		<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
-		<execute function="Click" locator1="StagingPublishToLive#DATE_RANGE_POPUP_OK_BUTTON" />
 	</command>
 
 	<command name="setHistoryVersionPG">

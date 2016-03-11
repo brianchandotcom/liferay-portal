@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.json.web.service.extender.test;
+package com.liferay.portal.remote.json.web.service.extender.client.test;
 
 import com.liferay.portal.kernel.util.StringUtil;
 

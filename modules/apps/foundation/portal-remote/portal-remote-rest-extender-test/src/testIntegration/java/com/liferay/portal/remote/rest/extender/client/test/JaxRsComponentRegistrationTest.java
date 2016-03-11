@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test;
+package com.liferay.portal.remote.rest.extender.client.test;
 
 import com.liferay.portal.kernel.util.StringUtil;
 

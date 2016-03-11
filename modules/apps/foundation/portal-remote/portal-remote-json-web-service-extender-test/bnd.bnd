@@ -2,4 +2,4 @@ Bundle-Activator: com.liferay.portal.remote.json.web.service.extender.test.TestW
 Bundle-Name: Liferay Portal Remote JSON Web Service Extender Test
 Bundle-SymbolicName: com.liferay.portal.remote.json.web.service.extender.test
 Bundle-Version: 1.0.1
-Include-Resource: classes
+Private-Package: com.liferay.portal.remote.json.web.service.extender.test

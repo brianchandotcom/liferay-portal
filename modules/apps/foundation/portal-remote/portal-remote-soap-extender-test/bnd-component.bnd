@@ -2,7 +2,7 @@ Bundle-Activator: com.liferay.portal.remote.soap.extender.test.activator.configu
 Bundle-Name: Liferay Portal Remote SOAP Extender Test Component
 Bundle-SymbolicName: com.liferay.portal.remote.soap.extender.test.component
 Bundle-Version: 1.0.0
-Include-Resource:\
-	com/liferay/portal/remote/soap/extender/test/activator/configuration=classes/com/liferay/portal/remote/soap/extender/test/activator/configuration,\
-	com/liferay/portal/remote/soap/extender/test/service=classes/com/liferay/portal/remote/soap/extender/test/service,\
-	com/liferay/portal/remote/soap/extender/test/util=classes/com/liferay/portal/remote/soap/extender/test/util
+Private-Package:\
+	com.liferay.portal.remote.soap.extender.test.activator.configuration,\
+	com.liferay.portal.remote.soap.extender.test.service,\
+	com.liferay.portal.remote.soap.extender.test.util

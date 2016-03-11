@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.axis.extender.test;
+package com.liferay.portal.remote.axis.extender.client.test;
 
 import com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoap;
 import com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoapService;

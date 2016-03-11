@@ -405,8 +405,7 @@
 
 		<execute function="SelectWindow" locator1="title=home - Site Template Name - Liferay" />
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="home" />
 		</execute>
 
@@ -414,15 +413,13 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="Page#viewPageTemplateLockCheck" />
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Locked Page Name" />
 		</execute>
 
@@ -452,8 +449,7 @@
 
 		<execute function="SelectWindow" locator1="title=home - Site Template Name - Liferay" />
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
@@ -586,8 +582,7 @@
 
 		<execute function="SelectWindow" locator1="title=home - Site Template Name - Liferay" />
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
@@ -600,9 +595,8 @@
 			<var name="portletName" value="Recent Bloggers" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
-			<var name="pageName" value="Locked Page Name" />
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

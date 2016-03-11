@@ -33,14 +33,6 @@
 			<span class="user-full-name">
 				<%= HtmlUtil.escape(user.getFullName()) %>
 			</span>
-
-			<%
-			int notificationsCount = GetterUtil.getInteger(request.getAttribute(ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT));
-			%>
-
-			<c:if test="<%= notificationsCount > 0 %>">
-				<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
-			</c:if>
 		</liferay-util:buffer>
 
 		<%
@@ -51,8 +43,37 @@
 			<c:when test='<%= Validator.equals(displayStyle, "button") %>'>
 				<span class="user-avatar-link">
 					<a class="text-default" data-qa-id="openUserMenu" href="javascript:;" id="<portlet:namespace />sidenavUserToggle">
-						<%= userName %>
+
+						<c:if test="<%= themeDisplay.isImpersonated() %>">
+							<aui:icon image="asterisk" markupView="lexicon" />
+						</c:if>
+
+						<span class="user-avatar-image">
+							<liferay-ui:user-portrait
+							imageCssClass="user-icon-lg"
+							userId="<%= user.getUserId() %>"
+							/>
+						</span>
+
+						<span class="user-full-name">
+							<%= HtmlUtil.escape(user.getFullName()) %>
+						</span>
 					</a>
+
+					<%
+					int notificationsCount = GetterUtil.getInteger(request.getAttribute(ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT));
+					%>
+
+					<c:if test="<%= notificationsCount > 0 %>">
+
+						<%
+						PortletURL notificationsURL = PortletProviderUtil.getPortletURL(request, UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
+						%>
+
+						<aui:a href="<%= notificationsURL.toString() %>">
+							<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+						</aui:a>
+					</c:if>
 				</span>
 
 				<aui:script sandbox="<%= true %>">

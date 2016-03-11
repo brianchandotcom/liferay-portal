@@ -32,6 +32,7 @@ if (resourceClassNameId == 0) {
 
 String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
+String keywords = ParamUtil.getString(request, "keywords");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
@@ -44,6 +45,7 @@ portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
 portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("keywords", keywords);
 %>
 
 <liferay-frontend:management-bar

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
+
 long templateId = ParamUtil.getLong(request, "templateId");
 
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
@@ -49,6 +51,17 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 <portlet:actionURL var="selectURL">
 	<portlet:param name="mvcPath" value="/select_template.jsp" />
 </portlet:actionURL>
+
+<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="mvcPath" value="/select_template.jsp" />
+	<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
+	<liferay-util:param name="templateId" value="<%= String.valueOf(templateId) %>" />
+	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<liferay-util:param name="eventName" value="<%= eventName %>" />
+	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+</liferay-util:include>
 
 <aui:form action="<%= selectURL.toString() %>" method="post" name="selectTemplateFm">
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
@@ -149,7 +162,7 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 </liferay-util:include>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />selectTemplateFm.<portlet:namespace />keywords);
+	Liferay.Util.focusFormField(document.<portlet:namespace />searchForm.<portlet:namespace />keywords);
 </aui:script>
 
 <aui:script>

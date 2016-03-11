@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
 import com.liferay.portal.osgi.web.wab.generator.internal.processor.WabProcessor;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,13 +39,17 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
+ * @author Gregory Amerson
  */
 public class WabURLConnection extends URLConnection {
 
-	public WabURLConnection(ClassLoader classLoader, URL url) {
+	public WabURLConnection(
+		ClassLoader classLoader, WabGenerator wabGenerator, URL url) {
+
 		super(url);
 
 		_classLoader = classLoader;
+		_wabGenerator = wabGenerator;
 
 		wireSpringUtils();
 	}
@@ -68,11 +74,15 @@ public class WabURLConnection extends URLConnection {
 
 		File file = transferToTempFile(new URL(url.getPath()));
 
+		_wabGenerator.generate(_classLoader, file, parameters);
+
 		try {
 			WabProcessor wabProcessor = new WabProcessor(
 				_classLoader, file, parameters);
 
-			return wabProcessor.getInputStream();
+			File processedFile = wabProcessor.getProcessedFile();
+
+			return new FileInputStream(processedFile);
 		}
 		finally {
 			FileUtil.deltree(file.getParentFile());
@@ -114,5 +124,6 @@ public class WabURLConnection extends URLConnection {
 	}
 
 	private final ClassLoader _classLoader;
+	private final WabGenerator _wabGenerator;
 
 }

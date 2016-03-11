@@ -116,7 +116,7 @@ public class WabProcessor {
 		_parameters = parameters;
 	}
 
-	public InputStream getInputStream() throws IOException {
+	public File getProcessedFile() throws IOException {
 		_pluginDir = autoDeploy();
 
 		if ((_pluginDir == null) || !_pluginDir.exists() ||
@@ -149,7 +149,7 @@ public class WabProcessor {
 			writeGeneratedWab(outputFile);
 		}
 
-		return new FileInputStream(outputFile);
+		return outputFile;
 	}
 
 	protected void addElement(Element element, String name, String text) {

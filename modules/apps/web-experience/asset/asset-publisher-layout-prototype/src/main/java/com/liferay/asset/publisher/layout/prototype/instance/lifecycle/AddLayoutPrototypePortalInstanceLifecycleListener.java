@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.search.web.constants.SearchPortletKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -100,9 +99,6 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
 			"column-1");
 
-		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, SearchPortletKeys.SEARCH, "column-2");
-
 		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
 
@@ -156,13 +152,6 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + SearchPortletKeys.SEARCH + ")",
-		unbind = "-"
-	)
-	protected void setSearchPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

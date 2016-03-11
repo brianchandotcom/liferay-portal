@@ -12,8 +12,8 @@
 	],
 	"liferayTheme": {
 		"baseTheme": "styled",
+		"rubySass": false,
 		"screenshot": "",
-		"supportCompass": false,
 		"templateLanguage": "ftl",
 		"version": "7.0"
 	},

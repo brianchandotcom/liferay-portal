@@ -17,7 +17,7 @@ gradle.beforeProject {
 	}
 
 	configure(project) {
-		if (project.path.startsWith(":apps:foundation:frontend:frontend-theme:") && FileUtil.exists(project, "gulpfile.js")) {
+		if (project.path.startsWith(":apps:foundation:frontend-theme:") && FileUtil.exists(project, "gulpfile.js")) {
 			apply from: rootProject.file("build-theme.gradle")
 		}
 		else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {

@@ -359,6 +359,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						project, message, false, ignored);
 				}
 
+				private String _getGradlewCommand(
+					String gradlewRelativePath, String command, boolean daemon,
+					String ... arguments) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(gradlewRelativePath);
+					sb.append(' ');
+					sb.append(command);
+
+					if (daemon) {
+						sb.append(" --daemon");
+					}
+
+					for (String argument : arguments) {
+						sb.append(' ');
+						sb.append(argument);
+					}
+
+					return sb.toString();
+				}
+
 				private String _getGitCommitCommand(
 					Project project, String message, boolean all,
 					boolean ignored) {
@@ -422,16 +444,27 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					String gradlewRelativePath = project.relativePath(
 						gradlewFile);
 
+					boolean daemon = true;
+
+					String daemonString = GradleUtil.getTaskPrefixedProperty(
+						task, "daemon");
+
+					if (Validator.isNotNull(daemonString)) {
+						daemon = Boolean.parseBoolean(daemonString);
+					}
+
 					commands.add(
-						gradlewRelativePath + " " +
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME + " -P" +
-								_SNAPSHOT_PROPERTY_NAME);
+						_getGradlewCommand(
+							gradlewRelativePath,
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, daemon,
+							"-P" + _SNAPSHOT_PROPERTY_NAME));
 
 					// Publish release
 
 					commands.add(
-						gradlewRelativePath + " " +
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+						_getGradlewCommand(
+							gradlewRelativePath,
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, daemon));
 
 					// Commit "prep next"
 

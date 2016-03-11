@@ -30,7 +30,7 @@ import org.junit.Test;
 public class ScriptDataTest {
 
 	@Test
-	public void testGenerateVariableStripsReplacesFirstCharacter()
+	public void testGenerateVariableReplacesInvalidFirstCharacter()
 		throws Exception {
 
 		ScriptData scriptData = new ScriptData();
@@ -47,7 +47,7 @@ public class ScriptDataTest {
 	}
 
 	@Test
-	public void testGenerateVariableStripsSpecialCharacters() throws Exception {
+	public void testGenerateVariableStripsInvalidCharacters() throws Exception {
 		ScriptData scriptData = new ScriptData();
 
 		scriptData.append(

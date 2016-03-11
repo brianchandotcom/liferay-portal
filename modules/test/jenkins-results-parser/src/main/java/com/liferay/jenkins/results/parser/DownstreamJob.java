@@ -99,40 +99,43 @@ public class DownstreamJob extends BaseJob {
 	}
 
 	public void update() throws Exception {
-		if (status.equals("completed") || status.equals("invalid")) {
+		if (getStatus().equals("completed") || getStatus().equals("invalid")) {
 			return;
 		}
 
-		if (status.equals("queued") || status.equals("starting")) {
+		if (getStatus().equals("queued") || getStatus().equals("starting") ||
+			getStatus().equals("missing")) {
+
 			JSONObject build = getRunningBuildJSONObject();
 
 			if (build != null) {
 				number = build.getInt("number");
 
-				status = "running";
+				setStatus("running");
 
 				System.out.println(getBuildMessage());
 			}
 			else {
 				JSONObject queueItem = getQueueItemJSONObject();
 
-				if (status.equals("started") && (queueItem != null)) {
-					status = "queued";
+				if (getStatus().equals("started") && (queueItem != null)) {
+					setStatus("queued");
 				}
-				else if (status.equals("queued") && (queueItem == null)) {
-					throw new IllegalStateException(
-						"Job " + name + " disappeared from queue");
+				else if (getStatus().equals("queued") && (queueItem == null)) {
+					setStatus("missing");
+
+					System.out.println(getBuildMessage());
 				}
 			}
 		}
 
-		if (status.equals("running")) {
+		if (getStatus().equals("running")) {
 			JSONObject build = getCompletedBuildJSONObject();
 
 			if (build != null) {
 				result = build.getString("result");
 
-				status = "completed";
+				setStatus("completed");
 			}
 		}
 	}
@@ -281,7 +284,7 @@ public class DownstreamJob extends BaseJob {
 		sb.append(name);
 		sb.append("'");
 
-		if (status.equals("completed")) {
+		if (getStatus().equals("completed")) {
 			sb.append(" completed at ");
 			sb.append(getURL());
 			sb.append(". ");
@@ -289,7 +292,7 @@ public class DownstreamJob extends BaseJob {
 			return sb.toString();
 		}
 
-		if (status.equals("queued")) {
+		if (getStatus().equals("queued")) {
 			sb.append(" is queued at ");
 			sb.append("http://");
 			sb.append(master);
@@ -299,14 +302,14 @@ public class DownstreamJob extends BaseJob {
 			return sb.toString();
 		}
 
-		if (status.equals("running")) {
+		if (getStatus().equals("running")) {
 			sb.append(" started at ");
 			sb.append(getURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
-		if (status.equals("starting")) {
+		if (getStatus().equals("starting")) {
 			sb.append(" invoked at ");
 			sb.append("http://");
 			sb.append(master);
@@ -316,7 +319,7 @@ public class DownstreamJob extends BaseJob {
 			return sb.toString();
 		}
 
-		if (status.equals("invalid")) {
+		if (getStatus().equals("invalid")) {
 			sb.append(" is invalid ");
 			sb.append("http://");
 			sb.append(master);
@@ -326,7 +329,17 @@ public class DownstreamJob extends BaseJob {
 			return sb.toString();
 		}
 
-		throw new RuntimeException("Unknown status: " + status + ".");
+		if (getStatus().equals("missing")) {
+			sb.append(" is missing ");
+			sb.append("http://");
+			sb.append(master);
+			sb.append("/job/");
+			sb.append(name);
+			sb.append(".");
+			return sb.toString();
+		}
+
+		throw new RuntimeException("Unknown status: " + getStatus() + ".");
 	}
 
 	private static final Pattern _invocationURLPattern = Pattern.compile(

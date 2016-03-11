@@ -31,7 +31,7 @@ public abstract class BaseJob {
 	}
 
 	public String getResult() {
-		if (!status.equals("completed")) {
+		if (!_status.equals("completed")) {
 			throw new IllegalStateException("Build not completed");
 		}
 
@@ -39,7 +39,7 @@ public abstract class BaseJob {
 	}
 
 	public String getStatus() {
-		return status;
+		return _status;
 	}
 
 	public String getURL() {
@@ -59,7 +59,35 @@ public abstract class BaseJob {
 		return sb.toString();
 	}
 
-	public void setURL(String url) throws Exception {
+	public abstract void update() throws Exception;
+
+	protected static String decodeURL(String url) {
+		url = url.replace("%28", "(");
+		url = url.replace("%29", ")");
+		url = url.replace("%5B", "[");
+		url = url.replace("%5D", "]");
+
+		return url;
+	}
+
+	protected BaseJob() {
+		master = "";
+		name = "";
+
+		setStatus("starting");
+	}
+
+	protected BaseJob(String buildURL) throws Exception {
+		setURL(buildURL);
+	}
+
+	protected void setStatus(String status) {
+		_status = status;
+
+		_lastStatusChange = System.currentTimeMillis();
+	}
+
+	protected void setURL(String url) throws Exception {
 		url = decodeURL(url);
 
 		Matcher buildURLMatcher = _buildURLPattern.matcher(url);
@@ -75,34 +103,19 @@ public abstract class BaseJob {
 		update();
 	}
 
-	public abstract void update() throws Exception;
-
-	protected static String decodeURL(String url) {
-		url = url.replace("%28", "(");
-		url = url.replace("%29", ")");
-		url = url.replace("%5B", "[");
-		url = url.replace("%5D", "]");
-
-		return url;
-	}
-
-	protected BaseJob() {
-		master = "";
-		name = "";
-		status = "starting";
-	}
-
-	protected BaseJob(String buildURL) throws Exception {
-		setURL(buildURL);
+	protected long timeSinceStatusChange() {
+		return System.currentTimeMillis() - _lastStatusChange;
 	}
 
 	protected String master;
 	protected String name;
 	protected int number;
 	protected String result;
-	protected String status;
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
+
+	private long _lastStatusChange;
+	private String _status;
 
 }

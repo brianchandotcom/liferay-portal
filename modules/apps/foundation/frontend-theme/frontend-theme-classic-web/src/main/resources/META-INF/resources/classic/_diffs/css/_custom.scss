@@ -247,3 +247,9 @@ body {
 		}
 	}
 }
+
+@include media-query(null, $screen-sm-max) {
+	.overlay-focused:focus {
+		outline: 0;
+	}
+}

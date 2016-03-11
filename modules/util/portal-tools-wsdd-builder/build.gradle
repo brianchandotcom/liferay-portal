@@ -11,10 +11,6 @@ buildPluginDescriptor {
 	goalPrefix = "liferay"
 }
 
-copyLibs {
-	enabled = false
-}
-
 dependencies {
 	compile group: "axis", name: "axis-wsdl4j", version: "1.5.1"
 	compile group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-1"

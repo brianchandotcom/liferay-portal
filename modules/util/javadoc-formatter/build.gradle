@@ -11,10 +11,6 @@ buildPluginDescriptor {
 	goalPrefix = "liferay"
 }
 
-copyLibs {
-	enabled = false
-}
-
 dependencies {
 	compile group: "com.thoughtworks.qdox", name: "qdox", transitive: false, version: "1.12.1"
 	compile group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"

@@ -392,10 +392,9 @@ public class AssetBrowserDisplayContext {
 		}
 		else {
 			total = (int)AssetEntryLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), getFilterGroupIds(),
-				themeDisplay.getUserId(), assetRendererFactory.getClassName(),
-				getSubtypeSelectionId(), getKeywords(), isShowNonindexable(),
-				getStatuses());
+				themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(),
+				assetRendererFactory.getClassName(), getSubtypeSelectionId(),
+				getKeywords(), isShowNonindexable(), getStatuses());
 		}
 
 		return total;

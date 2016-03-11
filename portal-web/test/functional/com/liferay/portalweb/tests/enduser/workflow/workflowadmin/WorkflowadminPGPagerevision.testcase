@@ -76,6 +76,8 @@
 	</tear-down>
 
 	<command name="ApprovePageRevisionPG" priority="5">
+		<property name="portal.acceptance" value="false" />
+
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#gotoPG">
@@ -193,6 +195,8 @@
 	</command>
 
 	<command name="RejectPageRevisionPG" priority="4">
+		<property name="portal.acceptance" value="false" />
+
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#gotoPG">

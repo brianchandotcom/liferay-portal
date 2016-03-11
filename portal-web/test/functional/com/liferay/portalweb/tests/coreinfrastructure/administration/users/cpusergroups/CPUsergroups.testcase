@@ -218,6 +218,8 @@
 	</command>
 
 	<command name="DeleteUserGroup" priority="5">
+		<property name="portal.acceptance" value="false" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>

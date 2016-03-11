@@ -36,7 +36,7 @@ liferay {
 }
 
 test {
-	dependsOn ":apps:foundation:frontend:frontend-common-css:buildCssCommon"
+	dependsOn ":apps:foundation:frontend-css:frontend-css-common:buildCssCommon"
 }
 
 updateFileVersions {

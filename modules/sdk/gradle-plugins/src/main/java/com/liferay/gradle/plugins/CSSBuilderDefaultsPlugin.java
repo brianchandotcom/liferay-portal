@@ -105,7 +105,7 @@ public class CSSBuilderDefaultsPlugin
 	}
 
 	private static final String _FRONTEND_COMMON_CSS_NAME =
-		"com.liferay.frontend.common.css";
+		"com.liferay.frontend.css.common";
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.css.builder";
 

@@ -122,7 +122,7 @@ public class PanelAppRegistry {
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
 			new PanelCategoryServiceReferenceMapper(),
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator("service.ranking")),
+				new PropertyServiceReferenceComparator("panel.app.order")),
 			new PanelAppsServiceTrackerMapListener());
 	}
 

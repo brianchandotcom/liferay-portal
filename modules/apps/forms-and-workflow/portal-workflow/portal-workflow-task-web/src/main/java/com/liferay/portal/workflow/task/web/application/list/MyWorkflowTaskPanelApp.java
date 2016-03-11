@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT,
-		"service.ranking:Integer=300"
+		"panel.app.order:Integer=300"
 	},
 	service = PanelApp.class
 )

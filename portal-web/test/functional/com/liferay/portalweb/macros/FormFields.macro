@@ -107,16 +107,22 @@
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
 	</command>
 
+	<command name="viewCheckboxChecked">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertChecked" locator1="FormFields#CHECKBOX" />
+	</command>
+
 	<command name="viewCheckboxLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
 	</command>
 
-	<command name="viewCheckboxValue">
+	<command name="viewCheckboxNotChecked">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX" />
+		<execute function="AssertNotChecked" locator1="FormFields#CHECKBOX" />
 	</command>
 
 	<command name="viewDateField">

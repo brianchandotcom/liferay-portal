@@ -1345,6 +1345,8 @@
 
 		<execute macro="DDLNavigator#gotoOptionalConfiguration" />
 
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="editable" />
 		</execute>
 	</command>
 

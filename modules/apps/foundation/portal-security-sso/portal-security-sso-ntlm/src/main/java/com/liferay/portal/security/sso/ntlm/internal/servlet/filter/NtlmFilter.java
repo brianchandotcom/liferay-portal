@@ -293,9 +293,7 @@ public class NtlmFilter extends BaseFilter {
 					src, serverChallenge);
 			}
 			catch (Exception e) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Unable to perform NTLM authentication", e);
-				}
+				_log.error("Unable to perform NTLM authentication", e);
 			}
 			finally {
 				_portalCache.remove(portalCacheKey);

@@ -223,9 +223,7 @@ public class ServletResponseUtil {
 			ranges = getRanges(request, response, contentLength);
 		}
 		catch (IOException ioe) {
-			if (_log.isErrorEnabled()) {
-				_log.error(ioe);
-			}
+			_log.error(ioe);
 
 			response.setHeader(
 				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);

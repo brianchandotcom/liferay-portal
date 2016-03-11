@@ -232,9 +232,7 @@ public class ImageToolImpl implements ImageTool {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e, e);
-			}
+			_log.error(e, e);
 		}
 		finally {
 			_fileUtil.delete(inputFile);

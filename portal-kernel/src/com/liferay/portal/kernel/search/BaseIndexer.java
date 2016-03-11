@@ -536,9 +536,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				reindex(element);
 			}
 			catch (SearchException se) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Unable to index object: " + element);
-				}
+				_log.error("Unable to index object: " + element);
 			}
 		}
 	}

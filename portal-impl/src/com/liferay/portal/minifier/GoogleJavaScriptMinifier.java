@@ -104,10 +104,7 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 		@Override
 		public void println(CheckLevel checkLevel, JSError jsError) {
 			if (checkLevel == CheckLevel.ERROR) {
-				if (_log.isErrorEnabled()) {
-					_log.error(
-						jsError.format(checkLevel, _simpleMessageFormatter));
-				}
+				_log.error(jsError.format(checkLevel, _simpleMessageFormatter));
 			}
 			else if (checkLevel == CheckLevel.WARNING) {
 				if (_log.isWarnEnabled()) {
@@ -119,7 +116,7 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 		@Override
 		protected void printSummary() {
-			if (_log.isErrorEnabled() && (getErrorCount() > 0)) {
+			if (getErrorCount() > 0) {
 				_log.error(_buildMessage());
 			}
 			else if (_log.isWarnEnabled() && (getWarningCount() > 0)) {

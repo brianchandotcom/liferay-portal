@@ -89,7 +89,7 @@ public class SidebarPanelTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/sidebar_panel/start.jsp";
 
-	private String _resourceURL = null;
-	private String _searchContainerId = null;
+	private String _resourceURL;
+	private String _searchContainerId;
 
 }

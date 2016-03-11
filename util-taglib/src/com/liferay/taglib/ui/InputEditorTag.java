@@ -455,7 +455,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _contents;
 	private String _contentsLanguageId;
 	private String _cssClass;
-	private Map<String, Object> _data = null;
+	private Map<String, Object> _data;
 	private String _editorName;
 	private Map<String, String> _fileBrowserParams;
 	private String _height;

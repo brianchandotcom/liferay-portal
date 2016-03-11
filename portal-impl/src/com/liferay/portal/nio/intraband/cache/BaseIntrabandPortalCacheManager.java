@@ -75,6 +75,6 @@ public abstract class BaseIntrabandPortalCacheManager
 
 	private final Map<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<>();
-	private final RegistrationReference _registrationReference = null;
+	private final RegistrationReference _registrationReference;
 
 }

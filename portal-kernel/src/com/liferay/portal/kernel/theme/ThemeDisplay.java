@@ -1906,13 +1906,13 @@ public class ThemeDisplay
 	private String _urlCurrent = StringPool.BLANK;
 	private String _urlHome = StringPool.BLANK;
 	private String _urlLayoutTemplates = StringPool.BLANK;
-	private transient PortletURL _urlMyAccount = null;
-	private transient PortletURL _urlPageSettings = null;
+	private transient PortletURL _urlMyAccount;
+	private transient PortletURL _urlPageSettings;
 	private String _urlPortal = StringPool.BLANK;
-	private transient PortletURL _urlPublishToLive = null;
+	private transient PortletURL _urlPublishToLive;
 	private String _urlSignIn = StringPool.BLANK;
 	private String _urlSignOut = StringPool.BLANK;
-	private transient PortletURL _urlUpdateManager = null;
+	private transient PortletURL _urlUpdateManager;
 	private User _user;
 	private boolean _widget;
 

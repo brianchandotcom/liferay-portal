@@ -665,9 +665,7 @@ public class Table {
 			ps.executeUpdate();
 		}
 		catch (SQLException sqle) {
-			if (_log.isErrorEnabled()) {
-				_log.error(sqle, sqle);
-			}
+			_log.error(sqle, sqle);
 
 			throw new RuntimeException("Unable to execute " + sql, sqle);
 		}

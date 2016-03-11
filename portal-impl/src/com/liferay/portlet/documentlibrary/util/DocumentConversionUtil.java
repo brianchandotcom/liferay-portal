@@ -116,9 +116,7 @@ public class DocumentConversionUtil {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e, e);
-			}
+			_log.error(e, e);
 		}
 
 		return false;

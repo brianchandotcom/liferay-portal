@@ -84,9 +84,7 @@ public abstract class BaseChannelImpl implements Channel {
 			}
 		}
 		catch (ChannelException ce) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to fetch notifications", ce);
-			}
+			_log.error("Unable to fetch notifications", ce);
 		}
 
 		return false;

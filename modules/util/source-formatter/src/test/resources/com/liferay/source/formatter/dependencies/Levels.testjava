@@ -23,42 +23,52 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class Levels {
 
 	public void method1() {
-		_log.debug("debug");
+		if (_log.isErrorEnabled()) {
+			_log.error("error");
+		}
 	}
 
 	public void method2() {
+		_log.error("error");
+	}
+
+	public void method3() {
+		_log.debug("debug");
+	}
+
+	public void method4() {
 		if (_log.isInfoEnabled()) {
 			_log.debug("debug");
 		}
 	}
 
-	public void method3() {
+	public void method5() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("debug");
 		}
 	}
 
-	public void method4() {
+	public void method6() {
 		if (_log.isDebugEnabled()) {
 			_log.info("info");
 		}
 	}
 
-	public void method5() {
+	public void method7() {
 		_log.trace("trace");
 	}
 
-	public void method6() {
+	public void method8() {
 		if (_log.isTraceEnabled()) {
 			_log.trace("trace");
 		}
 	}
 
-	public void method7() {
+	public void method9() {
 		_log.warn("warn");
 	}
 
-	public void method8() {
+	public void method10() {
 		if (_log.isWarnEnabled()) {
 			_log.warn("warn");
 		}

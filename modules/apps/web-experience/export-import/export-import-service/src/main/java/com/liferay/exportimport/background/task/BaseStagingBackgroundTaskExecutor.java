@@ -70,7 +70,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
 			FileUtil.delete(file);
 		}
-		else if ((file != null) && _log.isErrorEnabled()) {
+		else if (file != null) {
 			_log.error("Kept temporary LAR file " + file.getAbsolutePath());
 		}
 	}

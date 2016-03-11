@@ -114,9 +114,7 @@ public class MessageListenerImpl implements MessageListener {
 			return true;
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to process message: " + message, e);
-			}
+			_log.error("Unable to process message: " + message, e);
 
 			return false;
 		}

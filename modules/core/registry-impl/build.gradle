@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
 	provided group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1"
@@ -5,9 +7,11 @@ dependencies {
 }
 
 deploy {
-	from("lib") {
-		include "com.liferay.osgi.service.tracker.collections.jar"
-		include "org.eclipse.osgi.jar"
+	from(configurations.provided) {
+		include "com.liferay.osgi.service.tracker.collections-*.jar"
+		include "org.eclipse.osgi-*.jar"
+
+		rename new RenameDependencyClosure(project, configurations.provided.name)
 	}
 }
 

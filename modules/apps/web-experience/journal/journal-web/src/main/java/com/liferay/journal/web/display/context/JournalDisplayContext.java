@@ -182,7 +182,7 @@ public class JournalDisplayContext {
 
 		String content = article.getContent();
 
-		if (Validator.isNull(content) || (ddmStructure == null)) {
+		if (Validator.isNull(content)) {
 			return _ddmFormValues;
 		}
 

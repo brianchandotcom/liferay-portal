@@ -2237,6 +2237,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						ifClause = StringPool.BLANK;
 					}
 					else if (line.endsWith(StringPool.SEMICOLON)) {
+						String trimmedIfClause = StringUtil.trim(ifClause);
+
+						if (!trimmedIfClause.startsWith("while ") &&
+							!trimmedIfClause.contains("{\t")) {
+
+							processErrorMessage(
+								fileName,
+								"Incorrect if statement: " + fileName + " " +
+									lineCount);
+						}
+
 						ifClause = StringPool.BLANK;
 					}
 				}

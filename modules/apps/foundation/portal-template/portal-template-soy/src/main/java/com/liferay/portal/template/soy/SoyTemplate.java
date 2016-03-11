@@ -17,6 +17,7 @@ package com.liferay.portal.template.soy;
 import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.SoyFileSet.Builder;
+import com.google.template.soy.data.SanitizedContent;
 import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
@@ -69,7 +70,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 				new TemplatePrivilegedExceptionAction(templateResources));
 		}
 		else {
-			Builder builder = new SoyFileSet.Builder();
+			Builder builder = SoyFileSet.builder();
 
 			for (TemplateResource templateResource : templateResources) {
 				String templateContent = getTemplateContent(templateResource);
@@ -156,7 +157,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			renderer.setData(getSoyMapData());
 
-			renderer.render(writer);
+			writer.write(renderer.render());
 		}
 		catch (PrivilegedActionException pae) {
 			throw pae.getException();
@@ -176,7 +177,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		@Override
 		public SoyFileSet run() throws Exception {
-			Builder builder = new SoyFileSet.Builder();
+			Builder builder = SoyFileSet.builder();
 
 			for (TemplateResource templateResource : _templateResources) {
 				String templateContent = getTemplateContent(templateResource);

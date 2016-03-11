@@ -19,14 +19,14 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
 -include: ../../app.bnd
 -includeresource:\
-	@lib/aws-java-sdk-core.jar,\
-	@lib/aws-java-sdk-kms.jar,\
-	@lib/aws-java-sdk-s3.jar,\
-	@lib/commons-codec.jar,\
-	@lib/commons-logging.jar,\
-	@lib/httpclient.jar,\
-	@lib/httpcore.jar,\
-	@lib/jackson-annotations.jar,\
-	@lib/jackson-core.jar,\
-	@lib/jackson-databind.jar,\
-	@lib/joda-time.jar
+	@aws-java-sdk-core-*.jar,\
+	@aws-java-sdk-kms-*.jar,\
+	@aws-java-sdk-s3-*.jar,\
+	@commons-codec-*.jar,\
+	@commons-logging-*.jar,\
+	@httpclient-*.jar,\
+	@httpcore-*.jar,\
+	@jackson-annotations-*.jar,\
+	@jackson-core-*.jar,\
+	@jackson-databind-*.jar,\
+	@joda-time-*.jar

@@ -10,5 +10,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Comments
 -include: ../../app.bnd
 -includeresource:\
-	@lib/guava.jar,\
-	@lib/owasp-java-html-sanitizer.jar
+	@guava-*.jar,\
+	@owasp-java-html-sanitizer-*.jar

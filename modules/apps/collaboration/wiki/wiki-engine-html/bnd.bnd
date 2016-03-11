@@ -5,4 +5,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-html
 -include: ../../app.bnd
--includeresource: @../../../../../lib/portal/jericho-html.jar
+-includeresource: @jericho-html-*.jar

@@ -26,11 +26,11 @@ Liferay-Require-SchemaVersion: 1.0.3
 Liferay-Service: true
 -include: ../../app.bnd
 -includeresource:\
-	@${app.server.lib.portal.dir}/backport-concurrent.jar,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
-	@lib/net.fortuna.ical4j.jar
+	@backport-util-concurrent-*.jar,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@net.fortuna.ical4j-*.jar

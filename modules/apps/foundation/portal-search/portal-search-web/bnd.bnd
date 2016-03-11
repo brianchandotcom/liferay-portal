@@ -9,4 +9,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portal-search-web
 -include: ../../app.bnd
--includeresource: @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
+-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

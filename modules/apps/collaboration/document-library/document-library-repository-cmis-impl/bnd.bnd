@@ -16,10 +16,10 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 -include: ../../app.bnd
 -includeresource:\
-	@lib/chemistry-opencmis-client-api.jar,\
-	@lib/chemistry-opencmis-client-bindings.jar,\
-	@lib/chemistry-opencmis-client-impl.jar,\
-	@lib/chemistry-opencmis-commons-api.jar,\
-	@lib/chemistry-opencmis-commons-impl.jar,\
-	@lib/stax2-api.jar,\
-	@lib/woodstox-core-asl.jar
+	@chemistry-opencmis-client-api-*.jar,\
+	@chemistry-opencmis-client-bindings-*.jar,\
+	@chemistry-opencmis-client-impl-*.jar,\
+	@chemistry-opencmis-commons-api-*.jar,\
+	@chemistry-opencmis-commons-impl-*.jar,\
+	@stax2-api-*.jar,\
+	@woodstox-core-asl-*.jar

@@ -3,9 +3,9 @@ Bundle-SymbolicName: com.liferay.web.proxy.web
 Bundle-Version: 1.0.0
 Web-ContextPath: /web-proxy-web
 -includeresource:\
-	@lib/concurrent.jar,\
-	@lib/nekohtml.jar,\
-	@lib/org.portletbridge.core.jar,\
-	@lib/org.portletbridge.portlet.jar,\
-	@lib/serializer.jar,\
-	@lib/xalan.jar
+	@concurrent-*.jar,\
+	@nekohtml-*.jar,\
+	@org.portletbridge.core-*.jar,\
+	@org.portletbridge.portlet-*.jar,\
+	@serializer-*.jar,\
+	@xalan-*.jar

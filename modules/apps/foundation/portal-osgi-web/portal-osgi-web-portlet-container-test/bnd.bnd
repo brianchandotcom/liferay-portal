@@ -9,4 +9,4 @@ Require-Capability:\
 -include: ../../app.bnd
 -includeresource:\
 	test-classes/integration,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/Encryptor*.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/Encryptor*.class

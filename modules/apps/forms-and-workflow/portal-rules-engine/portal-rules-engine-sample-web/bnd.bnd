@@ -20,6 +20,6 @@ Web-ContextPath: /portal-rules-engine-sample-web
 -include: ../../app.bnd
 -includeresource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/com.liferay.util.java.jar!/com/liferay/util/portlet/PortletProps.class
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -wab: docroot

@@ -8,4 +8,4 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Metatype Ext
 -include: ../../app.bnd
--includeresource: @../../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+-includeresource: @biz.aQute.bndlib-*.jar!/aQute/bnd/annotation/metatype/*

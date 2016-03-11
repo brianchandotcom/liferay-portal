@@ -24,9 +24,9 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
 -includeresource:\
-	lib/google-api-client.jar=lib/google-api-client.jar,\
-	lib/google-api-services-oauth2.jar=lib/google-api-services-oauth2.jar,\
-	lib/google-http-client-jackson2.jar=lib/google-http-client-jackson2.jar,\
-	lib/google-http-client.jar=lib/google-http-client.jar,\
-	lib/google-oauth-client.jar=lib/google-oauth-client.jar,\
-	lib/jackson-core.jar=lib/jackson-core.jar
+	lib/google-api-client.jar=google-api-client-*.jar,\
+	lib/google-api-services-oauth2.jar=google-api-services-oauth2-*.jar,\
+	lib/google-http-client-jackson2.jar=google-http-client-jackson2-*.jar,\
+	lib/google-http-client.jar=google-http-client-*.jar,\
+	lib/google-oauth-client.jar=google-oauth-client-*.jar,\
+	lib/jackson-core.jar=jackson-core-*.jar

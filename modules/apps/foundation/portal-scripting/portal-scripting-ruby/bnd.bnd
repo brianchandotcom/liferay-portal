@@ -23,4 +23,4 @@ Liferay-Releng-Module-Group-Title: Scripting Engines
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
 -include: ../../app.bnd
--includeresource: @lib/jruby-complete.jar
+-includeresource: @jruby-complete-*.jar

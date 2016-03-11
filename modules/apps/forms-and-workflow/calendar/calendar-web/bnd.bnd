@@ -7,7 +7,7 @@ Liferay-Releng-Module-Group-Title: Calendar
 Web-ContextPath: /calendar-web
 -include: ../../app.bnd
 -includeresource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

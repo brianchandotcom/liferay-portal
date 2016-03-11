@@ -10,5 +10,5 @@ Liferay-Releng-Module-Group-Title: Bookmarks
 Web-ContextPath: /bookmarks-web
 -include: ../../app.bnd
 -includeresource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

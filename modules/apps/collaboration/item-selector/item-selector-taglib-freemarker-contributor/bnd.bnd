@@ -6,4 +6,4 @@ Import-Package: com.liferay.item.selector.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
--includeresource: @lib/com.liferay.item.selector.taglib.jar!/META-INF/resources/liferay-item-selector.tld
+-includeresource: @com.liferay.item.selector.taglib-*.jar!/META-INF/resources/liferay-item-selector.tld

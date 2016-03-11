@@ -6,4 +6,4 @@ Liferay-Releng-Module-Group-Title: Asset
 -include: ../../app.bnd
 -includeresource:\
 	test-classes/integration,\
-	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class
+	@com.liferay.journal.test-*.jar!/com/liferay/journal/test/util/JournalTestUtil.class

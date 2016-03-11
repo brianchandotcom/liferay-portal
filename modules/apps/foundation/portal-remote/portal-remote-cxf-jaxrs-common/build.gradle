@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "javax.annotation", name: "javax.annotation-api", version: "1.2"
 	provided group: "javax.json", name: "javax.json-api", version: "1.0"
 	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
 	provided group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"

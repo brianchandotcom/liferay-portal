@@ -12,12 +12,12 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
 -includeresource:\
-	@lib/antisamy.jar,\
-	@lib/batik-css.jar,\
-	@lib/batik-ext.jar,\
-	@lib/batik-util.jar,\
-	@lib/commons-httpclient.jar,\
-	@lib/nekohtml.jar,\
-	@lib/xercesImpl.jar,\
-	@lib/xml-apis.jar,\
-	@lib/xml-apis-ext.jar
+	@antisamy-*.jar,\
+	@batik-css-*.jar,\
+	@batik-ext-*.jar,\
+	@batik-util-*.jar,\
+	@commons-httpclient-*.jar,\
+	@nekohtml-*.jar,\
+	@xercesImpl-*.jar,\
+	@xml-apis-*.jar,\
+	@xml-apis-ext-*.jar

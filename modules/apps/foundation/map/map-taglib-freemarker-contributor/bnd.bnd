@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.map.taglib.freemarker.contributor
 Bundle-Version: 1.0.1
 Fragment-Host: com.liferay.portal.template.freemarker
 Import-Package: com.liferay.map.taglib.servlet.taglib
--includeresource: @lib/com.liferay.map.taglib.jar!/META-INF/resources/liferay-map.tld
+-includeresource: @com.liferay.map.taglib-*.jar!/META-INF/resources/liferay-map.tld

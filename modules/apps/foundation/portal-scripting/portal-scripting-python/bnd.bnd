@@ -29,4 +29,4 @@ Liferay-Releng-Module-Group-Title: Scripting Engines
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
 -include: ../../app.bnd
--includeresource: lib/jython-standalone.jar=lib/jython-standalone.jar
+-includeresource: lib/jython-standalone.jar=jython-standalone-*.jar

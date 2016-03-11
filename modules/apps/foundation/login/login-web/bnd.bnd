@@ -4,4 +4,4 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
--includeresource: @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
+-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class

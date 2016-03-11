@@ -8,7 +8,7 @@ Liferay-Service: true
 -dsannotations-options: inherit
 -include: ../../app.bnd
 -includeresource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@lib/jabsorb.jar
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@jabsorb-*.jar

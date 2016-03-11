@@ -6,5 +6,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
 -include: ../../app.bnd
 -includeresource:\
-	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
-	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
+	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/extender/*,\
+	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*

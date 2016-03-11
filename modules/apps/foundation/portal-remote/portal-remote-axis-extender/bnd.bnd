@@ -25,6 +25,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 -include: ../../app.bnd
 -includeresource:\
-	@lib/com.liferay.util.java.jar!/com/liferay/util/axis/*.class,\
-	@lib/axis-wsdl4j.jar,\
-	@lib/org.apache.axis.jar
+	@com.liferay.util.java-*.jar!/com/liferay/util/axis/*.class,\
+	@axis-wsdl4j-*.jar,\
+	@org.apache.axis-*.jar

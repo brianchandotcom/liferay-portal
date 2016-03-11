@@ -9,4 +9,4 @@ Web-ContextPath: /dynamic-data-mapping-web
 -include: ../../app.bnd
 -includeresource:\
 	META-INF/resources/content=src/main/resources/content,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class

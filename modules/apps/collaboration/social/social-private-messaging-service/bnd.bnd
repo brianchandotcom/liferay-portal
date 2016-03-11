@@ -15,6 +15,6 @@ Liferay-Releng-Module-Group-Title: Social Private Messaging
 Liferay-Service: true
 -include: ../../app.bnd
 -includeresource:\
-@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
-@../../../../../util-java/util-java.jar!/com/liferay/util/service/ServiceProps.class
+@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
+@com.liferay.util.java-*.jar!/com/liferay/util/service/ServiceProps.class

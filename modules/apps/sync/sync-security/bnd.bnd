@@ -2,9 +2,9 @@ Bundle-Name: Liferay Sync Security
 Bundle-SymbolicName: com.liferay.sync.security
 Bundle-Version: 1.0.1
 -includeresource:\
-	@lib/commons-codec.jar,\
-	@lib/google-collections.jar,\
-	@lib/gson.jar,\
-	@lib/httpcore.jar,\
-	@lib/joda-time.jar,\
-	@lib/jsontoken.jar
+	@commons-codec-*.jar,\
+	@google-collections-*.jar,\
+	@gson-*.jar,\
+	@httpcore-*.jar,\
+	@joda-time-*.jar,\
+	@jsontoken-*.jar

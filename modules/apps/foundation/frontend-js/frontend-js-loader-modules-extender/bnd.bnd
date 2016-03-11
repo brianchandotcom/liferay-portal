@@ -5,7 +5,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 -include: ../../app.bnd
 -includeresource:\
-	@lib/json.jar,\
-	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
-	@lib/biz.aQute.bndlib.jar!/aQute/lib/base64/*,\
-	@lib/biz.aQute.bndlib.jar!/aQute/lib/converter/*
+	@json-*.jar,\
+	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*,\
+	@biz.aQute.bndlib-*.jar!/aQute/lib/base64/*,\
+	@biz.aQute.bndlib-*.jar!/aQute/lib/converter/*

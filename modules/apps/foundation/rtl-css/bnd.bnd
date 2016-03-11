@@ -14,7 +14,7 @@ Liferay-Releng-Module-Group-Title:
 Main-Class: com.liferay.rtl.css.RTLConverter
 -include: ../app.bnd
 -includeresource:\
-	@lib/annotations.jar,\
-	@lib/ph-commons.jar,\
-	@lib/ph-css.jar,\
-	@lib/slf4j-api.jar
+	@annotations-*.jar,\
+	@ph-commons-*.jar,\
+	@ph-css-*.jar,\
+	@slf4j-api-*.jar

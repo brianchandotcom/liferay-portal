@@ -13,6 +13,6 @@ Web-ContextPath: /asset-publisher-web
 -dsannotations-options: inherit
 -include: ../../app.bnd
 -includeresource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

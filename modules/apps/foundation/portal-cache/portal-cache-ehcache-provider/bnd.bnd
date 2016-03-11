@@ -50,7 +50,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Cache Engines
 -include: ../../app.bnd
 -includeresource:\
-	@lib/ehcache.jar!/com/*,\
-	@lib/ehcache.jar!/net/*,\
-	@lib/ehcache.jar!/org/*,\
-	@lib/ehcache.jar!/META-INF/*
+	@ehcache-*.jar!/com/*,\
+	@ehcache-*.jar!/net/*,\
+	@ehcache-*.jar!/org/*,\
+	@ehcache-*.jar!/META-INF/*

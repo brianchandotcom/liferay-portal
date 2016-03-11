@@ -23,5 +23,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
 -include: ../../app.bnd
 -includeresource:\
-	@lib/velocity.jar,\
-	@lib/velocity-tools.jar
+	@velocity-*.jar,\
+	@velocity-tools-*.jar

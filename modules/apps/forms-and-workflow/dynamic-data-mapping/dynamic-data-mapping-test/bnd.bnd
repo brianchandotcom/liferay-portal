@@ -6,5 +6,5 @@ Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 -include: ../../app.bnd
 -includeresource:\
 	test-classes/integration,\
-	@lib/json.jar,\
-	@lib/jsonassert.jar
+	@json-*.jar,\
+	@jsonassert-*.jar

@@ -13,6 +13,6 @@ Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-web
 -include: ../../app.bnd
 -includeresource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

@@ -6,4 +6,4 @@ Liferay-Releng-Module-Group-Title: Document Library
 -include: ../../app.bnd
 -includeresource:\
 	test-classes/integration,\
-	@../../../../../lib/portal/chemistry-opencmis-commons-api.jar!/org/apache/chemistry/opencmis/commons/enums/CapabilityQuery.class
+	@chemistry-opencmis-commons-api-*.jar!/org/apache/chemistry/opencmis/commons/enums/CapabilityQuery.class

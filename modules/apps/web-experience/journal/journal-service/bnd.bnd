@@ -28,12 +28,12 @@ Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.l
 -include: ../../app.bnd
 -includeresource:\
 	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/FiniteUniqueStack.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/FiniteStack.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteUniqueStack.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteStack.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

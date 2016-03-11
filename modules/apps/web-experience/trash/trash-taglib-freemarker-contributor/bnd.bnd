@@ -6,4 +6,4 @@ Import-Package: com.liferay.trash.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
--includeresource: @lib/com.liferay.trash.taglib.jar!/META-INF/resources/liferay-trash.tld
+-includeresource: @com.liferay.trash.taglib-*.jar!/META-INF/resources/liferay-trash.tld

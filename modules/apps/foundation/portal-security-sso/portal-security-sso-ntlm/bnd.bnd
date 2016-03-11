@@ -10,4 +10,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 -include: ../../app.bnd
--includeresource: @lib/jcifs.jar
+-includeresource: @jcifs-*.jar

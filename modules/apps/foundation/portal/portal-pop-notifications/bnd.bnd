@@ -5,6 +5,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
 -include: ../../app.bnd
 -includeresource:\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/LiferayMimeMessage.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/MailEngine.class,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/mail/MailEngineException.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/mail/LiferayMimeMessage.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/mail/MailEngine.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/mail/MailEngineException.class

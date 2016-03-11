@@ -43,7 +43,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 -include: ../../app.bnd
 -includeresource:\
-	lib/=lib/cxf-rt-bindings-xml.jar,\
-	lib/=lib/cxf-rt-frontend-jaxws.jar,\
-	lib/=lib/cxf-rt-frontend-simple.jar,\
-	lib/=lib/cxf-rt-ws-policy.jar
+	lib/cxf-rt-bindings-xml.jar=cxf-rt-bindings-xml-*.jar,\
+	lib/cxf-rt-frontend-jaxws.jar=cxf-rt-frontend-jaxws-*.jar,\
+	lib/cxf-rt-frontend-simple.jar=cxf-rt-frontend-simple-*.jar,\
+	lib/cxf-rt-ws-policy.jar=cxf-rt-ws-policy-*.jar

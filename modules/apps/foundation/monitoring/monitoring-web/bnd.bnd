@@ -6,6 +6,6 @@ Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /monitoring-web
 -include: ../../app.bnd
 -includeresource:\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/log4j/Levels.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/Encryptor.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/log4j/Levels.class

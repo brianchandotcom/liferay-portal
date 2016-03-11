@@ -5,4 +5,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Publication Tools
 Web-ContextPath: /rss-web
 -include: ../../app.bnd
--includeresource: @../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

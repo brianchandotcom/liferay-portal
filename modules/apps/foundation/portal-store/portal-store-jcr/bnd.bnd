@@ -12,10 +12,10 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
 -include: ../../app.bnd
 -includeresource:\
-	@lib/concurrent.jar,\
-	@lib/jackrabbit-api.jar,\
-	@lib/jackrabbit-core.jar,\
-	@lib/jackrabbit-jcr-commons.jar,\
-	@lib/jackrabbit-spi.jar,\
-	@lib/jackrabbit-spi-commons.jar,\
-	@lib/jcr.jar
+	@concurrent-*.jar,\
+	@jackrabbit-api-*.jar,\
+	@jackrabbit-core-*.jar,\
+	@jackrabbit-jcr-commons-*.jar,\
+	@jackrabbit-spi-*.jar,\
+	@jackrabbit-spi-commons-*.jar,\
+	@jcr-*.jar

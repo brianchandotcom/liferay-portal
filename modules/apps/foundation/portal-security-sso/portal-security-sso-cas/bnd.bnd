@@ -13,5 +13,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 -include: ../../app.bnd
 -includeresource:\
-	@lib/cas-client-core.jar,\
-	@lib/opensaml.jar
+	@cas-client-core-*.jar,\
+	@opensaml-*.jar

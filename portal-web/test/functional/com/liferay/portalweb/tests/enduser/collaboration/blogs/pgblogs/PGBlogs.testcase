@@ -77,7 +77,7 @@
 		</for>
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 
@@ -537,20 +537,18 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Blogs#viewControlsPG" />
@@ -563,7 +561,7 @@
 		<var name="blogsEntryCounterList2" value="3,2,1" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Blogs Page" />
 			</execute>
 
@@ -574,7 +572,7 @@
 		</for>
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Blogs Page" />
 			</execute>
 
@@ -590,7 +588,7 @@
 		</for>
 
 		<for list="${blogsEntryCounterList2}" param="entryCount">
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Blogs Page" />
 			</execute>
 

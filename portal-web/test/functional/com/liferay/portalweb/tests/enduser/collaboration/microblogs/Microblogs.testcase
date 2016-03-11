@@ -11,7 +11,7 @@
 			<var name="pageName" value="Microblogs Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs Page" />
 		</execute>
 
@@ -19,7 +19,7 @@
 			<var name="portletName" value="Microblogs" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Microblogs Page" />
 		</execute>
 

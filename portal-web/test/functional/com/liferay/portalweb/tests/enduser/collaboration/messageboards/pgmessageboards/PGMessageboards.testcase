@@ -61,7 +61,7 @@
 		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
 
 		<for list="${categoryNameList}" param="categoryName" >
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 
@@ -1210,7 +1210,7 @@
 	<command name="ViewMBThreadReplyViaMoreMessages" priority="4">
 		<property name="custom.properties" value="discussion.comments.delta.value=5" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1219,7 +1219,7 @@
 			<var name="threadSubject" value="Message Boards Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1231,7 +1231,7 @@
 				<var name="threadSubject" value="Message Boards Thread Subject" />
 			</execute>
 
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 		</for>

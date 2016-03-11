@@ -223,7 +223,7 @@
 		</for>
 
 		<for list="${dmDocumentCounterList}" param="entryCount" >
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 

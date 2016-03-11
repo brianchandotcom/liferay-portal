@@ -20,14 +20,29 @@
 LayoutsPrototypeTreeDisplayContext layoutsTreeDisplayContext = new LayoutsPrototypeTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div class="tree-container tree-pages">
-	<li class="tree-node">
-		<div class="tree-node-content <%= layoutsTreeDisplayContext.isLayoutSelected() ? "tree-node-selected" : StringPool.BLANK %>">
-			<span class="tree-label">
-				<aui:a cssClass="layout-tree" href="<%= layoutsTreeDisplayContext.getLayoutURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutName() %>" />
+<div class="layout-prototype-tree lfr-tree">
+	<div class="tree-container tree-pages">
+		<li class="tree-node">
+			<div class="tree-node-content <%= layoutsTreeDisplayContext.isLayoutSelected() ? "tree-node-selected" : StringPool.BLANK %>">
+				<span class="tree-label">
+					<aui:a cssClass="layout-tree" href="<%= layoutsTreeDisplayContext.getLayoutURL() %>" label="<%= layoutsTreeDisplayContext.getLayoutName() %>" />
 
-				<a class="layout-tree-edit" href="<%= layoutsTreeDisplayContext.getEditLayoutURL() %>" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="edit" unicode="<%= true %>" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="<%= layoutsTreeDisplayContext.getLayoutName() %>" key="edit-x" /></span></a>
-			</span>
-		</div>
-	</li>
+					<div class="dropdown dropdown-menu-no-arrow layout-tree-options" data-updateable="true">
+						<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pageOptions" data-toggle="dropdown" href="javascript:;">
+							<aui:icon image="ellipsis-v" markupView="lexicon" />
+						</a>
+
+						<ul class="dropdown-menu dropdown-menu-left-side">
+							<li>
+								<a class="layout-tree-edit" data-qa-id="editPage" data-updateable="true" href="<%= layoutsTreeDisplayContext.getEditLayoutURL() %>">
+									<span aria-hidden="true"><liferay-ui:message key="edit" /></span>
+									<span class="sr-only"><liferay-ui:message arguments="<%= layoutsTreeDisplayContext.getLayoutName() %>" key="edit-x" /></span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</span>
+			</div>
+		</li>
+	</div>
 </div>

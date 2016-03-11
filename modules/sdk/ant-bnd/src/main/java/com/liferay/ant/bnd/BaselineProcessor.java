@@ -78,17 +78,6 @@ public class BaselineProcessor extends Analyzer {
 
 		String bsn = getBsn();
 		Version version = new Version(getVersion());
-		SortedSet<Version> versions = removeStagedAndFilter(repo.versions(bsn), repo, bsn);
-
-		if (versions.isEmpty()) {
-			// We have a repo
-			Version v = new Version(getVersion());
-			if (v.getWithoutQualifier().compareTo(Version.ONE) > 0) {
-				warning("There is no baseline for %s in the baseline repo %s. The build is for version %s, which is <= 1.0.0 which suggests that there should be a prior version.",
-						getBsn(), repo, v);
-			}
-			return null;
-		}
 
 		//
 		// Loop over the instructions, first match commits.
@@ -100,6 +89,17 @@ public class BaselineProcessor extends Analyzer {
 				Version target;
 
 				if (attrs.containsKey("version")) {
+					SortedSet<Version> versions = removeStagedAndFilter(repo.versions(bsn), repo, bsn);
+
+					if (versions.isEmpty()) {
+						// We have a repo
+						Version v = new Version(getVersion());
+						if (v.getWithoutQualifier().compareTo(Version.ONE) > 0) {
+							warning("There is no baseline for %s in the baseline repo %s. The build is for version %s, which is <= 1.0.0 which suggests that there should be a prior version.",
+									getBsn(), repo, v);
+						}
+						return null;
+					}
 
 					// Specified version!
 
@@ -137,8 +137,9 @@ public class BaselineProcessor extends Analyzer {
 					}
 					error("Specified file for baseline but could not find it %s", f);
 					return null;
-				} else {
-					target = versions.last();
+				}
+				else {
+					throw new IllegalArgumentException("Instruction must contain the version or file attribute!");
 				}
 
 				// Fetch the revision

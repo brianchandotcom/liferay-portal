@@ -3,10 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.extender
 Bundle-Version: 1.0.2
 Include-Resource:\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
-	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
-	@../../../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@../../../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/HashMapDictionary.class,\
-	@../../../../../portal-kernel/portal-kernel.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB
 Private-Package: com.liferay.portal.osgi.web.wab.extender.internal.*

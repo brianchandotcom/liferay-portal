@@ -29,10 +29,8 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Resource;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceBlockConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
@@ -45,7 +43,6 @@ import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
@@ -290,28 +287,23 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		if (ownerId == defaultUserId) {
-			try {
-				Role guestRole = RoleLocalServiceUtil.getRole(
-					companyId, RoleConstants.GUEST);
+		boolean ownerIsDefaultUser = ownerId == defaultUserId;
 
-				ResourcePermission resourcePermission =
-					ResourcePermissionLocalServiceUtil.getResourcePermission(
-						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-						primKey, guestRole.getRoleId());
+		if (ownerIsDefaultUser) {
+			List<String> guestUnsupportedActions;
 
-				ResourceAction resourceAction =
-					ResourceActionLocalServiceUtil.getResourceAction(
-						name, actionId);
-
-				if (resourcePermission.hasAction(resourceAction)) {
-					return true;
-				}
-				else {
-					return false;
-				}
+			if (name.indexOf(CharPool.PERIOD) != -1) {
+				guestUnsupportedActions =
+					ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+						name);
 			}
-			catch (PortalException pe) {
+			else {
+				guestUnsupportedActions =
+					ResourceActionsUtil.
+						getPortletResourceGuestUnsupportedActions(name);
+			}
+
+			if (guestUnsupportedActions.contains(actionId)) {
 				return false;
 			}
 		}
@@ -330,16 +322,33 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					groupId = groupedModel.getGroupId();
 				}
 
-				ResourceBlockIdsBag resourceBlockIdsBag =
-					getOwnerResourceBlockIdsBag(companyId, groupId, name);
+				ResourceBlockIdsBag resourceBlockIdsBag = null;
+
+				if (ownerIsDefaultUser) {
+					resourceBlockIdsBag = getGuestResourceBlockIdsBag(
+						companyId, groupId, name);
+				}
+				else {
+					resourceBlockIdsBag = getOwnerResourceBlockIdsBag(
+						companyId, groupId, name);
+				}
 
 				return ResourceBlockLocalServiceUtil.hasPermission(
 					name, permissionedModel, actionId, resourceBlockIdsBag);
 			}
 
+			long ownerRoleId = getOwnerRoleId();
+
+			if (ownerIsDefaultUser) {
+				Role guestRole = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.GUEST);
+
+				ownerRoleId = guestRole.getRoleId();
+			}
+
 			return ResourcePermissionLocalServiceUtil.hasResourcePermission(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
-				getOwnerRoleId(), actionId);
+				ownerRoleId, actionId);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

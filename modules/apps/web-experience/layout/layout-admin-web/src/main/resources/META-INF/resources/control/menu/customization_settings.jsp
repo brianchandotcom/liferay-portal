@@ -128,9 +128,16 @@ data.put("qa-id", "customizations");
 					</li>
 
 					<aui:script use="liferay-layout-customization-settings">
-						new Liferay.LayoutCustomizationSettings(
+						var layoutCustomizationSettings = new Liferay.LayoutCustomizationSettings(
 							{
 								namespace: '<%= portletNamespace %>'
+							}
+						);
+
+						Liferay.once(
+							'screenLoad',
+							function() {
+								layoutCustomizationSettings.destroy();
 							}
 						);
 					</aui:script>

@@ -27,6 +27,30 @@ AUI.add(
 						instance._bindUI();
 					},
 
+					destroy: function(event) {
+						var instance = this;
+
+						var columns = A.all('.portlet-column');
+
+						columns.each(
+							function(item, index) {
+								var overlayMask = item.getData('customizationControls');
+
+								if (overlayMask) {
+									overlayMask.destroy();
+								}
+							}
+						);
+
+						var customizationsHandle = instance._customizationsHandle;
+
+						if (customizationsHandle) {
+							customizationsHandle.detach();
+
+							instance._customizationsHandle = null;
+						}
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -170,34 +194,6 @@ AUI.add(
 								overlayMask.toggle();
 							}
 						);
-					},
-
-					_onPanelStateChange: function(event) {
-						var instance = this;
-
-						var columns = A.all('.portlet-column');
-
-						columns.each(
-							function(item, index) {
-								var overlayMask = item.getData('customizationControls');
-
-								if (overlayMask) {
-									overlayMask.hide();
-								}
-							}
-						);
-
-						var customizationsHandle = instance._customizationsHandle;
-
-						if (customizationsHandle) {
-							customizationsHandle.detach();
-
-							instance._customizationsHandle = null;
-						}
-
-						(new A.EventHandle(instance._eventHandles)).detach();
-
-						instance._eventHandles.length = 0;
 					}
 				}
 			}

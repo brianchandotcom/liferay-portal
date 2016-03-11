@@ -390,15 +390,6 @@
 							'dd'
 						]
 					},
-					'liferay-layout-customization-settings': {
-						path: 'layout_customization_settings.js',
-						requires: [
-							'aui-base',
-							'aui-io-request',
-							'aui-overlay-mask-deprecated',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-layout-freeform': {
 						path: 'layout_freeform.js',
 						requires: [

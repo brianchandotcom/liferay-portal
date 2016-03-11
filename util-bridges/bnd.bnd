@@ -6,5 +6,7 @@ Import-Package:\
 	com.liferay.*,\
 	*;resolution:=optional
 Include-Resource: classes
-
--baseline: *;version="6.2.0"
+-baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/util-bridges-6.2.5.jar
+-pluginpath.this:\
+	${project.dir}/../.bnd/ant-baseline-cache/util-bridges-6.2.5.jar;\
+		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/util-bridges/6.2.5/util-bridges-6.2.5.jar'

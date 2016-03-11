@@ -125,6 +125,25 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _customServletContextHelper.getServletContext();
+	}
+
+	@Override
+	public ServiceReference<ServletContextHelper>
+		getServletContextHelperSeviceReference() {
+
+		return _servletContextHelperServiceRegistration.getReference();
+	}
+
+	@Override
+	public ServiceReference<ServletContextListener>
+		getServletContextListenerSeviceReference() {
+
+		return _servletContextListenerServiceRegistration.getReference();
+	}
+
+	@Override
 	public void initDefaults() {
 		if (_defaultServletServiceRegistration == null) {
 			_defaultServletServiceRegistration = createDefaultServlet(
@@ -146,25 +165,6 @@ public class ServletContextHelperRegistrationImpl
 				createRestrictPortletServletRequestFilter(
 					_bundleContext, _servletContextName);
 		}
-	}
-
-	@Override
-	public ServletContext getServletContext() {
-		return _customServletContextHelper.getServletContext();
-	}
-
-	@Override
-	public ServiceReference<ServletContextHelper>
-		getServletContextHelperSeviceReference() {
-
-		return _servletContextHelperServiceRegistration.getReference();
-	}
-
-	@Override
-	public ServiceReference<ServletContextListener>
-		getServletContextListenerSeviceReference() {
-
-		return _servletContextListenerServiceRegistration.getReference();
 	}
 
 	@Override
@@ -393,16 +393,15 @@ public class ServletContextHelperRegistrationImpl
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
 	private final BundleContext _bundleContext;
-	private CustomServletContextHelper _customServletContextHelper;
+	private final CustomServletContextHelper _customServletContextHelper;
 	private ServiceRegistration<?> _defaultServletServiceRegistration;
 	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
 	private ServiceRegistration<?>
 		_portletServletRequestFilterServiceRegistration;
-	private ServiceRegistration<Servlet>
-		_portletServletServiceRegistration;
+	private ServiceRegistration<Servlet> _portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
 	private final Props _props;
-	private ServiceRegistration<ServletContextHelper>
+	private final ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final ServiceRegistration<ServletContextListener>
 		_servletContextListenerServiceRegistration;

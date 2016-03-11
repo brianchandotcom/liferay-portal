@@ -171,6 +171,53 @@ public class WabBundleProcessor {
 		}
 	}
 
+	public static class JspServletWrapper extends HttpServlet {
+
+		public JspServletWrapper(String jspFile) {
+			this.jspFile = jspFile;
+		}
+
+		@Override
+		public void destroy() {
+			_servlet.destroy();
+		}
+
+		@Override
+		public ServletConfig getServletConfig() {
+			return _servlet.getServletConfig();
+		}
+
+		@Override
+		public void init(ServletConfig servletConfig) throws ServletException {
+			_servlet.init(servletConfig);
+		}
+
+		@Override
+		public void service(
+				ServletRequest servletRequest, ServletResponse servletResponse)
+			throws IOException, ServletException {
+
+			String curJspFile = (String)servletRequest.getAttribute(
+				JspServlet.JSP_FILE);
+
+			if (jspFile != null) {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
+			}
+
+			try {
+				_servlet.service(servletRequest, servletResponse);
+			}
+			finally {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
+			}
+		}
+
+		protected String jspFile;
+
+		private final Servlet _servlet = new JspServlet();
+
+	}
+
 	protected void collectAnnotatedClasses(
 		String classResource, Bundle bundle, Class<?>[] handledTypesArray,
 		Set<Class<?>> annotatedClasses) {
@@ -284,156 +331,6 @@ public class WabBundleProcessor {
 				}
 			}
 		}
-	}
-
-	protected void initServletContainerInitializers(
-		Bundle bundle, ServletContext servletContext) {
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		Collection<String> initializerResources = bundleWiring.listResources(
-			"META-INF/services", "javax.servlet.ServletContainerInitializer",
-			BundleWiring.LISTRESOURCES_RECURSE);
-
-		if (initializerResources == null) {
-			return;
-		}
-
-		for (String initializerResource : initializerResources) {
-			URL url = bundle.getResource(initializerResource);
-
-			if (url == null) {
-				continue;
-			}
-
-			try (InputStream inputStream = url.openStream()) {
-				String fqcn = StringUtil.read(inputStream);
-
-				processServletContainerInitializerClass(
-					fqcn, bundle, bundleWiring, servletContext);
-			}
-			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
-			}
-		}
-	}
-
-	protected void processServletContainerInitializerClass(
-		String fqcn, Bundle bundle, BundleWiring bundleWiring,
-		ServletContext servletContext) {
-
-		Class<? extends ServletContainerInitializer> initializerClass = null;
-
-		try {
-			Class<?> clazz = bundle.loadClass(fqcn);
-
-			if (!ServletContainerInitializer.class.isAssignableFrom(clazz)) {
-				return;
-			}
-
-			initializerClass = clazz.asSubclass(
-				ServletContainerInitializer.class);
-		}
-		catch (Exception e) {
-			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
-
-			return;
-		}
-
-		HandlesTypes handledTypesAnnotation = initializerClass.getAnnotation(
-			HandlesTypes.class);
-
-		if (handledTypesAnnotation == null) {
-			handledTypesAnnotation = _NULL_HANDLES_TYPES;
-		}
-
-		Class<?>[] handledTypesArray = handledTypesAnnotation.value();
-
-		if (handledTypesArray == null) {
-			handledTypesArray = new Class[0];
-		}
-
-		Collection<String> classResources = bundleWiring.listResources(
-			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
-
-		if (classResources == null) {
-			classResources = new ArrayList<>(0);
-		}
-
-		Set<Class<?>> annotatedClasses = new HashSet<>();
-
-		for (String classResource : classResources) {
-			URL urlClassResource = bundle.getResource(classResource);
-
-			if (urlClassResource == null) {
-				continue;
-			}
-
-			collectAnnotatedClasses(
-				classResource, bundle, handledTypesArray, annotatedClasses);
-		}
-
-		if (annotatedClasses.isEmpty()) {
-			annotatedClasses = null;
-		}
-
-		try {
-			ServletContainerInitializer servletContainerInitializer =
-				initializerClass.newInstance();
-
-			servletContainerInitializer.onStartup(
-				annotatedClasses, servletContext);
-		}
-		catch (Throwable t) {
-			_logger.log(Logger.LOG_ERROR, t.getMessage(), t);
-		}
-	}
-
-	public static class JspServletWrapper extends HttpServlet {
-
-		public JspServletWrapper(String jspFile) {
-			this.jspFile = jspFile;
-		}
-
-		@Override
-		public void destroy() {
-			_servlet.destroy();
-		}
-
-		@Override
-		public ServletConfig getServletConfig() {
-			return _servlet.getServletConfig();
-		}
-
-		@Override
-		public void init(ServletConfig servletConfig) throws ServletException {
-			_servlet.init(servletConfig);
-		}
-
-		@Override
-		public void service(
-				ServletRequest servletRequest, ServletResponse servletResponse)
-			throws IOException, ServletException {
-
-			String curJspFile = (String)servletRequest.getAttribute(
-				JspServlet.JSP_FILE);
-
-			if (jspFile != null) {
-				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
-			}
-
-			try {
-				_servlet.service(servletRequest, servletResponse);
-			}
-			finally {
-				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
-			}
-		}
-
-		protected String jspFile;
-
-		private final Servlet _servlet = new JspServlet();
-
 	}
 
 	protected void destroyFilters() {
@@ -672,6 +569,38 @@ public class WabBundleProcessor {
 		}
 	}
 
+	protected void initServletContainerInitializers(
+		Bundle bundle, ServletContext servletContext) {
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		Collection<String> initializerResources = bundleWiring.listResources(
+			"META-INF/services", "javax.servlet.ServletContainerInitializer",
+			BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (initializerResources == null) {
+			return;
+		}
+
+		for (String initializerResource : initializerResources) {
+			URL url = bundle.getResource(initializerResource);
+
+			if (url == null) {
+				continue;
+			}
+
+			try (InputStream inputStream = url.openStream()) {
+				String fqcn = StringUtil.read(inputStream);
+
+				processServletContainerInitializerClass(
+					fqcn, bundle, bundleWiring, servletContext);
+			}
+			catch (IOException ioe) {
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+			}
+		}
+	}
+
 	protected void initServlets(WebXMLDefinition webXMLDefinition)
 		throws Exception {
 
@@ -740,6 +669,77 @@ public class WabBundleProcessor {
 			}
 
 			_servletRegistrations.add(serviceRegistration);
+		}
+	}
+
+	protected void processServletContainerInitializerClass(
+		String fqcn, Bundle bundle, BundleWiring bundleWiring,
+		ServletContext servletContext) {
+
+		Class<? extends ServletContainerInitializer> initializerClass = null;
+
+		try {
+			Class<?> clazz = bundle.loadClass(fqcn);
+
+			if (!ServletContainerInitializer.class.isAssignableFrom(clazz)) {
+				return;
+			}
+
+			initializerClass = clazz.asSubclass(
+				ServletContainerInitializer.class);
+		}
+		catch (Exception e) {
+			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+
+			return;
+		}
+
+		HandlesTypes handledTypesAnnotation = initializerClass.getAnnotation(
+			HandlesTypes.class);
+
+		if (handledTypesAnnotation == null) {
+			handledTypesAnnotation = _NULL_HANDLES_TYPES;
+		}
+
+		Class<?>[] handledTypesArray = handledTypesAnnotation.value();
+
+		if (handledTypesArray == null) {
+			handledTypesArray = new Class[0];
+		}
+
+		Collection<String> classResources = bundleWiring.listResources(
+			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (classResources == null) {
+			classResources = new ArrayList<>(0);
+		}
+
+		Set<Class<?>> annotatedClasses = new HashSet<>();
+
+		for (String classResource : classResources) {
+			URL urlClassResource = bundle.getResource(classResource);
+
+			if (urlClassResource == null) {
+				continue;
+			}
+
+			collectAnnotatedClasses(
+				classResource, bundle, handledTypesArray, annotatedClasses);
+		}
+
+		if (annotatedClasses.isEmpty()) {
+			annotatedClasses = null;
+		}
+
+		try {
+			ServletContainerInitializer servletContainerInitializer =
+				initializerClass.newInstance();
+
+			servletContainerInitializer.onStartup(
+				annotatedClasses, servletContext);
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_ERROR, t.getMessage(), t);
 		}
 	}
 

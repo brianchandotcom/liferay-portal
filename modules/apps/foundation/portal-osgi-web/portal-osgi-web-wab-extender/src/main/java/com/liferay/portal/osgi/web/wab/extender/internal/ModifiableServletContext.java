@@ -20,26 +20,24 @@ import java.lang.reflect.Proxy;
 
 import javax.servlet.ServletContext;
 
-
 /**
  * @author Raymond Augé
  */
 public class ModifiableServletContext implements InvocationHandler {
+
+	public static ServletContext createInstance(
+		ServletContext servletContext, WabBundleProcessor wabBundleProcessor) {
+
+		return (ServletContext)Proxy.newProxyInstance(
+			ModifiableServletContext.class.getClassLoader(), _INTERFACES,
+			new ModifiableServletContext(servletContext, wabBundleProcessor));
+	}
 
 	public ModifiableServletContext(
 		ServletContext servletContext, WabBundleProcessor wabBundleProcessor) {
 
 		_servletContext = servletContext;
 		_wabBundleProcessor = wabBundleProcessor;
-	}
-
-	public static ServletContext createInstance(
-		ServletContext servletContext, WabBundleProcessor wabBundleProcessor) {
-
-		return (ServletContext)Proxy.newProxyInstance(
-			ModifiableServletContext.class.getClassLoader(),
-			_INTERFACES,
-			new ModifiableServletContext(servletContext, wabBundleProcessor));
 	}
 
 	@Override

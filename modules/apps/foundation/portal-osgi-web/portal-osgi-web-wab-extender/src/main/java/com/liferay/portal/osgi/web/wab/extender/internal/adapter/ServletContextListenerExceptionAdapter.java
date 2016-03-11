@@ -37,9 +37,8 @@ public class ServletContextListenerExceptionAdapter
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext =
-			ModifiableServletContext.createInstance(
-				servletContextEvent.getServletContext(), _wabBundleProcessor);
+		ServletContext servletContext = ModifiableServletContext.createInstance(
+			servletContextEvent.getServletContext(), _wabBundleProcessor);
 
 		try {
 			_servletContextListener.contextDestroyed(
@@ -54,9 +53,8 @@ public class ServletContextListenerExceptionAdapter
 	public void contextInitialized(
 		final ServletContextEvent servletContextEvent) {
 
-		ServletContext servletContext =
-			ModifiableServletContext.createInstance(
-				servletContextEvent.getServletContext(), _wabBundleProcessor);
+		ServletContext servletContext = ModifiableServletContext.createInstance(
+			servletContextEvent.getServletContext(), _wabBundleProcessor);
 
 		try {
 			_servletContextListener.contextInitialized(

@@ -186,7 +186,7 @@
 
 		<execute macro="PageCustomizations#viewCustomizablePagePG" />
 
-		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Page without my customizations" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Wiki" />

@@ -422,22 +422,22 @@
 <!--PAGE_CUSTOMIZATION-->
 <tr>
 	<td>PAGE_CUSTOMIZATION_MESSAGE_INFO</td>
-	<td>//div[@class='customizable-layout']/span[contains(.,'You can customize this page')]</td>
+	<td>//li[contains(@class,'control-menu') and contains(@class,'nav-item')]/p[contains(.,'You can customize this page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE</td>
-	<td>//div[@class='customizable-layout']//span[contains(.,'View Default Page')]/a/span</td>
+	<td>//li/a[contains(.,'View Page without my customizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS</td>
-	<td>//div[@class='customizable-layout']//span[contains(.,'Reset My Customizations')]/a/span</td>
+	<td>//li/a[contains(.,'Reset My Customizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE</td>
-	<td>//div[@class='customizable-layout']//span[contains(.,'View My Customized')]/a/span</td>
+	<td>//li/a[contains(.,'View My Customized')]</td>
 	<td></td>
 </tr>
 <tr>

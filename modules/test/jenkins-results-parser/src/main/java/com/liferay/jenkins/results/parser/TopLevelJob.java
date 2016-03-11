@@ -73,13 +73,13 @@ public class TopLevelJob extends BaseJob {
 			if (getDownstreamJobs().size() ==
 					getDownstreamJobs("completed").size()) {
 
-				status = "completed";
+				setStatus("completed");
 
 				return;
 			}
 		}
 
-		status = "running";
+		setStatus("running");
 
 		return;
 	}
@@ -103,6 +103,14 @@ public class TopLevelJob extends BaseJob {
 			System.out.print(" Starting / ");
 			System.out.print(getDownstreamJobCount());
 			System.out.println(" Total");
+
+			List<DownstreamJob> missingJobs = getDownstreamJobs("missing");
+
+			for (DownstreamJob missingJob : missingJobs) {
+				if (missingJob.timeSinceStatusChange() > maxStartingTime) {
+					throw new TimeoutException("Downstream job disappeared");
+				}
+			}
 
 			long elapsedTime = System.currentTimeMillis() - startTime;
 

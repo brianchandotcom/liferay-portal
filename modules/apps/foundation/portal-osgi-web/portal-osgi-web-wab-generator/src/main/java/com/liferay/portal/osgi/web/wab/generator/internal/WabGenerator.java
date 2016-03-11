@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
 import org.osgi.framework.Bundle;
@@ -110,11 +108,8 @@ public class WabGenerator
 
 	protected void unsetModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-
-		_servletContext = null;
 	}
 
 	private ServiceRegistration<ArtifactUrlTransformer> _serviceRegistration;
-	private ServletContext _servletContext;
 
 }

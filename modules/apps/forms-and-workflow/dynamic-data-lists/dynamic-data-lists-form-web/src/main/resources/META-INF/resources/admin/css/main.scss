@@ -543,6 +543,13 @@ $horizontal-spacing: 35px;
 		top: 0;
 	}
 
+	.control-label {
+		float: none;
+		line-height: 12px;
+		margin-bottom: 0;
+		word-wrap: break-word;
+	}
+
 	.ddl-form-builder-buttons {
 		margin-bottom: 0;
 	}
@@ -598,13 +605,6 @@ $horizontal-spacing: 35px;
 		box-shadow: none;
 		margin: 0;
 		padding: 21px 0;
-
-		label {
-			float: none;
-			line-height: 12px;
-			margin-bottom: 0;
-			word-wrap: break-word;
-		}
 	}
 
 	.liferay-ddm-form-field-paragraph {

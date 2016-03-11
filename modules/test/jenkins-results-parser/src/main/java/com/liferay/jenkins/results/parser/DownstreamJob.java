@@ -168,6 +168,23 @@ public class DownstreamJob extends BaseJob {
 		return jsonObject.getJSONArray("builds");
 	}
 
+	protected JSONObject getCompletedBuildJSONObject() throws Exception {
+		JSONArray builds = getBuildsJSONArray();
+
+		for (int i = 0; i < builds.length(); i++) {
+			JSONObject build = builds.getJSONObject(i);
+
+			if ((number == build.getInt("number")) &&
+				(build.get("result") != null) &&
+				!build.getBoolean("building")) {
+
+				return build;
+			}
+		}
+
+		return null;
+	}
+
 	protected Set<String> getParameterNames() throws Exception {
 		Set<String> parameterNames = new HashSet<>();
 
@@ -193,6 +210,26 @@ public class DownstreamJob extends BaseJob {
 		return parameterNames;
 	}
 
+	protected JSONObject getQueueItemJSONObject() throws Exception {
+		JSONArray queueItems = getQueueItemsJSONArray();
+
+		for (int i = 0; i < queueItems.length(); i++) {
+			JSONObject queueItem = queueItems.getJSONObject(i);
+
+			String queueItemName = queueItem.getJSONObject(
+				"task").getString("name");
+			Map<String, String> jobParameters = getParameters(queueItem);
+
+			if (queueItemName.equals(name) &&
+				jobParameters.equals(parameters)) {
+
+				return queueItem;
+			}
+		}
+
+		return null;
+	}
+
 	protected JSONArray getQueueItemsJSONArray() throws Exception {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			"http://" + master +
@@ -201,6 +238,20 @@ public class DownstreamJob extends BaseJob {
 			false);
 
 		return jsonObject.getJSONArray("items");
+	}
+
+	protected JSONObject getRunningBuildJSONObject() throws Exception {
+		JSONArray builds = getBuildsJSONArray();
+
+		for (int i = 0; i < builds.length(); i++) {
+			JSONObject build = builds.getJSONObject(i);
+
+			if (parameters.equals(getParameters(build))) {
+				return build;
+			}
+		}
+
+		return null;
 	}
 
 	protected String invocationURL;

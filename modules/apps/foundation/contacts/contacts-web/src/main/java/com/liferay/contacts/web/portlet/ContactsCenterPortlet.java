@@ -563,9 +563,6 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception e) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			String message = "your-request-failed-to-complete";
 
 			if (e instanceof AddressCityException) {

@@ -128,12 +128,10 @@
 	</command>
 
 	<command name="openPrivateSitePageURL">
-		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${pageNameURL}')" name="pageNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
-		<var method="StringUtil#replace('${sitePageName}', ' ', '-')" name="sitePageNameURL" />
-		<var method="StringUtil#lowerCase('${sitePageNameURL}')" name="sitePageNameURL" />
 
-		<execute function="Open" locator1="/group/${siteNameURL}/${sitePageNameURL}" />
+		<execute function="Open" locator1="/group/${siteNameURL}/${pageNameURL}" />
 	</command>
 
 	<command name="openPrivateSiteURL">

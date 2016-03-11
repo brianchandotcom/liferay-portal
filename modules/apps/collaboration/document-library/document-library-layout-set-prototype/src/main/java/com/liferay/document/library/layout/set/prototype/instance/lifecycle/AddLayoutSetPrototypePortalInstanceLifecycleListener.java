@@ -134,7 +134,8 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 			"portletSetupTitle_" + LocaleUtil.getDefault(), "Technology news");
 		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
 		preferences.put(
-			"urls", "http://partners.userland.com/nytRss/technology.xml");
+			"urls",
+			"http://www.nytimes.com/services/xml/rss/userland/Technology.xml");
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			newsLayout, portletId, preferences);
@@ -149,7 +150,9 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 			"portletSetupTitle_" + LocaleUtil.getDefault(), "Liferay news");
 		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
 		preferences.put(
-			"urls", "http://www.liferay.com/en/about-us/news/-/blogs/rss");
+			"urls",
+			"https://www.liferay.com/about-us/newsroom/press-releases/-/" +
+				"asset_publisher/2oZC/rss");
 		preferences.put("titles", "Liferay Press Releases");
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(

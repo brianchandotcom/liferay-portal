@@ -248,6 +248,7 @@
 
 		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${pageName}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />

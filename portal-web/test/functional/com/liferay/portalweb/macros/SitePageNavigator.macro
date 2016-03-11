@@ -60,7 +60,7 @@
 		<execute macro="ProductMenuHelper#expandPageTree" />
 
 		<if>
-			<equals arg1="${sitePagePrivacy}" arg2="Private" />
+			<equals arg1="${sitePagePrivacy}" arg2="Private Pages" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#PRIVATE_PAGES" />
 			</then>

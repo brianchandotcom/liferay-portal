@@ -552,6 +552,10 @@
 			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
 			<var name="sitePagePrivacy" value="Private" />

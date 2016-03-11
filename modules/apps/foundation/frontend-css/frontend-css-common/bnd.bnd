@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend CSS Common
 Bundle-SymbolicName: com.liferay.frontend.css.common
-Bundle-Version: 1.0.5
+Bundle-Version: 1.0.6
 Include-Resource: META-INF/resources=tmp/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure

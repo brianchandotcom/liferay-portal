@@ -20,9 +20,7 @@
 		<if>
 			<equals arg1="${sitePageType}" arg2="Embedded" />
 			<then>
-				<var name="key_pageType" value="${sitePageType}" />
-
-				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Embedded" />
 
 				<execute macro="Page#_addPageTypeEmbedded">
 					<var name="pageTypeDescription" value="${pageTypeDescription}" />
@@ -32,9 +30,7 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Link to URL" />
 				<then>
-					<var name="key_pageType" value="${sitePageType}" />
-
-					<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Link to URL" />
 
 					<execute macro="Page#_addPageTypeLinkToURL">
 						<var name="pageTypeDescription" value="${pageTypeDescription}" />
@@ -45,9 +41,7 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Panel" />
 				<then>
-					<var name="key_pageType" value="${sitePageType}" />
-
-					<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Panel" />
 
 					<execute macro="Page#_addPageTypePanel">
 						<var name="componentName" value="${componentName}" />
@@ -59,7 +53,7 @@
 				<then>
 					<var name="key_columnName" value="${columnName}" />
 
-					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
+					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
 				</then>
 			</elseif>
 		</if>
@@ -98,15 +92,13 @@
 
 		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
 
-		<var name="key_pageType" value="${pageTemplateName}" />
-
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
-				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
 
-				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
 				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Inherit Changes If enabled, this page will inherit changes made to the page template." />
+
 				<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 			</then>
 		</if>
@@ -364,7 +356,8 @@
 	<command name="editPageLayoutColumn">
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
+		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -373,7 +366,7 @@
 	<command name="editPageTypeLayout">
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
+		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
 
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -925,15 +918,15 @@
 	</command>
 
 	<command name="viewPageTemplateTypeNotPresent">
-		<var name="key_pageType" value="${pageTemplateName}" />
+		<var name="key_pageName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+		<execute function="AssertElementNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
 	</command>
 
 	<command name="viewPageTemplateTypePresent">
-		<var name="key_pageType" value="${pageTemplateName}" />
+		<var name="key_pageName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+		<execute function="AssertElementPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
 	</command>
 
 	<command name="viewPanelPortletListCP">

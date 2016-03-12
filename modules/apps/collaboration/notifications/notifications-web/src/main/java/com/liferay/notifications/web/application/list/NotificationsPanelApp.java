@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + NotificationsPortletKeys.NOTIFICATIONS,
-		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT,
-		"panel.app.order:Integer=400"
+		"panel.app.order:Integer=400",
+		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT
 	},
 	service = PanelApp.class
 )

@@ -1,6 +1,6 @@
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.test.internal", version: "default"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"

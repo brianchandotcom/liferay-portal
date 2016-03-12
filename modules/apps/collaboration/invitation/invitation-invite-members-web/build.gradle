@@ -1,5 +1,4 @@
 dependencies {
-	provided project(":apps:foundation:portal:portal-upgrade")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
@@ -12,6 +11,7 @@ dependencies {
 	provided project(":apps:collaboration:invitation:invitation-invite-members-api")
 	provided project(":apps:collaboration:invitation:invitation-invite-members-service")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

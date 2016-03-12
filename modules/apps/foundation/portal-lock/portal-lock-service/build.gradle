@@ -6,14 +6,14 @@ buildService {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided project(":apps:foundation:portal:portal-spring-extender")
-	provided project(":apps:foundation:portal:portal-upgrade")
-	provided project(":apps:foundation:xstream:xstream-configurator-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
 	provided project(":apps:foundation:portal-lock:portal-lock-api")
+	provided project(":apps:foundation:portal:portal-spring-extender")
+	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:foundation:xstream:xstream-configurator-api")
 }
 
 liferay {

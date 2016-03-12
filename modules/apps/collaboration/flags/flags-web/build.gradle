@@ -1,5 +1,4 @@
 dependencies {
-	provided project(":apps:foundation:portal:portal-upgrade")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
@@ -9,6 +8,7 @@ dependencies {
 	provided project(":apps:collaboration:flags:flags-api")
 	provided project(":apps:collaboration:flags:flags-service")
 	provided project(":apps:collaboration:flags:flags-taglib")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

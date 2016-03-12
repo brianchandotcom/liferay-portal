@@ -3,7 +3,7 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:calendar:calendar-api")
 	testCompile project(":apps:forms-and-workflow:calendar:calendar-service")
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

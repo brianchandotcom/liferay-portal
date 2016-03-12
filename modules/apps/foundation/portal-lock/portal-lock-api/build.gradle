@@ -1,8 +1,8 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided project(":apps:foundation:osgi:osgi-util")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":apps:foundation:osgi:osgi-util")
 }
 
 liferay {

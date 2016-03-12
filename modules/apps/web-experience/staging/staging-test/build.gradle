@@ -1,8 +1,8 @@
 dependencies {
 	provided project(":apps:web-experience:journal:journal-test")
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:foundation:users-admin:users-admin-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

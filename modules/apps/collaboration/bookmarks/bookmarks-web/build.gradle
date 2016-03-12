@@ -1,7 +1,4 @@
 dependencies {
-	provided project(":apps:web-experience:application-list:application-list-api")
-	provided project(":apps:foundation:portal:portal-upgrade")
-	provided project(":apps:web-experience:trash:trash-taglib")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
@@ -13,6 +10,9 @@ dependencies {
 	provided project(":apps:collaboration:bookmarks:bookmarks-api")
 	provided project(":apps:collaboration:bookmarks:bookmarks-service")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
+	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:web-experience:application-list:application-list-api")
+	provided project(":apps:web-experience:trash:trash-taglib")
 }
 
 liferay {

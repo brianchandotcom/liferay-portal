@@ -335,12 +335,13 @@
 			<var name="pageName" value="Test Public Page" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Private Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 

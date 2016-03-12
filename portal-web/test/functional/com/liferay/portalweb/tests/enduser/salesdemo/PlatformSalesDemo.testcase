@@ -220,7 +220,7 @@
 			<var name="userAddressType" value="Business" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Drools Page" />
 		</execute>
 

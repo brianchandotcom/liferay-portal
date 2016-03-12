@@ -319,7 +319,7 @@
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
-				<execute function="Click" locator1="Icon#DELETE" />
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute macro="Alert#viewSuccessMessage" />
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />

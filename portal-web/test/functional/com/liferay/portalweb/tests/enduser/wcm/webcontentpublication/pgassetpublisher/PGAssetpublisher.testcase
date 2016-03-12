@@ -371,7 +371,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
-			<var name="selectedAsset" value="Document" />
+			<var name="selectedAsset" value="Basic Document" />
 			<var name="selectedAssetConfiguration" value="Document" />
 		</execute>
 	</command>

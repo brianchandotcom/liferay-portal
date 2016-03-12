@@ -21,7 +21,7 @@ buildSystemPackagesExtraManifest {
 
 		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
-		jarBuilder.withClasspath fileTree(dir: "lib", include: "*.jar") as File[]
+		jarBuilder.withClasspath configurations.runtime.files as File[]
 		jarBuilder.withName "system.packages.extra"
 		jarBuilder.withProperties properties
 		jarBuilder.withResources new File[0]

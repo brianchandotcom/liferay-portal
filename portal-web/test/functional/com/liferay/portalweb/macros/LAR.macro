@@ -115,13 +115,12 @@
 			<isset var="contentDateRange" />
 			<then>
 				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
-				<execute function="AssertClick" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
+				<execute function="Click" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
-				<execute function="Click" locator1="ExportImport#DATE_RANGE_POPUP_RANGE_RADIO" />
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-				<execute function="AssertTextEquals" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
+				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
+				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
 			</then>
 		</if>
 	</command>

@@ -318,7 +318,7 @@
 		</execute>
 
 		<execute macro="Page#editPageTypeLayout">
-			<var name="columnName" value="1_column" />
+			<var name="columnName" value="1 Column" />
 		</execute>
 
 		<execute macro="Page#viewPageLayout">

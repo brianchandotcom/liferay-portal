@@ -75,6 +75,10 @@ if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);"
 	backURL = HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL));
 }
 
+// CSS class
+
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:cssClass"));
+
 // Refresh
 
 boolean refresh = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:tabs:refresh"));
@@ -118,7 +122,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					}
 					%>
 
-					<nav class="navbar navbar-default">
+					<nav class="navbar navbar-default <%= cssClass %>">
 						<div class="container-fluid">
 							<ul class="nav navbar-nav">
 								<c:if test="<%= names.length > 1 %>">
@@ -133,7 +137,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 								</c:if>
 				</c:when>
 				<c:otherwise>
-					<ul class="lfr-nav nav nav-<%= type %>">
+					<ul class="lfr-nav nav nav-<%= type %> <%= cssClass %>">
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>

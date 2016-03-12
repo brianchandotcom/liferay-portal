@@ -43,6 +43,7 @@ public class TabsTag extends IncludeTag {
 
 			request.removeAttribute("liferay-ui:tabs:backLabel");
 			request.removeAttribute("liferay-ui:tabs:backURL");
+			request.removeAttribute("liferay-ui:tabs:cssClass");
 			request.removeAttribute("liferay-ui:tabs:formName");
 			request.removeAttribute("liferay-ui:tabs:names");
 			request.removeAttribute("liferay-ui:tabs:namesJS");
@@ -65,6 +66,7 @@ public class TabsTag extends IncludeTag {
 			if (!ServerDetector.isResin()) {
 				_backLabel = null;
 				_backURL = null;
+				_cssClass = StringPool.BLANK;
 				_endPage = null;
 				_formName = StringPool.BLANK;
 				_names = null;
@@ -257,6 +259,10 @@ public class TabsTag extends IncludeTag {
 		_backURL = backURL;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setEndPage(String endPage) {
 		_endPage = endPage;
 	}
@@ -415,6 +421,7 @@ public class TabsTag extends IncludeTag {
 
 	private String _backLabel;
 	private String _backURL;
+	private String _cssClass;
 	private String _endPage;
 	private String _formName;
 	private String[] _names;

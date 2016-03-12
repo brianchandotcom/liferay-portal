@@ -6,6 +6,10 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided project(":apps:collaboration:document-library:document-library-web")
+	provided project(":apps:collaboration:social:social-activities-web")
+	provided project(":apps:web-experience:asset:asset-publisher-web")
+	provided project(":apps:web-experience:rss:rss-web")
+	provided project(":apps:web-experience:site-navigation:site-navigation-language-web")
 }
 
 liferay {

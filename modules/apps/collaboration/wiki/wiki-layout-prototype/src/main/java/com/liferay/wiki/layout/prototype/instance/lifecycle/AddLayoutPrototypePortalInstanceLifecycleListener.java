@@ -28,11 +28,14 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiPage;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -94,9 +97,19 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
 			"column-2");
 
-		DefaultLayoutPrototypesUtil.addPortletId(
+		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,
 			"column-2");
+
+		Map<String, String> preferences = new HashMap<>();
+
+		preferences.put(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(WikiPage.class)));
+		preferences.put("showAssetCount", Boolean.TRUE.toString());
+
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			layout, portletId, preferences);
 	}
 
 	@Reference(

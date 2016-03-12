@@ -15,6 +15,7 @@
 package com.liferay.blogs.layout.prototype.instance.lifecycle;
 
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -29,10 +30,12 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -88,9 +91,19 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, BlogsPortletKeys.BLOGS, "column-1");
 
-		DefaultLayoutPrototypesUtil.addPortletId(
+		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD,
 			"column-2");
+
+		Map<String, String> preferences = new HashMap<>();
+
+		preferences.put(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class)));
+		preferences.put("showAssetCount", Boolean.TRUE.toString());
+
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			layout, portletId, preferences);
 
 		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-2");

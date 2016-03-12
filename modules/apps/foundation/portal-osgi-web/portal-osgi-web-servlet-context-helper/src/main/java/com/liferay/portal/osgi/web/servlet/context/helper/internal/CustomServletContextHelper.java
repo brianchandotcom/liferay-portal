@@ -105,15 +105,10 @@ public class CustomServletContextHelper
 		String path = null;
 
 		if (request.getDispatcherType() == DispatcherType.INCLUDE) {
-			path = (String)request.getAttribute(
-				RequestDispatcher.INCLUDE_SERVLET_PATH);
-
 			String pathInfo = (String)request.getAttribute(
 				RequestDispatcher.INCLUDE_PATH_INFO);
 
-			if (pathInfo != null) {
-				path = path + pathInfo;
-			}
+			path = pathInfo;
 		}
 		else {
 			path = request.getPathInfo();

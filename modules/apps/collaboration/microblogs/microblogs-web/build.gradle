@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "1.0.0"
+	provided project(":apps:foundation:portal:portal-upgrade")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

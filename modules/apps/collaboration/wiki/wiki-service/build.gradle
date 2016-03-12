@@ -6,15 +6,15 @@ buildService {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.9"
-	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.5"
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "1.0.0"
+	provided project(":apps:web-experience:export-import:export-import-api")
+	provided project(":apps:web-experience:export-import:export-import-service")
+	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
+	provided project(":apps:foundation:osgi:osgi-util")
+	provided project(":apps:foundation:portal:portal-spring-extender")
+	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
+	provided project(":core:registry-api")
+	provided project(":apps:foundation:xstream:xstream-configurator-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"

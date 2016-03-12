@@ -1,6 +1,6 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.product.navigation.control.menu.api", version: "1.0.1"
+	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":apps:web-experience:product-navigation:product-navigation-control-menu-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"

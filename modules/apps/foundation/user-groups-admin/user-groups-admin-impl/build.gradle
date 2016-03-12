@@ -1,8 +1,8 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "1.0.0"
+	provided project(":apps:web-experience:export-import:export-import-api")
+	provided project(":apps:web-experience:export-import:export-import-service")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
+	provided project(":apps:foundation:xstream:xstream-configurator-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

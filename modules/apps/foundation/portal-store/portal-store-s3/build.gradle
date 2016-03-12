@@ -6,8 +6,8 @@ dependencies {
 	provided group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.5.0"
 	provided group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.5.3"
 	provided group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.5.3"
-	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
+	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "commons-codec", name: "commons-codec", version: "1.6"
 	provided group: "commons-logging", name: "commons-logging", version: "1.1.3"

@@ -87,18 +87,22 @@ roleSearch.setResults(roles);
 			modelVar="role"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
+				cssClass="content-column title-column"
 				name="title"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-column type-column"
 				name="type"
 				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
 				name="description"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
 			/>
 		</liferay-ui:search-container-row>

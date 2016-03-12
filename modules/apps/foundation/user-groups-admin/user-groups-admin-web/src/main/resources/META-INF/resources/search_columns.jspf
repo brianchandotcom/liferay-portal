@@ -63,21 +63,25 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="text-strong"
+			cssClass="content-column name-column title-column"
 			href="<%= rowURL %>"
 			name="name"
 			orderable="<%= true %>"
 			property="name"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="content-column description-column"
 			href="<%= rowURL %>"
 			name="description"
 			orderable="<%= true %>"
 			property="description"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="text-column users-column"
 			name="users"
 		>
 			<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>

@@ -1,6 +1,6 @@
 @import "mixins";
 
-.portal-popup.dialog-iframe-popup > #main-content,
+.portal-popup.dialog-iframe-popup #main-content,
 .portal-popup.dialog-iframe-popup > #wrapper {
 	overflow-x: hidden;
 }

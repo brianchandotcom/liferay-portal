@@ -14,21 +14,60 @@ $horizontal-spacing: 35px;
 	position: absolute;
 }
 
+.ddl-form-settings-modal,
+.lfr-ddl-field-settings-modal.form-builder-field-settings,
+.publish-modal-container {
+	.modal-body {
+		background-color: #FFF;
+	}
+}
+
 .ddl-publish-modal {
 	.alert-info {
 		text-align: center;
 	}
 
 	.ddl-publish-checkbox {
+		margin-bottom: 0;
 		width: 100%;
 
 		small {
 			display: block;
 		}
+
+		> span {
+			margin-bottom: 0.4em;
+			margin-top: 0.4em;
+		}
 	}
 
 	.input-checkbox-wrapper {
 		float: right;
+		margin-bottom: 0;
+	}
+
+	.lfr-ddm-repeatable-delete-button {
+		position: absolute;
+		right: 15px;
+		top: 0;
+	}
+
+	.liferay-ddm-form-renderer-wizard-navigation-allowed {
+		> li {
+			cursor: pointer;
+		}
+	}
+
+	select.form-control[multiple] {
+		height: auto;
+	}
+
+	.text-to-copy {
+		background-color: transparent;
+	}
+
+	.toggle-switch {
+		display: none;
 	}
 }
 
@@ -259,7 +298,6 @@ $horizontal-spacing: 35px;
 	}
 
 	.modal-body {
-		background-color: #FFF;
 		overflow-x: hidden;
 		overflow-y: auto;
 		padding: 0;
@@ -956,55 +994,6 @@ $horizontal-spacing: 35px;
 		> li {
 			cursor: pointer;
 		}
-	}
-
-	.toggle-switch {
-		display: none;
-	}
-}
-
-.ddl-publish-modal {
-	.alert-info {
-		text-align: center;
-	}
-
-	.ddl-publish-checkbox {
-		margin-bottom: 0;
-		width: 100%;
-
-		small {
-			display: block;
-		}
-
-		> span {
-			margin-bottom: 0.4em;
-			margin-top: 0.4em;
-		}
-	}
-
-	.input-checkbox-wrapper {
-		float: right;
-		margin-bottom: 0;
-	}
-
-	.lfr-ddm-repeatable-delete-button {
-		position: absolute;
-		right: 15px;
-		top: 0;
-	}
-
-	.liferay-ddm-form-renderer-wizard-navigation-allowed {
-		> li {
-			cursor: pointer;
-		}
-	}
-
-	select.form-control[multiple] {
-		height: auto;
-	}
-
-	.text-to-copy {
-		background-color: transparent;
 	}
 
 	.toggle-switch {

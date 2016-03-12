@@ -258,7 +258,8 @@ public class ServletContextHelperRegistrationImpl
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "jsp");
 		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "*.jsp");
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+				new String[] {"*.jsp", "*.jspx"});
 
 		return bundleContext.registerService(
 			Servlet.class, new JspServletWrapper(), properties);

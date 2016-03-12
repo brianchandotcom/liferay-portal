@@ -154,8 +154,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK</td>
-	<td>//a[contains(@id,'_rangeLink')]</td>
+	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE</td>
+	<td>//input[contains(@id,'rangeDateRange')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,12 +182,12 @@
 <!--DATE_RANGE-->
 <tr>
 	<td>DATE_RANGE_START_DATE</td>
-	<td>//input[contains(@name,'startDate')]</td>
+	<td>xpath=(//input[contains(@name,'startDate') and contains(@type,'text')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_RANGE_END_DATE</td>
-	<td>//input[contains(@name,'endDate')]</td>
+	<td>xpath=(//input[contains(@name,'endDate') and contains(@type,'text')])[1]</td>
 	<td></td>
 </tr>
 <tr>

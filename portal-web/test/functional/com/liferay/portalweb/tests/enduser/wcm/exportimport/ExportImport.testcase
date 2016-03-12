@@ -779,8 +779,7 @@
 		</execute>
 
 		<execute macro="DMDocument#deleteCP">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="recycleBinDisabled" value="true" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

@@ -47,7 +47,7 @@
 				PortletURL notificationsURL = PortletProviderUtil.getPortletURL(request, UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
 				%>
 
-				<aui:a href="<%= notificationsURL.toString() %>">
+				<aui:a href="<%= notificationsURL != null ? notificationsURL.toString() : null %>">
 					<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
 				</aui:a>
 			</c:if>

@@ -1,9 +1,27 @@
+import aQute.bnd.gradle.Baseline
 import org.gradle.execution.ProjectConfigurer
+
+buildscript {
+	dependencies {
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "3.1.0"
+	}
+
+	repositories {
+		if (!Boolean.getBoolean("maven.local.ignore")) {
+			mavenLocal()
+		}
+
+		maven {
+			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
 
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
 
 configurations {
+	baseline
 	compile {
 		if (!project.path.startsWith(":sdk:") &&
 			!project.path.startsWith(":test:") &&
@@ -30,6 +48,12 @@ configurations.provided.dependencies.withType(ProjectDependency) {
 	configurations.default.exclude module: it.name
 }
 
+dependencies {
+	baseline('group': group, 'name': jar.baseName, 'version': "(,${jar.version})") {
+		transitive false
+	}
+}
+
 List<String> taskNames = gradle.startParameter.taskNames
 
 if (("eclipse" in taskNames) || ("idea" in taskNames)) {
@@ -44,4 +68,9 @@ if (("eclipse" in taskNames) || ("idea" in taskNames)) {
 			projectConfigurer.configure projectDependency.dependencyProject
 		}
 	}
+}
+
+task baseline(type: Baseline) {
+	bundle jar
+	baseline configurations.baseline
 }

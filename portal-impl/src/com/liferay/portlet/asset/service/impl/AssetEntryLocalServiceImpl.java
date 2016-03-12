@@ -697,7 +697,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			if (entry.isVisible()) {
 				boolean isNew = entry.isNew();
 
-				assetEntryPersistence.updateImpl(entry);
+				assetEntryPersistence.update(entry);
 
 				if (isNew) {
 					for (AssetTag tag : tags) {

@@ -1,4 +1,6 @@
-Bundle-ClassPath: .,lib/jython-standalone.jar
+Bundle-ClassPath:\
+	.,\
+	lib/jython-standalone.jar
 Bundle-Name: Liferay Portal Scripting Python
 Bundle-SymbolicName: com.liferay.portal.scripting.python
 Bundle-Version: 1.0.1

@@ -5,4 +5,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Themes
 Web-ContextPath: /frontend-theme-admin-web
 -donotcopy: (.*_diffs.*)
--include: ../../../app.bnd
+-include: ../../app.bnd

@@ -101,7 +101,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Elasticsearch
--include: bnd.bnd
+-include: ../../app.bnd
 -includeresource:\
 	lib/antlr-runtime.jar=antlr-runtime-*.jar,\
 	lib/asm-commons.jar=asm-commons-*.jar,\

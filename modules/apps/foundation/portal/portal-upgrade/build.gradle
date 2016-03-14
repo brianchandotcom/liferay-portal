@@ -1,9 +1,9 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.9"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
+	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
+	provided project(":apps:foundation:osgi:osgi-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.jgrapht", name: "jgrapht-core", version: "0.9.1"

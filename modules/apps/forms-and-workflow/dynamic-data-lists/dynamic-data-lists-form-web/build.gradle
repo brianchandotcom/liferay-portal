@@ -2,18 +2,18 @@ apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.evaluator", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.renderer", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.values.factory", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.values.query", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.validator", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.9"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
+	provided project(":apps:web-experience:application-list:application-list-api")
+	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-values-query")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
+	provided project(":apps:foundation:osgi:osgi-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"

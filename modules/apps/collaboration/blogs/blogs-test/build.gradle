@@ -1,5 +1,5 @@
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	testCompile project(":core:registry-api")
 	testCompile project(":apps:collaboration:blogs:blogs-service")
 	testCompile project(":apps:collaboration:blogs:blogs-web")
 

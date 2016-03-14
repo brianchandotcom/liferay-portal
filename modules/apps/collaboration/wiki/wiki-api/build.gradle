@@ -1,11 +1,11 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.9"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.settings", version: "1.0.0"
+	provided project(":apps:collaboration:item-selector:item-selector-api")
+	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
+	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
+	provided project(":apps:foundation:osgi:osgi-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-settings")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

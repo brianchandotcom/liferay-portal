@@ -1,7 +1,7 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
+	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.13.0"
 	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-bindings", version: "0.13.0"

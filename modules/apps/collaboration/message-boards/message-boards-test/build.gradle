@@ -1,6 +1,6 @@
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.portal.search", version: "1.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	testCompile project(":apps:foundation:portal-search:portal-search")
+	testCompile project(":core:registry-api")
 	testCompile project(":apps:collaboration:message-boards:message-boards-comment")
 	testCompile project(":apps:collaboration:message-boards:message-boards-web")
 

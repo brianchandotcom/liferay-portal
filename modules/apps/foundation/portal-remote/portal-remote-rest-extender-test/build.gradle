@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.9"
+	provided project(":apps:foundation:osgi:osgi-util")
 	provided group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.2"
 	provided group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.2"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

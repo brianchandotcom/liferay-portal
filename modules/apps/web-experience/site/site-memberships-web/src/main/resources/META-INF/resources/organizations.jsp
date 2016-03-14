@@ -88,8 +88,6 @@ organizationSearch.setResults(organizations);
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
-
 <portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
@@ -169,7 +167,8 @@ organizationSearch.setResults(organizations);
 							}
 						}
 					},
-					title: '<liferay-ui:message key="add-organizations-to-this-site" />',
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="assign-organizations-to-this-site" />',
 					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organizations.jsp" /></portlet:renderURL>'
 				}
 			);

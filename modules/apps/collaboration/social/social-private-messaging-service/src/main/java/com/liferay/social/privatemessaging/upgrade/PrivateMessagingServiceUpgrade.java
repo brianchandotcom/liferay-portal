@@ -39,7 +39,7 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradePrivateMessaging(), new UpgradePortletId());
 
 		registry.register(
-			"com.liferay.social.privatemessaging.web", "1.0.0", "1.0.1",
+			"com.liferay.social.privatemessaging.service", "1.0.0", "1.0.1",
 			new UpgradeResourcePermission());
 	}
 

@@ -27,7 +27,7 @@ public interface Job {
 
 	public String getStatus();
 
-	public String getURL();
+	public String getBuildURL();
 
 	public void update() throws Exception;
 

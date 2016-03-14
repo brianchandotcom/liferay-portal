@@ -29,8 +29,7 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsStopJobUtil {
 
-	public static void stopJob(
-			String jobURL, String username, String password)
+	public static void stopJob(String jobURL, String username, String password)
 		throws Exception {
 
 		_stopDownstreamJobs(jobURL, username, password);
@@ -103,8 +102,7 @@ public class JenkinsStopJobUtil {
 		}
 	}
 
-	private static void _stopJob(
-			Job job, String username, String password)
+	private static void _stopJob(Job job, String username, String password)
 		throws Exception {
 
 		_stopJob(job.getURL(), username, password);

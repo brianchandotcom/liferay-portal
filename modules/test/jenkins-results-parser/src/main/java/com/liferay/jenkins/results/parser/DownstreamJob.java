@@ -30,24 +30,6 @@ import org.json.JSONObject;
  */
 public class DownstreamJob extends BaseJob {
 
-	protected Map<String, String> getParameters(String queryString) {
-		if (!queryString.contains("=")) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, String> parameters = new HashMap<>();
-
-		for (String parameter : queryString.split("&")) {
-			if (parameter.contains("=")) {
-				String[] parameterParts = parameter.split("=");
-
-				parameters.put(parameterParts[0], parameterParts[1]);
-			}
-		}
-
-		return parameters;
-	}
-
 	public DownstreamJob(String invocationURL, TopLevelJob topLevelJob)
 		throws Exception {
 
@@ -65,8 +47,7 @@ public class DownstreamJob extends BaseJob {
 
 		String parametersString = invocationURLMatcher.group("queryString");
 
-		Map<String, String> invokedParameters = getParameters(
-			parametersString);
+		Map<String, String> invokedParameters = getParameters(parametersString);
 
 		Set<String> parameterNames = getParameterNames();
 
@@ -192,6 +173,64 @@ public class DownstreamJob extends BaseJob {
 		return parameterNames;
 	}
 
+	protected Map<String, String> getParameters(JSONArray jsonArray)
+		throws Exception {
+
+		Map<String, String> parameters = new HashMap<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (jsonObject.opt("value") instanceof String) {
+				String name = jsonObject.getString("name");
+				String value = jsonObject.getString("value");
+
+				parameters.put(name, value);
+			}
+		}
+
+		return parameters;
+	}
+
+	protected Map<String, String> getParameters(JSONObject buildJSONObject)
+		throws Exception {
+
+		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
+
+		if (actionsJSONArray.length() == 0) {
+			return new HashMap<>();
+		}
+
+		JSONObject jsonObject = actionsJSONArray.getJSONObject(0);
+
+		if (jsonObject.has("parameters")) {
+			JSONArray parametersJSONArray = jsonObject.getJSONArray(
+				"parameters");
+
+			return getParameters(parametersJSONArray);
+		}
+
+		return new HashMap<>();
+	}
+
+	protected Map<String, String> getParameters(String queryString) {
+		if (!queryString.contains("=")) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> parameters = new HashMap<>();
+
+		for (String parameter : queryString.split("&")) {
+			if (parameter.contains("=")) {
+				String[] parameterParts = parameter.split("=");
+
+				parameters.put(parameterParts[0], parameterParts[1]);
+			}
+		}
+
+		return parameters;
+	}
+
 	protected JSONObject getQueueItemJSONObject() throws Exception {
 		JSONArray queueItems = getQueueItemsJSONArray();
 
@@ -239,46 +278,6 @@ public class DownstreamJob extends BaseJob {
 	protected String invocationURL;
 	protected Map<String, String> parameters;
 	protected TopLevelJob topLevelJob;
-
-	protected Map<String, String> getParameters(JSONArray jsonArray)
-		throws Exception {
-
-		Map<String, String> parameters = new HashMap<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if (jsonObject.opt("value") instanceof String) {
-				String name = jsonObject.getString("name");
-				String value = jsonObject.getString("value");
-
-				parameters.put(name, value);
-			}
-		}
-
-		return parameters;
-	}
-
-	protected Map<String, String> getParameters(JSONObject buildJSONObject)
-		throws Exception {
-
-		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
-
-		if (actionsJSONArray.length() == 0) {
-			return new HashMap<>();
-		}
-
-		JSONObject jsonObject = actionsJSONArray.getJSONObject(0);
-		
-		if (jsonObject.has("parameters")) {
-			JSONArray parametersJSONArray = jsonObject.getJSONArray(
-				"parameters");
-
-			return getParameters(parametersJSONArray);
-		}
-
-		return new HashMap<>();
-	}
 
 	private String getBuildMessage() {
 		StringBuilder sb = new StringBuilder();

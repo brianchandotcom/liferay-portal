@@ -106,8 +106,8 @@ public abstract class BaseJob implements Job {
 		update();
 	}
 
-	protected long getTimeSinceStatusChanged() {
-		return System.currentTimeMillis() - _lastStatusChangedTime;
+	protected long getLastStatusChangedTime() {
+		return _lastStatusChangedTime;
 	}
 
 	protected String master;

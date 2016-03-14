@@ -105,7 +105,7 @@ public class TopLevelJob extends BaseJob {
 				if ((time - missingJob.getStatusModifiedTime()) >
 						maxStartTime) {
 
-					throw new TimeoutException("Downstream job disappeared");
+					throw new TimeoutException("Missing downstream job");
 				}
 			}
 
@@ -131,17 +131,6 @@ public class TopLevelJob extends BaseJob {
 				Thread.sleep(sleepTime);
 			}
 		}
-	}
-
-	protected List<String> getDownstreamURLs(String status) throws Exception {
-		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status);
-		List<String> downstreamURLs = new ArrayList<>(downstreamJobs.size());
-
-		for (DownstreamJob downstreamJob : downstreamJobs) {
-			downstreamURLs.add(downstreamJob.getURL());
-		}
-
-		return downstreamURLs;
 	}
 
 	private List<DownstreamJob> _downstreamJobs = new ArrayList<>();

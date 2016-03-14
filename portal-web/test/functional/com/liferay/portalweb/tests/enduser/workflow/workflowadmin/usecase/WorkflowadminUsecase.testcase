@@ -644,7 +644,9 @@
 			<var name="workflowDefinition" value="Scripted Single Approver (Version 1)" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Organization Name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

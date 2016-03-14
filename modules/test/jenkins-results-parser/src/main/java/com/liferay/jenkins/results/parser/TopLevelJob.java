@@ -27,12 +27,6 @@ public class TopLevelJob extends BaseJob {
 		super(url);
 	}
 
-	protected int getDownstreamJobCount(String status) {
-		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status); 
-
-		return downstreamJobs.size();
-	}
-
 	public List<DownstreamJob> getDownstreamJobs(String status) {
 		if (status == null) {
 			return _downstreamJobs;
@@ -54,7 +48,7 @@ public class TopLevelJob extends BaseJob {
 		for (DownstreamJob downstreamJob : _downstreamJobs) {
 			downstreamJob.update();
 		}
-		
+
 		if (_downstreamJobs.size() == getDownstreamJobCount("completed")) {
 			setStatus("completed");
 
@@ -72,7 +66,7 @@ public class TopLevelJob extends BaseJob {
 
 		while (true) {
 			update();
-			
+
 			StringBuilder sb = new StringBuilder();
 
 			sb.append(getDownstreamJobCount("completed"));
@@ -85,7 +79,7 @@ public class TopLevelJob extends BaseJob {
 			sb.append(" Starting / ");
 			sb.append(_downstreamJobs.size());
 			sb.append(" Total");
-			
+
 			System.out.println(sb.toString());
 
 			List<DownstreamJob> missingDownstreamJobs = getDownstreamJobs(
@@ -125,6 +119,12 @@ public class TopLevelJob extends BaseJob {
 		}
 	}
 
-	private List<DownstreamJob> _downstreamJobs = new ArrayList<>();
+	protected int getDownstreamJobCount(String status) {
+		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status);
+
+		return downstreamJobs.size();
+	}
+
+	private final List<DownstreamJob> _downstreamJobs = new ArrayList<>();
 
 }

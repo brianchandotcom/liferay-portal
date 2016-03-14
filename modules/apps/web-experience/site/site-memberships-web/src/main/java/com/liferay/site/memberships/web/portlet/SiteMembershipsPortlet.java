@@ -286,6 +286,22 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ArrayUtil.toLongArray(removeRoleIds));
 	}
 
+	public void editUserGroupsSiteRoles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Group group = getGroup(actionRequest, actionResponse);
+
+		long[] userGroupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+
+		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIdsRole");
+
+		for (long roleId : roleIds) {
+			_userGroupGroupRoleService.addUserGroupGroupRoles(
+				userGroupIds, group.getGroupId(), roleId);
+		}
+	}
+
 	public void editUsersSiteRoles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

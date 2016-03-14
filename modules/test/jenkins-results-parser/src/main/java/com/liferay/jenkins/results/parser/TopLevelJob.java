@@ -27,7 +27,7 @@ public class TopLevelJob extends BaseJob {
 		super(url);
 	}
 
-	public int getDownstreamJobCount(String status) {
+	protected int getDownstreamJobCount(String status) {
 		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status); 
 
 		return downstreamJobs.size();

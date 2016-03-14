@@ -31,7 +31,7 @@ gradle.beforeProject {
 			}
 
 			dependencies {
-				pmd project(":util:pmd")
+				pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
 				xmltask rootProject.files("../lib/development/xmltask.jar")
 			}
 

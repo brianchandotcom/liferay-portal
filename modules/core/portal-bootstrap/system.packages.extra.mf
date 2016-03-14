@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1457818068662
+Bnd-LastModified: 1457994683067
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_95 (Oracle Corporation)
+Created-By: 1.7.0_80 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2427,10 +2427,10 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ,com.liferay.portal.kernel.util",com.liferay.mobile.device.rules.kern
  el;version="1.0.0";uses:="com.liferay.expando.kernel.model,com.lifera
  y.exportimport.kernel.lar",com.liferay.osgi.service.tracker.collectio
- ns;version="1.0.1";uses:="org.osgi.framework",com.liferay.osgi.servic
- e.tracker.collections.list;version="1.0.1";uses:="org.osgi.framework,
+ ns;version="1.0.2";uses:="org.osgi.framework",com.liferay.osgi.servic
+ e.tracker.collections.list;version="1.0.2";uses:="org.osgi.framework,
  org.osgi.util.tracker",com.liferay.osgi.service.tracker.collections.m
- ap;version="1.0.1";uses:="com.liferay.osgi.service.tracker.collection
+ ap;version="1.0.2";uses:="com.liferay.osgi.service.tracker.collection
  s,org.osgi.framework,org.osgi.util.tracker",com.liferay.portal;versio
  n="1.0.0",com.liferay.portal.action;uses:="com.liferay.portal.kernel.
  exception,com.liferay.portal.kernel.json,com.liferay.portal.kernel.mo
@@ -3116,7 +3116,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  el.security.permission,com.liferay.portal.kernel.service,com.liferay.
  portal.kernel.theme,javax.portlet,javax.servlet.http",com.liferay.por
  tal.kernel.url;version="1.0.0";uses:="javax.servlet",com.liferay.port
- al.kernel.util;version="7.0.0";uses:="com.liferay.expando.kernel.mode
+ al.kernel.util;version="7.1.0";uses:="com.liferay.expando.kernel.mode
  l,com.liferay.mail.kernel.model,com.liferay.portal.kernel.concurrent,
  com.liferay.portal.kernel.configuration,com.liferay.portal.kernel.dao
  .jdbc.aop,com.liferay.portal.kernel.dao.search,com.liferay.portal.ker
@@ -4263,7 +4263,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  s.kernel.model,javax.portlet",com.liferay.registry;version="1.0.0";us
  es:="com.liferay.registry.dependency",com.liferay.registry.collection
  s;version="1.0.0";uses:="com.liferay.registry",com.liferay.registry.d
- ependency;version="1.0.0";uses:="com.liferay.registry",com.liferay.re
+ ependency;version="1.0.1";uses:="com.liferay.registry",com.liferay.re
  gistry.util;version="1.0.0",com.liferay.roles.admin.kernel.util;versi
  on="1.0.0";uses:="com.liferay.portal.kernel.model",com.liferay.sites.
  kernel.util;version="1.0.0";uses:="com.liferay.portal.kernel.exceptio
@@ -4778,7 +4778,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  .upgrade.util;version="[7.0,8)",com.liferay.portal.kernel.upgrade.v6_
  2_0;version="[7.0,8)",com.liferay.portal.kernel.upload;version="[6.3,
  7)",com.liferay.portal.kernel.url;version="[1.0,2)",com.liferay.porta
- l.kernel.util;version="[7.0,7.1)",com.liferay.portal.kernel.util.comp
+ l.kernel.util;version="[7.1,7.2)",com.liferay.portal.kernel.util.comp
  arator;version="[1.0,2)",com.liferay.portal.kernel.uuid;version="[6.2
  ,7)",com.liferay.portal.kernel.verify.model;version="[1.0,2)",com.lif
  eray.portal.kernel.webcache;version="[6.2,7)",com.liferay.portal.kern

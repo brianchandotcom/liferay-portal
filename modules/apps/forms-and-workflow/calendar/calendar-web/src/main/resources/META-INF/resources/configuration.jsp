@@ -32,6 +32,16 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "user-settings");
 			selected='<%= tabs2.equals("user-settings") %>'
 		/>
 
+		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="displaySettingsURL">
+			<portlet:param name="tabs2" value="display-settings" />
+		</liferay-portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= displaySettingsURL %>"
+			label="display-settings"
+			selected='<%= tabs2.equals("display-settings") %>'
+		/>
+
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="rssURL">
 				<portlet:param name="tabs2" value="rss" />
@@ -61,6 +71,9 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "user-settings");
 	<c:choose>
 		<c:when test='<%= tabs2.equals("user-settings") %>'>
 			<%@ include file="/configuration/user_settings.jspf" %>
+		</c:when>
+		<c:when test='<%= tabs2.equals("display-settings") %>'>
+			<%@ include file="/configuration/display_settings.jspf" %>
 		</c:when>
 		<c:when test='<%= tabs2.equals("rss") %>'>
 			<%@ include file="/configuration/rss.jspf" %>

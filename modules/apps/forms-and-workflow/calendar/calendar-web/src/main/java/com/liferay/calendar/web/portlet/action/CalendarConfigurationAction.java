@@ -59,6 +59,9 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 		if (tabs2.equals("user-settings")) {
 			updateUserSettings(actionRequest, actionResponse);
 		}
+		else if (tabs2.equals("display-settings")) {
+			updateDisplaySettings(actionRequest, actionResponse);
+		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -70,6 +73,21 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	protected void updateDisplaySettings(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		boolean displaySchedulerOnly = ParamUtil.getBoolean(
+			actionRequest, "displaySchedulerOnly");
+
+		portletPreferences.setValue(
+			"displaySchedulerOnly", String.valueOf(displaySchedulerOnly));
+
+		portletPreferences.store();
 	}
 
 	protected void updateUserSettings(

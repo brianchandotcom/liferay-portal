@@ -14,6 +14,8 @@
 
 package com.liferay.registry.internal;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
@@ -34,7 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -474,6 +475,7 @@ public class RegistryImpl implements Registry {
 	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
 		new HashSet<>();
 	private final Map<org.osgi.util.tracker.ServiceTracker<?, ?>, Void>
-		_serviceTrackers = new WeakHashMap<>();
+		_serviceTrackers = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

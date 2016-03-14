@@ -1,12 +1,12 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided project(":apps:foundation:bnd:bnd-util")
-	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
-	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-output-stream-container")
 }
 

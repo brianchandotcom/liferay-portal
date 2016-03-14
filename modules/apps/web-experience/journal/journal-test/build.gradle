@@ -1,20 +1,20 @@
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testCompile project(":apps:foundation:portal-search:portal-search")
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testCompile project(":apps:web-experience:journal:journal-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.4"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":core:registry-api")
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-web")
+	testIntegrationCompile project(":core:registry-api")
 }

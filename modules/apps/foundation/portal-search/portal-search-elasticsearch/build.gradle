@@ -7,8 +7,6 @@ dependencies {
 	provided group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.6.2"
 	provided group: "com.google.guava", name: "guava", version: "18.0"
 	provided group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
-	provided project(":apps:foundation:bnd:bnd-util")
-	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided group: "com.liferay", name: "org.elasticsearch", version: "2.2.0.LIFERAY-PATCHED-1"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.ning", name: "compress-lzf", version: "1.0.2"
@@ -41,6 +39,8 @@ dependencies {
 	provided group: "org.ow2.asm", name: "asm", version: "4.1"
 	provided group: "org.ow2.asm", name: "asm-commons", version: "4.1"
 	provided group: "org.yaml", name: "snakeyaml", version: "1.15"
+	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
 
 liferay {

@@ -6,7 +6,6 @@ buildTaglibs {
 }
 
 dependencies {
-	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
@@ -17,6 +16,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
 }
 
 liferay {

@@ -45,7 +45,7 @@ public class ConfigurationIndexingExtender {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.RESOLVED,
+			bundleContext, Bundle.ACTIVE,
 			new ConfigurationModelsBundleTrackerCustomizer());
 
 		_bundleTracker.open();

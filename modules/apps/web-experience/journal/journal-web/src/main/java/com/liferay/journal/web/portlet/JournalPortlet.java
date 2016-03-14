@@ -1070,9 +1070,7 @@ public class JournalPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
 
-			include(
-				"/portlet/journal/html/error.jsp", renderRequest,
-				renderResponse);
+			include("/error.jsp", renderRequest, renderResponse);
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);

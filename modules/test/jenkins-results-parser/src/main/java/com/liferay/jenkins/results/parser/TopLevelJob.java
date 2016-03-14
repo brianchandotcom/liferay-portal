@@ -99,7 +99,7 @@ public class TopLevelJob extends BaseJob {
 			List<DownstreamJob> missingJobs = getDownstreamJobs("missing");
 
 			for (DownstreamJob missingJob : missingJobs) {
-				if (missingJob.timeSinceStatusChange() > maxStartingTime) {
+				if (missingJob.getTimeSinceStatusChanged() > maxStartingTime) {
 					throw new TimeoutException("Downstream job disappeared");
 				}
 			}

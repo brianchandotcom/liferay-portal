@@ -62,10 +62,8 @@ public class TopLevelJob extends BaseJob {
 		for (DownstreamJob downstreamJob : _downstreamJobs) {
 			downstreamJob.update();
 		}
-
-		if (getDownstreamJobs().size() ==
-				getDownstreamJobs("completed").size()) {
-
+		
+		if (_downstreamJobs.size() == getDownstreamJobCount("completed")) {
 			setStatus("completed");
 
 			return;

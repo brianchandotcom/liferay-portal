@@ -116,8 +116,13 @@ public class LanguageImpl implements Language, Serializable {
 
 				@Override
 				public void dependenciesFulfilled() {
-					_portalCache = _createAndSynchronizeCache(
-						_PORTAL_CACHE_NAME, _companyLocalesBags,
+					Registry registry = RegistryUtil.getRegistry();
+
+					MultiVMPool multiVMPool = registry.getService(
+						MultiVMPool.class);
+
+					_portalCache = _getAndSynchronizeCache(
+						_PORTAL_CACHE_NAME, multiVMPool, _companyLocalesBags,
 						new Function<Long, Void>() {
 
 							@Override
@@ -128,8 +133,9 @@ public class LanguageImpl implements Language, Serializable {
 
 						});
 
-					_languageGroupCache = _createAndSynchronizeCache(
-						_GROUP_CACHE_NAME, _groupLanguageCodeLocalesMapMap,
+					_languageGroupCache = _getAndSynchronizeCache(
+						_GROUP_CACHE_NAME, multiVMPool,
+						_groupLanguageCodeLocalesMapMap,
 						new Function<Long, Void>() {
 
 							@Override
@@ -1674,35 +1680,6 @@ public class LanguageImpl implements Language, Serializable {
 		return companyLocalesBag;
 	}
 
-	private <V extends Serializable> PortalCache<Long, V>
-		_createAndSynchronizeCache(
-			String cacheName, Map<Long, V> syncMap,
-			final Function<Long, Void> synchronizeHook) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		MultiVMPool multiVMPool = registry.getService(MultiVMPool.class);
-
-		PortalCache<Long, V> cache =
-			(PortalCache<Long, V>)multiVMPool.getPortalCache(cacheName);
-
-		PortalCacheMapSynchronizeUtil.synchronize(
-			cache, syncMap,
-			new Synchronizer<Long, V>() {
-
-				@Override
-				public void onSynchronize(
-					Map<? extends Long, ? extends V> map, Long key, V value,
-					int timeToLive) {
-
-					synchronizeHook.apply(key);
-				}
-
-			});
-
-		return cache;
-	}
-
 	private ObjectValuePair<HashMap<String, Locale>, Map<String, Locale>>
 		_createGroupLocales(long groupId) {
 
@@ -1782,6 +1759,31 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		return null;
+	}
+
+	private <V extends Serializable> PortalCache<Long, V>
+		_getAndSynchronizeCache(
+			String cacheName, MultiVMPool multiVMPool, Map<Long, V> syncMap,
+			final Function<Long, Void> synchronizeHook) {
+
+		PortalCache<Long, V> cache =
+			(PortalCache<Long, V>)multiVMPool.getPortalCache(cacheName);
+
+		PortalCacheMapSynchronizeUtil.synchronize(
+			cache, syncMap,
+			new Synchronizer<Long, V>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Long, ? extends V> map, Long key, V value,
+					int timeToLive) {
+
+					synchronizeHook.apply(key);
+				}
+
+			});
+
+		return cache;
 	}
 
 	private Map<String, Locale> _getGroupLanguageCodeLocalesMap(long groupId) {

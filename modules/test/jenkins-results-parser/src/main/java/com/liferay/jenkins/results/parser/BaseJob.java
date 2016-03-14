@@ -110,11 +110,10 @@ public abstract class BaseJob implements Job {
 	protected String name;
 	protected int number;
 	protected String result;
+	protected String status;
+	protected long statusModifiedTime;
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
-
-	protected long statusModifiedTime;
-	protected String status;
 
 }

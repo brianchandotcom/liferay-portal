@@ -783,6 +783,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
+	<target name="functional-tomcat8-mysql56-jdk7-quarantine">
+		<antcall target="functional-tomcat8-mysql56-jdk7" />
+	</target>
+
 	<target name="functional-wildfly10-mariadb100-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>

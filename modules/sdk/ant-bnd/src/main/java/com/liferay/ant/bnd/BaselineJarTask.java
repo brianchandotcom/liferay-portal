@@ -99,7 +99,7 @@ public class BaselineJarTask extends BaseBndTask {
 			_reportLevelIsDiff = true;
 
 			File baselineReportsDir = new File(
-				rootDir, getBaselineResportsDirName());
+				rootDir, getBaselineReportsDirName());
 
 			if (!baselineReportsDir.exists() && !baselineReportsDir.mkdir()) {
 				throw new BuildException(
@@ -167,7 +167,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 				baselineProcessor.warning(
 					"Baseline file %s is invalid. Check if it exists, " +
-						"is reablable, and is not a directory.",
+						"is readable, and is not a directory.",
 					_oldJarFile);
 			}
 			else {
@@ -384,19 +384,19 @@ public class BaselineJarTask extends BaseBndTask {
 		fileOutputStream.close();
 	}
 
-	protected String getBaselineResportsDirName() {
-		if (_baselineResportsDirName != null) {
-			return _baselineResportsDirName;
+	protected String getBaselineReportsDirName() {
+		if (_baselineReportsDirName != null) {
+			return _baselineReportsDirName;
 		}
 
-		_baselineResportsDirName = project.getProperty(
+		_baselineReportsDirName = project.getProperty(
 			"baseline.jar.reports.dir.name");
 
-		if (_baselineResportsDirName == null) {
-			_baselineResportsDirName = _BASELINE_REPORTS_DIR;
+		if (_baselineReportsDirName == null) {
+			_baselineReportsDirName = _BASELINE_REPORTS_DIR;
 		}
 
-		return _baselineResportsDirName;
+		return _baselineReportsDirName;
 	}
 
 	protected Map<? extends Object, ? extends Object> getBndFileProperties()
@@ -468,7 +468,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";
 
-	private String _baselineResportsDirName;
+	private String _baselineReportsDirName;
 	private File _bndFile;
 	private boolean _headerPrinted;
 	private File _logFile;

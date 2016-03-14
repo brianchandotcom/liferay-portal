@@ -15,6 +15,7 @@ dependencies {
 	provided project(":apps:foundation:bnd:bnd-util")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-spring-extender")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

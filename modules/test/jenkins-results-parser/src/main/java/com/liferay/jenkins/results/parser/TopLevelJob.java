@@ -32,7 +32,9 @@ public class TopLevelJob extends BaseJob {
 	}
 
 	public int getDownstreamJobCount(String status) {
-		return getDownstreamJobs(status).size();
+		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status); 
+
+		return downstreamJobs.size();
 	}
 
 	public List<DownstreamJob> getDownstreamJobs() {
@@ -47,7 +49,7 @@ public class TopLevelJob extends BaseJob {
 		List<DownstreamJob> downstreamJobWithStatus = new ArrayList<>();
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
-			if (downstreamJob.getStatus().equals(status)) {
+			if (status.equals(downstreamJob.getStatus())) {
 				downstreamJobWithStatus.add(downstreamJob);
 			}
 		}

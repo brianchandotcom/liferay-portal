@@ -27,6 +27,10 @@ public class TopLevelJob extends BaseJob {
 		super(url);
 	}
 
+	public void addDownstreamJob(String invocationURL) throws Exception {
+		_downstreamJobs.add(new DownstreamJob(invocationURL, this));
+	}
+
 	public List<DownstreamJob> getDownstreamJobs(String status) {
 		if (status == null) {
 			return _downstreamJobs;

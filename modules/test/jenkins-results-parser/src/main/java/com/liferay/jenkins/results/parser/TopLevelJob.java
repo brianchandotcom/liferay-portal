@@ -28,7 +28,7 @@ public class TopLevelJob extends BaseJob {
 	}
 
 	public int getDownstreamJobCount() {
-		return downstreamJobs.size();
+		return _downstreamJobs.size();
 	}
 
 	public int getDownstreamJobCount(String status) {
@@ -43,12 +43,12 @@ public class TopLevelJob extends BaseJob {
 
 	public List<DownstreamJob> getDownstreamJobs(String status) {
 		if (status == null) {
-			return downstreamJobs;
+			return _downstreamJobs;
 		}
 
 		List<DownstreamJob> filteredDownstreamJobs = new ArrayList<>();
 
-		for (DownstreamJob downstreamJob : downstreamJobs) {
+		for (DownstreamJob downstreamJob : _downstreamJobs) {
 			if (status.equals(downstreamJob.getStatus())) {
 				filteredDownstreamJobs.add(downstreamJob);
 			}
@@ -59,7 +59,7 @@ public class TopLevelJob extends BaseJob {
 
 	@Override
 	public void update() throws Exception {
-		for (DownstreamJob downstreamJob : downstreamJobs) {
+		for (DownstreamJob downstreamJob : _downstreamJobs) {
 			downstreamJob.update();
 		}
 
@@ -141,6 +141,6 @@ public class TopLevelJob extends BaseJob {
 		return downstreamURLs;
 	}
 
-	protected List<DownstreamJob> downstreamJobs = new ArrayList<>();
+	private List<DownstreamJob> _downstreamJobs = new ArrayList<>();
 
 }

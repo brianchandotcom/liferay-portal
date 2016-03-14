@@ -96,9 +96,10 @@ public class TopLevelJob extends BaseJob {
 			
 			System.out.println(sb.toString());
 
-			List<DownstreamJob> missingJobs = getDownstreamJobs("missing");
+			List<DownstreamJob> missingDownstreamJobs = getDownstreamJobs(
+				"missing");
 
-			for (DownstreamJob missingJob : missingJobs) {
+			for (DownstreamJob missingJob : missingDownstreamJobs) {
 				long time = System.currentTimeMillis();
 
 				if ((time - missingJob.getStatusModifiedTime()) >

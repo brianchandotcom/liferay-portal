@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL,
-		"service.ranking:Integer=200"
+		"panel.category.order:Integer=200"
 	},
 	service = PanelCategory.class
 )

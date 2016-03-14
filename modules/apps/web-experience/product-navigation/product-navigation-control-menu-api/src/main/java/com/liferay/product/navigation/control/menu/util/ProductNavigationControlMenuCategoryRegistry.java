@@ -123,7 +123,8 @@ public class ProductNavigationControlMenuCategoryRegistry {
 				"(product.navigation.control.menu.category.key=*)",
 				new ProductNavigationControlMenuCategoryServiceReferenceMapper(),
 				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator("service.ranking")));
+					new PropertyServiceReferenceComparator(
+						"product.navigation.control.menu.category.order")));
 	}
 
 	@Deactivate

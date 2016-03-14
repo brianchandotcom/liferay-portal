@@ -174,10 +174,10 @@ public class LegacyPortletPanelAppHotDeployListener
 				"control-panel-entry-weight");
 
 			if (Validator.isNotNull(controlPanelEntryWeight)) {
-				int serviceRanking = (int)Math.ceil(
+				int panelAppOrder = (int)Math.ceil(
 					GetterUtil.getDouble(controlPanelEntryWeight) * 100);
 
-				properties.put("service.ranking", serviceRanking);
+				properties.put("panel.app.order", panelAppOrder);
 			}
 
 			propertiesList.add(properties);

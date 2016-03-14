@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.ROOT,
-		"service.ranking:Integer=300"
+		"product.navigation.control.menu.category.order:Integer=300"
 	},
 	service = ProductNavigationControlMenuCategory.class
 )

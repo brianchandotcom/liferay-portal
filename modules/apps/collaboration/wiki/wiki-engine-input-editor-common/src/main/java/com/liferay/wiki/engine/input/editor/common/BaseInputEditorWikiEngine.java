@@ -80,7 +80,8 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 
 	public String getHelpPageTitle(HttpServletRequest request) {
 		return LanguageUtil.format(
-			request, "x-syntax-help", getFormat(), false);
+			request, "x-syntax-help", getFormatLabel(request.getLocale()),
+			false);
 	}
 
 	public abstract String getHelpURL();

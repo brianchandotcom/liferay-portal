@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -38,51 +37,42 @@ import java.util.Locale;
 public abstract class BaseDDLExporter implements DDLExporter {
 
 	@Override
-	public byte[] export(long recordSetId) throws Exception {
-		return doExport(
-			recordSetId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	@Override
-	public byte[] export(long recordSetId, int status) throws Exception {
-		return doExport(
-			recordSetId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	@Override
-	public byte[] export(long recordSetId, int status, int start, int end)
+	public byte[] export(
+			long recordSetId, int status, int start, int end, Locale locale)
 		throws Exception {
 
-		return doExport(recordSetId, status, start, end, null);
+		return doExport(recordSetId, status, start, end, null, locale);
 	}
 
 	@Override
 	public byte[] export(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator<DDLRecord> orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator, Locale locale)
 		throws Exception {
 
-		return doExport(recordSetId, status, start, end, orderByComparator);
+		return doExport(
+			recordSetId, status, start, end, orderByComparator, locale);
 	}
 
 	@Override
-	public Locale getLocale() {
-		if (_locale == null) {
-			_locale = LocaleUtil.getSiteDefault();
-		}
+	public byte[] export(long recordSetId, int status, Locale locale)
+		throws Exception {
 
-		return _locale;
+		return doExport(
+			recordSetId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null,
+			locale);
 	}
 
 	@Override
-	public void setLocale(Locale locale) {
-		_locale = locale;
+	public byte[] export(long recordSetId, Locale locale) throws Exception {
+		return doExport(
+			recordSetId, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null, locale);
 	}
 
 	protected abstract byte[] doExport(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator<DDLRecord> orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator, Locale locale)
 		throws Exception;
 
 	protected List<DDMFormField> getDDMFormFields(DDMStructure ddmStructure)
@@ -97,12 +87,10 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		return ddmFormFields;
 	}
 
-	protected String getStatusMessage(int status) {
+	protected String getStatusMessage(int status, Locale locale) {
 		String statusLabel = WorkflowConstants.getStatusLabel(status);
 
-		return LanguageUtil.get(_locale, statusLabel);
+		return LanguageUtil.get(locale, statusLabel);
 	}
-
-	private Locale _locale;
 
 }

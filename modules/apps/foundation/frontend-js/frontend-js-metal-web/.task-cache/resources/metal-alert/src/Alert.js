@@ -122,6 +122,16 @@ define("frontend-js-metal-web@1.0.0/metal-alert/src/Alert", ['exports', 'metal/s
 			}
 		};
 
+		Alert.prototype.syncSpinnerDone = function syncSpinnerDone(spinnerDone) {
+			if (this.spinner) {
+				var spinnerElement = this.element.querySelector('.alert-spinner');
+				_dom2.default.removeClasses(spinnerElement, 'alert-spinner-done');
+				if (spinnerDone) {
+					_dom2.default.addClasses(spinnerElement, 'alert-spinner-done');
+				}
+			}
+		};
+
 		return Alert;
 	}(_Alert2.default);
 
@@ -186,6 +196,30 @@ define("frontend-js-metal-web@1.0.0/metal-alert/src/Alert", ['exports', 'metal/s
    * @type {?number}
    */
 		hideDelay: {},
+
+		/**
+   * Spinner indicating.
+   * @type {boolean}
+   * @default false
+   */
+		spinner: {
+			value: false
+		},
+
+		/**
+   * The CSS classes that should be added to the spinner.
+   * @type {string}
+   */
+		spinnerClasses: {},
+
+		/**
+   * Spinner is marked as done.
+   * @type {boolean}
+   * @default false
+   */
+		spinnerDone: {
+			value: false
+		},
 
 		/**
    * Flag indicating if the alert is visible or not.

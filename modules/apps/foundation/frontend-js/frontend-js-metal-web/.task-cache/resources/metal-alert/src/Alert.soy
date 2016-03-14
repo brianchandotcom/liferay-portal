@@ -5,11 +5,16 @@
  * @param body
  * @param dismissible
  * @param id
+ * @param spinner
  * @param? elementClasses
+ * @param? spinnerClasses
  * @skipUpdates elementClasses
  */
 {template .render}
 	<div id="{$id}" class="alert alert-dismissible component{$elementClasses ? ' ' + $elementClasses : ''}" role="alert">
+		{if $spinner}
+			<span class="alert-spinner{$spinnerClasses ? ' ' + $spinnerClasses : ''}"></span>
+		{/if}
 		<span class="alert-body">
 			{if $body}
 				{$body}

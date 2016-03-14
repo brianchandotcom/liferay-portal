@@ -105,7 +105,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 			<aui:input helpMessage="if-enabled-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />
 
-			<aui:select name="type">
+			<aui:select label="type" name="template">
 				<c:if test='<%= ArrayUtil.contains(types, "portlet") %>'>
 					<aui:option label="empty-page" value="blank" />
 				</c:if>
@@ -231,7 +231,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 	var nodeList = A.one('#<portlet:namespace />templateList');
 
-	A.one('#<portlet:namespace />type').on(
+	A.one('#<portlet:namespace />template').on(
 		'change',
 		function(event) {
 			var id = event.currentTarget.val();

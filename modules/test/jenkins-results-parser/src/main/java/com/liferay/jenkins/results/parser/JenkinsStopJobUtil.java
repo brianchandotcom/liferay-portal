@@ -29,7 +29,7 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsStopJobUtil {
 
-	public static void stopJenkinsJob(
+	public static void stopJob(
 			String jobURL, String username, String password)
 		throws Exception {
 
@@ -38,13 +38,13 @@ public class JenkinsStopJobUtil {
 		_stopJob(jobURL, username, password);
 	}
 
-	public static void stopJenkinsJob(
+	public static void stopJob(
 			TopLevelJob topLevelJob, String username, String password)
 		throws Exception {
 
-		stopDownstreamJobs(topLevelJob, username, password);
+		_stopDownstreamJobs(topLevelJob, username, password);
 
-		stopJob(topLevelJob, username, password);
+		_stopJob(topLevelJob, username, password);
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -99,18 +99,19 @@ public class JenkinsStopJobUtil {
 			"running");
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
-			stopJob(downstreamJob, username, password);
+			_stopJob(downstreamJob, username, password);
 		}
 	}
 
 	private static void _stopJob(
-			BaseJob baseJob, String username, String password)
+			Job job, String username, String password)
 		throws Exception {
 
-		stopJob(baseJob.getURL(), username, password);
+		_stopJob(job.getURL(), username, password);
 	}
 
-	private static void stopJob(String jobURL, String username, String password)
+	private static void _stopJob(
+			String jobURL, String username, String password)
 		throws Exception {
 
 		URL urlObject = new URL(

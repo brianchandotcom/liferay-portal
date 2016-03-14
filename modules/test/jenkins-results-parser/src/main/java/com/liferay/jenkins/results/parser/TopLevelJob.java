@@ -27,10 +27,6 @@ public class TopLevelJob extends BaseJob {
 		super(url);
 	}
 
-	public int getDownstreamJobCount() {
-		return _downstreamJobs.size();
-	}
-
 	public int getDownstreamJobCount(String status) {
 		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status); 
 
@@ -87,7 +83,7 @@ public class TopLevelJob extends BaseJob {
 			sb.append(" Queued / ");
 			sb.append(getDownstreamJobCount("starting"));
 			sb.append(" Starting / ");
-			sb.append(getDownstreamJobCount());
+			sb.append(_downstreamJobs.size());
 			sb.append(" Total");
 			
 			System.out.println(sb.toString());
@@ -114,12 +110,12 @@ public class TopLevelJob extends BaseJob {
 			}
 			else if ((elapsedTime > maxWaitTime) &&
 					 (getDownstreamJobCount("completed") <
-						 getDownstreamJobCount())) {
+						 _downstreamJobs.size())) {
 
 				throw new TimeoutException("Timed out downstream job");
 			}
 			else if (getDownstreamJobCount("completed") ==
-						getDownstreamJobCount()) {
+						_downstreamJobs.size()) {
 
 				break;
 			}

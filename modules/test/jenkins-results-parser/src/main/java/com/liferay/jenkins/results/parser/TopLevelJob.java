@@ -77,8 +77,6 @@ public class TopLevelJob extends BaseJob {
 		}
 
 		setStatus("running");
-
-		return;
 	}
 
 	public void waitForDownstreamJobs(

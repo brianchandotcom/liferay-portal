@@ -81,7 +81,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
 			cacheKey);
 
-		if (ddmRESTDataProviderResult != null) {
+		if ((ddmRESTDataProviderResult != null) &&
+			ddmRESTDataProviderSettings.cacheable()) {
+
 			return ddmRESTDataProviderResult.getKeyValuePairs();
 		}
 

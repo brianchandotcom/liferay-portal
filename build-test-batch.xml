@@ -1033,7 +1033,7 @@ ${output.content}</echo>
 					<include name="*.log" />
 				</fileset>
 
-				<pathconvert pathsep="," property="log.files" refid="log.files"/>
+				<pathconvert pathsep="," property="log.files" refid="log.files" />
 
 				<for list="${log.files}" param="log.file">
 					<sequential>

@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
@@ -16,8 +18,9 @@ dependencies {
 }
 
 deploy {
-	from("lib") {
-		include "com.liferay.portal.cxf.jaxrs.common.jar"
+	from(configurations.provided) {
+		include "com.liferay.portal.cxf.jaxrs.common-*.jar"
+		rename new RenameDependencyClosure(project, configurations.provided.name)
 	}
 }
 

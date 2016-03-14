@@ -1,7 +1,7 @@
 Bundle-Name: Mentions Test
 Bundle-SymbolicName: com.liferay.mentions.test
 Bundle-Version: 1.0.0
-Include-Resource: test-classes/unit
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mentions
 -include: ../../app.bnd
+-includeresource: test-classes/unit

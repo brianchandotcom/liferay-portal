@@ -54,7 +54,11 @@ Import-Package:\
 	\
 	!org.jgroups.*,\
 	*
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wiki
+Liferay-Service: true
+-include: ../../app.bnd
+-includeresource:\
 	@../../../../../lib/portal/antlr2.jar,\
 	@../../../../../lib/portal/antlr3.jar,\
 	@../../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
@@ -67,11 +71,7 @@ Include-Resource:\
 	@../../../../../lib/portal/oro.jar,\
 	@../../../../../lib/portal/oscache.jar,\
 	@../../../../../lib/portal/stringtemplate.jar,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Wiki
-Liferay-Service: true
--include: ../../app.bnd
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

@@ -1,3 +1,7 @@
+copyLibs {
+	enabled = true
+}
+
 dependencies {
 	provided project(":apps:web-experience:journal:journal-test")
 

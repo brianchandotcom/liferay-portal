@@ -8,12 +8,6 @@ dependencies {
 	provided project(":apps:web-experience:product-navigation:product-navigation-product-menu-web")
 }
 
-deploy {
-	from("lib") {
-		include "com.liferay.osgi.service.tracker.collections.jar"
-	}
-}
-
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }

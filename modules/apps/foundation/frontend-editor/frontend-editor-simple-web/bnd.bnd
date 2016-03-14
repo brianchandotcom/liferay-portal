@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Frontend Editor Simple Web
 Bundle-SymbolicName: com.liferay.frontend.editor.simple.web
 Bundle-Version: 1.0.0
-Include-Resource: content=../frontend-editor-lang/src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-simple-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)
 -include: ../../app.bnd
+-includeresource: content=../frontend-editor-lang/src/main/resources/content

@@ -1,4 +1,6 @@
-Bundle-ClassPath: .,lib/jython-standalone.jar
+Bundle-ClassPath:\
+	.,\
+	lib/jython-standalone.jar
 Bundle-Name: Liferay Portal Scripting Python
 Bundle-SymbolicName: com.liferay.portal.scripting.python
 Bundle-Version: 1.0.1
@@ -22,7 +24,6 @@ Import-Package:\
 	\
 	!sun.misc.*,\
 	*
-Include-Resource: lib/jython-standalone.jar=lib/jython-standalone.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -fixupmessages:\
@@ -30,3 +31,4 @@ Liferay-Releng-Module-Group-Title: Scripting Engines
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
 -include: ../../app.bnd
+-includeresource: lib/jython-standalone.jar=jython-standalone-*.jar

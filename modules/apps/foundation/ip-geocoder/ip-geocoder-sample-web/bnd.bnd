@@ -4,4 +4,4 @@ Bundle-Version: 1.0.2
 Web-ContextPath: /ip-geocoder-sample-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot
--wablib: ${app.server.portal.dir}/WEB-INF/lib/com.liferay.util.java.jar
+-wablib: ${app.server.portal.dir}/WEB-INF/lib/util-java.jar

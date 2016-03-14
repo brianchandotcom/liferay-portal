@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Portal Search Test
 Bundle-SymbolicName: com.liferay.portal.search.test
 Bundle-Version: 1.0.0
-Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Search
 -include: ../../app.bnd
+-includeresource: test-classes/integration

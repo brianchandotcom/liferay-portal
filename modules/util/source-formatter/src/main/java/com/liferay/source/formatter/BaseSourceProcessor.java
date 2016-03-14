@@ -2335,7 +2335,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern bndContentDirPattern = Pattern.compile(
-		"\\scontent=(.*?)(,\\\\|\n)");
+		"\\scontent=(.*?)(,\\\\|\n|$)");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Remote Axis Extender Test
 Bundle-SymbolicName: com.liferay.portal.remote.axis.extender.test
 Bundle-Version: 1.0.0
-Include-Resource: WEB-INF/server-config.wsdd=server-config.wsdd
 Private-Package: com.liferay.portal.remote.axis.extender.test
+-includeresource: WEB-INF/server-config.wsdd=server-config.wsdd

@@ -26,9 +26,15 @@ dependencies {
 }
 
 copyTestLibs {
-	from configurations.testLibs
+	from(configurations.provided) {
+		rename new RenameDependencyClosure(project, configurations.provided.name)
+	}
+
+	from(configurations.testLibs) {
+		rename new RenameDependencyClosure(project, configurations.testLibs.name)
+	}
+
 	into "test-lib"
-	rename new RenameDependencyClosure(project, configurations.testLibs.name)
 }
 
 liferay {

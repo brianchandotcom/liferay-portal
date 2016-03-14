@@ -37,7 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 public class JSONServlet extends HttpServlet {
 
 	@Override
-	public void init(ServletConfig servletConfig) {
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
+
 		ServletContext servletContext = servletConfig.getServletContext();
 
 		_pluginClassLoader = servletContext.getClassLoader();

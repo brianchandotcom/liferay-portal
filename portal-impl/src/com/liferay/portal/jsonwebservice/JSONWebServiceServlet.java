@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.JSONAction;
@@ -36,7 +36,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Igor Spasic
@@ -68,45 +67,23 @@ public class JSONWebServiceServlet extends JSONServlet {
 			_log.debug("Servlet context " + request.getContextPath());
 		}
 
-		String apiPath = PortalUtil.getPathMain() + "/portal/api/jsonws";
-
-		HttpSession session = request.getSession();
-
-		ServletContext servletContext = session.getServletContext();
-
-		String contextPath =
+		String portalContextPath =
 			PortalContextLoaderListener.getPortalServletContextPath();
 
-		if (contextPath.isEmpty()) {
-			contextPath = StringPool.SLASH;
-		}
+		String currentContextPath = request.getContextPath();
 
-		String proxyPath = PortalUtil.getPathProxy();
-
-		if (servletContext.getContext(contextPath) != null) {
-			if (Validator.isNotNull(proxyPath) &&
-				apiPath.startsWith(proxyPath)) {
-
-				apiPath = apiPath.substring(proxyPath.length());
-			}
-
-			if (!contextPath.equals(StringPool.SLASH) &&
-				apiPath.startsWith(contextPath)) {
-
-				apiPath = apiPath.substring(contextPath.length());
-			}
-
+		if (currentContextPath.equals(portalContextPath)) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-				apiPath);
+				Portal.PATH_MAIN + "/portal/api/jsonws");
 
 			requestDispatcher.forward(request, response);
 		}
 		else {
-			String servletContextPath = servletContext.getContextPath();
+			String contextName = getServletContext().getServletContextName();
 
 			String redirectPath =
-				PortalUtil.getPathContext() + "/api/jsonws?contextPath=" +
-					HttpUtil.encodeURL(servletContextPath);
+				PortalUtil.getPathContext() + "/api/jsonws?contextName=" +
+					HttpUtil.encodeURL(contextName);
 
 			response.sendRedirect(redirectPath);
 		}

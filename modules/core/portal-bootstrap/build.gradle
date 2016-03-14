@@ -50,17 +50,17 @@ copySystemPackagesExtraManifest {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "3.2.15.RELEASE"
+	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
 	provided project(":core:jaxws-osgi-bridge")
 	provided project(":core:portal-app-license-api")
+	provided project(":core:registry-api")
 	provided project(":core:registry-impl")
 }
 

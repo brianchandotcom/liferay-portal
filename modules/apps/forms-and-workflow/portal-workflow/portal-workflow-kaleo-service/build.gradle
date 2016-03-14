@@ -6,18 +6,18 @@ buildService {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
-	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.5"
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "org.jabsorb", name: "jabsorb", version: "1.3.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-api")
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-definition-api")
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-runtime-api")
+	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
+	provided project(":apps:foundation:portal:portal-spring-extender")
+	provided project(":apps:foundation:portal:portal-upgrade")
 }
 
 liferay {

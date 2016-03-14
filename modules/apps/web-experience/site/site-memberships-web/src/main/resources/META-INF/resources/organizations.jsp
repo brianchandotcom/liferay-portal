@@ -88,8 +88,6 @@ organizationSearch.setResults(organizations);
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
-
 <portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>

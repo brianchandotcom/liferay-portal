@@ -21,6 +21,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectSiteRole");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -28,8 +29,15 @@ portletURL.setParameter("mvcPath", "/site_roles.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("roleType", String.valueOf(roleType));
 portletURL.setParameter("displayStyle", displayStyle);
+portletURL.setParameter("eventName", eventName);
 
 RoleSearch roleSearch = new RoleSearch(renderRequest, portletURL);
+
+RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+rowChecker.setRowIds("rowIdsRole");
+
+roleSearch.setRowChecker(rowChecker);
 
 RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearch.getSearchTerms();
 
@@ -85,6 +93,7 @@ roleSearch.setResults(ListUtil.subList(roles, roleSearch.getStart(), roleSearch.
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
+		id="siteRoles"
 		searchContainer="<%= roleSearch %>"
 	>
 		<liferay-ui:search-container-row
@@ -100,3 +109,19 @@ roleSearch.setResults(ListUtil.subList(roles, roleSearch.getStart(), roleSearch.
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />siteRoles');
+
+	searchContainer.on(
+		'rowToggled',
+		function(event) {
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: event.elements.allSelectedElements.getDOMNodes()
+				}
+			);
+		}
+	);
+</aui:script>

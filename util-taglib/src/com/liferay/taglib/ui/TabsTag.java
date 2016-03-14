@@ -101,6 +101,7 @@ public class TabsTag extends IncludeTag {
 		try {
 			request.setAttribute("liferay-ui:tabs:backLabel", _backLabel);
 			request.setAttribute("liferay-ui:tabs:backURL", _backURL);
+			request.setAttribute("liferay-ui:tabs:cssClass", _cssClass);
 			request.setAttribute("liferay-ui:tabs:formName", _formName);
 			request.setAttribute("liferay-ui:tabs:names", _names);
 

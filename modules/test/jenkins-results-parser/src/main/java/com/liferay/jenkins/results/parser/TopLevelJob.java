@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.tools.ant.Project;
-
 /**
  * @author Kevin Yen
  */
@@ -136,37 +133,6 @@ public class TopLevelJob extends BaseJob {
 		}
 	}
 
-	public void waitForDownstreamJobs(Project project) throws Exception {
-		long maxStartingTime = 900000;
-
-		if (project.getProperty(MAX_STARTING_TIME_PROPERTY_NAME) != null) {
-			maxStartingTime = Long.parseLong(
-				project.getProperty(MAX_STARTING_TIME_PROPERTY_NAME)) * 60000;
-		}
-
-		long maxWaitTime = 7200000;
-
-		if (project.getProperty(MAX_WAIT_TIME_PROPERTY_NAME) != null) {
-			maxWaitTime = Long.parseLong(
-				project.getProperty(MAX_WAIT_TIME_PROPERTY_NAME)) * 60000;
-		}
-
-		long updatePeriod = 30000;
-
-		if (project.getProperty(UPDATE_PERIOD_PROPERTY_NAME) != null) {
-			updatePeriod = Long.parseLong(
-				project.getProperty(UPDATE_PERIOD_PROPERTY_NAME)) * 1000;
-		}
-
-		waitForDownstreamJobs(updatePeriod, maxStartingTime, maxWaitTime);
-
-		String completedDownstreamURLs = StringUtils.join(
-			getDownstreamURLs("completed"), ",");
-
-		project.setProperty(
-			COMPLETED_BUILD_URLS_PROPERTY_NAME, completedDownstreamURLs);
-	}
-
 	protected List<String> getDownstreamURLs(String status) throws Exception {
 		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status);
 		List<String> downstreamURLs = new ArrayList<>(downstreamJobs.size());
@@ -177,16 +143,6 @@ public class TopLevelJob extends BaseJob {
 
 		return downstreamURLs;
 	}
-
-	protected static final String COMPLETED_BUILD_URLS_PROPERTY_NAME =
-		"completed.build.urls";
-
-	protected static final String MAX_STARTING_TIME_PROPERTY_NAME =
-		"max.starting.time";
-
-	protected static final String MAX_WAIT_TIME_PROPERTY_NAME = "max.wait.time";
-
-	protected static final String UPDATE_PERIOD_PROPERTY_NAME = "update.period";
 
 	protected List<DownstreamJob> downstreamJobs;
 

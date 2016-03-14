@@ -87,7 +87,7 @@ public abstract class BaseJob implements Job {
 	protected void setStatus(String status) {
 		_status = status;
 
-		_lastStatusChangedTime = System.currentTimeMillis();
+		_statusModifiedTime = System.currentTimeMillis();
 	}
 
 	protected void setURL(String url) throws Exception {
@@ -106,8 +106,8 @@ public abstract class BaseJob implements Job {
 		update();
 	}
 
-	protected long getLastStatusChangedTime() {
-		return _lastStatusChangedTime;
+	protected long getStatusModifiedTime() {
+		return _statusModifiedTime;
 	}
 
 	protected String master;
@@ -118,7 +118,7 @@ public abstract class BaseJob implements Job {
 	private static final Pattern _pattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
 
-	private long _lastStatusChangedTime;
+	private long _statusModifiedTime;
 	private String _status;
 
 }

@@ -100,7 +100,7 @@ public class I18nServlet extends HttpServlet {
 				request.setAttribute(WebKeys.I18N_PATH, i18nData.getI18nPath());
 
 				Locale locale = LocaleUtil.fromLanguageId(
-					i18nData.getLanguageId(), true, false);
+					i18nData.getLanguageId(), false, false);
 
 				HttpSession session = request.getSession();
 

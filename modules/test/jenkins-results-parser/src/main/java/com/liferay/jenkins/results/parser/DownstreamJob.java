@@ -240,18 +240,17 @@ public class DownstreamJob extends BaseJob {
 	protected Map<String, String> parameters;
 	protected TopLevelJob topLevelJob;
 
-	private Map<String, String> getParameters(
-			JSONArray parametersJSONArray)
+	protected Map<String, String> getParameters(JSONArray jsonArray)
 		throws Exception {
 
 		Map<String, String> parameters = new HashMap<>();
 
-		for (int i = 0; i < parametersJSONArray.length(); i++) {
-			JSONObject parameter = parametersJSONArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			if (parameter.opt("value") instanceof String) {
-				String name = parameter.getString("name");
-				String value = parameter.getString("value");
+			if (jsonObject.opt("value") instanceof String) {
+				String name = jsonObject.getString("name");
+				String value = jsonObject.getString("value");
 
 				parameters.put(name, value);
 			}
@@ -260,16 +259,20 @@ public class DownstreamJob extends BaseJob {
 		return parameters;
 	}
 
-	private Map<String, String> getParameters(JSONObject buildJSONObject)
+	protected Map<String, String> getParameters(JSONObject buildJSONObject)
 		throws Exception {
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
 
-		if ((actionsJSONArray.length() > 0) &&
-			actionsJSONArray.getJSONObject(0).has("parameters")) {
+		if (actionsJSONArray.length() == 0) {
+			return new HashMap<>();
+		}
 
-			JSONArray parametersJSONArray = actionsJSONArray.getJSONObject(
-				0).getJSONArray("parameters");
+		JSONObject jsonObject = actionsJSONArray.getJSONObject(0);
+		
+		if (jsonObject.has("parameters")) {
+			JSONArray parametersJSONArray = jsonObject.getJSONArray(
+				"parameters");
 
 			return getParameters(parametersJSONArray);
 		}

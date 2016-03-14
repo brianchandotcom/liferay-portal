@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import aQute.bnd.osgi.Constants;
+import aQute.bnd.version.Version;
 
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
@@ -22,6 +23,7 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.tasks.BaselineTask;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -105,6 +107,7 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
+import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
@@ -144,6 +147,10 @@ import org.gradle.util.VersionNumber;
  */
 public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
+	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
+
+	public static final String BASELINE_TASK_NAME = "baseline";
+
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
@@ -171,6 +178,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
+	protected Configuration addConfigurationBaseline(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, BASELINE_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesBaseline(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures the previous released version of this project for " +
+				"baselining.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	protected Configuration addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -181,6 +210,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configuration.setVisible(false);
 
 		return configuration;
+	}
+
+	protected void addDependenciesBaseline(Project project) {
+		GradleUtil.addDependency(
+			project, BASELINE_CONFIGURATION_NAME,
+			String.valueOf(project.getGroup()), getArchivesBaseName(project),
+			"(," + String.valueOf(project.getVersion()) + ")", false);
 	}
 
 	protected void addDependenciesPortalTest(Project project) {
@@ -215,6 +251,60 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"org.springframework", "spring-test", "3.2.15.RELEASE");
+	}
+
+	protected BaselineTask addTaskBaseline(
+		final Project project, final Configuration baselineConfiguration) {
+
+		GradleUtil.applyPlugin(project, ReportingBasePlugin.class);
+
+		BaselineTask baselineTask = GradleUtil.addTask(
+			project, BASELINE_TASK_NAME, BaselineTask.class);
+
+		final Jar jar = (Jar)GradleUtil.getTask(
+			project, JavaPlugin.JAR_TASK_NAME);
+
+		baselineTask.dependsOn(jar);
+
+		baselineTask.setDescription(
+			"Compares the public API of this project with the public API of " +
+				"the previous released version, if found.");
+		baselineTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
+		baselineTask.setNewJarFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return jar.getArchivePath();
+				}
+
+			});
+
+		baselineTask.setOldJarFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return baselineConfiguration.getSingleFile();
+				}
+
+			});
+
+		baselineTask.setSourceDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+					return GradleUtil.getSrcDir(sourceSet.getResources());
+				}
+
+			});
+
+		return baselineTask;
 	}
 
 	protected Copy addTaskCopyLibs(Project project) {
@@ -1079,6 +1169,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					addTaskUpdateBundleVersion(project);
 					configureBundleDefaultInstructions(project, publishing);
 					configureTaskJavadoc(project);
+
+					Version version = Version.parseVersion(
+						String.valueOf(project.getVersion()));
+
+					if (version.compareTo(_LOWEST_BASELINE_VERSION) > 0) {
+						Configuration baselineConfiguration =
+							addConfigurationBaseline(project);
+
+						addTaskBaseline(project, baselineConfiguration);
+					}
 				}
 
 			});
@@ -1822,6 +1922,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static final String _LIFERAY_INCLUDERESOURCE =
 		"-liferay-includeresource";
+
+	private static final Version _LOWEST_BASELINE_VERSION = new Version(
+		1, 0, 0);
 
 	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
 		"maven.local.ignore");

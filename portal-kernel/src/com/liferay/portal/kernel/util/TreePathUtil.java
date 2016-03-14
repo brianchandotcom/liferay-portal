@@ -120,10 +120,8 @@ public class TreePathUtil {
 				_treeModelTasks.rebuildDependentModelsTreePaths(
 					_parentPrimaryKey, _parentTreePath);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
-
-				return;
+			catch (PortalException pe) {
+				ReflectionUtil.throwException(pe);
 			}
 
 			List<? extends TreeModel> treeModels =

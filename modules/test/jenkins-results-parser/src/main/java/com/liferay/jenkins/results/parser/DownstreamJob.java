@@ -30,7 +30,7 @@ import org.json.JSONObject;
  */
 public class DownstreamJob extends BaseJob {
 
-	public static Map<String, String> getParametersFromQueryString(
+	protected Map<String, String> getParametersFromQueryString(
 		String queryString) {
 
 		if (!queryString.contains("=")) {

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,7 +57,6 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.net.URL;
 
@@ -169,14 +169,14 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		// Legacy
 
-		addTaglibFactory(contextObjects, "PortalJspTagLibs", servletContext);
-		addTaglibFactory(contextObjects, "PortletJspTagLibs", servletContext);
-		addTaglibFactory(contextObjects, "taglibLiferayHash", servletContext);
-
-		// Contributed
-
 		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
 			servletContext);
+
+		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
+		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
+		contextObjects.put("taglibLiferayHash", taglibFactoryWrapper);
+
+		// Contributed
 
 		for (Map.Entry<String, String> entry : _taglibMappings.entrySet()) {
 			try {
@@ -349,7 +349,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	protected ServletContext getServletContextWrapper(
 		ServletContext servletContext) {
 
-		return (ServletContext)Proxy.newProxyInstance(
+		return (ServletContext)ProxyUtil.newProxyInstance(
 			_classLoader, _INTERFACES,
 			new ServletContextInvocationHandler(servletContext));
 	}

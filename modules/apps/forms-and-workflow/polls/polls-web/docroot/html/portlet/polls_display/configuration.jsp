@@ -32,7 +32,7 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<aui:form action="<%= configurationActionURL %>" cssClass="main-content-body" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
@@ -40,23 +40,25 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 
 	<c:choose>
 		<c:when test="<%= !questions.isEmpty() %>">
-			<aui:fieldset>
-				<aui:select label="title" name="preferences--questionId--">
-					<aui:option value="" />
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:select label="title" name="preferences--questionId--">
+						<aui:option value="" />
 
-					<%
-					for (PollsQuestion question : questions) {
-						question = question.toEscapedModel();
-					%>
+						<%
+						for (PollsQuestion question : questions) {
+							question = question.toEscapedModel();
+						%>
 
-						<aui:option label="<%= question.getTitle(locale) %>" selected="<%= questionId == question.getQuestionId() %>" value="<%= question.getQuestionId() %>" />
+							<aui:option label="<%= question.getTitle(locale) %>" selected="<%= questionId == question.getQuestionId() %>" value="<%= question.getQuestionId() %>" />
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</aui:select>
-			</aui:fieldset>
+					</aui:select>
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</c:when>
 		<c:otherwise>
 			<div class="alert alert-info">
@@ -67,5 +69,6 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" disabled="<%= questions.isEmpty() %>" type="submit" />
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.polls.service.persistence.PollsQuestionFinder.countByC_G_T_D">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT PollsQuestion.questionId) AS COUNT_VALUE
+			FROM
+				PollsQuestion
+			WHERE
+				(PollsQuestion.companyId = ?) AND
+				[$GROUP_ID$]
+				(
+					(lower(PollsQuestion.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(PollsQuestion.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.polls.service.persistence.PollsQuestionFinder.findByC_G_T_D">
+		<![CDATA[
+			SELECT
+				{PollsQuestion.*}
+			FROM
+				(
+					SELECT DISTINCT
+						PollsQuestion.questionId
+					FROM
+						PollsQuestion
+					WHERE
+						(PollsQuestion.companyId = ?) AND
+						[$GROUP_ID$]
+						(
+							(lower(PollsQuestion.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(PollsQuestion.description LIKE ? [$AND_OR_NULL_CHECK$])
+						)
+				)
+				TEMP_TABLE
+					INNER JOIN PollsQuestion ON
+						TEMP_TABLE.questionId = PollsQuestion.questionId
+			ORDER BY
+				PollsQuestion.questionId DESC
+		]]>
+	</sql>
+</custom-sql>

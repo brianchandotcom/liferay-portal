@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.service.PollsChoiceLocalService;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
+import com.liferay.polls.service.persistence.PollsQuestionFinder;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -562,6 +563,24 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 		this.pollsQuestionPersistence = pollsQuestionPersistence;
 	}
 
+	/**
+	 * Returns the polls question finder.
+	 *
+	 * @return the polls question finder
+	 */
+	public PollsQuestionFinder getPollsQuestionFinder() {
+		return pollsQuestionFinder;
+	}
+
+	/**
+	 * Sets the polls question finder.
+	 *
+	 * @param pollsQuestionFinder the polls question finder
+	 */
+	public void setPollsQuestionFinder(PollsQuestionFinder pollsQuestionFinder) {
+		this.pollsQuestionFinder = pollsQuestionFinder;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.polls.model.PollsChoice",
 			pollsChoiceLocalService);
@@ -628,6 +647,8 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	protected com.liferay.polls.service.PollsQuestionLocalService pollsQuestionLocalService;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;
+	@BeanReference(type = PollsQuestionFinder.class)
+	protected PollsQuestionFinder pollsQuestionFinder;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

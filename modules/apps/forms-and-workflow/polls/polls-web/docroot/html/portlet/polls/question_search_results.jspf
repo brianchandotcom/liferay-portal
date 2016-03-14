@@ -14,8 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
-
 <%
-PollsDisplayContext pollsDisplayContext = new PollsDisplayContext(renderRequest, renderResponse);
+total = PollsQuestionLocalServiceUtil.searchCount(company.getCompanyId(), new long[] {scopeGroupId}, searchContainer.getSearchTerms().getKeywords());
+
+searchContainer.setTotal(total);
+
+results = PollsQuestionLocalServiceUtil.search(company.getCompanyId(), new long[] {scopeGroupId}, searchContainer.getSearchTerms().getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+searchContainer.setResults(results);
 %>

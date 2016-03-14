@@ -411,6 +411,39 @@ public class PollsQuestionLocalServiceWrapper
 		return _pollsQuestionLocalService.getQuestionsCount(groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.polls.model.PollsQuestion> search(
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+		return _pollsQuestionLocalService.search(companyId, groupIds, keywords,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.polls.model.PollsQuestion> search(
+		long companyId, long[] groupIds, java.lang.String name,
+		java.lang.String description, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+		return _pollsQuestionLocalService.search(companyId, groupIds, name,
+			description, andOperator, start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords) {
+		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
+			keywords);
+	}
+
+	@Override
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String title, java.lang.String description,
+		boolean andOperator) {
+		return _pollsQuestionLocalService.searchCount(companyId, groupIds,
+			title, description, andOperator);
+	}
+
 	/**
 	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

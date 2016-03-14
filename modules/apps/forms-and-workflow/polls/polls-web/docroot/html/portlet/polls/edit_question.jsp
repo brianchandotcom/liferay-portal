@@ -86,70 +86,72 @@ portletDisplay.setURLBack(redirect);
 
 	<aui:model-context bean="<%= question %>" model="<%= PollsQuestion.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
 
-		<aui:input label="polls-question" name="description" />
+			<aui:input label="polls-question" name="description" />
 
-		<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" name="expirationDate" />
+			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" name="expirationDate" />
 
-		<aui:field-wrapper label="choices">
+			<aui:field-wrapper label="choices">
 
-			<%
-			for (int i = 1; i <= choicesCount; i++) {
-				char c = (char)(96 + i);
+				<%
+				for (int i = 1; i <= choicesCount; i++) {
+					char c = (char)(96 + i);
 
-				PollsChoice choice = null;
+					PollsChoice choice = null;
 
-				String paramName = null;
+					String paramName = null;
 
-				if (deleteChoice && (i >= choiceName)) {
-					paramName = EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + ((char)(96 + i + 1));
+					if (deleteChoice && (i >= choiceName)) {
+						paramName = EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + ((char)(96 + i + 1));
+					}
+					else {
+						paramName = EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + c;
+					}
+
+					if ((question != null) && ((i - 1) < choices.size())) {
+						choice = (PollsChoice)choices.get(i - 1);
+					}
+				%>
+
+					<div class="choice <%= (i == choicesCount) ? "last-choice" : StringPool.BLANK %>">
+						<aui:model-context bean="<%= choice %>" model="<%= PollsChoice.class %>" />
+
+						<aui:input name="<%= EditQuestionAction.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
+
+						<aui:input fieldParam="<%= paramName %>" label="<%= c + StringPool.PERIOD %>" name="description" />
+
+						<c:if test="<%= (((question == null) && (choicesCount > 2)) || ((question != null) && (choicesCount > oldChoicesCount))) && (i == choicesCount) %>">
+							<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
+						</c:if>
+					</div>
+
+				<%
 				}
-				else {
-					paramName = EditQuestionAction.CHOICE_DESCRIPTION_PREFIX + c;
-				}
+				%>
 
-				if ((question != null) && ((i - 1) < choices.size())) {
-					choice = (PollsChoice)choices.get(i - 1);
-				}
-			%>
-
-				<div class="choice <%= (i == choicesCount) ? "last-choice" : StringPool.BLANK %>">
-					<aui:model-context bean="<%= choice %>" model="<%= PollsChoice.class %>" />
-
-					<aui:input name="<%= EditQuestionAction.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
-
-					<aui:input fieldParam="<%= paramName %>" label="<%= c + StringPool.PERIOD %>" name="description" />
-
-					<c:if test="<%= (((question == null) && (choicesCount > 2)) || ((question != null) && (choicesCount > oldChoicesCount))) && (i == choicesCount) %>">
-						<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
-					</c:if>
+				<div class="button-holder">
+					<aui:button cssClass="add-choice btn-lg" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
 				</div>
-
-			<%
-			}
-			%>
-
-			<div class="button-holder">
-				<aui:button cssClass="add-choice btn-lg" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
-			</div>
-		</aui:field-wrapper>
+			</aui:field-wrapper>
+		</aui:fieldset>
 
 		<c:if test="<%= question == null %>">
-			<aui:field-wrapper label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= PollsQuestion.class.getName() %>"
 				/>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
+	</aui:fieldset-group>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

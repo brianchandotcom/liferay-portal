@@ -23,7 +23,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.polls.constants.PollsPortletKeys" %><%@
 page import="com.liferay.polls.constants.PollsWebKeys" %><%@
@@ -43,8 +44,10 @@ page import="com.liferay.polls.service.PollsVoteLocalServiceUtil" %><%@
 page import="com.liferay.polls.service.permission.PollsQuestionPermissionChecker" %><%@
 page import="com.liferay.polls.service.permission.PollsResourcePermissionChecker" %><%@
 page import="com.liferay.polls.web.polls.portlet.action.EditQuestionAction" %><%@
+page import="com.liferay.polls.web.polls.portlet.display.context.PollsDisplayContext" %><%@
 page import="com.liferay.polls.web.util.PollsUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@

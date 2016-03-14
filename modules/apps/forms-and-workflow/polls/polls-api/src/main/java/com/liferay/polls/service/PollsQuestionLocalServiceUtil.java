@@ -386,6 +386,37 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().getQuestionsCount(groupId);
 	}
 
+	public static java.util.List<com.liferay.polls.model.PollsQuestion> search(
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+		return getService()
+				   .search(companyId, groupIds, keywords, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.polls.model.PollsQuestion> search(
+		long companyId, long[] groupIds, java.lang.String name,
+		java.lang.String description, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+		return getService()
+				   .search(companyId, groupIds, name, description, andOperator,
+			start, end, orderByComparator);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords) {
+		return getService().searchCount(companyId, groupIds, keywords);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String title, java.lang.String description,
+		boolean andOperator) {
+		return getService()
+				   .searchCount(companyId, groupIds, title, description,
+			andOperator);
+	}
+
 	/**
 	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
+import com.liferay.polls.service.persistence.PollsQuestionFinder;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 import com.liferay.polls.service.persistence.PollsVotePersistence;
 
@@ -472,6 +473,24 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the polls question finder.
+	 *
+	 * @return the polls question finder
+	 */
+	public PollsQuestionFinder getPollsQuestionFinder() {
+		return pollsQuestionFinder;
+	}
+
+	/**
+	 * Sets the polls question finder.
+	 *
+	 * @param pollsQuestionFinder the polls question finder
+	 */
+	public void setPollsQuestionFinder(PollsQuestionFinder pollsQuestionFinder) {
+		this.pollsQuestionFinder = pollsQuestionFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -716,6 +735,8 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	protected PollsQuestionLocalService pollsQuestionLocalService;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;
+	@BeanReference(type = PollsQuestionFinder.class)
+	protected PollsQuestionFinder pollsQuestionFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)

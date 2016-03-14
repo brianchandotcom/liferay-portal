@@ -19,83 +19,84 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 %>
 
-<table class="table table-bordered table-hover table-striped">
-<thead class="table-columns">
-<tr>
-	<td class="table-cell">
-		%
-	</td>
-	<td class="table-cell" colspan="4">
-		<liferay-ui:message key="votes" />
-	</td>
-</tr>
-</thead>
+<div class="main-content-body table-responsive">
 
-<%
-int totalVotes = question.getVotesCount();
+	<table class="table table-bordered table-hover table-striped">
+	<thead class="table-columns">
+	<tr>
+		<th class="table-cell">
+			%
+		</th>
+		<th class="table-cell" colspan="4">
+			<liferay-ui:message key="votes" />
+		</th>
+	</tr>
+	</thead>
+	<tbody class="table-data">
 
-for (int i = 0; i < choices.size(); i++) {
-	PollsChoice choice = (PollsChoice)choices.get(i);
+	<%
+	int totalVotes = question.getVotesCount();
 
-	choice = choice.toEscapedModel();
+	for (int i = 0; i < choices.size(); i++) {
+		PollsChoice choice = (PollsChoice)choices.get(i);
 
-	int choiceVotes = choice.getVotesCount();
+		choice = choice.toEscapedModel();
 
-	double votesPercent = 0.0;
+		int choiceVotes = choice.getVotesCount();
 
-	if (totalVotes > 0) {
-		votesPercent = (double)choiceVotes / totalVotes;
+		double votesPercent = 0.0;
+
+		if (totalVotes > 0) {
+			votesPercent = (double)choiceVotes / totalVotes;
+		}
+
+		int votesPixelWidth = 35;
+
+		if (windowState.equals(WindowState.MAXIMIZED)) {
+			votesPixelWidth = 100;
+		}
+
+		int votesPercentWidth = (int)Math.floor(votesPercent * 100);
+	%>
+
+	<tr>
+		<td class="table-cell">
+			<%= percentFormat.format(votesPercent) %>
+		</td>
+		<td class="table-cell">
+			<%= numberFormat.format(choiceVotes) %>
+		</td>
+
+		<td class="table-cell">
+			<div class="progress progress-xs" style="width: <%= votesPixelWidth %>px;">
+				<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= votesPercentWidth %>" class="progress-bar" role="progressbar" style="width: <%= votesPercentWidth %>%;"></div>
+			</div>
+		</td>
+
+		<td class="table-cell">
+			<strong><%= choice.getName() %>.</strong>
+		</td>
+		<td class="table-cell">
+			<%= choice.getDescription(locale) %>
+		</td>
+	</tr>
+
+	<%
 	}
+	%>
 
-	int votesPixelWidth = 35;
+	</tbody>
+	</table>
 
-	if (windowState.equals(WindowState.MAXIMIZED)) {
-		votesPixelWidth = 100;
-	}
-
-	int votesPercentWidth = (int)Math.floor(votesPercent * 100);
-%>
-
-<tbody class="table-data">
-<tr>
-	<td class="table-cell">
-		<%= percentFormat.format(votesPercent) %>
-	</td>
-	<td class="table-cell">
-		<%= numberFormat.format(choiceVotes) %>
-	</td>
-
-	<td class="table-cell">
-		<div class="progress progress-xs" style="width: <%= votesPixelWidth %>px;">
-			<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= votesPercentWidth %>" class="progress-bar" role="progressbar" style="width: <%= votesPercentWidth %>%;"></div>
-		</div>
-	</td>
-
-	<td class="table-cell">
-		<strong><%= choice.getName() %>.</strong>
-	</td>
-	<td class="table-cell">
-		<%= choice.getDescription(locale) %>
-	</td>
-</tr>
-
-<%
-}
-%>
-
-</tbody>
-</table>
-
-<br />
+</div>
 
 <div>
 	<strong><liferay-ui:message key="total-votes" />:</strong> <%= numberFormat.format(totalVotes) %>
 </div>
 
 <c:if test="<%= PollsPortletKeys.POLLS.equals(portletDisplay.getId()) %>">
-	<br />
 
-	<div>
+	<div class="main-content-body">
 		<strong><liferay-ui:message key="charts" />:</strong>
 
 		<%

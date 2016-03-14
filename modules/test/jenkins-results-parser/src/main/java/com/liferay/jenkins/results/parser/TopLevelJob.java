@@ -101,7 +101,7 @@ public class TopLevelJob extends BaseJob {
 			for (DownstreamJob missingJob : missingJobs) {
 				long time = System.currentTimeMillis();
 
-				if ((time - missingJob.getLastStatusChangedTime()) >
+				if ((time - missingJob.getStatusModifiedTime()) >
 						maxStartingTime) {
 
 					throw new TimeoutException("Downstream job disappeared");

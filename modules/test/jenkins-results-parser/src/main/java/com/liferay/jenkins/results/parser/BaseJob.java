@@ -20,16 +20,19 @@ import java.util.regex.Pattern;
 /**
  * @author Kevin Yen
  */
-public abstract class BaseJob {
+public abstract class BaseJob implements Job {
 
+	@Override
 	public String getMaster() {
 		return master;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public String getResult() {
 		if (!_status.equals("completed")) {
 			throw new IllegalStateException("Build not completed");
@@ -38,10 +41,12 @@ public abstract class BaseJob {
 		return result;
 	}
 
+	@Override
 	public String getStatus() {
 		return _status;
 	}
 
+	@Override
 	public String getURL() {
 		if ((master == null) || (master.length() == 0)) {
 			return null;
@@ -58,8 +63,6 @@ public abstract class BaseJob {
 
 		return sb.toString();
 	}
-
-	public abstract void update() throws Exception;
 
 	protected static String decodeURL(String url) {
 		url = url.replace("%28", "(");

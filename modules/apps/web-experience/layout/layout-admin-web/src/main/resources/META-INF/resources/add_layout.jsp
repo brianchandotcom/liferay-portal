@@ -111,14 +111,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 				</c:if>
 
 				<%
-				for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-				%>
-
-					<aui:option label="<%= HtmlUtil.escape(layoutPrototype.getName(locale)) %>" value="<%= layoutPrototype.getUuid() %>" />
-
-				<%
-				}
-
 				int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(layoutsAdminDisplayContext.getGroup(), privateLayout);
 
 				for (String type : types) {
@@ -144,6 +136,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 				<c:if test='<%= ArrayUtil.contains(types, "portlet") %>'>
 					<aui:option label="copy-of-a-page" value="copy" />
 				</c:if>
+
+				<optgroup label="<liferay-ui:message key="templates" />">
+
+					<%
+					for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(layoutPrototype.getName(locale)) %>" value="<%= layoutPrototype.getUuid() %>" />
+
+					<%
+					}
+					%>
+
+				</optgroup>
 			</aui:select>
 
 			<div id="<portlet:namespace />templateList">

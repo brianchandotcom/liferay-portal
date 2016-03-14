@@ -1,6 +1,7 @@
 'use strict';
 
 import App from 'senna/src/app/App';
+import core from 'metal/src/core';
 import dom from 'metal-dom/src/dom';
 import Utils from '../util/Utils.es';
 import LiferaySurface from '../surface/Surface.es';
@@ -23,6 +24,8 @@ class LiferayApp extends App {
 		this.on('startNavigate', this.onStartNavigate);
 
 		Liferay.on('io:complete', this.onLiferayIOComplete, this);
+
+		document.body.id = 'senna_surface' + core.getUid();
 
 		this.addSurfaces(new LiferaySurface(document.body.id));
 

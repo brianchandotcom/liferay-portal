@@ -29,10 +29,6 @@ public class TopLevelJob extends BaseJob {
 		downstreamJobs = new ArrayList<>();
 	}
 
-	public void addDownstreamJob(String invocationURL) throws Exception {
-		downstreamJobs.add(new DownstreamJob(invocationURL, this));
-	}
-
 	public int getDownstreamJobCount() {
 		return downstreamJobs.size();
 	}

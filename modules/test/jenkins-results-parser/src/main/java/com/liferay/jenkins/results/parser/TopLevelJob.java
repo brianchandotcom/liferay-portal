@@ -46,15 +46,15 @@ public class TopLevelJob extends BaseJob {
 			return downstreamJobs;
 		}
 
-		List<DownstreamJob> downstreamJobWithStatus = new ArrayList<>();
+		List<DownstreamJob> filteredDownstreamJobs = new ArrayList<>();
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
 			if (status.equals(downstreamJob.getStatus())) {
-				downstreamJobWithStatus.add(downstreamJob);
+				filteredDownstreamJobs.add(downstreamJob);
 			}
 		}
 
-		return downstreamJobWithStatus;
+		return filteredDownstreamJobs;
 	}
 
 	@Override

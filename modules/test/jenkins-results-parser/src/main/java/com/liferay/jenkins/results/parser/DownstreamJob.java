@@ -45,9 +45,9 @@ public class DownstreamJob extends BaseJob {
 		master = invocationURLMatcher.group("master");
 		name = invocationURLMatcher.group("name");
 
-		String parametersString = invocationURLMatcher.group("queryString");
+		String queryString = invocationURLMatcher.group("queryString");
 
-		Map<String, String> invokedParameters = getParameters(parametersString);
+		Map<String, String> invokedParameters = getParameters(queryString);
 
 		Set<String> parameterNames = getParameterNames();
 

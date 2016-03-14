@@ -73,7 +73,7 @@ public class TopLevelJob extends BaseJob {
 	}
 
 	public void waitForDownstreamJobs(
-			long updatePeriod, long maxStartingTime, long maxWaitTime)
+			long sleepTime, long maxStartTime, long maxWaitTime)
 		throws Exception {
 
 		long startTime = System.currentTimeMillis();
@@ -98,7 +98,7 @@ public class TopLevelJob extends BaseJob {
 				long time = System.currentTimeMillis();
 
 				if ((time - missingJob.getStatusModifiedTime()) >
-						maxStartingTime) {
+						maxStartTime) {
 
 					throw new TimeoutException("Downstream job disappeared");
 				}
@@ -106,7 +106,7 @@ public class TopLevelJob extends BaseJob {
 
 			long elapsedTime = System.currentTimeMillis() - startTime;
 
-			if ((elapsedTime > maxStartingTime) &&
+			if ((elapsedTime > maxStartTime) &&
 				(getDownstreamJobCount("starting") > 0)) {
 
 				throw new TimeoutException("Unable to find downstream job");
@@ -123,7 +123,7 @@ public class TopLevelJob extends BaseJob {
 				break;
 			}
 			else {
-				Thread.sleep(updatePeriod);
+				Thread.sleep(sleepTime);
 			}
 		}
 	}

@@ -45,6 +45,12 @@ public class TopLevelJob extends BaseJob {
 
 	@Override
 	public void update() throws Exception {
+		if (_downstreamJobs == null) {
+			setStatus("running");
+
+			return;
+		}
+
 		for (DownstreamJob downstreamJob : _downstreamJobs) {
 			downstreamJob.update();
 		}

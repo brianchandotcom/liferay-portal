@@ -93,15 +93,15 @@ public abstract class BaseJob implements Job {
 	protected void setURL(String url) throws Exception {
 		url = decodeURL(url);
 
-		Matcher buildURLMatcher = _buildURLPattern.matcher(url);
+		Matcher matcher = _pattern.matcher(url);
 
-		if (!buildURLMatcher.find()) {
-			throw new IllegalArgumentException("Invalid build URL. " + url);
+		if (!matcher.find()) {
+			throw new IllegalArgumentException("Invalid URL " + url);
 		}
 
-		master = buildURLMatcher.group("master");
-		name = buildURLMatcher.group("name");
-		number = Integer.parseInt(buildURLMatcher.group("number"));
+		master = matcher.group("master");
+		name = matcher.group("name");
+		number = Integer.parseInt(matcher.group("number"));
 
 		update();
 	}
@@ -115,7 +115,7 @@ public abstract class BaseJob implements Job {
 	protected int number;
 	protected String result;
 
-	private static final Pattern _buildURLPattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
 
 	private long _lastStatusChangedTime;

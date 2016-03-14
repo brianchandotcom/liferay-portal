@@ -9,7 +9,7 @@ targetCompatibility = "1.6"
 
 dependencies {
 	compile group: "com.google.protobuf", name: "protobuf-java", version: "2.4.1"
-	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	compile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.1"
 	compile group: "org.antlr", name: "antlr", version: "3.3"
 	compile group: "org.antlr", name: "antlr-runtime", version: "3.3"

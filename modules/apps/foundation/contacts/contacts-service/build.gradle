@@ -7,8 +7,8 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.5"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided project(":apps:foundation:contacts:contacts-api")
 }
 

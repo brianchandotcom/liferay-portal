@@ -6,6 +6,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.bookmarks.api", version: "1.0.1"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "1.0.0"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:web-experience:asset:asset-categories-admin-web")
 }

@@ -4,7 +4,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "1.0.1"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.9"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.jgrapht", name: "jgrapht-core", version: "0.9.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"

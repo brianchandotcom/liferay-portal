@@ -410,6 +410,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
 		throws PortalException {
 
@@ -518,6 +519,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
 		throws PortalException {
 
@@ -531,6 +533,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public DDLRecordVersion getRecordVersion(long recordId, String version)
 		throws PortalException {
 
@@ -544,6 +547,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public List<DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
 		OrderByComparator<DDLRecordVersion> orderByComparator) {
@@ -559,6 +563,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public int getRecordVersionsCount(long recordId) {
 		return ddlRecordVersionPersistence.countByRecordId(recordId);
 	}
@@ -602,6 +607,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 */
 	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public void revertRecordVersion(
 			long userId, long recordId, String version,
 			ServiceContext serviceContext)

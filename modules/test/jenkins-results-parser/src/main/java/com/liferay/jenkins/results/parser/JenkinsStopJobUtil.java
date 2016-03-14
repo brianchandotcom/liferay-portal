@@ -29,22 +29,22 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsStopJobUtil {
 
-	public static void stopJenkinsJob(
+	public static void stopJob(
 			String jobURL, String username, String password)
 		throws Exception {
 
-		stopDownstreamJobs(jobURL, username, password);
+		_stopDownstreamJobs(jobURL, username, password);
 
-		stopJob(jobURL, username, password);
+		_stopJob(jobURL, username, password);
 	}
 
-	public static void stopJenkinsJob(
+	public static void stopJob(
 			TopLevelJob topLevelJob, String username, String password)
 		throws Exception {
 
-		stopDownstreamJobs(topLevelJob, username, password);
+		_stopDownstreamJobs(topLevelJob, username, password);
 
-		stopJob(topLevelJob, username, password);
+		_stopJob(topLevelJob, username, password);
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -55,7 +55,7 @@ public class JenkinsStopJobUtil {
 		return new String(Base64.encodeBase64(authorizationString.getBytes()));
 	}
 
-	private static List<String> getDownstreamURLs(String jobURL)
+	private static List<String> _getDownstreamURLs(String jobURL)
 		throws Exception {
 
 		List<String> downstreamURLs = new ArrayList<>();
@@ -80,18 +80,18 @@ public class JenkinsStopJobUtil {
 		return downstreamURLs;
 	}
 
-	private static void stopDownstreamJobs(
+	private static void _stopDownstreamJobs(
 			String jobURL, String username, String password)
 		throws Exception {
 
-		List<String> downstreamURLs = getDownstreamURLs(jobURL);
+		List<String> downstreamURLs = _getDownstreamURLs(jobURL);
 
 		for (String downstreamURL : downstreamURLs) {
-			stopJob(downstreamURL, username, password);
+			_stopJob(downstreamURL, username, password);
 		}
 	}
 
-	private static void stopDownstreamJobs(
+	private static void _stopDownstreamJobs(
 			TopLevelJob topLevelJob, String username, String password)
 		throws Exception {
 
@@ -99,18 +99,19 @@ public class JenkinsStopJobUtil {
 			"running");
 
 		for (DownstreamJob downstreamJob : downstreamJobs) {
-			stopJob(downstreamJob, username, password);
+			_stopJob(downstreamJob, username, password);
 		}
 	}
 
-	private static void stopJob(
-			BaseJob baseJob, String username, String password)
+	private static void _stopJob(
+			Job job, String username, String password)
 		throws Exception {
 
-		stopJob(baseJob.getURL(), username, password);
+		_stopJob(job.getURL(), username, password);
 	}
 
-	private static void stopJob(String jobURL, String username, String password)
+	private static void _stopJob(
+			String jobURL, String username, String password)
 		throws Exception {
 
 		URL urlObject = new URL(

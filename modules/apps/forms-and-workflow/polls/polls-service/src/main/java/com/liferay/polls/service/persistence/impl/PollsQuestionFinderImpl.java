@@ -51,13 +51,6 @@ public class PollsQuestionFinderImpl
 	public int countByKeywords(
 		long companyId, long[] groupIds, String keywords) {
 
-		return doCountByKeywords(companyId, groupIds, keywords, false);
-	}
-
-	protected int doCountByKeywords(
-		long companyId, long[] groupIds, String keywords,
-		boolean inlineSQLHelper) {
-
 		String[] titles = null;
 		String[] descriptions = null;
 		boolean andOperator = false;
@@ -71,8 +64,7 @@ public class PollsQuestionFinderImpl
 		}
 
 		return doCountByC_G_T_D(
-			companyId, groupIds, titles, descriptions, andOperator,
-			inlineSQLHelper);
+			companyId, groupIds, titles, descriptions, andOperator, false);
 	}
 
 	@Override

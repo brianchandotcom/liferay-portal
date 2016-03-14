@@ -119,6 +119,10 @@ public class ModuleFrameworkUtilAdapter {
 		_moduleFramework.uninstallBundle(bundleId);
 	}
 
+	public static void unregisterContext(Object context) {
+		_moduleFramework.unregisterContext(context);
+	}
+
 	public static void updateBundle(long bundleId) throws PortalException {
 		_moduleFramework.updateBundle(bundleId);
 	}

@@ -58,6 +58,8 @@ public interface ModuleFramework {
 
 	public void uninstallBundle(long bundleId) throws PortalException;
 
+	public void unregisterContext(Object context);
+
 	public void updateBundle(long bundleId) throws PortalException;
 
 	public void updateBundle(long bundleId, InputStream inputStream)

@@ -34,7 +34,7 @@ else {
 		try {
 			vocabularies.add(AssetVocabularyServiceUtil.getVocabulary(vocabularyId));
 		}
-		catch (NoSuchVocabularyException nsve) {
+		catch (PortalException pe) {
 		}
 	}
 }

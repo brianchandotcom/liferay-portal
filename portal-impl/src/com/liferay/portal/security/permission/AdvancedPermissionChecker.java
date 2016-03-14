@@ -287,11 +287,23 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		if (ownerId == defaultUserId) {
-			if (actionId.equals(ActionKeys.VIEW)) {
-				return true;
+		boolean ownerIsDefaultUser = ownerId == defaultUserId;
+
+		if (ownerIsDefaultUser) {
+			List<String> guestUnsupportedActions;
+
+			if (name.indexOf(CharPool.PERIOD) != -1) {
+				guestUnsupportedActions =
+					ResourceActionsUtil.getModelResourceGuestUnsupportedActions(
+						name);
 			}
 			else {
+				guestUnsupportedActions =
+					ResourceActionsUtil.
+						getPortletResourceGuestUnsupportedActions(name);
+			}
+
+			if (guestUnsupportedActions.contains(actionId)) {
 				return false;
 			}
 		}
@@ -310,16 +322,33 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					groupId = groupedModel.getGroupId();
 				}
 
-				ResourceBlockIdsBag resourceBlockIdsBag =
-					getOwnerResourceBlockIdsBag(companyId, groupId, name);
+				ResourceBlockIdsBag resourceBlockIdsBag = null;
+
+				if (ownerIsDefaultUser) {
+					resourceBlockIdsBag = getGuestResourceBlockIdsBag(
+						companyId, groupId, name);
+				}
+				else {
+					resourceBlockIdsBag = getOwnerResourceBlockIdsBag(
+						companyId, groupId, name);
+				}
 
 				return ResourceBlockLocalServiceUtil.hasPermission(
 					name, permissionedModel, actionId, resourceBlockIdsBag);
 			}
 
+			long ownerRoleId = getOwnerRoleId();
+
+			if (ownerIsDefaultUser) {
+				Role guestRole = RoleLocalServiceUtil.getRole(
+					companyId, RoleConstants.GUEST);
+
+				ownerRoleId = guestRole.getRoleId();
+			}
+
 			return ResourcePermissionLocalServiceUtil.hasResourcePermission(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
-				getOwnerRoleId(), actionId);
+				ownerRoleId, actionId);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

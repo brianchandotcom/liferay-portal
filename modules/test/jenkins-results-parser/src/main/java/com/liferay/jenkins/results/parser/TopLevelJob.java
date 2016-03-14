@@ -25,8 +25,6 @@ public class TopLevelJob extends BaseJob {
 
 	public TopLevelJob(String url) throws Exception {
 		super(url);
-
-		downstreamJobs = new ArrayList<>();
 	}
 
 	public int getDownstreamJobCount() {
@@ -143,6 +141,6 @@ public class TopLevelJob extends BaseJob {
 		return downstreamURLs;
 	}
 
-	protected List<DownstreamJob> downstreamJobs;
+	protected List<DownstreamJob> downstreamJobs = new ArrayList<>();
 
 }

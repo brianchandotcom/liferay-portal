@@ -8,7 +8,7 @@ configurations {
 
 task buildSenna(type: Copy)
 
-String sennaVersion = "1.0.0"
+String sennaVersion = "1.0.1"
 
 buildSenna {
 	eachFile new StripPathSegmentsAction(7)

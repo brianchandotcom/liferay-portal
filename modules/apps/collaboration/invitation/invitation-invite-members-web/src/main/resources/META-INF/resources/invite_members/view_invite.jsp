@@ -57,16 +57,11 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<aui:input id="inviteUserSearch" label="" name="userName" placeholder="search" />
 
-				<div class="search">
-					<div class="list"></div>
-				</div>
+				<div class="search" id="<portlet:namespace />membersList"></div>
 
 				<label><liferay-ui:message key="members-to-invite" /><liferay-ui:icon-help message="to-add,-click-members-on-the-top-list" /> </label>
 
-				<div class="user-invited">
-					<div class="list">
-					</div>
-				</div>
+				<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
 
 				<label><liferay-ui:message key="invite-by-email" /></label>
 
@@ -78,10 +73,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<label><liferay-ui:message key="emails-to-invite" /></label>
 
-				<div class="email-invited">
-					<div class="list">
-					</div>
-				</div>
+				<div class="email-invited" id="<portlet:namespace />invitedEmailList"></div>
 
 				<%
 				List<Role> roles = RoleLocalServiceUtil.search(layout.getCompanyId(), null, null, new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleNameComparator(false));
@@ -153,8 +145,8 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 	var inviteMembersContainer = A.one('#<portlet:namespace />inviteMembersContainer');
 
-	var invitedMembersList = inviteMembersContainer.one('.user-invited .list');
-	var searchList = inviteMembersContainer.one('.search .list');
+	var invitedMembersList = inviteMembersContainer.one('#<portlet:namespace />invitedMembersList');
+	var membersList = inviteMembersContainer.one('#<portlet:namespace />membersList');
 
 	var pageDelta = 50;
 
@@ -183,7 +175,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 	var inviteMembersList = new Liferay.SO.InviteMembersList(
 		{
 			inputNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />inviteUserSearch',
-			listNode: '#<portlet:namespace />inviteMembersContainer .search .list',
+			listNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />membersList',
 			minQueryLength: 0,
 			requestTemplate: function(query) {
 				return {
@@ -218,7 +210,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		if (results.length == 0) {
 			if (options.start == 0) {
 				buffer.push(
-					'<div class="empty"><liferay-ui:message key="there-are-no-users-to-invite" unicode="<%= true %>" /></div>'
+					'<small class="text-capitalize text-muted"><liferay-ui:message key="there-are-no-users-to-invite" /></small>'
 				);
 			}
 		}
@@ -260,23 +252,16 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		return buffer;
 	}
 
-	var showMoreResults = function(responseData) {
-		var moreResults = searchList.one('.more-results');
+	inviteMembersList.on(
+		'results',
+		function(event) {
+			var responseData = A.JSON.parse(event.data.responseText);
 
-		moreResults.remove();
+			membersList.html(renderResults(responseData).join(''));
+		}
+	);
 
-		searchList.append(renderResults(responseData).join(''));
-	}
-
-	var updateInviteMembersList = function(event) {
-		var responseData = A.JSON.parse(event.data.responseText);
-
-		searchList.html(renderResults(responseData).join(''));
-	}
-
-	inviteMembersList.on('results', updateInviteMembersList);
-
-	searchList.delegate(
+	membersList.delegate(
 		'click',
 		function(event) {
 			var node = event.currentTarget;
@@ -294,7 +279,11 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 						success: function(event, id, obj) {
 							var responseData = this.get('responseData');
 
-							showMoreResults(responseData);
+							var moreResults = membersList.one('.more-results');
+
+							moreResults.remove();
+
+							membersList.append(renderResults(responseData).join(''));
 						}
 					},
 					data: {

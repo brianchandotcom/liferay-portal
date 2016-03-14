@@ -6,6 +6,7 @@
 		border: 1px solid;
 		border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
 		height: 300px;
+		margin-bottom: 1em;
 		overflow-x: hidden;
 		overflow-y: auto;
 
@@ -19,10 +20,6 @@
 				background-color: #CCE6F7;
 			}
 		}
-	}
-
-	.list {
-		margin-bottom: 1em;
 	}
 
 	.invite-user-search {
@@ -52,6 +49,8 @@
 	}
 
 	.user-invited {
+		margin-bottom: 1em;
+
 		.user {
 			span {
 				display: inline-block;
@@ -71,11 +70,14 @@
 		}
 	}
 
-	.email-invited .user .email {
-		color: #555;
-		font-size: 1em;
-		font-weight: bold;
-		margin: 0;
+	.email-invited {
+		margin-bottom: 1em;
+
+		.user .email {
+			color: #555;
+			font-size: 1em;
+			font-weight: bold;
+		}
 	}
 
 	.controls a {
@@ -101,17 +103,6 @@
 
 .ie .so-portlet-invite-members .invite-to select {
 	width: 300px;
-}
-
-.ie6 .so-portlet-invite-members {
-	.search {
-		background-image: none;
-	}
-
-	.invited, .user {
-		border-bottom: 1px solid #FFF;
-		border-top: 1px solid #FFF;
-	}
 }
 
 /* ---------- Responsive ---------- */

@@ -30,11 +30,11 @@ AUI.add(
 						return;
 					}
 
-					instance._findMembersList = instance._inviteMembersContainer.one('.search .list');
-					instance._emailInput = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailAddress');
 					instance._emailButton = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailButton');
-					instance._invitedEmailList = instance._inviteMembersContainer.one('.email-invited .list');
-					instance._invitedMembersList = instance._inviteMembersContainer.one('.user-invited .list');
+					instance._emailInput = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailAddress');
+					instance._membersList = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'membersList');
+					instance._invitedEmailList = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'invitedEmailList');
+					instance._invitedMembersList = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'invitedMembersList');
 
 					var form = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'fm');
 
@@ -42,25 +42,15 @@ AUI.add(
 						'submit',
 						function(event) {
 							instance._syncFields(form);
+						}
+					);
 
-							var dialog = instance.get('dialog');
+					instance._emailButton.on(
+						'click',
+						function(event) {
+							instance._addMemberEmail();
 
-							if (!dialog && !dialog.io) {
-								return;
-							}
-
-							event.halt();
-
-							dialog.io.set(
-								'form',
-								{
-									id: form.getDOM()
-								}
-							);
-
-							dialog.io.set('uri', form.getAttribute('action'));
-
-							dialog.io.start();
+							Liferay.Util.focusFormField(instance._emailInput.getDOM());
 						}
 					);
 
@@ -96,15 +86,6 @@ AUI.add(
 						},
 						'.controls'
 					);
-
-					instance._emailButton.on(
-						'click',
-						function(event) {
-							instance._addMemberEmail();
-
-							Liferay.Util.focusFormField(instance._emailInput.getDOM());
-						}
-					);
 				},
 
 				_addMemberEmail: function() {
@@ -136,7 +117,7 @@ AUI.add(
 
 					userId = userId || user.getAttribute('data-userId');
 
-					var user = instance._findMembersList.one('[data-userId="' + userId + '"]');
+					var user = instance._membersList.one('[data-userId="' + userId + '"]');
 					var invitedUser = instance._invitedMembersList.one('[data-userId="' + userId + '"]');
 
 					user.removeClass('invited');

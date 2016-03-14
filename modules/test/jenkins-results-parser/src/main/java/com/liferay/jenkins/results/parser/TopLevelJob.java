@@ -37,10 +37,6 @@ public class TopLevelJob extends BaseJob {
 		return downstreamJobs.size();
 	}
 
-	public List<DownstreamJob> getDownstreamJobs() {
-		return getDownstreamJobs(null);
-	}
-
 	public List<DownstreamJob> getDownstreamJobs(String status) {
 		if (status == null) {
 			return _downstreamJobs;

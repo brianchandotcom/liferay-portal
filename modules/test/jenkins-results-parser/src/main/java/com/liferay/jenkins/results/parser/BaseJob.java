@@ -34,7 +34,7 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public String getResult() {
-		if (!_status.equals("completed")) {
+		if (!status.equals("completed")) {
 			throw new IllegalStateException("Build not completed");
 		}
 
@@ -43,7 +43,7 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public String getStatus() {
-		return _status;
+		return status;
 	}
 
 	@Override
@@ -85,9 +85,9 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected void setStatus(String status) {
-		_status = status;
+		this.status = status;
 
-		_statusModifiedTime = System.currentTimeMillis();
+		statusModifiedTime = System.currentTimeMillis();
 	}
 
 	protected void setURL(String url) throws Exception {
@@ -106,10 +106,6 @@ public abstract class BaseJob implements Job {
 		update();
 	}
 
-	protected long getStatusModifiedTime() {
-		return _statusModifiedTime;
-	}
-
 	protected String master;
 	protected String name;
 	protected int number;
@@ -118,7 +114,7 @@ public abstract class BaseJob implements Job {
 	private static final Pattern _pattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
 
-	private long _statusModifiedTime;
-	private String _status;
+	protected long statusModifiedTime;
+	protected String status;
 
 }

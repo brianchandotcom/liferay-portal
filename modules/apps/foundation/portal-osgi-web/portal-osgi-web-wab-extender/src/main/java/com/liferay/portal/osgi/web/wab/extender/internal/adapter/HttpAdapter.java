@@ -16,12 +16,18 @@ package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.descriptor.JspConfigDescriptor;
 import javax.servlet.http.HttpServlet;
 
 import org.eclipse.equinox.http.servlet.HttpServiceServlet;
@@ -126,11 +132,57 @@ public class HttpAdapter {
 
 	@Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		Class<?> clazz = getClass();
+
+		_servletContext = (ServletContext)Proxy.newProxyInstance(
+			clazz.getClassLoader(), _INTERFACES,
+			new ServletContextAdaptor(servletContext));
 	}
+
+	private static final Class<?>[] _INTERFACES = new Class<?>[] {
+		ServletContext.class
+	};
 
 	private HttpServiceServlet _httpServiceServlet;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+
+	private static class ServletContextAdaptor implements InvocationHandler {
+
+		public ServletContextAdaptor(ServletContext servletContext) {
+			_servletContext = servletContext;
+		}
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			if (method.getName().equals("getInitParameter") &&
+				(args != null) && (args.length == 1)) {
+
+				if ("osgi.http.endpoint".equals(args[0])) {
+					return _servletContext.getInitParameter((String)args[0]);
+				}
+
+				return null;
+			}
+			else if (method.getName().equals("getInitParameterNames") &&
+					 (args == null)) {
+
+				return Collections.emptyEnumeration();
+			}
+			else if (method.getName().equals("getJspConfigDescriptor") &&
+					 JspConfigDescriptor.class.isAssignableFrom(
+						 method.getReturnType())) {
+
+				return null;
+			}
+
+			return method.invoke(_servletContext, args);
+		}
+
+		private final ServletContext _servletContext;
+
+	}
 
 }

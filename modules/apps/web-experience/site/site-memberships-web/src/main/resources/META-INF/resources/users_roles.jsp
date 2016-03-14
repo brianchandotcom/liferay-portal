@@ -53,7 +53,7 @@ roleSearch.setResults(roles);
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= rolesCount <= 0 %>"
+	disabled="<%= (rolesCount <= 0) && !searchTerms.isSearch() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userGroupRoleRole"
 >

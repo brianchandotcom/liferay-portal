@@ -70,7 +70,7 @@ roleSearch.setResults(roles);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -88,20 +88,8 @@ roleSearch.setResults(roles);
 			keyProperty="roleId"
 			modelVar="role"
 		>
-			<liferay-ui:search-container-column-text
-				name="title"
-				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
 
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
-			/>
+			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

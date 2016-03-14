@@ -1340,6 +1340,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					"Invalid include " + includeFileName);
 			}
 
+			String extension = matcher.group(1);
+
+			if (extension.equals("svg")) {
+				x = y;
+
+				continue;
+			}
+
 			includeFileName = buildFullPathIncludeFileName(
 				fileName, includeFileName);
 
@@ -1976,7 +1984,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"([\\s\\S]*?)\n\\}\n");
 	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
-		"/.*[.]jsp[f]?");
+		"/.*\\.(jsp[f]?|svg)");
 	private final Pattern _jspTagAttributes = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
 	private final Pattern _jspTagAttributeValue = Pattern.compile(

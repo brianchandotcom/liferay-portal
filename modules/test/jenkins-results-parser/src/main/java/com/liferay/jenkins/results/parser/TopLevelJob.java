@@ -80,17 +80,21 @@ public class TopLevelJob extends BaseJob {
 
 		while (true) {
 			update();
+			
+			StringBuilder sb = new StringBuilder();
 
-			System.out.print(getDownstreamJobCount("completed"));
-			System.out.print(" Completed / ");
-			System.out.print(getDownstreamJobCount("running"));
-			System.out.print(" Running / ");
-			System.out.print(getDownstreamJobCount("queued"));
-			System.out.print(" Queued / ");
-			System.out.print(getDownstreamJobCount("starting"));
-			System.out.print(" Starting / ");
-			System.out.print(getDownstreamJobCount());
-			System.out.println(" Total");
+			sb.append(getDownstreamJobCount("completed"));
+			sb.append(" Completed / ");
+			sb.append(getDownstreamJobCount("running"));
+			sb.append(" Running / ");
+			sb.append(getDownstreamJobCount("queued"));
+			sb.append(" Queued / ");
+			sb.append(getDownstreamJobCount("starting"));
+			sb.append(" Starting / ");
+			sb.append(getDownstreamJobCount());
+			sb.append(" Total");
+			
+			System.out.println(sb.toString());
 
 			List<DownstreamJob> missingJobs = getDownstreamJobs("missing");
 

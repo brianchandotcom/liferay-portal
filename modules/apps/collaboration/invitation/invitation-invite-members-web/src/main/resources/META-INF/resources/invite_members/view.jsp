@@ -25,25 +25,19 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<liferay-ui:message key="this-application-will-only-function-when-placed-on-a-site-page" />
 	</c:when>
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="inviteURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:renderURL var="inviteURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
 		</portlet:renderURL>
 
-		<a class="invite-members" href="javascript:;" onClick="<portlet:namespace />openInviteMembers('<%= inviteURL %>');"><liferay-ui:message key="invite-members-to-this-site" /></a>
+		<aui:a cssClass="btn btn-default" id="inviteMembersButton" href="javascript:;" label="invite-members-to-this-site" />
 
-		<aui:script position="inline" use="aui-base,aui-io-plugin-deprecated,liferay-so-invite-members,liferay-util-window">
-			Liferay.provide(
-				window,
-				'<portlet:namespace />openInviteMembers',
-				function(url) {
-					var title = '';
-					var titleNode = A.one('.so-portlet-invite-members .portlet-title-default');
+		<aui:script position="inline" use="aui-base">
+			var inviteMembersButton = A.one('#<portlet:namespace />inviteMembersButton');
 
-					if (titleNode) {
-						title = titleNode.get('innerHTML');
-					}
-
-					var dialog = Liferay.Util.Window.getWindow(
+			inviteMembersButton.on(
+				'click',
+				function() {
+					Liferay.Util.openWindow(
 						{
 							dialog: {
 								align: {
@@ -54,29 +48,16 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 								destroyOnClose: true,
 								modal: true,
 								resizable: false,
-								width: 700
+								width: 900
 							},
-							title: title
-						}
-					).plug(
-						A.Plugin.IO,
-						{
-							after: {
-								success: function() {
-									new Liferay.SO.InviteMembers(
-										{
-											dialog: dialog,
-											portletNamespace: '<portlet:namespace />'
-										}
-									);
-								}
+							dialogIframe: {
+								bodyCssClass: 'dialog-with-footer'
 							},
-							method: 'GET',
-							uri: url
+							uri: '<%= HtmlUtil.escapeJS(inviteURL) %>',
+							title: '<%= portletDisplay.getTitle() %>'
 						}
-					).render();
-				},
-				['aui-base', 'aui-io-plugin-deprecated', 'liferay-so-invite-members', 'liferay-util-window']
+					);
+				}
 			);
 		</aui:script>
 	</c:when>

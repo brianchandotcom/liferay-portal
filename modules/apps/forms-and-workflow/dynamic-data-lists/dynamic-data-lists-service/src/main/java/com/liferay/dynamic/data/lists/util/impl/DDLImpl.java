@@ -37,10 +37,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -53,10 +50,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,7 +60,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class DDLImpl implements DDL {
 
+	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception {
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
@@ -210,7 +205,9 @@ public class DDLImpl implements DDL {
 		return jsonArray;
 	}
 
+	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public JSONArray getRecordsJSONArray(DDLRecordSet recordSet)
 		throws Exception {
 
@@ -219,7 +216,9 @@ public class DDLImpl implements DDL {
 		return getRecordsJSONArray(recordSet.getRecords(), false, locale);
 	}
 
+	@Deprecated
 	@Override
+	@SuppressWarnings("deprecation")
 	public JSONArray getRecordsJSONArray(List<DDLRecord> records)
 		throws Exception {
 
@@ -249,30 +248,6 @@ public class DDLImpl implements DDL {
 		}
 
 		return jsonArray;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isEditable(
-			HttpServletRequest request, String portletId, long groupId)
-		throws Exception {
-
-		return true;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isEditable(
-			PortletPreferences preferences, String portletId, long groupId)
-		throws Exception {
-
-		return true;
 	}
 
 	@Override
@@ -325,16 +300,6 @@ public class DDLImpl implements DDL {
 		}
 
 		return record;
-	}
-
-	@Override
-	public DDLRecord updateRecord(
-			long recordId, long recordSetId, boolean mergeFields,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return updateRecord(
-			recordId, recordSetId, mergeFields, true, serviceContext);
 	}
 
 	protected String getFileEntryTitle(String uuid, long groupId) {
@@ -402,11 +367,6 @@ public class DDLImpl implements DDL {
 	}
 
 	@Reference(unbind = "-")
-	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
-		_indexerRegistry = indexerRegistry;
-	}
-
-	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		_layoutService = layoutService;
 	}
@@ -416,15 +376,12 @@ public class DDLImpl implements DDL {
 		_storageEngine = storageEngine;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDLImpl.class);
-
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordService _ddlRecordService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDM _ddm;
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DLAppLocalService _dlAppLocalService;
-	private IndexerRegistry _indexerRegistry;
 	private LayoutService _layoutService;
 	private StorageEngine _storageEngine;
 

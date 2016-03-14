@@ -29,7 +29,7 @@
 				</c:if>
 
 				<a class="collapsed management-bar-toggle management-bar-toggle-link" data-toggle="collapse" href="#<%= namespace %>managementBarCollapse">
-					<span class="management-bar-item-title"><liferay-ui:message key="label" /></span>
+					<span class="management-bar-item-title"><liferay-ui:message key="filter-order" /></span>
 
 					<span class="icon-sort"></span>
 				</a>

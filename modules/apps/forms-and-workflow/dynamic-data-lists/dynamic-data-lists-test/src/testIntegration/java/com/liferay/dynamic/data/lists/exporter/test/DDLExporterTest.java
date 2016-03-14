@@ -137,7 +137,8 @@ public class DDLExporterTest {
 
 		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("csv");
 
-		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
+		byte[] bytes = ddlExporter.export(
+			recordSet.getRecordSetId(), LocaleUtil.getSiteDefault());
 
 		File file = new File("record-set.csv");
 
@@ -171,7 +172,8 @@ public class DDLExporterTest {
 
 		DDLExporter ddlExporter = _ddlExporterFactory.getDDLExporter("xml");
 
-		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
+		byte[] bytes = ddlExporter.export(
+			recordSet.getRecordSetId(), LocaleUtil.getSiteDefault());
 
 		File file = new File("record-set.xml");
 

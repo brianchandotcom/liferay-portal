@@ -10,7 +10,7 @@
 	$theme.include($top_head_include)
 </head>
 
-<body class="portal-popup $css_class" id="main-surface">
+<body class="portal-popup $css_class">
 
 $theme.include($content_include)
 

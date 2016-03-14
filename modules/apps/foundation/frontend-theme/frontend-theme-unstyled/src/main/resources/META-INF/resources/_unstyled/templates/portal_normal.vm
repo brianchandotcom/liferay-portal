@@ -12,7 +12,7 @@
 	$theme.include($top_head_include)
 </head>
 
-<body class="$css_class" id="main-surface">
+<body class="$css_class">
 
 $theme.include($body_top_include)
 

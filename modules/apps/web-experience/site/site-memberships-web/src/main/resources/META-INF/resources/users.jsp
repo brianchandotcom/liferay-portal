@@ -175,7 +175,7 @@ userSearch.setResults(users);
 							}
 						}
 					},
-					title: '<liferay-ui:message key="add-users-to-this-site" />',
+					title: '<liferay-ui:message key="assign-users-to-this-site" />',
 					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_users.jsp" /></portlet:renderURL>'
 				}
 			);

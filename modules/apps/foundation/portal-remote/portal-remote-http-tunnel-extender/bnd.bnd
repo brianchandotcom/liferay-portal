@@ -8,6 +8,6 @@ Provide-Capability:\
 	liferay.extender="http.tunnel.extender";\
 	version:Version="${plugin.full.version}"
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/extender/*,\
 	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*

@@ -9,6 +9,6 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	test-classes/integration,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

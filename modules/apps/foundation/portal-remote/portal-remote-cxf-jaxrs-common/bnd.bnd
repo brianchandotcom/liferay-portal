@@ -57,7 +57,7 @@ Provide-Capability:\
 		uses:="javax.json,javax.json.spi,javax.json.stream";\
 		version:Version=1
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	lib/cxf-rt-frontend-jaxrs.jar=cxf-rt-frontend-jaxrs-*.jar,\
 	lib/cxf-rt-rs-extension-providers.jar=cxf-rt-rs-extension-providers-*.jar,\
 	lib/javax.annotation-api.jar=javax.annotation-api-*.jar,\

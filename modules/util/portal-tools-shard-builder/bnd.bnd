@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.tools.shard.builder
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.tools.shard.builder.exporter
 Main-Class: com.liferay.portal.tools.shard.builder.Main
--includeresource:\
+-liferay-includeresource:\
 	@HikariCP-*.jar,\
 	@jcommander-*.jar,\
 	@slf4j-api-*.jar

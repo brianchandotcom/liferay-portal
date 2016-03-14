@@ -7,7 +7,7 @@ Private-Package:\
 	com.liferay.sass.compiler.jni.internal.libsass,\
 	com.ochafik.*,\
 	com.sun.jna
--includeresource:\
+-liferay-includeresource:\
 	@jna-*.jar,\
 	@jnaerator-runtime-*.jar,\
 	@ochafik-util-*.jar

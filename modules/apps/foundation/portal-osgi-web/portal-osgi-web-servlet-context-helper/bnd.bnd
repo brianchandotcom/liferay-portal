@@ -5,4 +5,4 @@ Export-Package: com.liferay.portal.osgi.web.servlet.context.helper
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -include: ../../app.bnd
--includeresource: @org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*
+-liferay-includeresource: @org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*

@@ -7,7 +7,7 @@ Liferay-Require-SchemaVersion: 1.3.0
 Liferay-Service: true
 -dsannotations-options: inherit
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\

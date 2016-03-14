@@ -12,6 +12,6 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@antlr4-runtime-*.jar,\
 	@org.abego.treelayout.core-*.jar

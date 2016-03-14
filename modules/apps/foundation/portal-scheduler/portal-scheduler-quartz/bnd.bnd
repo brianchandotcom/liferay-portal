@@ -20,4 +20,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scheduling
 -include: ../../app.bnd
--includeresource: @quartz-*.jar
+-liferay-includeresource: @quartz-*.jar

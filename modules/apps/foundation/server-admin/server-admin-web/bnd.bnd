@@ -5,7 +5,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="1.0.0"
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/log4j/Levels.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/log4j/Log4JUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\

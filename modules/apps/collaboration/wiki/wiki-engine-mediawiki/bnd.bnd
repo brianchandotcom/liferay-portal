@@ -13,4 +13,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-mediawiki
 -include: ../../app.bnd
--includeresource: @org.jamwiki-*.jar
+-liferay-includeresource: @org.jamwiki-*.jar

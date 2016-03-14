@@ -8,4 +8,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -include: ../../app.bnd
--includeresource: @bsh-*.jar
+-liferay-includeresource: @bsh-*.jar

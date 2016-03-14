@@ -5,7 +5,7 @@ Import-Package:\
 	!org.apache.maven.plugin.*,\
 	*
 Main-Class: com.liferay.portal.tools.wsdd.merger.WSDDBuilder
--includeresource:\
+-liferay-includeresource:\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\

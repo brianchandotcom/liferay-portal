@@ -6,4 +6,4 @@ Export-Package:\
 	com.liferay.registry.collections,\
 	com.liferay.registry.dependency,\
 	com.liferay.registry.util
--includeresource: @biz.aQute.bndlib-*.jar!/aQute/lib/filter/*
+-liferay-includeresource: @biz.aQute.bndlib-*.jar!/aQute/lib/filter/*

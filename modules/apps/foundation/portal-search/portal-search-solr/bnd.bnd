@@ -35,7 +35,7 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Solr
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	lib/commons-io.jar=commons-io-*.jar,\
 	lib/httpclient.jar=httpclient-*.jar,\
 	lib/httpcore.jar=httpcore-*.jar,\

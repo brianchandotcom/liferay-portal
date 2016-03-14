@@ -24,7 +24,7 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/axis/*.class,\
 	@axis-wsdl4j-*.jar,\
 	@org.apache.axis-*.jar

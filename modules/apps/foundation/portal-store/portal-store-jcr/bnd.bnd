@@ -11,7 +11,7 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@concurrent-*.jar,\
 	@jackrabbit-api-*.jar,\
 	@jackrabbit-core-*.jar,\

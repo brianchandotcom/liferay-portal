@@ -6,7 +6,7 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
 Web-ContextPath: /calendar-web
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\

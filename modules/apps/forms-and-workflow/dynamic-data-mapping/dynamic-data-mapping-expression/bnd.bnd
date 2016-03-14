@@ -5,4 +5,4 @@ Export-Package: com.liferay.dynamic.data.mapping.expression
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
 -include: ../../app.bnd
--includeresource: @EvalEx-*.jar
+-liferay-includeresource: @EvalEx-*.jar

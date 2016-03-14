@@ -12,7 +12,7 @@ Liferay-Releng-Module-Group-Title: Mobile Device Rules
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -include: ../../app.bnd
--includeresource:\
+-liferay-includeresource:\
 	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

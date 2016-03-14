@@ -908,7 +908,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
 		String includeResource = bundleInstructions.get(
-			Constants.INCLUDERESOURCE);
+			_LIFERAY_INCLUDERESOURCE);
 
 		if (Validator.isNull(includeResource) ||
 			!includeResource.contains("-*.")) {
@@ -960,7 +960,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				name + "-*.", name + "-" + version + ".");
 		}
 
-		bundleInstructions.put(Constants.INCLUDERESOURCE, includeResource);
+		bundleInstructions.put(
+			Constants.INCLUDERESOURCE + ".liferay", includeResource);
 	}
 
 	protected void configureConfiguration(Configuration configuration) {
@@ -1818,6 +1819,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	private static final String _IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
+
+	private static final String _LIFERAY_INCLUDERESOURCE =
+		"-liferay-includeresource";
 
 	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
 		"maven.local.ignore");

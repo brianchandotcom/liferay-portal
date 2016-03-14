@@ -1290,7 +1290,11 @@ public class WabProcessor {
 		for (Node node : nodes) {
 			String text = node.getText();
 
-			value = "!" + text +"," + value;
+			if (text.startsWith("/")) {
+				text = text.substring(1);
+			}
+
+			value = "!" + text + "/*," + value;
 		}
 
 		analyzer.setProperty("-jsp", value);

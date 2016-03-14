@@ -22,31 +22,41 @@ String layoutTemplateIdPrefix = (String)request.getAttribute("liferay-ui:layout-
 List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribute("liferay-ui:layout-templates-list:layoutTemplates");
 %>
 
-<aui:fieldset>
-	<aui:row cssClass="lfr-page-layouts">
-		<ul>
+<div class="lfr-page-layouts row">
+	<ul class="list-unstyled">
 
-			<%
-			layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
+		<%
+		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
-			for (int i = 0; i < layoutTemplates.size(); i++) {
-				LayoutTemplate layoutTemplate = layoutTemplates.get(i);
-			%>
+		for (int i = 0; i < layoutTemplates.size(); i++) {
+			LayoutTemplate layoutTemplate = layoutTemplates.get(i);
+		%>
 
-				<li class="lfr-layout-template radio">
+			<li class="col-lg-3 col-md-4 col-sm-6 lfr-layout-template">
+				<div class="checkbox-card">
 					<label for="<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>">
-						<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" wrappedField="<%= true %>" />
+						<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" cssClass="hide" id='<%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" wrappedField="<%= true %>" />
 
-						<img alt="" class="layout-template-entry modify-link <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="25" onclick="document.getElementById('<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" width="25" />
+						<div class="card card-horizontal">
+							<div class="card-row card-row-padded">
+								<div class="card-col-field">
+									<img alt="" class="layout-template-entry modify-link <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="28" onclick="document.getElementById('<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" width="28" />
+								</div>
 
-						<span><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
+								<div class="card-col-content card-col-gutters clamp-horizontal">
+									<div class="clamp-container">
+										<span class="truncate-text" title=""><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</label>
-				</li>
+				</div>
+			</li>
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</ul>
-	</aui:row>
-</aui:fieldset>
+	</ul>
+</div>

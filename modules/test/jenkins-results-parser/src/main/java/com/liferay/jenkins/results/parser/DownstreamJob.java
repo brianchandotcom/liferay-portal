@@ -98,6 +98,7 @@ public class DownstreamJob extends BaseJob {
 		return topLevelJob;
 	}
 
+	@Override
 	public void update() throws Exception {
 		if (getStatus().equals("completed") || getStatus().equals("invalid")) {
 			return;

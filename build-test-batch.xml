@@ -1029,37 +1029,23 @@ ${output.content}</echo>
 	<target name="semantic-versioning-jdk7">
 		<run-batch-test>
 			<test-action>
-				<exec dir="${project.dir}" executable="git" outputproperty="git.status.log">
-					<arg line="status --short" />
-				</exec>
+				<fileset dir="${project.dir}/baseline-reports" id="log.files">
+					<include name="*.log" />
+				</fileset>
 
-				<propertyregex
-					input="${git.status.log}"
-					override="true"
-					property="git.status.log"
-					regexp="(.*)\n?\?\? bundles\/(.*)"
-					replace="\1\2"
-				/>
+				<pathconvert pathsep="," property="log.files" refid="log.files"/>
 
-				<propertyregex
-					input="${git.status.log}"
-					override="true"
-					property="git.status.log"
-					regexp="(.*)\n?\?\? git-commit-portal(.*)"
-					replace="\1\2"
-				/>
+				<for list="${log.files}" param="log.file">
+					<sequential>
+						<print-file file.name="@{log.file}" />
+					</sequential>
+				</for>
 
 				<if>
 					<not>
-						<equals arg1="${git.status.log}" arg2="" />
+						<equals arg1="${log.files}" arg2="" />
 					</not>
 					<then>
-						<echo></echo>
-						<echo>Semantic versioning is incorrect for the following packages:</echo>
-						<echo></echo>
-						<echo>${git.status.log}</echo>
-						<echo></echo>
-
 						<fail message="Semantic versioning is incorrect." />
 					</then>
 				</if>

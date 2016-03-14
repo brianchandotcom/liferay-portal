@@ -1933,6 +1933,24 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-file">
+		<attribute name="file.name" />
+
+		<sequential>
+			<echo></echo>
+			<echo>##</echo>
+			<echo>## @{file.name}</echo>
+			<echo>##</echo>
+			<echo></echo>
+
+			<loadfile property="file.content" srcFile="@{file.name}" />
+
+			<echo>${file.content}</echo>
+
+			<var name="file.content" unset="true" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-gc-logs">
 		<attribute name="tomcat.gc.log" />
 		<attribute name="tsant.gc.log" />

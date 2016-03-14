@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * Represents a exception class that is thrown when the system identifies violation of the Record Set Key unique property.
+ *
  * @author Brian Wing Shun Chan
  */
 @ProviderType

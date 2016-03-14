@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * Represents a exception class that is thrown when the system identifies violation of the Record Set Name required property.
+ *
  * @author Brian Wing Shun Chan
  */
 @ProviderType

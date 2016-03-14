@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -48,6 +49,22 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	@Override
 	public void delete(T object) throws SearchException {
 		_indexer.delete(object);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof NoAutoCommitIndexer<?>)) {
+			return false;
+		}
+
+		NoAutoCommitIndexer<?> noAutoCommitIndexer =
+			(NoAutoCommitIndexer<?>)object;
+
+		return Validator.equals(_indexer, noAutoCommitIndexer._indexer);
 	}
 
 	@Override
@@ -138,6 +155,11 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 
 		return _indexer.getSummary(
 			document, snippet, portletRequest, portletResponse);
+	}
+
+	@Override
+	public int hashCode() {
+		return _indexer.hashCode();
 	}
 
 	@Override

@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1018,12 +1021,28 @@ public class BaseTextExportImportContentProcessor
 	protected void validateDLReferences(long groupId, String content)
 		throws PortalException {
 
-		String contextPath = PortalUtil.getPathContext();
+		String portalURL = PortalUtil.getPathContext();
+
+		StringBundler stringBundler = new StringBundler(2);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			(serviceContext.getThemeDisplay() != null)) {
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			stringBundler.append(PortalUtil.getPortalURL(themeDisplay));
+			stringBundler.append(PortalUtil.getPathContext());
+
+			portalURL = stringBundler.toString();
+		}
 
 		String[] patterns = {
-			contextPath.concat("/c/document_library/get_file?"),
-			contextPath.concat("/documents/"),
-			contextPath.concat("/image/image_gallery?")
+			portalURL.concat("/c/document_library/get_file?"),
+			portalURL.concat("/documents/"),
+			portalURL.concat("/image/image_gallery?")
 		};
 
 		int beginPos = -1;
@@ -1038,7 +1057,7 @@ public class BaseTextExportImportContentProcessor
 
 			Map<String, String[]> dlReferenceParameters =
 				getDLReferenceParameters(
-					groupId, content, beginPos + contextPath.length(), endPos);
+					groupId, content, beginPos + portalURL.length(), endPos);
 
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 

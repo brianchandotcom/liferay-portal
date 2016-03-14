@@ -79,6 +79,11 @@ define("frontend-js-metal-web@1.0.0/metal-tooltip/src/TooltipBase", ['exports', 
 			this.eventHandler_.removeAllListeners();
 		};
 
+		TooltipBase.prototype.disposeInternal = function disposeInternal() {
+			_Component.prototype.disposeInternal.call(this);
+			clearTimeout(this.delay_);
+		};
+
 		TooltipBase.prototype.align = function align(opt_alignElement) {
 			this.syncAlignElement(opt_alignElement || this.alignElement);
 		};

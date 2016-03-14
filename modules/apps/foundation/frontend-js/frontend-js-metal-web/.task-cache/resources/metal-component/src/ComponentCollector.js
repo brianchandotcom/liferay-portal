@@ -56,14 +56,11 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/ComponentCollector", ['e
 			ComponentCollector.components[component.id] = component;
 		};
 
-		ComponentCollector.prototype.createComponent = function createComponent(componentName, id, opt_data) {
-			var component = ComponentCollector.components[id];
+		ComponentCollector.prototype.createComponent = function createComponent(componentName, opt_data) {
+			var component = ComponentCollector.components[(opt_data || {}).id];
 			if (!component) {
 				var ConstructorFn = _ComponentRegistry2.default.getConstructor(componentName);
-				var data = opt_data || {};
-				data.id = id;
-				data.element = '#' + id;
-				component = new ConstructorFn(data);
+				component = new ConstructorFn(opt_data);
 			}
 			return component;
 		};

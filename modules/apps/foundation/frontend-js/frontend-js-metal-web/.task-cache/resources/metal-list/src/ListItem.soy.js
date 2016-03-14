@@ -79,22 +79,20 @@ define("frontend-js-metal-web@1.0.0/metal-list/src/ListItem.soy", ['exports', 'm
   Templates.ListItem.item = function (opt_data, opt_ignored, opt_ijData) {
     var output = (opt_data.item.avatar ? '<span class="list-image pull-left ' + soy.$$escapeHtmlAttribute(opt_data.item.avatar['class']) + '">' + soy.$$escapeHtml(opt_data.item.avatar.content) + '</span>' : '') + '<div class="list-main-content pull-left"><div class="list-text-primary">' + soy.$$escapeHtml(opt_data.item.textPrimary) + '</div>' + (opt_data.item.textSecondary ? '<div class="list-text-secondary">' + soy.$$escapeHtml(opt_data.item.textSecondary) + '</div>' : '') + '</div>';
     if (opt_data.item.icons) {
-      output += '<div class="list-icons pull-right">';
-      var iconList56 = opt_data.item.icons;
-      var iconListLen56 = iconList56.length;
-      for (var iconIndex56 = 0; iconIndex56 < iconListLen56; iconIndex56++) {
-        var iconData56 = iconList56[iconIndex56];
-        output += '<span class="list-icon ' + soy.$$escapeHtmlAttribute(iconData56) + '"></span>';
+      var iconList55 = opt_data.item.icons;
+      var iconListLen55 = iconList55.length;
+      for (var iconIndex55 = 0; iconIndex55 < iconListLen55; iconIndex55++) {
+        var iconData55 = iconList55[iconIndex55];
+        output += '<span class="btn-icon ' + soy.$$escapeHtmlAttribute(iconData55) + ' pull-right"></span>';
       }
-      output += '</div>';
     }
     if (opt_data.item.iconsHtml) {
-      output += '<div class="list-icons pull-right">';
-      var iconHtmlList65 = opt_data.item.iconsHtml;
-      var iconHtmlListLen65 = iconHtmlList65.length;
-      for (var iconHtmlIndex65 = 0; iconHtmlIndex65 < iconHtmlListLen65; iconHtmlIndex65++) {
-        var iconHtmlData65 = iconHtmlList65[iconHtmlIndex65];
-        output += soy.$$escapeHtml(iconHtmlData65);
+      output += '<div class="pull-right">';
+      var iconHtmlList63 = opt_data.item.iconsHtml;
+      var iconHtmlListLen63 = iconHtmlList63.length;
+      for (var iconHtmlIndex63 = 0; iconHtmlIndex63 < iconHtmlListLen63; iconHtmlIndex63++) {
+        var iconHtmlData63 = iconHtmlList63[iconHtmlIndex63];
+        output += soy.$$escapeHtml(iconHtmlData63);
       }
       output += '</div>';
     }

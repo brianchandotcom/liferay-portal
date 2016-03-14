@@ -29,14 +29,12 @@
 		{/if}
 	</div>
 	{if $item.icons}
-		<div class="list-icons pull-right">
-			{foreach $icon in $item.icons}
-				<span class="list-icon {$icon}"></span>
-			{/foreach}
-		</div>
+		{foreach $icon in $item.icons}
+			<span class="btn-icon {$icon} pull-right"></span>
+		{/foreach}
 	{/if}
 	{if $item.iconsHtml}
-		<div class="list-icons pull-right">
+		<div class="pull-right">
 			{foreach $iconHtml in $item.iconsHtml}
 				{$iconHtml}
 			{/foreach}

@@ -152,11 +152,11 @@ define("frontend-js-metal-web@1.0.0/metal-attribute/src/Attribute", ['exports', 
 			}
 		};
 
-		Attribute.prototype.callSetter_ = function callSetter_(name, value) {
+		Attribute.prototype.callSetter_ = function callSetter_(name, value, currentValue) {
 			var info = this.attrsInfo_[name];
 			var config = info.config;
 			if (config.setter) {
-				value = this.callFunction_(config.setter, [value]);
+				value = this.callFunction_(config.setter, [value, currentValue]);
 			}
 			return value;
 		};
@@ -231,6 +231,7 @@ define("frontend-js-metal-web@1.0.0/metal-attribute/src/Attribute", ['exports', 
 					prevVal: prevVal
 				};
 				this.emit(name + 'Changed', data);
+				this.emit('attrChanged', data);
 				this.scheduleBatchEvent_(data);
 			}
 		};
@@ -314,7 +315,7 @@ define("frontend-js-metal-web@1.0.0/metal-attribute/src/Attribute", ['exports', 
 			}
 
 			var prevVal = this[name];
-			info.value = this.callSetter_(name, value);
+			info.value = this.callSetter_(name, value, prevVal);
 			info.written = true;
 			this.informChange_(name, prevVal);
 		};
@@ -360,7 +361,7 @@ define("frontend-js-metal-web@1.0.0/metal-attribute/src/Attribute", ['exports', 
   * on their constructors, which will be merged together and handled automatically.
   * @type {!Array<string>}
   */
-	Attribute.INVALID_ATTRS = ['attrs'];
+	Attribute.INVALID_ATTRS = ['attr', 'attrs'];
 
 	/**
   * Constants that represent the states that an attribute can be in.

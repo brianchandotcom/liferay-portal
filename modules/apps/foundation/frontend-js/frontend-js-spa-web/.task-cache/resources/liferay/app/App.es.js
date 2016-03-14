@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal-dom/src/dom', '../util/Utils.es', '../surface/Surface.es'], function (exports, _App2, _dom, _Utils, _Surface) {
+define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/app/App', 'metal/src/core', 'metal-dom/src/dom', '../util/Utils.es', '../surface/Surface.es'], function (exports, _App2, _core, _dom, _Utils, _Surface) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -6,6 +6,8 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 	});
 
 	var _App3 = _interopRequireDefault(_App2);
+
+	var _core2 = _interopRequireDefault(_core);
 
 	var _dom2 = _interopRequireDefault(_dom);
 
@@ -71,6 +73,8 @@ define("frontend-js-spa-web@1.0.0/liferay/app/App.es", ['exports', 'senna/src/ap
 			_this.on('startNavigate', _this.onStartNavigate);
 
 			Liferay.on('io:complete', _this.onLiferayIOComplete, _this);
+
+			document.body.id = 'senna_surface' + _core2.default.getUid();
 
 			_this.addSurfaces(new _Surface2.default(document.body.id));
 

@@ -180,9 +180,14 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/Component", ['exports', 
 			Component.componentsCollector.addComponent(this);
 		};
 
-		Component.prototype.addSubComponent = function addSubComponent(componentName, componentId, opt_componentData) {
-			this.components[componentId] = Component.componentsCollector.createComponent(componentName, componentId, opt_componentData);
-			return this.components[componentId];
+		Component.prototype.addSubComponent = function addSubComponent(componentName, opt_componentData) {
+			// Avoid accessing id from component if possible, since that may cause
+			// the lookup of the component's element in the dom unnecessarily, which is
+			// bad for performance.
+			var id = (opt_componentData || {}).id;
+			var component = Component.componentsCollector.createComponent(componentName, opt_componentData);
+			this.components[id || component.id] = component;
+			return component;
 		};
 
 		Component.prototype.decorate = function decorate() {
@@ -356,7 +361,9 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/Component", ['exports', 
 				decorating: this.decorating_
 			});
 			this.syncAttrs_();
-			this.attach(opt_parentElement, opt_siblingElement);
+			if (opt_parentElement !== false) {
+				this.attach(opt_parentElement, opt_siblingElement);
+			}
 			this.wasRendered = true;
 			return this;
 		};
@@ -438,7 +445,7 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/Component", ['exports', 
 		};
 
 		Component.prototype.valueIdFn_ = function valueIdFn_() {
-			return this.hasBeenSet('element') ? this.element.id : this.makeId_();
+			return this.hasBeenSet('element') && this.element.id ? this.element.id : this.makeId_();
 		};
 
 		return Component;

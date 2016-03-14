@@ -190,7 +190,7 @@ define("frontend-js-metal-web@1.0.0/metal-clipboard/src/Clipboard", ['exports', 
 		};
 
 		ClipboardAction.prototype.copyText = function copyText() {
-			var succeeded = undefined;
+			var succeeded = void 0;
 
 			try {
 				succeeded = document.execCommand(this.action);

@@ -260,7 +260,10 @@ define("frontend-js-metal-web@1.0.0/metal-component/src/surfaces/SurfaceRenderer
 		};
 
 		SurfaceRenderer.prototype.addSubComponent = function addSubComponent(componentName, componentId) {
-			return this.component_.addSubComponent(componentName, componentId, this.getSurfaceFromElementId(componentId).componentData);
+			var data = this.getSurfaceFromElementId(componentId).componentData || {};
+			data.id = componentId;
+			data.element = '#' + componentId;
+			return this.component_.addSubComponent(componentName, data);
 		};
 
 		SurfaceRenderer.prototype.createSurfaceElement_ = function createSurfaceElement_(surfaceElementId) {

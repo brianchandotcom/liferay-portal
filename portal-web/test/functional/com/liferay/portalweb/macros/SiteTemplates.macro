@@ -67,10 +67,7 @@
 		<if>
 			<isset var="pageType" />
 			<then>
-				<var name="key_pageType" value="${pageType}" />
-
-				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageType}" />
-				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" value1="${pageType}" />
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageType}" />
 
 				<if>
 					<equals arg1="${pageTemplateAutoApplyChanges}" arg2="true" />

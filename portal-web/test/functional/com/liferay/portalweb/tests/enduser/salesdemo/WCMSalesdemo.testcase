@@ -27,7 +27,7 @@
 
 	<command name="IFrameDemo" priority="4">
 		<execute macro="Page#add">
-			<var name="columnName" value="1_column" />
+			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="IFrame Page" />
 			<var name="sitePageType" value="Empty Page" />
 		</execute>
@@ -82,7 +82,7 @@
 		</execute>
 
 		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="2_columns_i" />
+			<var name="columnName" value="2 Columns (50/50)" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

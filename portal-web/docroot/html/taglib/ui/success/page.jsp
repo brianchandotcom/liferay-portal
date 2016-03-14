@@ -22,7 +22,18 @@ String message = (String)request.getAttribute("liferay-ui:success:message");
 String targetNode = (String)request.getAttribute("liferay-ui:success:targetNode");
 boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:success:translateMessage"));
 
-if (translateMessage) {
+String bodyContentString = StringPool.BLANK;
+
+Object bodyContent = request.getAttribute("liferay-ui:success:bodyContent");
+
+if (bodyContent != null) {
+	bodyContentString = bodyContent.toString();
+}
+
+if (Validator.isNotNull(bodyContentString)) {
+	message = bodyContentString;
+}
+else if (translateMessage) {
 	message = LanguageUtil.get(resourceBundle, message);
 }
 %>

@@ -14,18 +14,33 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SuccessTag extends IncludeTag {
+public class SuccessTag extends IncludeTag implements BodyTag {
 
 	@Override
-	public int doStartTag() {
-		return EVAL_BODY_INCLUDE;
+	public int doStartTag() throws JspException {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (!MultiSessionMessages.contains(portletRequest, _key)) {
+			return SKIP_BODY;
+		}
+
+		return super.doStartTag();
 	}
 
 	public void setKey(String key) {
@@ -55,6 +70,11 @@ public class SuccessTag extends IncludeTag {
 	}
 
 	@Override
+	protected int processStartTag() throws Exception {
+		return EVAL_BODY_BUFFERED;
+	}
+
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:success:key", _key);
 		request.setAttribute("liferay-ui:success:message", _message);
@@ -63,6 +83,8 @@ public class SuccessTag extends IncludeTag {
 			"liferay-ui:success:translateMessage",
 			String.valueOf(_translateMessage));
 	}
+
+	private static final String _ATTRIBUTE_NAMESPACE = "liferay-ui:success:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 

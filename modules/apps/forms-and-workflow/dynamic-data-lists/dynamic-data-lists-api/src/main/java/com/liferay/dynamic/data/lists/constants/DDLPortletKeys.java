@@ -15,13 +15,21 @@
 package com.liferay.dynamic.data.lists.constants;
 
 /**
+ * Represents a class that hold the portlets IDs for the avaialble DDL portlets.
+ *
  * @author Marcellus Tavares
  */
 public class DDLPortletKeys {
 
+	/**
+	 * {@value #DYNAMIC_DATA_LISTS} Portlet ID for the Dynamic Data Lists administration portlet.
+	 */
 	public static final String DYNAMIC_DATA_LISTS =
 		"com_liferay_dynamic_data_lists_web_portlet_DDLPortlet";
 
+	/**
+	 * {@value #DYNAMIC_DATA_LISTS_DISPLAY} Portlet ID for the Dynamic Data Lists Display portlet.
+	 */
 	public static final String DYNAMIC_DATA_LISTS_DISPLAY =
 		"com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet";
 

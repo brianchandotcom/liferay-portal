@@ -30,9 +30,7 @@ import org.json.JSONObject;
  */
 public class DownstreamJob extends BaseJob {
 
-	protected Map<String, String> getParametersFromQueryString(
-		String queryString) {
-
+	protected Map<String, String> getParameters(String queryString) {
 		if (!queryString.contains("=")) {
 			return Collections.emptyMap();
 		}
@@ -41,8 +39,9 @@ public class DownstreamJob extends BaseJob {
 
 		for (String parameter : queryString.split("&")) {
 			if (parameter.contains("=")) {
-				String[] stringArray = parameter.split("=");
-				parameters.put(stringArray[0], stringArray[1]);
+				String[] parameterParts = parameter.split("=");
+
+				parameters.put(parameterParts[0], parameterParts[1]);
 			}
 		}
 
@@ -66,7 +65,7 @@ public class DownstreamJob extends BaseJob {
 
 		String parametersString = invocationURLMatcher.group("queryString");
 
-		Map<String, String> invokedParameters = getParametersFromQueryString(
+		Map<String, String> invokedParameters = getParameters(
 			parametersString);
 
 		Set<String> parameterNames = getParameterNames();
@@ -241,7 +240,7 @@ public class DownstreamJob extends BaseJob {
 	protected Map<String, String> parameters;
 	protected TopLevelJob topLevelJob;
 
-	private static Map<String, String> getParameters(
+	private Map<String, String> getParameters(
 			JSONArray parametersJSONArray)
 		throws Exception {
 
@@ -261,7 +260,7 @@ public class DownstreamJob extends BaseJob {
 		return parameters;
 	}
 
-	private static Map<String, String> getParameters(JSONObject buildJSONObject)
+	private Map<String, String> getParameters(JSONObject buildJSONObject)
 		throws Exception {
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");

@@ -312,7 +312,9 @@
 		<if>
 			<isset var="roleUser" />
 			<then>
-				<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[2]/a" value1="${roleUser}" />
+				<var name="key_roleUser" value="${roleUser}" />
+
+				<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_USER_TITLE" value1="${roleUser}" />
 				<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
 			</then>
 			<else>

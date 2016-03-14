@@ -25,6 +25,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_TABLE_USER_TITLE</td>
+	<td>//tr[@data-qa-id='row']//td[contains(.,'${key_roleUser}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSION_TABLE_PERMISSIONS</td>
 	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td</td>
 	<td></td>

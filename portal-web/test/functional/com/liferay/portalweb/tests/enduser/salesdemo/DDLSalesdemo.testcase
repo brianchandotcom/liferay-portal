@@ -88,7 +88,7 @@
 			<var name="fieldOptionsValues" value="Carrots,Beef Jerky,Chips" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#saveCP" />
+		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
@@ -148,34 +148,48 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])" value1="First Name" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[2])" value1="Last Name" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[3])" value1="What are you bringing?" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[4])" value1="Status" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[5])" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[6])" value1="Author" />
+		<for list="John,Jane" param="ddlRecordFieldData">
+			<execute macro="DDLRecord#viewViaDDLDisplayTable">
+				<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+				<var name="fieldFieldLabel" value="First Name" />
+			</execute>
+		</for>
 
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a)" value1="John" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/a)" value1="Doe" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3]/a)" value1="Beef Jerky" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[4]/span/span/span/strong)" value1="Approved" />
-		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[5]/a)" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[6]/a)" value1="Test Test" />
+		<for list="Doe,Smith" param="ddlRecordFieldData">
+			<execute macro="DDLRecord#viewViaDDLDisplayTable">
+				<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+				<var name="fieldFieldLabel" value="Last Name" />
+			</execute>
+		</for>
 
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[1]/a)" value1="Jane" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[2]/a)" value1="Smith" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[3]/a)" value1="Carrots" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[4]/span/span/span/strong)" value1="Approved" />
-		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[5]/a)" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[6]/a)" value1="Test Test" />
+		<for list="Beef Jerky,Carrots" param="ddlRecordFieldData">
+			<execute macro="DDLRecord#viewViaDDLDisplayTable">
+				<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+				<var name="fieldFieldLabel" value="What are you bringing" />
+			</execute>
+		</for>
+
+		<execute macro="DDLRecord#viewViaDDLDisplayTable">
+			<var name="ddlRecordFieldData" value="Approved" />
+			<var name="fieldFieldLabel" value="Status" />
+		</execute>
+
+		<execute macro="DDLRecord#viewViaDDLDisplayTable">
+			<var name="ddlRecordFieldData" value="Test Test" />
+			<var name="fieldFieldLabel" value="Author" />
+		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="DDLDisplayPortlet#configureListViewPG">
-			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+		<execute macro="DDLNavigator#gotoOptionalConfiguration" />
+
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="spreadsheet" />
 		</execute>
+
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Company Picnic" />

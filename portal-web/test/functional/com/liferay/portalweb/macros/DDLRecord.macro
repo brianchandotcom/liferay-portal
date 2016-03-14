@@ -879,4 +879,11 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewViaDDLDisplayTable">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+	</command>
 </definition>

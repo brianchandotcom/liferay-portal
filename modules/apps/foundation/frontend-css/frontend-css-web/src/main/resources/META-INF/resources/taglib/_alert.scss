@@ -5,6 +5,14 @@
 	width: 100%;
 	z-index: 1;
 
+	&.inline-alert-container {
+		position: relative;
+
+		.lfr-alert-wrapper {
+			padding: 0;
+		}
+	}
+
 	.lfr-alert-wrapper {
 		margin-bottom: 5px;
 		overflow: hidden;

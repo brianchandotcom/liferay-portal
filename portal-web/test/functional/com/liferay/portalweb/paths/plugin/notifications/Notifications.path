@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_NAVIGATION_BAR_BADGE_COUNT</td>
+	<td>//div[contains(@class,'user-personal-bar')]//span[@class='user-avatar-link']//span[contains(@class,'panel-notifications-count')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROFILE_BADGE_COUNT</td>
 	<td>//div[@class='panel-title']/div[@aria-expanded="false"]//span[contains(@class,'notifications-count')]</td>
 	<td></td>

@@ -33,9 +33,18 @@ public class JenkinsStopJobUtil {
 			String jobURL, String username, String password)
 		throws Exception {
 
-		stopJob(jobURL, username, password);
-
 		stopDownstreamJobs(jobURL, username, password);
+
+		stopJob(jobURL, username, password);
+	}
+
+	public static void stopJenkinsJob(
+			TopLevelJob topLevelJob, String username, String password)
+		throws Exception {
+
+		stopDownstreamJobs(topLevelJob, username, password);
+
+		stopJob(topLevelJob, username, password);
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -82,6 +91,25 @@ public class JenkinsStopJobUtil {
 		}
 	}
 
+	private static void stopDownstreamJobs(
+			TopLevelJob topLevelJob, String username, String password)
+		throws Exception {
+
+		List<DownstreamJob> downstreamJobs = topLevelJob.getDownstreamJobs(
+			"running");
+
+		for (DownstreamJob downstreamJob : downstreamJobs) {
+			stopJob(downstreamJob, username, password);
+		}
+	}
+
+	private static void stopJob(
+			BaseJob baseJob, String username, String password)
+		throws Exception {
+
+		stopJob(baseJob.getURL(), username, password);
+	}
+
 	private static void stopJob(String jobURL, String username, String password)
 		throws Exception {
 
@@ -107,6 +135,6 @@ public class JenkinsStopJobUtil {
 		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
-		"\\[echo\\] Build \\'.*\\' started at (?<url>.+)\\.");
+		"Build \\'.*\\' started at (?<url>.+)\\.");
 
 }

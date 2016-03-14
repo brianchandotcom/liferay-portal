@@ -82,8 +82,7 @@ public class FileLocator {
 	}
 
 	private static final ReentrantLock _lock = new ReentrantLock(true);
-
-	private static volatile ServiceTrackerMap<String,URLConverter>
+	private static volatile ServiceTrackerMap<String, URLConverter>
 		_serviceTrackerMap;
 
 }

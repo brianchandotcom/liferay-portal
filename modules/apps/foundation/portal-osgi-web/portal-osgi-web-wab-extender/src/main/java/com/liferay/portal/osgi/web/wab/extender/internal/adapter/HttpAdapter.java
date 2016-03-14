@@ -139,7 +139,7 @@ public class HttpAdapter {
 			new ServletContextAdaptor(servletContext));
 	}
 
-	private static Class<?>[] _INTERFACES = new Class<?>[] {
+	private static final Class<?>[] _INTERFACES = new Class<?>[] {
 		ServletContext.class
 	};
 
@@ -158,7 +158,7 @@ public class HttpAdapter {
 			throws Throwable {
 
 			if (method.getName().equals("getInitParameter") &&
-					(args != null) && (args.length == 1)) {
+				(args != null) && (args.length == 1)) {
 
 				if ("osgi.http.endpoint".equals(args[0])) {
 					return _servletContext.getInitParameter((String)args[0]);
@@ -167,13 +167,13 @@ public class HttpAdapter {
 				return null;
 			}
 			else if (method.getName().equals("getInitParameterNames") &&
-					(args == null)) {
+					 (args == null)) {
 
 				return Collections.emptyEnumeration();
 			}
 			else if (method.getName().equals("getJspConfigDescriptor") &&
-						JspConfigDescriptor.class.isAssignableFrom(
-							method.getReturnType())) {
+					 JspConfigDescriptor.class.isAssignableFrom(
+						 method.getReturnType())) {
 
 				return null;
 			}
@@ -182,6 +182,7 @@ public class HttpAdapter {
 		}
 
 		private final ServletContext _servletContext;
+
 	}
 
 }

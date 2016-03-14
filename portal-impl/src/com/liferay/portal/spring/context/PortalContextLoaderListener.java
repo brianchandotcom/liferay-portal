@@ -144,6 +144,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
+
+			ModuleFrameworkUtilAdapter.unregisterContext(
+				getCurrentWebApplicationContext());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -170,6 +173,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			catch (Exception e) {
 				_log.error(e, e);
 			}
+
+			ModuleFrameworkUtilAdapter.unregisterContext(
+				_arrayApplicationContext);
 
 			_arrayApplicationContext.close();
 		}

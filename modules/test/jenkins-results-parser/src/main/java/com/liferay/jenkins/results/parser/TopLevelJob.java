@@ -99,10 +99,10 @@ public class TopLevelJob extends BaseJob {
 			List<DownstreamJob> missingDownstreamJobs = getDownstreamJobs(
 				"missing");
 
-			for (DownstreamJob missingJob : missingDownstreamJobs) {
+			for (DownstreamJob missingDownstreamJob : missingDownstreamJobs) {
 				long time = System.currentTimeMillis();
 
-				if ((time - missingJob.getStatusModifiedTime()) >
+				if ((time - missingDownstreamJob.getStatusModifiedTime()) >
 						maxStartTime) {
 
 					throw new TimeoutException("Missing downstream job");
@@ -120,7 +120,7 @@ public class TopLevelJob extends BaseJob {
 					 (getDownstreamJobCount("completed") <
 						 getDownstreamJobCount())) {
 
-				throw new TimeoutException("Downstream job timeout");
+				throw new TimeoutException("Timed out downstream job");
 			}
 			else if (getDownstreamJobCount("completed") ==
 						getDownstreamJobCount()) {

@@ -15,12 +15,20 @@
 package com.liferay.dynamic.data.lists.constants;
 
 /**
+ * Represents a class that hold action keys constants used in DDL permission system.
+ *
  * @author Rafael Praxedes
  */
 public class DDLActionKeys {
 
+	/**
+	 * {@value #ADD_RECORD} Action key used to check permissions for adding record.
+	 */
 	public static final String ADD_RECORD = "ADD_RECORD";
 
+	/**
+	 * {@value #ADD_RECORD_SET} Action key used to check permissions for adding records sets.
+	 */
 	public static final String ADD_RECORD_SET = "ADD_RECORD_SET";
 
 }

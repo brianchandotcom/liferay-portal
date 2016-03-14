@@ -31,11 +31,12 @@ AUI.add(
 					}
 
 					instance._findMembersList = instance._inviteMembersContainer.one('.search .list');
-					instance._emailInput = instance._inviteMembersContainer.one('#new-member-email-address');
+					instance._emailInput = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailAddress');
+					instance._emailButton = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailButton');
 					instance._invitedEmailList = instance._inviteMembersContainer.one('.email-invited .list');
 					instance._invitedMembersList = instance._inviteMembersContainer.one('.user-invited .list');
 
-					var form = instance._inviteMembersContainer.one('form');
+					var form = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'fm');
 
 					form.on(
 						'submit',
@@ -96,14 +97,13 @@ AUI.add(
 						'.controls'
 					);
 
-					instance._inviteMembersContainer.delegate(
+					instance._emailButton.on(
 						'click',
 						function(event) {
 							instance._addMemberEmail();
 
 							Liferay.Util.focusFormField(instance._emailInput.getDOM());
-						},
-						'#so-add-email-address'
+						}
 					);
 				},
 

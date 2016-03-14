@@ -29,7 +29,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 			<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
 		</portlet:renderURL>
 
-		<aui:a cssClass="btn btn-default" id="inviteMembersButton" href="javascript:;" label="invite-members-to-this-site" />
+		<aui:a cssClass="btn btn-default" href="javascript:;" id="inviteMembersButton" label="invite-members-to-this-site" />
 
 		<aui:script position="inline" use="aui-base">
 			var inviteMembersButton = A.one('#<portlet:namespace />inviteMembersButton');

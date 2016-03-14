@@ -54,11 +54,26 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		friendlyURL = matcher.replaceAll(StringPool.DASH);
 
-		matcher = _friendlyURLHyphenPattern.matcher(friendlyURL);
+		StringBuilder sb = new StringBuilder(friendlyURL.length());
 
-		friendlyURL = matcher.replaceAll(StringPool.DASH);
+		for (int i = 0; i < friendlyURL.length(); i++) {
+			char c = friendlyURL.charAt(i);
 
-		return friendlyURL;
+			if (c == CharPool.DASH) {
+				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
+					sb.append(CharPool.DASH);
+				}
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
+		if (sb.length() == friendlyURL.length()) {
+			return friendlyURL;
+		}
+
+		return sb.toString();
 	}
 
 	@Override
@@ -114,8 +129,5 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		return friendlyURL;
 	}
-
-	private static final Pattern _friendlyURLHyphenPattern = Pattern.compile(
-		"-{2,}");
 
 }

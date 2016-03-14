@@ -47,7 +47,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
-	public String getURL() {
+	public String getBuildURL() {
 		if ((master == null) || (master.length() == 0)) {
 			return null;
 		}
@@ -81,7 +81,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected BaseJob(String buildURL) throws Exception {
-		setURL(buildURL);
+		setBuildURL(buildURL);
 	}
 
 	protected void setStatus(String status) {
@@ -90,7 +90,7 @@ public abstract class BaseJob implements Job {
 		statusModifiedTime = System.currentTimeMillis();
 	}
 
-	protected void setURL(String buildURL) throws Exception {
+	protected void setBuildURL(String buildURL) throws Exception {
 		buildURL = decodeURL(buildURL);
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);

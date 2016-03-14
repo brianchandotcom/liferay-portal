@@ -105,7 +105,7 @@ public class JenkinsStopJobUtil {
 	private static void _stopJob(Job job, String username, String password)
 		throws Exception {
 
-		_stopJob(job.getURL(), username, password);
+		_stopJob(job.getBuildURL(), username, password);
 	}
 
 	private static void _stopJob(

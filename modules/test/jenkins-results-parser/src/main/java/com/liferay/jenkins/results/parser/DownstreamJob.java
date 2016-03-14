@@ -288,7 +288,7 @@ public class DownstreamJob extends BaseJob {
 
 		if (status.equals("completed")) {
 			sb.append(" completed at ");
-			sb.append(getURL());
+			sb.append(getBuildURL());
 			sb.append(". ");
 			sb.append(getResult());
 			return sb.toString();
@@ -306,7 +306,7 @@ public class DownstreamJob extends BaseJob {
 
 		if (status.equals("running")) {
 			sb.append(" started at ");
-			sb.append(getURL());
+			sb.append(getBuildURL());
 			sb.append(".");
 			return sb.toString();
 		}

@@ -14,19 +14,11 @@
 
 package com.liferay.portal.search.internal.buffer;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferExecutor;
-
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,32 +35,15 @@ public class IndexerRequestBufferTransactionLifecycleListener
 		TransactionAttribute transactionAttribute,
 		TransactionStatus transactionStatus) {
 
-		final IndexerRequestBuffer indexerRequestBuffer =
+		IndexerRequestBuffer indexerRequestBuffer =
 			IndexerRequestBuffer.remove();
 
 		if ((indexerRequestBuffer != null) && !indexerRequestBuffer.isEmpty()) {
-			final IndexerRequestBufferExecutor indexerRequestBufferExecutor =
+			IndexerRequestBufferExecutor indexerRequestBufferExecutor =
 				_indexerRequestBufferExecutorWatcher.
 					getIndexerRequestBufferExecutor();
 
-			try {
-				TransactionInvokerUtil.invoke(
-					_NEW_TRANSACTION_CONFIG,
-					new Callable<Void>() {
-
-						@Override
-						public Void call() throws Exception {
-							indexerRequestBufferExecutor.execute(
-								indexerRequestBuffer);
-
-							return null;
-						}
-
-					});
-			}
-			catch (Throwable t) {
-				ReflectionUtil.throwException(t);
-			}
+			indexerRequestBufferExecutor.execute(indexerRequestBuffer);
 		}
 	}
 
@@ -91,18 +66,6 @@ public class IndexerRequestBufferTransactionLifecycleListener
 		if ((indexerRequestBuffer != null) && !indexerRequestBuffer.isEmpty()) {
 			indexerRequestBuffer.clear();
 		}
-	}
-
-	private static final TransactionConfig _NEW_TRANSACTION_CONFIG;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setRollbackForClasses(
-			PortalException.class, SystemException.class);
-
-		_NEW_TRANSACTION_CONFIG = builder.build();
 	}
 
 	@Reference

@@ -581,16 +581,16 @@ public class JavaClass {
 		}
 
 		checkAnnotationForMethod(
-			javaTerm, "After", "^.*tearDown\\z", JavaTerm.TYPE_METHOD_PUBLIC,
-			_fileName);
+			javaTerm, "After", "\\btearDown(?!Class)",
+			JavaTerm.TYPE_METHOD_PUBLIC, _fileName);
 		checkAnnotationForMethod(
-			javaTerm, "AfterClass", "^.*tearDownClass\\z",
+			javaTerm, "AfterClass", "\\btearDownClass",
 			JavaTerm.TYPE_METHOD_PUBLIC_STATIC, _fileName);
 		checkAnnotationForMethod(
-			javaTerm, "Before", "^.*setUp\\z", JavaTerm.TYPE_METHOD_PUBLIC,
-			_fileName);
+			javaTerm, "Before", "\\bsetUp(?!Class)",
+			JavaTerm.TYPE_METHOD_PUBLIC, _fileName);
 		checkAnnotationForMethod(
-			javaTerm, "BeforeClass", "^.*setUpClass\\z",
+			javaTerm, "BeforeClass", "\\bsetUpClass",
 			JavaTerm.TYPE_METHOD_PUBLIC_STATIC, _fileName);
 		checkAnnotationForMethod(
 			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC,

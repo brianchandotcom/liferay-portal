@@ -991,6 +991,16 @@ ${output.content}</echo>
 	<target name="ruby-sass-compiler-jdk7">
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 
+		<if>
+			<isset property="env.DIST_PATH" />
+			<then>
+				<prepare-test-environment />
+			</then>
+			<else>
+				<prepare-test-build />
+			</else>
+		</if>
+
 		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
 
 		<antcall target="setup-sdk" inheritAll="false" />

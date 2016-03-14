@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,7 +57,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	@Override
 	protected byte[] doExport(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator<DDLRecord> orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator, Locale locale)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -70,11 +71,11 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			LocalizedValue label = ddmFormField.getLabel();
 
-			sb.append(CSVUtil.encode(label.getString(getLocale())));
+			sb.append(CSVUtil.encode(label.getString(locale)));
 			sb.append(CharPool.COMMA);
 		}
 
-		sb.append(LanguageUtil.get(getLocale(), "status"));
+		sb.append(LanguageUtil.get(locale, "status"));
 		sb.append(StringPool.NEW_LINE);
 
 		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
@@ -100,14 +101,14 @@ public class DDLCSVExporter extends BaseDDLExporter {
 				if (fields.contains(name)) {
 					Field field = fields.get(name);
 
-					value = field.getRenderedValue(getLocale());
+					value = field.getRenderedValue(locale);
 				}
 
 				sb.append(CSVUtil.encode(value));
 				sb.append(CharPool.COMMA);
 			}
 
-			sb.append(getStatusMessage(recordVersion.getStatus()));
+			sb.append(getStatusMessage(recordVersion.getStatus(), locale));
 
 			if (iterator.hasNext()) {
 				sb.append(StringPool.NEW_LINE);

@@ -85,8 +85,6 @@ userGroupSearch.setResults(userGroups);
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
-
 <portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>

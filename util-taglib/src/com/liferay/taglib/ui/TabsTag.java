@@ -66,7 +66,7 @@ public class TabsTag extends IncludeTag {
 			if (!ServerDetector.isResin()) {
 				_backLabel = null;
 				_backURL = null;
-				_cssClass = StringPool.BLANK;
+				_cssClass = null;
 				_endPage = null;
 				_formName = StringPool.BLANK;
 				_names = null;

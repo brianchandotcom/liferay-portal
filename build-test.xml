@@ -2720,22 +2720,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								</daemons>
 							</parallel>
 
-							<trycatch>
-								<try>
-									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
-								</try>
-								<catch>
-									<parallel>
-										<daemons>
-											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
-												<arg line="${app.server.start.executable.arg.line}" />
-											</exec>
-										</daemons>
-									</parallel>
-
-									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
-								</catch>
-							</trycatch>
+							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
 						</else>
 					</if>
 				</then>
@@ -3009,6 +2994,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
+
 		<sequential>
 			<local name="app.server.waiting.url" />
 
@@ -3032,7 +3018,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<echo>Waiting for ${app.server.waiting.url} to load</echo>
 
-			<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
+			<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
 				<http url="${app.server.waiting.url}" />
 			</waitfor>
 
@@ -3065,6 +3051,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 
 					<delete file="jps_output" />
+
+					<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" failonerror="true" resolveexecutable="true">
+						<arg line="${app.server.stop.executable.arg.line}" />
+					</exec>
 
 					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
 				</then>

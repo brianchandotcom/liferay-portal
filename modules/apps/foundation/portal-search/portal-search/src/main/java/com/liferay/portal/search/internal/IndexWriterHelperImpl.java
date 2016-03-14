@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
+import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
@@ -465,7 +466,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			taskContextMap = new HashMap<>();
 		}
 
-		taskContextMap.put("companyIds", companyIds);
+		taskContextMap.put(
+			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
 		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 
@@ -494,8 +496,10 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			taskContextMap = new HashMap<>();
 		}
 
-		taskContextMap.put("className", className);
-		taskContextMap.put("companyIds", companyIds);
+		taskContextMap.put(
+			ReindexBackgroundTaskConstants.CLASS_NAME, className);
+		taskContextMap.put(
+			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
 		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 

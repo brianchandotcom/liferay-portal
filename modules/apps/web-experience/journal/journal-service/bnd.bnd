@@ -19,17 +19,6 @@ Export-Package:\
 	com.liferay.journal.util.impl,\
 	com.liferay.journal.verify,\
 	com.liferay.journal.workflow
-Include-Resource:\
-	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/FiniteUniqueStack.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/FiniteStack.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
-	@../../../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Liferay-Require-SchemaVersion: 1.0.0
@@ -37,3 +26,14 @@ Liferay-Service: true
 Provide-Capability: liferay.resource.bundle;aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";baseName="content.Language"
 Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.liferay.journal.lang)"
 -include: ../../app.bnd
+-includeresource:\
+	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteUniqueStack.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteStack.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

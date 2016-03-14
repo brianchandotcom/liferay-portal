@@ -16,15 +16,15 @@ Import-Package:\
 	\
 	!sun.io.*,\
 	*
-Include-Resource:\
-	@lib/guice.jar,\
-	@lib/httpclient.jar,\
-	@lib/httpcore.jar,\
-	@lib/nekohtml.jar,\
-	@lib/openid4java.jar,\
-	@lib/org.apache.xml.resolver.jar,\
-	@lib/xercesImpl.jar,\
-	@lib/xml-apis.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 -include: ../../app.bnd
+-includeresource:\
+	@guice-*.jar,\
+	@httpclient-*.jar,\
+	@httpcore-*.jar,\
+	@nekohtml-*.jar,\
+	@openid4java-*.jar,\
+	@org.apache.xml.resolver-*.jar,\
+	@xercesImpl-*.jar,\
+	@xml-apis-*.jar

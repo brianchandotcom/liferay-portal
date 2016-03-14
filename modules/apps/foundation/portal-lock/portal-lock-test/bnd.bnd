@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Portal Lock Test
 Bundle-SymbolicName: com.liferay.portal.lock.test
 Bundle-Version: 1.0.0
-Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Lock
 -include: ../../app.bnd
+-includeresource: test-classes/integration

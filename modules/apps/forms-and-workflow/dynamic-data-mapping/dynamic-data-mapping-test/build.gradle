@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "org.json", name: "json", version: "20090211"
 	provided group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")

@@ -7,7 +7,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.journal.api", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.message.boards.api", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.wiki.api", version: "1.0.0"
-	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
 	compile project(":apps:collaboration:blogs:blogs-web")
 	compile project(":apps:collaboration:document-library:document-library-web")
@@ -19,8 +19,8 @@ dependencies {
 	compile project(":apps:foundation:login:login-web")
 	compile project(":apps:web-experience:journal:journal-service")
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 }
 

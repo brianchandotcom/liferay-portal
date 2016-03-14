@@ -10,7 +10,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.bnd.util", version: "1.0.1"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "1.0.1"
 	provided group: "com.liferay", name: "org.elasticsearch", version: "2.2.0.LIFERAY-PATCHED-1"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.ning", name: "compress-lzf", version: "1.0.2"
 	provided group: "com.spatial4j", name: "spatial4j", version: "0.5"
 	provided group: "com.tdunning", name: "t-digest", version: "3.0"

@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 1.0.4
+Bundle-Version: 2.0.1
 Export-Package:\
 	!com.liferay.portal.kernel.test.*,\
 	\
@@ -8,7 +8,7 @@ Export-Package:\
 Import-Package: *
 Include-Resource: classes
 
--baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/portal-service-6.2.5.jar
+-baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.kernel-2.0.0.jar
 -pluginpath.this:\
-	${project.dir}/../.bnd/ant-baseline-cache/portal-service-6.2.5.jar;\
-		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/portal-service/6.2.5/portal-service-6.2.5.jar'
+	${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.kernel-2.0.0.jar;\
+		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/com.liferay.portal.kernel/2.0.0/com.liferay.portal.kernel-2.0.0.jar'

@@ -16,6 +16,7 @@ package com.liferay.registry.internal;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.util.MapBackedSet;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
@@ -52,7 +53,7 @@ public class RegistryImpl implements Registry {
 
 	public void closeServiceTrackers() {
 		for (org.osgi.util.tracker.ServiceTracker<?, ?> serviceTracker :
-				_serviceTrackers.keySet()) {
+				_serviceTrackers) {
 
 			try {
 				serviceTracker.close();
@@ -348,7 +349,7 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, clazz, null);
 
-		_serviceTrackers.put(serviceTracker, null);
+		_serviceTrackers.add(serviceTracker);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -364,7 +365,7 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
-		_serviceTrackers.put(serviceTracker, null);
+		_serviceTrackers.add(serviceTracker);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -381,7 +382,7 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, filterWrapper.getFilter(), null);
 
-		_serviceTrackers.put(serviceTracker, null);
+		_serviceTrackers.add(serviceTracker);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -403,7 +404,7 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
-		_serviceTrackers.put(serviceTracker, null);
+		_serviceTrackers.add(serviceTracker);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -414,7 +415,7 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, className, null);
 
-		_serviceTrackers.put(serviceTracker, null);
+		_serviceTrackers.add(serviceTracker);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -430,7 +431,7 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
-		_serviceTrackers.put(serviceTracker, null);
+		_serviceTrackers.add(serviceTracker);
 
 		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
@@ -474,8 +475,10 @@ public class RegistryImpl implements Registry {
 	private final BundleContext _bundleContext;
 	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
 		new HashSet<>();
-	private final Map<org.osgi.util.tracker.ServiceTracker<?, ?>, Void>
-		_serviceTrackers = new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private final Set<org.osgi.util.tracker.ServiceTracker<?, ?>>
+		_serviceTrackers = new MapBackedSet<>(
+			new ConcurrentReferenceKeyHashMap
+				<org.osgi.util.tracker.ServiceTracker<?, ?>, Boolean>(
+					FinalizeManager.WEAK_REFERENCE_FACTORY));
 
 }

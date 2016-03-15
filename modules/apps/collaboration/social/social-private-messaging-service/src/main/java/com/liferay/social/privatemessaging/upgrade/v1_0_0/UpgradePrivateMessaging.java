@@ -14,13 +14,13 @@
 
 package com.liferay.social.privatemessaging.upgrade.v1_0_0;
 
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.social.privatemessaging.model.PrivateMessagingConstants;
 import com.liferay.social.privatemessaging.model.UserThread;
-import com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil;
+import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 
 import java.util.List;
 
@@ -29,18 +29,28 @@ import java.util.List;
  */
 public class UpgradePrivateMessaging extends UpgradeProcess {
 
+	public UpgradePrivateMessaging(
+		MBThreadLocalService mBThreadLocalService,
+		UserThreadLocalService userThreadLocalService) {
+
+		_mBThreadLocalService = mBThreadLocalService;
+		_userThreadLocalService = userThreadLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<UserThread> userThreads =
-			UserThreadLocalServiceUtil.getUserThreads(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<UserThread> userThreads = _userThreadLocalService.getUserThreads(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (UserThread userThread : userThreads) {
-			MBThreadLocalServiceUtil.moveThread(
+			_mBThreadLocalService.moveThread(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				PrivateMessagingConstants.PRIVATE_MESSAGING_CATEGORY_ID,
 				userThread.getMbThreadId());
 		}
 	}
+
+	private final MBThreadLocalService _mBThreadLocalService;
+	private final UserThreadLocalService _userThreadLocalService;
 
 }

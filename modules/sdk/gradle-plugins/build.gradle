@@ -1,6 +1,6 @@
 dependencies {
 	compile gradleApi()
-	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.16"
+	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.17"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.10"

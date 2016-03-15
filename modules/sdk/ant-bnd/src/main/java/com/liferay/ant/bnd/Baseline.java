@@ -329,10 +329,6 @@ public abstract class Baseline {
 	protected void generatePackageInfo(Info info, Delta delta, String warnings)
 		throws Exception {
 
-		if ((_sourceDir == null) || !_sourceDir.exists()) {
-			return;
-		}
-
 		File packageDir = new File(
 			_sourceDir, info.packageName.replace('.', File.separatorChar));
 

@@ -121,6 +121,9 @@
 
 		<execute function="AssertTextEquals" locator1="Polls#VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
 		<execute function="AssertTextEquals" locator1="Polls#VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
+
+		<var name="key_pollsQuestionTotalVotes" value="${pollsQuestionTotalVotes}" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#VOTES_TOTAL" value1="Total Votes: ${pollsQuestionTotalVotes}" />
 	</command>
 

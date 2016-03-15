@@ -52,6 +52,9 @@ public abstract class BaseFailureMessageGenerator
 		consoleOutput = JenkinsResultsParserUtil.fixMarkdown(
 			consoleOutput.substring(start, end));
 
+		consoleOutput = consoleOutput.replaceFirst("^\\s*\\n", "");
+		consoleOutput = consoleOutput.replaceFirst("\\n\\s*$", "");
+
 		return "<pre><code>" + consoleOutput + "</code></pre>";
 	}
 

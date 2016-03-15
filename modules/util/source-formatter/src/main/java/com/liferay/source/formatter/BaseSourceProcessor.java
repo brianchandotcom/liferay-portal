@@ -433,7 +433,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkStringBundler(String fileName, String content) {
+	protected String checkStringBundler(
+		String fileName, String content, int maxLineLength) {
+
 		Matcher matcher = sbAppendPattern.matcher(content);
 
 		matcherIteration:
@@ -461,6 +463,33 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				"plus: " + fileName + " " +
 					getLineCount(content, matcher.start(1)));
 		}
+
+		matcher = sbAppendWithStartingSpacePattern.matcher(content);
+
+		while (matcher.find()) {
+			String firstLine = matcher.group(1);
+
+			if (firstLine.endsWith("\\n\");")) {
+				continue;
+			}
+
+			if ((maxLineLength != -1) &&
+				(getLineLength(firstLine) >= maxLineLength)) {
+
+				processErrorMessage(
+					fileName,
+					"leading space in sb: " + fileName + " " +
+						getLineCount(content, matcher.start(3)));
+			}
+			else {
+				content = StringUtil.replaceFirst(
+					content, "\");\n", " \");\n", matcher.start(2));
+				content = StringUtil.replaceFirst(
+					content, "(\" ", "(\"", matcher.start(3));
+			}
+		}
+
+		return content;
 	}
 
 	protected void checkStringUtilReplace(String fileName, String content)
@@ -2350,6 +2379,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"PrincipalException\\.class\\.getName\\(\\)");
 	protected static Pattern sbAppendPattern = Pattern.compile(
 		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
+	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(
+		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
+			"[0-9]?\\.append\\(\" .*\"\\);\n");
 	protected static Pattern sessionKeyPattern = Pattern.compile(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),

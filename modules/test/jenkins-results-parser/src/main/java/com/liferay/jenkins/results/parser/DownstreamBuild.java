@@ -54,7 +54,7 @@ public class DownstreamBuild extends BaseBuild {
 		parameters = new HashMap<>();
 
 		for (String parameterName : parameterNames) {
-			if (invokedParameters.keySet().contains(parameterName)) {
+			if (invokedParameters.containsKey(parameterName)) {
 				parameters.put(
 					parameterName, invokedParameters.get(parameterName));
 			}

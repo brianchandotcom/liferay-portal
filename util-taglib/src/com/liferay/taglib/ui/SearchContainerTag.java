@@ -53,6 +53,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_deltaConfigurable = SearchContainer.DEFAULT_DELTA_CONFIGURABLE;
 		_deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
 		_displayTerms = null;
+		_emptyResultsMessageCssClass = null;
 		_emptyResultsMessage = null;
 		_headerNames = null;
 		_id = null;
@@ -98,6 +99,11 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 
 			_searchContainer.setDeltaConfigurable(_deltaConfigurable);
+
+			if (Validator.isNotNull(_emptyResultsMessageCssClass)) {
+				_searchContainer.setEmptyResultsMessageCssClass(
+					_emptyResultsMessageCssClass);
+			}
 
 			if (Validator.isNotNull(_emptyResultsMessage)) {
 				_searchContainer.setEmptyResultsMessage(_emptyResultsMessage);
@@ -204,6 +210,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		return _emptyResultsMessage;
 	}
 
+	public String getEmptyResultsMessageCssClass() {
+		return _emptyResultsMessageCssClass;
+	}
+
 	public PortletURL getIteratorURL() {
 		return _iteratorURL;
 	}
@@ -294,6 +304,12 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_emptyResultsMessage = emptyResultsMessage;
 	}
 
+	public void setEmptyResultsMessageCssClass(
+		String emptyResultsMessageCssClass) {
+
+		_emptyResultsMessageCssClass = emptyResultsMessageCssClass;
+	}
+
 	public void setHeaderNames(String headerNames) {
 		_headerNames = ListUtil.toList(StringUtil.split(headerNames));
 	}
@@ -359,6 +375,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	private String _deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
 	private DisplayTerms _displayTerms;
 	private String _emptyResultsMessage;
+	private String _emptyResultsMessageCssClass;
 	private List<String> _headerNames;
 	private String _id;
 	private PortletURL _iteratorURL;

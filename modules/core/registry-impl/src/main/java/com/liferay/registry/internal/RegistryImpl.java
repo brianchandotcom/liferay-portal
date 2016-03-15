@@ -36,9 +36,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -510,7 +509,8 @@ public class RegistryImpl implements Registry {
 		_referenceQueue = new ReferenceQueue<>();
 	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
 		new HashSet<>();
-	private final Queue<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>>
-		_serviceTrackerReferences = new ConcurrentLinkedQueue<>();
+	private final Set<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>>
+		_serviceTrackerReferences = Collections.newSetFromMap(
+			new ConcurrentHashMap<Reference<org.osgi.util.tracker.ServiceTracker<?, ?>>, Boolean>());
 
 }

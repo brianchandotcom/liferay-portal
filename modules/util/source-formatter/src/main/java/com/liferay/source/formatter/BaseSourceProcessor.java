@@ -1539,9 +1539,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected int getLineCount(String content, int pos) {
-		String beforePos = content.substring(0, pos);
-
-		return StringUtil.count(beforePos, StringPool.NEW_LINE) + 1;
+		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
 	}
 
 	protected int getLineLength(String line) {

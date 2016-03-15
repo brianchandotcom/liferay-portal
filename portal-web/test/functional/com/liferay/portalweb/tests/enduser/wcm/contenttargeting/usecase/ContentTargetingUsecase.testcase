@@ -1408,10 +1408,9 @@
 			<var name="siteName" value="Import Site" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Import Site" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">

@@ -412,10 +412,9 @@
 			<var name="portletName" value="RSS Publisher" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page Name 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -438,10 +437,9 @@
 
 		<execute macro="IFrame#selectTopFrame" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page Name 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<var attribute="href" locator="//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]" name="rssFeedUrl" />

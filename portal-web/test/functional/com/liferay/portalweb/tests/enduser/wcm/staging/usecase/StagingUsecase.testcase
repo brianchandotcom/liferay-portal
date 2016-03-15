@@ -110,10 +110,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Delete Live Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#deletePG">
@@ -313,10 +312,9 @@
 			<var name="pageNameList" value="Page Name 2" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Page Name 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
@@ -606,10 +604,9 @@
 			<var name="uncheckPropagation" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1342,10 +1339,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -1580,10 +1576,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#viewStagingLocalLiveVariationMessagePG">
@@ -1628,10 +1623,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Empty Page Name" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#viewStagingLocalLiveVariationMessagePG">
@@ -1845,19 +1839,17 @@
 			<var name="scheduleTitleName" value="Staging Schedule Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 		<execute function="Pause" locator1="120000" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
@@ -1882,10 +1874,9 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1901,10 +1892,9 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name 2" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1920,10 +1910,9 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name 3" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1967,10 +1956,9 @@
 
 		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#viewSpecificPG">
@@ -2407,10 +2395,9 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotEquals" locator1="BasePortlet#TITLE" value1="Web Content Display" />
@@ -2470,10 +2457,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -2626,10 +2612,9 @@
 		</execute>
 
 		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt" param="dmDocumentTitle">
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="Staging Test Page" />
 				<var name="siteName" value="Site Name" />
-				<var name="siteURL" value="true" />
 			</execute>
 
 			<execute macro="DMDocument#viewPG">
@@ -2679,10 +2664,9 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -2799,10 +2783,9 @@
 
 		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 1" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Title 2" />
@@ -2836,10 +2819,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="Web Content Content 2" />
@@ -2872,10 +2854,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
@@ -3321,20 +3302,18 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletName" value="Navigation" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Wiki" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
@@ -3519,10 +3498,9 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Remote Site" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
@@ -4059,10 +4037,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page 1" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#viewSpecificPG">
@@ -4077,10 +4054,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">
@@ -4088,10 +4064,9 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#viewPGViaAP">

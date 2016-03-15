@@ -39,7 +39,7 @@
 			<var name="pageTemplateName" value="Content Display Page" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
@@ -65,7 +65,7 @@
 			<var name="pageNameEdit" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Site Page Edit" />
 		</execute>
 

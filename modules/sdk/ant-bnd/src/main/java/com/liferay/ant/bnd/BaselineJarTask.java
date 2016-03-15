@@ -14,26 +14,13 @@
 
 package com.liferay.ant.bnd;
 
-import aQute.bnd.differ.Baseline;
-import aQute.bnd.differ.Baseline.BundleInfo;
-import aQute.bnd.differ.Baseline.Info;
-import aQute.bnd.differ.DiffPluginImpl;
-import aQute.bnd.osgi.Jar;
-import aQute.bnd.service.diff.Delta;
-import aQute.bnd.service.diff.Diff;
-import aQute.bnd.version.Version;
+import aQute.service.reporter.Reporter;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -92,56 +79,29 @@ public class BaselineJarTask extends BaseBndTask {
 
 		_reportLevelIsDiff = _reportLevel.equals("diff");
 		_reportLevelIsOff = _reportLevel.equals("off");
-		_reportLevelIsPersist = _reportLevel.equals("persist");
-		_reportLevelIsStandard = _reportLevel.equals("standard");
 
-		if (_reportLevelIsPersist) {
+		boolean reportLevelIsPersist = _reportLevel.equals("persist");
+
+		if (reportLevelIsPersist) {
 			_reportLevelIsDiff = true;
 
 			File baselineReportsDir = new File(
 				rootDir, getBaselineReportsDirName());
 
-			if (!baselineReportsDir.exists() && !baselineReportsDir.mkdir()) {
-				throw new BuildException(
-					"Unable to create " + baselineReportsDir.getName());
-			}
-
 			_logFile = new File(
 				baselineReportsDir, _newJarFile.getName() + ".log");
-
-			if (_logFile.exists()) {
-				_logFile.delete();
-			}
 		}
 
 		_reportOnlyDirtyPackages = Boolean.parseBoolean(
 			project.getProperty("baseline.jar.report.only.dirty.packages"));
-	}
 
-	protected void doDiff(Diff diff, StringBuffer sb) {
-		String type = String.valueOf(diff.getType());
+		String sourceDirName = project.getProperty("plugin.source.dir");
 
-		String output = String.format(
-			"%s%-3s %-10s %s", sb, getShortDelta(diff.getDelta()),
-			type.toLowerCase(), diff.getName());
-
-		log(output, Project.MSG_WARN);
-
-		if (_printWriter != null) {
-			_printWriter.println(output);
+		if (sourceDirName == null) {
+			sourceDirName = project.getBaseDir() + "/src";
 		}
 
-		sb.append("\t");
-
-		for (Diff curDiff : diff.getChildren()) {
-			if (curDiff.getDelta() == Delta.UNCHANGED) {
-				continue;
-			}
-
-			doDiff(curDiff, sb);
-		}
-
-		sb.deleteCharAt(sb.length() - 1);
+		_sourceDir = new File(sourceDirName);
 	}
 
 	@Override
@@ -150,238 +110,33 @@ public class BaselineJarTask extends BaseBndTask {
 			return;
 		}
 
-		BaselineProcessor baselineProcessor = new BaselineProcessor();
+		Baseline baseline = new Baseline() {
 
-		Properties properties = baselineProcessor.getProperties();
+			@Override
+			protected void log(Reporter reporter) {
+				report(reporter);
+			}
+
+			@Override
+			protected void log(String output) {
+				BaselineJarTask.this.log(output, Project.MSG_WARN);
+			}
+
+		};
+
+		Properties properties = baseline.getProperties();
 
 		properties.putAll(project.getProperties());
 		properties.putAll(getBndFileProperties());
 
-		Jar newJar = new Jar(_newJarFile);
+		baseline.setLogFile(_logFile);
+		baseline.setNewJarFile(_newJarFile);
+		baseline.setOldJarFile(_oldJarFile);
+		baseline.setReportDiff(_reportLevelIsDiff);
+		baseline.setReportOnlyDirtyPackages(_reportOnlyDirtyPackages);
+		baseline.setSourceDir(_sourceDir);
 
-		Jar oldJar = null;
-
-		if (_oldJarFile != null) {
-			if (!_oldJarFile.exists() || _oldJarFile.isDirectory() ||
-				!_oldJarFile.canRead()) {
-
-				baselineProcessor.warning(
-					"Baseline file %s is invalid. Check if it exists, " +
-						"is readable, and is not a directory.",
-					_oldJarFile);
-			}
-			else {
-				oldJar = new Jar(_oldJarFile);
-			}
-		}
-		else {
-			oldJar = baselineProcessor.getBaselineJar();
-		}
-
-		try {
-			if (oldJar == null) {
-				return;
-			}
-
-			Baseline baseline = new Baseline(
-				baselineProcessor, new DiffPluginImpl());
-
-			Set<Info> infos = baseline.baseline(newJar, oldJar, null);
-
-			if (infos.isEmpty()) {
-				return;
-			}
-
-			BundleInfo bundleInfo = baseline.getBundleInfo();
-
-			Info[] infosArray = infos.toArray(new Info[infos.size()]);
-
-			Arrays.sort(
-				infosArray,
-				new Comparator<Info>() {
-
-					@Override
-					public int compare(Info info1, Info info2) {
-						return info1.packageName.compareTo(info2.packageName);
-					}
-
-				});
-
-			doHeader(bundleInfo);
-
-			for (Info info : infosArray) {
-				String warnings = "-";
-
-				Version newerVersion = info.newerVersion;
-				Version suggestedVersion = info.suggestedVersion;
-
-				if (suggestedVersion != null) {
-					if (newerVersion.compareTo(suggestedVersion) > 0) {
-						warnings = "EXCESSIVE VERSION INCREASE";
-					}
-					else if (newerVersion.compareTo(suggestedVersion) < 0) {
-						warnings = "VERSION INCREASE REQUIRED";
-					}
-				}
-
-				Diff packageDiff = info.packageDiff;
-
-				Delta delta = packageDiff.getDelta();
-
-				if (delta == Delta.REMOVED) {
-					warnings = "PACKAGE REMOVED";
-				}
-				else if (delta == Delta.UNCHANGED) {
-					boolean newVersionSuggested = false;
-
-					if (suggestedVersion.compareTo(newerVersion) > 0) {
-						warnings = "VERSION INCREASE SUGGESTED";
-
-						newVersionSuggested = true;
-					}
-					else if (suggestedVersion.compareTo(newerVersion) < 0) {
-						warnings = "EXCESSIVE VERSION INCREASE";
-
-						newVersionSuggested = true;
-					}
-
-					if (!newVersionSuggested && !info.mismatch) {
-						continue;
-					}
-				}
-
-				generatePackageInfo(info, delta, warnings);
-
-				if (((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
-					 warnings.equals("-")) ||
-					(_reportOnlyDirtyPackages && (delta == Delta.REMOVED))) {
-
-					continue;
-				}
-
-				doInfo(bundleInfo, info, warnings);
-
-				if (_reportLevelIsDiff && (delta != Delta.REMOVED)) {
-					doPackageDiff(packageDiff);
-				}
-			}
-		}
-		finally {
-			report(baselineProcessor);
-
-			baselineProcessor.close();
-			newJar.close();
-
-			if (oldJar != null) {
-				oldJar.close();
-			}
-
-			if (_printWriter != null) {
-				_printWriter.close();
-			}
-		}
-	}
-
-	protected void doHeader(BundleInfo bundleInfo) {
-		if (!bundleInfo.mismatch) {
-			return;
-		}
-
-		log("[Baseline Report] Mode: " + _reportLevel, Project.MSG_WARN);
-
-		String output =
-			"[Baseline Warning] Bundle Version Change Recommended: " +
-				bundleInfo.suggestedVersion;
-
-		log(output, Project.MSG_WARN);
-
-		persistLog(output);
-	}
-
-	protected void doInfo(BundleInfo bundleInfo, Info info, String warnings) {
-		doPackagesHeader(bundleInfo);
-
-		reportLog(
-			String.valueOf(info.mismatch ? '*' : ' '), info.packageName,
-			String.valueOf(info.packageDiff.getDelta()),
-			String.valueOf(info.newerVersion),
-			String.valueOf(info.olderVersion),
-			String.valueOf(
-				(info.suggestedVersion == null) ? "-" : info.suggestedVersion),
-			warnings, String.valueOf(info.attributes));
-	}
-
-	protected void doPackageDiff(Diff diff) {
-		StringBuffer sb = new StringBuffer();
-
-		sb.append("\t");
-
-		for (Diff curDiff : diff.getChildren()) {
-			if (curDiff.getDelta() == Delta.UNCHANGED) {
-				continue;
-			}
-
-			doDiff(curDiff, sb);
-		}
-	}
-
-	protected void doPackagesHeader(BundleInfo bundleInfo) {
-		if (_headerPrinted) {
-			return;
-		}
-
-		_headerPrinted = true;
-
-		reportLog(
-			" ", "PACKAGE_NAME", "DELTA", "CUR_VER", "BASE_VER", "REC_VER",
-			"WARNINGS", "ATTRIBUTES");
-
-		reportLog(
-			"=", "==================================================",
-			"==========", "==========", "==========", "==========",
-			"==========", "==========");
-	}
-
-	protected void generatePackageInfo(Info info, Delta delta, String warnings)
-		throws Exception {
-
-		String sourceDirName = project.getProperty("plugin.source.dir");
-
-		if (sourceDirName == null) {
-			sourceDirName = project.getBaseDir() + "/src";
-		}
-
-		File sourceDir = new File(sourceDirName);
-
-		if (!sourceDir.exists()) {
-			return;
-		}
-
-		File packageDir = new File(
-			sourceDir, info.packageName.replace('.', File.separatorChar));
-
-		if (!packageDir.exists()) {
-			return;
-		}
-
-		File packageInfoFile = new File(packageDir, "packageinfo");
-
-		if (delta == Delta.REMOVED) {
-			if (packageInfoFile.exists()) {
-				packageInfoFile.delete();
-			}
-
-			return;
-		}
-
-		FileOutputStream fileOutputStream = new FileOutputStream(
-			packageInfoFile);
-
-		String content = "version " + info.suggestedVersion;
-
-		fileOutputStream.write(content.getBytes());
-
-		fileOutputStream.close();
+		baseline.execute();
 	}
 
 	protected String getBaselineReportsDirName() {
@@ -409,77 +164,17 @@ public class BaselineJarTask extends BaseBndTask {
 		return properties;
 	}
 
-	protected String getShortDelta(Delta delta) {
-		if (delta == Delta.ADDED) {
-			return "+";
-		}
-		else if (delta == Delta.CHANGED) {
-			return "~";
-		}
-		else if (delta == Delta.MAJOR) {
-			return ">";
-		}
-		else if (delta == Delta.MICRO) {
-			return "0xB5";
-		}
-		else if (delta == Delta.MINOR) {
-			return "<";
-		}
-		else if (delta == Delta.REMOVED) {
-			return "-";
-		}
-
-		String deltaString = delta.toString();
-
-		return String.valueOf(deltaString.charAt(0));
-	}
-
-	protected void persistLog(String output) {
-		if (!_reportLevelIsPersist) {
-			return;
-		}
-
-		try {
-			if (_printWriter == null) {
-				_logFile.createNewFile();
-
-				_printWriter = new PrintWriter(_logFile);
-			}
-
-			_printWriter.println(output);
-		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
-		}
-	}
-
-	protected void reportLog(
-		String string1, String string2, String string3, String string4,
-		String string5, String string6, String string7, String string8) {
-
-		String output = String.format(
-			"%s %-50s %-10s %-10s %-10s %-10s %-10s", string1, string2, string3,
-			string4, string5, string6, string7);
-
-		log(output, Project.MSG_WARN);
-
-		persistLog(output);
-	}
-
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";
 
 	private String _baselineReportsDirName;
 	private File _bndFile;
-	private boolean _headerPrinted;
 	private File _logFile;
 	private File _newJarFile;
 	private File _oldJarFile;
-	private PrintWriter _printWriter;
 	private String _reportLevel;
 	private boolean _reportLevelIsDiff;
 	private boolean _reportLevelIsOff = true;
-	private boolean _reportLevelIsPersist;
-	private boolean _reportLevelIsStandard;
 	private boolean _reportOnlyDirtyPackages;
+	private File _sourceDir;
 
 }

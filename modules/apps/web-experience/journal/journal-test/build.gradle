@@ -1,3 +1,7 @@
+copyLibs {
+	enabled = true
+}
+
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 

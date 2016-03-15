@@ -2709,7 +2709,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								<arg line="${app.server.start.executable.arg.line}" />
 							</exec>
 
-							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 						</then>
 						<else>
 							<parallel>
@@ -2720,7 +2720,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								</daemons>
 							</parallel>
 
-							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 						</else>
 					</if>
 				</then>
@@ -2994,6 +2994,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
 			<local name="app.server.waiting.url" />
@@ -3052,9 +3053,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 					<delete file="jps_output" />
 
-					<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" failonerror="true" resolveexecutable="true">
-						<arg line="${app.server.stop.executable.arg.line}" />
-					</exec>
+					<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 
 					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
 				</then>

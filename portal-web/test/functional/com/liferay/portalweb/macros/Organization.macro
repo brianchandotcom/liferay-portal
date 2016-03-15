@@ -33,15 +33,10 @@
 	</command>
 
 	<command name="addCategorizationCP">
-		<execute macro="Organization#gotoActionsCmd">
+		<execute macro="Organization#editOrganizationInformationCP">
 			<var name="orgName" value="${orgName}" />
+			<var name="panelHeading" value="Categorization" />
 		</execute>
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAB" value1="Categorization" />
 
 		<var name="key_tagName" value="${tagName}" />
 
@@ -51,6 +46,11 @@
 		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG" value1="${tagName}" />
 
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoOrganizationInformationCP">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG" value1="${tagName}" />
 	</command>
 
@@ -69,7 +69,7 @@
 	<command name="addCP">
 		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 
-		<var name="key_navItem" value="${orgType}" />
+		<var name="key_navItem" value="Organizations" />
 
 		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
 
@@ -80,6 +80,12 @@
 			<then>
 				<execute function="AssertClick" locator1="MenuItem#LOCATION" value1="Location" />
 			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="MenuItem#ORGANIZATION" />
+				<then>
+					<execute function="AssertClick" locator1="MenuItem#ORGANIZATION" value1="Organization" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgName}" />
@@ -550,7 +556,7 @@
 		<execute function="Uncheck" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 	</command>
 
 	<command name="searchCP">
@@ -706,7 +712,7 @@
 
 	<command name="viewRemoveMemberCP">
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_orgName" value="${orgName}" />
 

@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_INFO</td>
+	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_INFO_2</td>
+	<td>//div[contains(@class,'panel-default')][2]//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
@@ -151,16 +161,6 @@
 <tr>
 	<td>NO_TOP_POSTERS</td>
 	<td>//p[contains(.,'There are no top posters.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMPTY_INFO_2</td>
-	<td>//div[contains(@class,'panel-default')][2]//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
 	<td></td>
 </tr>
 <tr>

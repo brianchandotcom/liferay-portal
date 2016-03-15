@@ -340,6 +340,10 @@
 			<var name="tagName" value="alpha" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name 2" />
 			<var name="orgType" value="Organization" />
@@ -372,6 +376,10 @@
 				<equals arg1="${count}" arg2="5" />
 			</not>
 			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
+
 				<execute macro="Organization#addCP">
 					<var name="orgName" value="Suborganization Name ${count}" />
 					<var name="orgType" value="Organization" />
@@ -396,6 +404,8 @@
 				<execute macro="ProductMenu#gotoControlPanelUsers">
 					<var name="portlet" value="Users and Organizations" />
 				</execute>
+
+				<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 				<execute macro="Organization#viewParentOrganizationCP">
 					<var name="orgName" value="Suborganization Name ${count}" />
@@ -686,6 +696,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#assignOrgRoleCP">
 			<var name="orgName" value="Organization Name" />

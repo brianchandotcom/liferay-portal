@@ -1707,7 +1707,16 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Authentication failed. Please try again." />
+		<if>
+			<equals arg1="${loginAttempts}" arg2="${maximumFailure}" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="This account is locked until" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please wait until the unlock date or contact an administrator to have this account unlocked." />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Authentication failed. Please try again." />
+			</else>
+		</if>
 	</command>
 
 	<command name="loginUserPG">

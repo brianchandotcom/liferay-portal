@@ -23,6 +23,24 @@ import java.util.regex.Pattern;
 public abstract class BaseJob implements Job {
 
 	@Override
+	public String getBuildURL() {
+		if ((master == null) || (master.length() == 0)) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("http://");
+		sb.append(master);
+		sb.append("/job/");
+		sb.append(name);
+		sb.append("/");
+		sb.append(number);
+
+		return sb.toString();
+	}
+
+	@Override
 	public String getMaster() {
 		return master;
 	}
@@ -46,24 +64,6 @@ public abstract class BaseJob implements Job {
 		return status;
 	}
 
-	@Override
-	public String getBuildURL() {
-		if ((master == null) || (master.length() == 0)) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("http://");
-		sb.append(master);
-		sb.append("/job/");
-		sb.append(name);
-		sb.append("/");
-		sb.append(number);
-
-		return sb.toString();
-	}
-
 	protected static String decodeURL(String url) {
 		url = url.replace("%28", "(");
 		url = url.replace("%29", ")");
@@ -84,20 +84,13 @@ public abstract class BaseJob implements Job {
 		setBuildURL(buildURL);
 	}
 
-	protected void setStatus(String status) {
-		this.status = status;
-
-		statusModifiedTime = System.currentTimeMillis();
-	}
-
 	protected void setBuildURL(String buildURL) throws Exception {
 		buildURL = decodeURL(buildURL);
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
-			throw new IllegalArgumentException(
-				"Invalid build URL " + buildURL);
+			throw new IllegalArgumentException("Invalid build URL " + buildURL);
 		}
 
 		master = matcher.group("master");
@@ -105,6 +98,12 @@ public abstract class BaseJob implements Job {
 		number = Integer.parseInt(matcher.group("number"));
 
 		update();
+	}
+
+	protected void setStatus(String status) {
+		this.status = status;
+
+		statusModifiedTime = System.currentTimeMillis();
 	}
 
 	protected String master;

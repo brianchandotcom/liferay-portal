@@ -127,7 +127,7 @@ public class PollsQuestionFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_G_T_D);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_T_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -194,7 +194,7 @@ public class PollsQuestionFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_G_T_D);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_T_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(

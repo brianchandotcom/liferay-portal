@@ -20,6 +20,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.impl.JournalArticleImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticleUtil;
+import com.liferay.portal.dao.orm.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
 
@@ -568,7 +568,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -591,7 +591,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_PERMISSIONS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_PERMISSIONS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -623,7 +623,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_REVIEW_DATE);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_REVIEW_DATE);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -657,7 +657,7 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_R_D);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_R_D);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

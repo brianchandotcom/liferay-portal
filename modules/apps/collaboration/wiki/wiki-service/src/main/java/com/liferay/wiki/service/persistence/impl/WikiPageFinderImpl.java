@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.persistence.impl;
 
+import com.liferay.portal.dao.orm.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.impl.WikiPageImpl;
@@ -145,7 +145,8 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_RESOURCE_PRIM_KEY);
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_RESOURCE_PRIM_KEY);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -203,7 +204,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
 
 			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 				WikiPage.class);
@@ -244,7 +245,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_CREATE_DATE);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_CREATE_DATE);
 
 			String createDateComparator = StringPool.GREATER_THAN;
 
@@ -360,7 +361,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_CREATE_DATE);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_CREATE_DATE);
 
 			String createDateComparator = StringPool.GREATER_THAN;
 

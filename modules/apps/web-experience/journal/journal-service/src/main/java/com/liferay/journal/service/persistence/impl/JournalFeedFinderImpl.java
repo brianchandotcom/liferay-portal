@@ -17,6 +17,7 @@ package com.liferay.journal.service.persistence.impl;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.impl.JournalFeedImpl;
 import com.liferay.journal.service.persistence.JournalFeedFinder;
+import com.liferay.portal.dao.orm.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
 import java.util.List;
@@ -92,7 +92,7 @@ public class JournalFeedFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_G_F_N_D);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_F_N_D);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
@@ -198,7 +198,7 @@ public class JournalFeedFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_G_F_N_D);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_F_N_D);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(

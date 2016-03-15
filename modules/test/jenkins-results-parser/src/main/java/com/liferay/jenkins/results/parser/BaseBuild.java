@@ -33,7 +33,7 @@ public abstract class BaseBuild implements Build {
 		sb.append("http://");
 		sb.append(master);
 		sb.append("/job/");
-		sb.append(name);
+		sb.append(jobName);
 		sb.append("/");
 		sb.append(number);
 
@@ -47,7 +47,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getName() {
-		return name;
+		return jobName;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public abstract class BaseBuild implements Build {
 
 	protected BaseBuild() {
 		master = "";
-		name = "";
+		jobName = "";
 
 		setStatus("starting");
 	}
@@ -94,7 +94,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		master = matcher.group("master");
-		name = matcher.group("name");
+		jobName = matcher.group("jobName");
 		number = Integer.parseInt(matcher.group("number"));
 
 		update();
@@ -107,13 +107,13 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String master;
-	protected String name;
+	protected String jobName;
 	protected int number;
 	protected String result;
 	protected long statusModifiedTime;
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<number>\\d+)/?");
 
 	private String _status;
 

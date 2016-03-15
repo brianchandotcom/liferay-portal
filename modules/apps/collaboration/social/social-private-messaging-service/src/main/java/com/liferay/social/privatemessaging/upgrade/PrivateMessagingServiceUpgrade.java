@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
 import com.liferay.social.privatemessaging.upgrade.v1_0_1.UpgradeResourcePermission;
@@ -40,8 +39,7 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.social.privatemessaging.service", "0.0.1", "1.0.0",
-			new UpgradePrivateMessaging(
-				_mBThreadLocalService, _userThreadLocalService),
+			new UpgradePrivateMessaging(_mBThreadLocalService),
 			new UpgradePortletId());
 
 		registry.register(
@@ -97,13 +95,6 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 		_roleLocalService = roleLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserThreadLocalService(
-		UserThreadLocalService userThreadLocalService) {
-
-		_userThreadLocalService = userThreadLocalService;
-	}
-
 	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
 	private MBThreadLocalService _mBThreadLocalService;
@@ -111,6 +102,5 @@ public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 	private ResourceLocalService _resourceLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
-	private UserThreadLocalService _userThreadLocalService;
 
 }

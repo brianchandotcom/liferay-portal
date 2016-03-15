@@ -15,13 +15,14 @@
 package com.liferay.social.privatemessaging.upgrade.v1_0_0;
 
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.social.privatemessaging.model.PrivateMessagingConstants;
-import com.liferay.social.privatemessaging.model.UserThread;
-import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,28 +30,35 @@ import java.util.List;
  */
 public class UpgradePrivateMessaging extends UpgradeProcess {
 
-	public UpgradePrivateMessaging(
-		MBThreadLocalService mBThreadLocalService,
-		UserThreadLocalService userThreadLocalService) {
-
+	public UpgradePrivateMessaging(MBThreadLocalService mBThreadLocalService) {
 		_mBThreadLocalService = mBThreadLocalService;
-		_userThreadLocalService = userThreadLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<UserThread> userThreads = _userThreadLocalService.getUserThreads(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		PreparedStatement ps = connection.prepareStatement(
+			"select mbThreadId from PM_UserThread");
 
-		for (UserThread userThread : userThreads) {
+		ResultSet rs = ps.executeQuery();
+
+		List<Long> mbThreadIds = new ArrayList<>();
+
+		while (rs.next()) {
+
+			// We can load into memory all the elements, this plugin is not
+			// widely used, so the amount of data will be small
+
+			mbThreadIds.add(rs.getLong(1));
+		}
+
+		for (Long mbThreadId : mbThreadIds) {
 			_mBThreadLocalService.moveThread(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				PrivateMessagingConstants.PRIVATE_MESSAGING_CATEGORY_ID,
-				userThread.getMbThreadId());
+				mbThreadId);
 		}
 	}
 
 	private final MBThreadLocalService _mBThreadLocalService;
-	private final UserThreadLocalService _userThreadLocalService;
 
 }

@@ -54,14 +54,8 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-
-		if (tabs2.equals("user-settings")) {
-			updateUserSettings(actionRequest, actionResponse);
-		}
-		else if (tabs2.equals("display-settings")) {
-			updateDisplaySettings(actionRequest, actionResponse);
-		}
+		updateDisplaySettings(actionRequest, actionResponse);
+		updateUserSettings(actionRequest, actionResponse);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

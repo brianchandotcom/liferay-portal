@@ -16,77 +16,31 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String tabs2 = ParamUtil.getString(request, "tabs2", "user-settings");
-%>
-
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="userSettingsURL">
-			<portlet:param name="tabs2" value="user-settings" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= userSettingsURL %>"
-			label="user-settings"
-			selected='<%= tabs2.equals("user-settings") %>'
-		/>
-
-		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="displaySettingsURL">
-			<portlet:param name="tabs2" value="display-settings" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= displaySettingsURL %>"
-			label="display-settings"
-			selected='<%= tabs2.equals("display-settings") %>'
-		/>
-
-		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="rssURL">
-				<portlet:param name="tabs2" value="rss" />
-			</liferay-portlet:renderURL>
-
-			<aui:nav-item
-				href="<%= rssURL %>"
-				label="rss"
-				selected='<%= tabs2.equals("rss") %>'
-			/>
-		</c:if>
-	</aui:nav>
-</aui:nav-bar>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 
-	<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL">
-		<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	</liferay-portlet:renderURL>
-
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-
-	<c:choose>
-		<c:when test='<%= tabs2.equals("user-settings") %>'>
+	<liferay-ui:tabs
+		names='<%= "user-settings,display-settings,rss" %>'
+		param="tabs2"
+		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
+	>
+		<liferay-ui:section>
 			<%@ include file="/configuration/user_settings.jspf" %>
-		</c:when>
-		<c:when test='<%= tabs2.equals("display-settings") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<%@ include file="/configuration/display_settings.jspf" %>
-		</c:when>
-		<c:when test='<%= tabs2.equals("rss") %>'>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
 			<%@ include file="/configuration/rss.jspf" %>
-		</c:when>
-	</c:choose>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveConfiguration() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>

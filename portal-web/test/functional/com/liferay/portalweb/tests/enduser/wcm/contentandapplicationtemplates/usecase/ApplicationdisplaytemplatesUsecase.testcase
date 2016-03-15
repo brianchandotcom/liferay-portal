@@ -748,9 +748,9 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />
-			<var name="siteURL" value="true" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">

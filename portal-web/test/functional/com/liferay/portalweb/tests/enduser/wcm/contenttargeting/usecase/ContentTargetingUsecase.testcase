@@ -1102,17 +1102,13 @@
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="8080" />
-			<var name="pageName" value="Welcome" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="8080" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
@@ -1174,9 +1170,9 @@
 			<var name="vocabularyName" value="User Segment" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page Name" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1200,9 +1196,9 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page Name" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">

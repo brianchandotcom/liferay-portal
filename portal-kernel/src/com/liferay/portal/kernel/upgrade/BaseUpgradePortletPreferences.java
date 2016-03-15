@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,14 +35,6 @@ import javax.portlet.ReadOnlyException;
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
-
-	protected void deletePortletPreferences(long portletPreferencesId)
-		throws Exception {
-
-		runSQL(
-			"delete from PortletPreferences where portletPreferencesId = " +
-				portletPreferencesId);
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -224,7 +217,16 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString());
-
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update PortletPreferences set preferences = ? " +
+							"where portletPreferencesId = ?");
+				PreparedStatement ps3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from PortletPreferences where " +
+							"portletPreferencesId = ?");
 				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {
@@ -288,35 +290,22 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 							preferences);
 
 						if (!preferences.equals(newPreferences)) {
-							updatePortletPreferences(
-								portletPreferencesId, newPreferences);
+							ps2.setString(1, newPreferences);
+							ps2.setLong(2, portletPreferencesId);
+
+							ps2.addBatch();
 						}
 					}
 					else {
-						deletePortletPreferences(portletPreferencesId);
+						ps3.setLong(1, portletPreferencesId);
+
+						ps3.addBatch();
 					}
 				}
+
+				ps2.executeBatch();
+				ps3.executeBatch();
 			}
-		}
-	}
-
-	protected void updatePortletPreferences(
-			long portletPreferencesId, String preferences)
-		throws Exception {
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update PortletPreferences set preferences = ? where " +
-					"portletPreferencesId = " + portletPreferencesId);
-
-			ps.setString(1, preferences);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

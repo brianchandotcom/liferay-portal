@@ -210,11 +210,20 @@ AUI.add(
 
 						var existingField;
 
-						var name = key;
+						var keyValue = key.replace(/[^a-z0-9]/gi,'');
+
+						var name;
+
+						if (keyValue) {
+							name = keyValue;
+						}
+						else {
+							name = 'label';
+						}
 
 						do {
 							if (counter > 0) {
-								name = key + counter;
+								name = name + counter;
 							}
 
 							existingField = builder.getField(name);

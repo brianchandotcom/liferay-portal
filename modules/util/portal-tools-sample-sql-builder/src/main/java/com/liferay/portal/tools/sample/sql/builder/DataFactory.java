@@ -1301,8 +1301,8 @@ public class DataFactory {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		sb.append("], \"title\": {\"en_US\": \"\"}}],");
-		sb.append("\"paginationMode\": \"single-page\"}");
+		sb.append("], \"title\": {\"en_US\": \"\"}}],\"paginationMode\": ");
+		sb.append("\"single-page\"}");
 
 		return newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
@@ -1316,8 +1316,9 @@ public class DataFactory {
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
-			sb.append("{\"dataType\": \"string\", \"indexType\": \"keyword\"");
-			sb.append(", \"label\": {\"en_US\": \"Text");
+			sb.append(
+				"{\"dataType\": \"string\", \"indexType\": \"keyword\", ");
+			sb.append("\"label\": {\"en_US\": \"Text");
 			sb.append(i);
 			sb.append("\"}, \"name\": \"");
 			sb.append(nextDDLCustomFieldName(groupId, i));

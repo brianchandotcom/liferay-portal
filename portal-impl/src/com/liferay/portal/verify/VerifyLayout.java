@@ -222,8 +222,8 @@ public class VerifyLayout extends VerifyProcess {
 		sb.append("update ");
 		sb.append(tableName);
 		sb.append(" set layoutUuid = (select distinct ");
-		sb.append("sourcePrototypeLayoutUuid from Layout where ");
-		sb.append("Layout.uuid_ = ");
+		sb.append("sourcePrototypeLayoutUuid from Layout where Layout.uuid_ ");
+		sb.append("= ");
 		sb.append(tableName);
 		sb.append(".layoutUuid) where exists (select 1 from Layout where ");
 		sb.append("Layout.uuid_ = ");

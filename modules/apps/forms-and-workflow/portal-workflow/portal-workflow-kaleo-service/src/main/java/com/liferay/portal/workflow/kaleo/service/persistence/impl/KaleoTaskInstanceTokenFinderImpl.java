@@ -548,9 +548,8 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("AND ((");
-			sb.append("KaleoTaskAssignmentInstance.assigneeClassName = ?) ");
-			sb.append("AND (");
+			sb.append("AND ((KaleoTaskAssignmentInstance.assigneeClassName ");
+			sb.append("= ?) AND (");
 
 			for (int i = 0; i < roleIds.size(); i++) {
 				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?) ");

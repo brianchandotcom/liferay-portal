@@ -1012,10 +1012,10 @@ public class UpgradeDynamicDataMappingTest {
 	protected void addContent(long contentId, String data) throws Exception {
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("insert into DDMContent (contentId, groupId, ");
-		sb.append("companyId, userId, userName, createDate, ");
-		sb.append("modifiedDate, name, description, data_) values (?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("insert into DDMContent (contentId, groupId, companyId, ");
+		sb.append("userId, userName, createDate, modifiedDate, name, ");
+		sb.append("description, data_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?)");
 
 		String sql = sb.toString();
 
@@ -1044,9 +1044,9 @@ public class UpgradeDynamicDataMappingTest {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("insert into ResourcePermission (mvccVersion, ");
-		sb.append("resourcePermissionId, companyId, name, scope,  ");
-		sb.append("primKey, primKeyId, roleId, ownerId, actionIds ) ");
-		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("resourcePermissionId, companyId, name, scope,  primKey, ");
+		sb.append("primKeyId, roleId, ownerId, actionIds ) values (?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
@@ -1072,11 +1072,10 @@ public class UpgradeDynamicDataMappingTest {
 			long storageLinkId, long classPK, long structureId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(2);
 
 		sb.append("insert into DDMStorageLink (storageLinkId, companyId, ");
-		sb.append("classNameId, classPK, structureId) values (?, ?, ?, ");
-		sb.append("?, ?)");
+		sb.append("classNameId, classPK, structureId) values (?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
@@ -1103,10 +1102,10 @@ public class UpgradeDynamicDataMappingTest {
 		sb.append("insert into DDMStructure (structureId, groupId, ");
 		sb.append("companyId, userId, userName, versionUserId, ");
 		sb.append("versionUserName, createDate, modifiedDate, ");
-		sb.append("parentStructureId, classNameId, structureKey, ");
-		sb.append("version, name, description, definition, storageType, ");
-		sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?)");
+		sb.append("parentStructureId, classNameId, structureKey, version, ");
+		sb.append("name, description, definition, storageType, type_) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?)");
 
 		String sql = sb.toString();
 
@@ -1143,13 +1142,13 @@ public class UpgradeDynamicDataMappingTest {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("insert into DDMTemplate (templateId, groupId, ");
-		sb.append("companyId, userId, userName, versionUserId, ");
-		sb.append("versionUserName, createDate, modifiedDate, ");
-		sb.append("classNameId, classPK, resourceClassNameId, ");
-		sb.append("templateKey, version, name, mode_, language, script, ");
-		sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?)");
+		sb.append("insert into DDMTemplate (templateId, groupId, companyId, ");
+		sb.append("userId, userName, versionUserId, versionUserName, ");
+		sb.append("createDate, modifiedDate, classNameId, classPK, ");
+		sb.append("resourceClassNameId, templateKey, version, name, mode_, ");
+		sb.append("language, script, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?)");
 
 		String sql = sb.toString();
 

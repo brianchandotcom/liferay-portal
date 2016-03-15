@@ -43,8 +43,8 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<p>To include a plugin fix for this pull request, ");
-		sb.append("please edit your <a href=\"https://github.com/");
+		sb.append("<p>To include a plugin fix for this pull request, please ");
+		sb.append("edit your <a href=\"https://github.com/");
 		sb.append(project.getProperty("github.pull.request.head.username"));
 		sb.append("/");
 		sb.append(project.getProperty("portal.repository"));

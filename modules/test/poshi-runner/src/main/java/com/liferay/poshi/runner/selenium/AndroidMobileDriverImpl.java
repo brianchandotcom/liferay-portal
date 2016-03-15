@@ -122,8 +122,8 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 			StringBuilder sb = new StringBuilder(6);
 
 			sb.append(PropsValues.MOBILE_ANDROID_HOME);
-			sb.append("/platform-tools/");
-			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
+			sb.append("/platform-tools/adb -s emulator-5554 shell ");
+			sb.append("/data/local/tap.sh ");
 
 			int elementPositionCenterX =
 				WebDriverHelper.getElementPositionCenterX(this, locator);

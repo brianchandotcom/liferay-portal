@@ -38,10 +38,10 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("insert into AssetCategory (uuid_, categoryId, ");
-		sb.append("groupId, companyId, userId, userName, createDate, ");
-		sb.append("modifiedDate, parentCategoryId, name, vocabularyId) ");
-		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("insert into AssetCategory (uuid_, categoryId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, modifiedDate, ");
+		sb.append("parentCategoryId, name, vocabularyId) values (?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
@@ -75,12 +75,12 @@ public class UpgradeAsset extends UpgradeProcess {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("insert into AssetEntry (entryId, groupId, companyId, ");
-		sb.append("userId, userName, createDate, modifiedDate, ");
-		sb.append("classNameId, classPK, visible, startDate, endDate, ");
-		sb.append("publishDate, expirationDate, mimeType, title, ");
-		sb.append("description, summary, url, height, width, priority, ");
-		sb.append("viewCount) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("userId, userName, createDate, modifiedDate, classNameId, ");
+		sb.append("classPK, visible, startDate, endDate, publishDate, ");
+		sb.append("expirationDate, mimeType, title, description, summary, ");
+		sb.append("url, height, width, priority, viewCount) values (?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?)");
 
 		String sql = sb.toString();
 
@@ -155,9 +155,9 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("insert into AssetTag (tagId, groupId, companyId, ");
-		sb.append("userId, userName, createDate, modifiedDate, name) ");
-		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("insert into AssetTag (tagId, groupId, companyId, userId, ");
+		sb.append("userName, createDate, modifiedDate, name) values (?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
@@ -185,8 +185,8 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		sb.append("insert into AssetVocabulary (uuid_, vocabularyId, ");
 		sb.append("groupId, companyId, userId, userName, createDate, ");
-		sb.append("modifiedDate, name, description) values (?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?)");
+		sb.append("modifiedDate, name, description) values (?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 

@@ -1565,6 +1565,10 @@ AUI.add(
 					_onClickAddEvent: function(event) {
 						var instance = this;
 
+						if (Liferay.Session.get('sessionState') === "expired") {
+							return;
+						}
+
 						var recorder = instance.get('eventRecorder');
 
 						var activeViewName = instance.get('activeView').get('name');

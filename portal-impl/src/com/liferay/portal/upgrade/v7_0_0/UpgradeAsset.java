@@ -79,8 +79,8 @@ public class UpgradeAsset extends UpgradeProcess {
 			sb.append("max(JournalArticle.version) as maxVersion from ");
 			sb.append("JournalArticle group by ");
 			sb.append("JournalArticle.resourcePrimkey) temp_table inner join ");
-			sb.append("JournalArticle on (JournalArticle.indexable = ");
-			sb.append("?) and (JournalArticle.status = 0) and ");
+			sb.append("JournalArticle on (JournalArticle.indexable = ?) and ");
+			sb.append("(JournalArticle.status = 0) and ");
 			sb.append("(JournalArticle.resourcePrimkey = temp_table.primKey) ");
 			sb.append("and (JournalArticle.version = temp_table.maxVersion)");
 

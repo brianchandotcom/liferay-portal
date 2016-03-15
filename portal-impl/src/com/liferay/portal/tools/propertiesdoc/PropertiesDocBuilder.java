@@ -359,8 +359,8 @@ public class PropertiesDocBuilder {
 				else {
 					StringBundler sb = new StringBundler(8);
 
-					sb.append("Properties section should consist of 3 ");
-					sb.append("or more lines:");
+					sb.append("Properties section should consist of 3 or ");
+					sb.append("more lines:");
 					sb.append(StringPool.NEW_LINE);
 					sb.append("##");
 					sb.append(StringPool.NEW_LINE);

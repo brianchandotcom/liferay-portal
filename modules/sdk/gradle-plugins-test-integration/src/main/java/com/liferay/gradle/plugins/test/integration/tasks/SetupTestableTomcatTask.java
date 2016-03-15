@@ -184,8 +184,8 @@ public class SetupTestableTomcatTask
 	protected String getJmxOptions() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("-Dcom.sun.management.jmxremote");
-		sb.append(" -Dcom.sun.management.jmxremote.authenticate=");
+		sb.append("-Dcom.sun.management.jmxremote ");
+		sb.append("-Dcom.sun.management.jmxremote.authenticate=");
 		sb.append(isJmxRemoteAuthenticate());
 		sb.append(" -Dcom.sun.management.jmxremote.port=");
 		sb.append(getJmxRemotePort());

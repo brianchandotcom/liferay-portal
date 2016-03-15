@@ -633,8 +633,7 @@ public class LoadBalancerUtil {
 			sb.append(availableSlaveCount);
 			sb.append(", duration=");
 			sb.append(System.currentTimeMillis() - start);
-			sb.append("ms");
-			sb.append(", idle=");
+			sb.append("ms, idle=");
 			sb.append(idleCount);
 			sb.append(", queue=");
 			sb.append(queueCount);

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * @author Kevin Yen
  */
-public abstract class BaseJob implements Job {
+public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBuildURL() {
@@ -73,14 +73,14 @@ public abstract class BaseJob implements Job {
 		return url;
 	}
 
-	protected BaseJob() {
+	protected BaseBuild() {
 		master = "";
 		name = "";
 
 		setStatus("starting");
 	}
 
-	protected BaseJob(String buildURL) throws Exception {
+	protected BaseBuild(String buildURL) throws Exception {
 		setBuildURL(buildURL);
 	}
 

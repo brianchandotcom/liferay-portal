@@ -38,7 +38,7 @@ public class JenkinsStopJobUtil {
 	}
 
 	public static void stopJob(
-			TopLevelJob topLevelJob, String username, String password)
+			TopLevelBuild topLevelJob, String username, String password)
 		throws Exception {
 
 		_stopDownstreamJobs(topLevelJob, username, password);
@@ -91,18 +91,18 @@ public class JenkinsStopJobUtil {
 	}
 
 	private static void _stopDownstreamJobs(
-			TopLevelJob topLevelJob, String username, String password)
+			TopLevelBuild topLevelJob, String username, String password)
 		throws Exception {
 
-		List<DownstreamJob> downstreamJobs = topLevelJob.getDownstreamJobs(
+		List<DownstreamBuild> downstreamJobs = topLevelJob.getDownstreamJobs(
 			"running");
 
-		for (DownstreamJob downstreamJob : downstreamJobs) {
+		for (DownstreamBuild downstreamJob : downstreamJobs) {
 			_stopJob(downstreamJob, username, password);
 		}
 	}
 
-	private static void _stopJob(Job job, String username, String password)
+	private static void _stopJob(Build job, String username, String password)
 		throws Exception {
 
 		_stopJob(job.getBuildURL(), username, password);

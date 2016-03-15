@@ -540,22 +540,18 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="ADT Test Page" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Categories Navigation" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="ADT Test Page" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
@@ -564,11 +560,9 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="ADT Test Page" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="CategoriesNavigationPortlet#viewDefaultPG">
@@ -580,11 +574,9 @@
 			<var name="adtType" value="Categories Navigation" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="ADT Test Page" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Test Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="CategoriesNavigationPortlet#viewCustomADTMultiColumnPG">

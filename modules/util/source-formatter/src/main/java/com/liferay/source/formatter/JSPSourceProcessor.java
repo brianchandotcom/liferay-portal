@@ -411,6 +411,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
 
+		checkStringBundler(fileName, newContent);
+
 		checkXSS(fileName, newContent);
 
 		// LPS-47682
@@ -703,8 +705,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					processErrorMessage(
 						fileName, "chaining: " + fileName + " " + lineCount);
 				}
-
-				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
 

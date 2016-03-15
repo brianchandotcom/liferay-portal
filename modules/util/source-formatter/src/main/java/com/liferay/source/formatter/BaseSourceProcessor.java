@@ -433,34 +433,34 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void checkStringBundler(
-		String line, String fileName, int lineCount) {
+	protected void checkStringBundler(String fileName, String content) {
+		Matcher matcher = sbAppendPattern.matcher(content);
 
-		if ((!line.startsWith("sb.append(") && !line.contains("SB.append(")) ||
-			!line.endsWith(");")) {
+		matcherIteration:
+		while (matcher.find()) {
+			String appendValue = stripQuotes(matcher.group(2), CharPool.QUOTE);
 
-			return;
-		}
+			appendValue = StringUtil.replace(appendValue, "+\n", "+ ");
 
-		int pos = line.indexOf(".append(");
-
-		line = line.substring(pos + 8, line.length() - 2);
-
-		line = stripQuotes(line, CharPool.QUOTE);
-
-		if (!line.contains(" + ")) {
-			return;
-		}
-
-		String[] lineParts = StringUtil.split(line, " + ");
-
-		for (String linePart : lineParts) {
-			if ((getLevel(linePart) != 0) || Validator.isNumber(linePart)) {
-				return;
+			if (!appendValue.contains(" + ")) {
+				continue;
 			}
-		}
 
-		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
+			String[] appendValueParts = StringUtil.split(appendValue, " + ");
+
+			for (String appendValuePart : appendValueParts) {
+				if ((getLevel(appendValuePart) != 0) ||
+					Validator.isNumber(appendValuePart)) {
+
+					continue matcherIteration;
+				}
+			}
+
+			processErrorMessage(
+				fileName,
+				"plus: " + fileName + " " +
+					getLineCount(content, matcher.start(1)));
+		}
 	}
 
 	protected void checkStringUtilReplace(String fileName, String content)
@@ -2348,6 +2348,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
+	protected static Pattern sbAppendPattern = Pattern.compile(
+		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern sessionKeyPattern = Pattern.compile(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),

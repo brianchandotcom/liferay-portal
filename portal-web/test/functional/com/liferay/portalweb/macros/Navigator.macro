@@ -69,6 +69,16 @@
 		</execute>
 	</command>
 
+	<command name="gotoStagedSitePage" summary="Navigate to the page named '${pageName}'">
+		<execute macro="Navigator#openStagingSiteURL">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
 	<command name="gotoStagedView">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 

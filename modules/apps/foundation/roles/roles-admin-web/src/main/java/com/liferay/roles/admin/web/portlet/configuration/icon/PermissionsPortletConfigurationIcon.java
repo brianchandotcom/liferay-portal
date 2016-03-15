@@ -112,10 +112,15 @@ public class PermissionsPortletConfigurationIcon
 
 			String roleName = role.getName();
 
-			return !roleName.equals(RoleConstants.OWNER) &&
+			if (!roleName.equals(RoleConstants.OWNER) &&
 				RolePermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), roleId,
-					ActionKeys.PERMISSIONS);
+					ActionKeys.PERMISSIONS)) {
+
+				return true;
+			}
+
+			return false;
 		}
 		catch (Exception e) {
 		}

@@ -71,6 +71,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFormatReturnStatements() throws Exception {
+		test("FormatReturnStatements.testjava");
+	}
+
+	@Test
 	public void testIfClauseIncorrectLineBreaks() throws Exception {
 		test("IfClauseIncorrectLineBreaks.testjava");
 	}

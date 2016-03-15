@@ -23,7 +23,9 @@ public interface Build {
 
 	public String getMaster();
 
-	public String getName();
+	public String getJobName();
+	
+	public String getJobURL();
 
 	public String getResult();
 

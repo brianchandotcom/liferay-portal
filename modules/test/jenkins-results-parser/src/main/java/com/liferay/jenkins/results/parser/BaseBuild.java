@@ -30,24 +30,33 @@ public abstract class BaseBuild implements Build {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("http://");
-		sb.append(master);
-		sb.append("/job/");
-		sb.append(jobName);
-		sb.append("/");
+		sb.append(getJobURL());
 		sb.append(number);
 
 		return sb.toString();
 	}
-
+	
 	@Override
 	public String getMaster() {
 		return master;
 	}
 
 	@Override
-	public String getName() {
+	public String getJobName() {
 		return jobName;
+	}
+
+	@Override
+	public String getJobURL() {
+		StringBuilder sb = new StringBuilder();
+	
+		sb.append("http://");
+		sb.append(master);
+		sb.append("/job/");
+		sb.append(jobName);
+		sb.append("/");
+
+		return sb.toString();
 	}
 
 	@Override

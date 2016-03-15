@@ -1425,7 +1425,7 @@
 			<var name="results" value="Showing 1 to 6 of 6 entries." />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'panel entry-display-style')])[6]" />
+		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]" />
 
 		<execute macro="Pagination#changePagination">
 			<var name="itemsPerPage" value="5" />
@@ -1435,7 +1435,7 @@
 			<var name="results" value="Showing 1 to 5 of 6 entries." />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'panel entry-display-style')])[6]" />
+		<execute function="AssertElementNotPresent" locator1="xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]" />
 	</command>
 
 	<command name="ViewWebContentConfigurationCP" priority="3">

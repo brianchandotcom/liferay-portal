@@ -943,9 +943,9 @@ ${output.content}</echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
-			test.license.xml.url="${test.license.xml.url}"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
+import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -127,19 +128,30 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		LocalRepository localRepository = repositoryProvider.getLocalRepository(
-			repositoryId);
+		try {
+			LocalRepository localRepository =
+				repositoryProvider.getLocalRepository(repositoryId);
 
-		if (localRepository.isCapabilityProvided(
-				RepositoryEventTriggerCapability.class)) {
+			if (localRepository.isCapabilityProvided(
+					RepositoryEventTriggerCapability.class)) {
 
-			RepositoryEventTriggerCapability repositoryEventTriggerCapability =
-				localRepository.getCapability(
-					RepositoryEventTriggerCapability.class);
+				RepositoryEventTriggerCapability
+					repositoryEventTriggerCapability =
+						localRepository.getCapability(
+							RepositoryEventTriggerCapability.class);
 
-			repositoryEventTriggerCapability.trigger(
-				RepositoryEventType.Delete.class, LocalRepository.class,
-				localRepository);
+				repositoryEventTriggerCapability.trigger(
+					RepositoryEventType.Delete.class, LocalRepository.class,
+					localRepository);
+			}
+		}
+		catch (UndeployedExternalRepositoryException uere) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Repository deletion events for this repository will not " +
+						"be raised",
+					uere);
+			}
 		}
 
 		return repositoryLocalService.deleteRepository(repository);

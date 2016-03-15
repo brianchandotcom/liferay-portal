@@ -1171,10 +1171,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					configureBundleDefaultInstructions(project, publishing);
 					configureTaskJavadoc(project);
 
-					Version version = Version.parseVersion(
-						String.valueOf(project.getVersion()));
-
-					if (version.compareTo(_LOWEST_BASELINE_VERSION) > 0) {
+					if (hasBaseline(project)) {
 						Configuration baselineConfiguration =
 							addConfigurationBaseline(project);
 
@@ -1922,6 +1919,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				return null;
 			}
 		}
+	}
+
+	protected boolean hasBaseline(Project project) {
+		try {
+			Version version = Version.parseVersion(
+				String.valueOf(project.getVersion()));
+
+			if (version.compareTo(_LOWEST_BASELINE_VERSION) > 0) {
+				return true;
+			}
+		}
+		catch (IllegalArgumentException iae) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Unable to parse project version", iae);
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean isPublishing(Project project) {

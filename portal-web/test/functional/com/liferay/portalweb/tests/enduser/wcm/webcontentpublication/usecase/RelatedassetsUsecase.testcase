@@ -150,12 +150,9 @@
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#gotoPrivateStagedSitePage">
 			<var name="pageName" value="Private Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -167,12 +164,9 @@
 			<var name="assetType" value="Basic Web Content" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#gotoPrivateStagedSitePage">
 			<var name="pageName" value="Private Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -184,12 +178,9 @@
 			<var name="displayTemplate" value="Full Content" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#gotoPrivateStagedSitePage">
 			<var name="pageName" value="Private Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -200,12 +191,9 @@
 			<var name="categoryName" value="Category Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageAccess" value="Private" />
+		<execute macro="Navigator#gotoPrivateStagedSitePage">
 			<var name="pageName" value="Private Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="RelatedAssets#viewPG">

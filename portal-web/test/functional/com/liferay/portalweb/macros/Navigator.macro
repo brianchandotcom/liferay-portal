@@ -49,6 +49,16 @@
 		</execute>
 	</command>
 
+	<command name="gotoPrivateStagedSitePage" summary="Navigate to the page named '${pageName}'">
+		<execute macro="Navigator#openPrivateStagedSiteURL">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
 	<command name="gotoSitePage">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName}" />
@@ -156,6 +166,12 @@
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
 
 		<execute function="Open" locator1="/group/${siteNameURL}" />
+	</command>
+
+	<command name="openPrivateStagedSiteURL">
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
+
+		<execute function="Open" locator1="/group/${siteNameURL}-staging" />
 	</command>
 
 	<command name="openPrivateURL">

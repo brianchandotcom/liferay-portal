@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.data.provider.internal.servlet;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContextContributor;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -41,6 +42,7 @@ import java.io.IOException;
 
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -98,15 +100,33 @@ public class DDMDataProviderServlet extends HttpServlet {
 		bundleContext.registerService(Servlet.class, this, properties);
 	}
 
+	protected void addDDMDataProviderContextParameters(
+		HttpServletRequest request,
+		DDMDataProviderContext ddmDataProviderContext,
+		List<DDMDataProviderContextContributor>
+			ddmDataProviderContextContributors) {
+
+		for (DDMDataProviderContextContributor
+				ddmDataProviderContextContributor :
+					ddmDataProviderContextContributors) {
+
+			Map<String, String> parameters =
+				ddmDataProviderContextContributor.getParameters(request);
+
+			if (parameters == null) {
+				continue;
+			}
+
+			ddmDataProviderContext.addParameters(parameters);
+		}
+	}
+
 	@Override
 	protected void doGet(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		long ddmDataProviderInstanceId = ParamUtil.getLong(
-			request, "ddmDataProviderInstanceId");
-
-		String data = doGetData(ddmDataProviderInstanceId);
+		String data = doGetData(request);
 
 		if (data == null) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -120,8 +140,11 @@ public class DDMDataProviderServlet extends HttpServlet {
 		ServletResponseUtil.write(response, data);
 	}
 
-	protected String doGetData(long ddmDataProviderInstanceId) {
+	protected String doGetData(HttpServletRequest request) {
 		try {
+			long ddmDataProviderInstanceId = ParamUtil.getLong(
+				request, "ddmDataProviderInstanceId");
+
 			DDMDataProviderInstance ddmDataProviderInstance =
 				_ddmDataProviderInstanceService.getDataProviderInstance(
 					ddmDataProviderInstanceId);
@@ -139,6 +162,16 @@ public class DDMDataProviderServlet extends HttpServlet {
 
 			DDMDataProviderContext ddmDataProviderContext =
 				new DDMDataProviderContext(ddmFormValues);
+
+			List<DDMDataProviderContextContributor>
+				ddmDataProviderContextContributors =
+					_ddmDataProviderTracker.
+						getDDMDataProviderContextContributors(
+							ddmDataProviderInstance.getType());
+
+			addDDMDataProviderContextParameters(
+				request, ddmDataProviderContext,
+				ddmDataProviderContextContributors);
 
 			JSONArray jsonArray = toJSONArray(
 				ddmDataProvider.getData(ddmDataProviderContext));

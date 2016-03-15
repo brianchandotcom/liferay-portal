@@ -16,7 +16,9 @@
 	<command name="gotoAllPagesPG">
 		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
-		<execute function="AssertVisible" locator1="Portlet#H3_HEADER" value1="All Pages" />
+		<var name="key_tabName" value="All Pages" />
+
+		<execute function="AssertElementPresent" locator1="WikiTable#NAVIGATION_ACTIVE_TAB" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="All Pages" />
 	</command>

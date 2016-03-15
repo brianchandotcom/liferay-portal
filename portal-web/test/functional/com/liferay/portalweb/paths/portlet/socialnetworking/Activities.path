@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ACTIVITY_TITLE_ASSET_NAME</td>
-	<td>//div[@class='activity-title']/a</td>
+	<td>//div[contains(@class,'card-col-content')]/a</td>
 	<td></td>
 </tr>
 </tbody>

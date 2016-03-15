@@ -406,7 +406,7 @@
 </tr>
 <tr>
 	<td>ADD_CHILD_PAGE</td>
-	<td>//div[*[@data-qa-id='pageOptions' and @aria-expanded='true']]//*[@data-qa-id='addChildPage']</td>
+	<td>//div[*[@aria-expanded='true']]//*[@data-qa-id='addChildPage']/span[contains(.,'Add Child Page of ${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>

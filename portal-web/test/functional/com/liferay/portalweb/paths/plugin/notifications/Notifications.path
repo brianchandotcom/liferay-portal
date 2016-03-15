@@ -36,7 +36,7 @@
 <!--NOTIFICATIONS-->
 <tr>
 	<td>MARK_AS_READ</td>
-	<td>//span[contains(.,'mark-as-read')]</td>
+	<td>//span[contains(.,'Mark as Read')]</td>
 	<td></td>
 </tr>
 <tr>

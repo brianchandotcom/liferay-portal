@@ -1435,6 +1435,8 @@
 
 		<execute function="AssertClick" locator1="WikiRSS#FEED_LINK" value1="Feed" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="SelectWindow" locator1="title=${wikiPageTitle}" />
 
 		<execute function="AssertTextEquals" locator1="WikiRSS#FEED_TITLE" value1="${wikiPageTitle}" />

@@ -433,7 +433,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String checkStringBundler(
+	protected String formatStringBundler(
 		String fileName, String content, int maxLineLength) {
 
 		Matcher matcher = sbAppendPattern.matcher(content);

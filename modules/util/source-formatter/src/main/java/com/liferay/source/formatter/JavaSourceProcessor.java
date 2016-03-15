@@ -800,7 +800,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
-		newContent = checkStringBundler(fileName, newContent, _MAX_LINE_LENGTH);
+		newContent = formatStringBundler(
+			fileName, newContent, _MAX_LINE_LENGTH);
 
 		newContent = StringUtil.replace(
 			newContent, StringPool.TAB + "for (;;) {",

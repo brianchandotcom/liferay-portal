@@ -35,11 +35,6 @@ public abstract class BaseBuild implements Build {
 
 		return sb.toString();
 	}
-	
-	@Override
-	public String getMaster() {
-		return master;
-	}
 
 	@Override
 	public String getJobName() {
@@ -49,7 +44,7 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getJobURL() {
 		StringBuilder sb = new StringBuilder();
-	
+
 		sb.append("http://");
 		sb.append(master);
 		sb.append("/job/");
@@ -57,6 +52,11 @@ public abstract class BaseBuild implements Build {
 		sb.append("/");
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getMaster() {
+		return master;
 	}
 
 	@Override
@@ -115,8 +115,8 @@ public abstract class BaseBuild implements Build {
 		statusModifiedTime = System.currentTimeMillis();
 	}
 
-	protected String master;
 	protected String jobName;
+	protected String master;
 	protected int number;
 	protected String result;
 	protected long statusModifiedTime;

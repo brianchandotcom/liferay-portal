@@ -21,11 +21,11 @@ public interface Build {
 
 	public String getBuildURL();
 
-	public String getMaster();
-
 	public String getJobName();
-	
+
 	public String getJobURL();
+
+	public String getMaster();
 
 	public String getResult();
 

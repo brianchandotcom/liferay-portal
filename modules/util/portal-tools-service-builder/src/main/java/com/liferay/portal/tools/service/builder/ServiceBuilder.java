@@ -4717,14 +4717,21 @@ public class ServiceBuilder {
 
 			StringBundler sb = new StringBundler();
 
-			sb.append(
-				"package " + _packagePath + ".service.persistence.impl;\n\n");
-			sb.append(
-				"import " + _apiPackagePath + ".service.persistence." +
-					ejbName + "Finder;\n");
-			sb.append(
-				"import " + _apiPackagePath + ".service.persistence." + ejbName +
-					"Util;");
+			sb.append("package ");
+			sb.append(_packagePath);
+			sb.append(".service.persistence.impl;\n\n");
+
+			sb.append("import ");
+			sb.append(_apiPackagePath);
+			sb.append(".service.persistence.");
+			sb.append(ejbName);
+			sb.append("Finder;\n");
+
+			sb.append("import ");
+			sb.append(_apiPackagePath);
+			sb.append(".service.persistence.");
+			sb.append(ejbName);
+			sb.append("Util;");
 
 			content = StringUtil.replace(
 				content, "package " + _packagePath + ".service.persistence;",

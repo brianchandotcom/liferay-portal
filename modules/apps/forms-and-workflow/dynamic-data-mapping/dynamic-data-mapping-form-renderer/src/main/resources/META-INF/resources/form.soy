@@ -28,8 +28,10 @@
  * Prints the JavaScript form renderer.
  *
  * @param containerId
+ * @param dataProviderURL
  * @param definition
  * @param evaluation
+ * @param evaluatorURL
  * @param fieldTypes
  * @param layout
  * @param portletNamespace
@@ -54,8 +56,10 @@
 					new Liferay.DDM.Renderer.Form(
 						{lb}
 							container: '#{$containerId}',
+							dataProviderURL: '{$dataProviderURL|noAutoescape}',
 							definition: {$definition|noAutoescape},
 							evaluation: {$evaluation|noAutoescape},
+							evaluatorURL: '{$evaluatorURL|noAutoescape}',
 
 							{if $layout}
 								layout: {$layout|noAutoescape},

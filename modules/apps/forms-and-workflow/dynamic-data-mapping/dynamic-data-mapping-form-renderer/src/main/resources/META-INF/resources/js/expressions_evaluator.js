@@ -8,8 +8,8 @@ AUI.add(
 						value: true
 					},
 
-					evaluationURL: {
-						value: '/o/dynamic-data-mapping-form-evaluator/'
+					evaluatorURL: {
+						valueFn: '_valueEvaluatorURL'
 					},
 
 					form: {
@@ -77,7 +77,7 @@ AUI.add(
 						var form = instance.get('form');
 
 						A.io.request(
-							instance.get('evaluationURL'),
+							instance.get('evaluatorURL'),
 							{
 								data: {
 									languageId: form.get('locale'),
@@ -98,6 +98,20 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_valueEvaluatorURL: function() {
+						var instance = this;
+
+						var evaluatorURL;
+
+						var form = instance.get('form');
+
+						if (form) {
+							evaluatorURL = form.get('evaluatorURL');
+						}
+
+						return evaluatorURL;
 					}
 				}
 			}

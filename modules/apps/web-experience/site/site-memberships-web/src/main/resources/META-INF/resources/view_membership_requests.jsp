@@ -146,7 +146,6 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 						<%= LanguageUtil.get(request, "the-user-could-not-be-found") %>
 					</c:otherwise>
 				</c:choose>
-
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

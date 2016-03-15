@@ -92,7 +92,7 @@ public class DownstreamBuild extends BaseBuild {
 			JSONObject build = getRunningBuildJSONObject();
 
 			if (build != null) {
-				number = build.getInt("number");
+				buildNumber = build.getInt("number");
 
 				setStatus("running");
 
@@ -140,7 +140,7 @@ public class DownstreamBuild extends BaseBuild {
 		for (int i = 0; i < builds.length(); i++) {
 			JSONObject build = builds.getJSONObject(i);
 
-			if ((number == build.getInt("number")) &&
+			if ((buildNumber == build.getInt("number")) &&
 				(build.get("result") != null) &&
 				!build.getBoolean("building")) {
 

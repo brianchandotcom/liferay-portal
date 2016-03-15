@@ -43,7 +43,7 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		master = invocationURLMatcher.group("master");
-		jobName = invocationURLMatcher.group("name");
+		jobName = invocationURLMatcher.group("jobName");
 
 		String queryString = invocationURLMatcher.group("queryString");
 
@@ -351,7 +351,7 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	private static final Pattern _invocationURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/" +
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
 			"buildWithParameters\\?(?<queryString>.*)");
 
 }

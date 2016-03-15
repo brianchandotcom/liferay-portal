@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -180,6 +181,10 @@ public class DDMStructureLocalServiceImpl
 		ddmStructureLayoutLocalService.addStructureLayout(
 			userId, groupId, structureVersion.getStructureVersionId(),
 			ddmFormLayout, serviceContext);
+
+		// Data provider instance links
+
+		addDataProviderInstanceLinks(structureId, ddmForm);
 
 		return structure;
 	}
@@ -497,6 +502,11 @@ public class DDMStructureLocalServiceImpl
 		// Structure links
 
 		ddmStructureLinkPersistence.removeByStructureId(
+			structure.getStructureId());
+
+		// Data provider instance links
+
+		ddmDataProviderInstanceLinkPersistence.removeByStructureId(
 			structure.getStructureId());
 
 		// Structure versions
@@ -1437,6 +1447,17 @@ public class DDMStructureLocalServiceImpl
 			serviceContext, structure);
 	}
 
+	protected void addDataProviderInstanceLinks(
+		long structureId, DDMForm ddmForm) {
+
+		Set<Long> dataProviderInstanceIds = getDataProviderInstanceIds(ddmForm);
+
+		for (Long dataProviderInstanceId : dataProviderInstanceIds) {
+			ddmDataProviderInstanceLinkLocalService.addDataProviderInstanceLink(
+				dataProviderInstanceId, structureId);
+		}
+	}
+
 	protected DDMStructureVersion addStructureVersion(
 		User user, DDMStructure structure, String version,
 		ServiceContext serviceContext) {
@@ -1558,11 +1579,33 @@ public class DDMStructureLocalServiceImpl
 
 		syncStructureTemplatesFields(structure);
 
+		// Data provider instance links
+
+		updateDataProviderInstanceLinks(structure.getStructureId(), ddmForm);
+
 		// Indexer
 
 		reindexStructure(structure, serviceContext);
 
 		return structure;
+	}
+
+	protected Set<Long> getDataProviderInstanceIds(DDMForm ddmForm) {
+		Set<Long> dataProviderInstanceIds = new HashSet<>();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			long ddmDataProviderInstanceId = GetterUtil.getLong(
+				ddmFormField.getProperty("ddmDataProviderInstanceId"));
+
+			if (ddmDataProviderInstanceId > 0) {
+				dataProviderInstanceIds.add(ddmDataProviderInstanceId);
+			}
+		}
+
+		return dataProviderInstanceIds;
 	}
 
 	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {
@@ -1671,6 +1714,35 @@ public class DDMStructureLocalServiceImpl
 				}
 
 			});
+	}
+
+	protected void updateDataProviderInstanceLinks(
+		long structureId, DDMForm ddmForm) {
+
+		Set<Long> dataProviderInstanceIds = getDataProviderInstanceIds(ddmForm);
+
+		List<DDMDataProviderInstanceLink> dataProviderInstaceLinks =
+			ddmDataProviderInstanceLinkLocalService.
+				getDataProviderInstanceLinks(structureId);
+
+		for (DDMDataProviderInstanceLink dataProviderInstanceLink :
+				dataProviderInstaceLinks) {
+
+			long dataProviderInstanceId =
+				dataProviderInstanceLink.getDataProviderInstanceId();
+
+			if (dataProviderInstanceIds.remove(dataProviderInstanceId)) {
+				continue;
+			}
+
+			ddmDataProviderInstanceLinkLocalService.
+				deleteDataProviderInstanceLink(dataProviderInstanceLink);
+		}
+
+		for (Long dataProviderInstanceId : dataProviderInstanceIds) {
+			ddmDataProviderInstanceLinkLocalService.addDataProviderInstanceLink(
+				dataProviderInstanceId, structureId);
+		}
 	}
 
 	protected void validate(DDMForm ddmForm) throws PortalException {

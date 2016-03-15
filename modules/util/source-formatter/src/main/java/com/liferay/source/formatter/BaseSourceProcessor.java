@@ -433,65 +433,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String formatStringBundler(
-		String fileName, String content, int maxLineLength) {
-
-		Matcher matcher = sbAppendPattern.matcher(content);
-
-		matcherIteration:
-		while (matcher.find()) {
-			String appendValue = stripQuotes(matcher.group(2), CharPool.QUOTE);
-
-			appendValue = StringUtil.replace(appendValue, "+\n", "+ ");
-
-			if (!appendValue.contains(" + ")) {
-				continue;
-			}
-
-			String[] appendValueParts = StringUtil.split(appendValue, " + ");
-
-			for (String appendValuePart : appendValueParts) {
-				if ((getLevel(appendValuePart) != 0) ||
-					Validator.isNumber(appendValuePart)) {
-
-					continue matcherIteration;
-				}
-			}
-
-			processErrorMessage(
-				fileName,
-				"plus: " + fileName + " " +
-					getLineCount(content, matcher.start(1)));
-		}
-
-		matcher = sbAppendWithStartingSpacePattern.matcher(content);
-
-		while (matcher.find()) {
-			String firstLine = matcher.group(1);
-
-			if (firstLine.endsWith("\\n\");")) {
-				continue;
-			}
-
-			if ((maxLineLength != -1) &&
-				(getLineLength(firstLine) >= maxLineLength)) {
-
-				processErrorMessage(
-					fileName,
-					"leading space in sb: " + fileName + " " +
-						getLineCount(content, matcher.start(3)));
-			}
-			else {
-				content = StringUtil.replaceFirst(
-					content, "\");\n", " \");\n", matcher.start(2));
-				content = StringUtil.replaceFirst(
-					content, "(\" ", "(\"", matcher.start(3));
-			}
-		}
-
-		return content;
-	}
-
 	protected void checkStringUtilReplace(String fileName, String content)
 		throws Exception {
 
@@ -968,6 +909,65 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (!javaClassContent.equals(newJavaClassContent)) {
 			return StringUtil.replaceFirst(
 				content, javaClassContent, newJavaClassContent);
+		}
+
+		return content;
+	}
+
+	protected String formatStringBundler(
+		String fileName, String content, int maxLineLength) {
+
+		Matcher matcher = sbAppendPattern.matcher(content);
+
+		matcherIteration:
+		while (matcher.find()) {
+			String appendValue = stripQuotes(matcher.group(2), CharPool.QUOTE);
+
+			appendValue = StringUtil.replace(appendValue, "+\n", "+ ");
+
+			if (!appendValue.contains(" + ")) {
+				continue;
+			}
+
+			String[] appendValueParts = StringUtil.split(appendValue, " + ");
+
+			for (String appendValuePart : appendValueParts) {
+				if ((getLevel(appendValuePart) != 0) ||
+					Validator.isNumber(appendValuePart)) {
+
+					continue matcherIteration;
+				}
+			}
+
+			processErrorMessage(
+				fileName,
+				"plus: " + fileName + " " +
+					getLineCount(content, matcher.start(1)));
+		}
+
+		matcher = sbAppendWithStartingSpacePattern.matcher(content);
+
+		while (matcher.find()) {
+			String firstLine = matcher.group(1);
+
+			if (firstLine.endsWith("\\n\");")) {
+				continue;
+			}
+
+			if ((maxLineLength != -1) &&
+				(getLineLength(firstLine) >= maxLineLength)) {
+
+				processErrorMessage(
+					fileName,
+					"leading space in sb: " + fileName + " " +
+						getLineCount(content, matcher.start(3)));
+			}
+			else {
+				content = StringUtil.replaceFirst(
+					content, "\");\n", " \");\n", matcher.start(2));
+				content = StringUtil.replaceFirst(
+					content, "(\" ", "(\"", matcher.start(3));
+			}
 		}
 
 		return content;

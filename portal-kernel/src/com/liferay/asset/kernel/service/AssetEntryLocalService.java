@@ -467,12 +467,12 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		int status, boolean andSearch, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long searchCount(long companyId, long[] groupIds, long userId,
+	public int searchCount(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
 		java.lang.String keywords, boolean showNonindexable, int[] statuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long searchCount(long companyId, long[] groupIds, long userId,
+	public int searchCount(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
 		java.lang.String userName, java.lang.String title,
 		java.lang.String description, java.lang.String assetCategoryIds,

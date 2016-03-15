@@ -722,7 +722,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
-	public long searchCount(long companyId, long[] groupIds, long userId,
+	public int searchCount(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
 		java.lang.String keywords, boolean showNonindexable, int[] statuses) {
 		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
@@ -730,7 +730,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
-	public long searchCount(long companyId, long[] groupIds, long userId,
+	public int searchCount(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
 		java.lang.String userName, java.lang.String title,
 		java.lang.String description, java.lang.String assetCategoryIds,

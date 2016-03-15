@@ -536,7 +536,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long searchCount(
+	public int searchCount(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, boolean showNonindexable,
 		int[] statuses) {
@@ -547,7 +547,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long searchCount(
+	public int searchCount(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String userName, String title, String description,
 		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
@@ -575,7 +575,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
-			return assetSearcher.searchCount(searchContext);
+			return (int)assetSearcher.searchCount(searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

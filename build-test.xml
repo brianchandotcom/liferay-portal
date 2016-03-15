@@ -7759,28 +7759,29 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<daemons>
 				<ant antfile="build-db-upgrade.xml" dir="${liferay.home}" target="upgrade" />
 			</daemons>
+			<sequential>
+				<var name="upgrade.timeout.error" unset="true" />
+
+				<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="upgrade.timeout.error">
+					<resourcecontains
+						resource="${liferay.home}/db_upgrade_log"
+						substring="Running modules upgrades. Connect to your Gogo Shell to check the status."
+					/>
+				</waitfor>
+
+				<fail if="upgrade.timeout.error" message="Upgrade timeout error!" />
+
+				<sleep seconds="60" />
+
+				<telnet port="11311" server="localhost" timeout="30">
+					<read>g!</read>
+					<write>upgrade:list</write>
+					<read>g!</read>
+					<write>exit</write>
+					<write>y</write>
+				</telnet>
+			</sequential>
 		</parallel>
-
-		<var name="upgrade.timeout.error" unset="true" />
-
-		<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="upgrade.timeout.error">
-			<resourcecontains
-				resource="${liferay.home}/db_upgrade_log"
-				substring="Running modules upgrades. Connect to your Gogo Shell to check the status."
-			/>
-		</waitfor>
-
-		<fail if="upgrade.timeout.error" message="Upgrade timeout error!" />
-
-		<sleep seconds="60" />
-
-		<telnet port="11311" server="localhost" timeout="30">
-			<read>g!</read>
-			<write>upgrade:list</write>
-			<read>g!</read>
-			<write>exit</write>
-			<write>y</write>
-		</telnet>
 
 		<record action="stop" name="${liferay.home}/db_upgrade_log" />
 

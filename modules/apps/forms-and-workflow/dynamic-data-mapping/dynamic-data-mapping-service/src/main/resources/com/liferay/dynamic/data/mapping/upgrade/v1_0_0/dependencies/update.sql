@@ -13,6 +13,13 @@ create table DDMDataProviderInstance (
 	type_ VARCHAR(75) null
 );
 
+create table DDMDataProviderInstanceLink (
+	dataProviderInstanceLinkId LONG not null primary key,
+	companyId LONG,
+	dataProviderInstanceId LONG,
+	structureId LONG
+);
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;

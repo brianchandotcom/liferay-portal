@@ -19,6 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public interface Job {
 
+	public String getBuildURL();
+
 	public String getMaster();
 
 	public String getName();
@@ -26,8 +28,6 @@ public interface Job {
 	public String getResult();
 
 	public String getStatus();
-
-	public String getBuildURL();
 
 	public void update() throws Exception;
 

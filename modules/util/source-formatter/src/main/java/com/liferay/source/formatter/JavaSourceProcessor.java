@@ -970,6 +970,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkStringUtilReplace(fileName, newContent);
 		}
 
+		newContent = formatReturnStatements(fileName, newContent);
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
@@ -2641,6 +2643,41 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileName, content, className, packagePath);
 	}
 
+	protected String formatReturnStatements(String fileName, String content) {
+		Matcher matcher = _returnPattern.matcher(content);
+
+		while (matcher.find()) {
+			String returnStatement = matcher.group();
+
+			if (returnStatement.contains(" {\n") ||
+				(!returnStatement.contains("|\n") &&
+				 !returnStatement.contains("&\n"))) {
+
+				continue;
+			}
+
+			String tabs = matcher.group(1);
+
+			StringBundler sb = new StringBundler(11);
+
+			sb.append(content.substring(0, matcher.end(1)));
+			sb.append("if (");
+			sb.append(matcher.group(2));
+			sb.append(") {\n\n");
+			sb.append(tabs);
+			sb.append("\treturn true;\n");
+			sb.append(tabs);
+			sb.append("}\n\n");
+			sb.append(tabs);
+			sb.append("return false;\n");
+			sb.append(content.substring(matcher.end()));
+
+			return sb.toString();
+		}
+
+		return content;
+	}
+
 	protected String getCombinedLinesContent(String content, Pattern pattern) {
 		Matcher matcher = pattern.matcher(content);
 
@@ -4072,5 +4109,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExcludes;
+	private Pattern _returnPattern = Pattern.compile(
+		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 
 }

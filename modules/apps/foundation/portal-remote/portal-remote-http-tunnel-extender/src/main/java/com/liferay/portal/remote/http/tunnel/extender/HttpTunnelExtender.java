@@ -172,7 +172,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				_bundle.getSymbolicName());
+				"http.tunnel." + _bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.
 					HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX +
@@ -195,7 +195,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-				_bundle.getSymbolicName());
+				"http.tunnel." + _bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 				"/" + _bundle.getSymbolicName());
@@ -222,7 +222,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				_bundle.getSymbolicName());
+				"http.tunnel." + _bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 				"HttpTunnelServlet");

@@ -74,9 +74,38 @@
 			<finder-column name="companyId" />
 		</finder>
 
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMDataProviderInstanceLink" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
+	<entity name="DDMDataProviderInstanceLink" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="dataProviderInstanceLinkId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="dataProviderInstanceId" type="long" />
+		<column name="structureId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="DataProviderInstanceId" return-type="Collection">
+			<finder-column name="dataProviderInstanceId" />
+		</finder>
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
+		</finder>
+		<finder name="D_S" return-type="DDMDataProviderInstanceLink" unique="true">
+			<finder-column name="dataProviderInstanceId" />
+			<finder-column name="structureId" />
+		</finder>
 	</entity>
 	<entity name="DDMStorageLink" uuid="true" local-service="true" remote-service="false">
 
@@ -175,6 +204,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMDataProviderInstanceLink" />
 		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLayout" />
 		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureVersion" />

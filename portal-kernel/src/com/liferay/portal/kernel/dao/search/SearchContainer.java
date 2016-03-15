@@ -210,6 +210,10 @@ public class SearchContainer<R> {
 		return _emptyResultsMessage;
 	}
 
+	public String getEmptyResultsMessageCssClass() {
+		return _emptyResultsMessageCssClass;
+	}
+
 	public int getEnd() {
 		return _end;
 	}
@@ -404,6 +408,12 @@ public class SearchContainer<R> {
 		_emptyResultsMessage = emptyResultsMessage;
 	}
 
+	public void setEmptyResultsMessageCssClass(
+		String emptyResultsMessageCssClass) {
+
+		_emptyResultsMessageCssClass = emptyResultsMessageCssClass;
+	}
+
 	public void setHeaderNames(List<String> headerNames) {
 		_headerNames = headerNames;
 
@@ -542,6 +552,7 @@ public class SearchContainer<R> {
 	private String _deltaParam = DEFAULT_DELTA_PARAM;
 	private final DisplayTerms _displayTerms;
 	private String _emptyResultsMessage;
+	private String _emptyResultsMessageCssClass;
 	private int _end;
 	private List<String> _headerNames;
 	private boolean _hover = true;

@@ -643,8 +643,7 @@ public class SPIAgentRequestTest {
 		sb.append(spiAgentRequest.distributedRequestAttributes);
 		sb.append(", headerMap=");
 		sb.append(spiAgentRequest.headerMap);
-		sb.append(", multipartParameterMap=null");
-		sb.append(", originalSessionAttributes=");
+		sb.append(", multipartParameterMap=null, originalSessionAttributes=");
 		sb.append(spiAgentRequest.getOriginalSessionAttributes());
 		sb.append(", parameterMap={");
 
@@ -672,13 +671,12 @@ public class SPIAgentRequestTest {
 
 		sb = new StringBundler(13 + parameterMap.size() * 4);
 
-		sb.append(
-			"{contentType=null, cookies=[], distributedRequestAttributes=");
+		sb.append("{contentType=null, cookies=[], ");
+		sb.append("distributedRequestAttributes=");
 		sb.append(spiAgentRequest.distributedRequestAttributes);
 		sb.append(", headerMap=");
 		sb.append(spiAgentRequest.headerMap);
-		sb.append(", multipartParameterMap=null");
-		sb.append(", originalSessionAttributes=");
+		sb.append(", multipartParameterMap=null, originalSessionAttributes=");
 		sb.append(spiAgentRequest.getOriginalSessionAttributes());
 		sb.append(", parameterMap={");
 

@@ -174,10 +174,9 @@ public class AssetCategoryFinderImpl
 			closeSession(session);
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("No AssetCategory exists with the key ");
-		sb.append("{groupId=");
+		sb.append("No AssetCategory exists with the key {groupId=");
 		sb.append(groupId);
 		sb.append(", name=");
 		sb.append(name);

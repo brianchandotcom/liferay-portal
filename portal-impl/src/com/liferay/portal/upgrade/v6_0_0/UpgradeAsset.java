@@ -120,17 +120,15 @@ public class UpgradeAsset extends UpgradeProcess {
 			String key, String value)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("insert into ");
 		sb.append(tableName);
 		sb.append(" (");
 		sb.append(pkName);
-		sb.append(", companyId, userId, userName, createDate, ");
-		sb.append("modifiedDate, ");
+		sb.append(", companyId, userId, userName, createDate, modifiedDate, ");
 		sb.append(assocationPKName);
-		sb.append(", key_, value) values (?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?)");
+		sb.append(", key_, value) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 

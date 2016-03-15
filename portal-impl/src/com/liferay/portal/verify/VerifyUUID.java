@@ -77,12 +77,11 @@ public class VerifyUUID extends VerifyProcess {
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("update ");
 		sb.append(verifiableUUIDModel.getTableName());
-		sb.append(" set uuid_ = ? ");
-		sb.append("where ");
+		sb.append(" set uuid_ = ? where ");
 		sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
 		sb.append(" = ?");
 

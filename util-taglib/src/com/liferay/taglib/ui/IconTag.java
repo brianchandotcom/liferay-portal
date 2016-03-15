@@ -222,12 +222,11 @@ public class IconTag extends IncludeTag {
 			details = " alt=\"\"";
 		}
 		else {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append(" alt=\"");
 			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
-			sb.append("\" ");
-			sb.append("title=\"");
+			sb.append("\" title=\"");
 			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
 			sb.append("\"");
 

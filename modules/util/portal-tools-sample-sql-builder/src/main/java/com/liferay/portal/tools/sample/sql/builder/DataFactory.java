@@ -1286,7 +1286,7 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 3);
 
 		sb.append(
 			"{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": [");
@@ -1294,8 +1294,7 @@ public class DataFactory {
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append("{\"columns\": [{\"fieldNames\": [\"");
 			sb.append(nextDDLCustomFieldName(groupId, i));
-			sb.append("\"], \"size\": 12}]}");
-			sb.append(", ");
+			sb.append("\"], \"size\": 12}]}, ");
 		}
 
 		if (_maxDDLCustomFieldCount > 0) {
@@ -1448,7 +1447,7 @@ public class DataFactory {
 	public DDMContentModel newDDMContentModel(
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 8);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 7);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
@@ -1460,8 +1459,7 @@ public class DataFactory {
 			sb.append(nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			sb.append("\", \"value\": {\"en_US\": \"Test Record ");
 			sb.append(currentIndex);
-			sb.append("\"}}");
-			sb.append(",");
+			sb.append("\"}},");
 		}
 
 		if (_maxDDLCustomFieldCount > 0) {

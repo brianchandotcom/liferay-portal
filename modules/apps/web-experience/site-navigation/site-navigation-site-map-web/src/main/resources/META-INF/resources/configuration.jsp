@@ -64,7 +64,9 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 
 			</aui:select>
 
-			<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
+			<div class="<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
+				<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
+			</div>
 
 			<aui:input name="preferences--showCurrentPage--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showCurrentPage() %>" />
 
@@ -88,3 +90,11 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />isVisible(currentValue, value) {
+		return currentValue != '';
+	}
+
+	Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutUuid', <portlet:namespace />isVisible, '<portlet:namespace />includeRootInTreeContainer');
+</aui:script>

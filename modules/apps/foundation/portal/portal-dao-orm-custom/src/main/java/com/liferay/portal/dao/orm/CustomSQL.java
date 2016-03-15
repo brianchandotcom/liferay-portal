@@ -132,18 +132,17 @@ public class CustomSQL {
 		return _sqlPool.get(bundleContext, id);
 	}
 
-	public String get(String id) {
-		return _sqlPool.get(id);
-	}
+	public String get(
+		Class<?> clazz, String id, QueryDefinition<?> queryDefinition) {
 
-	public String get(String id, QueryDefinition<?> queryDefinition) {
-		return get(id, queryDefinition, StringPool.BLANK);
+		return get(clazz, id, queryDefinition, StringPool.BLANK);
 	}
 
 	public String get(
-		String id, QueryDefinition<?> queryDefinition, String tableName) {
+		Class<?> clazz, String id, QueryDefinition<?> queryDefinition,
+		String tableName) {
 
-		String sql = get(id);
+		String sql = get(clazz, id);
 
 		if (!Validator.isBlank(tableName) &&
 			!tableName.endsWith(StringPool.PERIOD)) {
@@ -199,6 +198,10 @@ public class CustomSQL {
 		}
 
 		return sql;
+	}
+
+	public String get(String id) {
+		return _sqlPool.get(id);
 	}
 
 	/**
@@ -372,7 +375,6 @@ public class CustomSQL {
 	}
 
 	public void reloadCustomSQL(Class<?> clazz) throws SQLException {
-
 		PortalUtil.initCustomSQL();
 
 		Connection con = DataAccess.getConnection();
@@ -892,7 +894,6 @@ public class CustomSQL {
 
 	private void loadCustomSQL(Class<?> clazz) {
 		try {
-
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			BundleContext bundleContext = getBundleContext(clazz);

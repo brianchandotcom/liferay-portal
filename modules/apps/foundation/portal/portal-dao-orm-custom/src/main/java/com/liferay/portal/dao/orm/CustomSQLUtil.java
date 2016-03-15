@@ -37,14 +37,17 @@ public class CustomSQLUtil {
 		return _instance._customSQL.get(clazz, id);
 	}
 
-	public static String get(String id, QueryDefinition<?> queryDefinition) {
-		return _instance._customSQL.get(id, queryDefinition);
+	public static String get(
+		Class<?> clazz, String id, QueryDefinition<?> queryDefinition) {
+
+		return _instance._customSQL.get(clazz, id, queryDefinition);
 	}
 
 	public static String get(
-		String id, QueryDefinition<?> queryDefinition, String tableName) {
+		Class<?> clazz, String id, QueryDefinition<?> queryDefinition,
+		String tableName) {
 
-		return _instance._customSQL.get(id, queryDefinition, tableName);
+		return _instance._customSQL.get(clazz, id, queryDefinition, tableName);
 	}
 
 	public static boolean isVendorDB2() {

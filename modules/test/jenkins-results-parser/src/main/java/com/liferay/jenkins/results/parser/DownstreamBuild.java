@@ -30,10 +30,10 @@ import org.json.JSONObject;
  */
 public class DownstreamBuild extends BaseBuild {
 
-	public DownstreamBuild(String invocationURL, TopLevelBuild topLevelJob)
+	public DownstreamBuild(String invocationURL, TopLevelBuild topLevelBuild)
 		throws Exception {
 
-		this.topLevelJob = topLevelJob;
+		this.topLevelBuild = topLevelBuild;
 
 		Matcher invocationURLMatcher = _invocationURLPattern.matcher(
 			invocationURL);
@@ -43,7 +43,7 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		master = invocationURLMatcher.group("master");
-		name = invocationURLMatcher.group("name");
+		jobName = invocationURLMatcher.group("name");
 
 		String queryString = invocationURLMatcher.group("queryString");
 
@@ -74,8 +74,8 @@ public class DownstreamBuild extends BaseBuild {
 		return parameters;
 	}
 
-	public TopLevelBuild getTopLevelJob() {
-		return topLevelJob;
+	public TopLevelBuild getTopLevelBuild() {
+		return topLevelBuild;
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class DownstreamBuild extends BaseBuild {
 
 	protected JSONArray getBuildsJSONArray() throws Exception {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			"http://" + master + "/job/" + name +
+			"http://" + master + "/build/" + jobName +
 				"/api/json?tree=builds[actions[parameters" +
 					"[name,type,value]],building,duration,number,result,url]",
 			false);
@@ -156,7 +156,7 @@ public class DownstreamBuild extends BaseBuild {
 		Set<String> parameterNames = new HashSet<>();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			"http://" + master + "/job/" + name +
+			"http://" + master + "/build/" + jobName +
 				"/api/json?tree=actions[parameterDefinitions" +
 					"[name,type,value]]");
 
@@ -243,10 +243,10 @@ public class DownstreamBuild extends BaseBuild {
 
 			String queueItemName = queueItem.getJSONObject(
 				"task").getString("name");
-			Map<String, String> jobParameters = getParameters(queueItem);
+			Map<String, String> buildParameters = getParameters(queueItem);
 
-			if (queueItemName.equals(name) &&
-				jobParameters.equals(parameters)) {
+			if (queueItemName.equals(jobName) &&
+				buildParameters.equals(parameters)) {
 
 				return queueItem;
 			}
@@ -281,7 +281,7 @@ public class DownstreamBuild extends BaseBuild {
 
 	protected String invocationURL;
 	protected Map<String, String> parameters;
-	protected TopLevelBuild topLevelJob;
+	protected TopLevelBuild topLevelBuild;
 
 	private String getBuildMessage() {
 		String myStatus = getStatus();
@@ -289,7 +289,7 @@ public class DownstreamBuild extends BaseBuild {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Build '");
-		sb.append(name);
+		sb.append(jobName);
 		sb.append("'");
 
 		if (myStatus.equals("completed")) {
@@ -304,8 +304,8 @@ public class DownstreamBuild extends BaseBuild {
 			sb.append(" is queued at ");
 			sb.append("http://");
 			sb.append(master);
-			sb.append("/job/");
-			sb.append(name);
+			sb.append("/build/");
+			sb.append(jobName);
 			sb.append(".");
 			return sb.toString();
 		}
@@ -321,8 +321,8 @@ public class DownstreamBuild extends BaseBuild {
 			sb.append(" invoked at ");
 			sb.append("http://");
 			sb.append(master);
-			sb.append("/job/");
-			sb.append(name);
+			sb.append("/build/");
+			sb.append(jobName);
 			sb.append(".");
 			return sb.toString();
 		}
@@ -331,8 +331,8 @@ public class DownstreamBuild extends BaseBuild {
 			sb.append(" is invalid ");
 			sb.append("http://");
 			sb.append(master);
-			sb.append("/job/");
-			sb.append(name);
+			sb.append("/build/");
+			sb.append(jobName);
 			sb.append(".");
 			return sb.toString();
 		}
@@ -341,8 +341,8 @@ public class DownstreamBuild extends BaseBuild {
 			sb.append(" is missing ");
 			sb.append("http://");
 			sb.append(master);
-			sb.append("/job/");
-			sb.append(name);
+			sb.append("/build/");
+			sb.append(jobName);
 			sb.append(".");
 			return sb.toString();
 		}

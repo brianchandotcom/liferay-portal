@@ -29,21 +29,21 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsStopJobUtil {
 
-	public static void stopJob(String jobURL, String username, String password)
+	public static void stopBuild(String buildURL, String username, String password)
 		throws Exception {
 
-		_stopDownstreamJobs(jobURL, username, password);
+		_stopDownstreamBuilds(buildURL, username, password);
 
-		_stopJob(jobURL, username, password);
+		_stopBuild(buildURL, username, password);
 	}
 
-	public static void stopJob(
-			TopLevelBuild topLevelJob, String username, String password)
+	public static void stopBuild(
+			TopLevelBuild topLevelBuild, String username, String password)
 		throws Exception {
 
-		_stopDownstreamJobs(topLevelJob, username, password);
+		_stopDownstreamBuilds(topLevelBuild, username, password);
 
-		_stopJob(topLevelJob, username, password);
+		_stopBuild(topLevelBuild, username, password);
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -54,14 +54,14 @@ public class JenkinsStopJobUtil {
 		return new String(Base64.encodeBase64(authorizationString.getBytes()));
 	}
 
-	private static List<String> _getDownstreamURLs(String jobURL)
+	private static List<String> _getDownstreamURLs(String buildURL)
 		throws Exception {
 
 		List<String> downstreamURLs = new ArrayList<>();
 
 		String consoleOutput = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(
-				jobURL + "/logText/progressiveText"));
+				buildURL + "/logText/progressiveText"));
 
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			consoleOutput);
@@ -69,9 +69,9 @@ public class JenkinsStopJobUtil {
 		while (progressiveTextMatcher.find()) {
 			String urlString = progressiveTextMatcher.group("url");
 
-			Matcher jobNameMatcher = _jobNamePattern.matcher(urlString);
+			Matcher buildNameMatcher = _buildNamePattern.matcher(urlString);
 
-			if (jobNameMatcher.find()) {
+			if (buildNameMatcher.find()) {
 				downstreamURLs.add(urlString);
 			}
 		}
@@ -79,42 +79,42 @@ public class JenkinsStopJobUtil {
 		return downstreamURLs;
 	}
 
-	private static void _stopDownstreamJobs(
-			String jobURL, String username, String password)
+	private static void _stopDownstreamBuilds(
+			String buildURL, String username, String password)
 		throws Exception {
 
-		List<String> downstreamURLs = _getDownstreamURLs(jobURL);
+		List<String> downstreamURLs = _getDownstreamURLs(buildURL);
 
 		for (String downstreamURL : downstreamURLs) {
-			_stopJob(downstreamURL, username, password);
+			_stopBuild(downstreamURL, username, password);
 		}
 	}
 
-	private static void _stopDownstreamJobs(
-			TopLevelBuild topLevelJob, String username, String password)
+	private static void _stopDownstreamBuilds(
+			TopLevelBuild topLevelBuild, String username, String password)
 		throws Exception {
 
-		List<DownstreamBuild> downstreamJobs = topLevelJob.getDownstreamJobs(
+		List<DownstreamBuild> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
 			"running");
 
-		for (DownstreamBuild downstreamJob : downstreamJobs) {
-			_stopJob(downstreamJob, username, password);
+		for (DownstreamBuild downstreamBuild : downstreamBuilds) {
+			_stopBuild(downstreamBuild, username, password);
 		}
 	}
 
-	private static void _stopJob(Build job, String username, String password)
+	private static void _stopBuild(Build build, String username, String password)
 		throws Exception {
 
-		_stopJob(job.getBuildURL(), username, password);
+		_stopBuild(build.getBuildURL(), username, password);
 	}
 
-	private static void _stopJob(
-			String jobURL, String username, String password)
+	private static void _stopBuild(
+			String buildURL, String username, String password)
 		throws Exception {
 
 		URL urlObject = new URL(
 			JenkinsResultsParserUtil.fixURL(
-				JenkinsResultsParserUtil.getLocalURL(jobURL + "/stop")));
+				JenkinsResultsParserUtil.getLocalURL(buildURL + "/stop")));
 
 		HttpURLConnection httpConnection =
 			(HttpURLConnection)urlObject.openConnection();
@@ -125,13 +125,13 @@ public class JenkinsStopJobUtil {
 			"Basic " + encodeAuthorizationFields(username, password));
 
 		System.out.println(
-			"Response from " + jobURL + "/stop: " +
+			"Response from " + buildURL + "/stop: " +
 				httpConnection.getResponseCode() + " " +
 					httpConnection.getResponseMessage());
 	}
 
-	private static final Pattern _jobNamePattern = Pattern.compile(
-		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
+	private static final Pattern _buildNamePattern = Pattern.compile(
+		".+://(?<hostName>[^.]+).liferay.com/build/(?<buildName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
 		"Build \\'.*\\' started at (?<url>.+)\\.");

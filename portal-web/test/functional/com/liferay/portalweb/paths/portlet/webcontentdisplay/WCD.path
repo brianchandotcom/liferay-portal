@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADD_WEB_CONTENT</td>
-	<td>//a[contains(@id,'JournalContent')]/i[contains(@class,'icon-plus')]</td>
+	<td>//*[@data-qa-id='addButton']//a[contains(@id,'JournalContent')]</td>
 	<td></td>
 </tr>
 <tr>

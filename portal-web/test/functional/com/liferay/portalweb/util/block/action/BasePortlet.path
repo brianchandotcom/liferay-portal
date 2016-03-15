@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON</td>
-	<td>//header[@class='portlet-topper' and contains(.,'${key_portletName}')]//div/a[contains(@title,'Options')]</td>
+	<td>//header[@class='portlet-topper' and contains(.,'${key_portletName}')]//div/a</td>
 	<td></td>
 </tr>
 <tr>

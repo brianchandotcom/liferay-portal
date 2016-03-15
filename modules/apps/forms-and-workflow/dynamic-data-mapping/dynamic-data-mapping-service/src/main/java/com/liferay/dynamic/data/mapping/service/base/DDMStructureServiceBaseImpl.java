@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
@@ -152,6 +153,44 @@ public abstract class DDMStructureServiceBaseImpl extends BaseServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the d d m data provider instance link local service.
+	 *
+	 * @return the d d m data provider instance link local service
+	 */
+	public com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService getDDMDataProviderInstanceLinkLocalService() {
+		return ddmDataProviderInstanceLinkLocalService;
+	}
+
+	/**
+	 * Sets the d d m data provider instance link local service.
+	 *
+	 * @param ddmDataProviderInstanceLinkLocalService the d d m data provider instance link local service
+	 */
+	public void setDDMDataProviderInstanceLinkLocalService(
+		com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService ddmDataProviderInstanceLinkLocalService) {
+		this.ddmDataProviderInstanceLinkLocalService = ddmDataProviderInstanceLinkLocalService;
+	}
+
+	/**
+	 * Returns the d d m data provider instance link persistence.
+	 *
+	 * @return the d d m data provider instance link persistence
+	 */
+	public DDMDataProviderInstanceLinkPersistence getDDMDataProviderInstanceLinkPersistence() {
+		return ddmDataProviderInstanceLinkPersistence;
+	}
+
+	/**
+	 * Sets the d d m data provider instance link persistence.
+	 *
+	 * @param ddmDataProviderInstanceLinkPersistence the d d m data provider instance link persistence
+	 */
+	public void setDDMDataProviderInstanceLinkPersistence(
+		DDMDataProviderInstanceLinkPersistence ddmDataProviderInstanceLinkPersistence) {
+		this.ddmDataProviderInstanceLinkPersistence = ddmDataProviderInstanceLinkPersistence;
 	}
 
 	/**
@@ -646,6 +685,10 @@ public abstract class DDMStructureServiceBaseImpl extends BaseServiceImpl
 	protected DDMStructureFinder ddmStructureFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService ddmDataProviderInstanceLinkLocalService;
+	@BeanReference(type = DDMDataProviderInstanceLinkPersistence.class)
+	protected DDMDataProviderInstanceLinkPersistence ddmDataProviderInstanceLinkPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)

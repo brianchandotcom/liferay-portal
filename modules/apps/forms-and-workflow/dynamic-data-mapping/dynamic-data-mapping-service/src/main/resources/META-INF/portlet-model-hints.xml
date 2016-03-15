@@ -40,6 +40,12 @@
 		</field>
 		<field name="type" type="String" />
 	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink">
+		<field name="dataProviderInstanceLinkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="dataProviderInstanceId" type="long" />
+		<field name="structureId" type="long" />
+	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStorageLink">
 		<field name="uuid" type="String" />
 		<field name="storageLinkId" type="long" />

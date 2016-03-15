@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
@@ -534,6 +535,44 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m data provider instance link local service.
+	 *
+	 * @return the d d m data provider instance link local service
+	 */
+	public com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService getDDMDataProviderInstanceLinkLocalService() {
+		return ddmDataProviderInstanceLinkLocalService;
+	}
+
+	/**
+	 * Sets the d d m data provider instance link local service.
+	 *
+	 * @param ddmDataProviderInstanceLinkLocalService the d d m data provider instance link local service
+	 */
+	public void setDDMDataProviderInstanceLinkLocalService(
+		com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService ddmDataProviderInstanceLinkLocalService) {
+		this.ddmDataProviderInstanceLinkLocalService = ddmDataProviderInstanceLinkLocalService;
+	}
+
+	/**
+	 * Returns the d d m data provider instance link persistence.
+	 *
+	 * @return the d d m data provider instance link persistence
+	 */
+	public DDMDataProviderInstanceLinkPersistence getDDMDataProviderInstanceLinkPersistence() {
+		return ddmDataProviderInstanceLinkPersistence;
+	}
+
+	/**
+	 * Sets the d d m data provider instance link persistence.
+	 *
+	 * @param ddmDataProviderInstanceLinkPersistence the d d m data provider instance link persistence
+	 */
+	public void setDDMDataProviderInstanceLinkPersistence(
+		DDMDataProviderInstanceLinkPersistence ddmDataProviderInstanceLinkPersistence) {
+		this.ddmDataProviderInstanceLinkPersistence = ddmDataProviderInstanceLinkPersistence;
+	}
+
+	/**
 	 * Returns the class name local service.
 	 *
 	 * @return the class name local service
@@ -932,6 +971,10 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected DDMStructureFinder ddmStructureFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService ddmDataProviderInstanceLinkLocalService;
+	@BeanReference(type = DDMDataProviderInstanceLinkPersistence.class)
+	protected DDMDataProviderInstanceLinkPersistence ddmDataProviderInstanceLinkPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)

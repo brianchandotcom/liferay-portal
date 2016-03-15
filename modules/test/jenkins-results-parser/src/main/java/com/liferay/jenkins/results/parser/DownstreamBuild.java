@@ -302,10 +302,7 @@ public class DownstreamBuild extends BaseBuild {
 
 		if (myStatus.equals("queued")) {
 			sb.append(" is queued at ");
-			sb.append("http://");
-			sb.append(master);
-			sb.append("/build/");
-			sb.append(jobName);
+			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
@@ -319,30 +316,21 @@ public class DownstreamBuild extends BaseBuild {
 
 		if (myStatus.equals("starting")) {
 			sb.append(" invoked at ");
-			sb.append("http://");
-			sb.append(master);
-			sb.append("/build/");
-			sb.append(jobName);
+			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
 		if (myStatus.equals("invalid")) {
 			sb.append(" is invalid ");
-			sb.append("http://");
-			sb.append(master);
-			sb.append("/build/");
-			sb.append(jobName);
+			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
 		if (myStatus.equals("missing")) {
 			sb.append(" is missing ");
-			sb.append("http://");
-			sb.append(master);
-			sb.append("/build/");
-			sb.append(jobName);
+			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}

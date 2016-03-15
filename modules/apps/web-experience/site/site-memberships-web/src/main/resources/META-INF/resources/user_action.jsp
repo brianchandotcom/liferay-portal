@@ -89,6 +89,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 							}
 						}
 					},
+					'strings.add': '<liferay-ui:message key="done" />',
 					title: '<liferay-ui:message key="assign-site-roles" />',
 					url: currentTarget.data('href')
 				}

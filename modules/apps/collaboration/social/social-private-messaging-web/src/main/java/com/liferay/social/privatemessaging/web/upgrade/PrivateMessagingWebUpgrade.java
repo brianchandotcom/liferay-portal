@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.upgrade;
+package com.liferay.social.privatemessaging.web.upgrade;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Scott Lee
+ * @author Cristina González
  */
-public class UpgradeProcess_1_0_0 extends UpgradeProcess {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class PrivateMessagingWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public int getThreshold() {
-		return 100;
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(UpgradePrivateMessaging.class);
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.social.privatemessaging.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
 	}
 
 }

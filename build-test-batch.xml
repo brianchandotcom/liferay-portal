@@ -512,8 +512,8 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
-		<attribute default="" name="test.fix.pack.zip.name" />
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugin.zip.url" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
@@ -562,8 +562,8 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="app.server.type" value="${app.server.type}" />
 								<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
 								<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
+								<param name="test.build.fix.pack.zip.url" value="@{test.build.fix.pack.zip.url}" />
 								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
-								<param name="test.fix.pack.zip.name" value="@{test.fix.pack.zip.name}" />
 							</antcall>
 
 							<antcall target="deploy-license-xml">
@@ -761,8 +761,8 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="tomcat"
 			database.type="mysql"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.fix.pack.zip.name="${test.fix.pack.zip.name}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
@@ -944,8 +944,8 @@ ${output.content}</echo>
 			app.server.type="tomcat"
 			database.type="mysql"
 			test.license.xml.url="${test.license.xml.url}"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.fix.pack.zip.name="${test.fix.pack.zip.name}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>

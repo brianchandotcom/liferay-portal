@@ -92,9 +92,11 @@ public final class LoggerUtil {
 			String escapedAttributeValue = StringEscapeUtils.escapeEcmaScript(
 				childLoggerElement.getAttributeValue(attributeName));
 
-			childSB.append(
-				"'" + escapedAttributeName + "': '" + escapedAttributeValue +
-					"'");
+			childSB.append("'");
+			childSB.append(escapedAttributeName);
+			childSB.append("': '");
+			childSB.append(escapedAttributeValue);
+			childSB.append("'");
 
 			if (iterator.hasNext()) {
 				childSB.append(", ");

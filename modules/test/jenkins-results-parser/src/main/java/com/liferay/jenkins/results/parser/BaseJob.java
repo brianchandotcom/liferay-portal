@@ -52,7 +52,7 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public String getResult() {
-		if (!status.equals("completed")) {
+		if (!_status.equals("completed")) {
 			throw new IllegalStateException("Build not completed");
 		}
 
@@ -61,7 +61,7 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public String getStatus() {
-		return status;
+		return _status;
 	}
 
 	protected static String decodeURL(String url) {
@@ -101,7 +101,7 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected void setStatus(String status) {
-		this.status = status;
+		_status = status;
 
 		statusModifiedTime = System.currentTimeMillis();
 	}
@@ -110,10 +110,11 @@ public abstract class BaseJob implements Job {
 	protected String name;
 	protected int number;
 	protected String result;
-	protected String status;
 	protected long statusModifiedTime;
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<name>[^/]+).*/(?<number>\\d+)/?");
+
+	private String _status;
 
 }

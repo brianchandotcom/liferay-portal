@@ -32,9 +32,15 @@
 		</if>
 
 		<if>
-			<isset var="guestPermissions" />
+			<isset var="permissions" />
 			<then>
-				<execute function="Select" locator1="Select#ANYONE" value1="Anyone (Guest Role)" />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Permissions" />
+				</execute>
+
+				<var name="key_permissionsViewRole" value="${permissionsViewRole}" />
+
+				<execute function="Select" locator1="Select#PERMISSIONS_VIEW_ROLE" value1="${permissionsViewRole}" />
 			</then>
 		</if>
 

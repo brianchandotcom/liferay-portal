@@ -159,7 +159,8 @@
 		</execute>
 
 		<execute macro="Polls#addPollCP">
-			<var name="guestPermissions" value="true" />
+			<var name="permissions" value="true" />
+			<var name="permissionsViewRole" value="Anyone (Guest Role)" />
 			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
 			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />

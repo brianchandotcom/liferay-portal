@@ -11,7 +11,6 @@ compileJava {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.17"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
@@ -24,6 +23,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "3.2.15.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "3.2.15.RELEASE"
+	provided project(":sdk:ant-bnd")
 }
 
 downloadDependencyVisitor {

@@ -75,64 +75,68 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 <aui:container cssClass="calendar-portlet-column-parent">
 	<aui:row>
-		<aui:col cssClass='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>' id="columnOptions" span="<%= 3 %>">
-			<div class="calendar-portlet-mini-calendar" id="<portlet:namespace />miniCalendarContainer"></div>
+		<c:if test="<%= !displaySchedulerOnly %>">
+			<aui:col cssClass='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>' id="columnOptions" span="<%= 3 %>">
+				<div class="calendar-portlet-mini-calendar" id="<portlet:namespace />miniCalendarContainer"></div>
 
-			<div id="<portlet:namespace />calendarListContainer">
-				<div class="calendar-portlet-list">
-					<c:if test="<%= themeDisplay.isSignedIn() %>">
-						<div class="calendar-portlet-list-header toggler-header-expanded">
-							<span class="calendar-portlet-list-arrow"></span>
+				<div id="<portlet:namespace />calendarListContainer">
+					<div class="calendar-portlet-list">
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
+							<div class="calendar-portlet-list-header toggler-header-expanded">
+								<span class="calendar-portlet-list-arrow"></span>
 
-							<span class="calendar-portlet-list-text"><liferay-ui:message key="my-calendars" /></span>
-						</div>
+								<span class="calendar-portlet-list-text"><liferay-ui:message key="my-calendars" /></span>
+							</div>
 
-						<c:if test="<%= userCalendarResource != null %>">
-							<span class="calendar-list-item-arrow" data-calendarResourceId="<%= userCalendarResource.getCalendarResourceId() %>" tabindex="0"><i class="icon-caret-down"></i></span>
+							<c:if test="<%= userCalendarResource != null %>">
+								<span class="calendar-list-item-arrow" data-calendarResourceId="<%= userCalendarResource.getCalendarResourceId() %>" tabindex="0"><i class="icon-caret-down"></i></span>
+							</c:if>
+
+							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />myCalendarList"></div>
 						</c:if>
+					</div>
 
-						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />myCalendarList"></div>
-					</c:if>
-				</div>
+					<div class="calendar-portlet-list">
+						<c:if test="<%= showSiteCalendars %>">
+							<div class="calendar-portlet-list-header toggler-header-expanded">
+								<span class="calendar-portlet-list-arrow"></span>
 
-				<div class="calendar-portlet-list">
-					<c:if test="<%= showSiteCalendars %>">
-						<div class="calendar-portlet-list-header toggler-header-expanded">
-							<span class="calendar-portlet-list-arrow"></span>
+								<span class="calendar-portlet-list-text"><liferay-ui:message arguments="<%= new String[] {groupCalendarResource.getName(locale)} %>" key="x-calendars" /></span>
+							</div>
 
-							<span class="calendar-portlet-list-text"><liferay-ui:message arguments="<%= new String[] {groupCalendarResource.getName(locale)} %>" key="x-calendars" /></span>
-						</div>
+							<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, groupCalendarResource, CalendarActionKeys.ADD_CALENDAR) %>">
+								<span class="calendar-list-item-arrow" data-calendarResourceId="<%= groupCalendarResource.getCalendarResourceId() %>" tabindex="0"><i class="icon-caret-down"></i></span>
+							</c:if>
 
-						<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, groupCalendarResource, CalendarActionKeys.ADD_CALENDAR) %>">
-							<span class="calendar-list-item-arrow" data-calendarResourceId="<%= groupCalendarResource.getCalendarResourceId() %>" tabindex="0"><i class="icon-caret-down"></i></span>
+							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />siteCalendarList"></div>
 						</c:if>
+					</div>
 
-						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />siteCalendarList"></div>
-					</c:if>
+					<div class="calendar-portlet-list">
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
+							<div class="calendar-portlet-list-header toggler-header-expanded">
+								<span class="calendar-portlet-list-arrow"></span>
+
+								<span class="calendar-portlet-list-text"><liferay-ui:message key="other-calendars" /></span>
+							</div>
+
+							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />otherCalendarList">
+								<input class="calendar-portlet-add-calendars-input" id="<portlet:namespace />addOtherCalendar" placeholder="<liferay-ui:message key="add-other-calendars" />" type="text" />
+							</div>
+						</c:if>
+					</div>
 				</div>
 
-				<div class="calendar-portlet-list">
-					<c:if test="<%= themeDisplay.isSignedIn() %>">
-						<div class="calendar-portlet-list-header toggler-header-expanded">
-							<span class="calendar-portlet-list-arrow"></span>
+				<div id="<portlet:namespace />message"></div>
+			</aui:col>
+		</c:if>
 
-							<span class="calendar-portlet-list-text"><liferay-ui:message key="other-calendars" /></span>
-						</div>
-
-						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />otherCalendarList">
-							<input class="calendar-portlet-add-calendars-input" id="<portlet:namespace />addOtherCalendar" placeholder="<liferay-ui:message key="add-other-calendars" />" type="text" />
-						</div>
-					</c:if>
+		<aui:col cssClass="calendar-portlet-column-grid" id="columnGrid" span="<%= (columnOptionsVisible && !displaySchedulerOnly) ? 9 : 12 %>">
+			<c:if test="<%= !displaySchedulerOnly %>">
+				<div class="calendar-portlet-column-toggler" id="<portlet:namespace />columnToggler">
+					<i class="<%= columnOptionsVisible ? "icon-caret-left" : "icon-caret-right" %>" id="<portlet:namespace />columnTogglerIcon"></i>
 				</div>
-			</div>
-
-			<div id="<portlet:namespace />message"></div>
-		</aui:col>
-
-		<aui:col cssClass="calendar-portlet-column-grid" id="columnGrid" span="<%= columnOptionsVisible ? 9 : 12 %>">
-			<div class="calendar-portlet-column-toggler" id="<portlet:namespace />columnToggler">
-				<i class="<%= columnOptionsVisible ? "icon-caret-left" : "icon-caret-right" %>" id="<portlet:namespace />columnTogglerIcon"></i>
-			</div>
+			</c:if>
 
 			<liferay-util:include page="/scheduler.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="activeView" value="<%= activeView %>" />

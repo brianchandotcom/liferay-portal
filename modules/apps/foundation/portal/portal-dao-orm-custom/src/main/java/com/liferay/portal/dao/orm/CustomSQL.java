@@ -48,10 +48,12 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -83,7 +85,11 @@ public class CustomSQL {
 		"CONVERT(VARCHAR,?) IS NULL";
 
 	public CustomSQL() throws SQLException {
-		reloadCustomSQL();
+		reloadCustomSQL(getClass());
+	}
+
+	public CustomSQL(Class<?> clazz) throws SQLException {
+		reloadCustomSQL(clazz);
 	}
 
 	public String appendCriteria(String sql, String criteria) {
@@ -114,6 +120,16 @@ public class CustomSQL {
 		}
 
 		return sql.concat(criteria);
+	}
+
+	public String get(Class<?> clazz, String id) {
+		BundleContext bundleContext = getBundleContext(clazz);
+
+		if (!_sqlPool.isBundleContextLoaded(bundleContext)) {
+			loadCustomSQL(clazz);
+		}
+
+		return _sqlPool.get(bundleContext, id);
 	}
 
 	public String get(String id) {
@@ -355,7 +371,8 @@ public class CustomSQL {
 		return keywordsArray;
 	}
 
-	public void reloadCustomSQL() throws SQLException {
+	public void reloadCustomSQL(Class<?> clazz) throws SQLException {
+
 		PortalUtil.initCustomSQL();
 
 		Connection con = DataAccess.getConnection();
@@ -466,26 +483,13 @@ public class CustomSQL {
 		}
 
 		if (_sqlPool == null) {
-			_sqlPool = new HashMap<>();
+			_sqlPool = new CustomSQLPool();
 		}
 		else {
 			_sqlPool.clear();
 		}
 
-		try {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			String[] configs = getConfigs();
-
-			for (String config : configs) {
-				read(classLoader, config);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		loadCustomSQL(clazz);
 	}
 
 	public String removeGroupBy(String sql) {
@@ -795,7 +799,8 @@ public class CustomSQL {
 		}
 	}
 
-	protected void read(ClassLoader classLoader, String source)
+	protected void read(
+			BundleContext bundleContext, ClassLoader classLoader, String source)
 		throws Exception {
 
 		try (InputStream is = classLoader.getResourceAsStream(source)) {
@@ -815,7 +820,7 @@ public class CustomSQL {
 				String file = sqlElement.attributeValue("file");
 
 				if (Validator.isNotNull(file)) {
-					read(classLoader, file);
+					read(bundleContext, classLoader, file);
 				}
 				else {
 					String id = sqlElement.attributeValue("id");
@@ -823,7 +828,7 @@ public class CustomSQL {
 
 					content = replaceIsNull(content);
 
-					_sqlPool.put(id, content);
+					_sqlPool.put(bundleContext, id, content);
 				}
 			}
 		}
@@ -879,6 +884,30 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
+	private BundleContext getBundleContext(Class<?> clazz) {
+		Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+		return bundle.getBundleContext();
+	}
+
+	private void loadCustomSQL(Class<?> clazz) {
+		try {
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			BundleContext bundleContext = getBundleContext(clazz);
+
+			String[] configs = getConfigs();
+
+			for (String config : configs) {
+				read(bundleContext, classLoader, config);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
 	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
@@ -907,7 +936,7 @@ public class CustomSQL {
 
 	private String _functionIsNotNull;
 	private String _functionIsNull;
-	private Map<String, String> _sqlPool;
+	private CustomSQLPool _sqlPool;
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;
 	private boolean _vendorInformix;

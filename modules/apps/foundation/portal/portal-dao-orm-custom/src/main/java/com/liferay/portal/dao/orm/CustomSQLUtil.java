@@ -33,8 +33,8 @@ public class CustomSQLUtil {
 		return _instance._customSQL.appendCriteria(sql, criteria);
 	}
 
-	public static String get(String id) {
-		return _instance._customSQL.get(id);
+	public static String get(Class<?> clazz, String id) {
+		return _instance._customSQL.get(clazz, id);
 	}
 
 	public static String get(String id, QueryDefinition<?> queryDefinition) {
@@ -99,8 +99,8 @@ public class CustomSQLUtil {
 		return _instance._customSQL.keywords(keywordsArray, lowerCase);
 	}
 
-	public static void reloadCustomSQL() throws SQLException {
-		_instance._customSQL.reloadCustomSQL();
+	public static void reloadCustomSQL(Class<?> clazz) throws SQLException {
+		_instance._customSQL.reloadCustomSQL(clazz);
 	}
 
 	public static String removeGroupBy(String sql) {

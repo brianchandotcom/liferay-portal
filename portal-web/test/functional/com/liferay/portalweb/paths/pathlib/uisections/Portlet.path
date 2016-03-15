@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ICON_PLUS_SIGN</td>
-	<td>//i[contains(@class,'icon-plus-sign')]</td>
+	<td>//*[@data-qa-id='addButton']//a</td>
 	<td></td>
 </tr>
 <tr>

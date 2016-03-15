@@ -214,9 +214,12 @@ public class AssetPublisherPortletToolbarContributor
 
 		menu.setDirection("down");
 		menu.setExtended(false);
-		menu.setIcon("../aui/plus-sign-2");
+		menu.setIcon("plus");
+		menu.setMarkupView("lexicon");
 		menu.setMenuItems(portletTitleMenuItems);
+		menu.setScroll(false);
 		menu.setShowArrow(false);
+		menu.setShowWhenSingleIcon(true);
 
 		boolean showWhenSingleIcon = true;
 

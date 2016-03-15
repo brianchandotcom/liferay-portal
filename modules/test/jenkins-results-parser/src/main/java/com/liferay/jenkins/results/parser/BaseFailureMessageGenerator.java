@@ -37,16 +37,29 @@ public abstract class BaseFailureMessageGenerator
 
 		int start = getSnippetStart(consoleOutput, end);
 
-		return getConsoleOutputSnippet(consoleOutput, start, end);
+		return getConsoleOutputSnippet(consoleOutput, start, end, true);
 	}
 
 	protected String getConsoleOutputSnippet(
 		String consoleOutput, int start, int end) {
 
-		if ((end - start) > 2500) {
-			start = end - 2500;
+		return getConsoleOutputSnippet(consoleOutput, start, end, true);
+	}
 
-			start = consoleOutput.indexOf("\n", start);
+	protected String getConsoleOutputSnippet(
+		String consoleOutput, int start, int end, boolean anchor) {
+
+		if ((end - start) > 2500) {
+			if (anchor == true) {
+				start = end - 2500;
+
+				start = consoleOutput.indexOf("\n", start);
+			}
+			else {
+				end = start + 2500;
+
+				end = consoleOutput.lastIndexOf("\n", end);
+			}
 		}
 
 		consoleOutput = JenkinsResultsParserUtil.fixMarkdown(

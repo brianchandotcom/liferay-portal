@@ -27,39 +27,39 @@ public class TopLevelBuild extends BaseBuild {
 		super(url);
 	}
 
-	public void addDownstreamJob(String invocationURL) throws Exception {
-		_downstreamJobs.add(new DownstreamBuild(invocationURL, this));
+	public void addDownstreamBuild(String invocationURL) throws Exception {
+		_downstreamBuilds.add(new DownstreamBuild(invocationURL, this));
 	}
 
-	public List<DownstreamBuild> getDownstreamJobs(String status) {
+	public List<DownstreamBuild> getDownstreamBuilds(String status) {
 		if (status == null) {
-			return _downstreamJobs;
+			return _downstreamBuilds;
 		}
 
-		List<DownstreamBuild> filteredDownstreamJobs = new ArrayList<>();
+		List<DownstreamBuild> filteredDownstreamBuilds = new ArrayList<>();
 
-		for (DownstreamBuild downstreamJob : _downstreamJobs) {
-			if (status.equals(downstreamJob.getStatus())) {
-				filteredDownstreamJobs.add(downstreamJob);
+		for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
+			if (status.equals(downstreamBuild.getStatus())) {
+				filteredDownstreamBuilds.add(downstreamBuild);
 			}
 		}
 
-		return filteredDownstreamJobs;
+		return filteredDownstreamBuilds;
 	}
 
 	@Override
 	public void update() throws Exception {
-		if (_downstreamJobs == null) {
+		if (_downstreamBuilds == null) {
 			setStatus("running");
 
 			return;
 		}
 
-		for (DownstreamBuild downstreamJob : _downstreamJobs) {
-			downstreamJob.update();
+		for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
+			downstreamBuild.update();
 		}
 
-		if (_downstreamJobs.size() == getDownstreamJobCount("completed")) {
+		if (_downstreamBuilds.size() == getDownstreamBuildCount("completed")) {
 			setStatus("completed");
 
 			return;
@@ -68,7 +68,7 @@ public class TopLevelBuild extends BaseBuild {
 		setStatus("running");
 	}
 
-	public void waitForDownstreamJobs(
+	public void waitForDownstreamBuilds(
 			long sleepTime, long maxStartTime, long maxWaitTime)
 		throws Exception {
 
@@ -79,47 +79,47 @@ public class TopLevelBuild extends BaseBuild {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(getDownstreamJobCount("completed"));
+			sb.append(getDownstreamBuildCount("completed"));
 			sb.append(" Completed / ");
-			sb.append(getDownstreamJobCount("running"));
+			sb.append(getDownstreamBuildCount("running"));
 			sb.append(" Running / ");
-			sb.append(getDownstreamJobCount("queued"));
+			sb.append(getDownstreamBuildCount("queued"));
 			sb.append(" Queued / ");
-			sb.append(getDownstreamJobCount("starting"));
+			sb.append(getDownstreamBuildCount("starting"));
 			sb.append(" Starting / ");
-			sb.append(_downstreamJobs.size());
+			sb.append(_downstreamBuilds.size());
 			sb.append(" Total");
 
 			System.out.println(sb.toString());
 
-			List<DownstreamBuild> missingDownstreamJobs = getDownstreamJobs(
+			List<DownstreamBuild> missingDownstreamBuilds = getDownstreamBuilds(
 				"missing");
 
-			for (DownstreamBuild missingDownstreamJob : missingDownstreamJobs) {
+			for (DownstreamBuild missingDownstreamBuild : missingDownstreamBuilds) {
 				long time = System.currentTimeMillis();
 
-				if ((time - missingDownstreamJob.statusModifiedTime) >
+				if ((time - missingDownstreamBuild.statusModifiedTime) >
 						maxStartTime) {
 
-					throw new TimeoutException("Missing downstream job");
+					throw new TimeoutException("Missing downstream build");
 				}
 			}
 
 			long elapsedTime = System.currentTimeMillis() - startTime;
 
 			if ((elapsedTime > maxStartTime) &&
-				(getDownstreamJobCount("starting") > 0)) {
+				(getDownstreamBuildCount("starting") > 0)) {
 
-				throw new TimeoutException("Unable to find downstream job");
+				throw new TimeoutException("Unable to find downstream build");
 			}
 			else if ((elapsedTime > maxWaitTime) &&
-					 (getDownstreamJobCount("completed") <
-						 _downstreamJobs.size())) {
+					 (getDownstreamBuildCount("completed") <
+						 _downstreamBuilds.size())) {
 
-				throw new TimeoutException("Timed out downstream job");
+				throw new TimeoutException("Timed out downstream build");
 			}
-			else if (getDownstreamJobCount("completed") ==
-						_downstreamJobs.size()) {
+			else if (getDownstreamBuildCount("completed") ==
+						_downstreamBuilds.size()) {
 
 				break;
 			}
@@ -129,12 +129,12 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
-	protected int getDownstreamJobCount(String status) {
-		List<DownstreamBuild> downstreamJobs = getDownstreamJobs(status);
+	protected int getDownstreamBuildCount(String status) {
+		List<DownstreamBuild> downstreamBuilds = getDownstreamBuilds(status);
 
-		return downstreamJobs.size();
+		return downstreamBuilds.size();
 	}
 
-	private final List<DownstreamBuild> _downstreamJobs = new ArrayList<>();
+	private final List<DownstreamBuild> _downstreamBuilds = new ArrayList<>();
 
 }

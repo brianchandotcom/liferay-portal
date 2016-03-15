@@ -101,13 +101,6 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		return "/wiki/edit_page.jsp";
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorHelper(
-		WikiPageTitleValidator wikiPageTitleValidator) {
-
-		_wikiPageTitleValidator = wikiPageTitleValidator;
-	}
-
 	protected void getPage(RenderRequest renderRequest) throws Exception {
 		long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
 		String title = ParamUtil.getString(renderRequest, "title");
@@ -185,6 +178,13 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 	@Reference(unbind = "-")
 	protected void setWikiPageService(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiPageTitleValidator(
+		WikiPageTitleValidator wikiPageTitleValidator) {
+
+		_wikiPageTitleValidator = wikiPageTitleValidator;
 	}
 
 	private WikiEngineRenderer _wikiEngineRenderer;

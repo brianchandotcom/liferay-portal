@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.solr.connection;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.solr.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr.internal.connection.ReplicatedSolrClientFactory;
 import com.liferay.portal.search.solr.internal.http.BasicAuthPoolingHttpClientFactory;

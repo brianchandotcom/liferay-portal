@@ -14,7 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.jmx;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.monitoring.Level;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.MonitoringControl;

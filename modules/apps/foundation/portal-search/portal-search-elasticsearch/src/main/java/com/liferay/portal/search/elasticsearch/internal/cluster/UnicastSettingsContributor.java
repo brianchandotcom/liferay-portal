@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;

@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Locale;
 import java.util.Map;

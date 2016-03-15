@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.web.messaging;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.message.boards.configuration.MBConfiguration;
 import com.liferay.message.boards.kernel.service.MBBanLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;

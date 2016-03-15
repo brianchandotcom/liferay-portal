@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.messaging;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

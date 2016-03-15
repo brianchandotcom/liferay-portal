@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;

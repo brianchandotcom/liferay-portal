@@ -14,9 +14,9 @@
 
 package com.liferay.ip.geocoder.internal;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;

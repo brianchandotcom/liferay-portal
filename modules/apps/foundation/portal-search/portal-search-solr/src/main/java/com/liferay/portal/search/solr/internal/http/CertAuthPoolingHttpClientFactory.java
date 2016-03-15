@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.solr.internal.http;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 import com.liferay.portal.search.solr.http.SSLSocketFactoryBuilder;

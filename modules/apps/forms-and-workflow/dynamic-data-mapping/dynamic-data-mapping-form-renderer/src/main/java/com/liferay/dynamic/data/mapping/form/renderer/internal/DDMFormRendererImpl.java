@@ -65,6 +65,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -150,6 +154,22 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		String javaScript = render(template, "ddm.form_renderer_js");
 
 		return html.concat(javaScript);
+	}
+
+	protected String getDDMDataProviderServletURL() {
+		String servletContextPath = getServletContextPath(
+			_ddmDataProviderServlet);
+
+		return servletContextPath.concat(
+			"/dynamic-data-mapping-data-provider/");
+	}
+
+	protected String getDDMFormEvaluatorServletURL() {
+		String servletContextPath = getServletContextPath(
+			_ddmFormEvaluatorServlet);
+
+		return servletContextPath.concat(
+			"/dynamic-data-mapping-form-evaluator/");
 	}
 
 	protected Map<String, String> getLanguageStringsMap(
@@ -240,6 +260,14 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return new AggregateResourceBundle(resourceBundlesArray);
 	}
 
+	protected String getServletContextPath(Servlet servlet) {
+		ServletConfig servletConfig = servlet.getServletConfig();
+
+		ServletContext servletContext = servletConfig.getServletContext();
+
+		return servletContext.getContextPath();
+	}
+
 	protected String getTemplateNamespace(DDMFormLayout ddmFormLayout) {
 		String paginationMode = ddmFormLayout.getPaginationMode();
 
@@ -275,7 +303,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		}
 
 		template.put("containerId", containerId);
-
+		template.put("dataProviderURL", getDDMDataProviderServletURL());
 		template.put("definition", _ddmFormJSONSerializer.serialize(ddmForm));
 
 		DDMFormValues ddmFormValues =
@@ -298,6 +326,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"evaluation",
 			jsonSerializer.serializeDeep(ddmFormEvaluationResult));
+		template.put("evaluatorURL", getDDMFormEvaluatorServletURL());
 
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
@@ -395,9 +424,25 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		_ddm = ddm;
 	}
 
+	@Reference(
+		target = "(osgi.http.whiteboard.servlet.name=DDMDataProviderServlet)",
+		unbind = "-"
+	)
+	protected void setDDMDataProviderServlet(Servlet ddmDataProviderServlet) {
+		_ddmDataProviderServlet = ddmDataProviderServlet;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
 		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
+	@Reference(
+		target = "(osgi.http.whiteboard.servlet.name=DDMFormEvaluatorServlet)",
+		unbind = "-"
+	)
+	protected void setDDMFormEvaluatorServlet(Servlet ddmFormEvaluatorServlet) {
+		_ddmFormEvaluatorServlet = ddmFormEvaluatorServlet;
 	}
 
 	@Reference(unbind = "-")
@@ -441,7 +486,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	private DDM _ddm;
+	private Servlet _ddmDataProviderServlet;
 	private DDMFormEvaluator _ddmFormEvaluator;
+	private Servlet _ddmFormEvaluatorServlet;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;

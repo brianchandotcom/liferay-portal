@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.internal.query;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 
 import java.util.LinkedHashMap;

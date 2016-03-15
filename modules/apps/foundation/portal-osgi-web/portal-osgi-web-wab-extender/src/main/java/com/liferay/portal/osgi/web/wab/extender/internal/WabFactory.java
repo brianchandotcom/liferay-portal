@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;

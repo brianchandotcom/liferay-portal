@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;

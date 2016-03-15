@@ -1311,6 +1311,11 @@
 		<tag-class>com.liferay.taglib.ui.EmptyResultMessageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to use only the empty results message and text styling, and not use the large smiley face animation. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>compact</name>
 			<required>false</required>
@@ -3811,6 +3816,11 @@
 		<attribute>
 			<description>A message displayed when the search container is empty.</description>
 			<name>emptyResultsMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>emptyResultsMessageCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

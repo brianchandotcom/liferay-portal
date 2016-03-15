@@ -74,7 +74,7 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 		if (Validator.isNull(parentTitle)) {
 			parentTitle = templatePage.getParentTitle();
 
-			if ((wikiPage == null) || wikiPage.isNew()) {
+			if (wikiPage.isNew()) {
 				selectedFormat = templatePage.getFormat();
 
 				wikiPage.setContent(templatePage.getContent());
@@ -95,7 +95,7 @@ if (Validator.isNull(redirect)) {
 	redirect = backToViewPagesURL.toString();
 }
 
-String headerTitle = (wikiPage == null) || wikiPage.isNew() ? LanguageUtil.get(request, "new-wiki-page") : wikiPage.getTitle();
+String headerTitle = ((wikiPage == null) || wikiPage.isNew()) ? LanguageUtil.get(request, "new-wiki-page") : wikiPage.getTitle();
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -155,7 +155,7 @@ if (wikiPage != null) {
 
 		<liferay-ui:asset-tags-error />
 
-		<aui:model-context bean="<%= (wikiPage != null) && !wikiPage.isNew() ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
+		<aui:model-context bean="<%= ((wikiPage != null) && !wikiPage.isNew()) ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 
 		<c:choose>
 			<c:when test="<%= !editable %>">
@@ -410,7 +410,7 @@ if (wikiPage != null) {
 	function <portlet:namespace />savePage() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('<%= (wikiPage == null) || wikiPage.isNew() ? Constants.ADD : Constants.UPDATE %>');
+		form.fm('<%= Constants.CMD %>').val('<%= ((wikiPage == null) || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>');
 
 		var titleEditor = window.<portlet:namespace />titleEditor;
 

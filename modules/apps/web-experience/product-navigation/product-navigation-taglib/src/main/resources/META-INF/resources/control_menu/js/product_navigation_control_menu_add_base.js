@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-product-navigation-control-menu-add-base',
 	function(A) {
+		var $ = AUI.$;
+
 		var DDM = A.DD.DDM;
 		var Lang = A.Lang;
 
@@ -72,7 +74,10 @@ AUI.add(
 							focusItem.focus();
 						}
 
+						instance._guid = A.stamp(instance);
+
 						instance._eventHandles = [];
+						instance._jqueryEventHandles = [];
 
 						instance._bindUIDABase();
 					},
@@ -81,6 +86,8 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandles)).detach();
+
+						A.Array.invoke(instance._jqueryEventHandles, 'off', '.' + instance._guid);
 					},
 
 					addPortlet: function(portlet, options) {
@@ -144,22 +151,19 @@ AUI.add(
 					_bindUIDABase: function() {
 						var instance = this;
 
-						var panelBodyId = instance._panelBody.get('id');
-
-						var panelBody = $('#' + panelBodyId);
+						var panelBody = $(Util.getDOM(instance._panelBody));
 
 						var listGroupPanel = panelBody.find('.list-group-panel');
 
-						instance._eventHandles.push(
+						var eventType = EVENT_SHOWN_BS_COLLAPSE + '.' + instance._guid;
+
+						instance._jqueryEventHandles.push(
 							panelBody.on(
-								EVENT_SHOWN_BS_COLLAPSE,
-								$.proxy(
-									instance._focusOnItem,
-									instance
-								)
+								eventType,
+								$.proxy(instance._focusOnItem, instance)
 							),
 							listGroupPanel.on(
-								EVENT_SHOWN_BS_COLLAPSE,
+								eventType,
 								function(event) {
 									event.stopPropagation();
 								}

@@ -7773,13 +7773,47 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 				<sleep seconds="60" />
 
-				<telnet port="11311" server="localhost" timeout="30">
-					<read>g!</read>
-					<write>upgrade:list</write>
-					<read>g!</read>
-					<write>exit</write>
-					<write>y</write>
-				</telnet>
+				<trycatch property="telnet.error">
+					<try>
+						<telnet port="11311" server="localhost" timeout="30">
+							<read>g!</read>
+							<write>upgrade:list</write>
+							<read>g!</read>
+							<write>exit</write>
+							<write>y</write>
+						</telnet>
+					</try>
+					<catch>
+						<execute>
+							jps > jps_output
+						</execute>
+
+						<var name="jps.output" unset="true" />
+
+						<loadfile property="jps.output" srcfile="jps_output" />
+
+						<if>
+							<contains string="${jps.output}" substring="DBUpgrader" />
+							<then>
+								<propertyregex
+									input="${jps.output}"
+									override="true"
+									property="dbupgrader.pid"
+									regexp="(|[\S\s]*\n)([0-9]+) DBUpgrader[\S\s]*"
+									replace="\2"
+								/>
+
+								<execute>
+									jstack ${dbupgrader.pid}
+								</execute>
+							</then>
+						</if>
+
+						<delete file="jps_output" />
+
+						<fail message="${telnet.error}" />
+					</catch>
+				</trycatch>
 			</sequential>
 		</parallel>
 

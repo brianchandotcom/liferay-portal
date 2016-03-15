@@ -103,8 +103,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		StringBundler sb = new StringBundler(10);
 
 		sb.append("select DLFileEntry.fileEntryId as fileId, ");
-		sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId");
-		sb.append(" as companyId, DLFileEntry.createDate as createDate, ");
+		sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId ");
+		sb.append("as companyId, DLFileEntry.createDate as createDate, ");
 		sb.append("DLFileEntry.folderId as parentFolderId, 'file' as ");
 		sb.append("type from DLFileEntry union all select ");
 		sb.append("DLFolder.folderId as fileId, DLFolder.groupId as ");

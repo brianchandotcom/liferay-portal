@@ -155,8 +155,8 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 				sb.append("update ");
 				sb.append(verifiableGroupedModel.getTableName());
-				sb.append(" set groupId = ?");
-				sb.append(" where ");
+				sb.append(" set groupId = ? ");
+				sb.append("where ");
 				sb.append(verifiableGroupedModel.getPrimaryKeyColumnName());
 				sb.append(" = ?");
 

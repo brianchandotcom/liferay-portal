@@ -226,8 +226,8 @@ public class IconTag extends IncludeTag {
 
 			sb.append(" alt=\"");
 			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
-			sb.append("\"");
-			sb.append(" title=\"");
+			sb.append("\" ");
+			sb.append("title=\"");
 			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
 			sb.append("\"");
 

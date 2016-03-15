@@ -17,13 +17,9 @@ AUI.add(
 
 		var NAME = 'categoriesselector';
 
-		var STR_EXPANDED = 'expanded';
-
 		var STR_MAX_ENTRIES = 'maxEntries';
 
 		var STR_MORE_RESULTS_LABEL = 'moreResultsLabel';
-
-		var STR_PREV_EXPANDED = '_LFR_prevExpanded';
 
 		var STR_START = 'start';
 
@@ -38,12 +34,6 @@ AUI.add(
 			'</label>';
 
 		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
-
-		var TPL_RADIO_CLASS = ' class="{0}" ';
-
-		var TPL_RADIO_ID = ' id="{0}" ';
-
-		var TPL_RADIO_IMAGE = '<div class="category{0} lfr-categories-selector-radio-image"></div>';
 
 		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
 

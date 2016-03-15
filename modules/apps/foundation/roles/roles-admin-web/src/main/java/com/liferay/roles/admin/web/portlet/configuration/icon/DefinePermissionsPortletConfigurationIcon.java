@@ -110,7 +110,7 @@ public class DefinePermissionsPortletConfigurationIcon
 
 			String roleName = role.getName();
 
-			return !roleName.equals(RoleConstants.ADMINISTRATOR) &&
+			if (!roleName.equals(RoleConstants.ADMINISTRATOR) &&
 				!roleName.equals(RoleConstants.SITE_OWNER) &&
 				!roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) &&
 				!roleName.equals(RoleConstants.ORGANIZATION_OWNER) &&
@@ -118,7 +118,12 @@ public class DefinePermissionsPortletConfigurationIcon
 				!roleName.equals(RoleConstants.SITE_ADMINISTRATOR) &&
 				RolePermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), roleId,
-					ActionKeys.DEFINE_PERMISSIONS);
+					ActionKeys.DEFINE_PERMISSIONS)) {
+
+				return true;
+			}
+
+			return false;
 		}
 		catch (Exception e) {
 		}

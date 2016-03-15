@@ -101,10 +101,15 @@ public class DeleteRolePortletConfigurationIcon
 
 			Role role = _roleService.fetchRole(roleId);
 
-			return !role.isSystem() &&
+			if (!role.isSystem() &&
 				RolePermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), roleId,
-					ActionKeys.DELETE);
+					ActionKeys.DELETE)) {
+
+				return true;
+			}
+
+			return false;
 		}
 		catch (Exception e) {
 		}

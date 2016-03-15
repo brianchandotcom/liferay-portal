@@ -886,49 +886,6 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.REQUIRE_BUNDLE, sb.toString());
 	}
 
-	protected void processServiceBeanPostProcessor(Element rootElement) {
-		boolean exists = false;
-
-		for (Element contextParamElement :
-				rootElement.elements("context-param")) {
-
-			Element paramNameElement = contextParamElement.element(
-				"param-name");
-
-			String paramName = paramNameElement.getTextTrim();
-
-			if (!paramName.equals("portalContextConfigLocation")) {
-				continue;
-			}
-
-			exists = true;
-
-			Element paramValueElement = contextParamElement.element(
-				"param-value");
-
-			String paramValue = paramValueElement.getTextTrim();
-
-			paramValueElement.setText(
-				paramValue + StringPool.COMMA +
-					_SERVICE_BEAN_POST_PROCESSOR_SPRING_XML);
-		}
-
-		if (exists) {
-			return;
-		}
-
-		Element contextParamElement = rootElement.addElement("context-param");
-
-		Element paramNameElement = contextParamElement.addElement("param-name");
-
-		paramNameElement.setText("portalContextConfigLocation");
-
-		Element paramValueElement = contextParamElement.addElement(
-			"param-value");
-
-		paramValueElement.setText(_SERVICE_BEAN_POST_PROCESSOR_SPRING_XML);
-	}
-
 	protected void processServicePackageName(URI uri, File file) {
 		try {
 			Document document = UnsecureSAXReaderUtil.read(file);
@@ -952,18 +909,6 @@ public class WabProcessor {
 
 			_importPackageNames.add(
 				"com.liferay.portal.osgi.web.wab.generator");
-
-			File metaInfDir = new File(uri.resolve("WEB-INF/classes/META-INF"));
-
-			metaInfDir.mkdirs();
-
-			Class<?> clazz = getClass();
-
-			FileUtil.write(
-				new File(metaInfDir, "service-bean-post-processor-spring.xml"),
-				clazz.getResourceAsStream(
-					"/com/liferay/portal/osgi/web/wab/generator/internal/" +
-						"dependencies/service-bean-post-processor-spring.xml"));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1051,8 +996,6 @@ public class WabProcessor {
 		Document document = readDocument(file);
 
 		Element rootElement = document.getRootElement();
-
-		processServiceBeanPostProcessor(rootElement);
 
 		for (Element element : rootElement.elements("filter")) {
 			Element filterClassElement = element.element("filter-class");
@@ -1299,9 +1242,6 @@ public class WabProcessor {
 
 		analyzer.setProperty("-jsp", value);
 	}
-
-	private static final String _SERVICE_BEAN_POST_PROCESSOR_SPRING_XML =
-		"/WEB-INF/classes/META-INF/service-bean-post-processor-spring.xml";
 
 	private static final Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 

@@ -12,12 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.tree;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TreeModel;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.VerifyThreadLocal;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -26,11 +32,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
 /**
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.kernel.tree.TreePathUtil}
  * @author Shinn Lok
  */
-@Deprecated
 public class TreePathUtil {
 
 	public static void rebuildTree(

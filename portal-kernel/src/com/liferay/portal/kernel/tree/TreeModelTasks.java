@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.tree;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TreeModel;
@@ -20,11 +20,8 @@ import com.liferay.portal.kernel.model.TreeModel;
 import java.util.List;
 
 /**
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.kernel.tree.TreeModelTasks}
  * @author Shinn Lok
  */
-@Deprecated
 public interface TreeModelTasks<T extends TreeModel> {
 
 	public List<T> findTreeModels(
@@ -34,6 +31,11 @@ public interface TreeModelTasks<T extends TreeModel> {
 			long parentPrimaryKey, String treePath)
 		throws PortalException;
 
+	/**
+	 * @throws PortalException
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void reindexTreeModels(List<TreeModel> treeModels)
 		throws PortalException;
 

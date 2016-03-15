@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.FilterExceptionAdapter;
+import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContext;
+import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContextAdaptor;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.FilterDefinition;
@@ -142,19 +144,39 @@ public class WabBundleProcessor {
 					webXMLDefinition.getContextParameters(),
 					webXMLDefinition.getJspTaglibMappings());
 
+			boolean wabShapedBundle =
+				servletContextHelperRegistration.isWabShapedBundle();
+
+			if (!wabShapedBundle) {
+				return;
+			}
+
 			ServletContext servletContext =
-				ModifiableServletContext.createInstance(
-					servletContextHelperRegistration.getServletContext(), this);
+				ModifiableServletContextAdaptor.createInstance(
+					servletContextHelperRegistration.getServletContext(),
+					_bundle.getBundleContext(), webXMLDefinition, _logger);
 
 			initServletContainerInitializers(_bundle, servletContext);
 
-			servletContextHelperRegistration.initDefaults();
+			scanTLDsForListeners(webXMLDefinition, servletContext);
 
-			initListeners(webXMLDefinition.getListenerDefinitions());
+			initListeners(
+				webXMLDefinition.getListenerDefinitions(), servletContext);
+
+			ModifiableServletContext modifiableServletContext =
+				(ModifiableServletContext)servletContext;
+
+			initListeners(
+				modifiableServletContext.getListenerDefinitions(),
+				servletContext);
+
+			modifiableServletContext.registerFilters();
 
 			initFilters(webXMLDefinition.getFilterDefinitions());
 
-			initServlets(webXMLDefinition);
+			modifiableServletContext.registerServlets();
+
+			initServlets(webXMLDefinition.getServletDefinitions());
 		}
 		catch (Exception e) {
 			_logger.log(
@@ -517,7 +539,9 @@ public class WabBundleProcessor {
 		}
 	}
 
-	protected void initListeners(List<ListenerDefinition> listenerDefinitions)
+	protected void initListeners(
+			List<ListenerDefinition> listenerDefinitions,
+			ServletContext servletContext)
 		throws Exception {
 
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
@@ -552,7 +576,8 @@ public class WabBundleProcessor {
 				servletContextListenerExceptionAdaptor =
 					new ServletContextListenerExceptionAdapter(
 						(ServletContextListener)
-							listenerDefinition.getEventListener(), this);
+							listenerDefinition.getEventListener(),
+						servletContext);
 
 			ServiceRegistration<?> serviceRegistration =
 				_bundleContext.registerService(
@@ -604,11 +629,9 @@ public class WabBundleProcessor {
 		}
 	}
 
-	protected void initServlets(WebXMLDefinition webXMLDefinition)
+	protected void initServlets(
+			Map<String, ServletDefinition> servletDefinitions)
 		throws Exception {
-
-		Map<String, ServletDefinition> servletDefinitions =
-			webXMLDefinition.getServletDefinitions();
 
 		for (Entry<String, ServletDefinition> entry :
 				servletDefinitions.entrySet()) {
@@ -743,6 +766,38 @@ public class WabBundleProcessor {
 		}
 		catch (Throwable t) {
 			_logger.log(Logger.LOG_ERROR, t.getMessage(), t);
+		}
+	}
+
+	protected void scanTLDsForListeners(
+		WebXMLDefinition webXMLDefinition, ServletContext servletContext) {
+
+		List<String> listenerClassNames = new ArrayList<>();
+
+		JspServlet.scanTLDs(_bundle, servletContext, listenerClassNames);
+
+		for (String listenerClassName : listenerClassNames) {
+			try {
+				Class<?> clazz = _bundle.loadClass(listenerClassName);
+
+				Class<? extends EventListener> eventListenerClass =
+					clazz.asSubclass(EventListener.class);
+
+				EventListener eventListener = eventListenerClass.newInstance();
+
+				ListenerDefinition listenerDefinition =
+					new ListenerDefinition();
+
+				listenerDefinition.setEventListener(eventListener);
+
+				webXMLDefinition.addListenerDefinition(listenerDefinition);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Logger.LOG_ERROR,
+					"Bundle " + _bundle + " is unable to load listener " +
+						listenerClassName);
+			}
 		}
 	}
 

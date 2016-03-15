@@ -52,11 +52,14 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -86,11 +89,14 @@
 			<var name="breadcrumbListVisible" value="Liferay" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
@@ -112,11 +118,14 @@
 			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
@@ -136,11 +145,14 @@
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">

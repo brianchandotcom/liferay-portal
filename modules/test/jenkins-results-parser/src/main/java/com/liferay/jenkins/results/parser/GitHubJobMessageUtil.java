@@ -48,7 +48,7 @@ public class GitHubJobMessageUtil {
 		String result = jsonObject.getString("result");
 
 		if (result.equals("ABORTED")) {
-			sb.append("<pre>Build was aborted</pre>");
+			sb.append("<pre><code>Build was aborted</code></pre>");
 		}
 		else if (result.equals("FAILURE")) {
 			if (jsonObject.has("runs")) {
@@ -143,7 +143,7 @@ public class GitHubJobMessageUtil {
 		else if (javacOutputFile.exists()) {
 			sb.append("<h6>Job Results:</h6>");
 			sb.append("<p>0 Tests Passed.<br />1 Test Failed.</p>");
-			sb.append("<pre>");
+			sb.append("<pre><code>");
 
 			String javacOutputFileContent = JenkinsResultsParserUtil.read(
 				javacOutputFile);
@@ -154,7 +154,7 @@ public class GitHubJobMessageUtil {
 			}
 
 			sb.append(javacOutputFileContent);
-			sb.append("</pre>");
+			sb.append("</code></pre>");
 		}
 
 		project.setProperty("report.html.content", sb.toString());

@@ -27,6 +27,10 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_compact = compact;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setMessage(String message) {
 		_message = message;
 	}
@@ -38,6 +42,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_compact = false;
+		_cssClass = null;
 		_message = null;
 		_search = false;
 	}
@@ -58,6 +63,8 @@ public class EmptyResultMessageTag extends IncludeTag {
 			"liferay-ui:empty-result-message:compact",
 			String.valueOf(_compact));
 		request.setAttribute(
+			"liferay-ui:empty-result-message:cssClass", _cssClass);
+		request.setAttribute(
 			"liferay-ui:empty-result-message:message", _message);
 		request.setAttribute(
 			"liferay-ui:empty-result-message:search", String.valueOf(_search));
@@ -70,6 +77,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 		"/html/taglib/ui/empty_result_message/start.jsp";
 
 	private boolean _compact;
+	private String _cssClass;
 	private String _message;
 	private boolean _search;
 

@@ -27,6 +27,8 @@ public class RestoreEntryException extends PortalException {
 
 	public static final int INVALID_NAME = 3;
 
+	public static final int INVALID_STATUS = 4;
+
 	public RestoreEntryException() {
 	}
 

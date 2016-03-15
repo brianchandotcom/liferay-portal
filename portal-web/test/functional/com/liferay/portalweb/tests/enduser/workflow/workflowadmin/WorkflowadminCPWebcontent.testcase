@@ -414,6 +414,10 @@
 
 		<execute macro="PortletEntry#publish" />
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Structure Title" />
 		</execute>
@@ -1024,6 +1028,10 @@
 			<var name="templateName" value="WC Template Name" />
 			<var name="webContentText" value="WC Folder WebContent Structure Text" />
 			<var name="webContentTitle" value="WC Folder WebContent Structure Title" />
+		</execute>
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
 		<execute macro="WebContent#viewTitle">

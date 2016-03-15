@@ -2328,6 +2328,7 @@
 		<execute macro="Calendar#viewRSSFeedEventPresent">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#closeWindow" />
@@ -2347,6 +2348,7 @@
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#closeWindow" />
@@ -2571,6 +2573,7 @@
 		<execute macro="Calendar#viewRSSFeedEventPresent">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<var method="selenium#getLocation()" name="rssURL" />
@@ -5418,16 +5421,19 @@
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Past Day Event" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Current Day Event" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="Future Day Event" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#closeWindow" />

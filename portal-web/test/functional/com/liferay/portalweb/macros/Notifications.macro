@@ -35,6 +35,13 @@
 				<execute function="Click" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" />
 			</then>
 		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Notifications#USER_NAVIGATION_BAR_BADGE_COUNT" />
+			<then>
+				<execute function="Click" locator1="Notifications#USER_NAVIGATION_BAR_BADGE_COUNT" />
+			</then>
+		</if>
 	</command>
 
 	<command name="markAllAsRead">
@@ -93,6 +100,13 @@
 						<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_BADGE_COUNT" value1="${notificationCount}" />
 					</then>
 				</if>
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Notifications#USER_NAVIGATION_BAR_BADGE_COUNT" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Notifications#USER_NAVIGATION_BAR_BADGE_COUNT" value1="${notificationCount}" />
 			</then>
 		</if>
 	</command>

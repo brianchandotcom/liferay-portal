@@ -3,6 +3,23 @@
 	<var name="calendarDescription" value="" />
 	<var name="siteName" value="Liferay" />
 
+	<command name="_checkForRSSTitle">
+		<if>
+			<condition function="IsElementNotPresent" locator1="CalendarRSS#FEED_TITLE"  />
+			<then>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+
+				<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+					<var name="menuListOption" value="RSS" />
+					<var name="siteCalendarName" value="${siteCalendarName}" />
+					<var name="siteName" value="${siteName}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="_deleteCalendar">
 		<var name="key_menuListOption" value="Delete" />
 
@@ -996,12 +1013,11 @@
 	</command>
 
 	<command name="viewRSSFeedEventNotPresent">
-		<if>
-			<condition function="IsElementNotPresent" locator1="CalendarRSS#FEED_TITLE"  />
-			<then>
-				<execute function="Refresh" />
-			</then>
-		</if>
+		<execute macro="Calendar#_checkForRSSTitle">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteCalendarName" value="${siteCalendarName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 
@@ -1012,12 +1028,11 @@
 	</command>
 
 	<command name="viewRSSFeedEventPresent">
-		<if>
-			<condition function="IsElementNotPresent" locator1="CalendarRSS#FEED_TITLE"  />
-			<then>
-				<execute function="Refresh" />
-			</then>
-		</if>
+		<execute macro="Calendar#_checkForRSSTitle">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteCalendarName" value="${siteCalendarName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 

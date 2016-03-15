@@ -1240,7 +1240,7 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="Data Definition Page Name" />
 		</execute>
 
@@ -1248,10 +1248,9 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute macro="Navigator#closeWindow" />
-
-		<execute macro="Navigator#selectSpecificWindow">
-			<var name="windowTitle" value="Users and Organizations - Control Panel - Liferay" />
+		<execute macro="Navigator#closeSpecificWindow">
+			<var name="closeWindowTitle" value="Data Definition Page Name - Liferay" />
+			<var name="selectWindowTitle" value="Users and Organizations - Control Panel - Liferay" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1281,7 +1280,7 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="Data Definition Page Name" />
 		</execute>
 

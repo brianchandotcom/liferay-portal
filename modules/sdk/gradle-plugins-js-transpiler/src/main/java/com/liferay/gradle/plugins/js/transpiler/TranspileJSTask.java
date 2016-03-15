@@ -99,6 +99,11 @@ public class TranspileJSTask
 		super.executeNode();
 	}
 
+	@Input
+	public String getBundleFileName() {
+		return GradleUtil.toString(_bundleFileName);
+	}
+
 	@Override
 	public Set<String> getExcludes() {
 		return _patternFilterable.getExcludes();
@@ -201,6 +206,10 @@ public class TranspileJSTask
 		return this;
 	}
 
+	public void setBundleFileName(Object bundleFileName) {
+		_bundleFileName = bundleFileName;
+	}
+
 	public void setGlobalName(Object globalName) {
 		_globalName = globalName;
 	}
@@ -244,6 +253,9 @@ public class TranspileJSTask
 
 		completeArgs.add("build");
 
+		completeArgs.add("--bundleFileName");
+		completeArgs.add(getBundleFileName());
+
 		completeArgs.add("--dest");
 		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
 
@@ -273,6 +285,7 @@ public class TranspileJSTask
 		return completeArgs;
 	}
 
+	private Object _bundleFileName = "";
 	private Object _globalName = "";
 	private Object _moduleName = "";
 	private Object _modules = "amd";

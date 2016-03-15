@@ -26,7 +26,10 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 			String buildURL, String consoleOutput, Project project)
 		throws Exception {
 
-		if (!consoleOutput.contains("--abort")) {
+		if (!consoleOutput.contains(_REBASE_START_STRING) ||
+			!consoleOutput.contains(_REBASE_END_STRING) ||
+			!consoleOutput.contains("CONFLICT")) {
+
 			return null;
 		}
 

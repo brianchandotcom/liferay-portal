@@ -21,24 +21,24 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Kevin Yen
  */
-public class TopLevelJob extends BaseJob {
+public class TopLevelBuild extends BaseBuild {
 
-	public TopLevelJob(String url) throws Exception {
+	public TopLevelBuild(String url) throws Exception {
 		super(url);
 	}
 
 	public void addDownstreamJob(String invocationURL) throws Exception {
-		_downstreamJobs.add(new DownstreamJob(invocationURL, this));
+		_downstreamJobs.add(new DownstreamBuild(invocationURL, this));
 	}
 
-	public List<DownstreamJob> getDownstreamJobs(String status) {
+	public List<DownstreamBuild> getDownstreamJobs(String status) {
 		if (status == null) {
 			return _downstreamJobs;
 		}
 
-		List<DownstreamJob> filteredDownstreamJobs = new ArrayList<>();
+		List<DownstreamBuild> filteredDownstreamJobs = new ArrayList<>();
 
-		for (DownstreamJob downstreamJob : _downstreamJobs) {
+		for (DownstreamBuild downstreamJob : _downstreamJobs) {
 			if (status.equals(downstreamJob.getStatus())) {
 				filteredDownstreamJobs.add(downstreamJob);
 			}
@@ -55,7 +55,7 @@ public class TopLevelJob extends BaseJob {
 			return;
 		}
 
-		for (DownstreamJob downstreamJob : _downstreamJobs) {
+		for (DownstreamBuild downstreamJob : _downstreamJobs) {
 			downstreamJob.update();
 		}
 
@@ -92,10 +92,10 @@ public class TopLevelJob extends BaseJob {
 
 			System.out.println(sb.toString());
 
-			List<DownstreamJob> missingDownstreamJobs = getDownstreamJobs(
+			List<DownstreamBuild> missingDownstreamJobs = getDownstreamJobs(
 				"missing");
 
-			for (DownstreamJob missingDownstreamJob : missingDownstreamJobs) {
+			for (DownstreamBuild missingDownstreamJob : missingDownstreamJobs) {
 				long time = System.currentTimeMillis();
 
 				if ((time - missingDownstreamJob.statusModifiedTime) >
@@ -130,11 +130,11 @@ public class TopLevelJob extends BaseJob {
 	}
 
 	protected int getDownstreamJobCount(String status) {
-		List<DownstreamJob> downstreamJobs = getDownstreamJobs(status);
+		List<DownstreamBuild> downstreamJobs = getDownstreamJobs(status);
 
 		return downstreamJobs.size();
 	}
 
-	private final List<DownstreamJob> _downstreamJobs = new ArrayList<>();
+	private final List<DownstreamBuild> _downstreamJobs = new ArrayList<>();
 
 }

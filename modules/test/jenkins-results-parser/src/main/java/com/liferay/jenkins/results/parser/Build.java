@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Kevin Yen
  */
-public interface Job {
+public interface Build {
 
 	public String getBuildURL();
 

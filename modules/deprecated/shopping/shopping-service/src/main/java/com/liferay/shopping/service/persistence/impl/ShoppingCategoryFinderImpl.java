@@ -14,6 +14,7 @@
 
 package com.liferay.shopping.service.persistence.impl;
 
+import com.liferay.portal.dao.orm.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -29,7 +30,6 @@ import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingItemLocalServiceUtil;
 import com.liferay.shopping.service.persistence.ShoppingCategoryFinder;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -89,7 +89,7 @@ public class ShoppingCategoryFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(COUNT_C_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_C_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -100,7 +100,7 @@ public class ShoppingCategoryFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			sql = CustomSQLUtil.get(COUNT_I_BY_G_C);
+			sql = CustomSQLUtil.get(getClass(), COUNT_I_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -157,7 +157,7 @@ public class ShoppingCategoryFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = CustomSQLUtil.get(FIND_C_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_C_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -168,7 +168,7 @@ public class ShoppingCategoryFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			sql = CustomSQLUtil.get(FIND_I_BY_G_C);
+			sql = CustomSQLUtil.get(getClass(), FIND_I_BY_G_C);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(

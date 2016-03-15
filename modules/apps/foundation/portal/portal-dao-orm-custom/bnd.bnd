@@ -1,0 +1,7 @@
+Bundle-Name: Liferay DAO ORM Custom
+Bundle-SymbolicName: com.liferay.portal.dao.orm
+Bundle-Version: 1.0.1
+Export-Package: com.liferay.portal.dao.orm
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: DAO ORM
+-include: ../../app.bnd

@@ -30,7 +30,5 @@ Liferay-Service: true
 	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@net.fortuna.ical4j-*.jar

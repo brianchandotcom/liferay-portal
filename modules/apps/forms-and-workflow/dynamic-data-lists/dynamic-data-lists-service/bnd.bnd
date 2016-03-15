@@ -16,6 +16,4 @@ Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -include: ../../app.bnd
 -liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class

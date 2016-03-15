@@ -33,7 +33,5 @@ Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.l
 	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteStack.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

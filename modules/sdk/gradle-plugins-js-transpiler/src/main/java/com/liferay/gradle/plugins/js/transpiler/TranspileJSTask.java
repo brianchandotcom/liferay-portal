@@ -237,12 +237,10 @@ public class TranspileJSTask
 
 		SourceMaps sourceMaps = getSourceMaps();
 
-		if (sourceMaps != SourceMaps.DISABLED) {
+		if (sourceMaps != SourceMaps.ENABLED) {
 			completeArgs.add("--source-maps");
-		}
-
-		if (sourceMaps == SourceMaps.ENABLED_INLINE) {
-			completeArgs.add("inline");
+			completeArgs.add(
+				sourceMaps == SourceMaps.ENABLED_INLINE ? "inline" : "false");
 		}
 
 		completeArgs.add("--src");

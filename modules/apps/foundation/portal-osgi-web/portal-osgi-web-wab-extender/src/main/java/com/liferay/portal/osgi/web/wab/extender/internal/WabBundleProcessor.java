@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import java.net.URL;
 
@@ -240,7 +241,9 @@ public class WabBundleProcessor {
 		// Class extends/implements
 
 		for (Class<?> handledType : handledTypesArray) {
-			if (handledType.isAssignableFrom(annotatedClass)) {
+			if (handledType.isAssignableFrom(annotatedClass) &&
+				!Modifier.isAbstract(annotatedClass.getModifiers())) {
+
 				annotatedClasses.add(annotatedClass);
 
 				return;

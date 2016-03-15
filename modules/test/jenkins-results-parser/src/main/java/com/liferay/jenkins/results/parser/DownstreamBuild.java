@@ -127,9 +127,8 @@ public class DownstreamBuild extends BaseBuild {
 
 	protected JSONArray getBuildsJSONArray() throws Exception {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			"http://" + master + "/build/" + jobName +
-				"/api/json?tree=builds[actions[parameters" +
-					"[name,type,value]],building,duration,number,result,url]",
+			getJobURL() + "/api/json?tree=builds[actions[parameters" +
+				"[name,type,value]],building,duration,number,result,url]",
 			false);
 
 		return jsonObject.getJSONArray("builds");
@@ -156,9 +155,8 @@ public class DownstreamBuild extends BaseBuild {
 		Set<String> parameterNames = new HashSet<>();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			"http://" + master + "/build/" + jobName +
-				"/api/json?tree=actions[parameterDefinitions" +
-					"[name,type,value]]");
+			getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
+				"[name,type,value]]");
 
 		JSONArray parameterDefinitions = jsonObject.getJSONArray(
 			"actions").getJSONObject(0).getJSONArray("parameterDefinitions");

@@ -47,38 +47,40 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 <aui:script use="liferay-product-navigation-control-menu-add-content">
 	var ControlMenu = Liferay.ControlMenu;
 
+	var addContentCollapse = A.one('#<portlet:namespace />addContentCollapse');
 	var searchContent = A.one('#<portlet:namespace />searchContent');
-	var contentPanelBody = A.one('#<portlet:namespace />addContentCollapse');
 
-	var addContent = new ControlMenu.AddContent(
-		{
-			delta: '<%= delta %>',
-			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
-			focusItem: searchContent,
-			inputNode: searchContent,
-			namespace: '<portlet:namespace />',
-			panelBody: contentPanelBody
-		}
-	);
-
-	if (ControlMenu.PortletDragDrop) {
-		addContent.plug(
-			ControlMenu.PortletDragDrop,
+	if (addContentCollapse && searchContent) {
+		var addContent = new ControlMenu.AddContent(
 			{
-				on: {
-					dragEnd: function(event) {
-						addContent.addPortlet(
-							event.portletNode,
-							{
-								item: event.appendNode
-							}
-						);
-					}
-				},
-				srcNode: '#<portlet:namespace />entriesContainer'
+				delta: '<%= delta %>',
+				displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
+				focusItem: searchContent,
+				inputNode: searchContent,
+				namespace: '<portlet:namespace />',
+				panelBody: addContentCollapse
 			}
 		);
-	}
 
-	Liferay.component('<portlet:namespace />addContent', addContent);
+		if (ControlMenu.PortletDragDrop) {
+			addContent.plug(
+				ControlMenu.PortletDragDrop,
+				{
+					on: {
+						dragEnd: function(event) {
+							addContent.addPortlet(
+								event.portletNode,
+								{
+									item: event.appendNode
+								}
+							);
+						}
+					},
+					srcNode: '#<portlet:namespace />entriesContainer'
+				}
+			);
+		}
+
+		Liferay.component('<portlet:namespace />addContent', addContent);
+	}
 </aui:script>

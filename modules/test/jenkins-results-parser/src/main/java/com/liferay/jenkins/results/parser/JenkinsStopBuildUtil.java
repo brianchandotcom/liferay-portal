@@ -70,9 +70,9 @@ public class JenkinsStopBuildUtil {
 		while (progressiveTextMatcher.find()) {
 			String urlString = progressiveTextMatcher.group("url");
 
-			Matcher buildNameMatcher = _buildNamePattern.matcher(urlString);
+			Matcher buildURLMatcher = _buildURLPattern.matcher(urlString);
 
-			if (buildNameMatcher.find()) {
+			if (buildURLMatcher.find()) {
 				downstreamURLs.add(urlString);
 			}
 		}
@@ -132,8 +132,8 @@ public class JenkinsStopBuildUtil {
 		}
 	}
 
-	private static final Pattern _buildNamePattern = Pattern.compile(
-		".+://(?<hostName>[^.]+).liferay.com/build/(?<buildName>[^/]+).*/" +
+	private static final Pattern _buildURLPattern = Pattern.compile(
+		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
 		"Build \\'.*\\' started at (?<url>.+)\\.");

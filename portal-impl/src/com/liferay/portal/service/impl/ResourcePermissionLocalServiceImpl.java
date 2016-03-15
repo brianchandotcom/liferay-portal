@@ -363,10 +363,10 @@ public class ResourcePermissionLocalServiceImpl
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if (resourcePermission.getActionIds() == 0) {
-				Set<String> emptySet = Collections.emptySet();
+				Set<String> emptyActionIds = Collections.emptySet();
 
 				roleIdsToActionIds.put(
-					resourcePermission.getRoleId(), emptySet);
+					resourcePermission.getRoleId(), emptyActionIds);
 
 				continue;
 			}

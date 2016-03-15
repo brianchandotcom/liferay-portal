@@ -38,7 +38,23 @@ AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.
 AssetRenderer<?> assetRenderer = null;
 
 if (Validator.isNotNull(urlTitle)) {
-	assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
+	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
+
+	for (long sourceGroup : groupIds) {
+		try {
+			assetRenderer = assetRendererFactory.getAssetRenderer(sourceGroup, urlTitle);
+		}
+		catch (NoSuchModelException nsme) {
+		}
+
+		if (assetRenderer != null) {
+			break;
+		}
+	}
+
+	if (assetRenderer == null) {
+		assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);
+	}
 
 	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 }

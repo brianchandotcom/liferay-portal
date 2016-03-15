@@ -104,6 +104,11 @@ public class TranspileJSTask
 		return _patternFilterable.getExcludes();
 	}
 
+	@Input
+	public String getGlobalName() {
+		return GradleUtil.toString(_globalName);
+	}
+
 	@Override
 	public Set<String> getIncludes() {
 		return _patternFilterable.getIncludes();
@@ -196,6 +201,10 @@ public class TranspileJSTask
 		return this;
 	}
 
+	public void setGlobalName(Object globalName) {
+		_globalName = globalName;
+	}
+
 	public void setModuleName(Object moduleName) {
 		_moduleName = moduleName;
 	}
@@ -241,6 +250,9 @@ public class TranspileJSTask
 		completeArgs.add("--format");
 		completeArgs.add(getModules());
 
+		completeArgs.add("--globalName");
+		completeArgs.add(getGlobalName());
+
 		completeArgs.add("--moduleName");
 		completeArgs.add(getModuleName());
 
@@ -261,6 +273,7 @@ public class TranspileJSTask
 		return completeArgs;
 	}
 
+	private Object _globalName = "";
 	private Object _moduleName = "";
 	private Object _modules = "amd";
 	private Object _outputDir;

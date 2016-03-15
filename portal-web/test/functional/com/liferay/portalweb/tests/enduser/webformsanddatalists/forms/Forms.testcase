@@ -29,7 +29,9 @@
 		</if>
 	</tear-down>
 
-	<command name="ConfigureDataProviderWithSelectField" priority="4">
+	<command name="ConfigureDataProviderWithSelectField" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="Navigator#openURL" />

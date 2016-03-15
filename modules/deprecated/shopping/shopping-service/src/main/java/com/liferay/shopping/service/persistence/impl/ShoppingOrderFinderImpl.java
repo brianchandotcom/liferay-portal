@@ -14,6 +14,7 @@
 
 package com.liferay.shopping.service.persistence.impl;
 
+import com.liferay.portal.dao.orm.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -28,7 +29,6 @@ import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.model.ShoppingOrderConstants;
 import com.liferay.shopping.model.impl.ShoppingOrderImpl;
 import com.liferay.shopping.service.persistence.ShoppingOrderFinder;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
 import java.util.List;
@@ -60,7 +60,7 @@ public class ShoppingOrderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_C_U_N_PPPS);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C_U_N_PPPS);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -140,7 +140,7 @@ public class ShoppingOrderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_C_U_N_PPPS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C_U_N_PPPS);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);

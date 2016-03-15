@@ -20,6 +20,7 @@ import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryUtil;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderFinder;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
+import com.liferay.portal.dao.orm.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -100,7 +100,7 @@ public class BookmarksFolderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -139,10 +139,10 @@ public class BookmarksFolderFinderImpl
 			String sql = null;
 
 			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(COUNT_F_BY_G_P);
+				sql = CustomSQLUtil.get(getClass(), COUNT_F_BY_G_P);
 			}
 			else {
-				sql = CustomSQLUtil.get(COUNT_F_BY_G_P_S);
+				sql = CustomSQLUtil.get(getClass(), COUNT_F_BY_G_P_S);
 
 				sql = replaceExcludeStatus(sql, queryDefinition);
 			}
@@ -157,10 +157,10 @@ public class BookmarksFolderFinderImpl
 			sb.append(") UNION ALL (");
 
 			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(COUNT_E_BY_G_F);
+				sql = CustomSQLUtil.get(getClass(), COUNT_E_BY_G_F);
 			}
 			else {
-				sql = CustomSQLUtil.get(COUNT_E_BY_G_F_S);
+				sql = CustomSQLUtil.get(getClass(), COUNT_E_BY_G_F_S);
 
 				sql = replaceExcludeStatus(sql, queryDefinition);
 			}
@@ -234,10 +234,10 @@ public class BookmarksFolderFinderImpl
 			String sql = null;
 
 			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(FIND_F_BY_G_P);
+				sql = CustomSQLUtil.get(getClass(), FIND_F_BY_G_P);
 			}
 			else {
-				sql = CustomSQLUtil.get(FIND_F_BY_G_P_S);
+				sql = CustomSQLUtil.get(getClass(), FIND_F_BY_G_P_S);
 
 				sql = replaceExcludeStatus(sql, queryDefinition);
 			}
@@ -252,10 +252,10 @@ public class BookmarksFolderFinderImpl
 			sb.append(" UNION ALL ");
 
 			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(FIND_E_BY_G_F);
+				sql = CustomSQLUtil.get(getClass(), FIND_E_BY_G_F);
 			}
 			else {
-				sql = CustomSQLUtil.get(FIND_E_BY_G_F_S);
+				sql = CustomSQLUtil.get(getClass(), FIND_E_BY_G_F_S);
 
 				sql = replaceExcludeStatus(sql, queryDefinition);
 			}

@@ -407,11 +407,9 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -434,11 +432,9 @@
 
 		<execute function="AssertTextEquals#assertValue" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/blogs-page/-/blogs/trackback/blogs-entry3-title" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="BlogsEntry#addWithTrackbackURLPG">
@@ -485,11 +481,9 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -508,11 +502,9 @@
 
 		<execute function="AssertTextEquals#assertValue" locator1="BlogsEntry#COMMENTS_TRACKBACK_URL" value1="http://www.able.com:8080/blogs-page/-/blogs/trackback/blogs-entry5-title" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Blogs Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="BlogsEntry#addWithTrackbackURLPG">

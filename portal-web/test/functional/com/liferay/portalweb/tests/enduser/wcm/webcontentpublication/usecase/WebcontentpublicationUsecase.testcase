@@ -171,11 +171,9 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -193,11 +191,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">
@@ -205,11 +201,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -220,11 +214,9 @@
 
 		<execute function="AssertElementNotPresent" locator1="PGSignin#PORTLET_TITLE" value1="Sign" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="WebContent#editPGViaAP">
@@ -233,11 +225,9 @@
 			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">

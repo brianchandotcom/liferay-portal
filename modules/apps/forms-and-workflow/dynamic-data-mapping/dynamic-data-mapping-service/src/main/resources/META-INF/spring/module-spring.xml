@@ -7,6 +7,8 @@
 	<bean id="com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService" class="com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceServiceImpl" />
 	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstancePersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderInstanceFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceLinkLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderInstanceLinkPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStorageLinkLocalServiceImpl" />
 	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStorageLinkPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl" />

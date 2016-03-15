@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.exception.DataProviderInstanceNameException;
+import com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceLocalServiceBaseImpl;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,6 +94,17 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	public void deleteDataProviderInstance(
 			DDMDataProviderInstance dataProviderInstance)
 		throws PortalException {
+
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			if (ddmDataProviderInstanceLinkPersistence.
+					countByDataProviderInstanceId(
+						dataProviderInstance.getDataProviderInstanceId()) > 0) {
+
+				throw new RequiredDataProviderInstanceException.
+					MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks(
+						dataProviderInstance.getDataProviderInstanceId());
+			}
+		}
 
 		// Data provider instance
 

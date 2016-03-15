@@ -27,6 +27,13 @@ create table DDMDataProviderInstance (
 	type_ VARCHAR(75) null
 );
 
+create table DDMDataProviderInstanceLink (
+	dataProviderInstanceLinkId LONG not null primary key,
+	companyId LONG,
+	dataProviderInstanceId LONG,
+	structureId LONG
+);
+
 create table DDMStorageLink (
 	uuid_ VARCHAR(75) null,
 	storageLinkId LONG not null primary key,

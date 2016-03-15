@@ -8,6 +8,9 @@ create index IX_1333A2A7 on DDMDataProviderInstance (groupId);
 create index IX_C903C097 on DDMDataProviderInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_B4E180D9 on DDMDataProviderInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_8C878342 on DDMDataProviderInstanceLink (dataProviderInstanceId, structureId);
+create index IX_CB823541 on DDMDataProviderInstanceLink (structureId);
+
 create unique index IX_702D1AD5 on DDMStorageLink (classPK);
 create index IX_81776090 on DDMStorageLink (structureId);
 create index IX_DB81EB42 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$], companyId);

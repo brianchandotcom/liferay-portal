@@ -1155,6 +1155,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		configureTaskJar(project, testProject);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
+		configureTasksBaseline(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
 		configureTasksPublishNodeModule(project);
@@ -1442,6 +1443,26 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				portalTestConfiguration));
 	}
 
+	protected void configureTaskBaseline(BaselineTask baselineTask) {
+		Project project = baselineTask.getProject();
+
+		boolean reportDiff = false;
+
+		String reportLevel = GradleUtil.getProperty(
+			project, "baseline.jar.report.level", "standard");
+
+		if (reportLevel.equals("diff") || reportLevel.equals("persist")) {
+			reportDiff = true;
+		}
+
+		baselineTask.setReportDiff(reportDiff);
+
+		boolean reportOnlyDirtyPackages = GradleUtil.getProperty(
+			project, "baseline.jar.report.only.dirty.packages", true);
+
+		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
+	}
+
 	protected void configureTaskEnabledIfStale(
 		Task task, WritePropertiesTask recordArtifactTask,
 		boolean testProject) {
@@ -1584,6 +1605,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		publishNodeModuleTask.setModuleLicense("LGPL");
 		publishNodeModuleTask.setModuleMain("package.json");
 		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
+	}
+
+	protected void configureTasksBaseline(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BaselineTask.class,
+			new Action<BaselineTask>() {
+
+				@Override
+				public void execute(BaselineTask baselineTask) {
+					configureTaskBaseline(baselineTask);
+				}
+
+			});
 	}
 
 	protected void configureTasksFindBugs(Project project) {

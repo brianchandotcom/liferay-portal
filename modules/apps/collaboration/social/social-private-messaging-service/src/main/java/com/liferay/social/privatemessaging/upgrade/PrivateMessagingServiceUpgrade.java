@@ -14,33 +14,103 @@
 
 package com.liferay.social.privatemessaging.upgrade;
 
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.social.privatemessaging.service.UserThreadLocalService;
 import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.social.privatemessaging.upgrade.v1_0_0.UpgradePrivateMessaging;
 import com.liferay.social.privatemessaging.upgrade.v1_0_1.UpgradeResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true,
-	service = {
-		PrivateMessagingServiceUpgrade.class, UpgradeStepRegistrator.class
-	}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class PrivateMessagingServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.social.privatemessaging.service", "0.0.1", "1.0.0",
-			new UpgradePrivateMessaging(), new UpgradePortletId());
+			new UpgradePrivateMessaging(
+				_mBThreadLocalService, _userThreadLocalService),
+			new UpgradePortletId());
 
 		registry.register(
 			"com.liferay.social.privatemessaging.service", "1.0.0", "1.0.1",
-			new UpgradeResourcePermission());
+			new UpgradeResourcePermission(
+				_companyLocalService, _groupLocalService,
+				_repositoryLocalService, _resourceLocalService,
+				_resourcePermissionLocalService, _roleLocalService));
 	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mBThreadLocalService) {
+
+		_mBThreadLocalService = mBThreadLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		_repositoryLocalService = repositoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceLocalService(
+		ResourceLocalService resourceLocalService) {
+
+		_resourceLocalService = resourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserThreadLocalService(
+		UserThreadLocalService userThreadLocalService) {
+
+		_userThreadLocalService = userThreadLocalService;
+	}
+
+	private CompanyLocalService _companyLocalService;
+	private GroupLocalService _groupLocalService;
+	private MBThreadLocalService _mBThreadLocalService;
+	private RepositoryLocalService _repositoryLocalService;
+	private ResourceLocalService _resourceLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private RoleLocalService _roleLocalService;
+	private UserThreadLocalService _userThreadLocalService;
 
 }

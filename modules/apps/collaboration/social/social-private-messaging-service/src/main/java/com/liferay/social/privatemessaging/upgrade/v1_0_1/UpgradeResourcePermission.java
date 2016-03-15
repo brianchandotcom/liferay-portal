@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.List;
@@ -39,12 +39,28 @@ import java.util.List;
  */
 public class UpgradeResourcePermission extends UpgradeProcess {
 
+	public UpgradeResourcePermission(
+		CompanyLocalService companyLocalService,
+		GroupLocalService groupLocalService,
+		RepositoryLocalService repositoryLocalService,
+		ResourceLocalService resourceLocalService,
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService) {
+
+		_companyLocalService = companyLocalService;
+		_groupLocalService = groupLocalService;
+		_repositoryLocalService = repositoryLocalService;
+		_resourceLocalService = resourceLocalService;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_roleLocalService = roleLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+		List<Company> companies = _companyLocalService.getCompanies();
 
 		for (Company company : companies) {
-			Group group = GroupLocalServiceUtil.getCompanyGroup(
+			Group group = _groupLocalService.getCompanyGroup(
 				company.getCompanyId());
 
 			upgradeDLFolderResourcePermission(company, group);
@@ -55,7 +71,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 	private void upgradeDLFolderResourcePermission(Company company, Group group)
 		throws PortalException {
 
-		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+		Repository repository = _repositoryLocalService.fetchRepository(
 			group.getGroupId(), MBPortletKeys.MESSAGE_BOARDS);
 
 		if (repository == null) {
@@ -64,10 +80,10 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 		long folderId = repository.getDlFolderId();
 
-		Role role = RoleLocalServiceUtil.getRole(
+		Role role = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.GUEST);
 
-		if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+		if (_resourcePermissionLocalService.hasResourcePermission(
 				company.getCompanyId(), DLFolder.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(folderId),
 				role.getRoleId(), ActionKeys.VIEW)) {
@@ -75,7 +91,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			return;
 		}
 
-		ResourceLocalServiceUtil.addResources(
+		_resourceLocalService.addResources(
 			company.getCompanyId(), group.getGroupId(), 0,
 			DLFolder.class.getName(), folderId, false, true, true);
 	}
@@ -83,22 +99,29 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 	private void upgradeDLResourcePermission(Company company, Group group)
 		throws PortalException {
 
-		int count =
-			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				company.getCompanyId(), _DL_RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(group.getGroupId()));
+		int count = _resourcePermissionLocalService.getResourcePermissionsCount(
+			company.getCompanyId(), _DL_RESOURCE_NAME,
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(group.getGroupId()));
 
 		if (count > 0) {
 			return;
 		}
 
-		ResourceLocalServiceUtil.addResources(
+		_resourceLocalService.addResources(
 			company.getCompanyId(), group.getGroupId(), 0, _DL_RESOURCE_NAME,
 			group.getGroupId(), false, true, true);
 	}
 
 	private static final String _DL_RESOURCE_NAME =
 		"com.liferay.document.library.kernel";
+
+	private final CompanyLocalService _companyLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final RepositoryLocalService _repositoryLocalService;
+	private final ResourceLocalService _resourceLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private final RoleLocalService _roleLocalService;
 
 }

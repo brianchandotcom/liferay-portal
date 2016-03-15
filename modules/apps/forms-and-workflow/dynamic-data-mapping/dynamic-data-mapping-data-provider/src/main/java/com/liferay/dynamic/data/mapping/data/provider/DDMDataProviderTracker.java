@@ -14,16 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import java.util.List;
+import java.util.Set;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Marcellus Tavares
@@ -32,36 +32,44 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DDMDataProviderTracker {
 
 	public DDMDataProvider getDDMDataProvider(String type) {
-		return _ddmDataProvidersMap.get(type);
+		return _ddmDataProviderTrackerMap.getService(type);
+	}
+
+	public List<DDMDataProviderContextContributor>
+		getDDMDataProviderContextContributors(String type) {
+
+		return _ddmDataProviderContextContributorTrackerMap.getService(type);
 	}
 
 	public Set<String> getDDMDataProviderTypes() {
-		return Collections.unmodifiableSet(_ddmDataProvidersMap.keySet());
+		return _ddmDataProviderTrackerMap.keySet();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterDDMDataProvider"
-	)
-	protected synchronized void registerDDMDataProvider(
-		DDMDataProvider ddmDataProvider, Map<String, Object> properties) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_ddmDataProviderContextContributorTrackerMap =
+			ServiceTrackerMapFactory.multiValueMap(
+				bundleContext, DDMDataProviderContextContributor.class,
+				"ddm.data.provider.type");
 
-		Object value = properties.get("ddm.data.provider.type");
+		_ddmDataProviderContextContributorTrackerMap.open();
 
-		_ddmDataProvidersMap.put(value.toString(), ddmDataProvider);
+		_ddmDataProviderTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			bundleContext, DDMDataProvider.class, "ddm.data.provider.type");
+
+		_ddmDataProviderTrackerMap.open();
 	}
 
-	protected synchronized void unregisterDDMDataProvider(
-		DDMDataProvider ddmDataProvider, Map<String, Object> properties) {
+	@Deactivate
+	protected void deactivate() {
+		_ddmDataProviderContextContributorTrackerMap.close();
 
-		Object value = properties.get("ddm.data.provider.type");
-
-		_ddmDataProvidersMap.remove(value);
+		_ddmDataProviderTrackerMap.close();
 	}
 
-	private final Map<String, DDMDataProvider> _ddmDataProvidersMap =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, List<DDMDataProviderContextContributor>>
+		_ddmDataProviderContextContributorTrackerMap;
+	private ServiceTrackerMap<String, DDMDataProvider>
+		_ddmDataProviderTrackerMap;
 
 }

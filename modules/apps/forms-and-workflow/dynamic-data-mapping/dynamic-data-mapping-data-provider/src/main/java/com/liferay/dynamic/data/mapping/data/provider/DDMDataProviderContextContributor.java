@@ -14,34 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
-
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public class DDMDataProviderContext {
+public interface DDMDataProviderContextContributor {
 
-	public DDMDataProviderContext(DDMFormValues ddmFormValues) {
-		_ddmFormValues = ddmFormValues;
-	}
-
-	public void addParameters(Map<String, String> parameters) {
-		_parameters.putAll(parameters);
-	}
-
-	public Map<String, String> getParameters() {
-		return _parameters;
-	}
-
-	public <T> T getSettingsInstance(Class<T> clazz) {
-		return DDMFormInstanceFactory.create(clazz, _ddmFormValues);
-	}
-
-	private final DDMFormValues _ddmFormValues;
-	private final Map<String, String> _parameters = new HashMap<>();
+	public Map<String, String> getParameters(HttpServletRequest request);
 
 }

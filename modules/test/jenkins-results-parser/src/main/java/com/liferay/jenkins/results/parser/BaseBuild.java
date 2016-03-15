@@ -23,6 +23,11 @@ import java.util.regex.Pattern;
 public abstract class BaseBuild implements Build {
 
 	@Override
+	public int getBuildNumber() {
+		return buildNumber;
+	}
+
+	@Override
 	public String getBuildURL() {
 		if ((master == null) || (master.length() == 0)) {
 			return null;
@@ -31,7 +36,7 @@ public abstract class BaseBuild implements Build {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getJobURL());
-		sb.append(number);
+		sb.append(buildNumber);
 
 		return sb.toString();
 	}
@@ -104,7 +109,7 @@ public abstract class BaseBuild implements Build {
 
 		master = matcher.group("master");
 		jobName = matcher.group("jobName");
-		number = Integer.parseInt(matcher.group("number"));
+		buildNumber = Integer.parseInt(matcher.group("buildNumber"));
 
 		update();
 	}
@@ -115,14 +120,15 @@ public abstract class BaseBuild implements Build {
 		statusModifiedTime = System.currentTimeMillis();
 	}
 
+	protected int buildNumber;
 	protected String jobName;
 	protected String master;
-	protected int number;
 	protected String result;
 	protected long statusModifiedTime;
 
 	private static final Pattern _buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<number>\\d+)/?");
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
+			"(?<buildNumber>\\d+)/?");
 
 	private String _status;
 

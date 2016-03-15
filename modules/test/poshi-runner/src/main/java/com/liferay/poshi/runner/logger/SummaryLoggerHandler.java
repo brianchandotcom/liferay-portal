@@ -100,7 +100,7 @@ public final class SummaryLoggerHandler {
 			_summaryLogLoggerElement.loggerElement("div", "cause");
 
 		if (causeLoggerElement != null) {
-			loggerElement.addChildLoggerElement(causeLoggerElement);
+			loggerElement.addChildLoggerElement(causeLoggerElement.copy());
 		}
 
 		LoggerElement stepsLoggerElement =
@@ -149,6 +149,29 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
+	public static void startRunning() {
+		_containsMinorStepWarning = false;
+
+		_summaryContentContainerLoggerElement = new LoggerElement(
+			"summaryContentContainer");
+
+		_summaryContentWrapperLoggerElement = new LoggerElement(
+			"summaryContentWrapper");
+
+		_summaryContentContainerLoggerElement.addChildLoggerElement(
+			_summaryContentWrapperLoggerElement);
+
+		_summaryTitleContainerLoggerElement = new LoggerElement(
+			"summaryTitleContainer");
+
+		_summaryTitleContainerLoggerElement.addChildLoggerElement(
+			_getSummaryTitleLoggerElement("SUMMARY"));
+
+		_summaryTitleContainerLoggerElement.setName("ul");
+
+		_warningCount = 0;
+	}
+
 	public static void startSummary(Element element) throws Exception {
 		try {
 			if (_isMajorStep(element)) {
@@ -177,6 +200,10 @@ public final class SummaryLoggerHandler {
 		catch (Throwable t) {
 			throw new PoshiRunnerLoggerException(t.getMessage(), t);
 		}
+	}
+
+	public static void stopRunning() {
+		_stopMajorStep();
 	}
 
 	public static void warnSummary(Element element, String message) {
@@ -860,23 +887,10 @@ public final class SummaryLoggerHandler {
 	private static LoggerElement _minorStepLoggerElement;
 	private static LoggerElement _minorStepsLoggerElement;
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
-	private static final LoggerElement _summaryContentContainerLoggerElement =
-		new LoggerElement("summaryContentContainer");
-	private static final LoggerElement _summaryContentWrapperLoggerElement =
-		new LoggerElement("summaryContentWrapper");
+	private static LoggerElement _summaryContentContainerLoggerElement;
+	private static LoggerElement _summaryContentWrapperLoggerElement;
 	private static LoggerElement _summaryLogLoggerElement;
-	private static final LoggerElement _summaryTitleContainerLoggerElement =
-		new LoggerElement("summaryTitleContainer");
-	private static int _warningCount = 0;
-
-	static {
-		_summaryContentContainerLoggerElement.addChildLoggerElement(
-			_summaryContentWrapperLoggerElement);
-		_summaryContentContainerLoggerElement.setID("summaryContentContainer");
-
-		_summaryTitleContainerLoggerElement.addChildLoggerElement(
-			_getSummaryTitleLoggerElement("SUMMARY"));
-		_summaryTitleContainerLoggerElement.setName("ul");
-	}
+	private static LoggerElement _summaryTitleContainerLoggerElement;
+	private static int _warningCount;
 
 }

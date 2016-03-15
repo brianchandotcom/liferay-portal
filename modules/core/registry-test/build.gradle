@@ -1,11 +1,33 @@
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 task copyTestLibs(type: Copy)
+task copyTestPortalKernel(type: Jar)
+
+File testLibDir = file("test-lib")
 
 copyTestLibs {
+	dependsOn copyTestPortalKernel
+	exclude "com.liferay.portal.kernel-*.jar"
 	from configurations.provided
-	into "test-lib"
+	into testLibDir
 	rename new RenameDependencyClosure(project, configurations.provided.name)
+}
+
+copyTestPortalKernel {
+	archiveName = "com.liferay.portal.kernel.jar"
+	destinationDir = testLibDir
+
+	from {
+		File portalKernelJarFile = configurations.provided.find {
+			it.name.startsWith "com.liferay.portal.kernel-"
+		}
+
+		zipTree(portalKernelJarFile)
+	}
+
+	manifest {
+		attributes "Export-Package": 'com.liferay.portal.kernel.concurrent;version="7.0.0",com.liferay.portal.kernel.memory;version="7.0.0",com.liferay.portal.kernel.util;version="7.0.0"'
+	}
 }
 
 dependencies {

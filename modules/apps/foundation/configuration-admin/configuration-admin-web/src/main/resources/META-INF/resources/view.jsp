@@ -51,9 +51,9 @@ if (Validator.isNotNull(keywords)) {
 				</portlet:renderURL>
 
 				<aui:nav-item
-					cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
 					href="<%= configurationCategoryURL %>"
 					label="<%= curConfigurationCategory %>"
+					selected="<%= curConfigurationCategory.equals(configurationCategory) %>"
 				/>
 
 			<%

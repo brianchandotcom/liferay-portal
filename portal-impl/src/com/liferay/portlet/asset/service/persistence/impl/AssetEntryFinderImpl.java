@@ -359,8 +359,8 @@ public class AssetEntryFinderImpl
 
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
 			sb.append(" AND ((AssetLink.entryId1 = ?) OR ");
-			sb.append("(AssetLink.entryId2 = ?))");
-			sb.append(" AND (AssetEntry.entryId != ?)");
+			sb.append("(AssetLink.entryId2 = ?)) ");
+			sb.append("AND (AssetEntry.entryId != ?)");
 		}
 
 		if (entryQuery.isListable() != null) {
@@ -378,9 +378,9 @@ public class AssetEntryFinderImpl
 		// Keywords
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
-			sb.append(" AND ((AssetEntry.userName LIKE ?) OR");
-			sb.append(" (AssetEntry.title LIKE ?) OR");
-			sb.append(" (AssetEntry.description LIKE ?))");
+			sb.append(" AND ((AssetEntry.userName LIKE ?) OR ");
+			sb.append("(AssetEntry.title LIKE ?) OR ");
+			sb.append("(AssetEntry.description LIKE ?))");
 		}
 		else if (Validator.isNotNull(entryQuery.getUserName()) ||
 				 Validator.isNotNull(entryQuery.getTitle()) ||
@@ -479,9 +479,9 @@ public class AssetEntryFinderImpl
 			sb.append(") TEMP_TABLE ");
 			sb.append("INNER JOIN ");
 			sb.append("AssetEntry AssetEntry ON ");
-			sb.append("TEMP_TABLE.entryId = AssetEntry.entryId");
+			sb.append("TEMP_TABLE.entryId = AssetEntry.entryId ");
 
-			sb.append(" ORDER BY ");
+			sb.append("ORDER BY ");
 
 			if (entryQuery.getOrderByCol1().equals("ratings")) {
 				sb.append("TEMP_TABLE.averageScore");

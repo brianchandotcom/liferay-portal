@@ -241,8 +241,8 @@ public class AssetCategoryFinderImpl
 		StringBundler sb = new StringBundler(categoryProperties.length * 3 + 2);
 
 		sb.append(" INNER JOIN AssetCategoryProperty ON ");
-		sb.append(" (AssetCategoryProperty.categoryId = ");
-		sb.append(" AssetCategory.categoryId) AND ");
+		sb.append("(AssetCategoryProperty.categoryId = ");
+		sb.append("AssetCategory.categoryId) AND ");
 
 		for (int i = 0; i < categoryProperties.length; i++) {
 			sb.append("(AssetCategoryProperty.key_ = ? AND ");

@@ -338,8 +338,8 @@ public class DBUpgrader {
 		sb.append("The database contains changes from a previous ");
 		sb.append("upgrade attempt that failed. Please restore the old ");
 		sb.append("database and file system and retry the upgrade. A ");
-		sb.append("patch may be required if the upgrade failed due to a");
-		sb.append(" bug or an unforeseen data permutation that resulted ");
+		sb.append("patch may be required if the upgrade failed due to a ");
+		sb.append("bug or an unforeseen data permutation that resulted ");
 		sb.append("from a corrupt database.");
 
 		throw new IllegalStateException(sb.toString());

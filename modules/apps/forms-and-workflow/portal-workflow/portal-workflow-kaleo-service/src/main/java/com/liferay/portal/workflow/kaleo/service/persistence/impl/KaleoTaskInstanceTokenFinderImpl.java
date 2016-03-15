@@ -553,20 +553,20 @@ public class KaleoTaskInstanceTokenFinderImpl
 			sb.append("AND (");
 
 			for (int i = 0; i < roleIds.size(); i++) {
-				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?)");
-				sb.append(" OR ");
+				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?) ");
+				sb.append("OR ");
 			}
 
 			for (int i = 0; i < userGroupRoles.size(); i++) {
 				sb.append("((KaleoTaskAssignmentInstance.groupId = ?) AND ");
-				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?))");
-				sb.append(" OR ");
+				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ");
+				sb.append("?)) OR ");
 			}
 
 			for (int i = 0; i < userGroupGroupRoles.size(); i++) {
 				sb.append("((KaleoTaskAssignmentInstance.groupId = ?) AND ");
-				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?))");
-				sb.append(" OR ");
+				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ");
+				sb.append("?)) OR ");
 			}
 
 			sb.setIndex(sb.index() - 1);

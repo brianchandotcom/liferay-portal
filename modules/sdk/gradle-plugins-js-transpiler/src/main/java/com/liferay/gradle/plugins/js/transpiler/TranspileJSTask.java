@@ -110,6 +110,11 @@ public class TranspileJSTask
 	}
 
 	@Input
+	public String getModuleName() {
+		return GradleUtil.toString(_moduleName);
+	}
+
+	@Input
 	public String getModules() {
 		return GradleUtil.toString(_modules);
 	}
@@ -191,6 +196,10 @@ public class TranspileJSTask
 		return this;
 	}
 
+	public void setModuleName(Object moduleName) {
+		_moduleName = moduleName;
+	}
+
 	public void setModules(Object modules) {
 		_modules = modules;
 	}
@@ -233,7 +242,7 @@ public class TranspileJSTask
 		completeArgs.add(getModules());
 
 		completeArgs.add("--moduleName");
-		completeArgs.add("");
+		completeArgs.add(getModuleName());
 
 		SourceMaps sourceMaps = getSourceMaps();
 
@@ -252,6 +261,7 @@ public class TranspileJSTask
 		return completeArgs;
 	}
 
+	private Object _moduleName = "";
 	private Object _modules = "amd";
 	private Object _outputDir;
 	private final PatternFilterable _patternFilterable = new PatternSet();

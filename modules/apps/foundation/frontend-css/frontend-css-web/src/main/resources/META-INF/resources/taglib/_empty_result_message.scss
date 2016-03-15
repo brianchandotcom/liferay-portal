@@ -14,6 +14,13 @@
 	}
 
 	.taglib-empty-result-message-header {
+		background: url(@theme_image_path@/emoticons/happy_new_content.gif) no-repeat 50% 50%;
+		background-size: 200px;
+		min-width: 200px;
+		padding-top: 250px;
+	}
+
+	.taglib-empty-result-message-header-has-plus-btn {
 		background: url(@theme_image_path@/emoticons/happy_new_content_right.gif) no-repeat 50% 50%;
 		background-size: 200px;
 		min-width: 200px;

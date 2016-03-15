@@ -30,6 +30,8 @@ ddmDataProviderSearch.setOrderByComparator(orderByComparator);
 ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByType());
 %>
 
+<liferay-ui:error exception="<%= RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class %>" message="the-data-provider-cannot-be-deleted-because-it-is-required-by-one-or-more-forms" />
+
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">

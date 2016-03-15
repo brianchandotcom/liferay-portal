@@ -414,7 +414,7 @@
 		</execute>
 
 		<execute macro="Page#viewPageLocalization">
-			<var name="category" value="Páginas" />
+			<var name="category" value="Navegación" />
 			<var name="defaultSiteLanguageKey" value="es_ES" />
 			<var name="page" value="Site Page 1" />
 		</execute>
@@ -425,7 +425,7 @@
 		</execute>
 
 		<execute macro="Page#viewPageLocalization">
-			<var name="category" value="Páginas" />
+			<var name="category" value="Navegación" />
 			<var name="defaultSiteLanguageKey" value="es_ES" />
 			<var name="page" value="Site Page 2" />
 		</execute>

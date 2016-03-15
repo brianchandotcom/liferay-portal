@@ -199,7 +199,9 @@
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoAddPage" />
+		<execute macro="SitePageNavigator#gotoAddPage">
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
 
 		<execute macro="Page#addPageTitle">
 			<var name="pageName" value="${pageName}" />
@@ -769,20 +771,13 @@
 			<var name="category" value="Navigation" />
 		</execute>
 
-		<if>
-			<condition function="IsElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="ProductMenuHelper#expandPageTree" />
 
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
 
-		<execute function="AssertElementNotPresent" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
+		<execute function="AssertElementNotPresent" locator1="SitePages#DELETE_SPECIFIC_PAGE" value1="Delete" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 	</command>
 
@@ -836,7 +831,7 @@
 		</if>
 
 		<execute macro="ProductMenu#gotoLocalizedEditPage">
-			<var name="category" value="${category}" />
+			<var name="category" value="Navigation" />
 			<var name="page" value="${page}" />
 		</execute>
 

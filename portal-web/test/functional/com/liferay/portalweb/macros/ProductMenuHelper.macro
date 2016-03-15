@@ -20,10 +20,10 @@
 			<condition function="IsElementPresent" locator1="ProductMenu#CATEGORY_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#CATEGORY_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="ProductMenu#CATEGORY_EXPANDED" />
 			</then>
 		</if>
+
+		<execute function="AssertElementPresent" locator1="ProductMenu#CATEGORY_EXPANDED" />
 	</command>
 
 	<command name="expandPagePagination">

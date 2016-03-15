@@ -446,11 +446,6 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Liferay" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
 		</execute>

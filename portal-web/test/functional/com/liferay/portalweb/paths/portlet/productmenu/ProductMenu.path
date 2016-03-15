@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>PRIVATE_PAGES_SELECTED</td>
-	<td>//span[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPrivatePages']</td>
+	<td>//div[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPrivatePages']</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>PUBLIC_PAGES_SELECTED</td>
-	<td>//span[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPublicPages']</td>
+	<td>//div[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPublicPages']</td>
 	<td></td>
 </tr>
 <tr>

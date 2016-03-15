@@ -236,7 +236,7 @@
 </tr>
 <tr>
 	<td>HEADER_VERTICAL_ELLIPSIS</td>
-	<td>//*[@data-qa-id='headerOptions']//a</td>
+	<td>//*[@data-qa-id='header']//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -142,11 +142,6 @@ public class TranspileJSTask
 		return _sourceMaps;
 	}
 
-	@Input
-	public int getStage() {
-		return _stage;
-	}
-
 	@Override
 	public File getWorkingDir() {
 		return getSourceDir();
@@ -212,10 +207,6 @@ public class TranspileJSTask
 		_sourceMaps = sourceMaps;
 	}
 
-	public void setStage(int stage) {
-		_stage = stage;
-	}
-
 	@Override
 	public void setWorkingDir(Object workingDir) {
 		throw new UnsupportedOperationException();
@@ -260,9 +251,6 @@ public class TranspileJSTask
 			completeArgs.add(FileUtil.relativize(file, sourceDir));
 		}
 
-		completeArgs.add("--stage");
-		completeArgs.add(String.valueOf(getStage()));
-
 		return completeArgs;
 	}
 
@@ -271,6 +259,5 @@ public class TranspileJSTask
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private Object _sourceDir;
 	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
-	private int _stage = 0;
 
 }

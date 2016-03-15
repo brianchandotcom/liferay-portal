@@ -474,6 +474,8 @@ public class RegistryImpl implements Registry {
 	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
 		new HashSet<>();
 	private final Map<org.osgi.util.tracker.ServiceTracker<?, ?>, Void>
-		_serviceTrackers = new WeakHashMap<>();
+		_serviceTrackers = Collections.synchronizedMap(
+			new WeakHashMap
+				<org.osgi.util.tracker.ServiceTracker<?, ?>, Void>());
 
 }

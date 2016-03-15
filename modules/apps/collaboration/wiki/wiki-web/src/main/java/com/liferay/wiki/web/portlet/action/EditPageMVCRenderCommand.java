@@ -33,6 +33,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageService;
+import com.liferay.wiki.validator.WikiPageTitleValidator;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.PortletException;
@@ -66,6 +67,9 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		try {
 			renderRequest.setAttribute(
 				WikiWebKeys.WIKI_ENGINE_RENDERER, _wikiEngineRenderer);
+
+			renderRequest.setAttribute(
+				WikiWebKeys.WIKI_PAGE_TITLE_VALIDATOR, _wikiPageTitleValidator);
 
 			WikiNode node = ActionUtil.getNode(renderRequest);
 
@@ -176,7 +180,15 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		_wikiPageService = wikiPageService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageTitleValidator(
+		WikiPageTitleValidator wikiPageTitleValidator) {
+
+		_wikiPageTitleValidator = wikiPageTitleValidator;
+	}
+
 	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageService _wikiPageService;
+	private WikiPageTitleValidator _wikiPageTitleValidator;
 
 }

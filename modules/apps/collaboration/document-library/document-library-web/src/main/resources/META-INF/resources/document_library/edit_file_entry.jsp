@@ -146,7 +146,7 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
+		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
 	</liferay-frontend:info-bar>
 </c:if>
 

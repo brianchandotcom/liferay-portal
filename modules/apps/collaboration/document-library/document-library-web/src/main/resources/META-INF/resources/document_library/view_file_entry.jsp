@@ -99,7 +99,7 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= fileVersion.getVersion() %>" />
+		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= fileVersion.getVersion() %>" />
 
 		<liferay-frontend:info-bar-buttons>
 			<liferay-frontend:info-bar-sidenav-toggler-button

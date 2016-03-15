@@ -103,15 +103,14 @@ public class UpgradeSubscription extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				String.valueOf(companyId))) {
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("select userId, MIN(userName) as userName, ");
 			sb.append("classNameId, classPK, MIN(createDate) as createDate, ");
 			sb.append("MIN(modifiedDate) as modifiedDate from MBMessage ");
 			sb.append("where (companyId = ");
 			sb.append(companyId);
-			sb.append(") and ");
-			sb.append("(classNameId != 0) and (parentMessageId != 0) ");
+			sb.append(") and (classNameId != 0) and (parentMessageId != 0) ");
 			sb.append("group by userId, classNameId, classPK");
 
 			try (PreparedStatement ps = connection.prepareStatement(

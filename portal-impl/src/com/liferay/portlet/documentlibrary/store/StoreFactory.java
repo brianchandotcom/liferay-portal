@@ -85,17 +85,15 @@ public class StoreFactory {
 		}
 
 		if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(13);
+			StringBundler sb = new StringBundler(11);
 
 			sb.append("Liferay is configured with the legacy ");
 			sb.append("property \"dl.hook.impl=");
 			sb.append(dlHookImpl);
-			sb.append("\" ");
-			sb.append("in portal-ext.properties. Please reconfigure ");
+			sb.append("\" in portal-ext.properties. Please reconfigure ");
 			sb.append("to use the new property \"");
 			sb.append(PropsKeys.DL_STORE_IMPL);
-			sb.append("\". Liferay will ");
-			sb.append("attempt to temporarily set \"");
+			sb.append("\". Liferay will attempt to temporarily set \"");
 			sb.append(PropsKeys.DL_STORE_IMPL);
 			sb.append("=");
 			sb.append(PropsValues.DL_STORE_IMPL);

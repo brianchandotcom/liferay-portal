@@ -151,12 +151,11 @@ public class VerifyGroupedModel extends VerifyProcess {
 				PreparedStatement ps1 = con.prepareStatement(sb.toString());
 				ResultSet rs = ps1.executeQuery()) {
 
-				sb = new StringBundler(6);
+				sb = new StringBundler(5);
 
 				sb.append("update ");
 				sb.append(verifiableGroupedModel.getTableName());
-				sb.append(" set groupId = ? ");
-				sb.append("where ");
+				sb.append(" set groupId = ? where ");
 				sb.append(verifiableGroupedModel.getPrimaryKeyColumnName());
 				sb.append(" = ?");
 

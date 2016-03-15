@@ -84,8 +84,7 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 			sb.append("\" id=\"");
 			sb.append(_getNamespacedId());
-			sb.append("NavbarBtn\" ");
-			sb.append("data-navId=\"");
+			sb.append("NavbarBtn\" data-navId=\"");
 			sb.append(_getNamespacedId());
 			sb.append("\" tabindex=\"0\">");
 
@@ -103,8 +102,7 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 					sb.append(LanguageUtil.get(resourceBundle, "my-account"));
 
-					sb.append("\" class=\"user-avatar-image\" ");
-					sb.append("src=\"");
+					sb.append("\" class=\"user-avatar-image\" src=\"");
 
 					User user = themeDisplay.getUser();
 

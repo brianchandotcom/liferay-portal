@@ -327,18 +327,15 @@ public class AssetEntryFinderImpl
 		sb.append("FROM AssetEntry ");
 
 		if (entryQuery.getAnyTagIds().length > 0) {
-			sb.append("INNER JOIN ");
-			sb.append("AssetEntries_AssetTags ON ");
+			sb.append("INNER JOIN AssetEntries_AssetTags ON ");
 			sb.append("(AssetEntries_AssetTags.entryId = ");
 			sb.append("AssetEntry.entryId) ");
-			sb.append("INNER JOIN ");
-			sb.append("AssetTag ON ");
+			sb.append("INNER JOIN AssetTag ON ");
 			sb.append("(AssetTag.tagId = AssetEntries_AssetTags.tagId) ");
 		}
 
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
-			sb.append("INNER JOIN ");
-			sb.append("AssetLink ON ");
+			sb.append("INNER JOIN AssetLink ON ");
 			sb.append("(AssetEntry.entryId = AssetLink.entryId1) ");
 			sb.append("OR (AssetEntry.entryId = AssetLink.entryId2)");
 		}
@@ -346,8 +343,7 @@ public class AssetEntryFinderImpl
 		if (entryQuery.getOrderByCol1().equals("ratings") ||
 			entryQuery.getOrderByCol2().equals("ratings")) {
 
-			sb.append(" LEFT JOIN ");
-			sb.append("RatingsStats ON ");
+			sb.append(" LEFT JOIN RatingsStats ON ");
 			sb.append("(RatingsStats.classNameId = ");
 			sb.append("AssetEntry.classNameId) AND ");
 			sb.append("(RatingsStats.classPK = AssetEntry.classPK)");
@@ -476,9 +472,7 @@ public class AssetEntryFinderImpl
 		sb.append(getClassNameIds(entryQuery.getClassNameIds()));
 
 		if (!count) {
-			sb.append(") TEMP_TABLE ");
-			sb.append("INNER JOIN ");
-			sb.append("AssetEntry AssetEntry ON ");
+			sb.append(") TEMP_TABLE INNER JOIN AssetEntry AssetEntry ON ");
 			sb.append("TEMP_TABLE.entryId = AssetEntry.entryId ");
 
 			sb.append("ORDER BY ");

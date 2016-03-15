@@ -207,7 +207,7 @@ public class PortalClientBuilder {
 			soapNamespace.substring(0, pos) + ".client.soap" +
 				soapNamespace.substring(pos);
 
-		StringBundler sb = new StringBundler(12);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("com.liferay.client.soap.portal.kernel.util=");
 		sb.append("http://util.kernel.portal.liferay.com\n");
@@ -219,12 +219,10 @@ public class PortalClientBuilder {
 		sb.append("http://service.portal.liferay.com\n");
 
 		sb.append(soapNamespace);
-		sb.append(".model=");
-		sb.append("http://model.knowledgebase.liferay.com\n");
+		sb.append(".model=http://model.knowledgebase.liferay.com\n");
 
 		sb.append(soapNamespace);
-		sb.append(".service.http=");
-		sb.append("urn:http.service.knowledgebase.liferay.com\n");
+		sb.append(".service.http=urn:http.service.knowledgebase.liferay.com\n");
 
 		FileUtil.write(mappingFile, sb.toString());
 	}

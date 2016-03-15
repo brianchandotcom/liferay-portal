@@ -283,7 +283,7 @@ public class JournalFolderFinderImpl
 		boolean inlineSQLHelper) {
 
 		String sql = CustomSQLUtil.get(
-			id, queryDefinition, JournalArticleImpl.TABLE_NAME);
+			getClass(), id, queryDefinition, JournalArticleImpl.TABLE_NAME);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -322,7 +322,7 @@ public class JournalFolderFinderImpl
 		boolean inlineSQLHelper) {
 
 		String sql = CustomSQLUtil.get(
-			id, queryDefinition, JournalFolderImpl.TABLE_NAME);
+			getClass(), id, queryDefinition, JournalFolderImpl.TABLE_NAME);
 
 		if (inlineSQLHelper) {
 			sql = InlineSQLHelperUtil.replacePermissionCheck(

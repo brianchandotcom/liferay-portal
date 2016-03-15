@@ -801,7 +801,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				COUNT_BY_G_F, queryDefinition, "JournalArticle");
+				getClass(), COUNT_BY_G_F, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
@@ -861,7 +861,8 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				COUNT_BY_G_U_F_C, queryDefinition, "JournalArticle");
+				getClass(), COUNT_BY_G_U_F_C, queryDefinition,
+				"JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
@@ -935,7 +936,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				COUNT_BY_G_C_S, queryDefinition, "JournalArticle");
+				getClass(), COUNT_BY_G_C_S, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
@@ -1014,7 +1015,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				COUNT_BY_C_G_F_C_A_V_T_D_C_S_T_D_R, queryDefinition,
+				getClass(), COUNT_BY_C_G_F_C_A_V_T_D_C_S_T_D_R, queryDefinition,
 				"JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
@@ -1154,7 +1155,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				FIND_BY_G_F, queryDefinition, "JournalArticle");
+				getClass(), FIND_BY_G_F, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
@@ -1210,7 +1211,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
+				getClass(), FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
@@ -1280,7 +1281,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				FIND_BY_G_C_S, queryDefinition, "JournalArticle");
+				getClass(), FIND_BY_G_C_S, queryDefinition, "JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);
 
@@ -1355,7 +1356,7 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				FIND_BY_C_G_F_C_A_V_T_D_C_S_T_D_R, queryDefinition,
+				getClass(), FIND_BY_C_G_F_C_A_V_T_D_C_S_T_D_R, queryDefinition,
 				"JournalArticle");
 
 			sql = replaceStatusJoin(sql, queryDefinition);

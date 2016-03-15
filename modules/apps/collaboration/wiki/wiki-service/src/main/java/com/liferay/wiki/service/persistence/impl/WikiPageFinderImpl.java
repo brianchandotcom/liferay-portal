@@ -304,7 +304,7 @@ public class WikiPageFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				COUNT_BY_G_N_H_S, queryDefinition, "WikiPage");
+				getClass(), COUNT_BY_G_N_H_S, queryDefinition, "WikiPage");
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -410,7 +410,7 @@ public class WikiPageFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				FIND_BY_G_N_H_S, queryDefinition, "WikiPage");
+				getClass(), FIND_BY_G_N_H_S, queryDefinition, "WikiPage");
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(

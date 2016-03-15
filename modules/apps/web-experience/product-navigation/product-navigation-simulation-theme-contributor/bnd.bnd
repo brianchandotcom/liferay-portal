@@ -6,6 +6,3 @@ Liferay-Releng-Module-Group-Title: Product Navigation
 Liferay-Theme-Contributor-Type: simulation-panel
 Web-ContextPath: /product-navigation-simulation-theme-contributor
 -include: ../../app.bnd
--includeresource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources

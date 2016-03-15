@@ -63,6 +63,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
 -include: ../../app.bnd
 -liferay-includeresource:\
-	WEB-INF=src/main/resources/WEB-INF,\
 	@javax.servlet.jsp.jstl-*.jar!/META-INF/*.tld,\
 	@freemarker-*.jar

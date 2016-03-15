@@ -28,9 +28,9 @@ import org.json.JSONObject;
 /**
  * @author Kevin Yen
  */
-public class DownstreamJob extends BaseJob {
+public class DownstreamBuild extends BaseBuild {
 
-	public DownstreamJob(String invocationURL, TopLevelJob topLevelJob)
+	public DownstreamBuild(String invocationURL, TopLevelBuild topLevelJob)
 		throws Exception {
 
 		this.topLevelJob = topLevelJob;
@@ -74,7 +74,7 @@ public class DownstreamJob extends BaseJob {
 		return parameters;
 	}
 
-	public TopLevelJob getTopLevelJob() {
+	public TopLevelBuild getTopLevelJob() {
 		return topLevelJob;
 	}
 
@@ -281,7 +281,7 @@ public class DownstreamJob extends BaseJob {
 
 	protected String invocationURL;
 	protected Map<String, String> parameters;
-	protected TopLevelJob topLevelJob;
+	protected TopLevelBuild topLevelJob;
 
 	private String getBuildMessage() {
 		String myStatus = getStatus();

@@ -18,20 +18,13 @@
 
 <%
 boolean compact = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:compact"));
+String cssClass = (String)request.getAttribute("liferay-ui:empty-result-message:cssClass");
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:empty-result-message:message"));
-boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 %>
 
 <div class='card-horizontal main-content-card taglib-empty-result-message <%= compact ? "taglib-empty-result-message-compact" : StringPool.BLANK %>'>
 	<div class="card-row card-row-padded">
-		<c:choose>
-			<c:when test="<%= search %>">
-				<div class="taglib-empty-search-result-message-header"></div>
-			</c:when>
-			<c:otherwise>
-				<div class="taglib-empty-result-message-header"></div>
-			</c:otherwise>
-		</c:choose>
+		<div class="<%= cssClass %>"></div>
 
 		<div class="card-footer">
 			<div class="card-dm-details">

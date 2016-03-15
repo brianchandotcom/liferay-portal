@@ -57,7 +57,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			"insert into ClassName_ values(0, " + increment(ClassName.class) +
 				", 'PREFIX_" + _OLD_CLASS_NAME + "')");
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("insert into ResourceBlock values(0, ");
 		sb.append(increment(ResourceBlock.class));

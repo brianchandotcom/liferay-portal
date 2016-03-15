@@ -91,7 +91,7 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());

@@ -1097,7 +1097,7 @@ public class UpgradeDynamicDataMappingTest {
 			String definition, String storageType)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("insert into DDMStructure (structureId, groupId, ");
 		sb.append("companyId, userId, userName, versionUserId, ");

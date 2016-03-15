@@ -1573,12 +1573,12 @@ ${portal.legacy.file.content}</echo>
 				<os family="mac" />
 				<then>
 					<mirrors-get
-						dest="tools/selenium/extensions"
+						dest="tools/selenium/SafariDriver.safariextz"
 						src="http://selenium-release.storage.googleapis.com/2.45/SafariDriver.safariextz"
 					/>
 
 					<execute>
-						open ${basedir.unix}/tools/selenium/extensions/SafariDriver.safariextz
+						open ${basedir.unix}/tools/selenium/SafariDriver.safariextz
 					</execute>
 
 					<echo file="tools/selenium/safaridriver.scpt">

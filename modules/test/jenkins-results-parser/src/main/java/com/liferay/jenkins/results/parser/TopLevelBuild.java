@@ -23,8 +23,8 @@ import java.util.concurrent.TimeoutException;
  */
 public class TopLevelBuild extends BaseBuild {
 
-	public TopLevelBuild(String url) throws Exception {
-		super(url);
+	public TopLevelBuild(String buildURL) throws Exception {
+		super(buildURL);
 	}
 
 	public void addDownstreamBuild(String invocationURL) throws Exception {

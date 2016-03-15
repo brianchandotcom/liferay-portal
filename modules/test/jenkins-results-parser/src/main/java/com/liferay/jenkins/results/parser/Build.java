@@ -19,6 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public interface Build {
 
+	public int getBuildNumber();
+
 	public String getBuildURL();
 
 	public String getJobName();

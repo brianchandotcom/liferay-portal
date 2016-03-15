@@ -12,7 +12,11 @@
 	</command>
 
 	<command name="closeSpecificWindow">
-		<execute function="Close" locator1="title=${windowTitle}" />
+		<execute macro="Navigator#selectSpecificWindow">
+			<var name="windowTitle" value="${closeWindowTitle}" />
+		</execute>
+
+		<execute function="Close#closeAndSelectWindow" locator1="title=${selectWindowTitle}" />
 	</command>
 
 	<command name="closeWindow">

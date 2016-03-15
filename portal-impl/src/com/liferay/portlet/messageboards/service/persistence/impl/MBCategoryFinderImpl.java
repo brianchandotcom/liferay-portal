@@ -466,8 +466,8 @@ public class MBCategoryFinderImpl
 			}
 
 			sb.append(sql);
-			sb.append(") TEMP_TABLE ORDER BY modelCategory ASC, ");
-			sb.append("priority DESC, modelId ASC");
+			sb.append(") TEMP_TABLE ORDER BY modelCategory ASC, priority ");
+			sb.append("DESC, modelId ASC");
 
 			sql = sb.toString();
 

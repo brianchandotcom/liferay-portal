@@ -600,8 +600,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		sb.append("join DDLRecordSet on DDLRecordVersion.recordSetId = ");
 		sb.append("DDLRecordSet.recordSetId inner join DDMContent on  ");
 		sb.append("DDLRecordVersion.DDMStorageId = DDMContent.contentId ");
-		sb.append("inner join DDMStructure on DDLRecordSet.");
-		sb.append("DDMStructureId = DDMStructure.structureId");
+		sb.append("inner join DDMStructure on DDLRecordSet.DDMStructureId = ");
+		sb.append("DDMStructure.structureId");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
@@ -647,8 +647,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		sb.append("select DLFileVersion.*, DDMContent.contentId, ");
 		sb.append("DDMContent.data_, DDMStructure.structureId from ");
 		sb.append("DLFileEntryMetadata inner join DDMContent on ");
-		sb.append("DLFileEntryMetadata.DDMStorageId = DDMContent.");
-		sb.append("contentId inner join DDMStructure on ");
+		sb.append("DLFileEntryMetadata.DDMStorageId = DDMContent.contentId ");
+		sb.append("inner join DDMStructure on ");
 		sb.append("DLFileEntryMetadata.DDMStructureId = DDMStructure.");
 		sb.append("structureId inner join DLFileVersion on ");
 		sb.append("DLFileEntryMetadata.fileVersionId = DLFileVersion.");
@@ -983,9 +983,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		sb.append("insert into DDMTemplateVersion (templateVersionId, ");
 		sb.append("groupId, companyId, userId, userName, createDate, ");
 		sb.append("classNameId, classPK, templateId, version, name, ");
-		sb.append("description, language, script, status, ");
-		sb.append("statusByUserId, statusByUserName, statusDate) values ");
-		sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("description, language, script, status, statusByUserId, ");
+		sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(

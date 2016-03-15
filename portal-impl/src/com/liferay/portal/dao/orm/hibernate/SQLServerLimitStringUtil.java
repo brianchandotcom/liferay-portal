@@ -67,8 +67,8 @@ public class SQLServerLimitStringUtil {
 		sb.append(innerSelectFrom);
 		sb.append(selectFromWhere);
 		sb.append(innerOrderBy);
-		sb.append(" ) _temp_table_1 ) _temp_table_2 ");
-		sb.append("where _page_row_num between ");
+		sb.append(" ) _temp_table_1 ) _temp_table_2 where _page_row_num ");
+		sb.append("between ");
 		sb.append(offset + 1);
 		sb.append(" and ");
 		sb.append(limit);

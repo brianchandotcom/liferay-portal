@@ -329,24 +329,22 @@ public class AssetEntryFinderImpl
 		if (entryQuery.getAnyTagIds().length > 0) {
 			sb.append("INNER JOIN AssetEntries_AssetTags ON ");
 			sb.append("(AssetEntries_AssetTags.entryId = ");
-			sb.append("AssetEntry.entryId) ");
-			sb.append("INNER JOIN AssetTag ON ");
+			sb.append("AssetEntry.entryId) INNER JOIN AssetTag ON ");
 			sb.append("(AssetTag.tagId = AssetEntries_AssetTags.tagId) ");
 		}
 
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
-			sb.append("INNER JOIN AssetLink ON ");
-			sb.append("(AssetEntry.entryId = AssetLink.entryId1) ");
-			sb.append("OR (AssetEntry.entryId = AssetLink.entryId2)");
+			sb.append("INNER JOIN AssetLink ON (AssetEntry.entryId = ");
+			sb.append("AssetLink.entryId1) OR (AssetEntry.entryId = ");
+			sb.append("AssetLink.entryId2)");
 		}
 
 		if (entryQuery.getOrderByCol1().equals("ratings") ||
 			entryQuery.getOrderByCol2().equals("ratings")) {
 
-			sb.append(" LEFT JOIN RatingsStats ON ");
-			sb.append("(RatingsStats.classNameId = ");
-			sb.append("AssetEntry.classNameId) AND ");
-			sb.append("(RatingsStats.classPK = AssetEntry.classPK)");
+			sb.append(" LEFT JOIN RatingsStats ON (RatingsStats.classNameId ");
+			sb.append("= AssetEntry.classNameId) AND (RatingsStats.classPK ");
+			sb.append("= AssetEntry.classPK)");
 		}
 
 		sb.append("WHERE ");
@@ -354,9 +352,8 @@ public class AssetEntryFinderImpl
 		int whereIndex = sb.index();
 
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
-			sb.append(" AND ((AssetLink.entryId1 = ?) OR ");
-			sb.append("(AssetLink.entryId2 = ?)) ");
-			sb.append("AND (AssetEntry.entryId != ?)");
+			sb.append(" AND ((AssetLink.entryId1 = ?) OR (AssetLink.entryId2 ");
+			sb.append("= ?)) AND (AssetEntry.entryId != ?)");
 		}
 
 		if (entryQuery.isListable() != null) {
@@ -375,8 +372,8 @@ public class AssetEntryFinderImpl
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
 			sb.append(" AND ((AssetEntry.userName LIKE ?) OR ");
-			sb.append("(AssetEntry.title LIKE ?) OR ");
-			sb.append("(AssetEntry.description LIKE ?))");
+			sb.append("(AssetEntry.title LIKE ?) OR (AssetEntry.description ");
+			sb.append("LIKE ?))");
 		}
 		else if (Validator.isNotNull(entryQuery.getUserName()) ||
 				 Validator.isNotNull(entryQuery.getTitle()) ||
@@ -473,9 +470,7 @@ public class AssetEntryFinderImpl
 
 		if (!count) {
 			sb.append(") TEMP_TABLE INNER JOIN AssetEntry AssetEntry ON ");
-			sb.append("TEMP_TABLE.entryId = AssetEntry.entryId ");
-
-			sb.append("ORDER BY ");
+			sb.append("TEMP_TABLE.entryId = AssetEntry.entryId ORDER BY ");
 
 			if (entryQuery.getOrderByCol1().equals("ratings")) {
 				sb.append("TEMP_TABLE.averageScore");

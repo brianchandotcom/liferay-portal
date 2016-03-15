@@ -656,8 +656,8 @@ public class SPIAgentRequestTest {
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append("}, regularParameterMap=null, requestBodyFile=null");
-		sb.append(", serverName=");
+		sb.append("}, regularParameterMap=null, requestBodyFile=null, ");
+		sb.append("serverName=");
 		sb.append(_SERVER_NAME);
 		sb.append(", serverPort=");
 		sb.append(_SERVER_PORT);
@@ -689,8 +689,8 @@ public class SPIAgentRequestTest {
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append("}, regularParameterMap=null, requestBodyFile=null");
-		sb.append(", serverName=");
+		sb.append("}, regularParameterMap=null, requestBodyFile=null, ");
+		sb.append("serverName=");
 		sb.append(_SERVER_NAME);
 		sb.append(", serverPort=");
 		sb.append(_SERVER_PORT);

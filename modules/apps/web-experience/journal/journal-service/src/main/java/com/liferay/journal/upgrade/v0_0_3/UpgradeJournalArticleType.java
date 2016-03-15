@@ -161,8 +161,8 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 		StringBundler sb = new StringBundler(8);
 
 		sb.append("select JournalArticle.resourcePrimKey, ");
-		sb.append("JournalArticle.type_ from JournalArticle ");
-		sb.append("left join JournalArticle tempJournalArticle on ");
+		sb.append("JournalArticle.type_ from JournalArticle left join ");
+		sb.append("JournalArticle tempJournalArticle on ");
 		sb.append("(JournalArticle.groupId = tempJournalArticle.groupId) and ");
 		sb.append("(JournalArticle.articleId = tempJournalArticle.articleId) ");
 		sb.append("and (JournalArticle.version < tempJournalArticle.version) ");

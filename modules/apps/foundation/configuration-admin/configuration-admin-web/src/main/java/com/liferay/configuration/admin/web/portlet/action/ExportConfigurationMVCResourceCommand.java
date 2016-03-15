@@ -286,8 +286,8 @@ public class ExportConfigurationMVCResourceCommand
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("##\n## To apply the configuration, place this file in the ");
-		sb.append("Liferay installation's osgi/modules folder. Make sure ");
-		sb.append("it is named ");
+		sb.append("Liferay installation's osgi/modules folder. Make sure it ");
+		sb.append("is named ");
 		sb.append(getFileName(factoryPid, pid));
 		sb.append(".\n##\n\n");
 

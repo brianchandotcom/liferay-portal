@@ -100,18 +100,17 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateSyncs() throws Exception {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("select DLFileEntry.fileEntryId as fileId, ");
-		sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId ");
-		sb.append("as companyId, DLFileEntry.createDate as createDate, ");
-		sb.append("DLFileEntry.folderId as parentFolderId, 'file' as ");
-		sb.append("type from DLFileEntry union all select ");
-		sb.append("DLFolder.folderId as fileId, DLFolder.groupId as ");
-		sb.append("groupId, DLFolder.companyId as companyId, ");
-		sb.append("DLFolder.createDate as createDate, ");
-		sb.append("DLFolder.parentFolderId as parentFolderId, 'folder' ");
-		sb.append("as type from DLFolder");
+		sb.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId as ");
+		sb.append("companyId, DLFileEntry.createDate as createDate, ");
+		sb.append("DLFileEntry.folderId as parentFolderId, 'file' as type ");
+		sb.append("from DLFileEntry union all select DLFolder.folderId as ");
+		sb.append("fileId, DLFolder.groupId as groupId, DLFolder.companyId ");
+		sb.append("as companyId, DLFolder.createDate as createDate, ");
+		sb.append("DLFolder.parentFolderId as parentFolderId, 'folder' as ");
+		sb.append("type from DLFolder");
 
 		String sql = sb.toString();
 

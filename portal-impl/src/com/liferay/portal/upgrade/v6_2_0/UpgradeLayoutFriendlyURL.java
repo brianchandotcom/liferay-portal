@@ -65,9 +65,9 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 
 		sb.append("insert into LayoutFriendlyURL (uuid_, ");
 		sb.append("layoutFriendlyURLId, groupId, companyId, userId, ");
-		sb.append("userName, createDate, modifiedDate, plid, ");
-		sb.append("privateLayout, friendlyURL, languageId) values (?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("userName, createDate, modifiedDate, plid, privateLayout, ");
+		sb.append("friendlyURL, languageId) values (?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?)");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {

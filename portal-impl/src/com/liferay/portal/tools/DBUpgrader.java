@@ -318,8 +318,8 @@ public class DBUpgrader {
 
 		sb.append("Permission conversion to algorithm 6 has not been ");
 		sb.append("completed. Please complete the conversion prior to ");
-		sb.append("starting the portal. The conversion process is ");
-		sb.append("available in portal versions starting with ");
+		sb.append("starting the portal. The conversion process is available ");
+		sb.append("in portal versions starting with ");
 		sb.append(ReleaseInfo.RELEASE_5_2_3_BUILD_NUMBER);
 		sb.append(" and prior to ");
 		sb.append(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
@@ -335,12 +335,12 @@ public class DBUpgrader {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("The database contains changes from a previous ");
-		sb.append("upgrade attempt that failed. Please restore the old ");
-		sb.append("database and file system and retry the upgrade. A ");
-		sb.append("patch may be required if the upgrade failed due to a ");
-		sb.append("bug or an unforeseen data permutation that resulted ");
-		sb.append("from a corrupt database.");
+		sb.append("The database contains changes from a previous upgrade ");
+		sb.append("attempt that failed. Please restore the old database and ");
+		sb.append("file system and retry the upgrade. A patch may be ");
+		sb.append("required if the upgrade failed due to a bug or an ");
+		sb.append("unforeseen data permutation that resulted from a corrupt ");
+		sb.append("database.");
 
 		throw new IllegalStateException(sb.toString());
 	}

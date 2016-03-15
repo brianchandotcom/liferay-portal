@@ -123,8 +123,8 @@ public class NetvibesServlet extends HttpServlet {
 		sb.append("<head>");
 		sb.append("<link href=\"");
 		sb.append(_NETVIBES_CSS);
-		sb.append("\" rel=\"stylesheet\" ");
-		sb.append("type=\"text/css\" />");
+		sb.append("\" rel=\"stylesheet\" type=\"text/css\" ");
+		sb.append("/>");
 		sb.append("<script src=\"");
 		sb.append(_NETVIBES_JS);
 		sb.append("\" ");
@@ -134,8 +134,8 @@ public class NetvibesServlet extends HttpServlet {
 		sb.append("</title>");
 		sb.append("<link href=\"");
 		sb.append(iconURL);
-		sb.append("\" rel=\"icon\" ");
-		sb.append("type=\"image/png\" />");
+		sb.append("\" rel=\"icon\" type=\"image/png\" ");
+		sb.append("/>");
 		sb.append("</head>");
 		sb.append("<body>");
 		sb.append("<script src=\"");

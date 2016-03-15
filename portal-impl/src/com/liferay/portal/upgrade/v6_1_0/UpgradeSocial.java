@@ -133,8 +133,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		sb.append("insert into SocialActivityCounter (activityCounterId, ");
 		sb.append("groupId, companyId, classNameId, classPK, name, ");
 		sb.append("ownerType, currentValue, totalValue, graceValue, ");
-		sb.append("startPeriod, endPeriod) values (?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?)");
+		sb.append("startPeriod, endPeriod) values (?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?)");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {
@@ -237,9 +237,9 @@ public class UpgradeSocial extends UpgradeProcess {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("select activityCounterId, totalValue from ");
-		sb.append("SocialActivityCounter where groupId = ? and ");
-		sb.append("classNameId = ? and classPK = ? and name = ? and ");
-		sb.append("ownerType = ? and startPeriod = ? and endPeriod = ?");
+		sb.append("SocialActivityCounter where groupId = ? and classNameId ");
+		sb.append("= ? and classPK = ? and name = ? and ownerType = ? and ");
+		sb.append("startPeriod = ? and endPeriod = ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {
@@ -294,8 +294,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("select groupId, companyId, userId from AssetEntry ");
-		sb.append("where classNameId = ");
+		sb.append("select groupId, companyId, userId from AssetEntry where ");
+		sb.append("classNameId = ");
 		sb.append(classNameId);
 		sb.append(" and classPK = ");
 		sb.append(classPK);
@@ -339,9 +339,9 @@ public class UpgradeSocial extends UpgradeProcess {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("select max(totalValue) as totalValue from ");
-		sb.append("SocialActivityCounter where groupId = ? and ");
-		sb.append("classNameId = ? and classPK = ? and name = ? and ");
-		sb.append("ownerType = ? and startPeriod < ?");
+		sb.append("SocialActivityCounter where groupId = ? and classNameId ");
+		sb.append("= ? and classPK = ? and name = ? and ownerType = ? and ");
+		sb.append("startPeriod < ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {
@@ -385,8 +385,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("select groupId from SocialActivitySetting where ");
-			sb.append("activityType = 0 and name = 'enabled' and ");
-			sb.append("value = 'true' and classNameId in (");
+			sb.append("activityType = 0 and name = 'enabled' and value = ");
+			sb.append("'true' and classNameId in (");
 
 			long mbMessageClassNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.messageboards.model.MBMessage");
@@ -534,9 +534,9 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb = new StringBundler(4);
 
 			sb.append("select groupId, classNameId, classPK, name, ");
-			sb.append("max(startPeriod) as startPeriod ");
-			sb.append("from SocialActivityCounter group by groupId, ");
-			sb.append("classNameId, classPK, name");
+			sb.append("max(startPeriod) as startPeriod from ");
+			sb.append("SocialActivityCounter group by groupId, classNameId, ");
+			sb.append("classPK, name");
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString());

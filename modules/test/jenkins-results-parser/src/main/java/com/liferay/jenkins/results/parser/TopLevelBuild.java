@@ -95,7 +95,9 @@ public class TopLevelBuild extends BaseBuild {
 			List<DownstreamBuild> missingDownstreamBuilds = getDownstreamBuilds(
 				"missing");
 
-			for (DownstreamBuild missingDownstreamBuild : missingDownstreamBuilds) {
+			for (DownstreamBuild missingDownstreamBuild :
+					missingDownstreamBuilds) {
+
 				long time = System.currentTimeMillis();
 
 				if ((time - missingDownstreamBuild.statusModifiedTime) >

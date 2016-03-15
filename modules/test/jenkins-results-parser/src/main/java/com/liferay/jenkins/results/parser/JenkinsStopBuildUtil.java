@@ -29,7 +29,8 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class JenkinsStopBuildUtil {
 
-	public static void stopBuild(String buildURL, String username, String password)
+	public static void stopBuild(
+			String buildURL, String username, String password)
 		throws Exception {
 
 		_stopDownstreamBuilds(buildURL, username, password);
@@ -79,30 +80,8 @@ public class JenkinsStopBuildUtil {
 		return downstreamURLs;
 	}
 
-	private static void _stopDownstreamBuilds(
-			String buildURL, String username, String password)
-		throws Exception {
-
-		List<String> downstreamURLs = _getDownstreamURLs(buildURL);
-
-		for (String downstreamURL : downstreamURLs) {
-			_stopBuild(downstreamURL, username, password);
-		}
-	}
-
-	private static void _stopDownstreamBuilds(
-			TopLevelBuild topLevelBuild, String username, String password)
-		throws Exception {
-
-		List<DownstreamBuild> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
-			"running");
-
-		for (DownstreamBuild downstreamBuild : downstreamBuilds) {
-			_stopBuild(downstreamBuild, username, password);
-		}
-	}
-
-	private static void _stopBuild(Build build, String username, String password)
+	private static void _stopBuild(
+			Build build, String username, String password)
 		throws Exception {
 
 		_stopBuild(build.getBuildURL(), username, password);
@@ -128,6 +107,29 @@ public class JenkinsStopBuildUtil {
 			"Response from " + buildURL + "/stop: " +
 				httpConnection.getResponseCode() + " " +
 					httpConnection.getResponseMessage());
+	}
+
+	private static void _stopDownstreamBuilds(
+			String buildURL, String username, String password)
+		throws Exception {
+
+		List<String> downstreamURLs = _getDownstreamURLs(buildURL);
+
+		for (String downstreamURL : downstreamURLs) {
+			_stopBuild(downstreamURL, username, password);
+		}
+	}
+
+	private static void _stopDownstreamBuilds(
+			TopLevelBuild topLevelBuild, String username, String password)
+		throws Exception {
+
+		List<DownstreamBuild> downstreamBuilds =
+			topLevelBuild.getDownstreamBuilds("running");
+
+		for (DownstreamBuild downstreamBuild : downstreamBuilds) {
+			_stopBuild(downstreamBuild, username, password);
+		}
 	}
 
 	private static final Pattern _buildNamePattern = Pattern.compile(

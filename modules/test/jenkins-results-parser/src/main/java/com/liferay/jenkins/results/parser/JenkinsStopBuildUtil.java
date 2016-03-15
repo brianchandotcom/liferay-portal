@@ -27,7 +27,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * @author Kevin Yen
  */
-public class JenkinsStopJobUtil {
+public class JenkinsStopBuildUtil {
 
 	public static void stopBuild(String buildURL, String username, String password)
 		throws Exception {

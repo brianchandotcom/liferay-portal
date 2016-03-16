@@ -158,17 +158,22 @@ public class DownstreamBuild extends BaseBuild {
 			getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
 				"[name,type,value]]");
 
-		JSONArray parameterDefinitions = jsonObject.getJSONArray(
-			"actions").getJSONObject(0).getJSONArray("parameterDefinitions");
+		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
-		for (int i = 0; i < parameterDefinitions.length(); i++) {
-			JSONObject parameterDefinition = parameterDefinitions.getJSONObject(
-				i);
+		JSONObject firstActionJSONObject = actionsJSONArray.getJSONObject(0);
 
-			if (parameterDefinition.getString(
-					"type").equals("StringParameterDefinition")) {
+		JSONArray parameterDefinitionsJSONArray =
+			firstActionJSONObject.getJSONArray("parameterDefinitions");
 
-				parameterNames.add(parameterDefinition.getString("name"));
+		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
+			JSONObject parameterDefinitionJSONObject =
+				parameterDefinitionsJSONArray.getJSONObject(i);
+
+			String type = parameterDefinitionJSONObject.getString("type");
+
+			if (type.equals("StringParameterDefinition")) {
+				parameterNames.add(
+					parameterDefinitionJSONObject.getString("name"));
 			}
 		}
 

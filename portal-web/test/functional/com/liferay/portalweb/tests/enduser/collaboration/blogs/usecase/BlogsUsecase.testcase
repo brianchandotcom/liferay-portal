@@ -1138,7 +1138,7 @@
 
 		<execute function="AssertTextEquals" locator1="ProductMenu#SITES_MODAL_TITLE" value1="Select Site" />
 
-		<var name="key_site" value="www.able.com" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
 
@@ -1183,7 +1183,7 @@
 
 		<execute function="AssertTextEquals" locator1="ProductMenu#SITES_MODAL_TITLE" value1="Select Site" />
 
-		<var name="key_site" value="www.able.com" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
 

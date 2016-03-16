@@ -28,7 +28,6 @@ Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.l
 -include: ../../app.bnd
 -liferay-includeresource:\
 	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteUniqueStack.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteStack.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\

@@ -16,11 +16,11 @@ package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
+import com.liferay.portal.content.ContentUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.util.ContentUtil;
 
 import java.text.Format;
 
@@ -45,6 +45,7 @@ public class RSSUtil extends com.liferay.util.RSSUtil {
 		}
 
 		String content = ContentUtil.get(
+			RSSUtil.class.getClassLoader(),
 			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
 
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(

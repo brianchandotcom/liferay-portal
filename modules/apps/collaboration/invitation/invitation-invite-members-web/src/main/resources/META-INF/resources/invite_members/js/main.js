@@ -1,165 +1,180 @@
 AUI.add(
 	'liferay-so-invite-members',
 	function(A) {
-		var InviteMembers = function() {
-			InviteMembers.superclass.constructor.apply(this, arguments);
-		};
+		var Lang = A.Lang;
+		var Util = Liferay.Util;
 
-		InviteMembers.NAME = 'soinvitemembers';
-
-		InviteMembers.ATTRS = {
-			portletNamespace: {
-				value: ''
-			}
-		};
-
-		A.extend(
-			InviteMembers,
-			A.Base,
+		var InviteMembers = A.Component.create(
 			{
-				initializer: function(params) {
-					var instance = this;
-
-					instance._inviteMembersContainer = A.one('#' + instance.get('portletNamespace') + 'inviteMembersContainer');
-
-					if (!instance._inviteMembersContainer) {
-						return;
+				ATTRS: {
+					form: {
+						validator: Lang.isObject
 					}
+				},
 
-					instance._emailButton = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailButton');
-					instance._emailInput = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'emailAddress');
-					instance._membersList = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'membersList');
-					instance._invitedEmailList = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'invitedEmailList');
-					instance._invitedMembersList = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'invitedMembersList');
+				AUGMENTS: [Liferay.PortletBase],
 
-					var form = instance._inviteMembersContainer.one('#' + instance.get('portletNamespace') + 'fm');
+				EXTENDS: A.Base,
 
-					form.on(
-						'submit',
-						function(event) {
-							instance._syncFields(form);
+				NAME: 'soinvitemembers',
+
+				prototype: {
+					initializer: function(params) {
+						var instance = this;
+
+						var rootNode = instance.rootNode;
+
+						if (!rootNode) {
+							return;
 						}
-					);
 
-					instance._emailButton.on(
-						'click',
-						function(event) {
-							instance._addMemberEmail();
+						var membersList = instance.one('#membersList');
 
-							Liferay.Util.focusFormField(instance._emailInput.getDOM());
-						}
-					);
+						var form = instance.get('form').node;
 
-					instance._inviteMembersContainer.delegate(
-						'click',
-						function(event) {
-							var user = event.currentTarget;
+						form.on(
+							'submit',
+							function(event) {
+								instance._syncFields(form);
+							}
+						);
 
-							var userEmail = user.attr('data-emailAddress');
-							var userId = user.attr('data-userId');
+						instance.one('#emailButton').on(
+							'click',
+							function(event) {
+								instance._addMemberEmail();
 
-							if (userId) {
-								if (user.hasClass('invited')) {
-									instance._removeMemberInvite(user, userId);
+								var emailInput = instance.one('#emailAddress');
+
+								Util.focusFormField(emailInput.getDOM());
+							}
+						);
+
+						rootNode.delegate(
+							'click',
+							function(event) {
+								var user = event.currentTarget;
+
+								var userEmail = user.attr('data-emailAddress');
+								var userId = user.attr('data-userId');
+
+								if (userId) {
+									if (user.hasClass('invited')) {
+										instance._removeMemberInvite(user, userId);
+									}
+									else {
+										instance._addMemberInvite(user);
+									}
 								}
 								else {
-									instance._addMemberInvite(user);
+									instance._removeEmailInvite(user);
 								}
-							}
-							else {
-								instance._removeEmailInvite(user);
-							}
-						},
-						'.user'
-					);
+							},
+							'.user'
+						);
 
-					instance._inviteMembersContainer.delegate(
-						'keyup',
-						function(event) {
-							if (event.keyCode == 13) {
-								instance._addMemberEmail();
-							}
-						},
-						'.controls'
-					);
-				},
+						rootNode.delegate(
+							'keyup',
+							function(event) {
+								if (event.keyCode == 13) {
+									instance._addMemberEmail();
+								}
+							},
+							'.controls'
+						);
+					},
 
-				_addMemberEmail: function() {
-					var instance = this;
+					_addMemberEmail: function() {
+						var instance = this;
 
-					var emailAddress = A.Lang.trim(instance._emailInput.val());
+						var emailInput = instance.one('#emailAddress');
 
-					if (emailAddress) {
-						var html = '<div class="user" data-emailAddress="' + emailAddress + '"><span class="email">' + emailAddress + '</span></div>';
+						var emailAddress = Lang.trim(emailInput.val());
 
-						instance._invitedEmailList.append(html);
-					}
+						if (emailAddress) {
+							var html = '<div class="user" data-emailAddress="' + emailAddress + '"><span class="email">' + emailAddress + '</span></div>';
 
-					instance._emailInput.val('');
-				},
+							var invitedEmailList = instance.one('#invitedEmailList');
 
-				_addMemberInvite: function(user) {
-					var instance = this;
-
-					user.addClass('invited').cloneNode(true).appendTo(instance._invitedMembersList);
-				},
-
-				_removeEmailInvite: function(user) {
-					user.remove();
-				},
-
-				_removeMemberInvite: function(user, userId) {
-					var instance = this;
-
-					userId = userId || user.getAttribute('data-userId');
-
-					var user = instance._membersList.one('[data-userId="' + userId + '"]');
-
-					if (user) {
-						user.removeClass('invited');
-					}
-
-					var invitedUser = instance._invitedMembersList.one('[data-userId="' + userId + '"]');
-
-					invitedUser.remove();
-				},
-
-				_syncFields: function(form) {
-					var instance = this;
-
-					var userIds = [];
-					var emailAddresses = [];
-
-					instance._invitedMembersList.all('.user').each(
-						function(item, index) {
-							userIds.push(item.attr('data-userId'));
+							invitedEmailList.append(html);
 						}
-					);
 
-					instance._invitedEmailList.all('.user').each(
-						function(item, index) {
-							emailAddresses.push(item.attr('data-emailAddress'));
+						emailInput.val('');
+					},
+
+					_addMemberInvite: function(user) {
+						var instance = this;
+
+						var invitedMembersList = instance.one('#invitedMembersList');
+
+						user.addClass('invited').cloneNode(true).appendTo(invitedMembersList);
+					},
+
+					_removeEmailInvite: function(user) {
+						user.remove();
+					},
+
+					_removeMemberInvite: function(user, userId) {
+						var instance = this;
+
+						userId = userId || user.getAttribute('data-userId');
+
+						var membersList = instance.one('#membersList');
+
+
+						var user = membersList.one('[data-userId="' + userId + '"]');
+
+						if (user) {
+							user.removeClass('invited');
 						}
-					);
 
-					var role = instance._inviteMembersContainer.one('select[name=' + instance.get('portletNamespace') + 'roleId]');
-					var team = instance._inviteMembersContainer.one('select[name=' + instance.get('portletNamespace') + 'teamId]');
+						var invitedMembersList = instance.one('#invitedMembersList');
 
-					form.one('input[name="' + instance.get('portletNamespace') + 'receiverUserIds"]').val(userIds.join());
-					form.one('input[name="' + instance.get('portletNamespace') + 'receiverEmailAddresses"]').val(emailAddresses.join());
-					form.one('input[name="' + instance.get('portletNamespace') + 'invitedRoleId"]').val(role ? role.val() : 0);
-					form.one('input[name="' + instance.get('portletNamespace') + 'invitedTeamId"]').val(team ? team.val() : 0);
+
+						var invitedUser = invitedMembersList.one('[data-userId="' + userId + '"]');
+
+						invitedUser.remove();
+					},
+
+					_syncFields: function(form) {
+						var instance = this;
+
+						var userIds = [];
+						var emailAddresses = [];
+
+						var invitedMembersList = instance.one('#invitedMembersList');
+
+						invitedMembersList.all('.user').each(
+							function(item, index) {
+								userIds.push(item.attr('data-userId'));
+							}
+						);
+
+						var invitedEmailList = instance.one('#invitedEmailList');
+
+						invitedEmailList.all('.user').each(
+							function(item, index) {
+								emailAddresses.push(item.attr('data-emailAddress'));
+							}
+						);
+
+						var role = instance.one('select[name=' + instance.ns('roleId') + ']');
+						var team = instance.one('select[name=' + instance.ns('teamId') + ']');
+
+						instance.one('[name=' + instance.ns('receiverUserIds') +']', form).val(userIds.join());
+						instance.one('[name="' + instance.ns('receiverEmailAddresses') + ']', form).val(emailAddresses.join());
+						instance.one('[name="' + instance.ns('invitedRoleId') + ']', form).val(role ? role.val() : 0);
+						instance.one('[name="' + instance.ns('invitedTeamId') +']', form).val(team ? team.val() : 0);
+					}
 				}
 			}
 		);
 
-		Liferay.namespace('SO');
-
-		Liferay.SO.InviteMembers = InviteMembers;
+		Liferay.InviteMembers = InviteMembers;
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-deprecated', 'liferay-util-window']
+		requires: ['aui-base', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );
 
@@ -180,9 +195,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.namespace('SO');
-
-		Liferay.SO.InviteMembersList = InviteMembersList;
+		Liferay.InviteMembersList = InviteMembersList;
 	},
 	'',
 	{

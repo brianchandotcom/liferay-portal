@@ -124,9 +124,14 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 </div>
 
 <aui:script use="aui-base,datasource-io,datatype-number,liferay-so-invite-members,liferay-so-invite-members-list">
-	new Liferay.SO.InviteMembers(
+	new Liferay.InviteMembers(
 		{
-			portletNamespace: '<portlet:namespace />'
+			form: {
+				method: 'POST',
+				node: A.one(document.<portlet:namespace />fm)
+			},
+			namespace: '<portlet:namespace />',
+			rootNode: '#<portlet:namespace/>inviteMembersContainer'
 		}
 	);
 
@@ -159,7 +164,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		);
 	}
 
-	var inviteMembersList = new Liferay.SO.InviteMembersList(
+	var inviteMembersList = new Liferay.InviteMembersList(
 		{
 			inputNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />inviteUserSearch',
 			listNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />membersList',

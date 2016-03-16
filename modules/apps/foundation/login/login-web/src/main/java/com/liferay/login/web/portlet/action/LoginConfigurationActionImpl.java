@@ -15,11 +15,11 @@
 package com.liferay.login.web.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.portal.content.ContentUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,19 +53,27 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordResetBody_" + languageId,
-			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+			ContentUtil.get(
+				LoginConfigurationActionImpl.class.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordResetSubject_" + languageId,
-			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+			ContentUtil.get(
+				LoginConfigurationActionImpl.class.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordSentBody_" + languageId,
-			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
+			ContentUtil.get(
+				LoginConfigurationActionImpl.class.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_BODY));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailPasswordSentSubject_" + languageId,
-			ContentUtil.get(PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
+			ContentUtil.get(
+				LoginConfigurationActionImpl.class.getClassLoader(),
+				PropsValues.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT));
 	}
 
 	@Override

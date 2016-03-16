@@ -4,6 +4,12 @@ AUI.add(
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
+		var KEY_ENTER = 13;
+
+		var STR_CLICK = 'click';
+
+		var STR_KEYUP = 'keyup';
+
 		var TPL_EMAIL_ROW = new A.Template(
 			'<div class="user" data-emailAddress="{emailAddress}">',
 				'<span class="email">{emailAddress}</span>',
@@ -28,66 +34,21 @@ AUI.add(
 					initializer: function(params) {
 						var instance = this;
 
-						var rootNode = instance.rootNode;
+						instance._rootNode = instance.rootNode;
 
-						if (!rootNode) {
+						if (!instance._rootNode) {
 							return;
 						}
 
-						var membersList = instance.one('#membersList');
+						instance._form = instance.get('form').node;
 
-						var form = instance.get('form').node;
+						instance._bindUI();
+					},
 
-						form.on(
-							'submit',
-							function(event) {
-								instance._syncFields(form);
-							}
-						);
+					destructor: function() {
+						var instance = this;
 
-						instance.one('#emailButton').on(
-							'click',
-							function(event) {
-								instance._addMemberEmail();
-
-								var emailInput = instance.one('#emailAddress');
-
-								Util.focusFormField(emailInput.getDOM());
-							}
-						);
-
-						rootNode.delegate(
-							'click',
-							function(event) {
-								var user = event.currentTarget;
-
-								var userEmail = user.attr('data-emailAddress');
-								var userId = user.attr('data-userId');
-
-								if (userId) {
-									if (user.hasClass('invited')) {
-										instance._removeMemberInvite(user, userId);
-									}
-									else {
-										instance._addMemberInvite(user);
-									}
-								}
-								else {
-									instance._removeEmailInvite(user);
-								}
-							},
-							'.user'
-						);
-
-						rootNode.delegate(
-							'keyup',
-							function(event) {
-								if (event.keyCode == 13) {
-									instance._addMemberEmail();
-								}
-							},
-							'.controls'
-						);
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_addMemberEmail: function() {
@@ -110,6 +71,8 @@ AUI.add(
 						}
 
 						emailInput.val('');
+
+						Util.focusFormField(emailInput.getDOM());
 					},
 
 					_addMemberInvite: function(user) {
@@ -120,10 +83,49 @@ AUI.add(
 						user.addClass('invited').cloneNode(true).appendTo(invitedMembersList);
 					},
 
+					_bindUI: function() {
+						var instance = this;
+
+						instance._eventHandles = [
+							instance.one('#emailButton').on(STR_CLICK, instance._addMemberEmail, instance),
+							instance._rootNode.delegate(STR_CLICK, instance._handleInvite, '.user', instance),
+							instance._rootNode.delegate(STR_KEYUP, instance._onEmailKeyup, '.controls', instance),
+							instance._form.on('submit', instance._syncFields, instance)
+						];
+					},
+
 					_getByName: function(form, name) {
 						var instance = this;
 
 						return instance.one('[name=' + instance.ns(name) + ']', form);
+					},
+
+					_handleInvite: function(event) {
+						var instance = this;
+
+						var user = event.currentTarget;
+
+						var userId = user.attr('data-userId');
+
+						if (userId) {
+							if (user.hasClass('invited')) {
+								instance._removeMemberInvite(user, userId);
+							}
+							else {
+								instance._addMemberInvite(user);
+							}
+						}
+						else {
+							instance._removeEmailInvite(user);
+						}
+					},
+
+					_onEmailKeyup: function(event) {
+						var instance = this;
+
+						if (event.keyCode == KEY_ENTER) {
+							instance._addMemberEmail();
+						}
 					},
 
 					_removeEmailInvite: function(user) {
@@ -163,8 +165,10 @@ AUI.add(
 						instance._syncReceiverEmailAddressesField(form);
 					},
 
-					_syncInvitedRoleIdField : function(form) {
+					_syncInvitedRoleIdField : function() {
 						var instance = this;
+
+						var form = instance._form;
 
 						var invitedRoleId = instance._getByName(form, 'invitedRoleId');
 
@@ -226,7 +230,7 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base', 'liferay-util-window']
+		requires: ['aui-base', 'aui-template-deprecated', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );
 

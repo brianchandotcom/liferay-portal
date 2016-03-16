@@ -109,6 +109,8 @@ if (layout != null) {
 	</c:if>
 
 	<aui:script use="event-move,liferay-navigation">
+		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
+
 		Liferay.once(
 			'initNavigation',
 			function() {
@@ -147,8 +149,6 @@ if (layout != null) {
 				);
 			}
 		);
-
-		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
 
 		if (navBlock) {
 			if (A.UA.touchMobile) {

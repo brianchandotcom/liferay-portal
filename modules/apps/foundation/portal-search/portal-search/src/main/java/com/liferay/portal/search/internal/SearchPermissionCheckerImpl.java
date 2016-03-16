@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.FieldNames;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				return;
 			}
 
-			String viewActionId = document.get(Field.VIEW_ACTION_ID);
+			String viewActionId = document.get(FieldNames.VIEW_ACTION_ID);
 
 			if (Validator.isNull(viewActionId)) {
 				viewActionId = ActionKeys.VIEW;

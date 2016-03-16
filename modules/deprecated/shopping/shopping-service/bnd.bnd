@@ -16,6 +16,4 @@ Export-Package:	\
 	com.liferay.shopping.verify.model
 Liferay-Service: true
 -liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class

@@ -23,6 +23,7 @@ dependencies {
 	provided project(":apps:foundation:mobile-device-rules:mobile-device-rules-api")
 	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
+	provided project(":apps:foundation:portal:portal-dao-orm-custom")
 	provided project(":apps:foundation:portal:portal-instance-lifecycle")
 	provided project(":apps:foundation:portal:portal-spring-extender")
 	provided project(":apps:foundation:portal:portal-upgrade")

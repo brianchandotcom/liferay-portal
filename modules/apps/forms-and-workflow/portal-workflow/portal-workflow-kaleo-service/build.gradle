@@ -16,6 +16,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-definition-api")
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-runtime-api")
 	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
+	provided project(":apps:foundation:portal:portal-dao-orm-custom")
 	provided project(":apps:foundation:portal:portal-spring-extender")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }

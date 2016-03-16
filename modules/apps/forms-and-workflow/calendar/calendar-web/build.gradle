@@ -10,6 +10,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:calendar:calendar-api")
 	provided project(":apps:forms-and-workflow:calendar:calendar-service")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
+	provided project(":apps:foundation:portal:portal-dao-orm-custom")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }
 

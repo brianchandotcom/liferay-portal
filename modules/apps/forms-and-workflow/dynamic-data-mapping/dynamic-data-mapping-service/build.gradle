@@ -22,6 +22,7 @@ dependencies {
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-background-task:portal-background-task-api")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
+	provided project(":apps:foundation:portal:portal-dao-orm-custom")
 	provided project(":apps:foundation:portal:portal-instance-lifecycle")
 	provided project(":apps:foundation:portal:portal-spring-extender")
 	provided project(":apps:foundation:portal:portal-upgrade")

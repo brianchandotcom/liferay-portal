@@ -408,6 +408,37 @@
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Page Versioning" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Page Versioning" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
 	</command>
 
 	<command name="AddSitePagesVariation" priority="5">

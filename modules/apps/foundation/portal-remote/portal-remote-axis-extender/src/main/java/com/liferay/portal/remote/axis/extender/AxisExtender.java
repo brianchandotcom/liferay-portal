@@ -133,7 +133,7 @@ public class AxisExtender {
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-				"axis." + bundle.getSymbolicName());
+				"liferay.axis." + bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 				"/" + bundle.getSymbolicName());
@@ -162,7 +162,7 @@ public class AxisExtender {
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				"axis." + bundle.getSymbolicName());
+				"liferay.axis." + bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
 				"AuthVerifierFilter");
@@ -178,7 +178,7 @@ public class AxisExtender {
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				"axis." + bundle.getSymbolicName());
+				"liferay.axis." + bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 				"AxisServlet");

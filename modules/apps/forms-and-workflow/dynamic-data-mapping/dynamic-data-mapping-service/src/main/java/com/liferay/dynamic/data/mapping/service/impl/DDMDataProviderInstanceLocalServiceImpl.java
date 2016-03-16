@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -137,34 +136,38 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
-	public void deleteDataProviderInstances(
-		long companyId, final long groupId) throws PortalException{
+	public void deleteDataProviderInstances(long companyId, final long groupId)
+		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			ddmDataProviderInstanceLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
-			@Override
-			public void addCriteria(DynamicQuery dynamicQuery) {
-				Property groupIdProperty =
-					PropertyFactoryUtil.forName("groupId");
-
-				dynamicQuery.add(groupIdProperty.eq(groupId));
-			}
-		});
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDMDataProviderInstance>() {
 
 				@Override
-				public void performAction(DDMDataProviderInstance ddmDataProviderInstance)
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property groupIdProperty = PropertyFactoryUtil.forName(
+						"groupId");
+
+					dynamicQuery.add(groupIdProperty.eq(groupId));
+				}
+
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<DDMDataProviderInstance>() {
+
+				@Override
+				public void performAction(
+						DDMDataProviderInstance ddmDataProviderInstance)
 					throws PortalException {
 
 					deleteDataProviderInstance(ddmDataProviderInstance);
 				}
-			}
-		);
+
+			});
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.performActions();

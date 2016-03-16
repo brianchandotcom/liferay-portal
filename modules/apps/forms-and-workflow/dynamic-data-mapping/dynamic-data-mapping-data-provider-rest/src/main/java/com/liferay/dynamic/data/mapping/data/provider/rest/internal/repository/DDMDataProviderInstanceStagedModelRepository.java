@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dylan Rebelak
@@ -49,8 +49,8 @@ public class DDMDataProviderInstanceStagedModelRepository
 
 	@Override
 	public DDMDataProviderInstance addStagedModel(
-		PortletDataContext portletDataContext,
-		DDMDataProviderInstance dataProviderInstance)
+			PortletDataContext portletDataContext,
+			DDMDataProviderInstance dataProviderInstance)
 		throws PortalException {
 
 		long userId = portletDataContext.getUserId(
@@ -88,7 +88,7 @@ public class DDMDataProviderInstanceStagedModelRepository
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData)
+			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
 		DDMDataProviderInstance dataProviderInstance =
@@ -144,7 +144,8 @@ public class DDMDataProviderInstanceStagedModelRepository
 	}
 
 	@Override
-	public DDMDataProviderInstance saveStagedModel(DDMDataProviderInstance dataProviderInstance)
+	public DDMDataProviderInstance saveStagedModel(
+			DDMDataProviderInstance dataProviderInstance)
 		throws PortalException {
 
 		return _ddmDataProviderInstanceLocalService.
@@ -153,8 +154,8 @@ public class DDMDataProviderInstanceStagedModelRepository
 
 	@Override
 	public DDMDataProviderInstance updateStagedModel(
-		PortletDataContext portletDataContext,
-		DDMDataProviderInstance dataProviderInstance)
+			PortletDataContext portletDataContext,
+			DDMDataProviderInstance dataProviderInstance)
 		throws PortalException {
 
 		long userId = portletDataContext.getUserId(
@@ -184,4 +185,5 @@ public class DDMDataProviderInstanceStagedModelRepository
 
 	@Reference
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+
 }

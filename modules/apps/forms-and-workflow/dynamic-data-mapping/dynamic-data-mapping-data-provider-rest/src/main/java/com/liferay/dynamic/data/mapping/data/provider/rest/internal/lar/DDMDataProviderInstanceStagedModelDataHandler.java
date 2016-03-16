@@ -44,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" +
-		DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER},
+	property = {"javax.portlet.name=" + DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER},
 	service = StagedModelDataHandler.class
 )
 public class DDMDataProviderInstanceStagedModelDataHandler
@@ -80,8 +79,7 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		String uuid, long groupId) {
 
 		return _ddmDataProviderInstanceLocalService.
-			fetchDDMDataProviderInstanceByUuidAndGroupId(
-				uuid, groupId);
+			fetchDDMDataProviderInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -150,8 +148,8 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 					dataProviderInstance.getUuid(),
 					portletDataContext.getScopeGroupId());
 
-		ServiceContext serviceContext =
-			portletDataContext.createServiceContext(dataProviderInstance);
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			dataProviderInstance);
 
 		String definition = dataProviderInstance.getDefinition();
 
@@ -168,9 +166,8 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 				_ddmDataProviderInstanceLocalService.addDataProviderInstance(
 					userId, portletDataContext.getScopeGroupId(),
 					dataProviderInstance.getNameMap(),
-					dataProviderInstance.getDescriptionMap(),
-					ddmFormValues, dataProviderInstance.getType(),
-					serviceContext);
+					dataProviderInstance.getDescriptionMap(), ddmFormValues,
+					dataProviderInstance.getType(), serviceContext);
 		}
 		else {
 			importedProvider.setDataProviderInstanceId(
@@ -197,5 +194,5 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 
 	@Reference
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-}
 
+}

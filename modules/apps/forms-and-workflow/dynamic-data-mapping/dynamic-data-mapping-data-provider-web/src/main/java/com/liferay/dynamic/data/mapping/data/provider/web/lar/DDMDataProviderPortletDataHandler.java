@@ -23,12 +23,13 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dylan Rebelak
@@ -40,38 +41,9 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
-	public String getSchemaVersion() {
-		return SCHEMA_VERSION;
-	}
-
-	@Activate
-	protected void activate() {
-		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(DDMDataProviderInstance.class));
-	}
-
-	@Override
-	protected PortletPreferences doDeleteData(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences)
-		throws Exception {
-
-		if (portletDataContext.addPrimaryKey(
-			DDMDataProviderPortletDataHandler.class, "deleteData")) {
-
-			return portletPreferences;
-		}
-
-		_ddmDataProviderInstanceStagedModelRepository.deleteStagedModels(
-			portletDataContext);
-
-		return portletPreferences;
-	}
-
-	@Override
 	public String doExportData(
-		final PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences)
+			final PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
@@ -89,6 +61,35 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 		exportActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
+	}
+
+	@Override
+	public String getSchemaVersion() {
+		return SCHEMA_VERSION;
+	}
+
+	@Activate
+	protected void activate() {
+		setDeletionSystemEventStagedModelTypes(
+			new StagedModelType(DDMDataProviderInstance.class));
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (portletDataContext.addPrimaryKey(
+				DDMDataProviderPortletDataHandler.class, "deleteData")) {
+
+			return portletPreferences;
+		}
+
+		_ddmDataProviderInstanceStagedModelRepository.deleteStagedModels(
+			portletDataContext);
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -129,7 +130,6 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 
 		entryExportActionableDynamicQuery.performCount();
 	}
-
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)"

@@ -24,10 +24,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -251,7 +248,9 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 			List<Element> ddmDataProviderInstanceElements =
 				ddmDataProviderInstanceElement.elements();
 
-			for (Element ddmStructureElement: ddmDataProviderInstanceElements) {
+			for (Element ddmStructureElement :
+					ddmDataProviderInstanceElements) {
+
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmStructureElement);
 			}

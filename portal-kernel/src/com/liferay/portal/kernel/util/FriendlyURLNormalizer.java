@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.regex.Pattern;
 
 /**
  * @author Julio Camarero
  */
+@ProviderType
 public interface FriendlyURLNormalizer {
 
 	public String normalize(String friendlyURL);

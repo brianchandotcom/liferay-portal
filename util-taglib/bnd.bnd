@@ -72,6 +72,3 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}"
 -baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.util.taglib-2.0.0.jar
 -include: ../modules/apps/foundation/app.bnd
--pluginpath.this:\
-	${project.dir}/../.bnd/ant-baseline-cache/com.liferay.util.taglib-2.0.0.jar;\
-		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/com.liferay.util.taglib/2.0.0/com.liferay.util.taglib-2.0.0.jar'

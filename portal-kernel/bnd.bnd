@@ -7,8 +7,4 @@ Export-Package:\
 	com.liferay.*
 Import-Package: *
 Include-Resource: classes
-
 -baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.kernel-2.0.0.jar
--pluginpath.this:\
-	${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.kernel-2.0.0.jar;\
-		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/com.liferay.portal.kernel/2.0.0/com.liferay.portal.kernel-2.0.0.jar'

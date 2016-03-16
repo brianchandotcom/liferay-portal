@@ -80,6 +80,3 @@ Include-Resource: classes
 Private-Package: com.liferay.*.dependencies
 -baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.impl-2.0.0.jar
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)
--pluginpath.this:\
-	${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.impl-2.0.0.jar;\
-		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/com.liferay.portal.impl/2.0.0/com.liferay.portal.impl-2.0.0.jar'

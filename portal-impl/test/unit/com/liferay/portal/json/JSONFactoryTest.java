@@ -61,6 +61,25 @@ public class JSONFactoryTest {
 	}
 
 	@Test
+	public void testDeserializeArrayOfSmallLongsReturnsArrayOfInteger() {
+		Map<String, long[]> map = new HashMap<>();
+
+		map.put("key", new long[] {1L, 2L, 3L, 4L, 5L});
+
+		String json = JSONFactoryUtil.serialize(map);
+
+		Object object = JSONFactoryUtil.deserialize(json);
+
+		Assert.assertTrue(object instanceof Map);
+
+		Map<String, long[]> deserializedMap = (Map)object;
+
+		Object values = deserializedMap.get("key");
+
+		Assert.assertTrue(values instanceof Integer[]);
+	}
+
+	@Test
 	public void testDeserializePrimitiveArrays() {
 		String json = buildPrimitiveArraysJSON();
 

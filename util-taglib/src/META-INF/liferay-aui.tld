@@ -702,6 +702,13 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[The optional path to a custom SVG file. If not supplied, default icons will be used.]]></description>
+			<name>src</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[The target window in which the URL is opened. The default value is <code>self</code>. Possible values are <code>blank</code>, <code>self</code>, <code>parent</code>, <code>top</code>, and a unique frame's name.]]></description>
 			<name>target</name>
 			<required>false</required>

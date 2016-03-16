@@ -18,7 +18,7 @@
 
 <liferay-util:buffer var="iconContent">
 	<svg class="lexicon-icon lexicon-icon-<%= image %>" role="img" title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, label)) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-		<use xlink:href='<%= Validator.isNotNull(src) ? src : themeDisplay.getPathThemeImages().concat("/lexicon/icons.svg") %>#<%= image %>' />
+		<use xlink:href="<%= Validator.isNotNull(src) ? src : themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>#<%= image %>" />
 	</svg>
 
 	<span class="taglib-icon-label">

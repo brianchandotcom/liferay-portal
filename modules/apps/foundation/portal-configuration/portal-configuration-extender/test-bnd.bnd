@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.configuration.extender
 Import-Package: !javax.*,*
 -includeresource:\
-	classes,\
 	test-classes/integration,\
 	@test-lib/biz.aQute.bndlib.jar!/aQute/lib/filter/*,\
 	@test-lib/org.apache.felix.utils.jar,\

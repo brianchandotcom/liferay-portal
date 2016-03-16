@@ -255,7 +255,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_BAR_ELLIPSIS</td>
+	<td>STAGING_BAR_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(@class,'control-menu-nav-item')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
-import com.liferay.portal.osgi.web.wab.extender.internal.ModifiableServletContext;
-import com.liferay.portal.osgi.web.wab.extender.internal.WabBundleProcessor;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -29,20 +26,17 @@ public class ServletContextListenerExceptionAdapter
 
 	public ServletContextListenerExceptionAdapter(
 		ServletContextListener servletContextListener,
-		WabBundleProcessor wabBundleProcessor) {
+		ServletContext servletContext) {
 
 		_servletContextListener = servletContextListener;
-		_wabBundleProcessor = wabBundleProcessor;
+		_servletContext = servletContext;
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext = ModifiableServletContext.createInstance(
-			servletContextEvent.getServletContext(), _wabBundleProcessor);
-
 		try {
 			_servletContextListener.contextDestroyed(
-				new ServletContextEvent(servletContext));
+				new ServletContextEvent(_servletContext));
 		}
 		catch (Exception e) {
 			_exception = e;
@@ -53,12 +47,9 @@ public class ServletContextListenerExceptionAdapter
 	public void contextInitialized(
 		final ServletContextEvent servletContextEvent) {
 
-		ServletContext servletContext = ModifiableServletContext.createInstance(
-			servletContextEvent.getServletContext(), _wabBundleProcessor);
-
 		try {
 			_servletContextListener.contextInitialized(
-				new ServletContextEvent(servletContext));
+				new ServletContextEvent(_servletContext));
 		}
 		catch (Exception e) {
 			_exception = e;
@@ -70,7 +61,7 @@ public class ServletContextListenerExceptionAdapter
 	}
 
 	private Exception _exception;
+	private final ServletContext _servletContext;
 	private final ServletContextListener _servletContextListener;
-	private final WabBundleProcessor _wabBundleProcessor;
 
 }

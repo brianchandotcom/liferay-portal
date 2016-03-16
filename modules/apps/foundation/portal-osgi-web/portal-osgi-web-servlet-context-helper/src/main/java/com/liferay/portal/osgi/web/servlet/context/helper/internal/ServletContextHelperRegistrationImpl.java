@@ -95,25 +95,30 @@ public class ServletContextHelperRegistrationImpl
 
 		_servletContextListenerServiceRegistration =
 			createServletContextListener(_bundleContext, _servletContextName);
+
+		_defaultServletServiceRegistration = createDefaultServlet(
+			_bundleContext, _servletContextName);
+
+		_jspServletServiceRegistration = createJspServlet(
+			_bundleContext, _servletContextName);
+
+		_portletServletServiceRegistration = createPortletServlet(
+			_bundleContext, _servletContextName);
+
+		_portletServletRequestFilterServiceRegistration =
+			createRestrictPortletServletRequestFilter(
+				_bundleContext, _servletContextName);
 	}
 
 	@Override
 	public void close() {
-		if (_servletContextHelperServiceRegistration != null) {
-			_servletContextHelperServiceRegistration.unregister();
-		}
+		_servletContextHelperServiceRegistration.unregister();
 
-		if (_servletContextListenerServiceRegistration != null) {
-			_servletContextListenerServiceRegistration.unregister();
-		}
+		_servletContextListenerServiceRegistration.unregister();
 
-		if (_defaultServletServiceRegistration != null) {
-			_defaultServletServiceRegistration.unregister();
-		}
+		_defaultServletServiceRegistration.unregister();
 
-		if (_jspServletServiceRegistration != null) {
-			_jspServletServiceRegistration.unregister();
-		}
+		_jspServletServiceRegistration.unregister();
 
 		if (_portletServletServiceRegistration != null) {
 			_portletServletServiceRegistration.unregister();
@@ -130,41 +135,8 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	@Override
-	public ServiceReference<ServletContextHelper>
-		getServletContextHelperSeviceReference() {
-
-		return _servletContextHelperServiceRegistration.getReference();
-	}
-
-	@Override
-	public ServiceReference<ServletContextListener>
-		getServletContextListenerSeviceReference() {
-
-		return _servletContextListenerServiceRegistration.getReference();
-	}
-
-	@Override
-	public void initDefaults() {
-		if (_defaultServletServiceRegistration == null) {
-			_defaultServletServiceRegistration = createDefaultServlet(
-				_bundleContext, _servletContextName, _wabShapedBundle);
-		}
-
-		if (_jspServletServiceRegistration == null) {
-			_jspServletServiceRegistration = createJspServlet(
-				_bundleContext, _servletContextName);
-		}
-
-		if (_portletServletServiceRegistration == null) {
-			_portletServletServiceRegistration = createPortletServlet(
-				_bundleContext, _servletContextName);
-		}
-
-		if (_portletServletRequestFilterServiceRegistration == null) {
-			_portletServletRequestFilterServiceRegistration =
-				createRestrictPortletServletRequestFilter(
-					_bundleContext, _servletContextName);
-		}
+	public boolean isWabShapedBundle() {
+		return _wabShapedBundle;
 	}
 
 	@Override
@@ -210,8 +182,7 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	protected ServiceRegistration<?> createDefaultServlet(
-		BundleContext bundleContext, String servletContextName,
-		boolean wabShapedBundle) {
+		BundleContext bundleContext, String servletContextName) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -221,7 +192,7 @@ public class ServletContextHelperRegistrationImpl
 
 		String prefix = "/META-INF/resources";
 
-		if (wabShapedBundle) {
+		if (_wabShapedBundle) {
 			prefix = "/";
 		}
 
@@ -268,6 +239,10 @@ public class ServletContextHelperRegistrationImpl
 	protected ServiceRegistration<Servlet> createPortletServlet(
 		BundleContext bundleContext, String servletContextName) {
 
+		if (_wabShapedBundle) {
+			return null;
+		}
+
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
@@ -286,6 +261,10 @@ public class ServletContextHelperRegistrationImpl
 
 	protected ServiceRegistration<?> createRestrictPortletServletRequestFilter(
 		BundleContext bundleContext, String servletContextName) {
+
+		if (_wabShapedBundle) {
+			return null;
+		}
 
 		if (!GetterUtil.getBoolean(
 				_props.get(PropsKeys.PORTLET_CONTAINER_RESTRICT))) {
@@ -390,11 +369,12 @@ public class ServletContextHelperRegistrationImpl
 
 	private final BundleContext _bundleContext;
 	private final CustomServletContextHelper _customServletContextHelper;
-	private ServiceRegistration<?> _defaultServletServiceRegistration;
-	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private ServiceRegistration<?>
+	private final ServiceRegistration<?> _defaultServletServiceRegistration;
+	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private final ServiceRegistration<?>
 		_portletServletRequestFilterServiceRegistration;
-	private ServiceRegistration<Servlet> _portletServletServiceRegistration;
+	private final ServiceRegistration<Servlet>
+		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
 	private final Props _props;
 	private final ServiceRegistration<ServletContextHelper>

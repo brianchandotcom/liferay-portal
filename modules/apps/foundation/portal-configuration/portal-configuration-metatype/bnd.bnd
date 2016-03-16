@@ -2,6 +2,7 @@ Bundle-Name: Liferay Portal Metatype
 Bundle-SymbolicName: com.liferay.portal.configuration.metatype
 Bundle-Version: 1.0.2
 Export-Package:\
+	com.liferay.portal.configuration.bnd.util,\
 	com.liferay.portal.configuration.metatype.annotations,\
 	com.liferay.portal.configuration.metatype.definitions,\
 	com.liferay.portal.configuration.metatype.util

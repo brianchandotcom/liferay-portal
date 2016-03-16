@@ -103,7 +103,10 @@ public class DDMDataProviderInstanceStagedModelRepository
 	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
-	//TODO there is no method in the LS to delete multiple entities
+
+		_ddmDataProviderInstanceLocalService.deleteDataProviderInstances(
+			portletDataContext.getCompanyId(),
+			portletDataContext.getScopeGroupId());
 	}
 
 	@Override
@@ -138,34 +141,6 @@ public class DDMDataProviderInstanceStagedModelRepository
 			PortletDataContext portletDataContext,
 			DDMDataProviderInstance dataProviderInstance)
 		throws PortletDataException {
-
-		long userId = portletDataContext.getUserId(
-			dataProviderInstance.getUserUuid());
-
-		DDMDataProviderInstance existingProvider =
-			fetchStagedModelByUuidAndGroupId(
-				dataProviderInstance.getUuid(),
-				portletDataContext.getScopeGroupId());
-
-		if ((existingProvider == null) ||
-			!isStagedModelInTrash(existingProvider)) {
-
-			return;
-		}
-
-/*		TrashHandler trashHandler = existingProvider.getTrashHandler();
-
-		try {
-			if (trashHandler.isRestorable(
-				existingProvider.getEntryId())) {
-
-				trashHandler.restoreTrashEntry(
-					userId, existingProvider.getEntryId());
-			}
-		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
-		}*/
 	}
 
 	@Override

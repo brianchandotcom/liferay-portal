@@ -376,7 +376,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	);
 </aui:script>
 
-<aui:script use="aui-base,aui-datatype,calendar">
+<aui:script use="aui-base,aui-datatype,calendar,liferay-calendar-session-listener">
 	var DateMath = A.DataType.DateMath;
 
 	window.<portlet:namespace />refreshMiniCalendarSelectedDates = function() {
@@ -493,6 +493,13 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<portlet:namespace />refreshMiniCalendarSelectedDates();
 
 	<portlet:namespace />scheduler.load();
+
+	new Liferay.CalendarSessionListener(
+		{
+			calendars: Liferay.CalendarUtil.availableCalendars,
+			scheduler: <portlet:namespace />scheduler
+		}
+	);
 </aui:script>
 
 <%!

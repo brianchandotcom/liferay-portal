@@ -82,7 +82,7 @@
 	%>
 
 			<aui:script sandbox="<%= true %>">
-				var sectionContent = $('#<%= errorSection %>Content');
+				var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
 
 				if (!sectionContent.hasClass('in')) {
 					sectionContent.collapse('show');

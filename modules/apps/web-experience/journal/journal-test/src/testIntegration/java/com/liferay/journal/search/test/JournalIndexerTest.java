@@ -280,7 +280,7 @@ public class JournalIndexerTest {
 
 		assertSearchCount(1, _group.getGroupId(), searchContext);
 
-		JournalArticleLocalServiceUtil.moveArticleToTrash(
+		article = JournalArticleLocalServiceUtil.moveArticleToTrash(
 			TestPropsValues.getUserId(), article);
 
 		assertSearchCount(0, _group.getGroupId(), searchContext);

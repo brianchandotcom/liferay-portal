@@ -61,14 +61,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoRecycleBinViaSuccessMessage">
-		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_RECYCLE_BIN_LINK" value1="the Recycle Bin" />
-
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Recycle Bin" />
-		</execute>
-	</command>
-
 	<command name="restoreContentFromFolderCP">
 		<var name="key_assetName" value="${assetName}" />
 

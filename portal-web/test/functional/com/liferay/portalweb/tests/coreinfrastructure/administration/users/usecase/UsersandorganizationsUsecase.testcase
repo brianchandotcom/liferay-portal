@@ -812,9 +812,6 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
-
-		<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
 		<execute function="AssertTextPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Site Name H" />
 	</command>
 

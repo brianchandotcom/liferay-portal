@@ -1319,14 +1319,15 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			int size = organizationsTree.size();
 
 			if (size > 0) {
-				StringBundler sb = new StringBundler(size * 3 + 1);
+				StringBundler sb = new StringBundler(size * 4 + 1);
 
 				sb.append("WHERE (");
 
 				for (Organization organization : organizationsTree) {
 					sb.append("(Organization_.treePath LIKE '%/");
 					sb.append(organization.getOrganizationId());
-					sb.append("/%') OR ");
+					sb.append("/%')");
+					sb.append(" OR ");
 				}
 
 				sb.setIndex(sb.index() - 1);

@@ -1286,15 +1286,17 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 3);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
 
-		sb.append(
-			"{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": [");
+		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
+		sb.append("[");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append("{\"columns\": [{\"fieldNames\": [\"");
 			sb.append(nextDDLCustomFieldName(groupId, i));
-			sb.append("\"], \"size\": 12}]}, ");
+			sb.append("\"], \"size\": 12}]}");
+			sb.append(", ");
+		}
 		}
 
 		if (_maxDDLCustomFieldCount > 0) {

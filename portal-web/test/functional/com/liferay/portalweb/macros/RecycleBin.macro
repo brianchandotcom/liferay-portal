@@ -214,7 +214,7 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
 
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
-		
+
 		<execute function="AssertElementPresent" locator1="MenuItem#RESTORE" />
 		<execute function="AssertElementPresent" locator1="MenuItem#DELETE" />
 	</command>

@@ -152,7 +152,7 @@ if (layout != null) {
 
 		if (navBlock) {
 			if (A.UA.touchMobile) {
-				$('#navigationCollapse').one(
+				$(Liferay.Data.NAV_SELECTOR_MOBILE).one(
 					'shown.bs.collapse',
 					function () {
 						Liferay.fire('initNavigation');

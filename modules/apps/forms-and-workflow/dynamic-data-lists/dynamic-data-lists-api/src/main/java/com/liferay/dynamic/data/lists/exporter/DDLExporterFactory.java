@@ -26,17 +26,19 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- *  Provides a factory to fetch implementations of DDL Exporter service. By default
- *  two implemententations are provided and available as XML or CSV formats
- *  but other could be added as OSGi modules.
+ * Provides a factory to fetch implementations of the DDL Exporter service. By
+ * default, implemententations for XML and CSV formats are available, but others
+ * can be added as OSGi modules.
  *
  * @author Marcellus Tavares
+ * @see    DDLExporter
  */
 @Component(immediate = true, service = DDLExporterFactory.class)
 public class DDLExporterFactory {
 
 	/**
-	 * Returns the available formats that could be used to export record set records.
+	 * Returns the available formats that can be used to export record set
+	 * records.
 	 *
 	 * @return the available formats registered in the system
 	 */
@@ -45,7 +47,8 @@ public class DDLExporterFactory {
 	}
 
 	/**
-	 * Returns the DDL Export service instace for the formats specified.
+	 * Returns the DDL Export service instace for the specified formats.
+	 *
 	 * @param  format the format that will be used to export
 	 * @return the DDLExporter instance
 	 */

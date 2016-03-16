@@ -35,7 +35,7 @@ public class DDLRecordVersionLocalServiceImpl
 	extends DDLRecordVersionLocalServiceBaseImpl {
 
 	/**
-	 * Returns the latest record version for the given record
+	 * Returns a record's latest record version.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the latest record version for the given record
@@ -75,7 +75,8 @@ public class DDLRecordVersionLocalServiceImpl
 	}
 
 	/**
-	 * Returns a record version matching the record's primary key and the version.
+	 * Returns the version of a record matching the record's primary key and
+	 * version.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @param  version the record version
@@ -90,7 +91,7 @@ public class DDLRecordVersionLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all record versions matching the record.
+	 * Returns an ordered range of all record versions matching the record.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -103,10 +104,9 @@ public class DDLRecordVersionLocalServiceImpl
 	 * </p>
 	 *
 	 * @param  recordId the primary key of the record
-	 * @param  start the lower bound of the range of record versions to
-	 *         return
-	 * @param  end the upper bound of the range of record versions to
-	 *         return (not inclusive)
+	 * @param  start the lower bound of the range of record versions to return
+	 * @param  end the upper bound of the range of record versions to return
+	 *         (not inclusive)
 	 * @param  orderByComparator the comparator to order the record versions
 	 * @return the range of matching record versions ordered by the comparator
 	 */

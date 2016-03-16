@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +48,18 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_search = false;
 	}
 
+	protected String getCssClass() {
+		if (Validator.isNotNull(_cssClass)) {
+			return _cssClass;
+		}
+
+		if (_search) {
+			return "taglib-empty-search-result-message-header";
+		}
+
+		return "taglib-empty-result-message-header";
+	}
+
 	@Override
 	protected String getEndPage() {
 		return _END_PAGE;
@@ -63,7 +76,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 			"liferay-ui:empty-result-message:compact",
 			String.valueOf(_compact));
 		request.setAttribute(
-			"liferay-ui:empty-result-message:cssClass", _cssClass);
+			"liferay-ui:empty-result-message:cssClass", getCssClass());
 		request.setAttribute(
 			"liferay-ui:empty-result-message:message", _message);
 		request.setAttribute(

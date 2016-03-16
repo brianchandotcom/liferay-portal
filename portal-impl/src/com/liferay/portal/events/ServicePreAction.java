@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1400,7 +1401,7 @@ public class ServicePreAction extends Action {
 			request, user, permissionChecker, defaultLayoutComposite,
 			doAsGroupId);
 
-		if (defaultLayoutComposite.getLayouts() != null) {
+		if (ListUtil.isNotEmpty(defaultLayoutComposite.getLayouts())) {
 			return defaultLayoutComposite;
 		}
 
@@ -1417,7 +1418,7 @@ public class ServicePreAction extends Action {
 				request, user, permissionChecker, defaultLayoutComposite,
 				doAsGroupId);
 
-			if (defaultLayoutComposite.getLayouts() != null) {
+			if (ListUtil.isNotEmpty(defaultLayoutComposite.getLayouts())) {
 				return defaultLayoutComposite;
 			}
 		}

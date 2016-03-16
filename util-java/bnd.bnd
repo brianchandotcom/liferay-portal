@@ -6,4 +6,4 @@ Import-Package:\
 	com.liferay.*,\
 	*;resolution:=optional
 Include-Resource: classes
--baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.util.java-2.0.0.jar
+-baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.java-2.0.0.jar

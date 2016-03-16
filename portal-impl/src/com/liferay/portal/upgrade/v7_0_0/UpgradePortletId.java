@@ -45,14 +45,10 @@ public class UpgradePortletId
 			new String[] {"191", _SITE_TEAMS},
 			new String[] {"192", _SITE_TEMPLATE_SETTINGS},
 			new String[] {"199", PortletKeys.DOCUMENT_LIBRARY_ADMIN},
-			new String[] {
-				"1_WAR_soannouncementsportlet", PortletKeys.ANNOUNCEMENTS
-			},
 			new String[] {"20", PortletKeys.DOCUMENT_LIBRARY},
 			new String[] {"31", PortletKeys.MEDIA_GALLERY_DISPLAY},
 			new String[] {"33", PortletKeys.BLOGS},
 			new String[] {"83", PortletKeys.ALERTS},
-			new String[] {"84", PortletKeys.ANNOUNCEMENTS},
 			new String[] {"88", _LAYOUTS_ADMIN},
 			new String[] {"99", _ASSET_TAGS_ADMIN}
 		};

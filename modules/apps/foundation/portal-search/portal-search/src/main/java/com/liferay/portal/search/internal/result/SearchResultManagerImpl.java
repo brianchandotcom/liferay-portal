@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.internal.result;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -22,10 +25,6 @@ import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,6 +32,9 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -94,6 +96,26 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			searchResult, document, locale, portletRequest, portletResponse);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SearchResultManager.class, "(model.class.name=*)",
+			new ServiceReferenceMapper<String, SearchResultManager>() {
+
+				@Override
+				public void map(
+					ServiceReference<SearchResultManager> serviceReference,
+					Emitter<String> emitter) {
+
+					Object modelClassName = serviceReference.getProperty(
+						"model.class.name");
+
+					emitter.emit((String)modelClassName);
+				}
+
+			});
+	}
+
 	private SearchResultManager _getSearchResultManager(Document document) {
 		String entryClassName = GetterUtil.getString(
 			document.get(Field.ENTRY_CLASS_NAME));
@@ -118,25 +140,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 	private final HashMap<String, SearchResultContributor>
 		_searchResultContributors = new HashMap<>();
-
-	private final ServiceTrackerMap<String, SearchResultManager>
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			SearchResultManager.class, "(model.class.name=*)",
-			new ServiceReferenceMapper<String, SearchResultManager>() {
-
-				@Override
-				public void map(
-					ServiceReference<SearchResultManager> serviceReference,
-					Emitter<String> emitter) {
-
-					Object modelClassName = serviceReference.getProperty(
-						"model.class.name");
-
-					emitter.emit((String)modelClassName);
-				}
-
-			});
-
+	private ServiceTrackerMap<String, SearchResultManager> _serviceTrackerMap;
 	private SummaryFactory _summaryFactory;
 
 }

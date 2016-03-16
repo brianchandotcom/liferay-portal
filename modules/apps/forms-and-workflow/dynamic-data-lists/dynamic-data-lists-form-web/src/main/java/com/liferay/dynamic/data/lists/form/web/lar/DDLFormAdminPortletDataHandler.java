@@ -30,6 +30,7 @@ import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -78,16 +79,22 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DDLRecord.class),
 			new StagedModelType(DDLRecordSet.class));
+
+		PortletDataHandlerControl[] formsPortletDataHandlerControlChildren =
+			new PortletDataHandlerControl[] {
+				new PortletDataHandlerBoolean(
+					NAMESPACE, "ddm-data-provider", true, false, null,
+					DDMDataProviderInstance.class.getName())
+			};
+
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "forms", true, false, null,
+				NAMESPACE, "forms", true, false,
+				formsPortletDataHandlerControlChildren,
 				DDLRecordSet.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "form-entries", true, false, null,
-				DDLRecord.class.getName()),
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "ddm-data-provider", true, false, null,
-				DDMDataProviderInstance.class.getName())
+				DDLRecord.class.getName())
 		);
 	}
 
@@ -241,18 +248,18 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, ddmStructureElement);
 			}
 
-			Element ddmDataProviderInstanceElement =
+			Element ddmDataProviderInstancesElement =
 				portletDataContext.getImportDataGroupElement(
 					DDMDataProviderInstance.class);
 
 			List<Element> ddmDataProviderInstanceElements =
-				ddmDataProviderInstanceElement.elements();
+				ddmDataProviderInstancesElement.elements();
 
-			for (Element ddmStructureElement :
+			for (Element ddmDataProviderInstanceElement :
 					ddmDataProviderInstanceElements) {
 
 				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, ddmStructureElement);
+					portletDataContext, ddmDataProviderInstanceElement);
 			}
 		}
 

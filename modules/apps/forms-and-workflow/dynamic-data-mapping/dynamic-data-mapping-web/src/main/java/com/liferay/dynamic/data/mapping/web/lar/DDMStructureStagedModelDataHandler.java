@@ -298,8 +298,8 @@ public class DDMStructureStagedModelDataHandler
 		DDMForm ddmForm = getImportDDMForm(
 			portletDataContext, structureElement);
 
-		importDDMDataProviderInstances(portletDataContext, structureElement,
-			ddmForm);
+		importDDMDataProviderInstances(
+			portletDataContext, structureElement, ddmForm);
 
 		DDMFormLayout ddmFormLayout = getImportDDMFormLayout(
 			portletDataContext, structureElement);
@@ -383,17 +383,19 @@ public class DDMStructureStagedModelDataHandler
 
 		Set<Long> ddmDataProviderInstanceIdSet = new HashSet<>();
 
-		List<DDMDataProviderInstanceLink> providerInstanceLinks =
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
 			_ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structure.getStructureId());
 
-		for (DDMDataProviderInstanceLink providerLink : providerInstanceLinks) {
+		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
+				ddmDataProviderInstanceLinks) {
+
 			long ddmDataProviderInstanceId =
-				providerLink.getDataProviderInstanceId();
+				ddmDataProviderInstanceLink.getDataProviderInstanceId();
 
 			DDMDataProviderInstance ddmDataProviderInstance =
-				_ddmDataProviderInstanceLocalService.
-					getDDMDataProviderInstance(ddmDataProviderInstanceId);
+				_ddmDataProviderInstanceLocalService.getDDMDataProviderInstance(
+					ddmDataProviderInstanceId);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, structure, ddmDataProviderInstance,
@@ -506,14 +508,15 @@ public class DDMStructureStagedModelDataHandler
 				DDMDataProviderInstance.class);
 
 		for (String ddmDataProviderInstanceId : ddmDataProviderInstanceIds) {
-			long oldProviderId = Long.parseLong(ddmDataProviderInstanceId);
+			long oldDDMDataProviderInstanceId = Long.parseLong(
+				ddmDataProviderInstanceId);
 
-			long newProviderId = MapUtil.getLong(
-				dataProviderInstanceIdMap, oldProviderId);
+			long newDDMDataProviderInstanceId = MapUtil.getLong(
+				dataProviderInstanceIdMap, oldDDMDataProviderInstanceId);
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, DDMDataProviderInstance.class,
-				newProviderId);
+				newDDMDataProviderInstanceId);
 		}
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
@@ -523,15 +526,15 @@ public class DDMStructureStagedModelDataHandler
 				continue;
 			}
 
-			long oldProviderId = Long.valueOf(
+			long oldDDMDataProviderInstanceId = Long.valueOf(
 				String.valueOf(
 					ddmFormField.getProperty("ddmDataProviderInstanceId")));
 
-			long newProviderId = MapUtil.getLong(
-				dataProviderInstanceIdMap, oldProviderId);
+			long newDDMDataProviderInstanceId = MapUtil.getLong(
+				dataProviderInstanceIdMap, oldDDMDataProviderInstanceId);
 
 			ddmFormField.setProperty(
-				"ddmDataProviderInstanceId", newProviderId);
+				"ddmDataProviderInstanceId", newDDMDataProviderInstanceId);
 		}
 	}
 

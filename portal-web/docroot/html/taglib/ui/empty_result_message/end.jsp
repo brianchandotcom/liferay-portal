@@ -14,7 +14,11 @@
  */
 --%>
 
+<%@ include file="/html/taglib/ui/empty_result_message/init.jsp" %>
+
+<c:if test="<%= !compact %>">
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</c:if>

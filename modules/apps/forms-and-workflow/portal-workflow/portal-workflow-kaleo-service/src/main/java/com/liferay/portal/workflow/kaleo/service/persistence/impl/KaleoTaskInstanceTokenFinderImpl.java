@@ -548,8 +548,9 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("AND ((KaleoTaskAssignmentInstance.assigneeClassName ");
-			sb.append("= ?) AND (");
+			sb.append("AND ((");
+			sb.append("KaleoTaskAssignmentInstance.assigneeClassName = ?) ");
+			sb.append("AND (");
 
 			for (int i = 0; i < roleIds.size(); i++) {
 				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?) ");
@@ -559,13 +560,15 @@ public class KaleoTaskInstanceTokenFinderImpl
 			for (int i = 0; i < userGroupRoles.size(); i++) {
 				sb.append("((KaleoTaskAssignmentInstance.groupId = ?) AND ");
 				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ");
-				sb.append("?)) OR ");
+				sb.append("?)) ");
+				sb.append("OR ");
 			}
 
 			for (int i = 0; i < userGroupGroupRoles.size(); i++) {
 				sb.append("((KaleoTaskAssignmentInstance.groupId = ?) AND ");
 				sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ");
-				sb.append("?)) OR ");
+				sb.append("?)) ");
+				sb.append("OR ");
 			}
 
 			sb.setIndex(sb.index() - 1);

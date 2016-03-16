@@ -35,7 +35,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -77,19 +76,6 @@ public class ModifiableServletContextAdaptor
 		_logger = logger;
 
 		_bundle = _bundleContext.getBundle();
-	}
-
-	@Override
-	public Object invoke(Object proxy, Method method, Object[] args)
-		throws Throwable {
-
-		Method adaptorMethod = contextAdaptorMethods.get(method);
-
-		if (adaptorMethod != null) {
-			return adaptorMethod.invoke(this, args);
-		}
-
-		return method.invoke(_servletContext, args);
 	}
 
 	public FilterRegistration.Dynamic addFilter(
@@ -331,6 +317,19 @@ public class ModifiableServletContextAdaptor
 	}
 
 	@Override
+	public Object invoke(Object proxy, Method method, Object[] args)
+		throws Throwable {
+
+		Method adaptorMethod = _contextAdaptorMethods.get(method);
+
+		if (adaptorMethod != null) {
+			return adaptorMethod.invoke(this, args);
+		}
+
+		return method.invoke(_servletContext, args);
+	}
+
+	@Override
 	public void registerFilters() {
 		Map<String, FilterDefinition> filterDefinitions =
 			_webXMLDefinition.getFilterDefinitions();
@@ -451,29 +450,6 @@ public class ModifiableServletContextAdaptor
 		}
 	}
 
-	private static final Class<?>[] _INTERFACES = new Class<?>[] {
-		ModifiableServletContext.class, ServletContext.class
-	};
-
-	private static Map<Method, Method> contextAdaptorMethods =
-		new ConcurrentHashMap<>();
-
-	private final Bundle _bundle;
-	private final BundleContext _bundleContext;
-	private final LinkedHashMap<String, FilterRegistrationImpl>
-		_filterRegistrations = new LinkedHashMap<>();
-	private final LinkedHashMap<Class<? extends EventListener>, EventListener>
-		_listeners = new LinkedHashMap<>();
-	private final Logger _logger;
-	private final ServletContext _servletContext;
-	private final LinkedHashMap<String, ServletRegistrationImpl>
-		_servletRegistrations = new LinkedHashMap<>();
-	private final WebXMLDefinition _webXMLDefinition;
-
-	static {
-		contextAdaptorMethods = createContextAdaptorMethods();
-	}
-
 	private static Map<Method, Method> createContextAdaptorMethods() {
 		Map<Method, Method> methods = new HashMap<>();
 
@@ -498,12 +474,36 @@ public class ModifiableServletContextAdaptor
 					methods.put(method, adaptorMethod);
 				}
 				catch (NoSuchMethodException nsme2) {
+
 					// do nothing
+
 				}
 			}
 		}
 
 		return Collections.unmodifiableMap(methods);
 	}
+
+	private static final Class<?>[] _INTERFACES = new Class<?>[] {
+		ModifiableServletContext.class, ServletContext.class
+	};
+
+	private static final Map<Method, Method> _contextAdaptorMethods;
+
+	static {
+		_contextAdaptorMethods = createContextAdaptorMethods();
+	}
+
+	private final Bundle _bundle;
+	private final BundleContext _bundleContext;
+	private final LinkedHashMap<String, FilterRegistrationImpl>
+		_filterRegistrations = new LinkedHashMap<>();
+	private final LinkedHashMap<Class<? extends EventListener>, EventListener>
+		_listeners = new LinkedHashMap<>();
+	private final Logger _logger;
+	private final ServletContext _servletContext;
+	private final LinkedHashMap<String, ServletRegistrationImpl>
+		_servletRegistrations = new LinkedHashMap<>();
+	private final WebXMLDefinition _webXMLDefinition;
 
 }

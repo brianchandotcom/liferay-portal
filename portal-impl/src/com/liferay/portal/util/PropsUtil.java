@@ -88,9 +88,7 @@ public class PropsUtil {
 
 		Properties mergedProperties = (Properties)systemProperties.clone();
 
-		for(Map.Entry<Object, Object> entry : properties.entrySet()) {
-			mergedProperties.put(entry.getKey(), entry.getValue());
-		}
+		mergedProperties.putAll(properties);
 
 		return mergedProperties;
 	}

@@ -25,7 +25,8 @@ import java.util.List;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
- * dynamic data list (DDL) record versions. Its methods include permission checks.
+ * dynamic data list (DDL) record versions. Its methods include permission
+ * checks.
  *
  * @author Marcellus Tavares
  */
@@ -37,7 +38,8 @@ public class DDLRecordVersionServiceImpl
 	 *
 	 * @param  recordVersionId the primary key of the record version
 	 * @return the record version with the ID
-	 * @throws PortalException if the mathing record set is not found or if the user do not have the required permission to access the record set
+	 * @throws PortalException if the matching record set is not found or if the
+	 *         user do not have the required permission to access the record set
 	 */
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
@@ -54,12 +56,11 @@ public class DDLRecordVersionServiceImpl
 	}
 
 	/**
-	 * Returns a record version matching the record's primary key and the version.
+	 * Returns a record version matching the record's primary key and version.
 	 *
-	 * @param  recordId the primary key of the record
-	 * @param  version the record version
 	 * @return the record version macthing the record primary key and version
-	 * @throws PortalException if the mathing record set is not found or if the user do not have the required permission to access the record set
+	 * @throws PortalException if the matching record set is not found or if the
+	 *         user do not have the required permission to access the record set
 	 */
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordId, String version)
@@ -72,7 +73,7 @@ public class DDLRecordVersionServiceImpl
 	}
 
 	/**
-	 * Returns all the record versions matching the record
+	 * Returns all the record versions matching the record.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the matching record versions
@@ -88,7 +89,7 @@ public class DDLRecordVersionServiceImpl
 	}
 
 	/**
-	 * Returns a range of all record versions matching the record.
+	 * Returns an ordered range of record versions matching the record.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
@@ -101,10 +102,9 @@ public class DDLRecordVersionServiceImpl
 	 * </p>
 	 *
 	 * @param  recordId the primary key of the record
-	 * @param  start the lower bound of the range of record versions to
-	 *         return
-	 * @param  end the upper bound of the range of record versions to
-	 *         return (not inclusive)
+	 * @param  start the lower bound of the range of record versions to return
+	 * @param  end the upper bound of the range of record versions to return
+	 *         (not inclusive)
 	 * @param  orderByComparator the comparator to order the record versions
 	 * @return the range of matching record versions ordered by the comparator
 	 */

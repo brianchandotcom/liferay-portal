@@ -254,6 +254,11 @@
 	<td>xpath=(//*[@data-qa-id='row']//span/*[name()='svg'][contains(@class,'icon-ellipsis')])[${key_rowIndexNumber}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STAGING_BAR_ELLIPSIS</td>
+	<td>//li[contains(@class,'control-menu-nav-item')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

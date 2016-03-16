@@ -59,7 +59,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Jon Steer
- * @author Raymond Augé
+ * @author Raymond AugÃ©
  * @author Connor McKay
  * @author Shuyang Zhou
  */

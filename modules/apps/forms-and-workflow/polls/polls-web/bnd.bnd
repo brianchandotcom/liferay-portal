@@ -27,8 +27,6 @@ Web-ContextPath: /polls-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -include: ../../app.bnd
 -liferay-includeresource:\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
 	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -wab: docroot

@@ -419,8 +419,6 @@ public class FileSystemImporter extends BaseImporter {
 			InputStream inputStream)
 		throws Exception {
 
-		String language = getDDMStructureLanguage(fileName);
-
 		fileName = FileUtil.stripExtension(fileName);
 
 		String name = getName(fileName);
@@ -447,26 +445,13 @@ public class FileSystemImporter extends BaseImporter {
 
 		String content = StringUtil.read(inputStream);
 
-		DDMForm ddmForm = null;
-
-		if (language.equals(TemplateConstants.LANG_TYPE_XML)) {
-			if (isJournalStructureXSD(content)) {
-				content = journalConverter.getDDMXSD(content);
-			}
-
-			_ddmXML.validateXML(content);
-
-			ddmForm = _ddmFormXSDDeserializer.deserialize(content);
-		}
-		else {
-			ddmForm = _ddmFormJSONDeserializer.deserialize(content);
-		}
-
-		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
-		setServiceContext(fileName);
-
 		try {
+			DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(content);
+
+			DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
+
+			setServiceContext(fileName);
+
 			if (!updateModeEnabled || (ddmStructure == null)) {
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId, parentDDMStructureKey,
@@ -1352,18 +1337,6 @@ public class FileSystemImporter extends BaseImporter {
 		finally {
 			_indexWriterHelper.setIndexReadOnly(indexReadOnly);
 		}
-	}
-
-	protected String getDDMStructureLanguage(String fileName) {
-		String extension = FileUtil.getExtension(fileName);
-
-		if (extension.equals(TemplateConstants.LANG_TYPE_JSON) ||
-			extension.equals(TemplateConstants.LANG_TYPE_XML)) {
-
-			return extension;
-		}
-
-		return TemplateConstants.LANG_TYPE_XML;
 	}
 
 	protected String getDDMTemplateLanguage(String fileName) {

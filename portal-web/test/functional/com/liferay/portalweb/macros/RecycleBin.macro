@@ -54,10 +54,10 @@
 	<command name="gotoEntryViaSuccessMessage">
 		<var name="key_assetName" value="${assetName}" />
 
-		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_CONTENT_LINK" value1="${assetName}" />
+		<execute function="AssertClick" locator1="RecycleBin#SUCCESS_MESSAGE_CONTENT_LINK" value1="the Recycle Bin" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${assetName}" />
+			<var name="portletTitle" value="Recycle Bin" />
 		</execute>
 	</command>
 
@@ -217,13 +217,14 @@
 	</command>
 
 	<command name="viewEntry">
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${assetName}" />
-		</execute>
+		<var name="key_assetName" value="${assetName}" />
 
-		<execute function="AssertTextPresent" value1="${assetContent}" />
-		<execute function="AssertElementPresent" locator1="Button#RESTORE" />
-		<execute function="AssertElementPresent" locator1="Button#DELETE" />
+		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
+
+		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		
+		<execute function="AssertElementPresent" locator1="MenuItem#RESTORE" />
+		<execute function="AssertElementPresent" locator1="MenuItem#DELETE" />
 	</command>
 
 	<command name="viewRecycleBinMaxAge">

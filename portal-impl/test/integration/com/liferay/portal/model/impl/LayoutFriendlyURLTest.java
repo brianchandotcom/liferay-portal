@@ -154,7 +154,7 @@ public class LayoutFriendlyURLTest {
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
 
 			Assert.assertEquals(
-				layoutFriendlyURLException.getKeywordConflict(), "tags");
+				"tags", layoutFriendlyURLException.getKeywordConflict());
 		}
 
 		friendlyURLMap = new HashMap<>();
@@ -179,7 +179,7 @@ public class LayoutFriendlyURLTest {
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
 
 			Assert.assertEquals(
-				layoutFriendlyURLException.getKeywordConflict(), "tags");
+				"tags", layoutFriendlyURLException.getKeywordConflict());
 		}
 
 		friendlyURLMap = new HashMap<>();
@@ -204,7 +204,7 @@ public class LayoutFriendlyURLTest {
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
 
 			Assert.assertEquals(
-				layoutFriendlyURLException.getKeywordConflict(), "tags");
+				"tags", layoutFriendlyURLException.getKeywordConflict());
 		}
 
 		friendlyURLMap = new HashMap<>();
@@ -229,7 +229,7 @@ public class LayoutFriendlyURLTest {
 				(LayoutFriendlyURLException)layoutFriendlyURLExceptions.get(0);
 
 			Assert.assertEquals(
-				layoutFriendlyURLException.getKeywordConflict(), "/-/");
+				"/-/", layoutFriendlyURLException.getKeywordConflict());
 		}
 	}
 
@@ -302,7 +302,7 @@ public class LayoutFriendlyURLTest {
 				String keywordsConflict =
 					((LayoutFriendlyURLException)e).getKeywordConflict();
 
-				Assert.assertEquals(keywordsConflict, "tags");
+				Assert.assertEquals("tags", keywordsConflict);
 			}
 		}
 	}

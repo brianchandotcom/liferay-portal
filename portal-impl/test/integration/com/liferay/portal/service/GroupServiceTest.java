@@ -496,7 +496,7 @@ public class GroupServiceTest {
 
 		String scopeLabel = group.getScopeLabel(themeDisplay);
 
-		Assert.assertEquals(scopeLabel, "current-site");
+		Assert.assertEquals("current-site", scopeLabel);
 	}
 
 	@Test
@@ -568,7 +568,7 @@ public class GroupServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(_group.getGroupId()));
 
-		Assert.assertEquals(resourcePermissionsCount, 1);
+		Assert.assertEquals(1, resourcePermissionsCount);
 	}
 
 	@Test

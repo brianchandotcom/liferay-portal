@@ -465,8 +465,8 @@ public class RegistryTest {
 			serviceRegistration.getServiceReference();
 
 		Assert.assertNotNull(serviceReference);
-		Assert.assertEquals(serviceReference.getProperty("a.property"), "A");
-		Assert.assertEquals(serviceReference.getProperty("b.property"), "B");
+		Assert.assertEquals("A", serviceReference.getProperty("a.property"));
+		Assert.assertEquals("B", serviceReference.getProperty("b.property"));
 		Assert.assertNull(serviceReference.getProperty("c.property"));
 
 		serviceRegistration.unregister();
@@ -526,8 +526,8 @@ public class RegistryTest {
 			serviceRegistration.getServiceReference();
 
 		Assert.assertNotNull(serviceReference);
-		Assert.assertEquals(serviceReference.getProperty("a.property"), "E");
-		Assert.assertEquals(serviceReference.getProperty("b.property"), "F");
+		Assert.assertEquals("E", serviceReference.getProperty("a.property"));
+		Assert.assertEquals("F", serviceReference.getProperty("b.property"));
 		Assert.assertNull(serviceReference.getProperty("c.property"));
 
 		serviceRegistration.unregister();
@@ -583,8 +583,8 @@ public class RegistryTest {
 			serviceRegistration.getServiceReference();
 
 		Assert.assertNotNull(serviceReference);
-		Assert.assertEquals(serviceReference.getProperty("a.property"), "C");
-		Assert.assertEquals(serviceReference.getProperty("b.property"), "D");
+		Assert.assertEquals("C", serviceReference.getProperty("a.property"));
+		Assert.assertEquals("D", serviceReference.getProperty("b.property"));
 		Assert.assertNull(serviceReference.getProperty("c.property"));
 
 		serviceRegistration.unregister();

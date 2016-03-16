@@ -66,7 +66,7 @@ public class ProgressTrackerTest {
 
 		progressTracker = getAttribute(ProgressTracker.PERCENT);
 
-		Assert.assertEquals(progressTracker.getPercent(), 50);
+		Assert.assertEquals(50, progressTracker.getPercent());
 	}
 
 	@Test

@@ -51,37 +51,37 @@ public class HookTest {
 	@Test
 	public void testLanguage1() throws Exception {
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.SPAIN, "stars"), "Estrellas");
+			"Estrellas", LanguageUtil.get(LocaleUtil.SPAIN, "stars"));
 	}
 
 	@Test
 	public void testLanguage2() throws Exception {
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.GERMAN, "stars"), "Sterne");
+			"Sterne", LanguageUtil.get(LocaleUtil.GERMAN, "stars"));
 	}
 
 	@Test
 	public void testLanguage3() throws Exception {
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.BRAZIL, "stars"), "Ricardo Kaka");
+			"Ricardo Kaka", LanguageUtil.get(LocaleUtil.BRAZIL, "stars"));
 	}
 
 	@Test
 	public void testLanguage4() throws Exception {
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.PORTUGAL, "stars"),
-			"Cristiano Ronaldo");
+			"Cristiano Ronaldo",
+			LanguageUtil.get(LocaleUtil.PORTUGAL, "stars"));
 	}
 
 	@Test
 	public void testLanguage5() throws Exception {
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.UK, "stars"), "David Beckham");
+			"David Beckham", LanguageUtil.get(LocaleUtil.UK, "stars"));
 	}
 
 	@Test
 	public void testLanguage6() throws Exception {
-		Assert.assertEquals(LanguageUtil.get(LocaleUtil.US, "stars"), "Stars");
+		Assert.assertEquals("Stars", LanguageUtil.get(LocaleUtil.US, "stars"));
 	}
 
 	@Test

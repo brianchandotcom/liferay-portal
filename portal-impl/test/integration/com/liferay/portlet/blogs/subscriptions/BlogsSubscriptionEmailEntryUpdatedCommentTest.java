@@ -135,7 +135,7 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		MailMessage message = MailServiceTestUtil.getLastMailMessage();
 
-		Assert.assertEquals(message.getBody(), "This entry was updated.");
+		Assert.assertEquals("This entry was updated.", message.getBody());
 	}
 
 	@Test

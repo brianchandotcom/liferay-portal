@@ -445,6 +445,8 @@
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="DDLRecord#populateFieldText">
 			<var name="ddlRecordFieldData" value="Name1" />
 			<var name="fieldFieldLabel" value="Name" />

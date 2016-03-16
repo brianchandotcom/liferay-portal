@@ -9,8 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>ANYONE</td>
-	<td>//select[contains(.,'Anyone')]</td>
+	<td>PERMISSIONS_VIEW_ROLE</td>
+	<td>//select[contains(.,'${key_permissionsViewRole}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>VOTES_TOTAL</td>
-	<td>//form[contains(@id,'pollsweb')]/div</td>
+	<td>//form[contains(@id,'pollsweb')]//div[contains(.,'Total Votes: ${key_pollsQuestionTotalVotes}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -28,7 +28,8 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 
 		<div class="card-footer">
 			<div class="card-dm-details">
-				<p class="text-center text-muted">
-					<c:if test="<%= Validator.isNotNull(message) %>">
+				<c:if test="<%= Validator.isNotNull(message) %>">
+					<p class="text-center text-muted">
 						<liferay-ui:message key="<%= message %>" />
-					</c:if>
+					</p>
+				</c:if>

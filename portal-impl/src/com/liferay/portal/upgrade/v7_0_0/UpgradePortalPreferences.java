@@ -74,10 +74,11 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 				"select portalPreferencesId, preferences from " +
 					"PortalPreferences");
 			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
 					"update PortalPreferences set preferences = ? " +
-						"where portalPreferencesId = ?"))) {
+						"where portalPreferencesId = ?")) {
 
 			while (rs.next()) {
 				long portalPreferencesId = rs.getLong("portalPreferencesId");

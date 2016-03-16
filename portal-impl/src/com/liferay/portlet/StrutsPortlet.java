@@ -196,6 +196,8 @@ public class StrutsPortlet extends LiferayPortlet {
 			getInitParameter("copy-request-parameters"), true);
 
 		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
+
+		initValidPaths(templatePath, ".jsp");
 	}
 
 	@Override
@@ -267,14 +269,7 @@ public class StrutsPortlet extends LiferayPortlet {
 	}
 
 	protected void checkPath(String path) throws PortletException {
-		if (Validator.isNotNull(path) &&
-			(!path.startsWith(templatePath) ||
-			 !PortalUtil.isValidResourceId(path) ||
-			 !Validator.isFilePath(path, false))) {
-
-			throw new PortletException(
-				"Path " + path + " is not accessible by this portlet");
-		}
+		super.checkPath(path);
 	}
 
 	protected void include(

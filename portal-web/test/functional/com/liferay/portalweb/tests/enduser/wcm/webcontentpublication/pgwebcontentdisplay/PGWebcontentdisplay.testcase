@@ -377,6 +377,7 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaPanel">
+			<var name="templateName" value="Second Basic Template" />
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>

@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>EDIT_ASSET</td>
-	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
+	<td>//iframe[contains(@id,'editAsset_iframe_')] | //iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>
 </tr>
 <tr>

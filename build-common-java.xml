@@ -181,13 +181,13 @@
 								<property name="-sourcepath" value="." />
 							</bnd>
 
+							<var name="-baseline" unset="true" />
+
 							<if>
 								<not>
 									<equals arg1="${baseline.jar.report.level}" arg2="off" />
 								</not>
 								<then>
-									<var name="-baseline" unset="true" />
-
 									<loadproperties srcFile="bnd.bnd">
 										<filterchain>
 											<linecontains>
@@ -195,7 +195,12 @@
 											</linecontains>
 										</filterchain>
 									</loadproperties>
+								</then>
+							</if>
 
+							<if>
+								<isset property="-baseline" />
+								<then>
 									<antelope:stringutil string="${-baseline}" property="baseline.file.beginindex">
 										<indexof string="=" />
 									</antelope:stringutil>

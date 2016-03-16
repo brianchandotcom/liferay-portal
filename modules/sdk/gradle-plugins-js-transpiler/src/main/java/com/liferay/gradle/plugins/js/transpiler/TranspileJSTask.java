@@ -22,6 +22,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -48,6 +50,10 @@ public class TranspileJSTask
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_METAL_CLI_TASK_NAME);
 
+		_soySrcIncludes.add("**/*.soy.es");
+
+		_srcIncludes.add("**/*.es.js");
+
 		include("**/*.es.js");
 
 		setScriptFile(
@@ -60,6 +66,8 @@ public class TranspileJSTask
 				}
 
 			});
+
+		setWorkingDir("classes/META-INF/resources");
 	}
 
 	@Override
@@ -90,13 +98,6 @@ public class TranspileJSTask
 		_patternFilterable.exclude(excludes);
 
 		return this;
-	}
-
-	@Override
-	public void executeNode() {
-		super.setWorkingDir(getWorkingDir());
-
-		super.executeNode();
 	}
 
 	@Input
@@ -157,9 +158,14 @@ public class TranspileJSTask
 		return _sourceMaps;
 	}
 
-	@Override
-	public File getWorkingDir() {
-		return getSourceDir();
+	@Input
+	public List<String> getSoySrcIncludes() {
+		return GradleUtil.toStringList(_soySrcIncludes);
+	}
+
+	@Input
+	public List<String> getSrcIncludes() {
+		return GradleUtil.toStringList(_srcIncludes);
 	}
 
 	@Override
@@ -234,9 +240,20 @@ public class TranspileJSTask
 		_sourceMaps = sourceMaps;
 	}
 
-	@Override
-	public void setWorkingDir(Object workingDir) {
-		throw new UnsupportedOperationException();
+	public void setSoySrcIncludes(Iterable<?> soySrcIncludes) {
+		_soySrcIncludes.clear();
+	}
+
+	public void setSoySrcIncludes(Object ... soySrcIncludes) {
+		setSoySrcIncludes(Arrays.asList(soySrcIncludes));
+	}
+
+	public void setSrcIncludes(Iterable<?> srcIncludes) {
+		_srcIncludes.clear();
+	}
+
+	public void setSrcIncludes(Object ... srcIncludes) {
+		setSrcIncludes(Arrays.asList(srcIncludes));
 	}
 
 	public static enum SourceMaps {
@@ -250,6 +267,7 @@ public class TranspileJSTask
 		List<String> completeArgs = super.getCompleteArgs();
 
 		File sourceDir = getSourceDir();
+		File workingDir = getWorkingDir();
 
 		completeArgs.add("build");
 
@@ -257,7 +275,7 @@ public class TranspileJSTask
 		completeArgs.add(getBundleFileName());
 
 		completeArgs.add("--dest");
-		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
+		completeArgs.add(workingDir.toString());
 
 		completeArgs.add("--format");
 		completeArgs.add(getModules());
@@ -276,10 +294,19 @@ public class TranspileJSTask
 				sourceMaps == SourceMaps.ENABLED_INLINE ? "inline" : "false");
 		}
 
+		completeArgs.add("--soySrc");
+
+		for (String soySrcInclude : getSoySrcIncludes()) {
+			completeArgs.add(soySrcInclude);
+		}
+
+		completeArgs.add("--soyDest");
+		completeArgs.add(workingDir.toString());
+
 		completeArgs.add("--src");
 
-		for (File file : getSourceFiles()) {
-			completeArgs.add(FileUtil.relativize(file, sourceDir));
+		for (String srcInclude : getSrcIncludes()) {
+			completeArgs.add(srcInclude);
 		}
 
 		return completeArgs;
@@ -293,5 +320,7 @@ public class TranspileJSTask
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private Object _sourceDir;
 	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
+	private final List<Object> _soySrcIncludes = new ArrayList<>();
+	private final List<Object> _srcIncludes = new ArrayList<>();
 
 }

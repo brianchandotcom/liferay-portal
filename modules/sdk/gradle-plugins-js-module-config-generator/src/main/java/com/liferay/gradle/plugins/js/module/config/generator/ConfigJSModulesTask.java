@@ -54,7 +54,7 @@ public class ConfigJSModulesTask
 			JSModuleConfigGeneratorPlugin.
 				DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME);
 
-		include("**/*.es.js");
+		include("**/*.es.js*");
 
 		setScriptFile(
 			new Callable<File>() {

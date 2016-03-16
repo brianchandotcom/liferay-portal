@@ -41,7 +41,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<aui:input name="invitedRoleId" type="hidden" value="" />
 		<aui:input name="invitedTeamId" type="hidden" value="" />
 
-		<aui:fieldset-group id="inviteMembersContainer" markupView="lexicon">
+		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<label><liferay-ui:message key="find-members" /></label>
 
@@ -59,7 +59,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<div class="search" id="<portlet:namespace />membersList"></div>
 
-				<label><liferay-ui:message key="members-to-invite" /><liferay-ui:icon-help message="to-add,-click-members-on-the-top-list" /> </label>
+				<label><liferay-ui:message key="members-to-invite" /><liferay-ui:icon-help message="to-add,-click-members-on-the-top-list" /></label>
 
 				<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
 

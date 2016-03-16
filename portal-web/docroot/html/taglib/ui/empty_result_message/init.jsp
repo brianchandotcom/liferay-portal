@@ -15,3 +15,7 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
+
+<%
+boolean compact = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:compact"));
+%>

@@ -40,15 +40,9 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 					Liferay.Util.openWindow(
 						{
 							dialog: {
-								align: {
-									node: null,
-									points: ['tc', 'tc']
-								},
 								cssClass: 'so-portlet-invite-members',
-								destroyOnClose: true,
-								modal: true,
-								resizable: false,
-								width: 900
+								destroyOnHide: true,
+								width: 700
 							},
 							dialogIframe: {
 								bodyCssClass: 'dialog-with-footer'

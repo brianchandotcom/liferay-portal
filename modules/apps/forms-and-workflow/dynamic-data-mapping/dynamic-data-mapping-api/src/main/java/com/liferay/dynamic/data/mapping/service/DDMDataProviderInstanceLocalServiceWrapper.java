@@ -111,6 +111,13 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 		_ddmDataProviderInstanceLocalService.deleteDataProviderInstance(dataProviderInstanceId);
 	}
 
+	@Override
+	public void deleteDataProviderInstances(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmDataProviderInstanceLocalService.deleteDataProviderInstances(companyId,
+			groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

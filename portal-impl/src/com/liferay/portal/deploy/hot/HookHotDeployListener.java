@@ -1172,9 +1172,6 @@ public class HookHotDeployListener
 		List<Element> languagePropertiesElements = parentElement.elements(
 			"language-properties");
 
-		String baseLanguagePropertiesLocation = null;
-		URL baseLanguageURL = null;
-
 		for (Element languagePropertiesElement : languagePropertiesElements) {
 			String languagePropertiesLocation =
 				languagePropertiesElement.getText();
@@ -1217,29 +1214,6 @@ public class HookHotDeployListener
 						servletContextName, languagePropertiesLocation,
 						ResourceBundle.class, resourceBundle, properties);
 				}
-			}
-			else {
-				baseLanguagePropertiesLocation = languagePropertiesLocation;
-				baseLanguageURL = url;
-			}
-		}
-
-		if (baseLanguageURL != null) {
-			Locale locale = new Locale(StringPool.BLANK);
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			try (InputStream inputStream = baseLanguageURL.openStream()) {
-				ResourceBundle resourceBundle = new LiferayResourceBundle(
-					inputStream, StringPool.UTF8);
-
-				Map<String, Object> properties = new HashMap<>();
-
-				properties.put("language.id", languageId);
-
-				registerService(
-					servletContextName, baseLanguagePropertiesLocation,
-					ResourceBundle.class, resourceBundle, properties);
 			}
 		}
 	}

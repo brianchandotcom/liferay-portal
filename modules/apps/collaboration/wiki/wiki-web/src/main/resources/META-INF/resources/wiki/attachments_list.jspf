@@ -16,7 +16,7 @@
 
 <liferay-ui:search-container
 	emptyResultsMessage="<%= emptyResultsMessage %>"
-	headerNames="file-name,size,null"
+	headerNames="file-name,size,action"
 	id="pageAttachments"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= attachmentsFileEntriesCount %>"
@@ -51,6 +51,7 @@
 
 		<c:if test="<%= showPageAttachmentAction %>">
 			<liferay-ui:search-container-column-jsp
+				name="action"
 				cssClass="entry-action"
 				path="/wiki/page_attachment_action.jsp"
 			/>

@@ -42,7 +42,7 @@
 			</#if>
 		</@>
 
-		<@liferay_aui["button-row"]>
+		<div class="button-holder">
 			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
@@ -60,7 +60,7 @@
 				id="${namespacedFieldName}PreviewButton"
 				value="preview"
 			/>
-		</@>
+		</div>
 
 		<@liferay_aui.input
 			label="image-description"

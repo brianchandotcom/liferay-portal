@@ -25,14 +25,10 @@ int ruleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstan
 PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_header.jspf-portletURL");
 %>
 
-<c:if test="<%= ruleGroupInstancesCount <= 0 %>">
-	<p class="text-muted">
-		<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
-	</p>
-</c:if>
-
 <liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
 	deltaConfigurable="<%= false %>"
+	emptyResultsMessage="none"
 	id="rules"
 	iteratorURL="<%= portletURL %>"
 	total="<%= ruleGroupInstancesCount %>"

@@ -18,12 +18,13 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * Represents a OrderByComparator class used to order records according its IDs during listing operations.
- * The order could be ascending or descending and it's defined by the value specified in the class constructor.
+ * Used to order records according their IDs during listing operations. The
+ * order can be ascending or descending and is defined by the value specified in
+ * the class constructor.
  *
- * @see com.liferay.dynamic.data.lists.service.DDLRecordLocalService#getRecords(long, int, int, int, OrderByComparator)
-
  * @author Leonardo Barros
+ * @see    com.liferay.dynamic.data.lists.service.DDLRecordLocalService#getRecords(
+ *         long, int, int, int, OrderByComparator)
  */
 public class DDLRecordIdComparator extends OrderByComparator<DDLRecord> {
 

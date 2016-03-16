@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * Represents a exception class that is thrown when the system is unable to find the required DDL Record Version.
+ * Thrown when the system is unable to find the required DDL Record Version.
  *
  * @author Brian Wing Shun Chan
  */

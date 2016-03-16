@@ -37,6 +37,7 @@ public abstract class BaseBuild implements Build {
 
 		sb.append(getJobURL());
 		sb.append(buildNumber);
+		sb.append("/");
 
 		return sb.toString();
 	}

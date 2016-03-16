@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.internal;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 /**
@@ -28,6 +30,8 @@ public interface DBProvider {
 	public int getFetchSize();
 
 	public String getTableNameFieldName();
+
+	public void initializeDatabase(Properties properties);
 
 	public String serializeTableField(Object field);
 

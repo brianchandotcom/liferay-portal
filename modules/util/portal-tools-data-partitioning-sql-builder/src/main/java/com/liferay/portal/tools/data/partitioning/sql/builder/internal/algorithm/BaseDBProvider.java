@@ -50,12 +50,7 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseDBProvider
 	implements DBExporter, DBProvider, ShardExporter {
 
-	public BaseDBProvider(Properties properties) {
-		this.properties = properties;
-
-		HikariConfig hikariConfig = new HikariConfig(this.properties);
-
-		_dataSource = new HikariDataSource(hikariConfig);
+	public BaseDBProvider() {
 	}
 
 	@Override
@@ -93,6 +88,15 @@ public abstract class BaseDBProvider
 	@Override
 	public List<String> getPartitionedTableNames(String schemaName) {
 		return getTableNames(getPartitionedTableNamesSQL(schemaName));
+	}
+
+	@Override
+	public void initializeDatabase(Properties properties) {
+		this.properties = properties;
+
+		HikariConfig hikariConfig = new HikariConfig(this.properties);
+
+		_dataSource = new HikariDataSource(hikariConfig);
 	}
 
 	@Override
@@ -245,11 +249,11 @@ public abstract class BaseDBProvider
 		return tableNames;
 	}
 
-	protected final Properties properties;
+	protected Properties properties;
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BaseDBProvider.class);
 
-	private final DataSource _dataSource;
+	private DataSource _dataSource;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception.DBProviderNotAvailableException;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.DBProvider;
 
 import java.util.Properties;
 import java.util.ServiceLoader;
@@ -29,6 +30,10 @@ public class ShardExporterFactory {
 			ShardExporter.class);
 
 		for (ShardExporter shardExporter : shardExporters) {
+			DBProvider dbProvider = (DBProvider)shardExporter;
+
+			dbProvider.initializeDatabase(properties);
+
 			return shardExporter;
 		}
 

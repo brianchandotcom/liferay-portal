@@ -81,9 +81,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<c:if test="<%= !roles.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
 					<div class="invite-to">
-						<label><liferay-ui:message key="invite-to-role" /></label>
-
-						<aui:select label="" name="roleId">
+						<aui:select label="invite-to-role" name="roleId">
 							<aui:option value="0" />
 
 							<%
@@ -106,9 +104,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<c:if test="<%= !teams.isEmpty() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
 					<div class="invite-to">
-						<label><liferay-ui:message key="invite-to-team" /></label>
-
-						<aui:select label="" name="teamId">
+						<aui:select label="invite-to-team" name="teamId">
 							<aui:option value="0" />
 
 							<%

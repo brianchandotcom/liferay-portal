@@ -16,6 +16,7 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:application-list:application-list-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
+	provided project(":core:registry-api")
 }
 
 liferay {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.remote.axis.extender;
 
+import com.liferay.osgi.util.BundleUtil;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -149,7 +150,9 @@ public class AxisExtender {
 									name = name.substring(1);
 								}
 
-								return bundle.getResource(name);
+								return
+									BundleUtil.getResourceInBundleOrFragments(
+										bundle, name);
 							}
 
 						},

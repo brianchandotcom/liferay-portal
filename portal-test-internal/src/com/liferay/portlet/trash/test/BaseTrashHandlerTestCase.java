@@ -1794,7 +1794,7 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 	}
 
-	@Test
+	@Test(expected = TrashEntryException.class)
 	public void testTrashParentAndBaseModel() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
 
@@ -1811,13 +1811,7 @@ public abstract class BaseTrashHandlerTestCase {
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
 
-		try {
-			moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-			Assert.fail();
-		}
-		catch (TrashEntryException tee) {
-		}
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 	}
 
 	@Test
@@ -1973,7 +1967,7 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 	}
 
-	@Test
+	@Test(expected = RestoreEntryException.class)
 	public void testTrashParentAndRestoreParentAndBaseModel() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
@@ -2001,18 +1995,11 @@ public abstract class BaseTrashHandlerTestCase {
 			restoreParentBaseModelFromTrash(
 				(Long)parentBaseModel.getPrimaryKeyObj());
 
-		try {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					getBaseModelClassName());
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
 
-			trashHandler.restoreTrashEntry(
-				TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
-
-			Assert.fail();
-		}
-		catch (RestoreEntryException ree) {
-		}
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 	}
 
 	@Test

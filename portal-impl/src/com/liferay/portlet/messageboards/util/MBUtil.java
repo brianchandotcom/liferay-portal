@@ -805,9 +805,16 @@ public class MBUtil {
 	public static boolean isValidMessageFormat(String messageFormat) {
 		String editorName = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
+		if (editorName.equals("bbcode")) {
+			editorName = "ckeditor_bbcode";
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Replacing unsupported BBCode editor with CKEditor BBCode");
+			}
+		}
+
 		if (messageFormat.equals("bbcode") &&
-			!(editorName.equals("bbcode") ||
-			  editorName.equals("ckeditor_bbcode"))) {
+			!editorName.equals("ckeditor_bbcode")) {
 
 			return false;
 		}

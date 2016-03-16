@@ -22,10 +22,6 @@
 		}
 	}
 
-	.invite-user-search {
-		width: 203px;
-	}
-
 	.invited, .user {
 		background: transparent url(@theme_image_path@/lexicon/plus.svg) no-repeat 1% 50%;
 		background-size: 16px;
@@ -94,21 +90,5 @@
 		color: #AAA;
 		font-size: 0.8em;
 		margin-left: 0.5em;
-	}
-}
-
-.ie .so-portlet-invite-members .invite-to select {
-	width: 300px;
-}
-
-/* ---------- Responsive ---------- */
-
-@include respond-to(phone) {
-	.so-portlet-invite-members.modal {
-		.search {
-			height: auto;
-			max-height: 300px;
-			width: auto;
-		}
 	}
 }

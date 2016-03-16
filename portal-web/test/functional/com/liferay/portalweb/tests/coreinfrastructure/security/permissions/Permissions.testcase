@@ -23,7 +23,9 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewBlogsPortletAsGuestPG" priority="4">
+	<command name="ViewBlogsPortletAsGuestPG" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

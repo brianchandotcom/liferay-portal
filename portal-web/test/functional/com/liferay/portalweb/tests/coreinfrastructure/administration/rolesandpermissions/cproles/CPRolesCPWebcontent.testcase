@@ -33,7 +33,9 @@
 		</if>
 	</tear-down>
 
-	<command name="AddFolderSiteRole" priority="4">
+	<command name="AddFolderSiteRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
@@ -113,7 +115,9 @@
 		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
 	</command>
 
-	<command name="AddStructureSiteRole" priority="4">
+	<command name="AddStructureSiteRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
@@ -205,7 +209,9 @@
 		<execute function="AssertElementNotPresent" locator1="Toolbar#MANAGE" />
 	</command>
 
-	<command name="AddTemplateSiteRole" priority="4">
+	<command name="AddTemplateSiteRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
@@ -287,7 +293,9 @@
 		<execute function="AssertElementNotPresent" locator1="Toolbar#MANAGE" />
 	</command>
 
-	<command name="AddWebContentSiteRole" priority="4">
+	<command name="AddWebContentSiteRole" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />

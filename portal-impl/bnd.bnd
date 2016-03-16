@@ -78,5 +78,5 @@ Export-Package:\
 Import-Package: *
 Include-Resource: classes
 Private-Package: com.liferay.*.dependencies
--baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.portal.impl-2.0.0.jar
+-baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.impl-2.0.0.jar
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

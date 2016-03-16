@@ -361,7 +361,7 @@ public class BaseTextExportImportContentProcessor
 
 					exceptionSB.append("Unable to process file entry ");
 					exceptionSB.append(fileEntry.getFileEntryId());
-					exceptionSB.append(" for ");
+					exceptionSB.append(" for staged model ");
 					exceptionSB.append(stagedModel.getModelClassName());
 					exceptionSB.append(" with primary key ");
 					exceptionSB.append(stagedModel.getPrimaryKeyObj());

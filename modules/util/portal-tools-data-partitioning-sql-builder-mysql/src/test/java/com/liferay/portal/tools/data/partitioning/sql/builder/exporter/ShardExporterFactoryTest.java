@@ -15,14 +15,8 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.db.mysql.MySQLProvider;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.util.PropsReader;
-
-import java.net.URL;
-
-import java.util.Properties;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 
 /**
@@ -32,16 +26,7 @@ public class ShardExporterFactoryTest {
 
 	@Test
 	public void testGetShardExporterReturnsMySQLProvider() throws Exception {
-		Class<?> clazz = getClass();
-
-		URL url = clazz.getResource("/mysql.properties");
-
-		Assume.assumeNotNull(url);
-
-		Properties properties = PropsReader.read(url.getPath());
-
-		ShardExporter shardExporter = ShardExporterFactory.getShardExporter(
-			properties);
+		ShardExporter shardExporter = ShardExporterFactory.getShardExporter();
 
 		Class<MySQLProvider> providerClass = MySQLProvider.class;
 

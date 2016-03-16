@@ -15,14 +15,8 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.db.postgresql.PostgreSQLProvider;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.util.PropsReader;
-
-import java.net.URL;
-
-import java.util.Properties;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 
 /**
@@ -34,16 +28,7 @@ public class ShardExporterFactoryTest {
 	public void testGetShardExporterReturnsPostgreSQLProvider()
 		throws Exception {
 
-		Class<?> clazz = getClass();
-
-		URL url = clazz.getResource("/postgresql.properties");
-
-		Assume.assumeNotNull(url);
-
-		Properties properties = PropsReader.read(url.getPath());
-
-		ShardExporter shardExporter = ShardExporterFactory.getShardExporter(
-			properties);
+		ShardExporter shardExporter = ShardExporterFactory.getShardExporter();
 
 		Class<PostgreSQLProvider> providerClass = PostgreSQLProvider.class;
 

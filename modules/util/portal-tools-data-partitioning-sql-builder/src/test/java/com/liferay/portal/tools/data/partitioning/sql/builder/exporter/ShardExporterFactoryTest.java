@@ -16,8 +16,6 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception.DBProviderNotAvailableException;
 
-import java.util.Properties;
-
 import org.junit.Test;
 
 /**
@@ -27,7 +25,7 @@ public class ShardExporterFactoryTest {
 
 	@Test(expected = DBProviderNotAvailableException.class)
 	public void testGetShardExporter() throws Exception {
-		ShardExporterFactory.getShardExporter(new Properties());
+		ShardExporterFactory.getShardExporter();
 	}
 
 }

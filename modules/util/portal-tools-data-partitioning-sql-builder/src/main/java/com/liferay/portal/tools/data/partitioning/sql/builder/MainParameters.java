@@ -17,10 +17,13 @@ package com.liferay.portal.tools.data.partitioning.sql.builder;
 import com.beust.jcommander.Parameter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.util.PropsReader;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.validators.CompanyIdsRequiredParameterValidator;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.validators.FileRequiredParameterValidator;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.validators.RequiredParameterValidator;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.validators.WritableFileRequiredParameterValidator;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +53,10 @@ public class MainParameters {
 		return _writeFile;
 	}
 
-	public ExportContext toExportContext() {
+	public ExportContext toExportContext() throws IOException {
 		return new ExportContext(
-			_getCompanyIds(), _outputDirName, _schemaName, _writeFile);
+			_getCompanyIds(), _outputDirName,
+			PropsReader.read(getPropertiesFileName()), _schemaName, _writeFile);
 	}
 
 	private List<Long> _getCompanyIds() {

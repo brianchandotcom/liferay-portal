@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.db.mysql.MySQLProvider;
 import com.liferay.portal.tools.data.partitioning.sql.builder.db.postgresql.PostgreSQLProvider;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception.DBProviderNotAvailableException;
 
@@ -30,14 +29,9 @@ public class ShardExporterFactory {
 			"dataSourceClassName", "");
 
 		if (dataSourceClassName.equals(
-				"com.mysql.jdbc.jdbc2.optional.MysqlDataSource")) {
-
-			return new MySQLProvider(properties);
-		}
-		else if (dataSourceClassName.equals(
-					"com.impossibl.postgres.jdbc.PGDataSource") ||
-				 dataSourceClassName.equals(
-					 "org.postgresql.ds.PGSimpleDataSource")) {
+				"com.impossibl.postgres.jdbc.PGDataSource") ||
+			dataSourceClassName.equals(
+				"org.postgresql.ds.PGSimpleDataSource")) {
 
 			return new PostgreSQLProvider(properties);
 		}

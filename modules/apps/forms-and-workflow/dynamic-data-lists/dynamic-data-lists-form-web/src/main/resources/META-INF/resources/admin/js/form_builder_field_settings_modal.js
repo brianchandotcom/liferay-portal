@@ -124,8 +124,7 @@ AUI.add(
 											}
 										}
 									]
-								},
-								topFixed: true
+								}
 							}
 						).render();
 

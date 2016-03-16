@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-modal-support',
 	function(A) {
-		var Lang = A.Lang;
-
 		var FormBuilderModalSupport = function() {
 		};
 
@@ -17,11 +15,6 @@ AUI.add(
 			},
 
 			portletNamespace: {
-			},
-
-			topFixed: {
-				validator: '_validateTopFixed',
-				value: false
 			},
 
 			zIndex: {
@@ -64,12 +57,6 @@ AUI.add(
 				}
 			},
 
-			_afterTopFixedChange: function() {
-				var instance = this;
-
-				instance.align();
-			},
-
 			_afterWindowResize: function() {
 				var instance = this;
 
@@ -89,7 +76,6 @@ AUI.add(
 
 				instance._eventHandles.push(
 					instance.after('render', instance._afterModalRender),
-					instance.after('topFixedChange', instance._afterTopFixedChange),
 					instance.after('visibleChange', instance._afterModalVisibleChange),
 					instance.on('xyChange', instance._onModalXYChange)
 				);
@@ -99,16 +85,6 @@ AUI.add(
 				var instance = this;
 
 				instance.get('boundingBox').addClass('dynamic-content-height');
-			},
-
-			_fixAtTheTop: function(xy) {
-				var instance = this;
-
-				var boundingBox = instance.get('boundingBox');
-
-				xy[1] = A.config.win.scrollY + Lang.toInt(boundingBox.getComputedStyle('margin-top'));
-
-				return xy;
 			},
 
 			_getModalOffset: function() {
@@ -131,12 +107,6 @@ AUI.add(
 				if (instance.get('centered')) {
 					event.newVal = instance._verticallyCentering(event.newVal);
 				}
-			},
-
-			_validateTopFixed: function() {
-				var instance = this;
-
-				return instance.get('centered');
 			},
 
 			_valueCentered: function() {

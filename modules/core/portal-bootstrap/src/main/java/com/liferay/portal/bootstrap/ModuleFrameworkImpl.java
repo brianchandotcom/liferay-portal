@@ -1111,7 +1111,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		for (ServiceRegistration<?> serviceRegistration :
 				serviceRegistrations) {
 
-			serviceRegistration.unregister();
+			try {
+				serviceRegistration.unregister();
+			}
+			catch (IllegalStateException ise) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Service registration " + serviceRegistration +
+							" has already been unregistered");
+				}
+			}
 		}
 	}
 

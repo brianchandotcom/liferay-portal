@@ -1286,7 +1286,7 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
+		StringBundler sb = new StringBundler(4 + _maxDDLCustomFieldCount * 4);
 
 		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
 		sb.append("[");

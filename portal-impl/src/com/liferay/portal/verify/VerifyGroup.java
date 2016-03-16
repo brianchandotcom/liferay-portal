@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.RobotsUtil;
 
@@ -90,16 +91,6 @@ public class VerifyGroup extends VerifyProcess {
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
 			RobotsUtil.getDefaultRobots(virtualHostname));
-	}
-
-	protected void updateName(long groupId, String name) throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update Group_ set name = ? where groupId= " + groupId)) {
-
-			ps.setString(1, name);
-
-			ps.executeUpdate();
-		}
 	}
 
 	protected void verifyCompanyGroups() throws Exception {
@@ -178,6 +169,10 @@ public class VerifyGroup extends VerifyProcess {
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString());
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update Group_ set name = ? where groupId = ?");
 				ResultSet rs = ps.executeQuery()) {
 
 				while (rs.next()) {
@@ -202,8 +197,13 @@ public class VerifyGroup extends VerifyProcess {
 						name.substring(pos + 1) +
 							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
-					updateName(groupId, newName);
+					ps2.setString(1, newName);
+					ps2.setLong(2, groupId);
+
+					ps2.addBatch();
 				}
+
+				ps2.executeBatch();
 			}
 		}
 	}

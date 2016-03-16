@@ -586,6 +586,10 @@ $horizontal-spacing: 35px;
 }
 
 .portlet-forms {
+	label {
+		float: initial;
+	}
+
 	.aspect-ratio img {
 		top: 0;
 	}

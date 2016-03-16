@@ -14,7 +14,7 @@
 
 package com.liferay.xsl.content.web.portlet.action;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;

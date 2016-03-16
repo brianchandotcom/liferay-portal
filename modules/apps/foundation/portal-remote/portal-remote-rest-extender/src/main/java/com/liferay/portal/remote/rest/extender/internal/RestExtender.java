@@ -14,7 +14,7 @@
 
 package com.liferay.portal.remote.rest.extender.internal;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration;
 

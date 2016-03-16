@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.settings;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.settings.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 

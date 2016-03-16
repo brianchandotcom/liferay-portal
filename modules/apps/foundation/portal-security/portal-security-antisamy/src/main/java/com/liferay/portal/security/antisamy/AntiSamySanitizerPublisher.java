@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.antisamy;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration;
 

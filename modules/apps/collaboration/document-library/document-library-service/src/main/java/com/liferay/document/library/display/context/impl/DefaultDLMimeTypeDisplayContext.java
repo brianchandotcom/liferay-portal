@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.display.context.impl;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.configuration;
 
-import com.liferay.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
 

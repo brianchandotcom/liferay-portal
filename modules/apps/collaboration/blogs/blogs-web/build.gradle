@@ -15,7 +15,6 @@ dependencies {
 	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	provided project(":apps:collaboration:item-selector:item-selector-taglib")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	provided project(":apps:foundation:bnd:bnd-util")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-upgrade")

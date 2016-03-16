@@ -14,8 +14,8 @@
 
 package com.liferay.portal.scheduler.internal;
 
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.cal.DayAndPosition;

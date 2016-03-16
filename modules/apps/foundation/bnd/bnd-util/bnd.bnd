@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Bnd Utilities
-Bundle-SymbolicName: com.liferay.bnd.util
-Bundle-Version: 1.0.2
-Export-Package: com.liferay.bnd.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

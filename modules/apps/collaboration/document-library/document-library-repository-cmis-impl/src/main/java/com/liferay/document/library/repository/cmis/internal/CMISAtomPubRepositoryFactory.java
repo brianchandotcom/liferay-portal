@@ -15,11 +15,11 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.bnd.util.ConfigurableUtil;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;

@@ -22,7 +22,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 	provided group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
-	provided project(":apps:foundation:bnd:bnd-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
 

@@ -44,10 +44,12 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the record's group
 	 * @param  recordSetId the primary key of the record set
-	 * @param  displayIndex the index position in which the record is displayed in the spreadsheat view.
-	 * @param  ddmFormValues the record values. See {@link com.liferay.dynamic.data.mapping.storage.DDMFormValues}.
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, guest permissions, and group permissions for the structure.
+	 * @param  displayIndex the index position in which the record is displayed
+	 *         in the spreadsheat view
+	 * @param  ddmFormValues the record values. See {@link DDMFormValues}.
+	 * @param  serviceContext the service context to be applied. This can set
+	 *         the UUID, guest permissions, and group permissions for the
+	 *         record.
 	 * @return the record
 	 */
 	@Override
@@ -67,14 +69,17 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Adds a record referencing a record set.
 	 *
-	 * @param  groupId the primary key of the record's group
-	 * @param  recordSetId the primary key of the record set
-	 * @param  displayIndex the index position in which the record is displayed in the spreadsheat view.
-	 * @param  fields the record values. See {@link com.liferay.dynamic.data.mapping.storage.Fields}.
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, guest permissions, and group permissions for the structure.
-	 * @return the record
-	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int, DDMFormValues, ServiceContext)}
+	 * @param      groupId the primary key of the record's group
+	 * @param      recordSetId the primary key of the record set
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheat view
+	 * @param      fields the record values. See {@link Fields}.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the UUID, guest permissions, and group permissions for
+	 *             the record.
+	 * @return     the record
+	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	 *             DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -94,14 +99,18 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Adds a record referencing a record set.
 	 *
-	 * @param  groupId the primary key of the record's group
-	 * @param  recordSetId the primary key of the record set
-	 * @param  displayIndex the index position in which the record is displayed in the spreadsheat view.
-	 * @param  fieldsMap the record values. The fieldsMap is a map of field names and its Serializable values.
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, guest permissions, and group permissions for the structure.
-	 * @return the record
-	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int, DDMFormValues, ServiceContext)}
+	 * @param      groupId the primary key of the record's group
+	 * @param      recordSetId the primary key of the record set
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheat view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and its Serializable values.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the UUID, guest permissions, and group permissions for
+	 *             the record.
+	 * @return     the record
+	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	 *             DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -121,7 +130,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Deletes the record and its resources.
 	 *
-	 * @param  recordId the primary key of the record to be deleted
+	 * @param recordId the primary key of the record to be deleted
 	 */
 	@Override
 	public void deleteRecord(long recordId) throws PortalException {
@@ -134,13 +143,15 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	/**
-	 * Deletes the record values associated to a given locale.
+	 * Disassociates a record from the specified locale.
 	 *
-	 * @param  recordId the primary key of the record
-	 * @param  locale the locale that will be used to delete the localized record values
-	 * @param serviceContext the service context to be applied. Can set the
-	 *        record modified date.
-	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean, int, DDMFormValues, ServiceContext)}
+	 * @param      recordId the primary key of the record
+	 * @param      locale the locale that will be used to delete the localized
+	 *             record values
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	 *             int, DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -162,7 +173,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the record with the ID
-	 * @throws NoSuchRecordException if the record is not found.
 	 */
 	@Override
 	public DDLRecord getRecord(long recordId) throws PortalException {
@@ -177,11 +187,10 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Reverts the record to a given version.
 	 *
-	 * @param  recordId the primary key of the record
-	 * @param  version the version to be reverted
-	 * @param serviceContext the service context to be applied. Can set the
+	 * @param recordId the primary key of the record
+	 * @param version the version to be reverted
+	 * @param serviceContext the service context to be applied. This can set the
 	 *        record modified date.
-	 * @throws NoSuchRecordException if the record is not found.
 	 */
 	@Override
 	public void revertRecord(
@@ -214,11 +223,13 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 * Updates a record, replacing its display index and values.
 	 *
 	 * @param  recordId the primary key of the record
-	 * @param  majorVersion whether this update is a major change. Major changes causes the increment of the major version number.
-	 * @param  displayIndex the index position in which the record is displayed in the spreadsheat view.
-	 * @param  ddmFormValues the record values. See {@link com.liferay.dynamic.data.mapping.storage.DDMFormValues}.
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         record modified date
+	 * @param  majorVersion whether this update is a major change. Major changes
+	 *         causes the increment of the major version number.
+	 * @param  displayIndex the index position in which the record is displayed
+	 *         in the spreadsheat view
+	 * @param  ddmFormValues the record values. See {@link DDMFormValues}.
+	 * @param  serviceContext the service context to be applied. This can set
+	 *         the record modified date.
 	 * @return the record
 	 */
 	@Override
@@ -240,14 +251,17 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Updates a record, replacing its display index and values.
 	 *
-	 * @param  recordId the primary key of the record
-	 * @param  majorVersion whether this update is a major change. Major changes causes the increment of the major version number.
-	 * @param  displayIndex the index position in which the record is displayed in the spreadsheat view.
-	 * @param  fields the record values. See {@link com.liferay.dynamic.data.mapping.storage.Fields}.
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         record modified date
-	 * @return the record
-	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean, int, DDMFormValues, ServiceContext)}
+	 * @param      recordId the primary key of the record
+	 * @param      majorVersion whether this update is a major change. Major
+	 *             changes causes the increment of the major version number.
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheat view
+	 * @param      fields the record values. See {@link Fields}.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @return     the record
+	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	 *             int, DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -269,14 +283,16 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Updates a record, replacing its display index and values.
 	 *
-	 * @param  recordId the primary key of the record
-	 * @param  majorVersion whether this update is a major change. Major changes causes the increment of the major version number.
-	 * @param  displayIndex the index position in which the record is displayed in the spreadsheat view.
-	 * @param  fieldsMap the record values. The fieldsMap is a map of field names and its Serializable values.
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         record modified date
-	 * @return the record
-	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean, int, DDMFormValues, ServiceContext)}
+	 * @param      recordId the primary key of the record
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheat view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and its Serializable values.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @return     the record
+	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	 *             int, DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

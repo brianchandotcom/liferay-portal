@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.flags.taglib.freemarker.contributor
 Bundle-Version: 1.0.1
 Fragment-Host: com.liferay.portal.template.freemarker
 Import-Package: com.liferay.flags.taglib.servlet.taglib
+-include: ../../app.bnd
 -liferay-includeresource: @com.liferay.flags.taglib-*.jar!/META-INF/resources/liferay-flags.tld

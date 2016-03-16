@@ -268,6 +268,10 @@ public class StrutsPortlet extends LiferayPortlet {
 		}
 	}
 
+	protected void checkPath(String path) throws PortletException {
+		super.checkPath(path);
+	}
+
 	protected void include(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {

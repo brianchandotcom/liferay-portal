@@ -174,7 +174,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 
-		int quoteCount = StringUtil.count(ifClause, StringPool.QUOTE);
+		int quoteCount = StringUtil.count(ifClause, CharPool.QUOTE);
 
 		if ((quoteCount % 2) == 1) {
 			return;
@@ -201,7 +201,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		ifClause = stripRedundantParentheses(ifClause);
 
 		int level = 0;
-		int max = StringUtil.count(ifClause, StringPool.OPEN_PARENTHESIS);
+		int max = StringUtil.count(ifClause, CharPool.OPEN_PARENTHESIS);
 		int previousParenthesisPos = -1;
 
 		int[] levels = new int[max];
@@ -1539,9 +1539,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected int getLineCount(String content, int pos) {
-		String beforePos = content.substring(0, pos);
-
-		return StringUtil.count(beforePos, StringPool.NEW_LINE) + 1;
+		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
 	}
 
 	protected int getLineLength(String line) {

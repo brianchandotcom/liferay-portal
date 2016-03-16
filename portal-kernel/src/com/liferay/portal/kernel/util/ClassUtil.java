@@ -307,9 +307,9 @@ public class ClassUtil {
 					}
 
 					int closeParenthesesCount = StringUtil.count(
-						annotationParameters, ")");
+						annotationParameters, ')');
 					int openParenthesesCount = StringUtil.count(
-						annotationParameters, "(");
+						annotationParameters, '(');
 
 					if (closeParenthesesCount > openParenthesesCount) {
 						break;

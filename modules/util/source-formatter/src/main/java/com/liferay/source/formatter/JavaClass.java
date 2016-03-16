@@ -1158,7 +1158,7 @@ public class JavaClass {
 
 		if (y != -1) {
 			int spaceCount = StringUtil.count(
-				line.substring(0, y), StringPool.SPACE);
+				line.substring(0, y), CharPool.SPACE);
 
 			if (spaceCount == 1) {
 				return getJavaTermTuple(

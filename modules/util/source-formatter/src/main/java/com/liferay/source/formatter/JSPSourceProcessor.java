@@ -923,7 +923,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							else if (trimmedLine.endsWith(StringPool.QUOTE) &&
 									 tag.contains(StringPool.COLON) &&
 									 (StringUtil.count(
-										 trimmedLine, StringPool.QUOTE) > 2)) {
+										 trimmedLine, CharPool.QUOTE) > 2)) {
 
 								processErrorMessage(
 									fileName,

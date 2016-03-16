@@ -89,7 +89,7 @@ public class GitUtil {
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (!line.startsWith("add '") ||
-				(StringUtil.count(line, StringPool.SLASH) < gitLevel)) {
+				(StringUtil.count(line, CharPool.SLASH) < gitLevel)) {
 
 				continue;
 			}
@@ -127,7 +127,7 @@ public class GitUtil {
 			"git diff --diff-filter=AM --name-only " + commitId);
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (StringUtil.count(line, StringPool.SLASH) >= gitLevel) {
+			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {
 				fileNames.add(getFileName(line, gitLevel));
 			}
 		}

@@ -91,6 +91,36 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testCountChar() {
+		Assert.assertEquals(0, StringUtil.count(null, 0, 1, 'b'));
+		Assert.assertEquals(0, StringUtil.count("", 0, 1, 'b'));
+		Assert.assertEquals(0, StringUtil.count("", 0, 0, 'b'));
+		Assert.assertEquals(0, StringUtil.count("a", 0, 1, 'b'));
+		Assert.assertEquals(1, StringUtil.count("b", 0, 1, 'b'));
+		Assert.assertEquals(0, StringUtil.count("ab", 0, 1, 'b'));
+		Assert.assertEquals(1, StringUtil.count("ab", 0, 2, 'b'));
+		Assert.assertEquals(1, StringUtil.count("abb", 0, 2, 'b'));
+		Assert.assertEquals(2, StringUtil.count("abb", 0, 3, 'b'));
+		Assert.assertEquals(2, StringUtil.count("abcabfabrgab", 2, 8, 'b'));
+	}
+
+	@Test
+	public void testCountString() {
+		Assert.assertEquals(0, StringUtil.count(null, 0, 1, ""));
+		Assert.assertEquals(0, StringUtil.count("", 0, 1, ""));
+		Assert.assertEquals(0, StringUtil.count("", 0, 0, ""));
+		Assert.assertEquals(0, StringUtil.count("a", 0, 1, ""));
+		Assert.assertEquals(0, StringUtil.count("a", 0, 1, null));
+		Assert.assertEquals(0, StringUtil.count("a", 0, 1, "b"));
+		Assert.assertEquals(1, StringUtil.count("b", 0, 1, "b"));
+		Assert.assertEquals(0, StringUtil.count("ab", 0, 1, "b"));
+		Assert.assertEquals(1, StringUtil.count("ab", 0, 2, "b"));
+		Assert.assertEquals(1, StringUtil.count("abb", 0, 2, "b"));
+		Assert.assertEquals(2, StringUtil.count("abb", 0, 3, "b"));
+		Assert.assertEquals(2, StringUtil.count("abcabfabrgab", 2, 8, "ab"));
+	}
+
+	@Test
 	public void testEqualsIgnoreBreakLine() {
 		Assert.assertTrue(
 			StringUtil.equalsIgnoreBreakLine("Hello\n World", "Hello World"));

@@ -158,7 +158,7 @@ public class JavaSourceTabCalculator {
 			Matcher matcher2 = _throwsExceptionPattern.matcher(match);
 
 			if (matcher2.find()) {
-				addExtraTabs(lineCount, StringUtil.count(match, "\n") - 1);
+				addExtraTabs(lineCount, StringUtil.count(match, '\n') - 1);
 			}
 		}
 
@@ -255,7 +255,7 @@ public class JavaSourceTabCalculator {
 				continue;
 			}
 
-			int extra = StringUtil.count(s, "\n");
+			int extra = StringUtil.count(s, '\n');
 
 			if (matchingText.equals("\t)") || matchingText.equals("\t}") ||
 				matchingText.equals(":\n")) {

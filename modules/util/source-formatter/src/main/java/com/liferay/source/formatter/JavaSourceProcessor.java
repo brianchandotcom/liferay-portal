@@ -1283,7 +1283,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return content;
 			}
 
-			if ((StringUtil.count(line, StringPool.TAB) == indent.length()) &&
+			if ((StringUtil.count(line, CharPool.TAB) == indent.length()) &&
 				!line.startsWith(indent + StringPool.CLOSE_PARENTHESIS)) {
 
 				if (Validator.isNotNull(annotation) &&
@@ -1919,7 +1919,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						version = StringUtil.replace(
 							version, StringPool.COMMA, StringPool.BLANK);
 
-						if (StringUtil.count(version, StringPool.PERIOD) == 1) {
+						if (StringUtil.count(version, CharPool.PERIOD) == 1) {
 							line = StringUtil.replaceFirst(
 								line, version, version + ".0");
 						}
@@ -1927,7 +1927,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (trimmedLine.startsWith("* @see ") &&
-					(StringUtil.count(trimmedLine, StringPool.AT) > 1)) {
+					(StringUtil.count(trimmedLine, CharPool.AT) > 1)) {
 
 					processErrorMessage(
 						fileName,
@@ -2004,7 +2004,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					int strippedQuotesLineOpenParenthesisCount =
 						StringUtil.count(
-							strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
+							strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
 
 					if (!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS) &&
 						trimmedLine.endsWith(") {") &&
@@ -3167,7 +3167,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return null;
 		}
 
-		if (StringUtil.count(previousLine, StringPool.OPEN_PARENTHESIS) > 1) {
+		if (StringUtil.count(previousLine, CharPool.OPEN_PARENTHESIS) > 1) {
 			int pos = trimmedPreviousLine.lastIndexOf(
 				CharPool.OPEN_PARENTHESIS, trimmedPreviousLine.length() - 2);
 
@@ -3925,7 +3925,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		int quoteCount = StringUtil.count(javaParameter, StringPool.QUOTE);
+		int quoteCount = StringUtil.count(javaParameter, CharPool.QUOTE);
 
 		if ((quoteCount % 2) == 1) {
 			return false;

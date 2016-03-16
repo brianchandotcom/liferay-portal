@@ -4286,7 +4286,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		if (StringUtil.count(friendlyURL, StringPool.SLASH) > 1) {
+		if (StringUtil.count(friendlyURL, CharPool.SLASH) > 1) {
 			throw new GroupFriendlyURLException(
 				GroupFriendlyURLException.TOO_DEEP);
 		}

@@ -146,8 +146,7 @@ public class PortletInstance {
 			return new UserIdAndInstanceIdEncoder(0, null);
 		}
 
-		int slashCount = StringUtil.count(
-			userIdAndInstanceId, StringPool.SLASH);
+		int slashCount = StringUtil.count(userIdAndInstanceId, CharPool.SLASH);
 
 		if (slashCount > 0) {
 			throw new InvalidParameterException(
@@ -155,7 +154,7 @@ public class PortletInstance {
 		}
 
 		int underlineCount = StringUtil.count(
-			userIdAndInstanceId, StringPool.UNDERLINE);
+			userIdAndInstanceId, CharPool.UNDERLINE);
 
 		if (underlineCount > 1) {
 			throw new InvalidParameterException(

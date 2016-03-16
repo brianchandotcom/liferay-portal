@@ -67,7 +67,7 @@ public class MBAdminConfigurationAction
 	}
 
 	protected boolean isValidUserRank(String rank) {
-		if ((StringUtil.count(rank, StringPool.EQUAL) != 1) ||
+		if ((StringUtil.count(rank, CharPool.EQUAL) != 1) ||
 			rank.startsWith(StringPool.EQUAL) ||
 			rank.endsWith(StringPool.EQUAL)) {
 

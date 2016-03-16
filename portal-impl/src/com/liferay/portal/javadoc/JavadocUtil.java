@@ -14,8 +14,8 @@
 
 package com.liferay.portal.javadoc;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -61,7 +61,7 @@ public class JavadocUtil {
 	}
 
 	private static String _getLoadableClassName(String className) {
-		int bracketCount = StringUtil.count(className, StringPool.OPEN_BRACKET);
+		int bracketCount = StringUtil.count(className, CharPool.OPEN_BRACKET);
 
 		if (bracketCount == 0) {
 			return className;

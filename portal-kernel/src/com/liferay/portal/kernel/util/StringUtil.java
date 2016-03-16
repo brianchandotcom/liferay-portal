@@ -376,6 +376,52 @@ public class StringUtil {
 		return contains(toLowerCase(s), toLowerCase(text), delimiter);
 	}
 
+	public static int count(String s, char c) {
+		return count(s, 0, s.length(), c);
+	}
+
+	public static int count(String s, int start, int end, char c) {
+		if ((s == null) || s.isEmpty() || ((end - start) < 1)) {
+			return 0;
+		}
+
+		int count = 0;
+
+		int pos = start;
+
+		while ((pos < end) && ((pos = s.indexOf(c, pos)) != -1)) {
+			if (pos < end) {
+				count++;
+			}
+
+			pos++;
+		}
+
+		return count;
+	}
+
+	public static int count(String s, int start, int end, String text) {
+		if ((s == null) || s.isEmpty() || ((end - start) < 1) ||
+			(text == null) || text.isEmpty()) {
+
+			return 0;
+		}
+
+		int count = 0;
+
+		int pos = start;
+
+		while ((pos < end) && (pos = s.indexOf(text, pos)) != -1) {
+			if (pos < end) {
+				count++;
+			}
+
+			pos += text.length();
+		}
+
+		return count;
+	}
+
 	/**
 	 * Returns the number of times the text appears in the string.
 	 *
@@ -384,23 +430,7 @@ public class StringUtil {
 	 * @return the number of times the text appears in the string
 	 */
 	public static int count(String s, String text) {
-		if ((s == null) || (s.length() == 0) || (text == null) ||
-			(text.length() == 0)) {
-
-			return 0;
-		}
-
-		int count = 0;
-
-		int pos = s.indexOf(text);
-
-		while (pos != -1) {
-			pos = s.indexOf(text, pos + text.length());
-
-			count++;
-		}
-
-		return count;
+		return count(s, 0, s.length(), text);
 	}
 
 	/**

@@ -102,7 +102,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 			String strippedMatch = stripQuotes(match, CharPool.QUOTE);
 
-			if (StringUtil.count(strippedMatch, StringPool.EQUAL) <= 1) {
+			if (StringUtil.count(strippedMatch, CharPool.EQUAL) <= 1) {
 				continue;
 			}
 

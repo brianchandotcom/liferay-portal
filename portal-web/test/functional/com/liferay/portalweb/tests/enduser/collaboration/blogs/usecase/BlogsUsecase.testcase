@@ -1140,7 +1140,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
+		<var name="key_cardText" value="www.able.com" />
+
+		<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="www.able.com" />
 
 		<var name="key_siteName" value="www.able.com" />
 
@@ -1185,7 +1187,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="www.able.com" />
+		<var name="key_cardText" value="www.able.com" />
+
+		<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="www.able.com" />
 
 		<var name="key_siteName" value="www.able.com" />
 

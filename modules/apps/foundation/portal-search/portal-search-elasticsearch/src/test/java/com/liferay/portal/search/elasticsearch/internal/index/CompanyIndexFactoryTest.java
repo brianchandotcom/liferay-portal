@@ -186,6 +186,7 @@ public class CompanyIndexFactoryTest {
 				@Override
 				public void contribute(TypeMappingsHelper typeMappingsHelper) {
 					typeMappingsHelper.addTypeMappings(
+						getTestIndexName(),
 						replaceAnalyzer(mappings, "brazilian"));
 				}
 

@@ -19,6 +19,6 @@ package com.liferay.portal.search.elasticsearch.settings;
  */
 public interface TypeMappingsHelper {
 
-	public void addTypeMappings(String source);
+	public void addTypeMappings(String indexName, String source);
 
 }

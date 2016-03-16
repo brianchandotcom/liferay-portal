@@ -13,7 +13,6 @@ dependencies {
 	provided group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
 	provided group: "org.apache.lucene", name: "lucene-sandbox", version: "5.2.1"
 	provided group: "org.apache.lucene", name: "lucene-suggest", version: "5.2.1"
-	provided group: "org.apache.solr", name: "solr-core", transitive: false, version: "5.2.1"
 	provided group: "org.apache.solr", name: "solr-solrj", version: "5.2.1"
 	provided group: "org.apache.zookeeper", name: "zookeeper", version: "3.4.6"
 	provided group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"

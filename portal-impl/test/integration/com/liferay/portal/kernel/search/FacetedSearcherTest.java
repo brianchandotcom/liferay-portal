@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -57,6 +58,7 @@ public class FacetedSearcherTest {
 
 		_userSearchFixture.setUp();
 
+		_assetTags = _userSearchFixture.getAssetTags();
 		_groups = _userSearchFixture.getGroups();
 		_users = _userSearchFixture.getUsers();
 	}
@@ -136,6 +138,9 @@ public class FacetedSearcherTest {
 
 		return searchContext;
 	}
+
+	@DeleteAfterTestRun
+	private List<AssetTag> _assetTags;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;

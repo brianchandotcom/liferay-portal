@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.index.LiferayDocumentTypeFactory;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
@@ -26,11 +25,9 @@ import org.elasticsearch.common.settings.Settings;
  */
 public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
-	public LiferayIndexCreationHelper(
-		IndicesAdminClient indicesAdminClient, IndexName indexName) {
-
+	public LiferayIndexCreationHelper(IndicesAdminClient indicesAdminClient) {
 		_liferayDocumentTypeFactory = new LiferayDocumentTypeFactory(
-			indexName.getName(), indicesAdminClient);
+			indicesAdminClient);
 	}
 
 	@Override
@@ -47,8 +44,9 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	}
 
 	@Override
-	public void whenIndexCreated() {
-		_liferayDocumentTypeFactory.createOptionalDefaultTypeMappings();
+	public void whenIndexCreated(String indexName) {
+		_liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(
+			indexName);
 	}
 
 	private final LiferayDocumentTypeFactory _liferayDocumentTypeFactory;

@@ -34,17 +34,14 @@ import org.elasticsearch.common.settings.Settings;
  */
 public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
-	public LiferayDocumentTypeFactory(
-		String indexName, IndicesAdminClient indicesAdminClient) {
-
-		_indexName = indexName;
+	public LiferayDocumentTypeFactory(IndicesAdminClient indicesAdminClient) {
 		_indicesAdminClient = indicesAdminClient;
 	}
 
 	@Override
-	public void addTypeMappings(String source) {
+	public void addTypeMappings(String indexName, String source) {
 		PutMappingRequestBuilder putMappingRequestBuilder =
-			_indicesAdminClient.preparePutMapping(_indexName);
+			_indicesAdminClient.preparePutMapping(indexName);
 
 		putMappingRequestBuilder.setSource(source);
 		putMappingRequestBuilder.setType(
@@ -60,7 +57,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		}
 	}
 
-	public void createOptionalDefaultTypeMappings() {
+	public void createOptionalDefaultTypeMappings(String indexName) {
 		String name = StringUtil.replace(
 			LiferayTypeMappingsConstants.
 				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME,
@@ -69,7 +66,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		String optionalDefaultTypeMappings = ResourceUtil.getResourceAsString(
 			getClass(), name);
 
-		addTypeMappings(optionalDefaultTypeMappings);
+		addTypeMappings(indexName, optionalDefaultTypeMappings);
 	}
 
 	public void createRequiredDefaultAnalyzers(Settings.Builder builder) {
@@ -95,7 +92,6 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayDocumentTypeFactory.class);
 
-	private final String _indexName;
 	private final IndicesAdminClient _indicesAdminClient;
 
 }

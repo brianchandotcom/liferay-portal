@@ -178,6 +178,7 @@ Export-Package:\
 	org.apache.xml.serialize;version='2.11.0',\
 	org.apache.xml.serializer;version='2.7.1',\
 	org.apache.xml.utils.*;version='2.7.1',\
+	org.aspectj.*,\
 	org.dom4j.*;version='1.6.1',\
 	org.jaxen.*;version='1.1.1',\
 	org.jdom.*;version='1.0',\
@@ -208,6 +209,7 @@ Include-Resource:\
 	@../../../lib/global/portlet.jar,\
 	@../../../lib/portal/ant.jar,\
 	@../../../lib/portal/asm-debug-all.jar,\
+	@../../../lib/portal/aspectj-rt.jar,\
 	@../../../lib/portal/aopalliance.jar,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/header/*,\

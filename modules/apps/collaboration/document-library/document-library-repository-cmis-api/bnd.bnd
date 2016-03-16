@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.document.library.repository.cmis.search
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
--include: ../../app.bnd

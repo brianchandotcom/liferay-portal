@@ -4,7 +4,6 @@ Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-creole
--include: ../../app.bnd
 -includeresource:\
 	@../../../../../lib/portal/antlr2.jar,\
 	@../../../../../lib/portal/antlr3.jar,\

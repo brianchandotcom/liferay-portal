@@ -10,4 +10,3 @@ Liferay-JS-Config: /META-INF/resources/document_library/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 Web-ContextPath: /document-library-web
--include: ../../app.bnd

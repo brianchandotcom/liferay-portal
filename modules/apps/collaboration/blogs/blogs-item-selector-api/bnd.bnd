@@ -4,4 +4,3 @@ Bundle-Version: 1.0.1
 Export-Package: com.liferay.blogs.item.selector.criterion
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
--include: ../../app.bnd

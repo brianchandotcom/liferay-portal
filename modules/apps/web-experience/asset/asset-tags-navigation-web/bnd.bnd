@@ -5,4 +5,3 @@ Export-Package: com.liferay.asset.tags.navigation.web.constants.*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
 Web-ContextPath: /asset-tags-navigation-web
--include: ../../app.bnd

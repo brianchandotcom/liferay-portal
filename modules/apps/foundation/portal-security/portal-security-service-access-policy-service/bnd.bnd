@@ -5,4 +5,3 @@ Export-Package: com.liferay.portal.security.service.access.policy.service.permis
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Liferay-Service: true
--include: ../../app.bnd

@@ -9,4 +9,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/product-navigation";version:Version="1.0.0"
 Web-ContextPath: /product-navigation-taglib
--include: ../../app.bnd

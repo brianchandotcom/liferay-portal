@@ -5,4 +5,3 @@ Export-Package: com.liferay.announcements.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /announcements-web
--include: ../../app.bnd

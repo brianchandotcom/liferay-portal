@@ -6,4 +6,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /layout-admin-web
 -dsannotations-options: inherit
--include: ../../app.bnd

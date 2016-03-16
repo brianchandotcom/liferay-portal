@@ -4,4 +4,3 @@ Bundle-SymbolicName: com.liferay.portal.log4j.extender
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

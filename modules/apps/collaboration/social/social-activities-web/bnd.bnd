@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-activities-web
--include: ../../app.bnd
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

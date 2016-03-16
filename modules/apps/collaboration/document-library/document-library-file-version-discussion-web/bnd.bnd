@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.document.library.file.version.discussion.web
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library File Version Discussion Web
--include: ../../app.bnd

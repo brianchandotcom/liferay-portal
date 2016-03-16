@@ -4,4 +4,3 @@ Bundle-Version: 1.0.1
 Export-Package: com.liferay.portal.messaging.*;version=${plugin.full.version}
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
--include: ../../app.bnd

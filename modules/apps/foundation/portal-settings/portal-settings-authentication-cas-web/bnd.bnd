@@ -4,4 +4,3 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Portal Settings
 Web-ContextPath: /portal-settings-authentication-cas-web
--include: ../../app.bnd

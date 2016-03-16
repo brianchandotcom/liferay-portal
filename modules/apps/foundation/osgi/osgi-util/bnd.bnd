@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.osgi.util.service
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

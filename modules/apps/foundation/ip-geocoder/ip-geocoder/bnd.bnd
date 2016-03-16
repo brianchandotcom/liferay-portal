@@ -5,4 +5,3 @@ Export-Package: com.liferay.ip.geocoder
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Private-Package: com.liferay.ip.geocoder.internal
--include: ../../app.bnd

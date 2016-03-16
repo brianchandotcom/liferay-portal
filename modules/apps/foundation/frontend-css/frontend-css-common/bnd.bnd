@@ -4,5 +4,4 @@ Bundle-Version: 1.0.6
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 -donotcopy: (\.npmignore|npm-debug\.log|package\.json)
--include: ../../app.bnd
 -includeresource: META-INF/resources=tmp/META-INF/resources

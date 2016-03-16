@@ -9,4 +9,3 @@ Liferay-Releng-Module-Group-Title: Runtime
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ddm))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))"
--include: ../../app.bnd

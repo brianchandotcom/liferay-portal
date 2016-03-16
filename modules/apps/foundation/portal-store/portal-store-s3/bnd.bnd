@@ -17,7 +17,6 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
--include: ../../app.bnd
 -liferay-includeresource:\
 	@aws-java-sdk-core-*.jar,\
 	@aws-java-sdk-kms-*.jar,\

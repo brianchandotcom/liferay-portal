@@ -56,7 +56,6 @@ Provide-Capability:\
 		osgi.contract=JavaJSONP;\
 		uses:="javax.json,javax.json.spi,javax.json.stream";\
 		version:Version=1
--include: ../../app.bnd
 -liferay-includeresource:\
 	lib/cxf-rt-frontend-jaxrs.jar=cxf-rt-frontend-jaxrs-*.jar,\
 	lib/cxf-rt-rs-extension-providers.jar=cxf-rt-rs-extension-providers-*.jar,\

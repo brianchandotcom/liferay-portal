@@ -73,7 +73,6 @@ Provide-Capability:\
 	liferay.extender;\
 	liferay.extender="spring.extender";\
 	version:Version="${plugin.full.version}"
--include: ../../app.bnd
 -liferay-includeresource:\
 	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/extender/*,\
 	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*

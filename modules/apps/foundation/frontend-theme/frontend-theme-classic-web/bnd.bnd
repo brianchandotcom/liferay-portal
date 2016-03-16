@@ -5,4 +5,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Themes
 Web-ContextPath: /frontend-theme-classic-web
 -donotcopy: (.*_diffs.*|\.npmignore|npm-debug\.log|package\.json)
--include: ../../app.bnd

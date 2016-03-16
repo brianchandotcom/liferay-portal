@@ -6,4 +6,3 @@ Export-Package:\
 	com.liferay.portal.security.audit.configuration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audit
--include: ../../app.bnd

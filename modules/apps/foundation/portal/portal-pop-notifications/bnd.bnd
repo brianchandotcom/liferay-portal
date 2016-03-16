@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.portal.pop.notifications
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
--include: ../../app.bnd
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/mail/LiferayMimeMessage.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/mail/MailEngine.class,\

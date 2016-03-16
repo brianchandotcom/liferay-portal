@@ -5,7 +5,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-tinymce-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)
--include: ../../app.bnd
 -includeresource:\
 	content=../frontend-editor-lang/src/main/resources/content,\
 	META-INF/resources=tmp/META-INF/resources

@@ -5,5 +5,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /sites-admin-web
 -dsannotations-options: inherit
--include: ../../app.bnd
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/PKParser.class

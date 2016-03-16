@@ -4,4 +4,3 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.site.my.sites.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
--include: ../../app.bnd

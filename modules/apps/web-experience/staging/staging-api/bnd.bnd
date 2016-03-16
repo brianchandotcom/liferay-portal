@@ -4,5 +4,4 @@ Bundle-Version: 1.0.1
 Export-Package: com.liferay.staging.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
--include: ../../app.bnd
 -includeresource: classes

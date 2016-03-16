@@ -5,5 +5,4 @@ Fragment-Host: com.liferay.portal.template.freemarker
 Import-Package: com.liferay.site.navigation.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd
 -liferay-includeresource: @com.liferay.site.navigation.taglib-*.jar!/META-INF/resources/liferay-site-navigation.tld

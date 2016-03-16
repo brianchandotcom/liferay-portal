@@ -4,4 +4,3 @@ Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector
 Web-ContextPath: /item-selector-url-web
--include: ../../app.bnd

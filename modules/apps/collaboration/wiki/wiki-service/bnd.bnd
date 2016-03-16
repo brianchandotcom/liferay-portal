@@ -57,7 +57,6 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Liferay-Service: true
--include: ../../app.bnd
 -liferay-includeresource:\
 	@../../../../../lib/portal/antlr2.jar,\
 	@../../../../../lib/portal/antlr3.jar,\

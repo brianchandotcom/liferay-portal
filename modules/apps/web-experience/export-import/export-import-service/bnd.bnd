@@ -15,5 +15,4 @@ Export-Package:\
 	com.liferay.exportimport.xstream
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
--include: ../../app.bnd
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/xml/DocUtil.class

@@ -12,4 +12,3 @@ Require-Capability:\
 	osgi.extender;\
 	filter:="(&(osgi.extender=liferay.js)(version>=1.0)(!(version>=2.0)))"
 Web-ContextPath: /frontend-taglib
--include: ../../app.bnd

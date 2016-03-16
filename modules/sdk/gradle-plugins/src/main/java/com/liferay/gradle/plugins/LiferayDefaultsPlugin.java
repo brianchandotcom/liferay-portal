@@ -624,6 +624,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					List<String> publishCommands = _getPublishCommands(
 						gradleRelativePath, gradleDaemon, false);
 
+					publishCommands.add(0, "git add --all");
+					publishCommands.add(
+						1, _getGitCommitCommand("packageinfo", false));
+
 					commands.add(
 						"(git diff-index --quiet HEAD || (" +
 							CollectionUtils.join(" && ", publishCommands) +

@@ -144,9 +144,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
-
-			ModuleFrameworkUtilAdapter.unregisterContext(
-				getCurrentWebApplicationContext());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

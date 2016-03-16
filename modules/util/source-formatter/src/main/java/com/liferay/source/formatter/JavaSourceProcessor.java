@@ -800,6 +800,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
+		newContent = formatStringBundler(
+			fileName, newContent, _MAX_LINE_LENGTH);
+
 		newContent = StringUtil.replace(
 			newContent, StringPool.TAB + "for (;;) {",
 			StringPool.TAB + "while (true) {");
@@ -1891,8 +1894,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						"Do not set stopwatch to null: " + fileName + " " +
 							lineCount);
 				}
-
-				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
 
@@ -3223,11 +3224,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				classLine, StringPool.TAB + StringPool.SPACE, StringPool.TAB);
 		}
 
-		String classSingleLine = StringUtil.removeChar(
-			classLine.substring(1), CharPool.TAB);
-
-		classSingleLine = StringUtil.replace(
-			classSingleLine, CharPool.NEW_LINE, CharPool.SPACE);
+		String classSingleLine = StringUtil.replace(
+			classLine.substring(1),
+			new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
 
 		classSingleLine = indent + classSingleLine;
 

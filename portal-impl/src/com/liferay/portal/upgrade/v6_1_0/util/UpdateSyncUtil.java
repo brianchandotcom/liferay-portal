@@ -32,11 +32,12 @@ public class UpdateSyncUtil {
 
 	public static void updateSyncs(Connection connection) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb1 = new StringBundler(10);
+			StringBundler sb1 = new StringBundler(11);
 
 			sb1.append("select DLFileEntry.fileEntryId as fileId, ");
-			sb1.append("DLFileEntry.groupId as groupId, DLFileEntry.companyId");
-			sb1.append(" as companyId, DLFileEntry.createDate as createDate, ");
+			sb1.append("DLFileEntry.groupId as groupId, ");
+			sb1.append("DLFileEntry.companyId as companyId, ");
+			sb1.append("DLFileEntry.createDate as createDate, ");
 			sb1.append("DLFileEntry.folderId as parentFolderId, 'file' as ");
 			sb1.append("type from DLFileEntry union all select ");
 			sb1.append("DLFolder.folderId as fileId, DLFolder.groupId as ");

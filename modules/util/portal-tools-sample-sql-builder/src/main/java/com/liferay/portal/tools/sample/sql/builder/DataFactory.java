@@ -1286,10 +1286,10 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
+		StringBundler sb = new StringBundler(4 + _maxDDLCustomFieldCount * 4);
 
-		sb.append(
-			"{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": [");
+		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
+		sb.append("[");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append("{\"columns\": [{\"fieldNames\": [\"");
@@ -1302,8 +1302,8 @@ public class DataFactory {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		sb.append("], \"title\": {\"en_US\": \"\"}}],");
-		sb.append("\"paginationMode\": \"single-page\"}");
+		sb.append("], \"title\": {\"en_US\": \"\"}}],\"paginationMode\": ");
+		sb.append("\"single-page\"}");
 
 		return newDDMStructureLayoutModel(
 			_globalGroupId, _defaultUserId,
@@ -1317,8 +1317,9 @@ public class DataFactory {
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
 
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
-			sb.append("{\"dataType\": \"string\", \"indexType\": \"keyword\"");
-			sb.append(", \"label\": {\"en_US\": \"Text");
+			sb.append(
+				"{\"dataType\": \"string\", \"indexType\": \"keyword\", ");
+			sb.append("\"label\": {\"en_US\": \"Text");
 			sb.append(i);
 			sb.append("\"}, \"name\": \"");
 			sb.append(nextDDLCustomFieldName(groupId, i));
@@ -1448,7 +1449,7 @@ public class DataFactory {
 	public DDMContentModel newDDMContentModel(
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 8);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 7);
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
@@ -1460,8 +1461,7 @@ public class DataFactory {
 			sb.append(nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			sb.append("\", \"value\": {\"en_US\": \"Test Record ");
 			sb.append(currentIndex);
-			sb.append("\"}}");
-			sb.append(",");
+			sb.append("\"}},");
 		}
 
 		if (_maxDDLCustomFieldCount > 0) {

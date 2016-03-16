@@ -682,10 +682,9 @@ public class JournalArticleFinderImpl
 			closeSession(session);
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("No JournalArticle exists with the key ");
-		sb.append("{resourcePrimKey=");
+		sb.append("No JournalArticle exists with the key {resourcePrimKey=");
 		sb.append(resourcePrimKey);
 		sb.append(", displayDate=");
 		sb.append(displayDate);

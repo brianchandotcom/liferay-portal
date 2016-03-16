@@ -23,7 +23,7 @@
 		showErrorMessageURL.setParameter("mvcRenderCommandName", "/blogs_aggregator/view");
 		showErrorMessageURL.setParameter("blogsPortletFound", Boolean.FALSE.toString());
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/blogs/find_entry?noSuchEntryRedirect=");

@@ -972,25 +972,37 @@ public class ShoppingUtil {
 		String currencyCode =
 			shoppingGroupServiceOverriddenConfiguration.getCurrencyId();
 
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("https://www.paypal.com/cgi-bin/webscr?");
-		sb.append("cmd=_xclick&");
-		sb.append("business=").append(payPalEmailAddress).append("&");
-		sb.append("item_name=").append(order.getNumber()).append("&");
-		sb.append("item_number=").append(order.getNumber()).append("&");
-		sb.append("invoice=").append(order.getNumber()).append("&");
-		sb.append("amount=").append(amount).append("&");
-		sb.append("return=").append(returnURL).append("&");
-		sb.append("notify_url=").append(notifyURL).append("&");
-		sb.append("first_name=").append(firstName).append("&");
-		sb.append("last_name=").append(lastName).append("&");
-		sb.append("address1=").append(address1).append("&");
-		sb.append("city=").append(city).append("&");
-		sb.append("state=").append(state).append("&");
-		sb.append("zip=").append(zip).append("&");
-		sb.append("no_note=1&");
-		sb.append("currency_code=").append(currencyCode).append("");
+		sb.append("https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&");
+		sb.append("business=");
+		sb.append(payPalEmailAddress);
+		sb.append("&item_name=");
+		sb.append(order.getNumber());
+		sb.append("&item_number=");
+		sb.append(order.getNumber());
+		sb.append("&invoice=");
+		sb.append(order.getNumber());
+		sb.append("&amount=");
+		sb.append(amount);
+		sb.append("&return=");
+		sb.append(returnURL);
+		sb.append("&notify_url=");
+		sb.append(notifyURL);
+		sb.append("&first_name=");
+		sb.append(firstName);
+		sb.append("&last_name=");
+		sb.append(lastName);
+		sb.append("&address1=");
+		sb.append(address1);
+		sb.append("&city=");
+		sb.append(city);
+		sb.append("&state=");
+		sb.append(state);
+		sb.append("&zip=");
+		sb.append(zip);
+		sb.append("&no_note=1&currency_code=");
+		sb.append(currencyCode);
 
 		return sb.toString();
 	}

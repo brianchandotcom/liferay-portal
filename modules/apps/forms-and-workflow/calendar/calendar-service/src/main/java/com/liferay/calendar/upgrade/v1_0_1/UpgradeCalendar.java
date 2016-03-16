@@ -59,14 +59,13 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	protected void updateCalendarTimeZoneIds() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("select Calendar.calendarId, CalendarResource.");
-			sb.append("classNameId, User_.timeZoneId from Calendar ");
-			sb.append("inner join CalendarResource on Calendar.");
-			sb.append("calendarResourceId = CalendarResource.");
-			sb.append("calendarResourceId inner join User_ on ");
-			sb.append("CalendarResource.userId = User_.userId");
+			sb.append("classNameId, User_.timeZoneId from Calendar inner ");
+			sb.append("join CalendarResource on Calendar.calendarResourceId ");
+			sb.append("= CalendarResource.calendarResourceId inner join ");
+			sb.append("User_ on CalendarResource.userId = User_.userId");
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString());

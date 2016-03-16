@@ -63,11 +63,10 @@ public class VerifyUser extends VerifyProcess {
 			if (db.getDBType() == DBType.MYSQL) {
 				sb = new StringBundler(7);
 
-				sb.append(
-					"update Group_ inner join User_ on Group_.companyId = ");
-				sb.append("User_.companyId and Group_.classPK = User_.userId ");
-				sb.append("set active_ = [$FALSE$] ");
-				sb.append("where Group_.classNameId = ");
+				sb.append("update Group_ inner join User_ on ");
+				sb.append("Group_.companyId = User_.companyId and ");
+				sb.append("Group_.classPK = User_.userId set active_ = ");
+				sb.append("[$FALSE$] where Group_.classNameId = ");
 				sb.append(PortalUtil.getClassNameId(User.class));
 				sb.append(" and User_.status = ");
 				sb.append(WorkflowConstants.STATUS_INACTIVE);
@@ -75,12 +74,10 @@ public class VerifyUser extends VerifyProcess {
 			else {
 				sb = new StringBundler(9);
 
-				sb.append(
-					"update Group_ set active_ = [$FALSE$] where groupId in");
-				sb.append(
-					" (select Group_.groupId from Group_ inner join User_ ");
-				sb.append("on Group_.companyId = User_.companyId and ");
-				sb.append("Group_.classPK = User_.userId ");
+				sb.append("update Group_ set active_ = [$FALSE$] where ");
+				sb.append("groupId in (select Group_.groupId from Group_ ");
+				sb.append("inner join User_ on Group_.companyId = ");
+				sb.append("User_.companyId and Group_.classPK = User_.userId ");
 				sb.append("where Group_.classNameId = ");
 				sb.append(PortalUtil.getClassNameId(User.class));
 				sb.append(" and User_.status = ");

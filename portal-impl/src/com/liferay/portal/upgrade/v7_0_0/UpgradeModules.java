@@ -36,13 +36,12 @@ public class UpgradeModules extends UpgradeProcess {
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("insert into Release_ (mvccVersion, releaseId, ");
 		sb.append("createDate, modifiedDate, servletContextName, ");
-		sb.append("schemaVersion, buildNumber, buildDate, verified, ");
-		sb.append("state_, testString) values (?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?)");
+		sb.append("schemaVersion, buildNumber, buildDate, verified, state_, ");
+		sb.append("testString) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {

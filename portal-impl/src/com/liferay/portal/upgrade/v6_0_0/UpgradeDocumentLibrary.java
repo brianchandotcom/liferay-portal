@@ -53,10 +53,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
-		sb.append("companyId, userId, userName, createDate, folderId, ");
-		sb.append("name, version, size_, status, statusByUserId, ");
-		sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("companyId, userId, userName, createDate, folderId, name, ");
+		sb.append("version, size_, status, statusByUserId, ");
+		sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 

@@ -37,8 +37,7 @@ public class UnstableMessageUtil {
 
 		int passCount = totalCount - failCount;
 
-		sb.append("<h6>Job Results:</h6>");
-		sb.append("<p>");
+		sb.append("<h6>Job Results:</h6><p>");
 		sb.append(passCount);
 		sb.append(" Test");
 
@@ -54,9 +53,7 @@ public class UnstableMessageUtil {
 			sb.append("s");
 		}
 
-		sb.append(" Failed.</p>");
-
-		sb.append("<ol>");
+		sb.append(" Failed.</p><ol>");
 
 		List<String> runBuildURLs = new ArrayList<>();
 

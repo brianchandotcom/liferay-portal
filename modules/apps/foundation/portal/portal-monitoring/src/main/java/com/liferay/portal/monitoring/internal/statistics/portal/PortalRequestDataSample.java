@@ -67,21 +67,17 @@ public class PortalRequestDataSample extends BaseDataSample {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{referer=");
 		sb.append(_referer);
-		sb.append(", ");
-		sb.append("remoteAddr=");
+		sb.append(", remoteAddr=");
 		sb.append(_remoteAddr);
-		sb.append(", ");
-		sb.append("requestURL=");
+		sb.append(", requestURL=");
 		sb.append(_requestURL);
-		sb.append(", ");
-		sb.append("statusCode=");
+		sb.append(", statusCode=");
 		sb.append(_statusCode);
-		sb.append(", ");
-		sb.append("userAgent=");
+		sb.append(", userAgent=");
 		sb.append(_userAgent);
 		sb.append(", ");
 		sb.append(super.toString());

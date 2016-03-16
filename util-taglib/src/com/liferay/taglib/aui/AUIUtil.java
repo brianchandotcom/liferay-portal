@@ -119,8 +119,7 @@ public class AUIUtil {
 			if (inlineField) {
 				sb.append("class=\"");
 				sb.append(baseType);
-				sb.append("-inline");
-				sb.append("\" ");
+				sb.append("-inline\" ");
 			}
 		}
 		else {

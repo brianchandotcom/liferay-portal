@@ -103,9 +103,7 @@ public class InstanceWrapperBuilder {
 
 		sb.append("public static ");
 		sb.append(javaClass.getName());
-		sb.append("_IW getInstance() {");
-		sb.append("return _instance;");
-		sb.append("}\n");
+		sb.append("_IW getInstance() {return _instance;}\n");
 
 		for (JavaMethod javaMethod : javaMethods) {
 			String methodName = javaMethod.getName();
@@ -216,16 +214,14 @@ public class InstanceWrapperBuilder {
 				sb.setIndex(sb.index() - 1);
 			}
 
-			sb.append(");");
-			sb.append("}\n");
+			sb.append(");}\n");
 		}
 
 		// Private constructor
 
 		sb.append("private ");
 		sb.append(javaClass.getName());
-		sb.append("_IW() {");
-		sb.append("}");
+		sb.append("_IW() {}");
 
 		// Fields
 

@@ -1326,8 +1326,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				for (Organization organization : organizationsTree) {
 					sb.append("(Organization_.treePath LIKE '%/");
 					sb.append(organization.getOrganizationId());
-					sb.append("/%')");
-					sb.append(" OR ");
+					sb.append("/%') ");
+					sb.append("OR ");
 				}
 
 				sb.setIndex(sb.index() - 1);

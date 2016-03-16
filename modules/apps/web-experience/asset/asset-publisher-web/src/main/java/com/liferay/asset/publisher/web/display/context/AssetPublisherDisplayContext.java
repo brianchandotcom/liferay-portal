@@ -793,7 +793,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_enablePermissions = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enablePermissions", null));
+			_portletPreferences.getValue("enablePermissions", null), true);
 
 		return _enablePermissions;
 	}

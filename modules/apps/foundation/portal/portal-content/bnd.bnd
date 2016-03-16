@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Content
+Bundle-SymbolicName: com.liferay.portal.content
+Bundle-Version: 1.0.1
+Export-Package: com.liferay.portal.content
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../app.bnd

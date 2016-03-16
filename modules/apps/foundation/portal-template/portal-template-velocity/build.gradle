@@ -9,7 +9,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "velocity-tools", name: "velocity-tools", version: "1.4"
-	provided project(":apps:foundation:bnd:bnd-util")
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":core:registry-api")

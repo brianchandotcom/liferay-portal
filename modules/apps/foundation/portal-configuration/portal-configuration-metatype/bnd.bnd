@@ -2,10 +2,10 @@ Bundle-Name: Liferay Portal Metatype
 Bundle-SymbolicName: com.liferay.portal.configuration.metatype
 Bundle-Version: 1.0.2
 Export-Package:\
+	com.liferay.portal.configuration.bnd.util,\
 	com.liferay.portal.configuration.metatype.annotations,\
 	com.liferay.portal.configuration.metatype.definitions,\
 	com.liferay.portal.configuration.metatype.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Metatype Ext
 -include: ../../app.bnd
--liferay-includeresource: @biz.aQute.bndlib-*.jar!/aQute/bnd/annotation/metatype/*

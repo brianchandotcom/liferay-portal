@@ -11,7 +11,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
-	provided project(":apps:foundation:bnd:bnd-util")
+	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal-search:portal-search")
 	provided project(":apps:foundation:portal:portal-instance-lifecycle")
 	provided project(":apps:foundation:portal:portal-upgrade")

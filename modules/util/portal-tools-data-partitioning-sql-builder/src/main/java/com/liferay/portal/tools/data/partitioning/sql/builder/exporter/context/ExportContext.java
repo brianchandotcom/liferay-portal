@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Manuel de la Peña
@@ -22,11 +23,12 @@ import java.util.List;
 public class ExportContext {
 
 	public ExportContext(
-		List<Long> companyIds, String outputDirName, String schemaName,
-		boolean writeFile) {
+		List<Long> companyIds, String outputDirName, Properties properties,
+		String schemaName, boolean writeFile) {
 
 		_companyIds = companyIds;
 		_outputDirName = outputDirName;
+		_properties = properties;
 		_schemaName = schemaName;
 		_writeFile = writeFile;
 	}
@@ -39,6 +41,10 @@ public class ExportContext {
 		return _outputDirName;
 	}
 
+	public Properties getProperties() {
+		return _properties;
+	}
+
 	public String getSchemaName() {
 		return _schemaName;
 	}
@@ -49,6 +55,7 @@ public class ExportContext {
 
 	private final List<Long> _companyIds;
 	private final String _outputDirName;
+	private final Properties _properties;
 	private final String _schemaName;
 	private final boolean _writeFile;
 

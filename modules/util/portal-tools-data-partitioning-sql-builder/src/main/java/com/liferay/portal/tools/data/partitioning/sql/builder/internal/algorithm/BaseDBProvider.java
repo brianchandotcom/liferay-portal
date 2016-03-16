@@ -55,6 +55,8 @@ public abstract class BaseDBProvider
 
 	@Override
 	public void export(ExportContext exportContext) {
+		initializeDatabase(exportContext.getProperties());
+
 		ExportProcess exportProcess = new ExportProcess(this);
 
 		try {
@@ -88,15 +90,6 @@ public abstract class BaseDBProvider
 	@Override
 	public List<String> getPartitionedTableNames(String schemaName) {
 		return getTableNames(getPartitionedTableNamesSQL(schemaName));
-	}
-
-	@Override
-	public void initializeDatabase(Properties properties) {
-		this.properties = properties;
-
-		HikariConfig hikariConfig = new HikariConfig(this.properties);
-
-		_dataSource = new HikariDataSource(hikariConfig);
 	}
 
 	@Override
@@ -249,7 +242,11 @@ public abstract class BaseDBProvider
 		return tableNames;
 	}
 
-	protected Properties properties;
+	protected void initializeDatabase(Properties properties) {
+		HikariConfig hikariConfig = new HikariConfig(properties);
+
+		_dataSource = new HikariDataSource(hikariConfig);
+	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BaseDBProvider.class);

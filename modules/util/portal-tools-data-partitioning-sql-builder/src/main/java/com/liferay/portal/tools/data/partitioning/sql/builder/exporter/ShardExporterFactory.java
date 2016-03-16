@@ -15,29 +15,44 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception.DBProviderNotAvailableException;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.DBProvider;
 
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ServiceLoader;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Manuel de la Peña
  */
 public class ShardExporterFactory {
 
-	public static ShardExporter getShardExporter(Properties properties) {
-		ServiceLoader<ShardExporter> shardExporters = ServiceLoader.load(
+	public static ShardExporter getShardExporter() {
+		ServiceLoader<ShardExporter> serviceLoader = ServiceLoader.load(
 			ShardExporter.class);
 
-		for (ShardExporter shardExporter : shardExporters) {
-			DBProvider dbProvider = (DBProvider)shardExporter;
+		List<ShardExporter> shardExporters = new ArrayList<>();
 
-			dbProvider.initializeDatabase(properties);
-
-			return shardExporter;
+		for (ShardExporter shardExporter : serviceLoader) {
+			shardExporters.add(shardExporter);
 		}
 
-		throw new DBProviderNotAvailableException();
+		_logger.info(shardExporters.size() + " exporters available");
+
+		for (ShardExporter shardExporter : shardExporters) {
+			_logger.info("Shard exporter " + shardExporter);
+		}
+
+		if (shardExporters.isEmpty() || (shardExporters.size() > 1)) {
+			throw new DBProviderNotAvailableException(
+				shardExporters.size() + " exporters available");
+		}
+
+		return shardExporters.get(0);
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		ShardExporterFactory.class);
 
 }

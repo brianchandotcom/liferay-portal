@@ -140,6 +140,7 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
+import org.gradle.util.CollectionUtils;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -439,7 +440,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		File gitRepoDir, final File portalRootDir,
 		final WritePropertiesTask recordArtifactTask, boolean testProject) {
 
-		Project project = recordArtifactTask.getProject();
+		final Project project = recordArtifactTask.getProject();
 
 		Task task = project.task(PRINT_ARTIFACT_PUBLISH_COMMANDS);
 
@@ -447,23 +448,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			new Action<Task>() {
 
 				private String _getGitCommitCommand(
-					Project project, String message, boolean ignored) {
+					String message, boolean ignored) {
 
-					return _getGitCommitCommand(
-						project, message, false, ignored);
+					return _getGitCommitCommand(message, false, ignored);
 				}
 
-				private String _getGradlewCommand(
-					String gradlewRelativePath, String command, boolean daemon,
-					String ... arguments) {
+				private String _getGradleCommand(
+					String gradleRelativePath, String command,
+					boolean gradleDaemon, String ... arguments) {
 
 					StringBuilder sb = new StringBuilder();
 
-					sb.append(gradlewRelativePath);
+					sb.append(gradleRelativePath);
 					sb.append(' ');
 					sb.append(command);
 
-					if (daemon) {
+					if (gradleDaemon) {
 						sb.append(" --daemon");
 					}
 
@@ -476,8 +476,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 				private String _getGitCommitCommand(
-					Project project, String message, boolean all,
-					boolean ignored) {
+					String message, boolean all, boolean ignored) {
 
 					StringBuilder sb = new StringBuilder();
 
@@ -513,20 +512,20 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					return sb.toString();
 				}
 
-				@Override
-				public void execute(Task task) {
-					List<String> commands = new ArrayList<>();
+				private boolean _getGradleDaemon(Task task) {
+					boolean gradleDaemon = true;
 
-					Project project = task.getProject();
+					String gradleDaemonString =
+						GradleUtil.getTaskPrefixedProperty(task, "daemon");
 
-					// Change directory
+					if (Validator.isNotNull(gradleDaemonString)) {
+						gradleDaemon = Boolean.parseBoolean(gradleDaemonString);
+					}
 
-					commands.add(
-						"cd " +
-							FileUtil.getAbsolutePath(project.getProjectDir()));
+					return gradleDaemon;
+				}
 
-					// Publish snapshot
-
+				private String _getGradleRelativePath() {
 					File rootDir = portalRootDir;
 
 					if (portalRootDir == null) {
@@ -535,37 +534,47 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					File gradlewFile = new File(rootDir, "gradlew");
 
-					String gradlewRelativePath = project.relativePath(
-						gradlewFile);
+					return project.relativePath(gradlewFile);
+				}
 
-					boolean daemon = true;
+				private List<String> _getPublishCommands(
+					String gradleRelativePath, boolean gradleDaemon,
+					boolean excludeUpdateFileVersions) {
 
-					String daemonString = GradleUtil.getTaskPrefixedProperty(
-						task, "daemon");
+					List<String> commands = new ArrayList<>();
 
-					if (Validator.isNotNull(daemonString)) {
-						daemon = Boolean.parseBoolean(daemonString);
-					}
+					// Publish snapshot
 
 					commands.add(
-						_getGradlewCommand(
-							gradlewRelativePath,
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, daemon,
+						_getGradleCommand(
+							gradleRelativePath,
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, gradleDaemon,
 							"-P" + _SNAPSHOT_PROPERTY_NAME));
 
 					// Publish release
 
+					String[] arguments;
+
+					if (excludeUpdateFileVersions) {
+						arguments = new String[] {
+							"-x", UPDATE_FILE_VERSIONS_TASK_NAME
+						};
+					}
+					else {
+						arguments = new String[0];
+					}
+
 					commands.add(
-						_getGradlewCommand(
-							gradlewRelativePath,
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, daemon));
+						_getGradleCommand(
+							gradleRelativePath,
+							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, gradleDaemon,
+							arguments));
 
 					// Commit "prep next"
 
 					commands.add("git add " + project.relativePath("bnd.bnd"));
 
-					commands.add(
-						_getGitCommitCommand(project, "prep next", true));
+					commands.add(_getGitCommitCommand("prep next", true));
 
 					// Commit "artifact properties"
 
@@ -575,13 +584,50 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 								recordArtifactTask.getOutputFile()));
 
 					commands.add(
-						_getGitCommitCommand(
-							project, "artifact properties", true));
+						_getGitCommitCommand("artifact properties", true));
 
 					// Commit other changed files
 
+					commands.add(_getGitCommitCommand("apply", true, false));
+
+					return commands;
+				}
+
+				@Override
+				public void execute(Task task) {
+					List<String> commands = new ArrayList<>();
+
+					boolean gradleDaemon = _getGradleDaemon(task);
+					String gradleRelativePath = _getGradleRelativePath();
+
 					commands.add(
-						_getGitCommitCommand(project, "apply", true, false));
+						"cd " +
+							FileUtil.getAbsolutePath(project.getProjectDir()));
+
+					// Publish if never been published
+
+					if (!hasBaseline(project)) {
+						commands.addAll(
+							_getPublishCommands(
+								gradleRelativePath, gradleDaemon, true));
+					}
+
+					// Baseline
+
+					commands.add(
+						_getGradleCommand(
+							gradleRelativePath, BASELINE_TASK_NAME,
+							gradleDaemon));
+
+					// Publish if has packageinfo changes
+
+					List<String> publishCommands = _getPublishCommands(
+						gradleRelativePath, gradleDaemon, false);
+
+					commands.add(
+						"(git diff-index --quiet HEAD || (" +
+							CollectionUtils.join(" && ", publishCommands) +
+								"))");
 
 					System.out.println();
 

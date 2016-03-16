@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Comparator;
 
 /**
- * Represents a Comparator class used to order a list of record versions according to its version number.
- * The order could be ascending or descending and it's defined by the value specified in the class constructor.
+ * Used to order a list of record versions by version number. The order can be
+ * ascending or descending and is defined by the value specified in the class
+ * constructor.
  *
  * @author Marcellus Tavares
  */

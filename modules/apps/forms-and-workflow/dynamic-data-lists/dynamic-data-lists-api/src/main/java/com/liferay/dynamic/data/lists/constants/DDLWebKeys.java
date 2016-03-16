@@ -15,26 +15,29 @@
 package com.liferay.dynamic.data.lists.constants;
 
 /**
- * Represents a class that hold the DDL request attribute keys.
+ * Holds the DDL request attribute keys.
  *
  * @author Rafael Praxedes
  */
 public class DDLWebKeys {
 
 	/**
-	 * {@value #DYNAMIC_DATA_LISTS_RECORD} Key used to retrieve the DDL Record from the request attibute.
+	 * {@value #DYNAMIC_DATA_LISTS_RECORD} Used to retrieve the DDL Record from
+	 * the request attibute.
 	 */
 	public static final String DYNAMIC_DATA_LISTS_RECORD =
 		"DYNAMIC_DATA_LISTS_RECORD";
 
 	/**
-	 * {@value #DYNAMIC_DATA_LISTS_RECORD_SET} Key used to retrieve the DDL Record Set from the request attibute.
+	 * {@value #DYNAMIC_DATA_LISTS_RECORD_SET} Used to retrieve the DDL Record
+	 * Set from the request attibute.
 	 */
 	public static final String DYNAMIC_DATA_LISTS_RECORD_SET =
 		"DYNAMIC_DATA_LISTS_RECORD_SET";
 
 	/**
-	 * {@value #DYNAMIC_DATA_LISTS_RECORD_VERSION} Key used to retrieve the DDL Record Version from the request attibute.
+	 * {@value #DYNAMIC_DATA_LISTS_RECORD_VERSION} Used to retrieve the DDL
+	 * Record Version from the request attibute.
 	 */
 	public static final String DYNAMIC_DATA_LISTS_RECORD_VERSION =
 		"DYNAMIC_DATA_LISTS_RECORD_VERSION";

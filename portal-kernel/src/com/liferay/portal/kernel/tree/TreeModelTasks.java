@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.tree;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TreeModel;
 
@@ -22,6 +24,7 @@ import java.util.List;
 /**
  * @author Shinn Lok
  */
+@ProviderType
 public interface TreeModelTasks<T extends TreeModel> {
 
 	public List<T> findTreeModels(

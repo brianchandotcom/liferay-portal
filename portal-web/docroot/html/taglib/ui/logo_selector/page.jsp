@@ -61,7 +61,7 @@ else {
 
 				<c:if test='<%= Validator.isNull(imageURL) || imageURL.contains("/spacer.png") %>'>
 					<p class="text-muted" id="<%= randomNamespace %>emptyResultMessage">
-						<%= StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "none")) %>
+						<liferay-ui:message key="none" />
 					</p>
 				</c:if>
 

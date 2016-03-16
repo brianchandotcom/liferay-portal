@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.xml.Document;
 public interface JournalConverter {
 
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
-		throws Exception;
+		throws PortalException;
 
 	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
 		throws PortalException;
@@ -36,6 +36,7 @@ public interface JournalConverter {
 		throws PortalException;
 
 	public DDMFormValues getDDMFormValues(
-		DDMStructure ddmStructure, Fields fields)throws PortalException;
+			DDMStructure ddmStructure, Fields fields)
+		throws PortalException;
 
 }

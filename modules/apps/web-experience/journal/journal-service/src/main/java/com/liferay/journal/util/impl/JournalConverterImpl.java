@@ -86,7 +86,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Override
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
-		throws Exception {
+		throws PortalException {
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -247,7 +247,7 @@ public class JournalConverterImpl implements JournalConverter {
 	protected int countFieldRepetition(
 			Fields ddmFields, String fieldName, String parentFieldName,
 			int parentOffset)
-		throws Exception {
+		throws PortalException {
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
@@ -553,7 +553,7 @@ public class JournalConverterImpl implements JournalConverter {
 	protected void updateContentDynamicElement(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			Fields ddmFields, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
+		throws PortalException {
 
 		String fieldName = dynamicElementElement.attributeValue("name");
 
@@ -592,7 +592,7 @@ public class JournalConverterImpl implements JournalConverter {
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			Fields ddmFields, String fieldName,
 			DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
+		throws PortalException {
 
 		String fieldType = ddmStructure.getFieldType(fieldName);
 		String indexType = ddmStructure.getFieldProperty(
@@ -642,7 +642,7 @@ public class JournalConverterImpl implements JournalConverter {
 	protected void updateDynamicContentValue(
 			Element dynamicContentElement, String fieldType, boolean multiple,
 			String fieldValue)
-		throws Exception {
+		throws PortalException {
 
 		if (DDMImpl.TYPE_CHECKBOX.equals(fieldType)) {
 			if (fieldValue.equals(Boolean.FALSE.toString())) {

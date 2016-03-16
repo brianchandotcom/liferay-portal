@@ -18,6 +18,8 @@
 		<execute function="Check" locator1="ConfigurationAdmin#XSL_CONTENT_CONFIGURATION_XML_DOCTYPE_DECLARATION_CHECKBOX" />
 
 		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureXSLContentPortlet">

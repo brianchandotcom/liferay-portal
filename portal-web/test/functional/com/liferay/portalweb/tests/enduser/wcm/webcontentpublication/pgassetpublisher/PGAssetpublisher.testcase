@@ -248,6 +248,14 @@
 	</command>
 
 	<command name="ConfigureAPPortletEnableRatings" priority="4">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
 			<var name="enableRatings" value="true" />
 		</execute>

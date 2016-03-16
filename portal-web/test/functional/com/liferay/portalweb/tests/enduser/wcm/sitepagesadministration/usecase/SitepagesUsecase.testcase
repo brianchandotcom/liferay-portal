@@ -376,9 +376,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="pageName" value="Site Page" />
@@ -417,9 +415,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="page" value="Private" />

@@ -73,6 +73,37 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
+### Removed Liferay Frontend Editor BBCode Web, previously Liferay BBCode Editor
+- **Date:** 2016-Mar-16
+- **JIRA Ticket:** LPS-48334
+
+#### What changed?
+
+- Removed the com.liferay.frontend.editor.bbcode.web OSGi bundle.
+- Removed all hardcoded references/logic for the editor.
+- Added Log Warning and logic to upgrade the editor property to `ckeditor_bbcode`
+if the old `bbcode` is being used. This Log Warning and logic will be remove in
+the future along with LPS-64099.
+
+#### Who is affected?
+
+Any one who has
+`editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp`
+set to `bbcode` in portal properties (e.g., `portal-ext.properties`).
+
+#### How should I update my code?
+
+You should modify your `portal-ext.properties` file to remove the property
+`editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp`
+
+#### Why was this change made?
+
+Since Liferay Frontend Editor BBCode Web has been depricated since 6.1, it was
+time to remove it completely. This frees up developmnet and support resources to
+focus on supported features.
+
+---------------------------------------
+
 ### The liferay-ui:logo-selector Tag Requires Parameter Changes
 - **Date:** 2013-Dec-05
 - **JIRA Ticket:** LPS-42645

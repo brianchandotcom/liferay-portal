@@ -19,16 +19,10 @@ import com.liferay.portal.tools.data.partitioning.sql.builder.internal.algorithm
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import java.util.Properties;
-
 /**
  * @author Manuel de la Peña
  */
 public class PostgreSQLProvider extends BaseDBProvider {
-
-	public PostgreSQLProvider(Properties dbProperties) {
-		super(dbProperties);
-	}
 
 	@Override
 	public String getControlTableNamesSQL(String schema) {

@@ -16,16 +16,10 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.db.mysql;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.algorithm.BaseDBProvider;
 
-import java.util.Properties;
-
 /**
  * @author Manuel de la Peña
  */
 public class MySQLProvider extends BaseDBProvider {
-
-	public MySQLProvider(Properties properties) {
-		super(properties);
-	}
 
 	@Override
 	public String getControlTableNamesSQL(String schemaName) {

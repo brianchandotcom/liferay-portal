@@ -63,10 +63,8 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
 
-				<label><liferay-ui:message key="invite-by-email" /></label>
-
 				<div class="controls">
-					<aui:input label="" name="emailAddress" />
+					<aui:input label="invite-by-email" name="emailAddress" />
 
 					<aui:button name="emailButton" value="add-email-address" />
 				</div>

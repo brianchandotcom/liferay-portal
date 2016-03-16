@@ -1,31 +1,7 @@
 <html>
-	<style type="text/css">
-		h1 {
-			color: red;
-		}
-		h2 {
-			color: blue;
-		}
-		h3 {
-			color: darkgreen;
-		}
-		#toc {
-			border: 1px dotted #555;
-			color: #555;
-			width: 700px;
-		}
-		#toc li {
-			font-size: 14px;
-		}
-		.defaults {
-			background-color: #EFE;
-		}
-		.examples {
-			background-color: #EEE;
-		}
-	</style>
 	<head>
 		<title>${pageTitle!"Portal Properties"}</title>
+		<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
 	</head>
 	<body>
 		<h1>${pageTitle!"Portal Properties"}</h1>

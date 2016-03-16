@@ -55,8 +55,6 @@
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -250,6 +248,8 @@
 	</command>
 
 	<command name="DisableShowCurrentSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -281,8 +281,6 @@
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -311,11 +309,14 @@
 			<var name="breadcrumbListVisible" value="Parent Page Name,Child Page Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
@@ -338,11 +339,14 @@
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
@@ -404,6 +408,10 @@
 		</execute>
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome" />
+		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
@@ -471,8 +479,6 @@
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Child SiteName" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -497,11 +503,14 @@
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Child SiteName" />
+		</execute>
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
 			<var name="pageName" value="Parent Page Name" />
-			<var name="siteName" value="Child SiteName" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
@@ -545,6 +554,10 @@
 		</execute>
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome" />
+		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
@@ -591,6 +604,10 @@
 		</execute>
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome" />
+		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Child Page Name" />
@@ -648,6 +665,10 @@
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
 			<var name="breadcrumbListVisible" value="Liferay,Welcome,Child Page Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="Page#gotoChildPagePG">

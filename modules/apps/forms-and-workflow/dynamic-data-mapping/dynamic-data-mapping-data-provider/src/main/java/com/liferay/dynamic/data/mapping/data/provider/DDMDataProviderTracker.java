@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.data.provider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,15 @@ public class DDMDataProviderTracker {
 	public List<DDMDataProviderContextContributor>
 		getDDMDataProviderContextContributors(String type) {
 
-		return _ddmDataProviderContextContributorTrackerMap.getService(type);
+		List<DDMDataProviderContextContributor>
+			ddmDataProviderContextContributors =
+				_ddmDataProviderContextContributorTrackerMap.getService(type);
+
+		if (ddmDataProviderContextContributors != null) {
+			return ddmDataProviderContextContributors;
+		}
+
+		return Collections.emptyList();
 	}
 
 	public Set<String> getDDMDataProviderTypes() {

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_ASSET_PLUS_ICON</td>
-	<td>//a[contains(@id,'AssetPublisher')]/i[contains(@class,'icon-plus')]</td>
+	<td>//*[@data-qa-id='addButton']//a[contains(@id,'AssetPublisherPortlet')]</td>
 	<td></td>
 </tr>
 <tr>

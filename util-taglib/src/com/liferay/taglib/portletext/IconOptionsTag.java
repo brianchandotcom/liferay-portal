@@ -68,7 +68,7 @@ public class IconOptionsTag extends IconTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_direction = "down";
+		_direction = "right";
 		_portletConfigurationIcons = null;
 		_showArrow = true;
 	}
@@ -109,7 +109,7 @@ public class IconOptionsTag extends IconTag {
 			getPortletConfigurationIcons());
 	}
 
-	private String _direction = "down";
+	private String _direction = "right";
 	private List<PortletConfigurationIcon> _portletConfigurationIcons;
 	private boolean _showArrow = true;
 

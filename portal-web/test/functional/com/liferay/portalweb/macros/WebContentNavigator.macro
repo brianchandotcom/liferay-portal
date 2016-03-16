@@ -85,7 +85,7 @@
 			<var name="portletOption" value="Edit Web Content" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>

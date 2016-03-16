@@ -208,6 +208,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			JournalFeedTable.class,
 			new AlterColumnName("feedType", "feedFormat VARCHAR(75) null"));
 
+		setUpStrutureAttributesMappings();
+
 		updateStructures();
 		updateTemplates();
 
@@ -364,6 +366,34 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		element.remove(attribute);
 	}
 
+	protected void setUpStrutureAttributesMappings() {
+		_ddmDataTypes.put("boolean", "boolean");
+		_ddmDataTypes.put("document_library", "document-library");
+		_ddmDataTypes.put("image", "image");
+		_ddmDataTypes.put("link_to_layout", "link-to-page");
+		_ddmDataTypes.put("list", "string");
+		_ddmDataTypes.put("multi-list", "string");
+		_ddmDataTypes.put("text", "string");
+		_ddmDataTypes.put("text_area", "html");
+		_ddmDataTypes.put("text_box", "string");
+
+		_ddmMetadataAttributes.put("instructions", "tip");
+		_ddmMetadataAttributes.put("label", "label");
+		_ddmMetadataAttributes.put("predefinedValue", "predefinedValue");
+
+		_journalTypesToDDMTypes.put("boolean", "checkbox");
+		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");
+		_journalTypesToDDMTypes.put("image", "ddm-image");
+		_journalTypesToDDMTypes.put("image_gallery", "ddm-documentlibrary");
+		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
+		_journalTypesToDDMTypes.put("list", "select");
+		_journalTypesToDDMTypes.put("multi-list", "select");
+		_journalTypesToDDMTypes.put("selection_break", "ddm-separator");
+		_journalTypesToDDMTypes.put("text", "text");
+		_journalTypesToDDMTypes.put("text_area", "ddm-text-html");
+		_journalTypesToDDMTypes.put("text_box", "textarea");
+	}
+
 	protected void updateAssetEntryClassTypeId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
@@ -403,38 +433,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void updateJournalXSDDynamicElement(
 		Element element, String defaultLanguageId) {
-
-		Map<String, String> _ddmDataTypes = new HashMap<>();
-
-		_ddmDataTypes.put("boolean", "boolean");
-		_ddmDataTypes.put("document_library", "document-library");
-		_ddmDataTypes.put("image", "image");
-		_ddmDataTypes.put("link_to_layout", "link-to-page");
-		_ddmDataTypes.put("list", "string");
-		_ddmDataTypes.put("multi-list", "string");
-		_ddmDataTypes.put("text", "string");
-		_ddmDataTypes.put("text_area", "html");
-		_ddmDataTypes.put("text_box", "string");
-
-		Map<String, String> _ddmMetadataAttributes = new HashMap<>();
-
-		_ddmMetadataAttributes.put("instructions", "tip");
-		_ddmMetadataAttributes.put("label", "label");
-		_ddmMetadataAttributes.put("predefinedValue", "predefinedValue");
-
-		Map<String, String> _journalTypesToDDMTypes = new HashMap<>();
-
-		_journalTypesToDDMTypes.put("boolean", "checkbox");
-		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");
-		_journalTypesToDDMTypes.put("image", "ddm-image");
-		_journalTypesToDDMTypes.put("image_gallery", "ddm-documentlibrary");
-		_journalTypesToDDMTypes.put("link_to_layout", "ddm-link-to-page");
-		_journalTypesToDDMTypes.put("list", "select");
-		_journalTypesToDDMTypes.put("multi-list", "select");
-		_journalTypesToDDMTypes.put("selection_break", "ddm-separator");
-		_journalTypesToDDMTypes.put("text", "text");
-		_journalTypesToDDMTypes.put("text_area", "ddm-text-html");
-		_journalTypesToDDMTypes.put("text_box", "textarea");
 
 		String name = element.attributeValue("name");
 		String type = element.attributeValue("type");
@@ -805,7 +803,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
+	private final Map<String, String> _ddmDataTypes = new HashMap<>();
+	private final Map<String, String> _ddmMetadataAttributes = new HashMap<>();
 	private final Map<String, Long> _ddmStructureIds = new HashMap<>();
 	private final Map<Long, Long> _ddmStructurePKs = new HashMap<>();
+	private final Map<String, String> _journalTypesToDDMTypes = new HashMap<>();
 
 }

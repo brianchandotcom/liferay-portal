@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Ryan Park
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ResourceImporter.class)
 public class ResourceImporter extends FileSystemImporter {
 
 	@Override

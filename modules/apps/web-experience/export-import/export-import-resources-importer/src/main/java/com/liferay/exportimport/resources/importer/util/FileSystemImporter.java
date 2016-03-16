@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -125,7 +125,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  * @author Raymond Augé
  */
-@Component(immediate = true)
+@Component(immediate = true, service = FileSystemImporter.class)
 public class FileSystemImporter extends BaseImporter {
 
 	@Override
@@ -1134,7 +1134,8 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		PortletPreferences portletSetup =
-			_portletPreferencesFactory.getLayoutPortletSetup(layout, portletId);
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
 
 		Iterator<String> iterator = portletPreferencesJSONObject.keys();
 
@@ -1766,13 +1767,6 @@ public class FileSystemImporter extends BaseImporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setPortletPreferencesFactory(
-		PortletPreferencesFactory portletPreferencesFactory) {
-
-		_portletPreferencesFactory = portletPreferencesFactory;
-	}
-
-	@Reference(unbind = "-")
 	protected void setRepositoryLocalService(
 		RepositoryLocalService repositoryLocalService) {
 
@@ -2027,7 +2021,6 @@ public class FileSystemImporter extends BaseImporter {
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 	private LayoutSetLocalService _layoutSetLocalService;
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-	private PortletPreferencesFactory _portletPreferencesFactory;
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private RepositoryLocalService _repositoryLocalService;
 	private File _resourcesDir;

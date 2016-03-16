@@ -4,6 +4,12 @@ AUI.add(
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
+		var TPL_EMAIL_ROW = new A.Template(
+			'<div class="user" data-emailAddress="{emailAddress}">',
+				'<span class="email">{emailAddress}</span>',
+			'</div>'
+		);
+
 		var InviteMembers = A.Component.create(
 			{
 				ATTRS: {
@@ -92,11 +98,15 @@ AUI.add(
 						var emailAddress = Lang.trim(emailInput.val());
 
 						if (emailAddress) {
-							var html = '<div class="user" data-emailAddress="' + emailAddress + '"><span class="email">' + emailAddress + '</span></div>';
+							var emailRow = TPL_EMAIL_ROW.render(
+								{
+									emailAddress: emailAddress
+								}
+							);
 
 							var invitedEmailList = instance.one('#invitedEmailList');
 
-							invitedEmailList.append(html);
+							invitedEmailList.append(emailRow);
 						}
 
 						emailInput.val('');

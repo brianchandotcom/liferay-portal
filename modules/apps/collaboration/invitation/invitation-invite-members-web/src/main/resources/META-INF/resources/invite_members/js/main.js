@@ -110,6 +110,12 @@ AUI.add(
 						user.addClass('invited').cloneNode(true).appendTo(invitedMembersList);
 					},
 
+					_getByName: function(form, name) {
+						var instance = this;
+
+						return instance.one('[name=' + instance.ns(name) + ']', form);
+					},
+
 					_removeEmailInvite: function(user) {
 						user.remove();
 					},
@@ -120,7 +126,6 @@ AUI.add(
 						userId = userId || user.getAttribute('data-userId');
 
 						var membersList = instance.one('#membersList');
-
 
 						var user = membersList.one('[data-userId="' + userId + '"]');
 
@@ -139,32 +144,69 @@ AUI.add(
 					_syncFields: function(form) {
 						var instance = this;
 
-						var userIds = [];
+						instance._syncInvitedRoleIdField(form);
+
+						instance._syncInvitedTeamIdField(form);
+
+						instance._syncReceiverUserIdsField(form);
+
+						instance._syncReceiverEmailAddressesField(form);
+					},
+
+					_syncInvitedRoleIdField : function(form) {
+						var instance = this;
+
+						var invitedRoleId = instance._getByName(form, 'invitedRoleId');
+
+						var roleId = instance._getByName(form, 'roleId')
+
+						invitedRoleId.val(roleId ? roleId.val() : 0);
+					},
+
+					_syncInvitedTeamIdField : function(form) {
+						var instance = this;
+
+						var invitedTeamId = instance._getByName(form, 'invitedTeamId');
+
+						var teamId = instance._getByName(form, 'teamId')
+
+						invitedTeamId.val(teamId ? teamId.val() : 0);
+					},
+
+					_syncReceiverEmailAddressesField : function(form) {
+						var instance = this;
+
+						var receiverEmailAddresses = instance._getByName(form, 'receiverEmailAddresses');
+
 						var emailAddresses = [];
-
-						var invitedMembersList = instance.one('#invitedMembersList');
-
-						invitedMembersList.all('.user').each(
-							function(item, index) {
-								userIds.push(item.attr('data-userId'));
-							}
-						);
 
 						var invitedEmailList = instance.one('#invitedEmailList');
 
 						invitedEmailList.all('.user').each(
-							function(item, index) {
+							function (item, index) {
 								emailAddresses.push(item.attr('data-emailAddress'));
 							}
 						);
 
-						var role = instance.one('select[name=' + instance.ns('roleId') + ']');
-						var team = instance.one('select[name=' + instance.ns('teamId') + ']');
+						receiverEmailAddresses.val(emailAddresses.join());
+					},
 
-						instance.one('[name=' + instance.ns('receiverUserIds') +']', form).val(userIds.join());
-						instance.one('[name="' + instance.ns('receiverEmailAddresses') + ']', form).val(emailAddresses.join());
-						instance.one('[name="' + instance.ns('invitedRoleId') + ']', form).val(role ? role.val() : 0);
-						instance.one('[name="' + instance.ns('invitedTeamId') +']', form).val(team ? team.val() : 0);
+					_syncReceiverUserIdsField :function(form) {
+						var instance = this;
+
+						var receiverUserIds = instance._getByName(form, 'receiverUserIds');
+
+						var userIds = [];
+
+						var invitedMembersList = instance.one('#invitedMembersList');
+
+						invitedMembersList.all('.user').each(
+							function (item, index) {
+								userIds.push(item.attr('data-userId'));
+							}
+						);
+
+						receiverUserIds.val(userIds.join());
 					}
 				}
 			}

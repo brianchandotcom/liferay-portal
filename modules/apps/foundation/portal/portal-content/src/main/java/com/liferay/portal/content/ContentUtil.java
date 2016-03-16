@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portal.content;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,14 +39,6 @@ public class ContentUtil {
 		return _instance._get(classLoader, location, all);
 	}
 
-	public static String get(String location) {
-		return _instance._get(location, false);
-	}
-
-	public static String get(String location, boolean all) {
-		return _instance._get(location, all);
-	}
-
 	private ContentUtil() {
 		_contentPool = new HashMap<>();
 	}
@@ -66,12 +58,6 @@ public class ContentUtil {
 		}
 
 		return content;
-	}
-
-	private String _get(String location, boolean all) {
-		Class<?> clazz = getClass();
-
-		return _get(clazz.getClassLoader(), location, all);
 	}
 
 	private void _put(String location, String content) {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.CommonPermission;
@@ -54,12 +55,19 @@ public class CommonPermissionImpl implements CommonPermission {
 		throws PortalException {
 
 		if (className.equals(Account.class.getName())) {
+			long companyId = permissionChecker.getCompanyId();
+
+			if (classPK > 0) {
+				Account account = AccountLocalServiceUtil.getAccount(classPK);
+				companyId = account.getCompanyId();
+			}
+
 			if (!RoleLocalServiceUtil.hasUserRole(
-					permissionChecker.getUserId(),
-					permissionChecker.getCompanyId(),
+					permissionChecker.getUserId(), companyId,
 					RoleConstants.ADMINISTRATOR, true)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker);
 			}
 		}
 		else if (className.equals(Contact.class.getName())) {

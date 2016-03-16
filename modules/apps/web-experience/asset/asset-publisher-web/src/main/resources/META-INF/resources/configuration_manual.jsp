@@ -48,13 +48,9 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 				List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true);
 				%>
 
-				<c:if test="<%= assetEntries.isEmpty() %>">
-					<p class="text-muted">
-						<%= StringUtil.toLowerCase(LanguageUtil.get(request, "none")) %>
-					</p>
-				</c:if>
-
 				<liferay-ui:search-container
+					compactEmptyResultsMessage="<%= true %>"
+					emptyResultsMessage="none"
 					iteratorURL="<%= configurationRenderURL %>"
 					total="<%= assetEntries.size() %>"
 				>

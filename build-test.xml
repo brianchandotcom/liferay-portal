@@ -5208,11 +5208,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 							regexp="(.*?),.*"
 							replace="\1"
 						/>
+
+						<echo append="true" file="${test.ext.properties.file}">
+							test.name.skip.portal.instance=${test.name.skip.portal.instance}
+						</echo>
 					</then>
 				</if>
 
 				<echo append="true" file="${test.ext.properties.file}">
-					test.name.skip.portal.instance=${test.name.skip.portal.instance}
 					test.portal.instance=${test.portal.instance}
 				</echo>
 			</then>

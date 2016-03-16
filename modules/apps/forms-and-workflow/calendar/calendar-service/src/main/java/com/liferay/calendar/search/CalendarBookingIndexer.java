@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.FieldNames;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
@@ -134,7 +135,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			_classNameLocalService.getClassNameId(Calendar.class));
 		document.addKeyword(Field.CLASS_PK, calendarBooking.getCalendarId());
 		document.addKeyword(
-			Field.VIEW_ACTION_ID, CalendarActionKeys.VIEW_BOOKING_DETAILS);
+			FieldNames.VIEW_ACTION_ID, CalendarActionKeys.VIEW_BOOKING_DETAILS);
 
 		String calendarBookingId = String.valueOf(
 			calendarBooking.getCalendarBookingId());

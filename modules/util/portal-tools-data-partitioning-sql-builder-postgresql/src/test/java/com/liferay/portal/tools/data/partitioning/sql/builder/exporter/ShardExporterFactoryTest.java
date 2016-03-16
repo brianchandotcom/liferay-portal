@@ -14,8 +14,9 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception.DBProviderNotAvailableException;
+import com.liferay.portal.tools.data.partitioning.sql.builder.db.postgresql.PostgreSQLProvider;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -23,9 +24,15 @@ import org.junit.Test;
  */
 public class ShardExporterFactoryTest {
 
-	@Test(expected = DBProviderNotAvailableException.class)
-	public void testGetShardExporter() throws Exception {
-		ShardExporterFactory.getShardExporter();
+	@Test
+	public void testGetShardExporterReturnsPostgreSQLProvider()
+		throws Exception {
+
+		ShardExporter shardExporter = ShardExporterFactory.getShardExporter();
+
+		Class<PostgreSQLProvider> providerClass = PostgreSQLProvider.class;
+
+		Assert.assertTrue(providerClass.isInstance(shardExporter));
 	}
 
 }

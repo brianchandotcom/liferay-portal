@@ -50,16 +50,13 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseDBProvider
 	implements DBExporter, DBProvider, ShardExporter {
 
-	public BaseDBProvider(Properties properties) {
-		this.properties = properties;
-
-		HikariConfig hikariConfig = new HikariConfig(this.properties);
-
-		_dataSource = new HikariDataSource(hikariConfig);
+	public BaseDBProvider() {
 	}
 
 	@Override
 	public void export(ExportContext exportContext) {
+		initializeDatabase(exportContext.getProperties());
+
 		ExportProcess exportProcess = new ExportProcess(this);
 
 		try {
@@ -245,11 +242,15 @@ public abstract class BaseDBProvider
 		return tableNames;
 	}
 
-	protected final Properties properties;
+	protected void initializeDatabase(Properties properties) {
+		HikariConfig hikariConfig = new HikariConfig(properties);
+
+		_dataSource = new HikariDataSource(hikariConfig);
+	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BaseDBProvider.class);
 
-	private final DataSource _dataSource;
+	private DataSource _dataSource;
 
 }

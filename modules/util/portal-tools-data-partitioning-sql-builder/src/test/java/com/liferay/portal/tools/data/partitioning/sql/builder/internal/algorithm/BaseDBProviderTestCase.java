@@ -55,8 +55,7 @@ public abstract class BaseDBProviderTestCase {
 		properties = DBProviderTestUtil.readProperties(
 			getTestPropertiesFileName());
 
-		ShardExporter shardExporter = ShardExporterFactory.getShardExporter(
-			properties);
+		ShardExporter shardExporter = ShardExporterFactory.getShardExporter();
 
 		dbProvider = (DBProvider)shardExporter;
 

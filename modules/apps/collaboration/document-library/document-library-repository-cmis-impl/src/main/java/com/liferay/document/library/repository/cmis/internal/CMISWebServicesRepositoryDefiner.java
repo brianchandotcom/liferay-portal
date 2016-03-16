@@ -15,13 +15,9 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
-import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
-import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 
@@ -78,29 +74,10 @@ public class CMISWebServicesRepositoryDefiner
 	}
 
 	@Override
-	public void registerCapabilities(
-		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
-
-		DocumentRepository documentRepository = capabilityRegistry.getTarget();
-
-		capabilityRegistry.addSupportedCapability(
-			ProcessorCapability.class,
-			_portalCapabilityLocator.getProcessorCapability(
-				documentRepository));
-	}
-
-	@Override
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalCapabilityLocator(
-		PortalCapabilityLocator portalCapabilityLocator) {
-
-		_portalCapabilityLocator = portalCapabilityLocator;
 	}
 
 	@Reference(
@@ -111,7 +88,6 @@ public class CMISWebServicesRepositoryDefiner
 		_repositoryFactory = repositoryFactory;
 	}
 
-	private PortalCapabilityLocator _portalCapabilityLocator;
 	private final RepositoryConfiguration _repositoryConfiguration;
 	private RepositoryFactory _repositoryFactory;
 

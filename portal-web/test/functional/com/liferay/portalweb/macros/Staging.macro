@@ -125,7 +125,7 @@
 	</command>
 
 	<command name="addPageVariationPG">
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#STAGING_BAR_ELLIPSIS" />
 		<execute function="Click" locator1="Staging#STAGING_MENU_MANAGE_PAGE_VARIATION" />
 
 		<execute function="SelectFrame" locator1="IFrame#PAGE_VARIATION_IFRAME" />
@@ -153,7 +153,7 @@
 	</command>
 
 	<command name="addSitePagesVariationPG">
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#STAGING_BAR_ELLIPSIS" />
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
@@ -443,7 +443,7 @@
 	</command>
 
 	<command name="editSitePageVariationPG">
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#STAGING_BAR_ELLIPSIS" />
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
@@ -542,7 +542,7 @@
 	</command>
 
 	<command name="mergeSitePagesVariation">
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#STAGING_BAR_ELLIPSIS" />
 		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
 
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
@@ -789,7 +789,7 @@
 	</command>
 
 	<command name="setHistoryVersionPG">
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#STAGING_BAR_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 

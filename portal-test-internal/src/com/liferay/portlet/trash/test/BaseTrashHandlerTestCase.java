@@ -1279,10 +1279,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
@@ -1317,10 +1317,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());

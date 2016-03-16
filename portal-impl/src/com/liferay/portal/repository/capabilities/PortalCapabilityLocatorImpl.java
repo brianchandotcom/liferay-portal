@@ -59,7 +59,7 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	public CommentCapability getCommentCapability(
 		DocumentRepository documentRepository) {
 
-		return new LiferayCommentCapability();
+		return _commentCapability;
 	}
 
 	@Override
@@ -75,20 +75,18 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	public ProcessorCapability getProcessorCapability(
 		DocumentRepository documentRepository) {
 
-		return new LiferayProcessorCapability();
+		return _processorCapability;
 	}
 
 	@Override
 	public RelatedModelCapability getRelatedModelCapability(
 		DocumentRepository documentRepository) {
 
-		RepositoryEntryConverter repositoryEntryConverter =
-			new RepositoryEntryConverter();
 		RepositoryEntryChecker repositoryEntryChecker =
 			new RepositoryEntryChecker(documentRepository);
 
 		return new LiferayRelatedModelCapability(
-			repositoryEntryConverter, repositoryEntryChecker);
+			_repositoryEntryConverter, repositoryEntryChecker);
 	}
 
 	@Override
@@ -111,13 +109,11 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	public ThumbnailCapability getThumbnailCapability(
 		DocumentRepository documentRepository) {
 
-		RepositoryEntryConverter repositoryEntryConverter =
-			new RepositoryEntryConverter();
 		RepositoryEntryChecker repositoryEntryChecker =
 			new RepositoryEntryChecker(documentRepository);
 
 		return new LiferayThumbnailCapability(
-			repositoryEntryConverter, repositoryEntryChecker);
+			_repositoryEntryConverter, repositoryEntryChecker);
 	}
 
 	@Override
@@ -159,5 +155,12 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@BeanReference(type = TrashVersionLocalService.class)
 	protected TrashVersionLocalService trashVersionLocalService;
+
+	private final CommentCapability _commentCapability =
+		new LiferayCommentCapability();
+	private final ProcessorCapability _processorCapability =
+		new LiferayProcessorCapability();
+	private final RepositoryEntryConverter _repositoryEntryConverter =
+		new RepositoryEntryConverter();
 
 }

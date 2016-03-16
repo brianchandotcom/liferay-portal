@@ -226,35 +226,30 @@ AUI.add(
 			}
 		);
 
-		Liferay.InviteMembers = InviteMembers;
-	},
-	'',
-	{
-		requires: ['aui-base', 'aui-template-deprecated', 'liferay-portlet-base', 'liferay-util-window']
-	}
-);
-
-AUI.add(
-	'liferay-so-invite-members-list',
-	function(A) {
-		var InviteMembersList = A.Base.create(
-			'inviteMembersList',
-			A.Base,
-			[A.AutoCompleteBase],
+		var InviteMembersList = A.Component.create(
 			{
-				initializer: function(config) {
-					this._listNode = A.one(config.listNode);
+				EXTENDS: A.Base,
 
-					this._bindUIACBase();
-					this._syncUIACBase();
+				AUGMENTS: [A.AutoCompleteBase],
+
+				prototype: {
+					initializer: function (config) {
+						var instance = this;
+
+						instance._listNode = A.one(config.listNode);
+
+						instance._bindUIACBase();
+						instance._syncUIACBase();
+					}
 				}
 			}
 		);
 
+		Liferay.InviteMembers = InviteMembers;
 		Liferay.InviteMembersList = InviteMembersList;
 	},
 	'',
 	{
-		requires: ['aui-base', 'autocomplete-base', 'node-core']
+		requires: ['aui-base', 'aui-template-deprecated', 'autocomplete-base', 'liferay-portlet-base', 'liferay-util-window', 'node-core']
 	}
 );

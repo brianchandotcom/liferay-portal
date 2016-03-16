@@ -123,7 +123,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 	</aui:form>
 </div>
 
-<aui:script use="aui-base,datasource-io,datatype-number,liferay-so-invite-members,liferay-so-invite-members-list">
+<aui:script use="aui-base,datasource-io,datatype-number,liferay-so-invite-members">
 	new Liferay.InviteMembers(
 		{
 			form: {

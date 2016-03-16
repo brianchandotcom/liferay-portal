@@ -383,8 +383,12 @@ public class LiferayPortlet extends GenericPortlet {
 
 		String redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
 
-		if (Validator.isNull(redirect)) {
+		if (Validator.isBlank(redirect)) {
 			redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (!Validator.isBlank(redirect)) {
+				redirect = PortalUtil.escapeRedirect(redirect);
+			}
 		}
 
 		return redirect;

@@ -16,12 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-	<div class="portlet-msg-success">
-		<liferay-ui:message key="your-request-processed-successfully" />
-	</div>
-</c:if>
-
 <%
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 %>

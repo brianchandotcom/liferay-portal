@@ -724,6 +724,21 @@
 				</licenses>
 			</library>
 			<library>
+-				<file-name>lib/development/resin.jar</file-name>
+-				<version>4.0.44</version>
+-				<project-name>Resin</project-name>
+-				<project-url>http://www.caucho.com/resin-4.0</project-url>
+-				<licenses>
+-					<license>
+-						<license-name>GPL 2.0</license-name>
+-						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
+-					</license>
+-				</licenses>
+-				<comments>
+-					See LEP-5048 and LPS-15805.
+-				</comments>
+-			</library>
+			<library>
 				<file-name>lib/development/saxpath.jar</file-name>
 				<version>1.0 FCS</version>
 				<project-name>SAXPath</project-name>

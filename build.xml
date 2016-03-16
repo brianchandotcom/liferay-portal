@@ -487,6 +487,13 @@
 					/>
 				</copy>
 
+				<copy todir="${app.server.temp.dir}/liferay/com/liferay/portal/deploy/dependencies">
+					<fileset
+						dir="lib/development"
+						includes="resin.jar"
+					/>
+				</copy>
+
 				<if>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<then>

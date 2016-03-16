@@ -196,16 +196,15 @@ public class ExportImportLifecycleEventTest {
 
 			Throwable throwable = throwableInformation.getThrowable();
 
-			Assert.assertSame(
-				NoSuchLayoutSetException.class, throwable.getClass());
+			Assert.assertSame(NoSuchGroupException.class, throwable.getClass());
 
 			loggingEvents = captureAppender2.getLoggingEvents();
 
 			loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Unable to publish layout: No LayoutSet exists with the key " +
-					"{groupId=" + targetGroupId + ", privateLayout=false}",
+				"Unable to publish layout: Target group does not exists with " +
+					"the primary key " + targetGroupId,
 				loggingEvent.getMessage());
 		}
 

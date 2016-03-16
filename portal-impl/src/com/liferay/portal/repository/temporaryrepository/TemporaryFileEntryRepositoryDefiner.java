@@ -14,19 +14,16 @@
 
 package com.liferay.portal.repository.temporaryrepository;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
+import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
-import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
-import com.liferay.portal.repository.capabilities.TemporaryFileEntriesCapabilityImpl;
-import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
-import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 
 /**
  * @author Iván Zaera
@@ -52,21 +49,19 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
-		DLFileEntryServiceAdapter dlFileEntryServiceAdapter =
-			DLFileEntryServiceAdapter.create(documentRepository);
-
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class,
-			new LiferayBulkOperationCapability(
-				documentRepository, dlFileEntryServiceAdapter,
-				DLFolderServiceAdapter.create(documentRepository)));
+			portalCapabilityLocator.getBulkOperationCapability(
+				documentRepository));
 		capabilityRegistry.addExportedCapability(
 			TemporaryFileEntriesCapability.class,
-			new TemporaryFileEntriesCapabilityImpl(documentRepository));
+			portalCapabilityLocator.getTemporaryFileEntriesCapability(
+				documentRepository));
 
 		capabilityRegistry.addSupportedCapability(
 			WorkflowCapability.class,
-			new MinimalWorkflowCapability(dlFileEntryServiceAdapter));
+			portalCapabilityLocator.getWorkflowCapability(
+				documentRepository, WorkflowCapability.OperationMode.MINIMAL));
 	}
 
 	@Override
@@ -79,6 +74,9 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
 		_repositoryFactory = repositoryFactory;
 	}
+
+	@BeanReference(type = PortalCapabilityLocator.class)
+	protected PortalCapabilityLocator portalCapabilityLocator;
 
 	private RepositoryFactory _repositoryFactory;
 

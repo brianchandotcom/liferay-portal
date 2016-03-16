@@ -1297,7 +1297,6 @@ public class DataFactory {
 			sb.append("\"], \"size\": 12}]}");
 			sb.append(", ");
 		}
-		}
 
 		if (_maxDDLCustomFieldCount > 0) {
 			sb.setIndex(sb.index() - 1);

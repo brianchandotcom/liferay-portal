@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -12,24 +12,27 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider.rest.internal.repository;
+package com.liferay.dynamic.data.mapping.data.provider.web.lar;
 
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProviderSettings;
+import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 
@@ -41,42 +44,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"},
-	service = StagedModelRepository.class
+	property = {"javax.portlet.name=" + DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER},
+	service = StagedModelDataHandler.class
 )
-public class DDMDataProviderInstanceStagedModelRepository
-	extends BaseStagedModelRepository<DDMDataProviderInstance> {
+public class DDMDataProviderInstanceStagedModelDataHandler
+	extends BaseStagedModelDataHandler<DDMDataProviderInstance> {
 
-	@Override
-	public DDMDataProviderInstance addStagedModel(
-			PortletDataContext portletDataContext,
-			DDMDataProviderInstance dataProviderInstance)
-		throws PortalException {
-
-		long userId = portletDataContext.getUserId(
-			dataProviderInstance.getUserUuid());
-
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			dataProviderInstance);
-
-		if (portletDataContext.isDataStrategyMirror()) {
-			serviceContext.setUuid(dataProviderInstance.getUuid());
-		}
-
-		String definition = dataProviderInstance.getDefinition();
-
-		DDMForm ddmForm = DDMFormFactory.create(
-			DDMRESTDataProviderSettings.class);
-
-		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(ddmForm, definition);
-
-		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(
-			userId, dataProviderInstance.getGroupId(),
-			dataProviderInstance.getNameMap(),
-			dataProviderInstance.getDescriptionMap(), ddmFormValues,
-			dataProviderInstance.getType(), serviceContext);
-	}
+	public static final String[] CLASS_NAMES =
+		{DDMDataProviderInstance.class.getName()};
 
 	@Override
 	public void deleteStagedModel(DDMDataProviderInstance dataProviderInstance)
@@ -92,21 +67,11 @@ public class DDMDataProviderInstanceStagedModelRepository
 		throws PortalException {
 
 		DDMDataProviderInstance dataProviderInstance =
-			_ddmDataProviderInstanceLocalService.
-				fetchDDMDataProviderInstanceByUuidAndGroupId(uuid, groupId);
+			fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (dataProviderInstance != null) {
 			deleteStagedModel(dataProviderInstance);
 		}
-	}
-
-	@Override
-	public void deleteStagedModels(PortletDataContext portletDataContext)
-		throws PortalException {
-
-		_ddmDataProviderInstanceLocalService.deleteDataProviderInstances(
-			portletDataContext.getCompanyId(),
-			portletDataContext.getScopeGroupId());
 	}
 
 	@Override
@@ -129,37 +94,59 @@ public class DDMDataProviderInstanceStagedModelRepository
 	}
 
 	@Override
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext) {
-
-		return _ddmDataProviderInstanceLocalService.
-			getExportActionableDynamicQuery(portletDataContext);
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override
-	public void restoreStagedModel(
+	public String getDisplayName(DDMDataProviderInstance dataProviderInstance) {
+		return dataProviderInstance.getNameCurrentValue();
+	}
+
+	@Override
+	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
 			DDMDataProviderInstance dataProviderInstance)
-		throws PortletDataException {
+		throws Exception {
+
+		Element dataProviderInstanceElement =
+			portletDataContext.getExportDataElement(dataProviderInstance);
+
+		portletDataContext.addClassedModel(
+			dataProviderInstanceElement,
+			ExportImportPathUtil.getModelPath(dataProviderInstance),
+			dataProviderInstance);
 	}
 
 	@Override
-	public DDMDataProviderInstance saveStagedModel(
-			DDMDataProviderInstance dataProviderInstance)
-		throws PortalException {
-
-		return _ddmDataProviderInstanceLocalService.
-			updateDDMDataProviderInstance(dataProviderInstance);
-	}
-
-	@Override
-	public DDMDataProviderInstance updateStagedModel(
+	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
 			DDMDataProviderInstance dataProviderInstance)
-		throws PortalException {
+		throws Exception {
+
+		DDMDataProvider ddmDataProvider =
+			_ddmDataProviderTracker.getDDMDataProvider(
+				dataProviderInstance.getType());
+
+		if (ddmDataProvider == null) {
+			throw new IllegalStateException(
+				"No such DataProvider of type " + dataProviderInstance.getType()
+			);
+		}
 
 		long userId = portletDataContext.getUserId(
 			dataProviderInstance.getUserUuid());
+
+		DDMDataProviderInstance importedProvider =
+			(DDMDataProviderInstance)dataProviderInstance.clone();
+
+		importedProvider.setGroupId(portletDataContext.getScopeGroupId());
+
+		DDMDataProviderInstance existingProvider =
+			_ddmDataProviderInstanceLocalService.
+				fetchDDMDataProviderInstanceByUuidAndGroupId(
+					dataProviderInstance.getUuid(),
+					portletDataContext.getScopeGroupId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			dataProviderInstance);
@@ -172,16 +159,38 @@ public class DDMDataProviderInstanceStagedModelRepository
 		DDMFormValues ddmFormValues =
 			_ddmFormValuesJSONDeserializer.deserialize(ddmForm, definition);
 
-		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(
-			userId, dataProviderInstance.getDataProviderInstanceId(),
-			dataProviderInstance.getNameMap(),
-			dataProviderInstance.getDescriptionMap(), ddmFormValues,
-			serviceContext);
+		if (existingProvider == null) {
+			serviceContext.setUuid(dataProviderInstance.getUuid());
+
+			importedProvider =
+				_ddmDataProviderInstanceLocalService.addDataProviderInstance(
+					userId, portletDataContext.getScopeGroupId(),
+					dataProviderInstance.getNameMap(),
+					dataProviderInstance.getDescriptionMap(), ddmFormValues,
+					dataProviderInstance.getType(), serviceContext);
+		}
+		else {
+			importedProvider.setDataProviderInstanceId(
+				existingProvider.getDataProviderInstanceId());
+
+			importedProvider =
+				_ddmDataProviderInstanceLocalService.updateDataProviderInstance(
+					userId, existingProvider.getDataProviderInstanceId(),
+					dataProviderInstance.getNameMap(),
+					dataProviderInstance.getDescriptionMap(), ddmFormValues,
+					serviceContext);
+		}
+
+		portletDataContext.importClassedModel(
+			dataProviderInstance, importedProvider);
 	}
 
 	@Reference
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
+
+	@Reference
+	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

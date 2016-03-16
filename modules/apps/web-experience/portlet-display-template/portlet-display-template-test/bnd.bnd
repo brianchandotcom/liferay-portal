@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Portlet Display Template Test
 Bundle-SymbolicName: com.liferay.portlet.display.template.test
 Bundle-Version: 1.0.0
+-include: ../../app.bnd
 -includeresource: test-classes/integration

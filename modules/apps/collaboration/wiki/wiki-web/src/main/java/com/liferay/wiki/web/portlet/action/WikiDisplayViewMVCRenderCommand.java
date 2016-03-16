@@ -112,7 +112,7 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
 
-			return "/wiki_display/error.jsp";
+			return "/wiki/error.jsp";
 		}
 	}
 

@@ -23,6 +23,8 @@ AUI.add(
 
 		var PROXY_NODE_ITEM = Layout.PROXY_NODE_ITEM;
 
+		var STR_DOT = '.';
+
 		var STR_EMPTY = '';
 
 		var STR_NODE = 'node';
@@ -87,7 +89,7 @@ AUI.add(
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 
-						A.Array.invoke(instance._jqueryEventHandles, 'off', '.' + instance._guid);
+						A.Array.invoke(instance._jqueryEventHandles, 'off', STR_DOT + instance._guid);
 					},
 
 					addPortlet: function(portlet, options) {
@@ -155,7 +157,7 @@ AUI.add(
 
 						var listGroupPanel = panelBody.find('.list-group-panel');
 
-						var eventType = EVENT_SHOWN_BS_COLLAPSE + '.' + instance._guid;
+						var eventType = EVENT_SHOWN_BS_COLLAPSE + STR_DOT + instance._guid;
 
 						instance._jqueryEventHandles.push(
 							panelBody.on(

@@ -16,62 +16,38 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String navigation = ParamUtil.getString(request, "navigation");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-Boolean active = null;
-
-if (navigation.equals("active")) {
-	active = true;
-}
-else if (navigation.equals("inactive")) {
-	active = false;
-}
-
-int totalVar = LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), active);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-%>
-
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
 
 <aui:nav-bar markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
-
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="templates" selected="<%= true %>" />
+		<aui:nav-item href="<%= layoutPrototypeDisplayContext.getPortletURL().toString() %>" label="templates" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= totalVar <= 0 %>"
+	disabled="<%= layoutPrototypeDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="layoutPrototype"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= layoutPrototypeDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= layoutPrototypeDisplayContext.getOrderByCol() %>"
+			orderByType="<%= layoutPrototypeDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= layoutPrototypeDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			portletURL="<%= layoutPrototypeDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= layoutPrototypeDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -86,32 +62,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <aui:form action="<%= deleteLayoutPrototypesURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-page-templates.-you-can-add-a-page-template-by-clicking-the-plus-button-on-the-bottom-right-corner"
-		headerNames="name"
-		id="layoutPrototype"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		total="<%= totalVar %>"
+		searchContainer="<%= layoutPrototypeDisplayContext.getSearchContainer() %>"
 	>
-
-		<%
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<LayoutPrototype> orderByComparator = new LayoutPrototypeCreateDateComparator(orderByAsc);
-
-		searchContainer.setOrderByCol(orderByCol);
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType(orderByType);
-		%>
-
-		<liferay-ui:search-container-results
-			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), active, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.LayoutPrototype"
 			cssClass="selectable"
@@ -125,7 +77,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test="<%= layoutPrototypeDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
 						icon="edit-layout"
 						toggleRowChecker="<%= true %>"
@@ -165,7 +117,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						path="/layout_prototype_action.jsp"
 					/>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test="<%= layoutPrototypeDisplayContext.isIconView() %>">
 
 					<%
 					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
@@ -210,7 +162,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test="<%= layoutPrototypeDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
 						cssClass="content-column name-column title-column"
 						name="name"
@@ -253,11 +205,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= layoutPrototypeDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_PROTOTYPE) %>">
+<c:if test="<%= layoutPrototypeDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="addLayoutPrototypeURL">
 		<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
 	</portlet:renderURL>

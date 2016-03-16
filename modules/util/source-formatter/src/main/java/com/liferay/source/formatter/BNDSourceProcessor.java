@@ -187,7 +187,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDE_RESOURCE_DIRS_BLACKLIST =
 		new String[] {
 			"classes",
-			"META-INF/resources=src/main/resources/META-INF/resources"
+			"META-INF/resources=src/main/resources/META-INF/resources",
+			"META-INF/resources/content=src/main/resources/content",
+			"WEB-INF=src/main/resources/WEB-INF"
 		};
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
@@ -201,7 +203,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		"\nImport-Package:\\\\\n(.*?\n)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private Pattern _includeResourcePattern = Pattern.compile(
-		"^Include-Resource:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+		"^(-liferay)?-includeresource:[\\s\\S]*?([^\\\\]\n|\\Z)",
+		Pattern.MULTILINE);
 	private Pattern _incorrectTabPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(

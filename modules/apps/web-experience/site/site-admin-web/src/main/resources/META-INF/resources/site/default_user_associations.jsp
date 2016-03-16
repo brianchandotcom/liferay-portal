@@ -67,11 +67,9 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <h4 class="text-default"><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h4>
 
-<p class="text-muted <%= defaultSiteRoles.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />siteRolesEmptyResultMessage">
-	<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
-</p>
-
 <liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	emptyResultsMessage="none"
 	headerNames="title,null"
 	id="siteRolesSearchContainer"
 	total="<%= defaultSiteRoles.size() %>"
@@ -106,11 +104,9 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
 
-<p class="text-muted <%= defaultTeams.isEmpty() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />teamsEmptyResultMessage">
-	<%= StringUtil.lowerCase(LanguageUtil.get(request, "none")) %>
-</p>
-
 <liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	emptyResultsMessage="none"
 	headerNames="title,null"
 	id="teamsSearchContainer"
 	total="<%= defaultTeams.size() %>"
@@ -153,10 +149,6 @@ for (long defaultTeamId : defaultTeamIds) {
 				var link = event.currentTarget;
 
 				searchContainer.deleteRow(link.ancestor('tr'), link.getAttribute('data-rowId'));
-
-				if (searchContainer.getSize() <= 0) {
-					A.one(config.emptyResultMessageId).show();
-				}
 			},
 			'.modify-link'
 		);
@@ -192,8 +184,6 @@ for (long defaultTeamId : defaultTeamIds) {
 						searchContainer.addRow(rowColumns, event[config.idAttr]);
 
 						searchContainer.updateDataStore();
-
-						A.one(config.emptyResultMessageId).hide();
 					}
 				);
 			}
@@ -213,7 +203,6 @@ for (long defaultTeamId : defaultTeamIds) {
 	%>
 
 	var siteRolesConfig = {
-		emptyResultMessageId: '#<portlet:namespace />siteRolesEmptyResultMessage',
 		id: '<portlet:namespace />selectSiteRole',
 		idAttr: 'roleid',
 		inputId: '#<portlet:namespace />siteRolesSearchContainerPrimaryKeys',
@@ -239,7 +228,6 @@ for (long defaultTeamId : defaultTeamIds) {
 	%>
 
 	var teamsConfig = {
-		emptyResultMessageId: '#<portlet:namespace />teamsEmptyResultMessage',
 		id: '<portlet:namespace />selectTeam',
 		idAttr: 'teamid',
 		inputId: '#<portlet:namespace />teamsSearchContainerPrimaryKeys',

@@ -30,10 +30,10 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	<portlet:renderURL var="newExportProcessURL">
 		<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

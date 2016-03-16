@@ -41,10 +41,10 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			<aui:fieldset label="pages-options">
 				<c:choose>
 					<c:when test="<%= privateLayout %>">
-						<aui:button disabled="<%= disableInputs %>" id="changeToPrivateLayoutsButton" value="change-to-public-pages" />
+						<aui:button disabled="<%= disableInputs %>" id="changeToPublicLayoutsButton" value="change-to-public-pages" />
 					</c:when>
 					<c:otherwise>
-						<aui:button disabled="<%= disableInputs %>" id="changeToPublicLayoutsButton" value="change-to-private-pages" />
+						<aui:button disabled="<%= disableInputs %>" id="changeToPrivateLayoutsButton" value="change-to-private-pages" />
 					</c:otherwise>
 				</c:choose>
 

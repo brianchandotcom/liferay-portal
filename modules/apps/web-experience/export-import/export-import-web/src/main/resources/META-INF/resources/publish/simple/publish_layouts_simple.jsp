@@ -54,7 +54,6 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 				<portlet:param name="layoutSetBranchId" value='<%= MapUtil.getString(parameterMap, "layoutSetBranchId") %>' />
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item

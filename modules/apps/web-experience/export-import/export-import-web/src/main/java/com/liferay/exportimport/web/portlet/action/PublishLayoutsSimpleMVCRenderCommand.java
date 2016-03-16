@@ -15,7 +15,10 @@
 package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -38,8 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class PublishLayoutsSimpleMVCRenderCommand
-	extends ConfirmationExportImportConfigurationMVCRenderCommand {
+public class PublishLayoutsSimpleMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -69,7 +71,33 @@ public class PublishLayoutsSimpleMVCRenderCommand
 			}
 		}
 
-		return "/publish_layouts_simple.jsp";
+		return "/publish/simple/publish_layouts_simple.jsp";
+	}
+
+	protected void createExportImportConfiguration(RenderRequest renderRequest)
+		throws PortalException {
+
+		ExportImportConfiguration exportImportConfiguration = null;
+
+		boolean localPublishing = ParamUtil.getBoolean(
+			renderRequest, "localPublishing");
+
+		if (localPublishing) {
+			exportImportConfiguration =
+				ExportImportConfigurationFactory.
+					buildDefaultLocalPublishingExportImportConfiguration(
+						renderRequest);
+		}
+		else {
+			exportImportConfiguration =
+				ExportImportConfigurationFactory.
+					buildDefaultRemotePublishingExportImportConfiguration(
+						renderRequest);
+		}
+
+		renderRequest.setAttribute(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 }

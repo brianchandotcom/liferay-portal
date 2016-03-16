@@ -245,21 +245,21 @@ public class DocumentImplTest {
 
 		Hits results = IndexSearcherHelperUtil.search(searchContext, query);
 
-		List<String> names = new ArrayList<>(screenNames.length);
+		List<String> screenNamesList = new ArrayList<>(screenNames.length);
 
-		List<String> values = new ArrayList<>(screenNames.length);
+		List<String> searchResultValues = new ArrayList<>(screenNames.length);
 
 		for (int i = 0; i < screenNames.length; i++) {
 			Document document = results.doc(i);
 
-			names.add(document.get("screenName"));
+			screenNamesList.add(document.get("screenName"));
 
-			values.add(document.get(sort.getFieldName()));
+			searchResultValues.add(document.get(sort.getFieldName()));
 		}
 
 		Assert.assertEquals(
-			StringUtil.merge(values), StringUtil.merge(screenNames),
-			StringUtil.merge(names));
+			StringUtil.merge(searchResultValues), StringUtil.merge(screenNames),
+			StringUtil.merge(screenNamesList));
 	}
 
 	protected SearchContext buildSearchContext(String keywords)

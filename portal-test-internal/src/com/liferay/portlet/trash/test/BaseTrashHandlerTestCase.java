@@ -1794,6 +1794,26 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 	}
 
+	@Test(expected = TrashEntryException.class)
+	public void testTrashParentAndBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
+
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		whenHasParent.moveParentBaseModelToTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+	}
+
 	@Test
 	public void testTrashParentAndBaseModel() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
@@ -1971,6 +1991,41 @@ public abstract class BaseTrashHandlerTestCase {
 				whenIsIndexableBaseModel.searchBaseModelsCount(
 					getBaseModelClass(), group.getGroupId()));
 		}
+	}
+
+	@Test(expected = RestoreEntryException.class)
+	public void testTrashParentAndRestoreParentAndBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
+		Assume.assumeTrue(
+			this instanceof WhenIsRestorableParentBaseModelFromTrash);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
+
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		whenHasParent.moveParentBaseModelToTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		WhenIsRestorableParentBaseModelFromTrash
+			whenIsRestorableParentBaseModelFromTrash =
+				(WhenIsRestorableParentBaseModelFromTrash)this;
+
+		whenIsRestorableParentBaseModelFromTrash.
+			restoreParentBaseModelFromTrash(
+				(Long)parentBaseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 	}
 
 	@Test

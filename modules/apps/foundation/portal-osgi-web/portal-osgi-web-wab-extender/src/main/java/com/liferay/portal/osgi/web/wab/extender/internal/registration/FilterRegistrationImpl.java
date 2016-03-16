@@ -149,13 +149,6 @@ public class FilterRegistrationImpl implements FilterRegistration.Dynamic {
 		_name = name;
 	}
 
-	private boolean _asyncSupported;
-	private String _className = StringPool.BLANK;
-	private final FilterMapping _filterMapping = new FilterMapping();
-	private Map<String, String> _initParameters = new HashMap<>();
-	private Filter _instance;
-	private String _name = StringPool.BLANK;
-
 	public class FilterMapping {
 
 		public void addServletName(int index, String servletName) {
@@ -217,6 +210,13 @@ public class FilterRegistrationImpl implements FilterRegistration.Dynamic {
 
 	}
 
+	private boolean _asyncSupported;
+	private String _className = StringPool.BLANK;
+	private final FilterMapping _filterMapping = new FilterMapping();
+	private Map<String, String> _initParameters = new HashMap<>();
+	private Filter _instance;
+	private String _name = StringPool.BLANK;
+
 	private static class FilterMappingItem {
 
 		public String getItemContent() {
@@ -239,4 +239,5 @@ public class FilterRegistrationImpl implements FilterRegistration.Dynamic {
 		private boolean _urlPattern;
 
 	}
+
 }

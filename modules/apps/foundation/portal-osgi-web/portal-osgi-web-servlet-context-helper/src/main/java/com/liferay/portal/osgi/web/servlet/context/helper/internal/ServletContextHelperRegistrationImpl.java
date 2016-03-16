@@ -369,11 +369,12 @@ public class ServletContextHelperRegistrationImpl
 
 	private final BundleContext _bundleContext;
 	private final CustomServletContextHelper _customServletContextHelper;
-	private ServiceRegistration<?> _defaultServletServiceRegistration;
-	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private ServiceRegistration<?>
+	private final ServiceRegistration<?> _defaultServletServiceRegistration;
+	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private final ServiceRegistration<?>
 		_portletServletRequestFilterServiceRegistration;
-	private ServiceRegistration<Servlet> _portletServletServiceRegistration;
+	private final ServiceRegistration<Servlet>
+		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
 	private final Props _props;
 	private final ServiceRegistration<ServletContextHelper>

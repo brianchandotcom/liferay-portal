@@ -128,8 +128,8 @@ AUI.add(
 			_onModalXYChange: function(event) {
 				var instance = this;
 
-				if (instance.get('centered') && instance.get('topFixed')) {
-					event.newVal = instance._fixAtTheTop(event.newVal);
+				if (instance.get('centered')) {
+					event.newVal = instance._verticallyCentering(event.newVal);
 				}
 			},
 
@@ -145,6 +145,16 @@ AUI.add(
 				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
 
 				instance.set('centered', portletNode);
+			},
+
+			_verticallyCentering: function(xy) {
+				var instance = this;
+
+				var contentBox = instance.get('contentBox');
+
+				xy[1] = (A.config.win.pageYOffset - contentBox.outerHeight(true) / 2) + (A.config.win.innerHeight / 2);
+
+				return xy;
 			}
 		};
 

@@ -63,7 +63,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				<div class="user-invited" id="<portlet:namespace />invitedMembersList"></div>
 
-				<div class="controls">
+				<div class="button-holder controls">
 					<aui:input label="invite-by-email" name="emailAddress" />
 
 					<aui:button name="emailButton" value="add-email-address" />

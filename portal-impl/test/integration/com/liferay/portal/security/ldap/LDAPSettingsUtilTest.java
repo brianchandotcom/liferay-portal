@@ -51,21 +51,21 @@ public class LDAPSettingsUtilTest {
 		Properties properties = LDAPSettingsUtil.getContactExpandoMappings(
 			1, 1);
 
-		Assert.assertEquals(properties.get("ldapServerId"), "1");
+		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
 
 	@Test
 	public void testGetContactMappings() throws Exception {
 		Properties properties = LDAPSettingsUtil .getContactMappings(1, 1);
 
-		Assert.assertEquals(properties.get("ldapServerId"), "1");
+		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
 
 	@Test
 	public void testGetGroupMappings() throws Exception {
 		Properties properties = LDAPSettingsUtil .getGroupMappings(1, 1);
 
-		Assert.assertEquals(properties.get("ldapServerId"), "1");
+		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
 
 	@Test
@@ -73,28 +73,28 @@ public class LDAPSettingsUtilTest {
 		long ldapServerId = LDAPSettingsUtil.getPreferredLDAPServerId(
 			1, "test");
 
-		Assert.assertEquals(ldapServerId, 1234567890);
+		Assert.assertEquals(1234567890, ldapServerId);
 	}
 
 	@Test
 	public void testGetPropertyPostfix() {
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(1);
 
-		Assert.assertEquals(postfix, "liferay.ldap");
+		Assert.assertEquals("liferay.ldap", postfix);
 	}
 
 	@Test
 	public void testGetUserExpandoMappings() throws Exception {
 		Properties properties = LDAPSettingsUtil.getUserExpandoMappings(1, 1);
 
-		Assert.assertEquals(properties.get("ldapServerId"), "1");
+		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
 
 	@Test
 	public void testGetUserMappings() throws Exception {
 		Properties properties = LDAPSettingsUtil .getUserMappings(1, 1);
 
-		Assert.assertEquals(properties.get("ldapServerId"), "1");
+		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
 
 	@Test

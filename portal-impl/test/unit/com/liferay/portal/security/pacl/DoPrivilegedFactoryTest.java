@@ -60,7 +60,7 @@ public class DoPrivilegedFactoryTest {
 	public void testString() {
 		String string = DoPrivilegedFactory.wrap("Test");
 
-		Assert.assertEquals(string, "Test");
+		Assert.assertEquals("Test", string);
 		Assert.assertEquals(string.getClass(), String.class);
 	}
 

@@ -120,7 +120,7 @@ public class RoleLocalServiceTest {
 		Collections.sort(actualRoles, roleIdComparator);
 		Collections.sort(expectedRoles, roleIdComparator);
 
-		Assert.assertEquals(actualRoles, expectedRoles);
+		Assert.assertEquals(expectedRoles, actualRoles);
 	}
 
 	@Test

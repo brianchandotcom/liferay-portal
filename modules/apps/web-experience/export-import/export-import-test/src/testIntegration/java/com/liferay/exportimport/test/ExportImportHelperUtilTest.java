@@ -271,7 +271,7 @@ public class ExportImportHelperUtilTest {
 
 		List<String> entries = testReaderWriter.getEntries();
 
-		Assert.assertEquals(entries.size(), 1);
+		Assert.assertEquals(1, entries.size());
 
 		List<String> binaryEntries = testReaderWriter.getBinaryEntries();
 

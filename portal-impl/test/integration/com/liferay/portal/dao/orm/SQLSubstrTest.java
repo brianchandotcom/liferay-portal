@@ -77,7 +77,7 @@ public class SQLSubstrTest {
 
 			String substring = resultSet.getString(1);
 
-			Assert.assertEquals(substring, "AM");
+			Assert.assertEquals("AM", substring);
 		}
 	}
 

@@ -970,6 +970,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkStringUtilReplace(fileName, newContent);
 		}
 
+		newContent = formatAssertEquals(fileName, newContent);
+
 		newContent = formatReturnStatements(fileName, newContent);
 
 		newContent = getCombinedLinesContent(
@@ -1354,6 +1356,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				annotation += line + "\n";
 			}
+		}
+
+		return content;
+	}
+
+	protected String formatAssertEquals(String fileName, String content) {
+		if (!fileName.endsWith("Test.java")) {
+			return content;
+		}
+
+		Matcher matcher = _assertEqualsPattern.matcher(content);
+
+		while (matcher.find()) {
+			String parameters = StringUtil.trim(matcher.group(1));
+
+			List<String> parametersList = splitParameters(parameters);
+
+			if (parametersList.size() != 2) {
+				continue;
+			}
+
+			String actualParameter = parametersList.get(1);
+
+			String strippedQuotesActualParameter = stripQuotes(actualParameter);
+
+			if (!actualParameter.startsWith("expected") &&
+				!Validator.isDigit(actualParameter) &&
+				Validator.isNotNull(strippedQuotesActualParameter)) {
+
+				continue;
+			}
+
+			String assertEquals = matcher.group();
+			String expectedParameter = parametersList.get(0);
+
+			String newAssertEquals = StringUtil.replaceFirst(
+				assertEquals, expectedParameter, actualParameter,
+				assertEquals.indexOf(CharPool.OPEN_PARENTHESIS));
+
+			newAssertEquals = StringUtil.replaceLast(
+				newAssertEquals, actualParameter, expectedParameter);
+
+			return StringUtil.replace(content, assertEquals, newAssertEquals);
 		}
 
 		return content;
@@ -4026,6 +4071,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationMetaTypePattern = Pattern.compile(
 		"\\s(name|description) = \"%");
+	private Pattern _assertEqualsPattern = Pattern.compile(
+		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");

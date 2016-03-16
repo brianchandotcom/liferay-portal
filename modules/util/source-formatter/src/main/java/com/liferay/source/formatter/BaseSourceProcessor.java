@@ -489,33 +489,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String parameters = replaceCall.substring(
 				x + 1, replaceCall.length() - 1);
 
-			List<String> parametersList = new ArrayList<>();
-
-			x = -1;
-
-			while (true) {
-				x = parameters.indexOf(StringPool.COMMA, x + 1);
-
-				if (x == -1) {
-					parametersList.add(StringUtil.trim(parameters));
-
-					break;
-				}
-
-				if (ToolsUtil.isInsideQuotes(parameters, x)) {
-					continue;
-				}
-
-				String linePart = parameters.substring(0, x);
-
-				if (getLevel(linePart) == 0) {
-					parametersList.add(StringUtil.trim(linePart));
-
-					parameters = parameters.substring(x + 1);
-
-					x = -1;
-				}
-			}
+			List<String> parametersList = splitParameters(parameters);
 
 			if (parametersList.size() != 3) {
 				return;
@@ -2196,6 +2170,36 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line, String value, String attributeAndValue) {
 
 		return line;
+	}
+
+	protected List<String> splitParameters(String parameters) {
+		List<String> parametersList = new ArrayList<>();
+
+		int x = -1;
+
+		while (true) {
+			x = parameters.indexOf(StringPool.COMMA, x + 1);
+
+			if (x == -1) {
+				parametersList.add(StringUtil.trim(parameters));
+
+				return parametersList;
+			}
+
+			if (ToolsUtil.isInsideQuotes(parameters, x)) {
+				continue;
+			}
+
+			String linePart = parameters.substring(0, x);
+
+			if (getLevel(linePart) == 0) {
+				parametersList.add(StringUtil.trim(linePart));
+
+				parameters = parameters.substring(x + 1);
+
+				x = -1;
+			}
+		}
 	}
 
 	protected String stripQuotes(String s) {

@@ -140,8 +140,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		sb.append("companyId, userId, userName, createDate, modifiedDate,");
 		sb.append("classNameId, classPK , templateKey, name, description,");
 		sb.append("type_, mode_, language, script, cacheable, smallImage,");
-		sb.append("smallImageId, smallImageURL) values (?, ?, ?, ?, ?, ?,");
-		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("smallImageId, smallImageURL) values (?, ?, ?, ?, ?, ?,?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 

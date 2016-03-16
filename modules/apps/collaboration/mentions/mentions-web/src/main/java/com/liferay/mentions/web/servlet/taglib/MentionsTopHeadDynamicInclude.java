@@ -48,14 +48,14 @@ public class MentionsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = response.getWriter();
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("<link href=\"");
 		sb.append(themeDisplay.getPortalURL());
 		sb.append(PortalUtil.getPathContext());
 		sb.append(_servletContext.getContextPath());
-		sb.append("/css/mentions.css");
-		sb.append("\" rel=\"stylesheet\" type = \"text/css\" />");
+		sb.append("/css/mentions.css\" rel=\"stylesheet\" type = ");
+		sb.append("\"text/css\" />");
 
 		printWriter.println(sb.toString());
 	}

@@ -416,8 +416,8 @@ public class IncludeTag extends AttributesTagSupport {
 				sb = null;
 			}
 			else {
-				sb.append(" You must not use a taglib from a module and ");
-				sb.append("set the attribute \"servletContext\". Inline the ");
+				sb.append(" You must not use a taglib from a module and set ");
+				sb.append("the attribute \"servletContext\". Inline the ");
 				sb.append("content directly where the taglib is invoked.");
 			}
 		}
@@ -430,8 +430,8 @@ public class IncludeTag extends AttributesTagSupport {
 				sb.append("invoking a taglib from a module.");
 			}
 			else {
-				sb.append(" You must not use a taglib from a module and ");
-				sb.append("set the attribute \"file\". Inline the content ");
+				sb.append(" You must not use a taglib from a module and set ");
+				sb.append("the attribute \"file\". Inline the content ");
 				sb.append("directly where the taglib is invoked.");
 			}
 		}

@@ -35,12 +35,11 @@ public class UpgradeSubscription extends UpgradeProcess {
 			long classPK, String frequency)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("insert into Subscription (subscriptionId, companyId, ");
-		sb.append("userId, userName, createDate, modifiedDate, ");
-		sb.append("classNameId, classPK, frequency) values (?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?)");
+		sb.append("userId, userName, createDate, modifiedDate, classNameId, ");
+		sb.append("classPK, frequency) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {
@@ -103,15 +102,14 @@ public class UpgradeSubscription extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				String.valueOf(companyId))) {
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("select userId, MIN(userName) as userName, ");
 			sb.append("classNameId, classPK, MIN(createDate) as createDate, ");
 			sb.append("MIN(modifiedDate) as modifiedDate from MBMessage ");
 			sb.append("where (companyId = ");
 			sb.append(companyId);
-			sb.append(") and ");
-			sb.append("(classNameId != 0) and (parentMessageId != 0) ");
+			sb.append(") and (classNameId != 0) and (parentMessageId != 0) ");
 			sb.append("group by userId, classNameId, classPK");
 
 			try (PreparedStatement ps = connection.prepareStatement(

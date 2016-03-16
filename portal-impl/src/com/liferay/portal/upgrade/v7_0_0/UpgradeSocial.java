@@ -35,8 +35,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append(delta);
 			sb.append(") as activitySetId, groupId, companyId, userId, ");
 			sb.append("createDate, createDate AS modifiedDate, classNameId, ");
-			sb.append("classPK, type_, extraData, 1 as activityCount ");
-			sb.append("from SocialActivity where mirrorActivityId = 0");
+			sb.append("classPK, type_, extraData, 1 as activityCount from ");
+			sb.append("SocialActivity where mirrorActivityId = 0");
 
 			s.execute(sb.toString());
 		}

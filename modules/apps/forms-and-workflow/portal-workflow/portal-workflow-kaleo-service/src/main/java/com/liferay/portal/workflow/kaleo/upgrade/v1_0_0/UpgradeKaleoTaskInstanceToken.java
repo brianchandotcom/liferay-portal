@@ -70,13 +70,12 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 		StringBundler sb = new StringBundler();
 
 		sb.append("select KaleoNode.type_, ");
-		sb.append("KaleoInstanceToken.kaleoInstanceTokenId ");
-		sb.append("from KaleoNode inner join KaleoInstanceToken on ");
-		sb.append("(KaleoNode.kaleoNodeId = ");
-		sb.append("KaleoInstanceToken.currentKaleoNodeId) ");
-		sb.append("where KaleoInstanceToken.kaleoInstanceTokenId = ");
-		sb.append("(select parentKaleoInstanceTokenId from ");
-		sb.append("KaleoInstanceToken where KaleoInstanceTokenId = ?)");
+		sb.append("KaleoInstanceToken.kaleoInstanceTokenId from KaleoNode ");
+		sb.append("inner join KaleoInstanceToken on (KaleoNode.kaleoNodeId ");
+		sb.append("= KaleoInstanceToken.currentKaleoNodeId) where ");
+		sb.append("KaleoInstanceToken.kaleoInstanceTokenId = (select ");
+		sb.append("parentKaleoInstanceTokenId from KaleoInstanceToken where ");
+		sb.append("KaleoInstanceTokenId = ?)");
 
 		String sql = sb.toString();
 

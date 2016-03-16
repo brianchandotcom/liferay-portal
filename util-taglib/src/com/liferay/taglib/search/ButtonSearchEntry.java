@@ -43,8 +43,7 @@ public class ButtonSearchEntry extends TextSearchEntry {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<input type=\"button\" ");
-		sb.append("value=\"");
+		sb.append("<input type=\"button\" value=\"");
 		sb.append(getName());
 		sb.append("\" onClick=\"");
 		sb.append(getHref());

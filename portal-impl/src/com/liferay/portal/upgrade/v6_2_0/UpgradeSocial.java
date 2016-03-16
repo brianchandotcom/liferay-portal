@@ -175,8 +175,8 @@ public class UpgradeSocial extends UpgradeProcess {
 
 				sb.append("update ");
 				sb.append(tableName);
-				sb.append(" set classPK = (select resourcePrimKey ");
-				sb.append("from JournalArticle where id_ = ");
+				sb.append(" set classPK = (select resourcePrimKey from ");
+				sb.append("JournalArticle where id_ = ");
 				sb.append(tableName);
 				sb.append(".classPK) where classNameId = ");
 				sb.append(classNameId);

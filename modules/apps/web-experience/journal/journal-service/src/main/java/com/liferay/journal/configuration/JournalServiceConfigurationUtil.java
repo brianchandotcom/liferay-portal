@@ -14,10 +14,10 @@
 
 package com.liferay.journal.configuration;
 
+import com.liferay.portal.content.ContentUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author Eduardo Garcia

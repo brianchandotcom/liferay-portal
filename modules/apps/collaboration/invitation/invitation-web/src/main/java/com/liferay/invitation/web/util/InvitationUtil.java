@@ -14,6 +14,7 @@
 
 package com.liferay.invitation.web.util;
 
+import com.liferay.portal.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.util.ContentUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;

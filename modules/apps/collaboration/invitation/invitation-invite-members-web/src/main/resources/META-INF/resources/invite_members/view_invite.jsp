@@ -27,13 +27,13 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 %>
 
 <div class="container-fluid main-content-body" id="<portlet:namespace />inviteMembersContainer">
-	<portlet:actionURL name="sendInvites" var="sentIvitesURL" />
+	<portlet:actionURL name="sendInvites" var="sendInvitesURL" />
 
 	<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
 	</portlet:renderURL>
 
-	<aui:form action="<%= sentIvitesURL %>" method="post" name="fm">
+	<aui:form action="<%= sendInvitesURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 		<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 		<aui:input name="receiverUserIds" type="hidden" value="" />

@@ -111,7 +111,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 							for (Team team : teams) {
 							%>
 
-							<aui:option label="<%= HtmlUtil.escape(team.getName()) %>" value="<%= team.getTeamId() %>" />
+								<aui:option label="<%= HtmlUtil.escape(team.getName()) %>" value="<%= team.getTeamId() %>" />
 
 							<%
 							}

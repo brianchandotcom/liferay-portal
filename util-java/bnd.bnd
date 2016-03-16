@@ -7,6 +7,3 @@ Import-Package:\
 	*;resolution:=optional
 Include-Resource: classes
 -baseline: *;file=${project.dir}/../.bnd/ant-baseline-cache/com.liferay.util.java-2.0.0.jar
--pluginpath.this:\
-	${project.dir}/../.bnd/ant-baseline-cache/com.liferay.util.java-2.0.0.jar;\
-		url='https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce/com/liferay/portal/com.liferay.util.java/2.0.0/com.liferay.util.java-2.0.0.jar'

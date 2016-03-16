@@ -74,9 +74,9 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 	PortletURL marketplaceURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MARKETPLACE_STORE, PortletRequest.RENDER_PHASE);
 	%>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
-	</aui:button-row>
+	<div class="button-holder">
+		<aui:button cssClass="manage-layout-set-branches-link" href="<%= marketplaceURL.toString() %>" id="installMore" value="install-more" />
+	</div>
 </c:if>
 
 <div class="container-fluid-1280">

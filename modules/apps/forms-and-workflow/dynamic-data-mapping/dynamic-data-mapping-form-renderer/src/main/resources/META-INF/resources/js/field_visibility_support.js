@@ -84,14 +84,12 @@ AUI.add(
 				instance.showLoadingFeedback();
 			},
 
-			_afterVisibleChange: function() {
+			_afterVisibleChange: function(event) {
 				var instance = this;
 
-				var value = instance.getValue();
+				var container = instance.get('container');
 
-				instance.render();
-
-				instance.setValue(value);
+				container.one('.form-group').toggleClass('hide', !event.newVal);
 			},
 
 			_valueVisible: function() {

@@ -57,9 +57,7 @@ AUI.add(
 					initializer: function(params) {
 						var instance = this;
 
-						instance._rootNode = instance.rootNode;
-
-						if (!instance._rootNode) {
+						if (!instance.rootNode) {
 							return;
 						}
 
@@ -146,8 +144,8 @@ AUI.add(
 							instance._inviteMembersList.on('results', instance._onInviteMembersListResults, instance),
 							instance._form.on('submit', instance._syncFields, instance),
 							instance._membersList.delegate(STR_CLICK, instance._onMemberListClick, '.more-results a', instance),
-							instance._rootNode.delegate(STR_CLICK, instance._handleInvite, '.user', instance),
-							instance._rootNode.delegate(STR_KEYUP, instance._onEmailKeyup, '.controls', instance)
+							instance.rootNode.delegate(STR_CLICK, instance._handleInvite, '.user', instance),
+							instance.rootNode.delegate(STR_KEYUP, instance._onEmailKeyup, '.controls', instance)
 						];
 					},
 
@@ -267,10 +265,10 @@ AUI.add(
 
 						var membersList = instance.one('#membersList');
 
-						var user = membersList.one('[data-userId="' + userId + '"]');
+						var memberListUser = membersList.one('[data-userId="' + userId + '"]');
 
-						if (user) {
-							user.removeClass('invited');
+						if (memberListUser) {
+							memberListUser.removeClass('invited');
 						}
 
 						var invitedMembersList = instance.one('#invitedMembersList');

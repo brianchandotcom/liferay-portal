@@ -10,6 +10,7 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:product-navigation:product-navigation-control-menu-api")
+	provided project(":apps:web-experience:staging:staging-api")
 	provided project(":apps:web-experience:staging:staging-lang")
 	provided project(":apps:web-experience:staging:staging-taglib")
 }

@@ -17,7 +17,7 @@
  * @param value
  * @param visible
  */
-{template .select}
+{template .select autoescape="deprecated-contextual"}
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
 			{if $showLabel}

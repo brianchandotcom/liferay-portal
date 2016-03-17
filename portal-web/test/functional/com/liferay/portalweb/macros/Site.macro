@@ -364,46 +364,37 @@
 	</command>
 
 	<command name="assignRoleCP">
+		<execute function="AssertVisible" locator1="Portlet#HEADER" />
+
 		<var name="${key_cardText}" value="{userScreenName}" />
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
 
 		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 
 		<execute function="AssertClick" locator1="Button#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
+		<execute function="AssertVisible" locator1="Button#DONE" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Pause" locator1="5000" />
 
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
+
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
+
 		<execute function="Check" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_CHECKBOX" />
 
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<execute function="SelectFrameTop" />
 
-		<execute function="AssertClick" locator1="SiteMembershipsAssignUserRoles#AVAILABLE" value1="Available" />
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="Check" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_CHECKBOX" />
-		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertClick" locator1="SiteMembershipsAssignUserRoles#CURRENT" value1="Current" />
-
-		<if>
-			<isset var="userMiddleName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_USER_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="assignSiteRolesSiteOwnerUserGroupsCP">

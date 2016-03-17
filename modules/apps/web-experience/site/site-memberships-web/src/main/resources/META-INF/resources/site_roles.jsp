@@ -38,6 +38,15 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"

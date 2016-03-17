@@ -126,6 +126,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 			<var name="expirationDate" value="${expirationDate}" />
+			<var name="pastDate" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

@@ -4814,8 +4814,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="kfProcessName" value="${kfProcessName}" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms Page" />
 		</execute>
 

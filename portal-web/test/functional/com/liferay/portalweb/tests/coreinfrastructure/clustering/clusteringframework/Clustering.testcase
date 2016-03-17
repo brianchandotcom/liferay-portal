@@ -67,9 +67,9 @@
 			<var name="nodePort" value="9080" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page1" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
@@ -90,18 +90,18 @@
 			<var name="pageName" value="Test Page2" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page2" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page2" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
@@ -114,9 +114,9 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page2" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -124,9 +124,9 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Test Page2" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
@@ -234,9 +234,9 @@
 			<var name="nodePort" value="9080" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Documents and Media Page" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
@@ -304,19 +304,17 @@
 			<var name="nodePort" value="9080" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Welcome" />
-			<var name="siteURL" value="true" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 		<execute function="Pause" locator1="120000" />
 
-		<execute macro="Page#gotoPG">
-			<var name="nodePort" value="9080" />
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Welcome" />
-			<var name="siteURL" value="true" />
+			<var name="url" value="http://localhost:9080" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />

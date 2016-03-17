@@ -243,10 +243,9 @@
 			<var name="siteName" value="Site A" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page A" />
 			<var name="siteName" value="Site A" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -274,10 +273,9 @@
 			<var name="siteName" value="Site B" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page B" />
 			<var name="siteName" value="Site B" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -299,10 +297,9 @@
 		<execute function="Select" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page B" />
 			<var name="siteName" value="Site B" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<var name="key_portletName" value="Navigation" />
@@ -320,10 +317,9 @@
 		<execute function="Select" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="None" />
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page B" />
 			<var name="siteName" value="Site B" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<var name="key_portletName" value="Navigation" />
@@ -1165,10 +1161,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >

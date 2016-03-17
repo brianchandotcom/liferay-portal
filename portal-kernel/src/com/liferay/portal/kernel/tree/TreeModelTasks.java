@@ -34,12 +34,4 @@ public interface TreeModelTasks<T extends TreeModel> {
 			long parentPrimaryKey, String treePath)
 		throws PortalException;
 
-	/**
-	 * @throws PortalException
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public void reindexTreeModels(List<TreeModel> treeModels)
-		throws PortalException;
-
 }

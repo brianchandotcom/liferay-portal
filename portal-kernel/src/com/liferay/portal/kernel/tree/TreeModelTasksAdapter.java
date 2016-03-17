@@ -41,13 +41,4 @@ public class TreeModelTasksAdapter<T extends TreeModel>
 		throws PortalException {
 	}
 
-	/**
-	 * @throws PortalException
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Override
-	public void reindexTreeModels(List<TreeModel> treeModels)
-		throws PortalException {
-	}
-
 }

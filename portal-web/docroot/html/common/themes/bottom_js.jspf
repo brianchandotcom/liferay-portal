@@ -109,6 +109,8 @@ if (layout != null) {
 	</c:if>
 
 	<aui:script use="event-move,liferay-navigation">
+		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
+
 		Liferay.once(
 			'initNavigation',
 			function() {
@@ -148,15 +150,23 @@ if (layout != null) {
 			}
 		);
 
-		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
-
 		if (navBlock) {
-			navBlock.once(
-				['gesturemovestart', 'mousemove'],
-				function() {
-					Liferay.fire('initNavigation');
-				}
-			);
+			if (A.UA.touchMobile) {
+				AUI.$(Liferay.Data.NAV_SELECTOR_MOBILE).one(
+					'shown.bs.collapse',
+					function () {
+						Liferay.fire('initNavigation');
+					}
+				);
+			}
+			else {
+				navBlock.once(
+					['gesturemovestart', 'mousemove'],
+					function() {
+						Liferay.fire('initNavigation');
+					}
+				);
+			}
 		}
 
 		A.on(

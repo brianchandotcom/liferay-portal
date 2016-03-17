@@ -85,6 +85,8 @@
 
 		Liferay.Data.NAV_SELECTOR = '#navigation';
 
+		Liferay.Data.NAV_SELECTOR_MOBILE = '#navigationCollapse';
+
 		Liferay.Data.isCustomizationView = function() {
 			return <%= (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
 		};

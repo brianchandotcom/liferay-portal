@@ -238,6 +238,21 @@ public class ModifiableServletContextAdapter
 		}
 	}
 
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ModifiableServletContext)) {
+			return false;
+		}
+
+		ModifiableServletContext objModifiableServletContext =
+			(ModifiableServletContext)obj;
+
+		return (_bundle.equals(objModifiableServletContext.getBundle()));
+	}
+
+	public Bundle getBundle() {
+		return _bundle;
+	}
+
 	public FilterRegistration getFilterRegistration(String filterName) {
 		return getFilterRegistrationImpl(filterName);
 	}
@@ -316,6 +331,10 @@ public class ModifiableServletContextAdapter
 		getServletRegistrationsImpl() {
 
 		return _servletRegistrations;
+	}
+
+	public int hashCode() {
+		return _servletContext.hashCode();
 	}
 
 	@Override
@@ -476,6 +495,26 @@ public class ModifiableServletContextAdapter
 				catch (NoSuchMethodException nsme2) {
 				}
 			}
+		}
+
+		try {
+			Method equalsMethod = Object.class.getMethod(
+				"equals", Object.class);
+
+			Method equalsHandlerMethod =
+				ModifiableServletContextAdapter.class.getMethod(
+					"equals", Object.class);
+			methods.put(equalsMethod, equalsHandlerMethod);
+
+			Method hashCodeMethod = Object.class.getMethod(
+				"hashCode", (Class<?>[])null);
+
+			Method hashCodeHandlerMethod =
+				ModifiableServletContextAdapter.class.getMethod(
+					"hashCode", (Class<?>[])null);
+			methods.put(hashCodeMethod, hashCodeHandlerMethod);
+		}
+		catch (NoSuchMethodException nsme) {
 		}
 
 		return Collections.unmodifiableMap(methods);

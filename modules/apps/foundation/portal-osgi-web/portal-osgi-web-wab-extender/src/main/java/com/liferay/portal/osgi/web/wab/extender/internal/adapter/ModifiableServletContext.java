@@ -18,10 +18,14 @@ import com.liferay.portal.osgi.web.wab.extender.internal.definition.ListenerDefi
 
 import java.util.List;
 
+import org.osgi.framework.Bundle;
+
 /**
  * @author Raymond Augé
  */
 public interface ModifiableServletContext {
+
+	public Bundle getBundle();
 
 	public List<ListenerDefinition> getListenerDefinitions();
 

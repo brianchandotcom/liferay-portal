@@ -61,6 +61,22 @@ public class ScriptDataTest {
 		assertVariables(unsyncStringWriter, "var", "vAr", "vaR", "var1");
 	}
 
+	@Test
+	public void testGenerateVariableStripsLastInvalidCharacter()
+		throws Exception {
+
+		ScriptData scriptData = new ScriptData();
+
+		scriptData.append(
+			"portletId", "content", "var!", ScriptData.ModulesType.ES6);
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		scriptData.writeTo(unsyncStringWriter);
+
+		assertVariables(unsyncStringWriter, "var");
+	}
+
 	protected void assertVariables(
 		UnsyncStringWriter unsyncStringWriter, String... variables) {
 

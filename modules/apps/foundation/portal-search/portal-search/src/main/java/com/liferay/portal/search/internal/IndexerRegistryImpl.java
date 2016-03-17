@@ -17,6 +17,7 @@ package com.liferay.portal.search.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.dummy.DummyIndexer;
@@ -154,7 +155,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 			BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler =
 				new BufferedIndexerInvocationHandler(
-					indexer, _indexerRegistryConfiguration);
+					indexer, _indexWriterHelper, _indexerRegistryConfiguration);
 
 			if (_indexerRequestBufferOverflowHandler == null) {
 				bufferedIndexerInvocationHandler.
@@ -228,11 +229,16 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		_defaultIndexerRequestBufferOverflowHandler;
 
 	private final Indexer<?> _dummyIndexer = new DummyIndexer();
+
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
 	private volatile IndexerRequestBufferOverflowHandler
 		_indexerRequestBufferOverflowHandler;
 	private final Map<String, Indexer<? extends Object>> _indexers =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
+
 	private final Map<String, Indexer<? extends Object>> _proxiedIndexers =
 		new ConcurrentHashMap<>();
 

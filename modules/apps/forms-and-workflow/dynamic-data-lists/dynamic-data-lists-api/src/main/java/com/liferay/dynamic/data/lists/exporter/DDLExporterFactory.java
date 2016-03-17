@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Provides a factory to fetch implementations of the DDL Exporter service. By
- * default, implemententations for XML and CSV formats are available, but others
+ * default, implementations for XML and CSV formats are available, but others
  * can be added as OSGi modules.
  *
  * @author Marcellus Tavares
@@ -47,10 +47,10 @@ public class DDLExporterFactory {
 	}
 
 	/**
-	 * Returns the DDL Export service instace for the specified formats.
+	 * Returns the DDL Exporter service instance for the format.
 	 *
 	 * @param  format the format that will be used to export
-	 * @return the DDLExporter instance
+	 * @return the DDL Exporter instance
 	 */
 	public DDLExporter getDDLExporter(String format) {
 		DDLExporter ddlExporter = _ddlExporters.get(format);

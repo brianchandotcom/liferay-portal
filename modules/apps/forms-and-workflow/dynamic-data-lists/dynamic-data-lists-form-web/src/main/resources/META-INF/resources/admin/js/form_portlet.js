@@ -32,6 +32,7 @@ AUI.add(
 
 					name: {
 						getter: '_getName',
+						setter: '_setName',
 						value: ''
 					},
 
@@ -277,7 +278,7 @@ AUI.add(
 						var instance = this;
 
 						if (!instance.get('name').trim()) {
-							instance._setDefaultFormTitle();
+							instance.set('name', Liferay.Language.get('untitled-form'));
 						}
 
 						instance.serializeFormBuilder();
@@ -371,15 +372,6 @@ AUI.add(
 						instance.submitForm();
 					},
 
-					_setDefaultFormTitle: function() {
-						var instance = this;
-
-						var untitledForm = Liferay.Language.get('untitled-form');
-
-						instance.set('name', untitledForm);
-						window[instance.ns('nameEditor')].setHTML(untitledForm);
-					},
-
 					_setFormAsPublished: function() {
 						var instance = this;
 
@@ -400,6 +392,12 @@ AUI.add(
 								method: 'POST'
 							}
 						);
+					},
+
+					_setName: function(value) {
+						var instance = this;
+
+						window[instance.ns('nameEditor')].setHTML(value);
 					},
 
 					_valueFormBuilder: function() {

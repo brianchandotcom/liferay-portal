@@ -540,15 +540,17 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		Collection<String> fieldNames = solrDocument.getFieldNames();
 
 		for (String fieldName : fieldNames) {
-			Collection<Object> fieldValues = solrDocument.getFieldValues(
-				fieldName);
+			if (!fieldName.equals(_VERSION_FIELD)) {
+				Collection<Object> fieldValues = solrDocument.getFieldValues(
+					fieldName);
 
-			Field field = new Field(
-				fieldName,
-				ArrayUtil.toStringArray(
-					fieldValues.toArray(new Object[fieldValues.size()])));
+				Field field = new Field(
+					fieldName,
+					ArrayUtil.toStringArray(
+						fieldValues.toArray(new Object[fieldValues.size()])));
 
-			document.add(field);
+				document.add(field);
+			}
 		}
 
 		populateUID(document, queryConfig);
@@ -704,6 +706,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			hits.addStatsResults(statsResults);
 		}
 	}
+
+	private static final String _VERSION_FIELD = "_version_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexSearcher.class);

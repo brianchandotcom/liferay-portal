@@ -108,6 +108,10 @@ AUI.add(
 			validate: function(callback) {
 				var instance = this;
 
+				if (instance.get('readOnly')) {
+					return;
+				}
+
 				if (instance.hasValidation()) {
 					var evaluator = instance.get('evaluator');
 

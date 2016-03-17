@@ -57,6 +57,13 @@
 								'aui-base'
 							]
 						},
+						'liferay-calendar-session-listener': {
+							path: 'session_listener.js',
+							requires: [
+								'aui-base',
+								'liferay-scheduler'
+							]
+						},
 						'liferay-calendar-simple-color-picker': {
 							path: 'simple_color_picker.js',
 							requires: [

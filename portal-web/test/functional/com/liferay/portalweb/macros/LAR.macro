@@ -322,9 +322,8 @@
 		<if>
 			<isset var="importValidationMissingItem" />
 			<then>
-				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="cannot be imported." />
 				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import the following elements first:" />
-				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import  the following elements first:" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
 			</then>
 		</if>

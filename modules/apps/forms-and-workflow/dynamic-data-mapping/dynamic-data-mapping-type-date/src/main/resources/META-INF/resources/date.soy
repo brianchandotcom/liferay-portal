@@ -10,11 +10,11 @@
  * @param readOnly
  * @param required
  * @param showLabel
- * @param tip 
+ * @param tip
  * @param value
  * @param visible
  */
-{template .date}
+{template .date autoescape="deprecated-contextual"}
 	<div class="form-group {$visible ? '' : ' hide'} liferay-ddm-form-field-date" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">

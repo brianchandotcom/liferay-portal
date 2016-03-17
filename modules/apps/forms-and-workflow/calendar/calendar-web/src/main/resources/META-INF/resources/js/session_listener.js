@@ -59,8 +59,6 @@ AUI.add(
 
 						var scheduler = instance.get('scheduler');
 
-						var controlsNode = scheduler.get('controlsNode');
-
 						addEventButtons.set('disabled', true);
 
 						scheduler.set('eventRecorder', null);

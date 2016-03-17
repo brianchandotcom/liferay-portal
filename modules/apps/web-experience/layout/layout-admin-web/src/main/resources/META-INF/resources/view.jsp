@@ -29,7 +29,7 @@ String targetNode = null;
 <%@ include file="/layout_exception.jspf" %>
 
 <div class="container-fluid-1280">
-	<div class="lfr-app-column-view manage-view row">
+	<div class="lfr-app-column-view manage-view">
 		<c:choose>
 			<c:when test="<%= layoutsAdminDisplayContext.getSelPlid() > 0 %>">
 				<liferay-util:include page="/edit_layout.jsp" servletContext="<%= application %>" />

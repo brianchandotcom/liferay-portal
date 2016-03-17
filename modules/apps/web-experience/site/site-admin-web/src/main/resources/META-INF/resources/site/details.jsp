@@ -201,7 +201,7 @@ else if (group != null) {
 	</liferay-ui:search-container>
 
 	<div class="button-holder">
-		<aui:button cssClass="btn-lg modify-link" id="selectParentSiteLink" value="select" />
+		<aui:button cssClass="modify-link" id="selectParentSiteLink" value="select" />
 	</div>
 
 	<div class="<%= parentGroups.isEmpty() ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">

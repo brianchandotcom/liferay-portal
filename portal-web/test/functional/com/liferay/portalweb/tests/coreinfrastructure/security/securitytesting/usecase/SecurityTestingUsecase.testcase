@@ -127,32 +127,6 @@
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Test" />
 	</command>
 
-	<command name="ViewExternalWebappsPG" priority="4">
-		<property name="portlet.plugins.includes" value="opensocial-portlet" />
-
-		<execute macro="Page#add">
-			<var name="pageName" value="External Webapps Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="External Webapps Test Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="OpenSocial Gadget" />
-		</execute>
-
-		<execute macro="OpensocialGadget#addPG">
-			<var name="opensocialGadgetURL" value="http://www.labpixies.com/campaigns/todo/todo.xml" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="External Webapps Test Page" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="To-Do List" />
-	</command>
-
 	<command name="ViewUpdateUserViaJSONWS" priority="4">
 		<property name="custom.properties" value="company.security.strangers.verify=true" />
 

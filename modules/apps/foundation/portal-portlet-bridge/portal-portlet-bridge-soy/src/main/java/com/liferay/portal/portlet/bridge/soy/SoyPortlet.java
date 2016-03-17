@@ -38,6 +38,8 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.util.Map;
+
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -110,6 +112,8 @@ public class SoyPortlet extends MVCPortlet {
 			template.put(
 				TemplateConstants.NAMESPACE,
 				getTemplateNamespaceFromPath(path));
+
+			injectRequestParameters(portletRequest);
 
 			Writer writer = null;
 
@@ -226,6 +230,21 @@ public class SoyPortlet extends MVCPortlet {
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY,
 			soyTemplateResourcesCollector.getTemplateResources(), false);
+	}
+
+	private void injectRequestParameters(PortletRequest portletRequest) {
+		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
+
+		for (String parameterName : parametersMap.keySet()) {
+			String[] parameterValues = parametersMap.get(parameterName);
+
+			if (parameterValues.length == 1) {
+				template.put(parameterName, parameterValues[0]);
+			}
+			else if (parameterValues.length > 1) {
+				template.put(parameterName, parameterValues);
+			}
+		}
 	}
 
 	private SoyPortletControllersManager _controllersManager;

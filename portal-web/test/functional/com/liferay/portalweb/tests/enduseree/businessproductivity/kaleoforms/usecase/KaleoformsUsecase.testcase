@@ -50,7 +50,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertCanEditPendingForm" priority="4">
+	<command name="AssertCanEditPendingForm" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -162,7 +162,7 @@
 		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#WORKFLOW_STATUS" value1="${kfProcessStatus}" />
 	</command>
 
-	<command name="AssertEditFormNotUsedAsCreateForm" priority="4">
+	<command name="AssertEditFormNotUsedAsCreateForm" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -303,7 +303,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertPendingFormPresentAfterDeletingDifferentProcessDefinition" priority="4">
+	<command name="AssertPendingFormPresentAfterDeletingDifferentProcessDefinition" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcess1Description" value="Kaleo Forms Process 1 Description" />
 		<var name="kfProcess1Name" value="Kaleo Forms 1 Process" />
@@ -474,7 +474,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsAddProcessCP" priority="4">
+	<command name="AssignRolePermissionsAddProcessCP" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -614,7 +614,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsApprovePG" priority="4">
+	<command name="AssignRolePermissionsApprovePG" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -796,7 +796,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsCompleteFormPG" priority="4">
+	<command name="AssignRolePermissionsCompleteFormPG" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -993,7 +993,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsRejectPG" priority="4">
+	<command name="AssignRolePermissionsRejectPG" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -1175,7 +1175,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsSubmitProcessPG" priority="4">
+	<command name="AssignRolePermissionsSubmitProcessPG" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 

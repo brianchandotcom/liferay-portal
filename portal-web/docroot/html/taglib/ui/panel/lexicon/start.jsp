@@ -27,6 +27,10 @@ if (accordion) {
 else if ((extended != null) && !extended) {
 	collapsed = true;
 }
+
+if (persistState) {
+	collapsed = GetterUtil.getBoolean(SessionClicks.get(request, id, null), collapsed);
+}
 %>
 
 <div class="panel panel-default <%= cssClass %>" id="<%= id %>">

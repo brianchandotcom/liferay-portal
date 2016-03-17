@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
 long groupId = ParamUtil.getLong(request, "groupId");
 int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE);
+
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/site_roles.jsp");
-portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("roleType", String.valueOf(roleType));
+portletURL.setParameter("displayStyle", displayStyle);
 
 RoleSearch roleSearch = new RoleSearch(renderRequest, portletURL);
 

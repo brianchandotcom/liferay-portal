@@ -57,7 +57,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 					</div>
 
 					<div class="button-holder">
-						<aui:button cssClass="btn-lg web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+						<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
 					</div>
 				</div>
 			</div>
@@ -81,7 +81,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 					</div>
 
 					<div class="button-holder template-preview-button <%= ddmTemplates.size() > 1 ? StringPool.BLANK : "hidden" %>">
-						<aui:button cssClass="btn-lg" name="templateSelector" value="change" />
+						<aui:button name="templateSelector" value="change" />
 					</div>
 				</div>
 			</div>

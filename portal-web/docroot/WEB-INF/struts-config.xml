@@ -61,8 +61,6 @@
 
 		<action path="/portal/logout" type="com.liferay.portal.action.LogoutAction" />
 
-		<action path="/portal/portlet_url" type="com.liferay.portal.action.PortletURLAction" />
-
 		<action path="/portal/progress_poller" forward="portal.progress_poller" />
 
 		<action path="/portal/protected" forward="/portal/protected.jsp" />

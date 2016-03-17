@@ -127,17 +127,7 @@ public class LanguageImpl implements Language, Serializable {
 
 					PortalCacheMapSynchronizeUtil.synchronize(
 						_companyLocalesPortalCache, _companyLocalesBags,
-						new Synchronizer<Long, Serializable>() {
-
-							@Override
-							public void onSynchronize(
-								Map<? extends Long, ? extends Serializable> map,
-								Long key, Serializable value, int timeToLive) {
-
-								map.remove(key);
-							}
-
-						});
+						_removeSynchronizer);
 
 					_groupLocalesPortalCache =
 						(PortalCache<Long, Serializable>)
@@ -146,32 +136,11 @@ public class LanguageImpl implements Language, Serializable {
 
 					PortalCacheMapSynchronizeUtil.synchronize(
 						_groupLocalesPortalCache,
-						_groupLanguageCodeLocalesMapMap,
-						new Synchronizer<Long, Serializable>() {
-
-							@Override
-							public void onSynchronize(
-								Map<? extends Long, ? extends Serializable> map,
-								Long key, Serializable value, int timeToLive) {
-
-								map.remove(key);
-							}
-
-						});
+						_groupLanguageCodeLocalesMapMap, _removeSynchronizer);
 
 					PortalCacheMapSynchronizeUtil.synchronize(
 						_groupLocalesPortalCache, _groupLanguageIdLocalesMap,
-						new Synchronizer<Long, Serializable>() {
-
-							@Override
-							public void onSynchronize(
-								Map<? extends Long, ? extends Serializable> map,
-								Long key, Serializable value, int timeToLive) {
-
-								map.remove(key);
-							}
-
-						});
+						_removeSynchronizer);
 				}
 
 				@Override
@@ -1858,6 +1827,19 @@ public class LanguageImpl implements Language, Serializable {
 	private static PortalCache<Long, Serializable> _groupLocalesPortalCache;
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
+
+	private static final Synchronizer<Long, Serializable> _removeSynchronizer =
+		new Synchronizer<Long, Serializable>() {
+
+			@Override
+			public void onSynchronize(
+				Map<? extends Long, ? extends Serializable> map, Long key,
+				Serializable value, int timeToLive) {
+
+				map.remove(key);
+			}
+
+		};
 
 	private final Map<Long, HashMap<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();

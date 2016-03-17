@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.portal.rss;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.util.Normalizer;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;

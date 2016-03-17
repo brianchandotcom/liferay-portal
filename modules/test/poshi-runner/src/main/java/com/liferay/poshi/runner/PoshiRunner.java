@@ -93,8 +93,6 @@ public class PoshiRunner {
 
 		XMLLoggerHandler.generateXMLLog(classCommandName);
 
-		CommandLoggerHandler.startRunning();
-
 		LoggerUtil.startLogger();
 
 		SeleniumUtil.startSelenium();
@@ -144,8 +142,6 @@ public class PoshiRunner {
 				}
 			}
 			finally {
-				CommandLoggerHandler.stopRunning();
-
 				LoggerUtil.stopLogger();
 
 				SeleniumUtil.stopSelenium();

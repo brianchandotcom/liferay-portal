@@ -272,15 +272,21 @@ public final class LoggerUtil {
 	}
 
 	public static void startLogger() throws Exception {
-		if (isLoggerStarted() || !PropsValues.SELENIUM_LOGGER_ENABLED) {
-			return;
-		}
+		CommandLoggerHandler.startRunning();
 
-		_startLogger();
+		SummaryLoggerHandler.startRunning();
+
+		if (!isLoggerStarted() && PropsValues.SELENIUM_LOGGER_ENABLED) {
+			_startLogger();
+		}
 	}
 
 	public static void stopLogger() throws PoshiRunnerLoggerException {
 		try {
+			CommandLoggerHandler.stopRunning();
+
+			SummaryLoggerHandler.stopRunning();
+
 			if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
 				String mainCSSContent = _readResource(
 					"META-INF/resources/css/main.css");

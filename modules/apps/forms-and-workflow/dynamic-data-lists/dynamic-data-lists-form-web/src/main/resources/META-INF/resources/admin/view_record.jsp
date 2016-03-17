@@ -23,8 +23,18 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
+
+DDLRecordVersion recordVersion = ddlFormAdminDisplayContext.getRecordVersion();
 %>
 
 <div class="container-fluid-1280">
+	<c:if test="<%= recordVersion != null %>">
+		<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
+
+		<div class="panel text-center">
+			<aui:workflow-status markupView="lexicon" model="<%= DDLRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
+		</div>
+	</c:if>
+
 	<%= ddlFormAdminDisplayContext.getDDMFormHTML() %>
 </div>

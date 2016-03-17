@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
@@ -290,6 +291,12 @@ public class DDLFormAdminDisplayContext {
 		setRecordSetSearchTotal(recordSetSearch);
 
 		return recordSetSearch;
+	}
+
+	public DDLRecordVersion getRecordVersion() throws PortalException {
+		DDLRecord record = getRecord();
+
+		return record.getLatestRecordVersion();
 	}
 
 	public String getSerializedDDMDataProviders() throws PortalException {

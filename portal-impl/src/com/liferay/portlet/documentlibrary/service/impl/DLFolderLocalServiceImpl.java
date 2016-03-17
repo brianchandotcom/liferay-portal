@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
@@ -58,12 +57,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
+import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
-import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -742,24 +741,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 						parentPrimaryKey, treePath);
 					dlFileVersionLocalService.setTreePaths(
 						parentPrimaryKey, treePath);
-				}
-
-				@Override
-				public void reindexTreeModels(List<TreeModel> treeModels)
-					throws PortalException {
-
-					if (!reindex) {
-						return;
-					}
-
-					Indexer<DLFolder> indexer =
-						IndexerRegistryUtil.nullSafeGetIndexer(DLFolder.class);
-
-					for (TreeModel treeModel : treeModels) {
-						DLFolder dlFolder = (DLFolder)treeModel;
-
-						indexer.reindex(dlFolder);
-					}
 				}
 
 			});

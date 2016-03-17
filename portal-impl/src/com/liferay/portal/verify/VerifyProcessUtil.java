@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.VerifyThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -68,6 +69,8 @@ public class VerifyProcessUtil {
 		StagingAdvicesThreadLocal.setEnabled(false);
 		WorkflowThreadLocal.setEnabled(false);
 
+		VerifyThreadLocal.setVerifyInProgress(true);
+
 		try {
 			String[] verifyProcessClassNames = PropsUtil.getArray(
 				PropsKeys.VERIFY_PROCESSES);
@@ -87,6 +90,8 @@ public class VerifyProcessUtil {
 			NotificationThreadLocal.setEnabled(true);
 			StagingAdvicesThreadLocal.setEnabled(true);
 			WorkflowThreadLocal.setEnabled(true);
+
+			VerifyThreadLocal.setVerifyInProgress(false);
 		}
 
 		return ranVerifyProcess;

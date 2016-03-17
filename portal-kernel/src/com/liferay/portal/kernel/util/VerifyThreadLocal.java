@@ -14,27 +14,21 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.TreeModel;
-
-import java.util.List;
-
 /**
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.kernel.tree.TreeModelTasks}
- * @author Shinn Lok
+ * @author Preston Crary
  */
-@Deprecated
-public interface TreeModelTasks<T extends TreeModel> {
+public class VerifyThreadLocal {
 
-	public List<T> findTreeModels(
-		long previousId, long companyId, long parentPrimaryKey, int size);
+	public static boolean isVerifyInProgress() {
+		return _verifyInProgress.get();
+	}
 
-	public void rebuildDependentModelsTreePaths(
-			long parentPrimaryKey, String treePath)
-		throws PortalException;
+	public static void setVerifyInProgress(boolean enabled) {
+		_verifyInProgress.set(enabled);
+	}
 
-	public void reindexTreeModels(List<TreeModel> treeModels)
-		throws PortalException;
+	private static final ThreadLocal<Boolean> _verifyInProgress =
+		new AutoResetThreadLocal<>(
+			VerifyThreadLocal.class + "._verifyInProgress", false);
 
 }

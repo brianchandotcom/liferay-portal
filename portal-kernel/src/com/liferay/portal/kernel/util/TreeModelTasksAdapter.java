@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.model.TreeModel;
 import java.util.List;
 
 /**
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.portal.kernel.tree.TreeModelTasksAdapter}
  * @author Shinn Lok
  */
+@Deprecated
 public class TreeModelTasksAdapter<T extends TreeModel>
 	implements TreeModelTasks<T> {
 
@@ -41,9 +44,6 @@ public class TreeModelTasksAdapter<T extends TreeModel>
 		throws PortalException {
 	}
 
-	/**
-	 * @throws PortalException
-	 */
 	@Override
 	public void reindexTreeModels(List<TreeModel> treeModels)
 		throws PortalException {

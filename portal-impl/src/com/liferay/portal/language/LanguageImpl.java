@@ -123,7 +123,7 @@ public class LanguageImpl implements Language, Serializable {
 					_companyLocalesPortalCache =
 						(PortalCache<Long, Serializable>)
 							multiVMPool.getPortalCache(
-								LanguageImpl.class.getName());
+								_COMPANY_LOCALES_PORTAL_CACHE_NAME);
 
 					PortalCacheMapSynchronizeUtil.synchronize(
 						_companyLocalesPortalCache, _companyLocalesBags,
@@ -1809,6 +1809,9 @@ public class LanguageImpl implements Language, Serializable {
 	private void _resetAvailableLocales(long companyId) {
 		_companyLocalesPortalCache.remove(companyId);
 	}
+
+	private static final String _COMPANY_LOCALES_PORTAL_CACHE_NAME =
+		LanguageImpl.class + "._companyLocalesPortalCache";
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 

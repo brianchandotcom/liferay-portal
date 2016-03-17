@@ -215,10 +215,21 @@ public class CounterLocalServiceTest {
 
 			System.setProperty("catalina.base", ".");
 			System.setProperty("external-properties", "portal-test.properties");
+
+			// c3p0
+
 			System.setProperty("portal:jdbc.default.maxPoolSize", "1");
 			System.setProperty("portal:jdbc.default.minPoolSize", "0");
+
+			// HikariCP
+
 			System.setProperty("portal:jdbc.default.maximumPoolSize", "1");
 			System.setProperty("portal:jdbc.default.minimumIdle", "0");
+
+			// Tomcat JDBC Connection Pool
+
+			System.setProperty("portal:jdbc.default.maxActive", "1");
+			System.setProperty("portal:jdbc.default.minIdle", "0");
 
 			CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 				new CacheKeyGeneratorUtil();

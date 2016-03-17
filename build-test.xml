@@ -7748,6 +7748,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		/>
 
 		<property name="db.upgrade.classpath"><![CDATA[<path id="lib.classpath">
+			<fileset dir="${app.server.dir}/bin" includes="tomcat-juli.jar" />
 			<fileset dir="${app.server.dir}/lib" includes="*.jar" />
 			<fileset dir="${app.server.dir}/lib/ext" includes="*.jar" />
 			<fileset dir="${app.server.dir}/webapps/ROOT/WEB-INF/lib" includes="*.jar" />

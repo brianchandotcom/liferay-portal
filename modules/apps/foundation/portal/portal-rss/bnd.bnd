@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal RSS
+Bundle-SymbolicName: com.liferay.portal.rss
+Bundle-Version: 1.0.1
+Export-Package: com.liferay.portal.rss
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../app.bnd

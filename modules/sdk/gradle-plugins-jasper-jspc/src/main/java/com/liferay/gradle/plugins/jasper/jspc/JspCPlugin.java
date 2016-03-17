@@ -100,7 +100,7 @@ public class JspCPlugin implements Plugin<Project> {
 		dependencyHandler.add(CONFIGURATION_NAME, sourceSet.getOutput());
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 
 		dependencyHandler.add(CONFIGURATION_NAME, configuration);
 	}

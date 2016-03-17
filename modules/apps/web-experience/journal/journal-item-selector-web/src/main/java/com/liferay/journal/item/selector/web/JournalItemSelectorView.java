@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"service.ranking:Integer=100"}, service = ItemSelectorView.class
+	property = {"item.selector.view.order:Integer=100"}, service = ItemSelectorView.class
 )
 public class JournalItemSelectorView
 	implements ItemSelectorView<JournalItemSelectorCriterion> {

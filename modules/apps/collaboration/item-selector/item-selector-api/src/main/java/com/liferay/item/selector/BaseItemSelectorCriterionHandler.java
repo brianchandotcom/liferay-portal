@@ -68,7 +68,8 @@ public abstract class BaseItemSelectorCriterionHandler
 			bundleContext, ItemSelectorView.class, null,
 			new ItemSelectorViewServiceReferenceMapper(bundleContext),
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator("service.ranking")));
+				new PropertyServiceReferenceComparator(
+					"item.selector.view.order")));
 	}
 
 	private boolean _isItemSelectorViewSupported(

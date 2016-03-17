@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter;
+package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
-import javax.sql.DataSource;
+import java.io.OutputStream;
+
+import java.util.List;
 
 /**
  * @author Manuel de la Peña
  */
-public interface DBProvider {
+public interface DBExporter {
 
-	public DataSource getDataSource();
+	public List<String> getControlTableNames(String schemaName);
 
-	public String getDateTimeFormat();
+	public List<String> getPartitionedTableNames(String schemaName);
 
-	public int getFetchSize();
+	public void write(
+		long companyId, String tableName, OutputStream outputStream);
 
-	public String getTableNameFieldName();
-
-	public String serializeTableField(Object field);
+	public void write(String tableName, OutputStream outputStream);
 
 }

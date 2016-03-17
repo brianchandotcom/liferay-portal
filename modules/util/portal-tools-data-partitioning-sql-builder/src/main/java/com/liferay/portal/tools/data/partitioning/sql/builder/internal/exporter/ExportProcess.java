@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter;
 
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DBExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
 import java.io.BufferedOutputStream;

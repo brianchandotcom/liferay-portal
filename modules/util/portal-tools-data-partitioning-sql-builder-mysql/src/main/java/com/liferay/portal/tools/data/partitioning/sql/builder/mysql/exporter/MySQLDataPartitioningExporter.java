@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.mysql.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
 
 /**
  * @author Manuel de la Peña

@@ -123,172 +123,17 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 	</aui:form>
 </div>
 
-<aui:script use="aui-base,datasource-io,datatype-number,liferay-so-invite-members">
-	new Liferay.InviteMembers(
+<aui:script use="liferay-portlet-invite-members">
+	new Liferay.Portlet.InviteMembers(
 		{
+			availableUsersURL: '<portlet:resourceURL id="getAvailableUsers" />',
 			form: {
 				method: 'POST',
 				node: A.one(document.<portlet:namespace />fm)
 			},
 			namespace: '<portlet:namespace />',
+			pageDelta: 50,
 			rootNode: '#<portlet:namespace/>inviteMembersContainer'
 		}
 	);
-
-	var inviteMembersContainer = A.one('#<portlet:namespace />inviteMembersContainer');
-
-	var invitedMembersList = inviteMembersContainer.one('#<portlet:namespace />invitedMembersList');
-	var membersList = inviteMembersContainer.one('#<portlet:namespace />membersList');
-
-	var pageDelta = 50;
-
-	var createDataSource = function(url) {
-		return new A.DataSource.IO(
-			{
-				ioConfig: {
-					method: "post"
-				},
-				on: {
-					request: function(event) {
-						var data = event.request;
-
-						event.cfg.data = {
-							<portlet:namespace />end: data.<portlet:namespace />end || pageDelta,
-							<portlet:namespace />keywords: data.<portlet:namespace />keywords || '',
-							<portlet:namespace />start: data.<portlet:namespace />start || 0
-						}
-					}
-				},
-				source: url
-			}
-		);
-	}
-
-	var inviteMembersList = new Liferay.InviteMembersList(
-		{
-			inputNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />inviteUserSearch',
-			listNode: '#<portlet:namespace />inviteMembersContainer #<portlet:namespace />membersList',
-			minQueryLength: 0,
-			requestTemplate: function(query) {
-				return {
-					<portlet:namespace />end: pageDelta,
-					<portlet:namespace />keywords: query,
-					<portlet:namespace />start: 0
-				}
-			},
-			resultTextLocator: function(response) {
-				var result = '';
-
-				if (typeof response.toString != 'undefined') {
-					result = response.toString();
-				}
-				else if (typeof response.responseText != 'undefined') {
-					result = response.responseText;
-				}
-
-				return result;
-			},
-			source: createDataSource('<portlet:resourceURL id="getAvailableUsers" />')
-		}
-	);
-
-	var renderResults = function(responseData) {
-		var count = responseData.count;
-		var options = responseData.options;
-		var results = responseData.users;
-
-		var buffer = [];
-
-		if (results.length == 0) {
-			if (options.start == 0) {
-				buffer.push(
-					'<small class="text-capitalize text-muted"><liferay-ui:message key="there-are-no-users-to-invite" /></small>'
-				);
-			}
-		}
-		else {
-			buffer.push(
-				A.Array.map(
-					results,
-					function(result) {
-						var userTemplate =
-							'<div class="{cssClass}" data-userId="{userId}">' +
-								'<span class="name">{userFullName}</span>'+
-								'<span class="email">{userEmailAddress}</span>' +
-							'</div>';
-
-						var invited = invitedMembersList.one('[data-userId="' + result.userId + '"]');
-
-						return A.Lang.sub(
-							userTemplate,
-							{
-								cssClass: result.hasPendingMemberRequest ? "pending-member-request user" : (invited ? "invited user" : "user"),
-								userEmailAddress: result.userEmailAddress,
-								userFullName: result.userFullName,
-								userId: result.userId
-							}
-						);
-					}
-				).join('')
-			);
-
-			if (count > results.length) {
-				buffer.push(
-					'<div class="more-results">' +
-						'<a href="javascript:;" data-end="' + options.end + '"><liferay-ui:message key="view-more" unicode="<%= true %>" /></a>' +
-					'</div>'
-				);
-			}
-		}
-
-		return buffer;
-	}
-
-	inviteMembersList.on(
-		'results',
-		function(event) {
-			var responseData = A.JSON.parse(event.data.responseText);
-
-			membersList.html(renderResults(responseData).join(''));
-		}
-	);
-
-	membersList.delegate(
-		'click',
-		function(event) {
-			var node = event.currentTarget;
-
-			var start = A.DataType.Number.parse(node.getAttribute('data-end'));
-
-			var end = start + pageDelta;
-
-			var inviteUserSearch = inviteMembersContainer.one('#<portlet:namespace />inviteUserSearch');
-
-			A.io.request(
-				'<portlet:resourceURL id="getAvailableUsers" />',
-				{
-					after: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
-
-							var moreResults = membersList.one('.more-results');
-
-							moreResults.remove();
-
-							membersList.append(renderResults(responseData).join(''));
-						}
-					},
-					data: {
-						<portlet:namespace />end: end,
-						<portlet:namespace />keywords: inviteUserSearch.get('value'),
-						<portlet:namespace />start: start
-					},
-					dataType: 'json'
-				}
-			);
-		},
-		'.more-results a'
-	);
-
-	inviteMembersList.sendRequest();
 </aui:script>

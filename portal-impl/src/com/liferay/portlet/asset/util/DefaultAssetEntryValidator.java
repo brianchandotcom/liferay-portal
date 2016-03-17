@@ -14,8 +14,43 @@
 
 package com.liferay.portlet.asset.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class DefaultAssetEntryValidator extends BaseAssetEntryValidator {
+
+	public void afterPropertiesSet() {
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+			AssetEntryValidator.class, "model.class.name");
+	}
+
+	public void destroy() {
+		_serviceTrackerMap.close();
+	}
+
+	@Override
+	public void validate(
+			long groupId, String className, long classTypePK,
+			long[] categoryIds, String[] entryNames)
+		throws PortalException {
+
+		AssetEntryValidator assetEntryValidator = _serviceTrackerMap.getService(
+			className);
+
+		if (assetEntryValidator == null) {
+			super.validate(
+				groupId, className, classTypePK, categoryIds, entryNames);
+		}
+		else {
+			assetEntryValidator.validate(
+				groupId, className, classTypePK, categoryIds, entryNames);
+		}
+	}
+
+	private ServiceTrackerMap<String, AssetEntryValidator> _serviceTrackerMap;
+
 }

@@ -1672,7 +1672,7 @@ public class LanguageImpl implements Language, Serializable {
 		return companyLocalesBag;
 	}
 
-	private ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
+	private ObjectValuePair<HashMap<String, Locale>, HashMap<String, Locale>>
 		_createGroupLocales(long groupId) {
 
 		String[] languageIds = PropsValues.LOCALES_ENABLED;
@@ -1689,8 +1689,8 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		Map<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
-		Map<String, Locale> groupLanguageIdLocalesMap = new HashMap<>();
+		HashMap<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
+		HashMap<String, Locale> groupLanguageIdLocalesMap = new HashMap<>();
 
 		for (String languageId : languageIds) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
@@ -1758,7 +1758,7 @@ public class LanguageImpl implements Language, Serializable {
 			_groupLanguageCodeLocalesMapMap.get(groupId);
 
 		if (groupLanguageCodeLocalesMap == null) {
-			ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
+			ObjectValuePair<HashMap<String, Locale>, HashMap<String, Locale>>
 				objectValuePair = _createGroupLocales(groupId);
 
 			groupLanguageCodeLocalesMap = objectValuePair.getKey();
@@ -1772,7 +1772,7 @@ public class LanguageImpl implements Language, Serializable {
 			_groupLanguageIdLocalesMap.get(groupId);
 
 		if (groupLanguageIdLocalesMap == null) {
-			ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
+			ObjectValuePair<HashMap<String, Locale>, HashMap<String, Locale>>
 				objectValuePair = _createGroupLocales(groupId);
 
 			groupLanguageIdLocalesMap = objectValuePair.getValue();
@@ -1821,10 +1821,10 @@ public class LanguageImpl implements Language, Serializable {
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
 
-	private final Map<Long, Map<String, Locale>>
+	private final Map<Long, HashMap<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();
-	private final Map<Long, Map<String, Locale>> _groupLanguageIdLocalesMap =
-		new ConcurrentHashMap<>();
+	private final Map<Long, HashMap<String, Locale>>
+		_groupLanguageIdLocalesMap = new ConcurrentHashMap<>();
 
 	private static class CompanyLocalesBag implements Serializable {
 

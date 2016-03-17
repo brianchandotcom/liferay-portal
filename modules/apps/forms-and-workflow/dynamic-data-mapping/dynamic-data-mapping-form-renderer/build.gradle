@@ -13,3 +13,30 @@ dependencies {
 
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
+
+String soyJsWrapperHeader = "AUI.add('liferay-ddm-form-soy', function(A) {";
+String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
+
+task wrapSoyTemplates
+
+classes {
+	dependsOn wrapSoyTemplates
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+wrapSoyTemplates {
+	dependsOn transpileJS
+
+    doLast {
+        FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
+
+        soyJsFileTree.each {
+            File soyJsFile ->
+
+            soyJsFile.text = soyJsWrapperHeader + soyJsFile.text + soyJsWrapperFooter
+        }
+    }
+}

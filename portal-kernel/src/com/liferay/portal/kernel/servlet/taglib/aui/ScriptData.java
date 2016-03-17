@@ -203,15 +203,15 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		boolean modified = false;
 
-		if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) {
-			sb.append((char)(c - 32));
-
-			modified = true;
-		}
-		else if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z) ||
-				 (c == CharPool.UNDERLINE)) {
+		if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z) ||
+			(c == CharPool.UNDERLINE)) {
 
 			sb.append(c);
+		}
+		else if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
+			sb.append((char)(c + 32));
+
+			modified = true;
 		}
 		else {
 			sb.append(CharPool.UNDERLINE);
@@ -219,13 +219,20 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			modified = true;
 		}
 
+		boolean lastCharacterWasInvalid = false;
+
 		for (int i = 1; i < name.length(); i++) {
 			c = name.charAt(i);
 
 			if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) {
-				sb.append((char)(c - 32));
+				if (lastCharacterWasInvalid) {
+					sb.append((char)(c - 32));
 
-				modified = true;
+					lastCharacterWasInvalid = false;
+				}
+				else {
+					sb.append(c);
+				}
 			}
 			else if ((CharPool.UPPER_CASE_A <= c) &&
 					 (c <= CharPool.UPPER_CASE_Z) ||
@@ -233,6 +240,13 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 					 (c == CharPool.UNDERLINE)) {
 
 				sb.append(c);
+
+				lastCharacterWasInvalid = false;
+			}
+			else {
+				modified = true;
+
+				lastCharacterWasInvalid = true;
 			}
 		}
 

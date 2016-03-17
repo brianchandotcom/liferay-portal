@@ -47,10 +47,10 @@ public abstract class BaseFailureMessageGenerator
 	}
 
 	protected String getConsoleOutputSnippet(
-		String consoleOutput, int start, int end, boolean anchor) {
+		String consoleOutput, int start, int end, boolean truncateTop) {
 
 		if ((end - start) > 2500) {
-			if (anchor == true) {
+			if (truncateTop) {
 				start = end - 2500;
 
 				start = consoleOutput.indexOf("\n", start);

@@ -3829,6 +3829,22 @@ go]]></replacevalue>
 				</then>
 			</elseif>
 			<elseif>
+				<equals arg1="${database.type}" arg2="sqlserver" />
+				<then>
+					<delete includeemptydirs="true" failonerror="false">
+						<fileset
+							dir="${app.server.lib.global.dir}"
+							includes="${jdbc.sqlserver.driver}"
+						/>
+					</delete>
+
+					<mirrors-get
+						dest="${todir}"
+						src="${test.jdbc.drivers.url}/sqlserver/${database.version}/${jdbc.sqlserver.driver}"
+					/>
+				</then>
+			</elseif>
+			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="sybase" />
 					<equals arg1="${database.version}" arg2="16.0" />

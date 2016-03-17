@@ -259,7 +259,7 @@
 		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="AddNewWorkflowDefinitionViaViewTab" priority="4">
+	<command name="AddNewWorkflowDefinitionViaViewTab" priority="5">
 		<var name="nodeNodeLabel" value="Task" />
 		<var name="nodeType" value="task" />
 
@@ -679,7 +679,7 @@
 		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishFromSourceTabAndViewNameChange" priority="4">
+	<command name="PublishFromSourceTabAndViewNameChange" priority="5">
 		<description message="This is a use case for LPS-43214 and LPS-50269." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1071,7 +1071,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage" priority="4">
+	<command name="PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -1390,7 +1390,7 @@
 		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
 	</command>
 
-	<command name="ViewAndPublishWorkflowDefinitionDraftViaKDCP" priority="4">
+	<command name="ViewAndPublishWorkflowDefinitionDraftViaKDCP" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>

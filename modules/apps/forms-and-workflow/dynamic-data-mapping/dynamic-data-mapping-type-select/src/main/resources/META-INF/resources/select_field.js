@@ -58,16 +58,7 @@ AUI.add(
 					getContextValue: function() {
 						var instance = this;
 
-						var value = SelectField.superclass.getContextValue.apply(instance, arguments);
-
-						if (!Array.isArray(value)) {
-							try {
-								value = JSON.parse(value);
-							}
-							catch (e) {
-								value = [value];
-							}
-						}
+						var value = instance._getContextValue();
 
 						return value[0] || '';
 					},
@@ -153,6 +144,23 @@ AUI.add(
 						return instance;
 					},
 
+					_getContextValue: function() {
+						var instance = this;
+
+						var value = SelectField.superclass.getContextValue.apply(instance, arguments);
+
+						if (!Array.isArray(value)) {
+							try {
+								value = JSON.parse(value);
+							}
+							catch (e) {
+								value = [value];
+							}
+						}
+
+						return value;
+					},
+
 					_getDataSourceData: function(callback) {
 						var instance = this;
 
@@ -185,8 +193,13 @@ AUI.add(
 
 						var status = '';
 
-						if (instance.getContextValue() === option.value) {
-							status = 'selected';
+						var value = instance._getContextValue();
+
+						for (var i = 0; i < value.length; i++) {
+							if (value[i] === option.value) {
+								status = 'selected';
+								break;
+							}
 						}
 
 						return status;

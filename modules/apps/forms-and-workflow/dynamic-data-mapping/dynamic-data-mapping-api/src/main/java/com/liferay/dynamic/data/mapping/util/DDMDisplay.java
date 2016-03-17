@@ -33,6 +33,10 @@ public interface DDMDisplay {
 
 	public String getAvailableFields();
 
+	public String getConfirmSelectStructureMessage(Locale locale);
+
+	public String getConfirmSelectTemplateMessage(Locale locale);
+
 	public DDMNavigationHelper getDDMNavigationHelper();
 
 	public String getDefaultTemplateLanguage();
@@ -113,6 +117,10 @@ public interface DDMDisplay {
 	public boolean isShowAddStructureButton();
 
 	public boolean isShowBackURLInTitleBar();
+
+	public boolean isShowConfirmSelectStructure();
+
+	public boolean isShowConfirmSelectTemplate();
 
 	public boolean isShowStructureSelector();
 

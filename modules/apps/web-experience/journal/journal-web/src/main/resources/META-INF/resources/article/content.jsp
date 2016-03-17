@@ -156,8 +156,6 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			'strings.draft': '<liferay-ui:message key="draft" />',
 			'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
 			'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
-			'strings.selectStructure': '<liferay-ui:message key="selecting-a-new-structure-changes-the-available-input-fields-and-available-templates" />',
-			'strings.selectTemplate': '<liferay-ui:message key="selecting-a-new-template-deletes-all-unsaved-content" />',
 			titleInputLocalized: Liferay.component('<portlet:namespace />title'),
 			translationManager: Liferay.component('<portlet:namespace />translationManager'),
 			'urls.editStructure': '<%= editStructureURL %>',

@@ -63,6 +63,14 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
 	}
 
+	public String getConfirmSelectStructureMessage(Locale locale) {
+		return StringPool.BLANK;
+	}
+
+	public String getConfirmSelectTemplateMessage(Locale locale) {
+		return StringPool.BLANK;
+	}
+
 	public DDMNavigationHelper getDDMNavigationHelper() {
 		return new DDMNavigationHelperImpl();
 	}
@@ -317,6 +325,16 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public boolean isShowBackURLInTitleBar() {
+		return false;
+	}
+
+	@Override
+	public boolean isShowConfirmSelectStructure() {
+		return false;
+	}
+
+	@Override
+	public boolean isShowConfirmSelectTemplate() {
 		return false;
 	}
 

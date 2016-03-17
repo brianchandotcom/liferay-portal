@@ -144,7 +144,6 @@ String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", p
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
 boolean showAncestorScopes = ParamUtil.getBoolean(request, "showAncestorScopes");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
-boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
 DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 

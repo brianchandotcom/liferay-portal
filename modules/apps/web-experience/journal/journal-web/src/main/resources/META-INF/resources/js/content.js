@@ -58,8 +58,6 @@ AUI.add(
 							draft: Liferay.Language.get('draft'),
 							editStructure: Liferay.Language.get('editing-the-current-structure-deletes-all-unsaved-content'),
 							editTemplate: Liferay.Language.get('editing-the-current-template-deletes-all-unsaved-content'),
-							selectStructure: Liferay.Language.get('selecting-a-new-structure-changes-the-available-input-fields-and-available-templates'),
-							selectTemplate: Liferay.Language.get('selecting-a-new-template-deletes-all-unsaved-content'),
 							structures: Liferay.Language.get('structures'),
 							templates: Liferay.Language.get('templates')
 						}
@@ -236,7 +234,7 @@ AUI.add(
 
 								var ddmStructureId = instance.one('#ddmStructureId');
 
-								if (confirm(strings.selectStructure) && ddmStructureId.val() != event.ddmstructureid) {
+								if (ddmStructureId.val() != event.ddmstructureid) {
 									ddmStructureId.val(event.ddmstructureid);
 
 									instance.one('#changeStructure').val(true);
@@ -277,15 +275,13 @@ AUI.add(
 								title: strings.templates
 							},
 							function(event) {
-								if (confirm(strings.selectTemplate)) {
-									var form = instance._getPrincipalForm();
+								var form = instance._getPrincipalForm();
 
-									var ddmTemplateId = instance.one('#ddmTemplateId');
+								var ddmTemplateId = instance.one('#ddmTemplateId');
 
-									ddmTemplateId.val(event.ddmtemplateid);
+								ddmTemplateId.val(event.ddmtemplateid);
 
-									submitForm(form, null, false, false);
-								}
+								submitForm(form, null, false, false);
 							}
 						);
 					},

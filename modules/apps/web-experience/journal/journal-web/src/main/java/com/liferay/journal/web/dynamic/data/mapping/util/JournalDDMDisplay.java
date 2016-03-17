@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -50,6 +53,24 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
+	}
+
+	public String getConfirmSelectStructureMessage(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		String key =
+			"selecting-a-new-structure-changes-the-available-input-fields-" +
+				"and-available-templates";
+
+		return LanguageUtil.get(resourceBundle, key);
+	}
+
+	public String getConfirmSelectTemplateMessage(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(
+			resourceBundle,
+			"selecting-a-new-template-deletes-all-unsaved-content");
 	}
 
 	@Override
@@ -174,6 +195,16 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public boolean isShowBackURLInTitleBar() {
+		return true;
+	}
+
+	@Override
+	public boolean isShowConfirmSelectStructure() {
+		return true;
+	}
+
+	@Override
+	public boolean isShowConfirmSelectTemplate() {
 		return true;
 	}
 

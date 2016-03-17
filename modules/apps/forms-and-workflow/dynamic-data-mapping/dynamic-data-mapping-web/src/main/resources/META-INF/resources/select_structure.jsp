@@ -30,25 +30,13 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 <%
 SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
+
+request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 %>
 
-<c:if test="<%= showToolbar %>">
-
-	<%
-	request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
-	%>
-
-	<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
-</c:if>
+<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectStructureFm">
-	<c:if test="<%= !showToolbar %>">
-		<liferay-ui:header
-			localizeTitle="<%= false %>"
-			title="<%= ddmDisplay.getStructureName(locale) %>"
-		/>
-	</c:if>
-
 	<div class="container-fluid-1280">
 		<liferay-ui:search-container
 			searchContainer="<%= structureSearch %>"
@@ -89,6 +77,11 @@ SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL,
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
+
+						if (ddmDisplay.isShowConfirmSelectStructure()) {
+							data.put("confirm-selection", Boolean.TRUE.toString());
+							data.put("confirm-selection-message", ddmDisplay.getConfirmSelectStructureMessage(locale));
+						}
 
 						data.put("ddmstructureid", structure.getStructureId());
 						data.put("ddmstructurekey", structure.getStructureKey());

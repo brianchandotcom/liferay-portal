@@ -169,7 +169,6 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
 				showAncestorScopes: true,
 				showManageTemplates: false,
-				showToolbar: true,
 				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			},
 			function(event) {

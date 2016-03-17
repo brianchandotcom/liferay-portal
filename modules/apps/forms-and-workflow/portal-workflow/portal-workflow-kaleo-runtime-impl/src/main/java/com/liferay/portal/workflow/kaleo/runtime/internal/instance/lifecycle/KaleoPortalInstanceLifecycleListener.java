@@ -18,6 +18,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
+import com.liferay.portal.workflow.kaleo.runtime.internal.messaging.KaleoWorkflowMessagingConfigurator;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -64,6 +65,10 @@ public class KaleoPortalInstanceLifecycleListener
 	protected void setKaleoTransitionLocalService(
 		KaleoTransitionLocalService kaleoTransitionLocalService) {
 	}
+
+	@Reference
+	private KaleoWorkflowMessagingConfigurator
+		_kaleoWorkflowMessagingConfigurator;
 
 	@Reference
 	private PortalKaleoManager _portalKaleoManager;

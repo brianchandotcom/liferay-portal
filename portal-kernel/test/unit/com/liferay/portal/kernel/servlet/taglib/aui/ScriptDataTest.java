@@ -43,7 +43,7 @@ public class ScriptDataTest {
 
 		scriptData.writeTo(unsyncStringWriter);
 
-		assertVariables(unsyncStringWriter, "_VAR", "_VAR1", "_VAR2", "_VAR3");
+		assertVariables(unsyncStringWriter, "_Var", "_Var1", "_Var2", "_Var3");
 	}
 
 	@Test
@@ -51,14 +51,14 @@ public class ScriptDataTest {
 		ScriptData scriptData = new ScriptData();
 
 		scriptData.append(
-			"portletId", "content", "Var,V ar,Va*r,Var/",
+			"portletId", "content", "var,V ar,va*r,var/",
 			ScriptData.ModulesType.ES6);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		scriptData.writeTo(unsyncStringWriter);
 
-		assertVariables(unsyncStringWriter, "VAR", "VAR1", "VAR2", "VAR3");
+		assertVariables(unsyncStringWriter, "var", "vAr", "vaR", "var1");
 	}
 
 	protected void assertVariables(

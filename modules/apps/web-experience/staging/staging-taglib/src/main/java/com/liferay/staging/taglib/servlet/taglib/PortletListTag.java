@@ -49,6 +49,10 @@ public class PortletListTag extends IncludeTag {
 		_portlets = portlets;
 	}
 
+	public void setShowAllPortlets(boolean showAllPortlets) {
+		_showAllPortlets = showAllPortlets;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -58,6 +62,7 @@ public class PortletListTag extends IncludeTag {
 		_disableInputs = false;
 		_exportImportConfigurationId = 0;
 		_portlets = null;
+		_showAllPortlets = false;
 		_type = null;
 	}
 
@@ -75,6 +80,8 @@ public class PortletListTag extends IncludeTag {
 			_exportImportConfigurationId);
 		request.setAttribute(
 			"liferay-staging:portlet-list:portlets", _portlets);
+		request.setAttribute(
+			"liferay-staging:portlet-list:showAllPortlets", _showAllPortlets);
 		request.setAttribute("liferay-staging:portlet-list:type", _type);
 	}
 
@@ -83,6 +90,7 @@ public class PortletListTag extends IncludeTag {
 	private boolean _disableInputs;
 	private long _exportImportConfigurationId = 0;
 	private List<Portlet> _portlets;
+	private boolean _showAllPortlets;
 	private String _type;
 
 }

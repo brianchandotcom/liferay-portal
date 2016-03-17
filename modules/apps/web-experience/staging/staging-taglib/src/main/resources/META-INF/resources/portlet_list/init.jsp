@@ -20,6 +20,7 @@
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:portlet-list:disableInputs"));
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:portlet-list:exportImportConfigurationId"));
 List<Portlet> portlets = (List<Portlet>)GetterUtil.getObject(request.getAttribute("liferay-staging:portlet-list:portlets"), Collections.emptyList());
+boolean showAllPortlets = GetterUtil.getBoolean(request.getAttribute("liferay-staging:portlet-list:showAllPortlets"));
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:portlet-list:type"));
 
 Set<String> displayedControls = new HashSet<String>();

@@ -46,6 +46,10 @@ public class ContentTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setShowAllPortlets(boolean showAllPortlets) {
+		_showAllPortlets = showAllPortlets;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -55,6 +59,7 @@ public class ContentTag extends IncludeTag {
 		_cmd = null;
 		_disableInputs = false;
 		_exportImportConfigurationId = 0;
+		_showAllPortlets = false;
 		_type = null;
 	}
 
@@ -71,6 +76,8 @@ public class ContentTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:content:exportImportConfigurationId",
 			_exportImportConfigurationId);
+		request.setAttribute(
+			"liferay-staging:content:showAllPortlets", _showAllPortlets);
 		request.setAttribute("liferay-staging:content:type", _type);
 	}
 
@@ -79,6 +86,7 @@ public class ContentTag extends IncludeTag {
 	private String _cmd;
 	private boolean _disableInputs;
 	private long _exportImportConfigurationId = 0;
+	private boolean _showAllPortlets;
 	private String _type;
 
 }

@@ -161,7 +161,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 							</aui:fieldset>
 						</c:if>
 
-						<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
+						<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
 
 						<liferay-staging:deletions cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 

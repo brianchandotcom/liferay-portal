@@ -143,7 +143,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 					</aui:fieldset>
 				</c:if>
 
-					<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= Constants.EXPORT %>" />
+					<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= Constants.EXPORT %>" />
 
 					<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 				</aui:fieldset-group>

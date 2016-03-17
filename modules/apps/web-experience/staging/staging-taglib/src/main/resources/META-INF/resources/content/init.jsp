@@ -20,6 +20,7 @@
 String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:content:cmd"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:content:disableInputs"));
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:content:exportImportConfigurationId"));
+boolean showAllPortlets = GetterUtil.getBoolean(request.getAttribute("liferay-staging:content:showAllPortlets"));
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:content:type"));
 
 DateRange dateRange = null;

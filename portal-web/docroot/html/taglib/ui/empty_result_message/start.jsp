@@ -17,25 +17,27 @@
 <%@ include file="/html/taglib/ui/empty_result_message/init.jsp" %>
 
 <%
-boolean compact = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:compact"));
+String cssClass = (String)request.getAttribute("liferay-ui:empty-result-message:cssClass");
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:empty-result-message:message"));
-boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 %>
 
-<div class='card-horizontal main-content-card taglib-empty-result-message <%= compact ? "taglib-empty-result-message-compact" : StringPool.BLANK %>'>
-	<div class="card-row card-row-padded">
-		<c:choose>
-			<c:when test="<%= search %>">
-				<div class="taglib-empty-search-result-message-header"></div>
-			</c:when>
-			<c:otherwise>
-				<div class="taglib-empty-result-message-header"></div>
-			</c:otherwise>
-		</c:choose>
+<c:choose>
+	<c:when test="<%= compact %>">
+		<p class="text-muted">
+			<liferay-ui:message key="<%= message %>" />
+		</p>
+	</c:when>
+	<c:otherwise>
+	   <div class="card-horizontal main-content-card taglib-empty-result-message">
+			<div class="card-row card-row-padded">
+				<div class="<%= cssClass %>"></div>
 
-		<div class="card-footer">
-			<div class="card-dm-details">
-				<p class="text-center text-muted">
-					<c:if test="<%= Validator.isNotNull(message) %>">
-						<liferay-ui:message key="<%= message %>" />
-					</c:if>
+				<div class="card-footer">
+					<div class="card-dm-details">
+						<c:if test="<%= Validator.isNotNull(message) %>">
+							<p class="text-center text-muted">
+								<liferay-ui:message key="<%= message %>" />
+							</p>
+						</c:if>
+	</c:otherwise>
+</c:choose>

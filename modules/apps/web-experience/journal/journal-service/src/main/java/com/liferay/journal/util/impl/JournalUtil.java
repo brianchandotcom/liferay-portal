@@ -107,7 +107,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -801,8 +800,8 @@ public class JournalUtil {
 			title = String.valueOf(id);
 		}
 		else {
-			title = FriendlyURLNormalizerUtil.normalize(
-				title, _friendlyURLPattern);
+			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				title);
 		}
 
 		return ModelHintsUtil.trimString(
@@ -1627,8 +1626,6 @@ public class JournalUtil {
 	private static final Log _log = LogFactoryUtil.getLog(JournalUtil.class);
 
 	private static Map<String, String> _customTokens;
-	private static final Pattern _friendlyURLPattern = Pattern.compile(
-		"[^a-z0-9_-]");
 	private static final JournalTransformer _journalTransformer =
 		new JournalTransformer(
 			JournalServiceConfigurationKeys.TRANSFORMER_LISTENER,

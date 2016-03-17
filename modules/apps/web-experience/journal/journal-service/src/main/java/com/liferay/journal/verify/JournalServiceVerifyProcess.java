@@ -81,7 +81,6 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
@@ -926,8 +925,8 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 						rs.getString("urlTitle"));
 
 					String normalizedURLTitle =
-						FriendlyURLNormalizerUtil.normalize(
-							urlTitle, _friendlyURLPattern);
+						FriendlyURLNormalizerUtil.
+							normalizeWithPeriodsAndSlashes(urlTitle);
 
 					if (urlTitle.equals(normalizedURLTitle)) {
 						return;
@@ -957,9 +956,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceVerifyProcess.class);
-
-	private static final Pattern _friendlyURLPattern = Pattern.compile(
-		"[^a-z0-9_-]");
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;

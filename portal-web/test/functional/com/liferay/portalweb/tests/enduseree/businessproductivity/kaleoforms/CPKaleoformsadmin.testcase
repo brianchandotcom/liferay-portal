@@ -38,7 +38,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddFieldSetWithDocumentsAndMediaField" priority="4">
+	<command name="AddFieldSetWithDocumentsAndMediaField" priority="2">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -110,7 +110,7 @@
 		</execute>
 	</command>
 
-	<command name="AddProcessWithDataDefinitionFieldSet" priority="4">
+	<command name="AddProcessWithDataDefinitionFieldSet" priority="2">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
@@ -191,7 +191,7 @@
 		</execute>
 	</command>
 
-	<command name="AddProcessWithNewFieldSetAndWorkflowViaSourceTab" priority="4">
+	<command name="AddProcessWithNewFieldSetAndWorkflowViaSourceTab" priority="2">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -275,7 +275,7 @@
 		</execute>
 	</command>
 
-	<command name="AddProcessWithPredefinedFieldSetAndSingleApproverWorkflow" priority="4">
+	<command name="AddProcessWithPredefinedFieldSetAndSingleApproverWorkflow" priority="2">
 		<var name="kfProcessDescription" value="Kaleo Forms Process Predefined Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 

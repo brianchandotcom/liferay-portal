@@ -1622,7 +1622,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="4">
+	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="Navigator#openURL" />
@@ -1660,7 +1660,7 @@
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
 	</command>
 
-	<command name="ViewWorkflowDefinitionButtonsViaKDCP" priority="4">
+	<command name="ViewWorkflowDefinitionButtonsViaKDCP" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
@@ -1678,7 +1678,7 @@
 		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
 	</command>
 
-	<command name="ViewWorkflowDefinitionButtonsViaWorkflowCP" priority="4">
+	<command name="ViewWorkflowDefinitionButtonsViaWorkflowCP" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

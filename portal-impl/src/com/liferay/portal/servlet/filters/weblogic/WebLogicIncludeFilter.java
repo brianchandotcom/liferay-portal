@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +33,16 @@ public class WebLogicIncludeFilter
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			WebLogicIncludeServletResponseFactory.class,
-			new WebLogicIncludeServletResponseFactoryTrackerCustomizer());
+			WebLogicIncludeServletResponseFactory.class);
 
 		_serviceTracker.open();
+	}
+
+	@Override
+	public void destroy() {
+		_serviceTracker.close();
+
+		super.destroy();
 	}
 
 	@Override
@@ -47,7 +51,7 @@ public class WebLogicIncludeFilter
 
 		WebLogicIncludeServletResponseFactory
 			webLogicIncludeServletResponseFactory =
-				_webLogicIncludeServletResponseFactory;
+				_serviceTracker.getService();
 
 		if (webLogicIncludeServletResponseFactory != null) {
 			return webLogicIncludeServletResponseFactory.create(response);
@@ -58,56 +62,11 @@ public class WebLogicIncludeFilter
 
 	@Override
 	public boolean isFilterEnabled() {
-		return _webLogicIncludeServletResponseFactory != null;
+		return !_serviceTracker.isEmpty();
 	}
 
 	private final ServiceTracker
 		<WebLogicIncludeServletResponseFactory,
 			WebLogicIncludeServletResponseFactory> _serviceTracker;
-	private volatile WebLogicIncludeServletResponseFactory
-		_webLogicIncludeServletResponseFactory;
-
-	private class WebLogicIncludeServletResponseFactoryTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<WebLogicIncludeServletResponseFactory,
-				WebLogicIncludeServletResponseFactory> {
-
-		@Override
-		public WebLogicIncludeServletResponseFactory addingService(
-			ServiceReference<WebLogicIncludeServletResponseFactory>
-				serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			WebLogicIncludeServletResponseFactory
-				webLogicIncludeServletResponseFactory = registry.getService(
-					serviceReference);
-
-			_webLogicIncludeServletResponseFactory =
-				webLogicIncludeServletResponseFactory;
-
-			return webLogicIncludeServletResponseFactory;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<WebLogicIncludeServletResponseFactory>
-				serviceReference,
-			WebLogicIncludeServletResponseFactory service) {
-
-			removedService(serviceReference, service);
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<WebLogicIncludeServletResponseFactory>
-				serviceReference,
-			WebLogicIncludeServletResponseFactory service) {
-
-			_webLogicIncludeServletResponseFactory = null;
-		}
-
-	}
 
 }

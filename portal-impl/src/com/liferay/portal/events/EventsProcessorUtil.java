@@ -21,10 +21,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -93,18 +99,11 @@ public class EventsProcessorUtil {
 	}
 
 	protected Collection<LifecycleAction> _getLifecycleActions(String key) {
-		Collection<LifecycleAction> lifecycleActions = _lifecycleActions.get(
+		List<LifecycleAction> lifecycleActions = _lifecycleActions.getService(
 			key);
 
 		if (lifecycleActions == null) {
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put("key", key);
-
-			lifecycleActions = ServiceTrackerCollections.openList(
-				LifecycleAction.class, "(key=" + key + ")", properties);
-
-			_lifecycleActions.putIfAbsent(key, lifecycleActions);
+			lifecycleActions = Collections.emptyList();
 		}
 
 		return lifecycleActions;
@@ -148,17 +147,45 @@ public class EventsProcessorUtil {
 	}
 
 	protected void _registerEvent(String key, Object event) {
-		Collection<LifecycleAction> lifecycleActions =
-			_instance._getLifecycleActions(key);
+		Map<String, Object> properties = new HashMap<>();
 
-		lifecycleActions.add((LifecycleAction)event);
+		properties.put("key", key);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<LifecycleAction> serviceRegistration =
+			registry.registerService(
+				LifecycleAction.class, (LifecycleAction)event, properties);
+
+		Map<Object, ServiceRegistration<LifecycleAction>>
+			serviceRegistrationMap = _serviceRegistrations.get(key);
+
+		if (serviceRegistrationMap == null) {
+			_serviceRegistrations.putIfAbsent(
+				key,
+				new ConcurrentHashMap
+					<Object, ServiceRegistration<LifecycleAction>>());
+
+			serviceRegistrationMap = _serviceRegistrations.get(key);
+		}
+
+		serviceRegistrationMap.put(event, serviceRegistration);
 	}
 
 	protected void _unregisterEvent(String key, Object event) {
-		Collection<LifecycleAction> lifecycleActions =
-			_instance._getLifecycleActions(key);
+		Map<Object, ServiceRegistration<LifecycleAction>>
+			serviceRegistrationMap = _serviceRegistrations.get(key);
 
-		lifecycleActions.remove(event);
+		if (serviceRegistrationMap != null) {
+			ServiceRegistration<LifecycleAction> serviceRegistration =
+				serviceRegistrationMap.remove(event);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
+
+			_serviceRegistrations.remove(key, Collections.emptyList());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -167,7 +194,11 @@ public class EventsProcessorUtil {
 	private static final EventsProcessorUtil _instance =
 		new EventsProcessorUtil();
 
-	private final ConcurrentMap<String, Collection<LifecycleAction>>
-		_lifecycleActions = new ConcurrentHashMap<>();
+	private final ServiceTrackerMap<String, List<LifecycleAction>>
+		_lifecycleActions = ServiceTrackerCollections.openMultiValueMap(
+			LifecycleAction.class, "key");
+	private final
+		ConcurrentMap<String, Map<Object, ServiceRegistration<LifecycleAction>>>
+			_serviceRegistrations = new ConcurrentHashMap<>();
 
 }

@@ -26,11 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Edward Han
@@ -76,58 +73,18 @@ public class ActionHandlerManagerUtil {
 	private ActionHandlerManagerUtil() {
 		Bundle bundle = FrameworkUtil.getBundle(ActionHandlerManagerUtil.class);
 
-		_bundleContext = bundle.getBundleContext();
-
 		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext, ActionHandlerManager.class,
-			new ActionHandlerManagerServiceTrackerCustomizer());
+			bundle, ActionHandlerManager.class);
 	}
 
 	private ActionHandlerManager _getActionHandlerManager() {
-		return _actionHandlerManager;
+		return _serviceTracker.getService();
 	}
 
 	private static final ActionHandlerManagerUtil _instance =
 		new ActionHandlerManagerUtil();
 
-	private ActionHandlerManager _actionHandlerManager;
-	private final BundleContext _bundleContext;
 	private final ServiceTracker<ActionHandlerManager, ActionHandlerManager>
 		_serviceTracker;
-
-	private class ActionHandlerManagerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ActionHandlerManager, ActionHandlerManager> {
-
-		@Override
-		public ActionHandlerManager addingService(
-			ServiceReference<ActionHandlerManager> serviceReference) {
-
-			_actionHandlerManager = _bundleContext.getService(serviceReference);
-
-			return _actionHandlerManager;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ActionHandlerManager> serviceReference,
-			ActionHandlerManager actionHandlerManager) {
-
-			removedService(serviceReference, actionHandlerManager);
-
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ActionHandlerManager> serviceReference,
-			ActionHandlerManager actionHandlerManager) {
-
-			_bundleContext.ungetService(serviceReference);
-
-			_actionHandlerManager = null;
-		}
-
-	}
 
 }

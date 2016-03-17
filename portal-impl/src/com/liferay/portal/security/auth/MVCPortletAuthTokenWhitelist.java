@@ -37,6 +37,8 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.util.StringPlus;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -277,16 +279,18 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			List<String> portletNames = StringPlus.asList(
 				serviceReference.getProperty("javax.portlet.name"));
 
+			Collection<String> whitelistValues = new ArrayList<>();
+
 			for (String portletName : portletNames) {
 				for (String whitelistAction : whitelistActions) {
-					_whitelist.add(
+					whitelistValues.add(
 						getWhitelistValue(portletName, whitelistAction));
 				}
 			}
 
-			Registry registry = RegistryUtil.getRegistry();
+			_whitelist.addAll(whitelistValues);
 
-			return registry.getService(serviceReference);
+			return whitelistValues;
 		}
 
 		@Override
@@ -302,18 +306,9 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		public void removedService(
 			ServiceReference<Object> serviceReference, Object object) {
 
-			List<String> whitelistActions = StringPlus.asList(
-				serviceReference.getProperty("mvc.command.name"));
+			Collection<String> whitelistValues = (Collection<String>)object;
 
-			List<String> portletNames = StringPlus.asList(
-				serviceReference.getProperty("javax.portlet.name"));
-
-			for (String portletName : portletNames) {
-				for (String whitelistAction : whitelistActions) {
-					_whitelist.remove(
-						getWhitelistValue(portletName, whitelistAction));
-				}
-			}
+			_whitelist.removeAll(whitelistValues);
 		}
 
 		private final Set<String> _whitelist;

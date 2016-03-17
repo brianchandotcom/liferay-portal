@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.servlet.WrapHttpServletRequestFilter;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,10 +37,16 @@ public class CompoundSessionIdFilter
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			CompoundSessionIdServletRequestFactory.class,
-			new CompoundSessionIdServletRequestFactoryTrackerCustomizer());
+			CompoundSessionIdServletRequestFactory.class);
 
 		_serviceTracker.open();
+	}
+
+	@Override
+	public void destroy() {
+		_serviceTracker.close();
+
+		super.destroy();
 	}
 
 	@Override
@@ -51,7 +55,7 @@ public class CompoundSessionIdFilter
 
 		CompoundSessionIdServletRequestFactory
 			compoundSessionIdServletRequestFactory =
-				_compoundSessionIdServletRequestFactory;
+				_serviceTracker.getService();
 
 		if (compoundSessionIdServletRequestFactory != null) {
 			return compoundSessionIdServletRequestFactory.create(request);
@@ -62,63 +66,15 @@ public class CompoundSessionIdFilter
 
 	@Override
 	public boolean isFilterEnabled() {
-		if (_compoundSessionIdServletRequestFactory != null) {
-			return true;
+		if (_serviceTracker.isEmpty()) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
-	private volatile CompoundSessionIdServletRequestFactory
-		_compoundSessionIdServletRequestFactory;
 	private final ServiceTracker
 		<CompoundSessionIdServletRequestFactory,
 			CompoundSessionIdServletRequestFactory> _serviceTracker;
-
-	private class CompoundSessionIdServletRequestFactoryTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<CompoundSessionIdServletRequestFactory,
-				CompoundSessionIdServletRequestFactory> {
-
-		@Override
-		public CompoundSessionIdServletRequestFactory addingService(
-			ServiceReference<CompoundSessionIdServletRequestFactory>
-				serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			CompoundSessionIdServletRequestFactory
-				compoundSessionIdServletRequestFactory = registry.getService(
-					serviceReference);
-
-			_compoundSessionIdServletRequestFactory =
-				compoundSessionIdServletRequestFactory;
-
-			return compoundSessionIdServletRequestFactory;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<CompoundSessionIdServletRequestFactory>
-				serviceReference,
-			CompoundSessionIdServletRequestFactory
-				compoundSessionIdServletRequestFactory) {
-
-			removedService(
-				serviceReference, compoundSessionIdServletRequestFactory);
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<CompoundSessionIdServletRequestFactory>
-				serviceReference,
-			CompoundSessionIdServletRequestFactory
-				compoundSessionIdServletRequestFactory) {
-
-			_compoundSessionIdServletRequestFactory = null;
-		}
-
-	}
 
 }

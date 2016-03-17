@@ -2,7 +2,9 @@ AUI.add(
 	'liferay-portlet-invite-members',
 	function(A) {
 		var Lang = A.Lang;
+
 		var Language = Liferay.Language;
+
 		var Util = Liferay.Util;
 
 		var KEY_ENTER = 13;
@@ -11,7 +13,7 @@ AUI.add(
 
 		var STR_CLICK = 'click';
 
-		var STR_KEYUP = 'keyup';
+		var STR_KEYPRESS = 'keypress';
 
 		var TPL_EMAIL_ROW =
 			'<div class="user" data-emailAddress="{emailAddress}">' +
@@ -43,7 +45,8 @@ AUI.add(
 					},
 
 					pageDelta: {
-						validator: Lang.isInteger
+						validator: Lang.isInteger,
+						value: 50
 					}
 				},
 
@@ -105,7 +108,7 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
-					_addMemberEmail: function() {
+					_addMemberEmail: function(event) {
 						var instance = this;
 
 						var emailInput = instance.one('#emailAddress');
@@ -145,7 +148,7 @@ AUI.add(
 							instance._form.on('submit', instance._syncFields, instance),
 							instance._membersList.delegate(STR_CLICK, instance._onMemberListClick, '.more-results a', instance),
 							instance.rootNode.delegate(STR_CLICK, instance._handleInvite, '.user', instance),
-							instance.rootNode.delegate(STR_KEYUP, instance._onEmailKeyup, '.controls', instance)
+							instance.rootNode.on(STR_KEYPRESS, instance._onEmailKeypress, instance)
 						];
 					},
 
@@ -201,11 +204,13 @@ AUI.add(
 						}
 					},
 
-					_onEmailKeyup: function(event) {
+					_onEmailKeypress: function(event) {
 						var instance = this;
 
 						if (event.keyCode == KEY_ENTER) {
 							instance._addMemberEmail();
+
+							event.preventDefault();
 						}
 					},
 

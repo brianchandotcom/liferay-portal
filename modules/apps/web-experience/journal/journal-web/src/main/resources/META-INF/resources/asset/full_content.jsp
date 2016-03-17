@@ -42,6 +42,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 
 	articlePageURL.setParameter("mvcPath", "/view_content.jsp");
 	articlePageURL.setParameter("type", assetRendererFactory.getType());
+	articlePageURL.setParameter("groupId", String.valueOf(articleDisplay.getGroupId()));
 	articlePageURL.setParameter("redirect", pageRedirect);
 	articlePageURL.setParameter("urlTitle", articleDisplay.getUrlTitle());
 	articlePageURL.setParameter("cur", String.valueOf(cur));

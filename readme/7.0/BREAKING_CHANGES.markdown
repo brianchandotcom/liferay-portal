@@ -4059,3 +4059,34 @@ time to remove it completely. This frees up development and support resources to
 focus on supported features.
 
 ---------------------------------------
+
+### Removed `asset.entry.validator` property
+- **Date:** 2016-Mar-17
+- **JIRA Ticket:** LPS-64370
+
+#### What changed?
+
+The property `asset.entry.validator` was removed from `portal.properties`.
+
+#### Who is affected?
+
+Any installation with a customized asset validator.
+
+#### How should I update my code?
+
+You should create a new OSGi component that implements
+`AssetEntryValidator`, and define for which models it will be
+applicable by using the `model.class.name` OSGi property.
+
+#### Why was this change made?
+
+The default asset entry validator ensured that all assets of a
+particular type honored required vocabulary restrictions . In general,
+this was incorrect, as there may be different models of the same type
+that require different validation (e.g. A D&M FileEntry vs an
+attachment); additionally, in the context of a modular application, it
+was very difficult to extend or modify this behaviour without
+introducing dependencies between the core and the modules that
+required custom validation logic.
+
+---------------------------------------

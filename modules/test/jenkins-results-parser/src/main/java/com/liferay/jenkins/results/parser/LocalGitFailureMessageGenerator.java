@@ -45,28 +45,27 @@ public class LocalGitFailureMessageGenerator
 
 		consoleOutput = consoleOutput.substring(start, end);
 
-		end = consoleOutput.length();
-		start = end;
+		int minIndex = consoleOutput.length();
 
-		for (String localGitFailureString : _LOCAL_GIT_FAILURE_STRINGS) {
-			int index = consoleOutput.lastIndexOf(localGitFailureString, start);
+		for (String string : new String[] {"error: ", "fatal: "}) {
+			int index = consoleOutput.indexOf(string);
 
-			while ((index != -1) && (index < start)) {
-				start = index;
-
-				index = consoleOutput.lastIndexOf(localGitFailureString, index);
+			if (index != -1) {
+				if (index < minIndex) {
+					minIndex = index;
+				}
 			}
 		}
 
-		int index = consoleOutput.lastIndexOf("+ git", start);
+		int gitCommandIndex = consoleOutput.lastIndexOf("+ git", minIndex);
 
-		if (index != -1) {
-			start = index;
+		if (gitCommandIndex != -1) {
+			start = gitCommandIndex;
 		}
 
 		start = consoleOutput.lastIndexOf("\n", start);
 
-		end = consoleOutput.lastIndexOf("\n", end);
+		end = consoleOutput.lastIndexOf("\n");
 
 		sb.append(getConsoleOutputSnippet(consoleOutput, start, end, false));
 
@@ -77,8 +76,5 @@ public class LocalGitFailureMessageGenerator
 
 	private static final String _LOCAL_GIT_FAILURE_START_STRING =
 		"Too many retries while synchronizing GitHub pull request.";
-
-	private static final String[] _LOCAL_GIT_FAILURE_STRINGS =
-		{"error: ", "fatal: "};
 
 }

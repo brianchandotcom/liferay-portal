@@ -798,6 +798,7 @@
 				root: PATH_JAVASCRIPT + '/liferay/'
 			}
 		},
+		insertBefore: 'liferayPortalCSS',
 		lang: themeDisplay.getBCP47LanguageId(),
 		root: PATH_JAVASCRIPT + '/aui/',
 		useBrowserConsole: false

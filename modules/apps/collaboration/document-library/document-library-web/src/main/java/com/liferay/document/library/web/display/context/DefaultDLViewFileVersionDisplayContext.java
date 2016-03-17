@@ -20,6 +20,10 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.document.library.kernel.util.AudioProcessorUtil;
+import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.kernel.util.PDFProcessorUtil;
+import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.display.context.logic.FileVersionDisplayContextHelper;
@@ -203,6 +207,19 @@ public class DefaultDLViewFileVersionDisplayContext
 	@Override
 	public UUID getUuid() {
 		return _UUID;
+	}
+
+	@Override
+	public boolean hasPreview() {
+		if (AudioProcessorUtil.hasAudio(_fileVersion) ||
+			ImageProcessorUtil.hasImages(_fileVersion) ||
+			PDFProcessorUtil.hasImages(_fileVersion) ||
+			VideoProcessorUtil.hasVideo(_fileVersion)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -100,6 +100,11 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean hasPreview() {
+		return false;
+	}
+
+	@Override
 	public boolean isDownloadLinkVisible() {
 		return false;
 	}

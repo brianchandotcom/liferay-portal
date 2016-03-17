@@ -56,6 +56,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
+	public boolean hasPreview();
+
 	public boolean isDownloadLinkVisible() throws PortalException;
 
 	public boolean isVersionInfoVisible() throws PortalException;

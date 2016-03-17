@@ -103,6 +103,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean hasPreview() {
+		return parentDisplayContext.hasPreview();
+	}
+
+	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
 		return parentDisplayContext.isDownloadLinkVisible();
 	}

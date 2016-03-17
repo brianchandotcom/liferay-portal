@@ -28,8 +28,8 @@ public class DDLActionKeys {
 	public static final String ADD_RECORD = "ADD_RECORD";
 
 	/**
-	 * {@value #ADD_RECORD_SET} is the action key to use to check permissions for
-	 * adding record sets.
+	 * {@value #ADD_RECORD_SET} is the action key to use to check permissions
+	 * for adding record sets.
 	 */
 	public static final String ADD_RECORD_SET = "ADD_RECORD_SET";
 

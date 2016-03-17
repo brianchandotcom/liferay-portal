@@ -5208,11 +5208,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 							regexp="(.*?),.*"
 							replace="\1"
 						/>
+
+						<echo append="true" file="${test.ext.properties.file}">
+							test.name.skip.portal.instance=${test.name.skip.portal.instance}
+						</echo>
 					</then>
 				</if>
 
 				<echo append="true" file="${test.ext.properties.file}">
-					test.name.skip.portal.instance=${test.name.skip.portal.instance}
 					test.portal.instance=${test.portal.instance}
 				</echo>
 			</then>
@@ -6108,6 +6111,17 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.assert.warning.exceptions=${test.assert.warning.exceptions}
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="test.name.skip.portal.instance" />
+
+		<if>
+			<isset property="test.name.skip.portal.instance" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.name.skip.portal.instance=${test.name.skip.portal.instance}
 				</echo>
 			</then>
 		</if>

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String redirect = (String)request.getAttribute("edit_roles.jsp-redirect");
 
 String className = (String)request.getAttribute("edit_roles.jsp-className");
@@ -45,6 +47,14 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
@@ -74,32 +84,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 			keyProperty="roleId"
 			modelVar="role"
 		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="className" value="<%= className %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="title"
-				value="<%= role.getTitle(locale) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="type"
-				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="description"
-				value="<%= role.getDescription(locale) %>"
-			/>
+			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

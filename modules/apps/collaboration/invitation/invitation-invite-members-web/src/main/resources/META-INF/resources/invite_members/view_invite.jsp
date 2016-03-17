@@ -21,7 +21,6 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 %>
 
 <div class="container-fluid main-content-body" id="<portlet:namespace />inviteMembersContainer">
-
 	<portlet:actionURL name="sendInvites" var="sendInvitesURL" />
 
 	<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

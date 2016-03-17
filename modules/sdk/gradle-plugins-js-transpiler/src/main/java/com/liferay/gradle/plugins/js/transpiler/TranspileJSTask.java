@@ -198,6 +198,11 @@ public class TranspileJSTask
 		return this;
 	}
 
+	@Input
+	public boolean isSoySkipMetalGeneration() {
+		return _soySkipMetalGeneration;
+	}
+
 	@Override
 	public TranspileJSTask setExcludes(Iterable<String> excludes) {
 		_patternFilterable.setExcludes(excludes);
@@ -238,6 +243,10 @@ public class TranspileJSTask
 
 	public void setSourceMaps(SourceMaps sourceMaps) {
 		_sourceMaps = sourceMaps;
+	}
+
+	public void setSoySkipMetalGeneration(boolean soySkipMetalGeneration) {
+		_soySkipMetalGeneration = soySkipMetalGeneration;
 	}
 
 	public void setSoySrcIncludes(Iterable<?> soySrcIncludes) {
@@ -303,6 +312,10 @@ public class TranspileJSTask
 		completeArgs.add("--soyDest");
 		completeArgs.add(workingDir.toString());
 
+		if (isSoySkipMetalGeneration()) {
+			completeArgs.add("--soySkipMetalGeneration");
+		}
+
 		completeArgs.add("--src");
 
 		for (String srcInclude : getSrcIncludes()) {
@@ -320,6 +333,7 @@ public class TranspileJSTask
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private Object _sourceDir;
 	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
+	private boolean _soySkipMetalGeneration = false;
 	private final List<Object> _soySrcIncludes = new ArrayList<>();
 	private final List<Object> _srcIncludes = new ArrayList<>();
 

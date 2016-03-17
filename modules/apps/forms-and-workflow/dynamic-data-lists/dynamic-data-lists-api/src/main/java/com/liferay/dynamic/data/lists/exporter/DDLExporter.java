@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.Locale;
 
 /**
- * Provides a service for exporting the records of a given Record Set. The
- * format used to export the Record Set is defined by the format value passed to
- * DDLExporterFactory when instantiating this service.
+ * Provides a service for exporting Record Set records. The format this service
+ * uses to export records is the format that was specified to the {@link
+ * DDLExporterFactory} that created this service.
  *
  * @author Marcellus Tavares
  * @author Manuel de la Peña
@@ -40,7 +40,7 @@ public interface DDLExporter {
 	 *         inclusive)
 	 * @param  locale the locale used to retrieve the localized values of the
 	 *         record
-	 * @return the byte values of the exported Records.
+	 * @return the byte values of the exported records
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public byte[] export(
@@ -55,11 +55,11 @@ public interface DDLExporter {
 	 * @param  start the lower bound of the range of records to export
 	 * @param  end the upper bound of the range of records to export (not
 	 *         inclusive)
-	 * @param  orderByComparator the comparator to order the records nt s*
-	 *         (optionally <code>null</code>)
+	 * @param  orderByComparator a comparator to order the records (optionally
+	 *         <code>null</code>)
 	 * @param  locale the locale used to retrieve the localized values of the
 	 *         record
-	 * @return the byte values of the exported Records.
+	 * @return the byte values of the exported records
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public byte[] export(
@@ -68,13 +68,13 @@ public interface DDLExporter {
 		throws Exception;
 
 	/**
-	 * Exports the record set's records as a byte array.
+	 * Exports the record set's records of the workflow status as a byte array.
 	 *
 	 * @param  recordSetId the record set ID
-	 * @param  status the workflow status of the records
+	 * @param  status the workflow status of the records to export
 	 * @param  locale the locale used to retrieve the localized values of the
 	 *         record
-	 * @return the byte values of the exported Records
+	 * @return the byte values of the exported records
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public byte[] export(long recordSetId, int status, Locale locale)
@@ -86,7 +86,7 @@ public interface DDLExporter {
 	 * @param  recordSetId the record set ID
 	 * @param  locale the locale used to retrieve the localized values of the
 	 *         record
-	 * @return the byte values of the exported Records
+	 * @return the byte values of the exported records
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public byte[] export(long recordSetId, Locale locale) throws Exception;

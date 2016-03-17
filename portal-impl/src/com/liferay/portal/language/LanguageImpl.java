@@ -120,13 +120,13 @@ public class LanguageImpl implements Language, Serializable {
 					MultiVMPool multiVMPool = registry.getService(
 						MultiVMPool.class);
 
-					_portalCache =
+					_companyLocalesPortalCache =
 						(PortalCache<Long, Serializable>)
 							multiVMPool.getPortalCache(
 								LanguageImpl.class.getName());
 
 					PortalCacheMapSynchronizeUtil.synchronize(
-						_portalCache, _companyLocalesBags,
+						_companyLocalesPortalCache, _companyLocalesBags,
 						new Synchronizer<Long, Serializable>() {
 
 							@Override
@@ -1807,16 +1807,16 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	private void _resetAvailableLocales(long companyId) {
-		_portalCache.remove(companyId);
+		_companyLocalesPortalCache.remove(companyId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static final Map<Long, CompanyLocalesBag> _companyLocalesBags =
 		new ConcurrentHashMap<>();
+	private static PortalCache<Long, Serializable> _companyLocalesPortalCache;
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-	private static PortalCache<Long, Serializable> _portalCache;
 
 	private final Map<Long, Map<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();

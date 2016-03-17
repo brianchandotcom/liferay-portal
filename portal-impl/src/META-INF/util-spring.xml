@@ -7,11 +7,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.service.persistence.BatchSessionUtil" class="com.liferay.portal.kernel.service.persistence.BatchSessionUtil">
-		<property name="batchSession">
-			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />
-		</property>
-	</bean>
+
 	<bean id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermission" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />
 	<bean id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission" ref="com.liferay.expando.kernel.service.permission.ExpandoColumnPermission" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.search.constants;
 
 import aQute.bnd.annotation.ProviderType;
 

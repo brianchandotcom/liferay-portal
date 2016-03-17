@@ -47,6 +47,7 @@ public interface DDL {
 	 * </p>
 	 *
 	 * @param      record the record to transform
+	 * @return     the record's JSON Object representation
 	 * @throws     Exception if an unexpected exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getRecordJSONObject(DDLRecord,boolean,locale)}
@@ -65,6 +66,7 @@ public interface DDL {
 	 *         in a pending or draft state.
 	 * @param  locale a locale to use to retrieve the localized values of the
 	 *         record
+	 * @return the localized value of the record as a JSON Object
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public JSONObject getRecordJSONObject(
@@ -77,6 +79,7 @@ public interface DDL {
 	 * @param  recordSet the record set to transform
 	 * @param  locale a locale to use to retrieve the localized values of the
 	 *         record set
+	 * @return the localized record set as a JSON Array
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public JSONArray getRecordSetJSONArray(
@@ -84,14 +87,16 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Returns a record set's records as a JSON Array. The JSON Array contains a
-	 * list of JSON objects.
+	 * Returns the record set's records as a JSON Array. The JSON Array contains
+	 * a list of JSON objects.
 	 *
 	 * <p>
 	 * The Theme display locale is used as the default locale and the latest
 	 * record version is not used if its workflow status is not approved.
 	 * </p>
 	 *
+	 * @param      recordSet the record set from which to extract records
+	 * @return     the record set's records as a JSON Array
 	 * @throws     Exception if an unexpected exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getRecordsJSONArray(List,boolean,locale)}
@@ -101,8 +106,8 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Returns a list of records as a JSON Array. The JSON array contains a list
-	 * of JSON objects.
+	 * Returns the records as a JSON Array. The JSON array contains a list of
+	 * JSON objects.
 	 *
 	 * <p>
 	 * The Theme display locale is used as the default locale and the latest
@@ -110,6 +115,7 @@ public interface DDL {
 	 * </p>
 	 *
 	 * @param      records the records to transform
+	 * @return     the records as a JSON Array
 	 * @throws     Exception if an unexpected exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getRecordsJSONArray(List,boolean,locale)}
@@ -119,9 +125,10 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Transforms the list of records into a JSON Array. The JSON array contains
-	 * a list of record JSON Objects. If the latest version of the records is
-	 * requested, the records are transformed regardless of workflow status.
+	 * Returns the records of the locale as a JSON Array. The JSON array
+	 * contains a list of record JSON Objects. If the latest version of the
+	 * records is requested, the records are transformed regardless of workflow
+	 * status.
 	 *
 	 * @param  records the records to transform
 	 * @param  latestRecordVersion whether the latest version of each record is
@@ -129,6 +136,7 @@ public interface DDL {
 	 *         record is in a pending or draft state.
 	 * @param  locale a locale used to retrieve the localized values of the
 	 *         record
+	 * @return the records of the locale as a JSON Array
 	 * @throws Exception if an unexpected exception occurred
 	 * @see    #getRecordJSONObject(DDLRecord, boolean, Locale)
 	 */
@@ -150,6 +158,7 @@ public interface DDL {
 	 * @param  checkPermission whether to use the permission checker to validate
 	 *         credentials
 	 * @param  serviceContext the service context to be applied
+	 * @return the record
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public DDLRecord updateRecord(

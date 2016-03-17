@@ -148,9 +148,9 @@ public class GitHubMessageUtil {
 				sb.append("s");
 			}
 
-			sb.append(" Failed.</p><pre>Completed with the status of ");
+			sb.append(" Failed.</p><pre><code>Completed with the status of ");
 			sb.append(topLevelResult);
-			sb.append(".</pre></li>");
+			sb.append(".</code></pre></li>");
 
 			List<String> highPriorityJobFailureContents = new ArrayList<>();
 			List<String> normalPriorityJobFailureContents = new ArrayList<>();

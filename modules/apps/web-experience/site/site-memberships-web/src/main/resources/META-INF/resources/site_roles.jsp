@@ -17,15 +17,30 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long groupId = ParamUtil.getLong(request, "groupId");
+int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE);
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-String redirect = (String)request.getAttribute("edit_roles.jsp-redirect");
+PortletURL portletURL = renderResponse.createRenderURL();
 
-String className = (String)request.getAttribute("edit_roles.jsp-className");
-Group group = (Group)request.getAttribute("edit_roles.jsp-group");
-int roleType = (Integer)request.getAttribute("edit_roles.jsp-roleType");
+portletURL.setParameter("mvcPath", "/site_roles.jsp");
+portletURL.setParameter("groupId", String.valueOf(groupId));
+portletURL.setParameter("roleType", String.valueOf(roleType));
+portletURL.setParameter("displayStyle", displayStyle);
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
+RoleSearch roleSearch = new RoleSearch(renderRequest, portletURL);
+
+RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearch.getSearchTerms();
+
+List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
+
+roles = UsersAdminUtil.filterGroupRoles(permissionChecker, groupId, roles);
+
+int rolesCount = roles.size();
+
+roleSearch.setTotal(rolesCount);
+roleSearch.setResults(ListUtil.subList(roles, roleSearch.getStart(), roleSearch.getEnd()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -46,6 +61,13 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= roleSearch.getOrderByCol() %>"
+			orderByType="<%= roleSearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"title"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
@@ -59,25 +81,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= roleSearch %>"
 	>
-
-		<%
-		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
-
-		List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-		roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
-
-		total = roles.size();
-
-		searchContainer.setTotal(total);
-		%>
-
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			escapedModel="<%= true %>"

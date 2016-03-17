@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector.web.upgrade;
 
-import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
+import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;

@@ -15,7 +15,7 @@ buildscript {
 apply plugin: "com.liferay.jasper.jspc"
 
 File liferayHome = file("../../../../../bundles")
-String tomcatVersion = "7.0.62"
+String tomcatVersion = "8.0.32"
 File tomcatPortalDir = new File(liferayHome, "tomcat-${tomcatVersion}/webapps/ROOT")
 
 dependencies {

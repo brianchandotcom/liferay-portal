@@ -13,6 +13,8 @@ dependencies {
 	provided project(":apps:web-experience:layout:layout-taglib")
 	provided project(":apps:web-experience:staging:staging-api")
 	provided project(":apps:web-experience:staging:staging-lang")
+	provided project(":apps:web-experience:staging:staging-taglib")
+	provided project(":apps:web-experience:trash:trash-taglib")
 }
 
 liferay {

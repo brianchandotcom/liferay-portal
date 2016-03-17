@@ -27,6 +27,7 @@ dependencies {
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:web-experience:application-list:application-list-api")
+	provided project(":core:registry-api")
 }
 
 liferay {

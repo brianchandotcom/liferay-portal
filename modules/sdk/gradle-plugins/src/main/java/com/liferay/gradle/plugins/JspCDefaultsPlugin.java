@@ -29,7 +29,6 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
-import org.gradle.api.file.FileTree;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.bundling.Jar;
@@ -48,30 +47,6 @@ public class JspCDefaultsPlugin
 
 	protected void addDependenciesJspC(
 		Project project, LiferayExtension liferayExtension) {
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME,
-			liferayExtension.getAppServerLibGlobalDir());
-
-		FileTree fileTree = FileUtil.getJarsFileTree(
-			project, liferayExtension.getAppServerLibGlobalDir());
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
-
-		fileTree = FileUtil.getJarsFileTree(
-			project,
-			new File(liferayExtension.getAppServerPortalDir(), "WEB-INF/lib"));
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
-
-		fileTree = FileUtil.getJarsFileTree(
-			project,
-			new File(liferayExtension.getLiferayHome(), "osgi/modules"));
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
 
 		ConfigurableFileCollection configurableFileCollection = project.files(
 			getUnzippedJarDir(project));

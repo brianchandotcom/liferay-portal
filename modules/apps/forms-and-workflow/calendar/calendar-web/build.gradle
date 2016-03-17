@@ -12,6 +12,7 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-dao-orm-custom-sql")
 	provided project(":apps:foundation:portal:portal-upgrade")
+	provided project(":core:registry-api")
 }
 
 liferay {

@@ -72,7 +72,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.staging.processes.web.constants.StagingProcessesWebKeys" %>
+page import="com.liferay.staging.constants.StagingProcessesWebKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 

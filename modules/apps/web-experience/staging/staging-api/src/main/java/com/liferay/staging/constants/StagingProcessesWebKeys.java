@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.item.selector.web.constants;
+package com.liferay.staging.constants;
 
 /**
- * @author Jose A. Jimenez
+ * @author Levente Hudák
  */
-public class ItemSelectorPortletKeys {
+public class StagingProcessesWebKeys {
 
-	public static final String ITEM_SELECTOR =
-		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";
+	public static final String BRANCHING_ENABLED = "BRANCHING_ENABLED";
 
 }

@@ -31,6 +31,10 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "new-password-policy") : passwordPolicy.getName());
+
+if (passwordPolicy == null) {
+	passwordPolicy = new PasswordPolicyImpl();
+}
 %>
 
 <portlet:actionURL name="editPasswordPolicy" var="editPasswordPolicyURL" />

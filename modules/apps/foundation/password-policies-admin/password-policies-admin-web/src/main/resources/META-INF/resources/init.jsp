@@ -63,6 +63,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.model.impl.PasswordPolicyImpl" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@

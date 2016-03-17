@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.web.constants;
+package com.liferay.item.selector.constants;
 
 /**
  * @author Jose A. Jimenez

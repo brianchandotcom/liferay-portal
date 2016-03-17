@@ -379,7 +379,7 @@
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute function="Click" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute function="Check" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_CHECKBOX" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 

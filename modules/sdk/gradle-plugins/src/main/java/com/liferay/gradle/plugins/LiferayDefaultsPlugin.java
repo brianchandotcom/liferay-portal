@@ -613,6 +613,18 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 								gradleRelativePath, gradleDaemon, true));
 					}
 
+					// Change log
+
+					commands.add(
+						_getGradleCommand(
+							gradleRelativePath,
+							ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME,
+							gradleDaemon));
+
+					commands.add("git add --all");
+
+					commands.add(_getGitCommitCommand("change log", false));
+
 					// Baseline
 
 					commands.add(

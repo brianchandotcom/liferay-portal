@@ -1,6 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
@@ -10,4 +10,9 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:web-experience:application-list:application-list-api")
+	provided project(":core:registry-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

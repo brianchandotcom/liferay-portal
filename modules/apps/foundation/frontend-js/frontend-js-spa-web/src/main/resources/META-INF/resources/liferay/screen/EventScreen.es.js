@@ -50,10 +50,21 @@ class EventScreen extends HtmlScreen {
 		);
 	}
 
+	beforeScreenFlip() {
+		Liferay.fire(
+			'beforeScreenFlip',
+			{
+				app: Liferay.SPA.app,
+				screen: this
+			}
+		);
+	}
+
 	flip(surfaces) {
 		document.body.className = this.virtualDocument.querySelector('body').className;
 
 		return CancellablePromise.resolve(Utils.resetAllPortlets())
+			.then(CancellablePromise.resolve(this.beforeScreenFlip()))
 			.then(super.flip(surfaces))
 			.then(() => {
 				Liferay.fire(

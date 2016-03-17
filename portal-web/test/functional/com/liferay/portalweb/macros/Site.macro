@@ -364,7 +364,9 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<var name="${key_cardText}" value="{userScreenName}" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USERS" value1="Add Site Roles to Users" />
 

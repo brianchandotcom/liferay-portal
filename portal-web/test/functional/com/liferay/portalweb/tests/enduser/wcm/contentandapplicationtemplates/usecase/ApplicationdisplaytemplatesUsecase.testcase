@@ -100,7 +100,10 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
 			<var name="adtType" value="RSS" />

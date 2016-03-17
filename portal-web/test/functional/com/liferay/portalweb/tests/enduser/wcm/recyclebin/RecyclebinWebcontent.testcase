@@ -556,7 +556,6 @@
 		</execute>
 
 		<execute macro="RecycleBin#viewEntry">
-			<var name="assetContent" value="WC Web Content Content" />
 			<var name="assetName" value="WC WebContent Title" />
 		</execute>
 	</command>

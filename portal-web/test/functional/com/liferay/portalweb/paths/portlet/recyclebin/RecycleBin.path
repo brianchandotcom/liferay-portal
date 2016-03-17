@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_CONTENT_LINK</td>
-	<td>//div[contains(@class,'alert-success')]//a[contains(.,'${key_assetName}')]</td>
+	<td>//div[contains(@class,'alert-success') and contains(.,'${key_assetName}')]//a</td>
 	<td></td>
 </tr>
 <tr>

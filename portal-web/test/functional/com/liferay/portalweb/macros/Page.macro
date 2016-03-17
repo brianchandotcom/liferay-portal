@@ -116,9 +116,19 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute function="AssertVisible" locator1="Home#PAGE">
-			<var name="key_pageName" value="${pageName}" />
-		</execute>
+		<if>
+			<contains string="${pageName}" substring="&apos;" />
+			<then>
+				<execute function="AssertVisible" locator1="Home#PAGE_WITH_QUOTES">
+					<var name="key_pageName" value="${pageName}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="AssertVisible" locator1="Home#PAGE">
+					<var name="key_pageName" value="${pageName}" />
+				</execute>
+			</else>
+		</if>
 
 		<if>
 			<isset var="localized" />

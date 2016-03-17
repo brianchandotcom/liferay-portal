@@ -301,11 +301,58 @@ plugins.includes=${test.plugin}</echo>
 
 		<for list="${test.plugins}" param="test.plugin">
 			<sequential>
-				<antcall target="test-plugin">
-					<param name="test.plugin" value="@{test.plugin}" />
-				</antcall>
+				<trycatch>
+					<try>
+						<antcall target="test-plugin">
+							<param name="test.plugin" value="@{test.plugin}" />
+						</antcall>
+					</try>
+					<catch>
+						<echo append="true" file="plugins-compile-failure">@{test.plugin},</echo>
+					</catch>
+				</trycatch>
 			</sequential>
 		</for>
+
+		<if>
+			<available file="plugins-compile-failure" />
+			<then>
+				<loadfile property="failed.plugins" srcFile="plugins-compile-failure" />
+
+				<beanshell>
+					<![CDATA[
+						String failedPluginsString = project.getProperty("failed.plugins");
+						String testPluginsString = project.getProperty("test.plugins");
+
+						String[] failedPlugins = failedPluginsString.split(",");
+						String[] testPlugins = testPluginsString.split(",");
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("\n");
+						sb.append(failedPlugins.length);
+						sb.append(" of ");
+						sb.append(testPlugins.length);
+						sb.append(" plugin");
+
+						if (testPlugins.length != 1) {
+							sb.append("s");
+						}
+
+						sb.append(" failed to compile:\n");
+
+						for (String failedPlugin : failedPlugins) {
+							sb.append(failedPlugin);
+							sb.append("\n");
+						}
+
+						project.setProperty("plugins.failure.message", sb.toString());
+					]]>
+				</beanshell>
+
+				<fail message="${plugins.failure.message}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="test-plugins">

@@ -6,10 +6,6 @@ AUI.add(
 
 		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
 
-		var isNode = function(node) {
-			return node && (node._node || node.nodeType);
-		};
-
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
@@ -36,6 +32,7 @@ AUI.add(
 
 					name: {
 						getter: '_getName',
+						setter: '_setName',
 						value: ''
 					},
 
@@ -280,6 +277,10 @@ AUI.add(
 					submitForm: function() {
 						var instance = this;
 
+						if (!instance.get('name').trim()) {
+							instance.set('name', Liferay.Language.get('untitled-form'));
+						}
+
 						instance.serializeFormBuilder();
 
 						var submitButton = instance.one('#submit');
@@ -293,28 +294,16 @@ AUI.add(
 						submitForm(editForm.form);
 					},
 
-					_getDescription: function(value) {
+					_getDescription: function() {
 						var instance = this;
 
-						var editor = window[instance.ns('descriptionEditor')];
-
-						if (editor && !isNode(editor)) {
-							value = editor.getHTML();
-						}
-
-						return value;
+						return window[instance.ns('descriptionEditor')].getHTML();
 					},
 
-					_getName: function(value) {
+					_getName: function() {
 						var instance = this;
 
-						var editor = window[instance.ns('nameEditor')];
-
-						if (editor && !isNode(editor)) {
-							value = editor.getHTML();
-						}
-
-						return value;
+						return window[instance.ns('nameEditor')].getHTML();
 					},
 
 					_isSameState: function() {
@@ -403,6 +392,12 @@ AUI.add(
 								method: 'POST'
 							}
 						);
+					},
+
+					_setName: function(value) {
+						var instance = this;
+
+						window[instance.ns('nameEditor')].setHTML(value);
 					},
 
 					_valueFormBuilder: function() {

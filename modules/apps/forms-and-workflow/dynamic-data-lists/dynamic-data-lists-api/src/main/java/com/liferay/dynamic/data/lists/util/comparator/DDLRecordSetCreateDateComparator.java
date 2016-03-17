@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * Used to order record sets according to their create date during search
+ * Used to order record sets according to their created date during search
  * operations. The order can be ascending or descending and is defined by the
  * value specified in the class constructor.
  *

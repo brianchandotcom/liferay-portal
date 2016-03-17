@@ -12,6 +12,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-web
 -liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

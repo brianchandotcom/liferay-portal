@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.portal.content.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,7 +52,6 @@ import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys
 import com.liferay.social.privatemessaging.model.PrivateMessagingConstants;
 import com.liferay.social.privatemessaging.model.UserThread;
 import com.liferay.social.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
-import com.liferay.util.ContentUtil;
 
 import java.io.InputStream;
 

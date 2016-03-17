@@ -50,8 +50,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.FieldNames;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
+import com.liferay.portal.search.constants.FieldNames;
 
 import java.util.ArrayList;
 import java.util.Collections;

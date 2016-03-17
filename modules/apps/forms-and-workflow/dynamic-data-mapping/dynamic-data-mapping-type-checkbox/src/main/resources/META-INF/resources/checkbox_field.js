@@ -55,7 +55,7 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						inputNode.attr('checked', !!value);
+						inputNode.attr('checked', DataTypeBoolean.parse(value));
 					},
 
 					_renderErrorMessage: function() {

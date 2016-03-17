@@ -24,11 +24,9 @@
 	/>
 </liferay-util:buffer>
 
-<p class="text-muted <%= (inputAssetLinksDisplayContext.getAssetLinksCount() <= 0) ? StringPool.BLANK : "hide" %>" id="<%= inputAssetLinksDisplayContext.getRandomNamespace() + "emptyResultMessage" %>">
-	<%= StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "none")) %>
-</p>
-
 <liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	emptyResultsMessage="none"
 	headerNames="type,title,scope,null"
 	total="<%= inputAssetLinksDisplayContext.getAssetLinksCount() %>"
 >
@@ -137,8 +135,6 @@
 					searchContainer.addRow([event.assettype, A.Escape.html(event.assettitle), A.Escape.html(event.groupdescriptivename), entryLink], event.assetentryid);
 
 					searchContainer.updateDataStore();
-
-					A.one('#<%= inputAssetLinksDisplayContext.getRandomNamespace() %>emptyResultMessage').hide();
 				}
 			);
 		},
@@ -157,10 +153,6 @@
 			var tr = link.ancestor('tr');
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-
-			if (searchContainer.getSize()) {
-				A.one('#<%= inputAssetLinksDisplayContext.getRandomNamespace() %>emptyResultMessage').show();
-			}
 		},
 		'.modify-link'
 	);

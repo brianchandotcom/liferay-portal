@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * Thrown when the system is unable to find the required DDL Record Set.
+ * Thrown when the system is unable to find a required DDL Record Set.
  *
  * @author Brian Wing Shun Chan
  */

@@ -587,7 +587,6 @@ AUI.add(
 								strings: {
 									addField: Liferay.Language.get('choose-a-field-type')
 								},
-								topFixed: true,
 								visible: false
 							}
 						);

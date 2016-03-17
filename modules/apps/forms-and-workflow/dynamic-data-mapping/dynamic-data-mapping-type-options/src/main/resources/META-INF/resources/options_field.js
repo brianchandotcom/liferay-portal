@@ -59,6 +59,8 @@ AUI.add(
 						instance._syncFieldUI(repeatedField);
 						instance._syncFieldUI(lastField);
 
+						instance.fire('addField');
+
 						return repeatedField;
 					},
 
@@ -357,6 +359,8 @@ AUI.add(
 						}
 
 						field.remove();
+
+						instance.fire('removeField');
 					},
 
 					_onFieldValueChange: function(field) {

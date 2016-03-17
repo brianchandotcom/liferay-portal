@@ -38,59 +38,59 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-ui:search-container
-	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
->
-
-	<%
-	RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
-
-	List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-	roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
-
-	total = roles.size();
-
-	searchContainer.setTotal(total);
-	%>
-
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Role"
-		escapedModel="<%= true %>"
-		keyProperty="roleId"
-		modelVar="role"
+<aui:form cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:search-container
+		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 	>
-		<portlet:renderURL var="rowURL">
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="className" value="<%= className %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-		</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="title"
-			value="<%= role.getTitle(locale) %>"
+		<%
+		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
+
+		List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
+
+		roles = UsersAdminUtil.filterGroupRoles(permissionChecker, group.getGroupId(), roles);
+
+		total = roles.size();
+
+		searchContainer.setTotal(total);
+		%>
+
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="type"
-			value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
-		/>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.Role"
+			escapedModel="<%= true %>"
+			keyProperty="roleId"
+			modelVar="role"
+		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="className" value="<%= className %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="description"
-			value="<%= role.getDescription(locale) %>"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="title"
+				value="<%= role.getTitle(locale) %>"
+			/>
 
-	<div class="separator"><!-- --></div>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="type"
+				value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="description"
+				value="<%= role.getDescription(locale) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>

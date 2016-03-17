@@ -48,14 +48,18 @@ roleSearch.setResults(ListUtil.subList(roles, roleSearch.getStart(), roleSearch.
 		<aui:nav-item label="site-roles" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= (rolesCount > 0) || Validator.isNotNull(searchTerms.getKeywords()) %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	disabled="<%= (rolesCount <= 0) && Validator.isNull(searchTerms.getKeywords()) %>"
+>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'

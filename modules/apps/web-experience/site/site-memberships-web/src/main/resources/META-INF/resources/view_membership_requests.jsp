@@ -143,7 +143,7 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 						<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)
 					</c:when>
 					<c:otherwise>
-						<%= LanguageUtil.get(request, "the-user-could-not-be-found") %>
+						<liferay-ui:message key="the-user-could-not-be-found" />
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>
@@ -183,7 +183,7 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 							</c:choose>
 						</c:when>
 						<c:otherwise>
-							<%= LanguageUtil.get(request, "the-user-could-not-be-found") %>
+							<liferay-ui:message key="the-user-could-not-be-found" />
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>

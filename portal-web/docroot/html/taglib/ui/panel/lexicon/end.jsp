@@ -19,7 +19,3 @@
 		</div>
 	</div>
 </div>
-
-<c:if test="<%= collapsible && (panelCount == null) %>">
-	<%@ include file="/html/taglib/ui/panel_container/javascript.jspf" %>
-</c:if>

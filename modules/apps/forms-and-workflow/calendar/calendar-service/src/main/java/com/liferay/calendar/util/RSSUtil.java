@@ -27,7 +27,7 @@ import java.text.Format;
 /**
  * @author Bruno Basto
  */
-public class RSSUtil extends com.liferay.util.RSSUtil {
+public class RSSUtil extends com.liferay.portal.rss.RSSUtil {
 
 	public static final long TIME_INTERVAL_DEFAULT = Time.WEEK;
 

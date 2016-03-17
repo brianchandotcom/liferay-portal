@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Writer;
 
@@ -93,9 +94,13 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
-		template.put(
-			"childElementsHTML",
-			ddmFormFieldRenderingContext.getChildElementsHTML());
+		String childElementsHTML =
+			ddmFormFieldRenderingContext.getChildElementsHTML();
+
+		if (Validator.isNotNull(childElementsHTML)) {
+			template.put("childElementsHTML", childElementsHTML);
+		}
+
 		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());

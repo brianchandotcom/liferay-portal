@@ -15,19 +15,24 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column name-column"
 	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= true %>"
 	property="name"
+	truncate="<%= true %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column parent-organization-column"
 	href="<%= rowURL %>"
 	name="parent-organization"
+	truncate="<%= true %>"
 	value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="text-column type-column"
 	href="<%= rowURL %>"
 	name="type"
 	orderable="<%= true %>"
@@ -35,18 +40,21 @@
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="city-column text-column"
 	href="<%= rowURL %>"
 	name="city"
 	value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="region-column text-column"
 	href="<%= rowURL %>"
 	name="region"
 	value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="country-column text-column"
 	href="<%= rowURL %>"
 	name="country"
 	value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"

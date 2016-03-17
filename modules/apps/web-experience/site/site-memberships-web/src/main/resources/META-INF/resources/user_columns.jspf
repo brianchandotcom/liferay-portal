@@ -130,25 +130,30 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="text-strong"
+			cssClass="content-column name-column title-column"
 			name="name"
+			truncate="<%= true %>"
 			value="<%= name %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="content-column screen-name-column"
 			name="screen-name"
 			orderable="<%= true %>"
 			property="screenName"
+			truncate="<%= true %>"
 		/>
 
 		<c:if test="<%= !selectUsers %>">
 			<liferay-ui:search-container-column-text
+				cssClass="content-column site-roles-and-teams-column"
 				name="site-roles-and-teams"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
+				cssClass="entry-action-column"
 				path="/user_action.jsp"
 			/>
 		</c:if>

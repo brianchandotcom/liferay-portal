@@ -27,12 +27,14 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
@@ -93,6 +95,15 @@ public class JspCPlugin implements Plugin<Project> {
 
 	protected void addJspCDependencies(Project project) {
 		DependencyHandler dependencyHandler = project.getDependencies();
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		ConfigurableFileCollection configurableFileCollection = project.files(
+			jar);
+
+		configurableFileCollection.builtBy(jar);
+
+		dependencyHandler.add(CONFIGURATION_NAME, configurableFileCollection);
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);

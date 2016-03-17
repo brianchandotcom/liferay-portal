@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter;
+package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DataPartitioningExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.ExportProcess;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

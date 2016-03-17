@@ -13,7 +13,7 @@
  * @param value
  * @param visible
  */
-{template .editor}
+{template .editor autoescape="deprecated-contextual"}
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-editor" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">

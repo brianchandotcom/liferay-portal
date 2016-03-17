@@ -40,9 +40,11 @@ public interface DDL {
 
 	/**
 	 * Returns the record's JSON Object representation. The latest approved
-	 * record version will be used to transform.
+	 * version of the record is transformed.
 	 *
-	 * The Theme display locale will be used as the default locale.
+	 * <p>
+	 * The Theme display locale is used as the default locale.
+	 * </p>
 	 *
 	 * @param      record the record to transform
 	 * @throws     Exception if an unexpected exception occurred
@@ -53,15 +55,15 @@ public interface DDL {
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
 
 	/**
-	 * Returns the localized value of a record as a JSON Object. If the latest
-	 * record version is requested, it will be used for the transformation
-	 * regardless of the version's workflow status.
+	 * Returns the localized value of the record as a JSON Object. If the latest
+	 * version of the record is requested, it is transformed regardless of its
+	 * workflow status.
 	 *
 	 * @param  record the record to transform
-	 * @param  latestRecordVersion whether the lastest record version will be
-	 *         used for the transformation regardless if the latest record
-	 *         versions is a workflow pending or draft state.
-	 * @param  locale the locale used to retrieve the localized values of the
+	 * @param  latestRecordVersion whether the latest version of the record is
+	 *         to be transformed regardless of its workflow status, even if it's
+	 *         in a pending or draft state.
+	 * @param  locale a locale to use to retrieve the localized values of the
 	 *         record
 	 * @throws Exception if an unexpected exception occurred
 	 */
@@ -73,7 +75,7 @@ public interface DDL {
 	 * Returns the localized record set as a JSON Array.
 	 *
 	 * @param  recordSet the record set to transform
-	 * @param  locale the locale used to retrieve the localized values of the
+	 * @param  locale a locale to use to retrieve the localized values of the
 	 *         record set
 	 * @throws Exception if an unexpected exception occurred
 	 */
@@ -82,12 +84,13 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Returns a record set's records as a JSON Array. The JSON array will
-	 * contain a list of JSON Objects.
+	 * Returns a record set's records as a JSON Array. The JSON Array contains a
+	 * list of JSON objects.
 	 *
-	 * The Theme display locale will be used as the default locale and the
-	 * latest record version will not be used if its workflow status is not
-	 * approved.
+	 * <p>
+	 * The Theme display locale is used as the default locale and the latest
+	 * record version is not used if its workflow status is not approved.
+	 * </p>
 	 *
 	 * @throws     Exception if an unexpected exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
@@ -98,14 +101,15 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Returns a list of records as a JSON Array. The JSON array will contain a
-	 * list of JSON Objects.
+	 * Returns a list of records as a JSON Array. The JSON array contains a list
+	 * of JSON objects.
 	 *
-	 * The Theme display locale will be used as the default locale and the
-	 * latest record version will not be used if its workflow status is not
-	 * approved.
+	 * <p>
+	 * The Theme display locale is used as the default locale and the latest
+	 * version of the record is not used if its workflow status is approved.
+	 * </p>
 	 *
-	 * @param      records the list of records to transform
+	 * @param      records the records to transform
 	 * @throws     Exception if an unexpected exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getRecordsJSONArray(List,boolean,locale)}
@@ -115,16 +119,15 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Transforms a list of records into a JSON Array. The JSON array will
-	 * contain a list of record JSON Objects. If the latest record version is
-	 * requested, it will be used for the transformation regardless of the
-	 * version's workflow status.
+	 * Transforms the list of records into a JSON Array. The JSON array contains
+	 * a list of record JSON Objects. If the latest version of the records is
+	 * requested, the records are transformed regardless of workflow status.
 	 *
-	 * @param  records the list of records to transform
-	 * @param  latestRecordVersion whether the lastest record version will be
-	 *         used for the transformation regardless if the latest record
-	 *         versions is a workflow pending or draft state.
-	 * @param  locale the locale used to retrieve the localized values of the
+	 * @param  records the records to transform
+	 * @param  latestRecordVersion whether the latest version of each record is
+	 *         to be transformed regardless of its workflow status, even if the
+	 *         record is in a pending or draft state.
+	 * @param  locale a locale used to retrieve the localized values of the
 	 *         record
 	 * @throws Exception if an unexpected exception occurred
 	 * @see    #getRecordJSONObject(DDLRecord, boolean, Locale)
@@ -134,18 +137,18 @@ public interface DDL {
 		throws Exception;
 
 	/**
-	 * Updates a record according to the form parameters passed in the request.
-	 * The request parameters are wrapped in the ServiceContext parameter. If
-	 * the passed record ID doesn't exist, a new record will be added.
-	 * Otherwise, the existing record will be updated.
+	 * Updates the record according to the form parameters passed in the
+	 * request. The request parameters are wrapped in the service context
+	 * parameter. If a record matching the record ID doesn't exist, a new record
+	 * is added. Otherwise, the existing record is updated.
 	 *
 	 * @param  recordId the record ID to update
 	 * @param  recordSetId the record set ID of the record
-	 * @param  mergeFields whether the merge operation will be performed for the
-	 *         existing record. If <code>true</code>, the missing localized
+	 * @param  mergeFields whether to perform the merge operation for the
+	 *         existing record. If <code>true</code>, all missing localized
 	 *         record values are updated for the existing record.
-	 * @param  checkPermission whether the permission checker will be used to
-	 *         validate credentials.
+	 * @param  checkPermission whether to use the permission checker to validate
+	 *         credentials
 	 * @param  serviceContext the service context to be applied
 	 * @throws Exception if an unexpected exception occurred
 	 */

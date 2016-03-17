@@ -36,8 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "ddm_data_provider";
-
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override

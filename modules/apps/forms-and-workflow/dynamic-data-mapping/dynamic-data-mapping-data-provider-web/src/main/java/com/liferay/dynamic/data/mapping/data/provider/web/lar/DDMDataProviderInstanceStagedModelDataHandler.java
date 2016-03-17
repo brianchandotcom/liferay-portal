@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.data.provider.web.lar;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -137,12 +136,13 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		long userId = portletDataContext.getUserId(
 			dataProviderInstance.getUserUuid());
 
-		DDMDataProviderInstance importedProvider =
+		DDMDataProviderInstance importedDataProviderInstance =
 			(DDMDataProviderInstance)dataProviderInstance.clone();
 
-		importedProvider.setGroupId(portletDataContext.getScopeGroupId());
+		importedDataProviderInstance.setGroupId(
+			portletDataContext.getScopeGroupId());
 
-		DDMDataProviderInstance existingProvider =
+		DDMDataProviderInstance existingDataProviderInstance =
 			_ddmDataProviderInstanceLocalService.
 				fetchDDMDataProviderInstanceByUuidAndGroupId(
 					dataProviderInstance.getUuid(),
@@ -151,18 +151,16 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			dataProviderInstance);
 
-		String definition = dataProviderInstance.getDefinition();
-
-		DDMForm ddmForm = DDMFormFactory.create(
-			DDMRESTDataProviderSettings.class);
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
 		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(ddmForm, definition);
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, dataProviderInstance.getDefinition());
 
-		if (existingProvider == null) {
+		if (existingDataProviderInstance == null) {
 			serviceContext.setUuid(dataProviderInstance.getUuid());
 
-			importedProvider =
+			importedDataProviderInstance =
 				_ddmDataProviderInstanceLocalService.addDataProviderInstance(
 					userId, portletDataContext.getScopeGroupId(),
 					dataProviderInstance.getNameMap(),
@@ -170,19 +168,20 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 					dataProviderInstance.getType(), serviceContext);
 		}
 		else {
-			importedProvider.setDataProviderInstanceId(
-				existingProvider.getDataProviderInstanceId());
+			importedDataProviderInstance.setDataProviderInstanceId(
+				existingDataProviderInstance.getDataProviderInstanceId());
 
-			importedProvider =
+			importedDataProviderInstance =
 				_ddmDataProviderInstanceLocalService.updateDataProviderInstance(
-					userId, existingProvider.getDataProviderInstanceId(),
+					userId,
+					existingDataProviderInstance.getDataProviderInstanceId(),
 					dataProviderInstance.getNameMap(),
 					dataProviderInstance.getDescriptionMap(), ddmFormValues,
 					serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
-			dataProviderInstance, importedProvider);
+			dataProviderInstance, importedDataProviderInstance);
 	}
 
 	@Reference

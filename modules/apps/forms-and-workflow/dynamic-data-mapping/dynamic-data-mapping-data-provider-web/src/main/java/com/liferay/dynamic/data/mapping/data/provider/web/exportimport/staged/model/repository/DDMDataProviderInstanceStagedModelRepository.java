@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -14,7 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.exportimport.staged.model.repository;
 
-import com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProviderSettings;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -63,13 +64,12 @@ public class DDMDataProviderInstanceStagedModelRepository
 			serviceContext.setUuid(dataProviderInstance.getUuid());
 		}
 
-		String definition = dataProviderInstance.getDefinition();
-
-		DDMForm ddmForm = DDMFormFactory.create(
-			DDMRESTDataProviderSettings.class);
+		DDMForm ddmForm = getDataProviderSettingsDDMForm(
+			dataProviderInstance.getType());
 
 		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(ddmForm, definition);
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, dataProviderInstance.getDefinition());
 
 		return _ddmDataProviderInstanceLocalService.addDataProviderInstance(
 			userId, dataProviderInstance.getGroupId(),
@@ -164,13 +164,12 @@ public class DDMDataProviderInstanceStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			dataProviderInstance);
 
-		String definition = dataProviderInstance.getDefinition();
-
-		DDMForm ddmForm = DDMFormFactory.create(
-			DDMRESTDataProviderSettings.class);
+		DDMForm ddmForm = getDataProviderSettingsDDMForm(
+			dataProviderInstance.getType());
 
 		DDMFormValues ddmFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(ddmForm, definition);
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, dataProviderInstance.getDefinition());
 
 		return _ddmDataProviderInstanceLocalService.updateDataProviderInstance(
 			userId, dataProviderInstance.getDataProviderInstanceId(),
@@ -179,9 +178,24 @@ public class DDMDataProviderInstanceStagedModelRepository
 			serviceContext);
 	}
 
+	protected DDMForm getDataProviderSettingsDDMForm(String type) {
+		DDMDataProvider ddmDataProvider =
+			_ddmDataProviderTracker.getDDMDataProvider(type);
+
+		if (ddmDataProvider == null) {
+			throw new IllegalStateException(
+				"No such DataProvider of type " + type);
+		}
+
+		return DDMFormFactory.create(ddmDataProvider.getSettings());
+	}
+
 	@Reference
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
+
+	@Reference
+	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

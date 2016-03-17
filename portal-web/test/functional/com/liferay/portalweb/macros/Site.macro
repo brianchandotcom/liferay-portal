@@ -368,13 +368,13 @@
 
 		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USERS" value1="Add Site Roles to Users" />
-
-		<var name="key_roleName" value="${roleName}" />
+		<execute function="AssertClick" locator1="Button#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Pause" locator1="5000" />
+
+		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />

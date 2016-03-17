@@ -3,10 +3,6 @@
 		outline: none;
 	}
 
-	.image-viewer-footer-content .image-viewer-footer-control {
-		color: #777;
-	}
-
 	.item-preview:hover {
 		cursor: pointer;
 	}
@@ -40,10 +36,109 @@
 	}
 }
 
-.lfr-item-viewer-close {
+.image-viewer-caption {
+	color: #777;
+}
+
+.image-viewer-footer-control {
+	&,
+	&:focus,
+	&:hover {
+		color: #777;
+	}
+}
+
+.image-viewer-sidenav-menu {
+	@include sm {
+		background-color: transparent;
+		border-left-width: 0;
+	}
+}
+
+.image-viewer-sidenav {
+	dd {
+		color: #8B8B8B;
+		margin-bottom: 16px;
+
+		@include sm {
+			color: #777;
+		}
+	}
+
+	.h5 {
+		color: #869CAD;
+		margin-bottom: 3px;
+
+		@include sm {
+			color: #FFF;
+		}
+	}
+
+	.nav-tabs-default {
+		> li {
+			padding-left: 20px;
+
+			&:first-child {
+				padding-left: 0;
+			}
+		}
+
+		> li:first-child > a {
+			padding-left: 0;
+		}
+
+		> li > a {
+			border-color: transparent;
+			color: #777;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		> .active > a {
+			&,
+			&:focus,
+			&:hover {
+				border-color: transparent;
+				color: #777;
+
+				@include sm {
+					color: #FFF;
+				}
+			}
+
+			&:after {
+				background-color: #65B6F0;
+				bottom: -10px;
+				content: '';
+				display: block;
+				height: 2px;
+				left: 0;
+				position: absolute;
+				right: 0;
+			}
+		}
+	}
+}
+
+.image-viewer-sidenav-body {
+	padding-top: 0;
+}
+
+.lfr-item-viewer .lfr-item-viewer-close {
 	color: #FFF;
+	opacity: 1;
+
+	&,
+	&:focus,
+	&:hover {
+		color: #FFF;
+	}
+
+	.icon-monospaced {
+		color: #777;
+	}
 }
 
 .lfr-item-viewer-icon-info {
-	color: #CCC;
+	color: #FFF;
 }

@@ -81,6 +81,16 @@ AUI.add(
 				);
 			},
 
+			_centerYAxis: function(xy) {
+				var instance = this;
+
+				var contentBox = instance.get('contentBox');
+
+				xy[1] = (A.config.win.pageYOffset - contentBox.outerHeight(true) / 2) + (A.config.win.innerHeight / 2);
+
+				return xy;
+			},
+
 			_configModalDynamicHeight: function() {
 				var instance = this;
 
@@ -105,7 +115,7 @@ AUI.add(
 				var instance = this;
 
 				if (instance.get('centered')) {
-					event.newVal = instance._verticallyCentering(event.newVal);
+					event.newVal = instance._centerYAxis(event.newVal);
 				}
 			},
 
@@ -115,16 +125,6 @@ AUI.add(
 				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
 
 				instance.set('centered', portletNode);
-			},
-
-			_verticallyCentering: function(xy) {
-				var instance = this;
-
-				var contentBox = instance.get('contentBox');
-
-				xy[1] = (A.config.win.pageYOffset - contentBox.outerHeight(true) / 2) + (A.config.win.innerHeight / 2);
-
-				return xy;
 			}
 		};
 

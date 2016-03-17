@@ -44,20 +44,20 @@ AUI.add(
 						);
 					},
 
-					getSubmitButton: function() {
-						var instance = this;
-
-						var footerNode = instance._getModalStdModeNode(A.WidgetStdMod.FOOTER);
-
-						return footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE);
-					},
-
 					alignModal: function() {
 						var instance = this;
 
 						var modalSettings = instance.get('field').getSettingsModal();
 
 						modalSettings._modal.align();
+					},
+
+					getSubmitButton: function() {
+						var instance = this;
+
+						var footerNode = instance._getModalStdModeNode(A.WidgetStdMod.FOOTER);
+
+						return footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE);
 					},
 
 					render: function() {

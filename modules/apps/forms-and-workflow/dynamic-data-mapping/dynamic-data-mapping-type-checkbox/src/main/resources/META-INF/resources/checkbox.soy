@@ -14,7 +14,7 @@
  * @param tip
  * @param visible
  */
-{template .checkbox}
+{template .checkbox autoescape="deprecated-contextual"}
 	<div class="form-group form-inline{$visible ? '' : ' hide'} liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
 		{if $showAsSwitcher}
 			<div class="checkbox">

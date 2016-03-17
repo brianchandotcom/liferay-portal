@@ -2,9 +2,10 @@ Bundle-Name: Liferay Portal Search
 Bundle-SymbolicName: com.liferay.portal.search
 Bundle-Version: 1.0.1
 Export-Package:\
-	com.liferay.portal.search.analysis.*;version=${plugin.full.version},\
-	com.liferay.portal.search.buffer.*;version=${plugin.full.version},\
-	com.liferay.portal.search.configuration.*;version=${plugin.full.version}
+	com.liferay.portal.search,\
+	com.liferay.portal.search.analysis,\
+	com.liferay.portal.search.buffer,\
+	com.liferay.portal.search.configuration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Search
 -dsannotations-options: inherit

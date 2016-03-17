@@ -159,6 +159,6 @@ public class SoyPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	private static final String _VERSION = "2012-12-21";
+	private static final String _VERSION = "2015-04-10";
 
 }

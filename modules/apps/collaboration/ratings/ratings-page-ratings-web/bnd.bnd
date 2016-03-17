@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.ratings.page.ratings.web
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Ratings
--include: ../../app.bnd

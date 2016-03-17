@@ -7,4 +7,3 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Liferay-Service: true
--include: ../../app.bnd

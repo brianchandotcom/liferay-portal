@@ -4,5 +4,4 @@ Bundle-SymbolicName: com.liferay.portal.store.s3.test
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
--include: ../../app.bnd
 -includeresource: com/liferay/portal/store/s3/test/activator/configuration=classes/com/liferay/portal/store/s3/test/activator/configuration

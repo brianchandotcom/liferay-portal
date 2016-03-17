@@ -9,4 +9,3 @@ Export-Package:\
 	com.liferay.portal.background.task.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Background Tasks
--include: ../../app.bnd

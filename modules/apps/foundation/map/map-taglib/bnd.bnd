@@ -4,4 +4,3 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.map.taglib.servlet.taglib
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/map";version:Version="1.0.0"
 Web-ContextPath: /map-taglib
--include: ../../app.bnd

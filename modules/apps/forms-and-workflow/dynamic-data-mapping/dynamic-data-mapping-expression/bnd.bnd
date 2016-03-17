@@ -4,5 +4,4 @@ Bundle-Version: 1.0.1
 Export-Package: com.liferay.dynamic.data.mapping.expression
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
--include: ../../app.bnd
 -liferay-includeresource: @EvalEx-*.jar

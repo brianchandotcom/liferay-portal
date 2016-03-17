@@ -9,4 +9,3 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards
 Web-ContextPath: /message-boards-web
--include: ../../app.bnd

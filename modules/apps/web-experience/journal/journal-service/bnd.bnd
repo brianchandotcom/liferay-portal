@@ -25,7 +25,6 @@ Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Provide-Capability: liferay.resource.bundle;aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";baseName="content.Language"
 Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.liferay.journal.lang)"
--include: ../../app.bnd
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteUniqueStack.class,\

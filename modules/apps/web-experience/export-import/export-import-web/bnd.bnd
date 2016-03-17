@@ -8,5 +8,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Web-ContextPath: /exportimport-web
 -dsannotations-options: inherit
--include: ../../app.bnd
 -includeresource: content=../../staging/staging-lang/src/main/resources/content

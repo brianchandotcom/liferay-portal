@@ -9,7 +9,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Microblogs
 Liferay-Require-SchemaVersion: 1.0.2
 Liferay-Service: true
--include: ../../app.bnd
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

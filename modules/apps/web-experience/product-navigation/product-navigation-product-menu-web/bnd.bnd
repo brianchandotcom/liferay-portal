@@ -7,4 +7,3 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
 Web-ContextPath: /product-navigation-product-menu-web
--include: ../../app.bnd

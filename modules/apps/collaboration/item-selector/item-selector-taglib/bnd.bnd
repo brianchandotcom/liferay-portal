@@ -9,4 +9,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/item-selector";version:Version="1.0.0"
 Web-ContextPath: /item-selector-taglib
--include: ../../app.bnd

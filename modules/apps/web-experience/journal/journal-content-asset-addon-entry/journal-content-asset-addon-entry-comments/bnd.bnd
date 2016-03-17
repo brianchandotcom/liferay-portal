@@ -4,4 +4,3 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-content-asset-addon-entry-comments
--include: ../../../app.bnd

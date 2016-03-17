@@ -9,4 +9,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists
 Web-ContextPath: /dynamic-data-lists-web
 -dsannotations-options: inherit
--include: ../../app.bnd

@@ -8,4 +8,3 @@ Export-Package:\
 	com.liferay.wiki.*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
--include: ../../app.bnd

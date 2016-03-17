@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.portal.security.auth.verifier.tunnel
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
--include: ../../app.bnd
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/Encryptor.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/EncryptorException.class

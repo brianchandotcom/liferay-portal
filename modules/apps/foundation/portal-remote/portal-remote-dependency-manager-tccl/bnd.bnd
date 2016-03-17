@@ -6,4 +6,3 @@ Fragment-Host: org.apache.felix.dependencymanager
 Import-Package: org.osgi.framework.*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
--include: ../../app.bnd

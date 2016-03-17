@@ -4,4 +4,3 @@ Bundle-Version: 1.0.7
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Themes
 -donotcopy: (npm-debug\.log)
--include: ../../app.bnd

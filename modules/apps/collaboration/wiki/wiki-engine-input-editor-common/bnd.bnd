@@ -5,4 +5,3 @@ Export-Package: com.liferay.wiki.engine.input.editor.common
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-input-editor-common
--include: ../../app.bnd

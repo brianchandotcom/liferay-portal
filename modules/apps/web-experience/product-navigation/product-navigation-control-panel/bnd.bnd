@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.product.navigation.control.panel
 Bundle-Version: 1.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
--include: ../../app.bnd

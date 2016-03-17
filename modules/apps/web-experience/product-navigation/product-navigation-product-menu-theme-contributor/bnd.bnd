@@ -5,4 +5,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
 Liferay-Theme-Contributor-Type: product-navigation-product-menu
 Web-ContextPath: /product-navigation-product-menu-theme-contributor
--include: ../../app.bnd

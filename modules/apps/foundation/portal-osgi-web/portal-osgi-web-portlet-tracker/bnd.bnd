@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.portal.osgi.web.portlet.tracker
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
--include: ../../app.bnd

@@ -4,4 +4,3 @@ Bundle-Version: 1.0.3
 Export-Package: com.liferay.contacts.*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

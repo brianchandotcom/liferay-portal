@@ -22,7 +22,6 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-jspwiki
--include: ../../app.bnd
 -includeresource:\
 	@../../../../../lib/portal/ecs.jar,\
 	@../../../../../lib/portal/freshcookies-security.jar,\

@@ -14,7 +14,6 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
--include: ../../app.bnd
 -liferay-includeresource:\
 	@chemistry-opencmis-client-api-*.jar,\
 	@chemistry-opencmis-client-bindings-*.jar,\

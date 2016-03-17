@@ -8,4 +8,3 @@ Export-Package:\
 	com.liferay.invitation.invite.members.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd

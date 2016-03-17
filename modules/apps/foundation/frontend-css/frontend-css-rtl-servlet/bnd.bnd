@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.frontend.css.rtl.servlet
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd
 -liferay-includeresource:\
 	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/extender/*,\
 	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*

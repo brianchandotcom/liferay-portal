@@ -6,4 +6,3 @@ Export-Package:\
 	com.liferay.portal.security.sso.facebook.connect.constants;version=${plugin.full.version}
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
--include: ../../app.bnd

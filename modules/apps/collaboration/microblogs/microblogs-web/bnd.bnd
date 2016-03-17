@@ -5,4 +5,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Microblogs
 Web-ContextPath: /microblogs-web
 -dsannotations-options: inherit
--include: ../../app.bnd

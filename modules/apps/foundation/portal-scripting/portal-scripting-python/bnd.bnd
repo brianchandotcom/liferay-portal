@@ -30,5 +30,4 @@ Liferay-Releng-Module-Group-Title: Scripting Engines
 	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
--include: ../../app.bnd
 -liferay-includeresource: lib/jython-standalone.jar=jython-standalone-*.jar

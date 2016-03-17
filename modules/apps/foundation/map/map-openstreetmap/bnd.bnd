@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.map.openstreetmap
 Bundle-Version: 1.0.2
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /map-openstreetmap
--include: ../../app.bnd

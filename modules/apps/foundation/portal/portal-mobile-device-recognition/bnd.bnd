@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.portal.mobile.device
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mobile Device Rules
--include: ../../app.bnd

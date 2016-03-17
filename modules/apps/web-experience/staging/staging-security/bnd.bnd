@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.staging.security
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
--include: ../../app.bnd

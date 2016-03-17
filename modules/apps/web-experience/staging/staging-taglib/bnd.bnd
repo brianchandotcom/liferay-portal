@@ -6,4 +6,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/staging";version:Version="1.0.0"
 Web-ContextPath: /staging-taglib
--include: ../../app.bnd

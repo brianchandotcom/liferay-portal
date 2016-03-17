@@ -6,4 +6,3 @@ Export-Package:\
 	com.liferay.flags.taglib.servlet.taglib
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/flags";version:Version="1.0.0"
 Web-ContextPath: /flags-taglib
--include: ../../app.bnd

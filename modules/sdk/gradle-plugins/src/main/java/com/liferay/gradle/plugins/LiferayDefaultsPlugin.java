@@ -1040,6 +1040,15 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
 		}
 
+		File appDir = getRootDir(project, _APP_BND_FILE_NAME);
+
+		if (appDir != null) {
+			File appFile = new File(appDir, _APP_BND_FILE_NAME);
+
+			bundleDefaultInstructions.put(
+				Constants.INCLUDE, FileUtil.getRelativePath(project, appFile));
+		}
+
 		liferayOSGiExtension.bundleDefaultInstructions(
 			bundleDefaultInstructions);
 	}
@@ -2014,6 +2023,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		return false;
 	}
+
+	private static final String _APP_BND_FILE_NAME = "app.bnd";
 
 	private static final String _GROUP = "com.liferay";
 

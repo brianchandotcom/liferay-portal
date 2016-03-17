@@ -17,4 +17,3 @@ Export-Package:\
 	com.liferay.portal.workflow.kaleo.runtime.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
--include: ../../app.bnd

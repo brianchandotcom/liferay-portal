@@ -24,7 +24,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
 Liferay-Require-SchemaVersion: 1.0.3
 Liferay-Service: true
--include: ../../app.bnd
 -liferay-includeresource:\
 	@backport-util-concurrent-*.jar,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\

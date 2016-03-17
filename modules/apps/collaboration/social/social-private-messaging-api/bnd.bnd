@@ -11,4 +11,3 @@ Export-Package:\
 	com.liferay.social.privatemessaging.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social Private Messaging
--include: ../../app.bnd

@@ -12,7 +12,6 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Main-Class: com.liferay.rtl.css.RTLConverter
--include: ../app.bnd
 -liferay-includeresource:\
 	@annotations-*.jar,\
 	@ph-commons-*.jar,\

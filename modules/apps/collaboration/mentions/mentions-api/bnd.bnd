@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.mentions.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mentions
--include: ../../app.bnd

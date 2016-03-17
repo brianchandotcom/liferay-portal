@@ -4,5 +4,4 @@ Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Publication Tools
 Web-ContextPath: /rss-web
--include: ../../app.bnd
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

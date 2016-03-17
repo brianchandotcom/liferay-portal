@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.portal.configuration.metatype.definitions.equin
 Bundle-Version: 1.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Metatype
--include: ../../app.bnd

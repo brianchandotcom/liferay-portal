@@ -12,4 +12,3 @@ Export-Package:\
 	com.liferay.journal.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
--include: ../../app.bnd

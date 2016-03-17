@@ -5,4 +5,3 @@ DynamicImport-Package: *
 Export-Package: com.liferay.portal.scripting
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
--include: ../../app.bnd

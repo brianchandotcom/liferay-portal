@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.portal.reports.engine.servlet
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine
--include: ../../app.bnd

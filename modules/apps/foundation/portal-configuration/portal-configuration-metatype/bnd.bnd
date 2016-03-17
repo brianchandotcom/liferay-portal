@@ -8,4 +8,3 @@ Export-Package:\
 	com.liferay.portal.configuration.metatype.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Metatype Ext
--include: ../../app.bnd

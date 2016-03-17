@@ -6,5 +6,4 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
--include: ../../app.bnd
 -includeresource: test-classes/integration

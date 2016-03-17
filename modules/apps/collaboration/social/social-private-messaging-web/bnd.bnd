@@ -4,4 +4,3 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Private Messaging
 Web-ContextPath: /privatemessaging-web
--include: ../../app.bnd

@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -dsannotations-options: inherit
--include: ../../app.bnd
 -includeresource:\
 	content=../../users-admin/users-admin-web/src/main/resources/content,\
 	META-INF/resources=../../users-admin/users-admin-web/src/main/resources/META-INF/resources

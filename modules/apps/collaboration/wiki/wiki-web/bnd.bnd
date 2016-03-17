@@ -5,7 +5,6 @@ Export-Package: com.liferay.wiki.web.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-web
--include: ../../app.bnd
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\

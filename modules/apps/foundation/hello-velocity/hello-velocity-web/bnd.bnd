@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.hello.velocity.web
 Bundle-Version: 1.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--include: ../../app.bnd
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class

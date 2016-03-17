@@ -20,5 +20,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 Web-ContextPath: /document-library-google-docs
--include: ../../app.bnd
 -liferay-includeresource: @freemarker-*.jar

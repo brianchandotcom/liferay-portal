@@ -4,4 +4,3 @@ Bundle-Version: 1.0.1
 Export-Package: com.liferay.item.selector
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector
--include: ../../app.bnd

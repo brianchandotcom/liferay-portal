@@ -9,4 +9,3 @@ Export-Package:\
 	com.liferay.exportimport.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
--include: ../../app.bnd

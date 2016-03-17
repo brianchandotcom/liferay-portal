@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.test.util.storage
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
--include: ../../app.bnd

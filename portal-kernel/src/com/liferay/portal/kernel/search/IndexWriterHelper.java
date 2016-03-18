@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 
 import java.io.Serializable;
@@ -25,6 +27,7 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface IndexWriterHelper {
 
 	public void addDocument(
@@ -98,6 +101,12 @@ public interface IndexWriterHelper {
 			String searchEngineId, long companyId, Locale locale)
 		throws SearchException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager.
+	 *             isIndexReadOnly()}
+	 */
+	@Deprecated
 	public boolean isIndexReadOnly();
 
 	public void partiallyUpdateDocument(
@@ -120,6 +129,12 @@ public interface IndexWriterHelper {
 			Map<String, Serializable> taskContextMap)
 		throws SearchException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager.
+	 *             setIndexReadOnly(boolean)}
+	 */
+	@Deprecated
 	public void setIndexReadOnly(boolean indexReadOnly);
 
 	public void updateDocument(

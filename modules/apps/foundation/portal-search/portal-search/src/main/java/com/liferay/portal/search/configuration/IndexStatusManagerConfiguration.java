@@ -23,16 +23,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.search.configuration.IndexWriterHelperConfiguration",
+	id = "com.liferay.portal.search.configuration.IndexStatusManagerConfiguration",
 	localization = "content/Language",
-	name = "index.writer.helper.configuration.name"
+	name = "index.status.manager.configuration.name"
 )
-public interface IndexWriterHelperConfiguration {
+public interface IndexStatusManagerConfiguration {
 
-	@Meta.AD(
-		deflt = "true", description = "index-commit-immediately-help",
-		required = false
-	)
-	public boolean indexCommitImmediately();
+	@Meta.AD(deflt = "false", required = false)
+	public boolean indexReadOnly();
 
 }

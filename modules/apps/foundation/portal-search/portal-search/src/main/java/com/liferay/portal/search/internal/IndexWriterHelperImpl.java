@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.IndexWriterHelperConfiguration;
+import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor;
 import com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor;
 
@@ -387,9 +388,15 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		indexWriter.indexSpellCheckerDictionary(searchContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager.
+	 *             isIndexReadOnly()}
+	 */
+	@Deprecated
 	@Override
 	public boolean isIndexReadOnly() {
-		return _indexReadOnly;
+		return _indexStatusManager.isIndexReadOnly();
 	}
 
 	@Override
@@ -514,9 +521,15 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.search.index.IndexStatusManager.
+	 *             setIndexReadOnly(boolean)}
+	 */
+	@Deprecated
 	@Override
 	public void setIndexReadOnly(boolean indexReadOnly) {
-		_indexReadOnly = indexReadOnly;
+		_indexStatusManager.setIndexReadOnly(indexReadOnly);
 	}
 
 	@Override
@@ -607,8 +620,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		_commitImmediately =
 			indexWriterHelperConfiguration.indexCommitImmediately();
-
-		_indexReadOnly = indexWriterHelperConfiguration.indexReadOnly();
 	}
 
 	protected void setCommitImmediately(
@@ -629,7 +640,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	private BackgroundTaskManager _backgroundTaskManager;
 
 	private volatile boolean _commitImmediately;
-	private volatile boolean _indexReadOnly;
+
+	@Reference
+	private IndexStatusManager _indexStatusManager;
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;

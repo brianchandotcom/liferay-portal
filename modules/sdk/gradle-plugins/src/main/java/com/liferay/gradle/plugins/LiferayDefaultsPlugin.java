@@ -854,12 +854,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						return;
 					}
 
-					String replacement = replaceRegexTask.getReplacement();
-
 					for (Object file : replaceRegexTask.getMatchedFiles()) {
 						_logger.lifecycle(
 							"Project version in " + project.relativePath(file) +
-								" updated to " + replacement);
+								" updated");
 					}
 				}
 

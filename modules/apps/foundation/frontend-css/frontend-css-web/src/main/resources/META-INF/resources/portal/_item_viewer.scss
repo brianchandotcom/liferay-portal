@@ -61,8 +61,6 @@
 		visibility: visible;
 	}
 
-	// Image Viewer Containers
-
 	.image-viewer-base-image-list {
 		padding-top: 35px;
 	}
@@ -76,8 +74,6 @@
 	.yui3-widget-bd {
 		position: relative;
 	}
-
-	// Image Viewer Close
 
 	.image-viewer-base {
 		.lfr-item-viewer-close {
@@ -100,8 +96,6 @@
 		}
 	}
 
-	// Image Viewer Footer
-
 	.image-viewer-footer-content {
 		padding: 0 20px;
 
@@ -114,8 +108,7 @@
 			margin: 0 10px;
 			position: relative;
 
-			&:focus,
-			&:hover {
+			&:focus, &:hover {
 				text-decoration: none;
 			}
 		}
@@ -173,13 +166,10 @@
 	float: right;
 	font-size: 20px;
 
-	&:focus,
-	&:hover {
+	&:focus, &:hover {
 		text-decoration: none;
 	}
 }
-
-// Image Viewer Sidenav
 
 .image-viewer-base {
 	&.open {
@@ -191,8 +181,7 @@
 	}
 
 	.image-viewer-sidenav {
-		&,
-		.image-viewer-sidenav-menu {
+		&, .image-viewer-sidenav-menu {
 			width: 300px;
 
 			@include sm {

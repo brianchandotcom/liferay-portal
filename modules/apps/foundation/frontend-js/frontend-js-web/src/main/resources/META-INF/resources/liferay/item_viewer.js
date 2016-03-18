@@ -324,10 +324,10 @@ AUI.add(
 										return previousValue + Lang.sub(
 											TPL_INFO_TAB_BODY_CONTENT,
 												{
-													dt: currentValue.key,
-													dtClassName: 'h5',
 													dd: currentValue.value,
-													ddClassName: ''
+													ddClassName: '',
+													dt: currentValue.key,
+													dtClassName: 'h5'
 												}
 											);
 									},

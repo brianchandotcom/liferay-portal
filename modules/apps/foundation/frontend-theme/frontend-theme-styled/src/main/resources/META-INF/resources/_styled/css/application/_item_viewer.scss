@@ -41,9 +41,7 @@
 }
 
 .image-viewer-footer-control {
-	&,
-	&:focus,
-	&:hover {
+	&, &:focus, &:hover {
 		color: #777;
 	}
 }
@@ -95,9 +93,7 @@
 		}
 
 		> .active > a {
-			&,
-			&:focus,
-			&:hover {
+			&, &:focus, &:hover {
 				border-color: transparent;
 				color: #777;
 
@@ -128,9 +124,7 @@
 	color: #FFF;
 	opacity: 1;
 
-	&,
-	&:focus,
-	&:hover {
+	&, &:focus, &:hover {
 		color: #FFF;
 	}
 

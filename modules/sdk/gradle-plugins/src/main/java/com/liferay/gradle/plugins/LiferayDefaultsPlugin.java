@@ -865,34 +865,34 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			});
 
-		if (gitRepoDir != null) {
-			replaceRegexTask.pre(
-				new Closure<String>(null) {
+		replaceRegexTask.pre(
+			new Closure<String>(null) {
 
-					@SuppressWarnings("unused")
-					public String doCall(String content, File file) {
-						String fileName = file.getName();
+				@SuppressWarnings("unused")
+				public String doCall(String content, File file) {
+					String fileName = file.getName();
 
-						if (!fileName.equals("build.gradle")) {
-							return content;
-						}
-
-						if (FileUtil.isChild(file, gitRepoDir)) {
-							return content.replaceAll(
-								getModuleDependencyRegex(project),
-								Matcher.quoteReplacement(
-									getProjectDependency(project)));
-						}
-						else {
-							return content.replaceAll(
-								Pattern.quote(getProjectDependency(project)),
-								Matcher.quoteReplacement(
-									getModuleDependency(project)));
-						}
+					if (!fileName.equals("build.gradle")) {
+						return content;
 					}
 
-				});
-		}
+					if ((gitRepoDir != null) &&
+						FileUtil.isChild(file, gitRepoDir)) {
+
+						return content.replaceAll(
+							getModuleDependencyRegex(project),
+							Matcher.quoteReplacement(
+								getProjectDependency(project)));
+					}
+					else {
+						return content.replaceAll(
+							Pattern.quote(getProjectDependency(project)),
+							Matcher.quoteReplacement(
+								getModuleDependency(project)));
+					}
+				}
+
+			});
 
 		replaceRegexTask.replaceOnlyIf(
 			new Closure<Boolean>(null) {

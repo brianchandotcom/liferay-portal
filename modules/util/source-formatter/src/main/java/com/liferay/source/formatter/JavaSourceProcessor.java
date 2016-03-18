@@ -2580,6 +2580,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName);
 		}
 
+		// LPS-64238
+
+		if (content.contains("import com.liferay.util.dao.orm.CustomSQLUtil")) {
+			processErrorMessage(
+				fileName,
+				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
+					"modules: " + fileName);
+		}
+
 		return content;
 	}
 

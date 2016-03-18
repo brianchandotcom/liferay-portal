@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern></pattern>
+		<implicit-parameter name="p_p_id">com_liferay_contacts_web_portlet_ContactsCenterPortlet</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/search</pattern>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_id">com_liferay_contacts_web_portlet_ContactsCenterPortlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/search</pattern>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_id">com_liferay_contacts_web_portlet_ContactsCenterPortlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/view</pattern>
+		<implicit-parameter name="mvcPath">/view_user.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_id">com_liferay_contacts_web_portlet_ContactsCenterPortlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/view</pattern>
+		<implicit-parameter name="mvcPath">/view_user.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_id">com_liferay_contacts_web_portlet_ContactsCenterPortlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+</routes>

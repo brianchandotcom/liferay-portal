@@ -572,7 +572,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#deleteCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
+			<var name="ddlRecordFieldData" value="(Preview)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

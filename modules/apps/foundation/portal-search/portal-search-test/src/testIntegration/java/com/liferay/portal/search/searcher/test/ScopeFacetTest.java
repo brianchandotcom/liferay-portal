@@ -12,22 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.searcher.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.UserSearchFixture;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.FacetBuilder;
+import com.liferay.portal.kernel.search.facet.FacetConstants;
+import com.liferay.portal.kernel.search.facet.FacetManager;
+import com.liferay.portal.kernel.search.facet.FacetManagerUtil;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcherManagerUtil;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.search.test.util.UserSearchFixture;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -44,10 +52,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author André de Oliveira
  */
+@RunWith(Arquillian.class)
 public class ScopeFacetTest {
 
 	@ClassRule
@@ -178,7 +188,11 @@ public class ScopeFacetTest {
 
 				@Override
 				public Void call() throws Exception {
-					FacetedSearcher facetedSearcher = new FacetedSearcher();
+					FacetedSearcherManager facetedSearcherManager =
+						FacetedSearcherManagerUtil.getInstance();
+
+					FacetedSearcher facetedSearcher =
+						facetedSearcherManager.createFacetedSearcher();
 
 					facetedSearcher.search(searchContext);
 
@@ -210,18 +224,19 @@ public class ScopeFacetTest {
 			});
 	}
 
-	protected static SearchContext getSearchContext(String keywords)
-		throws Exception {
-
+	protected SearchContext getSearchContext(String keywords) throws Exception {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
 		searchContext.setKeywords(keywords);
 
-		ScopeFacet scopeFacet = new ScopeFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		scopeFacet.setStatic(false);
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.SCOPE_FACET, searchContext);
 
-		searchContext.addFacet(scopeFacet);
+		facetBuilder.setStatic(false);
+
+		searchContext.addFacet(facetBuilder.build());
 
 		return searchContext;
 	}

@@ -12,23 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.searcher.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.FacetBuilder;
+import com.liferay.portal.kernel.search.facet.FacetManager;
+import com.liferay.portal.kernel.search.facet.FacetManagerUtil;
+import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcherManagerUtil;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.search.facet.FacetConstants;
+import com.liferay.portal.search.test.util.UserSearchFixture;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -38,19 +47,19 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Andrew Betts
+ * @author André de Oliveira
  */
-@Sync
-public class FacetedSearcherTest {
+@RunWith(Arquillian.class)
+public class AssetTagNamesFacetTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -69,41 +78,27 @@ public class FacetedSearcherTest {
 	}
 
 	@Test
-	public void testSearchByKeywords() throws Exception {
+	public void testSearchByFacet() throws Exception {
 		Group group = _userSearchFixture.addGroup();
 
-		String tag = RandomTestUtil.randomString();
+		final String tag = "enterprise. open-source for life";
 
 		_userSearchFixture.addUser(group, tag);
 
-		assertSearch(tag, 1);
-	}
+		final SearchContext searchContext = getSearchContext(tag);
 
-	@Test
-	public void testSearchByKeywordsIgnoresInactiveSites() throws Exception {
-		Group group1 = _userSearchFixture.addGroup();
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		_userSearchFixture.addUser(
-			group1, "Liferay " + RandomTestUtil.randomString());
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.ASSET_TAG_NAMES_FACET, searchContext);
 
-		Group group2 = _userSearchFixture.addGroup();
+		facetBuilder.setStatic(false);
 
-		_userSearchFixture.addUser(
-			group2, "Liferay " + RandomTestUtil.randomString());
+		Facet facet = facetBuilder.build();
 
-		assertSearch("Liferay", 2);
+		searchContext.addFacet(facet);
 
-		deactivate(group1);
-
-		assertSearch("Liferay", 1);
-
-		deactivate(group2);
-
-		assertSearch("Liferay", 0);
-	}
-
-	protected static void assertSearch(final String tag, final int count)
-		throws Exception {
+		final String fieldName = facet.getFieldName();
 
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
@@ -111,22 +106,34 @@ public class FacetedSearcherTest {
 
 				@Override
 				public Void call() throws Exception {
-					FacetedSearcher facetedSearcher = new FacetedSearcher();
+					FacetedSearcherManager facetedSearcherManager =
+						FacetedSearcherManagerUtil.getInstance();
 
-					Hits hits = facetedSearcher.search(getSearchContext(tag));
+					FacetedSearcher facetedSearcher =
+						facetedSearcherManager.createFacetedSearcher();
 
-					Assert.assertEquals(count, hits.getLength());
+					facetedSearcher.search(searchContext);
+
+					Map<String, Facet> facets = searchContext.getFacets();
+
+					Facet facet = facets.get(fieldName);
+
+					FacetCollector facetCollector = facet.getFacetCollector();
+
+					List<TermCollector> termCollectors =
+						facetCollector.getTermCollectors();
+
+					Assert.assertEquals(1, termCollectors.size());
+
+					TermCollector termCollector = termCollectors.get(0);
+
+					Assert.assertEquals(tag, termCollector.getTerm());
+					Assert.assertEquals(1, termCollector.getFrequency());
 
 					return null;
 				}
 
 			});
-	}
-
-	protected static void deactivate(Group group) {
-		group.setActive(false);
-
-		GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	protected static SearchContext getSearchContext(String keywords)

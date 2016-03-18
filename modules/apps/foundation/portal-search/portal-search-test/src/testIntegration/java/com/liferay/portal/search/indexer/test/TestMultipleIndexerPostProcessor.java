@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.test;
+package com.liferay.portal.search.indexer.test;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -31,11 +31,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"indexer.class.name=com.liferay.portlet.usersadmin.util.OrganizationIndexer"
+		"indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage",
+		"indexer.class.name=com.liferay.message.boards.kernel.model.MBThread"
 	},
 	service = IndexerPostProcessor.class
 )
-public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
+public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 
 	@Override
 	public void postProcessContextBooleanFilter(

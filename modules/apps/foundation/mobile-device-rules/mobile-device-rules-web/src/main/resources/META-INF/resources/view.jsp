@@ -30,6 +30,8 @@ RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, Por
 
 RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)ruleGroupSearch.getSearchTerms();
 
+ruleGroupSearch.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
+
 LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
 params.put("includeGlobalScope", Boolean.TRUE);

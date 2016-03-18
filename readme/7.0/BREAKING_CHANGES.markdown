@@ -98,8 +98,8 @@ You should modify your `portal-ext.properties` file to remove the property
 
 #### Why was this change made?
 
-Since Liferay Frontend Editor BBCode Web has been depricated since 6.1, it was
-time to remove it completely. This frees up developmnet and support resources to
+Since Liferay Frontend Editor BBCode Web has been deprecated since 6.1, it was
+time to remove it completely. This frees up development and support resources to
 focus on supported features.
 
 ---------------------------------------

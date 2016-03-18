@@ -399,19 +399,16 @@ AUI.add(
 								searchResults
 							);
 
-							var searchCategoriesTask = A.debounce(
-								instance._searchCategories,
-								350,
-								instance,
-								searchResults,
-								vocabularyIds,
-								vocabularyGroupIds,
-								processSearchResults
+							var searchCategoriesTask = A.debounce(instance._searchCategories, 350, instance);
+
+							popup.searchField.on(
+								'keyup',
+								function(event) {
+									if (!event.isNavKey()) {
+										searchCategoriesTask(event, searchResults, vocabularyIds, vocabularyGroupIds, processSearchResults);
+									}
+								}
 							);
-
-							var input = popup.searchField;
-
-							input.on('keyup', searchCategoriesTask);
 
 							if (instance.get('singleSelect')) {
 								var onSelectChange = A.bind('_onSelectChange', instance);
@@ -586,7 +583,7 @@ AUI.add(
 
 						var searchValue = event.currentTarget.val().trim();
 
-						if (searchValue && !event.isNavKey()) {
+						if (searchValue) {
 							searchResults.empty();
 
 							searchResults.addClass('loading-animation');

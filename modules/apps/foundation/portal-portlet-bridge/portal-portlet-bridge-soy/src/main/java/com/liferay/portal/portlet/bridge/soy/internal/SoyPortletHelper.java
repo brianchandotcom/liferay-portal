@@ -46,7 +46,50 @@ public class SoyPortletHelper {
 		_javaScriptTpl = getJavaScriptTpl();
 	}
 
-	public String getControllerName(String path) {
+	public String getPortletJavaScript(
+		Template template, String path, String portletNamespace) {
+
+		if (_moduleName == null) {
+			return StringPool.BLANK;
+		}
+
+		JSONObject contextJSONObject = createContextJSONObject(
+			template, portletNamespace);
+
+		String controllerName = getControllerName(path);
+
+		return getPortletJavaScript(
+			contextJSONObject.toJSONString(), controllerName, portletNamespace);
+	}
+
+	public String getTemplateNamespace(String path) {
+		if (_moduleName == null) {
+			return path;
+		}
+
+		return "Templates.".concat(path).concat(".render");
+	}
+
+	protected JSONObject createContextJSONObject(
+		Template template, String portletNamespace) {
+
+		JSONObject contextJSONObject = JSONFactoryUtil.createJSONObject();
+
+		for (String key : template.getKeys()) {
+			if (Validator.equals(key, TemplateConstants.NAMESPACE)) {
+				continue;
+			}
+
+			contextJSONObject.put(key, template.get(key));
+		}
+
+		contextJSONObject.put(
+			"element", getPortletContentElement(portletNamespace));
+
+		return contextJSONObject;
+	}
+
+	protected String getControllerName(String path) {
 		String controllerName = _controllersMap.get(path);
 
 		if (controllerName != null) {
@@ -68,57 +111,11 @@ public class SoyPortletHelper {
 		return controllerName;
 	}
 
-	public String getPortletJavaScript(
-		Template template, String path, String portletNamespace) {
-
-		if (_moduleName == null) {
-			return StringPool.BLANK;
-		}
-
-		JSONObject contextJSONObject = JSONFactoryUtil.createJSONObject();
-
-		for (String key : template.getKeys()) {
-			if (Validator.equals(key, TemplateConstants.NAMESPACE)) {
-				continue;
-			}
-
-			contextJSONObject.put(key, template.get(key));
-		}
-
-		contextJSONObject.put(
-			"element", getPortletBoundaryId(portletNamespace));
-
-		String javaScript = StringUtil.replace(
-			_javaScriptTpl,
-			new String[] {
-				"$MODULE_NAME", "$CONTROLLER_NAME", "$PORTLET_NAMESPACE",
-				"$CONTEXT"
-			},
-			new String[] {
-				_moduleName, getControllerName(path), portletNamespace,
-				contextJSONObject.toJSONString()
-			});
-
-		return javaScript;
-	}
-
-	public String getTemplateNamespace(String path) {
-		if (_moduleName == null) {
-			return path;
-		}
-
-		return "Templates.".concat(path).concat(".render");
-	}
-
 	protected String getJavaScriptTpl() throws Exception {
-		if (_moduleName == null) {
-			return StringPool.BLANK;
-		}
-
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
-			"com/liferay/portal/portlet/bridge/soy/bootstrap.js.tpl");
+			"dependencies/bootstrap.js.tpl");
 
 		return StringUtil.read(inputStream);
 	}
@@ -127,7 +124,7 @@ public class SoyPortletHelper {
 		URL url = _bundle.getEntry("package.json");
 
 		if (url == null) {
-			throw null;
+			return null;
 		}
 
 		String json = StringUtil.read(url.openStream());
@@ -137,13 +134,13 @@ public class SoyPortletHelper {
 		String moduleName = jsonObject.getString("name");
 
 		if (Validator.isNull(moduleName)) {
-			throw null;
+			return null;
 		}
 
 		return moduleName;
 	}
 
-	protected String getPortletBoundaryId(String portletNamespace) {
+	protected String getPortletContentElement(String portletNamespace) {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("#p_p_id");
@@ -151,6 +148,20 @@ public class SoyPortletHelper {
 		sb.append(" .portlet-content-container");
 
 		return sb.toString();
+	}
+
+	protected String getPortletJavaScript(
+		String context, String controllerName, String portletNamespace) {
+
+		return StringUtil.replace(
+			_javaScriptTpl,
+			new String[] {
+				"$CONTEXT", "$CONTROLLER_NAME", "$MODULE_NAME",
+				"$PORTLET_NAMESPACE"
+			},
+			new String[] {
+				context, controllerName, _moduleName, portletNamespace
+			});
 	}
 
 	private final Bundle _bundle;

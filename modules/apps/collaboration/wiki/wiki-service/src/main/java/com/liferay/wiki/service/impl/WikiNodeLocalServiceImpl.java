@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -376,6 +378,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public WikiNode moveNodeToTrash(long userId, WikiNode node)
 		throws PortalException {
 
+		if (node.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
 		// Node
 
 		int oldStatus = node.getStatus();
@@ -409,6 +415,11 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	@Override
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException {
+
+		if (!node.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
 
 		// Node
 

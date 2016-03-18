@@ -226,6 +226,47 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>select-pages</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.SelectPagesTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>disableInputs</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>exportImportConfigurationId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>groupId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>privateLayout</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>treeId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+	<tag>
 		<name>status</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.StatusTag</tag-class>
 		<body-content>JSP</body-content>

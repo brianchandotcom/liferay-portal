@@ -24,7 +24,6 @@ long exportImportConfigurationId = 0;
 ExportImportConfiguration exportImportConfiguration = null;
 Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
 Map<String, String[]> parameterMap = Collections.emptyMap();
-long[] selectedLayoutIds = null;
 
 if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
 	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
@@ -48,7 +47,6 @@ else {
 if (MapUtil.isNotEmpty(exportImportConfigurationSettingsMap)) {
 	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	privateLayout = GetterUtil.getBoolean(exportImportConfigurationSettingsMap.get("privateLayout"), privateLayout);
-	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
 }
 
 if (exportImportConfiguration != null) {
@@ -72,20 +70,6 @@ if (liveGroup.isStaged()) {
 treeId = treeId + liveGroupId;
 
 treeId = treeId + privateLayout + layoutSetBranchId;
-
-if (!cmd.equals(Constants.UPDATE)) {
-	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
-
-	if (openNodes == null) {
-		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
-
-		for (long selectedLayoutId : selectedLayoutIds) {
-			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
-		}
-	} else {
-		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
-	}
-}
 
 PortletURL renderURL = renderResponse.createRenderURL();
 
@@ -144,28 +128,14 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 						<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" />
 
 						<c:if test="<%= !group.isCompany() %>">
-							<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-
-								<%
-								request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-								%>
-
-								<liferay-util:include page="/publish_templates/select_pages.jsp" servletContext="<%= application %>">
-									<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
-									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-									<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-									<liferay-util:param name="treeId" value="<%= treeId %>" />
-									<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-								</liferay-util:include>
-							</aui:fieldset>
+							<liferay-staging:select-pages action="<%= Constants.PUBLISH %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= stagingGroupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
 						</c:if>
 
 						<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
 
 						<liferay-staging:deletions cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 
-						<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+						<liferay-staging:permissions action="<%= Constants.PUBLISH %>" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 
 						<c:if test="<%= stagingGroup.isStagedRemotely() %>">
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">

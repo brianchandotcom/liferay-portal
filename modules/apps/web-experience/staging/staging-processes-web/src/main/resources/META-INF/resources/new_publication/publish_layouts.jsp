@@ -290,29 +290,14 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 				</aui:fieldset>
 
 				<c:if test="<%= !group.isCompany() %>">
-
-					<%
-					request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-					%>
-
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-						<liferay-util:include page="/new_publication/select_pages.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
-							<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-							<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-							<liferay-util:param name="treeId" value="<%= treeId %>" />
-							<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-							<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredPublish) %>" />
-						</liferay-util:include>
-					</aui:fieldset>
+					<liferay-staging:select-pages action="<%= Constants.PUBLISH %>" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= groupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
 				</c:if>
 
 				<liferay-staging:content cmd="<%= cmd %>" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
 				<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 
-				<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+				<liferay-staging:permissions action="<%= Constants.PUBLISH %>" descriptionCSSClass="permissions-description" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 
 				<c:if test="<%= !localPublishing %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">

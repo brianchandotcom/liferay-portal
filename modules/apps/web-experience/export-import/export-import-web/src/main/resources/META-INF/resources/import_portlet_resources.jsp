@@ -275,7 +275,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 				<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
 
-				<liferay-staging:permissions action="import" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+				<liferay-staging:permissions action="<%= Constants.IMPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 			</c:if>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="update-data">

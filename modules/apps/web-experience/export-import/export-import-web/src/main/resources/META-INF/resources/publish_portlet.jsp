@@ -467,7 +467,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 									<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
 
-									<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+									<liferay-staging:permissions action="<%= Constants.PUBLISH %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 								</c:if>
 							</aui:fieldset-group>
 

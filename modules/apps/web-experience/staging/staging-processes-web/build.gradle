@@ -10,7 +10,6 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:web-experience:application-list:application-list-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
-	provided project(":apps:web-experience:layout:layout-taglib")
 	provided project(":apps:web-experience:staging:staging-api")
 	provided project(":apps:web-experience:staging:staging-lang")
 	provided project(":apps:web-experience:staging:staging-taglib")

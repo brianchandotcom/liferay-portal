@@ -20,13 +20,15 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.exportimport.kernel.lar.ExportImportDateUtil" %><%@
+<%@ page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants" %><%@
+page import="com.liferay.exportimport.kernel.lar.ExportImportDateUtil" %><%@
 page import="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" %><%@
 page import="com.liferay.exportimport.kernel.lar.ManifestSummary" %><%@
 page import="com.liferay.exportimport.kernel.lar.PortletDataContext" %><%@
@@ -39,10 +41,12 @@ page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.exportimport.kernel.lar.StagedModelType" %><%@
 page import="com.liferay.exportimport.kernel.model.ExportImportConfiguration" %><%@
 page import="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil" %><%@
+page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.model.LayoutConstants" %><%@
 page import="com.liferay.portal.kernel.model.LayoutRevision" %><%@
 page import="com.liferay.portal.kernel.model.LayoutRevisionConstants" %><%@
 page import="com.liferay.portal.kernel.model.LayoutSetBranch" %><%@
@@ -69,14 +73,17 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.staging.constants.StagingProcessesWebKeys" %>
+page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
+page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
 <%@ page import="java.io.Serializable" %>
 
-<%@ page import="java.util.Calendar" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@

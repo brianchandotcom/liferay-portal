@@ -19,7 +19,6 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
@@ -55,7 +54,6 @@ page import="com.liferay.exportimport.kernel.lar.StagedModelType" %><%@
 page import="com.liferay.exportimport.kernel.lar.UserIdStrategy" %><%@
 page import="com.liferay.exportimport.kernel.model.ExportImportConfiguration" %><%@
 page import="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil" %><%@
-page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
@@ -88,7 +86,6 @@ page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.LayoutConstants" %><%@
 page import="com.liferay.portal.kernel.model.LayoutSet" %><%@
-page import="com.liferay.portal.kernel.model.LayoutSetBranch" %><%@
 page import="com.liferay.portal.kernel.model.LayoutType" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTypePortlet" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
@@ -110,7 +107,6 @@ page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" 
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContext" %><%@
@@ -147,7 +143,6 @@ page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.io.Serializable" %>

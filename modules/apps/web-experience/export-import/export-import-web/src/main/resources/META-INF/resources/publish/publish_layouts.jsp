@@ -87,33 +87,6 @@ if (configuredPublish) {
 
 treeId = treeId + privateLayout + layoutSetBranchId;
 
-long[] selectedLayoutIds = null;
-
-if (configuredPublish) {
-	if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-		selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
-	}
-	else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)exportImportConfigurationSettingsMap.get("layoutIdMap");
-
-		selectedLayoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
-	}
-}
-else {
-	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
-
-	if (openNodes == null) {
-		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(stagingGroupId, privateLayout);
-
-		for (long selectedLayoutId : selectedLayoutIds) {
-			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
-		}
-	}
-	else {
-		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
-	}
-}
-
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
 PortletURL portletURL = renderResponse.createActionURL();
@@ -269,29 +242,14 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					</aui:fieldset>
 
 					<c:if test="<%= !group.isCompany() %>">
-						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-
-							<%
-							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-							%>
-
-							<liferay-util:include page="/publish/select_pages.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
-								<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-								<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-								<liferay-util:param name="treeId" value="<%= treeId %>" />
-								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-								<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredPublish) %>" />
-							</liferay-util:include>
-						</aui:fieldset>
+						<liferay-staging:select-pages action="<%= Constants.PUBLISH %>" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= groupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
 					</c:if>
 
 					<liferay-staging:content cmd="<%= cmd %>" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
 					<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 
-					<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+					<liferay-staging:permissions action="<%= Constants.PUBLISH %>" descriptionCSSClass="permissions-description" disableInputs="<%= configuredPublish %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 
 					<c:if test="<%= !localPublishing %>">
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">

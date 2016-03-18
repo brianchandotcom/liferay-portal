@@ -423,7 +423,7 @@ portletURL.setParameter("portletResource", portletResource);
 						Group group = themeDisplay.getScopeGroup();
 						%>
 
-						<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+						<liferay-staging:permissions action="<%= Constants.EXPORT %>" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 					</c:if>
 
 					<aui:button-row>

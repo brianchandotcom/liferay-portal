@@ -34,8 +34,6 @@ long exportImportConfigurationId = 0;
 
 ExportImportConfiguration exportImportConfiguration = null;
 Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
-Map<String, String[]> parameterMap = Collections.emptyMap();
-long[] selectedLayoutIds = null;
 
 if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
 	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
@@ -57,9 +55,7 @@ else {
 }
 
 if (MapUtil.isNotEmpty(exportImportConfigurationSettingsMap)) {
-	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
 	privateLayout = GetterUtil.getBoolean(exportImportConfigurationSettingsMap.get("privateLayout"), privateLayout);
-	selectedLayoutIds = GetterUtil.getLongValues(exportImportConfigurationSettingsMap.get("layoutIds"));
 }
 
 String rootNodeName = StringPool.BLANK;
@@ -72,21 +68,6 @@ else {
 }
 
 String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
-
-if (!cmd.equals(Constants.UPDATE)) {
-	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
-
-	if (openNodes == null) {
-		selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
-
-		for (long selectedLayoutId : selectedLayoutIds) {
-			SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
-		}
-	}
-	else {
-		selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
-	}
-}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -127,25 +108,12 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 				<liferay-staging:configuration-header exportImportConfiguration="<%= exportImportConfiguration %>" />
 
 				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-
-						<%
-						request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-						%>
-
-						<liferay-util:include page="/export/export_templates/select_pages.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
-							<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-							<liferay-util:param name="treeId" value="<%= treeId %>" />
-							<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-						</liferay-util:include>
-					</aui:fieldset>
+					<liferay-staging:select-pages action="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= liveGroupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
 				</c:if>
 
 					<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= Constants.EXPORT %>" />
 
-					<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+					<liferay-staging:permissions action="<%= Constants.EXPORT %>" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
 				</aui:fieldset-group>
 			</div>
 

@@ -80,6 +80,10 @@
 	}
 }
 
+.overlaymask-hidden {
+	display: none;
+}
+
 @keyframes loading-animation {
 	0% {
 		@include trailing-shadow(0, -0.83em, $loading-animation-color);

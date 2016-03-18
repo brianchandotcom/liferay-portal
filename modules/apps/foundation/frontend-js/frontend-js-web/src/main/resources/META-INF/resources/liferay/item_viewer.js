@@ -35,13 +35,7 @@ AUI.add(
 
 		var CSS_PREVIEW_TIMEOUT_MESSAGE = 'preview-timeout-message';
 
-		var CSS_SIDENAV_CONTAINER = 'sidenav-container';
-
-		var CSS_SIDENAV_MENU_SLIDER = 'sidenav-menu-slider';
-
 		var STR_BLANK = '';
-
-		var STR_DATA_METADATA_RENDERED = 'data-metadata-rendered';
 
 		var STR_DOT = '.';
 
@@ -60,8 +54,6 @@ AUI.add(
 		var TPL_INFO_TAB_BODY_CONTENT = '<dt class="{dtClassName}">{dt}</dt><dd class="{ddClassName}">{dd}</dd>';
 
 		var TPL_INFO_TAB_TITLE = '<li class="{className}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
-
-		var bootstrapColumns = 12;
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -209,12 +201,16 @@ AUI.add(
 					_afterGetCurrentImage: function(event) {
 						var instance = this;
 
+						var retVal;
+
 						if (instance._showPreviewError) {
-							return new Do.AlterReturn(
+							retVal = new Do.AlterReturn(
 								'Return error message node',
 								instance.get(STR_SRC_NODE).one(STR_DOT + CSS_PREVIEW_TIMEOUT_MESSAGE)
 							);
 						}
+
+						return retVal;
 					},
 
 					_afterShow: function() {
@@ -250,9 +246,13 @@ AUI.add(
 					_beforeSyncInfoUI: function() {
 						var instance = this;
 
+						var retVal;
+
 						if (!instance.get(STR_RENDER_CONTROLS)) {
-							return new Do.Halt();
+							retVal = new Do.Halt();
 						}
+
+						return retVal;
 					},
 
 					_bindSidebarEvents: function() {
@@ -300,8 +300,6 @@ AUI.add(
 
 						metadata = JSON.parse(metadata);
 
-						var tabsCount = metadata.groups.length;
-
 						metadata.groups.forEach(
 							function(group, index) {
 								var groupId = A.guid();
@@ -323,13 +321,13 @@ AUI.add(
 									function(previousValue, currentValue) {
 										return previousValue + Lang.sub(
 											TPL_INFO_TAB_BODY_CONTENT,
-												{
-													dd: currentValue.value,
-													ddClassName: '',
-													dt: currentValue.key,
-													dtClassName: 'h5'
-												}
-											);
+											{
+												dd: currentValue.value,
+												ddClassName: '',
+												dt: currentValue.key,
+												dtClassName: 'h5'
+											}
+										);
 									},
 									STR_BLANK
 								);

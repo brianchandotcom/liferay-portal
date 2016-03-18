@@ -29,7 +29,10 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertTextEquals" locator1="Button#VIEW_HISTORY" value1="View History" />
+		<execute macro="WorkflowAsset#viewDetails">
+			<var name="userName" value="${userName}" />
+			<var name="workflowStatus" value="${workflowStatus}" />
+		</execute>
 	</command>
 
 	<command name="gotoListRecords">

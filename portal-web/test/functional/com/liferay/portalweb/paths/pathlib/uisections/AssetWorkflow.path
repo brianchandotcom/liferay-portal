@@ -18,6 +18,17 @@
 	<td>//span[@class='workflow-status']/span</td>
 	<td></td>
 </tr>
+<!--DETAILS_WORKFLOW-->
+<tr>
+	<td>DETAILS_WORKFLOW_CREATED_BY</td>
+	<td>//div[@class='sidebar-body']//p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_WORKFLOW_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]//strong</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

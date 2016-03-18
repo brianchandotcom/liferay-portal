@@ -1477,7 +1477,10 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute macro="DDLNavigator#gotoDDLRecordEditViaWorkflow" />
+		<execute macro="DDLNavigator#gotoDDLRecordEditViaWorkflow">
+			<var name="userName" value="userfn userln" />
+			<var name="workflowStatus" value="Pending (Update)" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

@@ -1061,7 +1061,7 @@
 			<var name="panelHeading" value="Asset Entries" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_NONE" value1="none" />
+		<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_NONE" value1="None" />
 
 		<execute function="SelectFrameTop" />
 	</command>

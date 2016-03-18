@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_NONE</td>
-	<td>//div[@class='panel-body']/p</td>
+	<td>//div[@class='panel-body']//p</td>
 	<td></td>
 </tr>
 <tr>

@@ -121,6 +121,14 @@ AUI.add(
 						);
 
 						radiosToCheck.attr('checked', true);
+
+						instance.fire(
+							'valueChanged',
+							{
+								field: instance,
+								value: value
+							}
+						);
 					},
 
 					_renderErrorMessage: function() {

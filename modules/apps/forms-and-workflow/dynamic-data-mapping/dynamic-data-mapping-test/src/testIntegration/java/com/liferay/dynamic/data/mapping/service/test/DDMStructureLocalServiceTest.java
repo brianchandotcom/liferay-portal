@@ -72,124 +72,74 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		_classNameId = PortalUtil.getClassNameId(DDL_RECORD_SET_CLASS_NAME);
 	}
 
-	@Test
+	@Test(expected = StructureDefinitionException.class)
 	public void testAddStructureMissingRequiredElementAttribute()
 		throws Exception {
 
-		try {
-			addStructure(
-				_classNameId, null, "Test Structure",
-				read("ddm-structure-required-element-attribute.xsd"),
-				StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureDefinitionException sde) {
-		}
+		addStructure(
+			_classNameId, null, "Test Structure",
+			read("ddm-structure-required-element-attribute.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	@Test
+	@Test(expected = StructureDuplicateElementException.class)
 	public void testAddStructureWithDuplicateElementName() throws Exception {
-		try {
-			addStructure(
-				_classNameId, null, "Test Structure",
-				read("ddm-structure-duplicate-element-name.xsd"),
-				StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureDuplicateElementException sdee) {
-		}
+		addStructure(
+			_classNameId, null, "Test Structure",
+			read("ddm-structure-duplicate-element-name.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	@Test
+	@Test(expected = StructureDuplicateElementException.class)
 	public void testAddStructureWithDuplicateElementNameInParent()
 		throws Exception {
 
-		try {
-			DDMStructure parentStructure = addStructure(
-				_classNameId, null, "Test Parent Structure",
-				read("ddm-structure-duplicate-element-name.xsd"),
-				StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
+		DDMStructure parentStructure = addStructure(
+			_classNameId, null, "Test Parent Structure",
+			read("ddm-structure-duplicate-element-name.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
-			addStructure(
-				parentStructure.getStructureId(), _classNameId, null,
-				"Test Structure",
-				read("ddm-structure-duplicate-element-name.xsd"),
-				StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureDuplicateElementException sdee) {
-		}
+		addStructure(
+			parentStructure.getStructureId(), _classNameId, null,
+			"Test Structure", read("ddm-structure-duplicate-element-name.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	@Test
+	@Test(expected = StructureDuplicateStructureKeyException.class)
 	public void testAddStructureWithDuplicateKey() throws Exception {
 		String structureKey = RandomTestUtil.randomString();
 
-		try {
-			addStructure(
-				_classNameId, structureKey, "Test Structure 1",
-				read("test-structure.xsd"), StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
+		addStructure(
+			_classNameId, structureKey, "Test Structure 1",
+			read("test-structure.xsd"), StorageType.JSON.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT);
 
-			addStructure(
-				_classNameId, structureKey, "Test Structure 2",
-				read("test-structure.xsd"), StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureDuplicateStructureKeyException sdske) {
-		}
+		addStructure(
+			_classNameId, structureKey, "Test Structure 2",
+			read("test-structure.xsd"), StorageType.JSON.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	@Test
+	@Test(expected = StructureDefinitionException.class)
 	public void testAddStructureWithInvalidElementAttribute() throws Exception {
-		try {
-			addStructure(
-				_classNameId, null, "Test Structure",
-				read("ddm-structure-invalid-element-attribute.xsd"),
-				StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureDefinitionException sde) {
-		}
+		addStructure(
+			_classNameId, null, "Test Structure",
+			read("ddm-structure-invalid-element-attribute.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	@Test
+	@Test(expected = StructureDefinitionException.class)
 	public void testAddStructureWithoutDefinition() throws Exception {
-		try {
-			addStructure(
-				_classNameId, null, "Test Structure", StringPool.BLANK,
-				StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureDefinitionException sde) {
-		}
+		addStructure(
+			_classNameId, null, "Test Structure", StringPool.BLANK,
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	@Test
+	@Test(expected = StructureNameException.class)
 	public void testAddStructureWithoutName() throws Exception {
-		try {
-			addStructure(
-				_classNameId, null, StringPool.BLANK,
-				read("test-structure.xsd"), StorageType.JSON.getValue(),
-				DDMStructureConstants.TYPE_DEFAULT);
-
-			Assert.fail();
-		}
-		catch (StructureNameException sne) {
-		}
+		addStructure(
+			_classNameId, null, StringPool.BLANK, read("test-structure.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	@Test

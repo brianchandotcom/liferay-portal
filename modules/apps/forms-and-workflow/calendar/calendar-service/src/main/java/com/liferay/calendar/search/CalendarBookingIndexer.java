@@ -15,9 +15,9 @@
 package com.liferay.calendar.search;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
+import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
-import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -33,8 +33,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -64,30 +63,12 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
-	}
-
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
-
-		if (actionId.equals(ActionKeys.VIEW)) {
-			CalendarBooking calendarBooking =
-				_calendarBookingLocalService.getCalendarBooking(entryClassPK);
-
-			return CalendarPermission.contains(
-				permissionChecker, calendarBooking.getCalendar(),
-				CalendarActionKeys.VIEW_BOOKING_DETAILS);
-		}
-
-		return super.hasPermission(
-			permissionChecker, entryClassName, entryClassPK, actionId);
 	}
 
 	@Override
@@ -102,6 +83,11 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		throws Exception {
 
 		Document document = getBaseModelDocument(CLASS_NAME, calendarBooking);
+
+		document.addKeyword(
+			Field.CLASS_NAME_ID,
+			_classNameLocalService.getClassNameId(Calendar.class));
+		document.addKeyword(Field.CLASS_PK, calendarBooking.getCalendarId());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
@@ -128,6 +114,8 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				description);
 		}
 
+		document.addKeyword(Field.RELATED_ENTRY, true);
+
 		String titleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			calendarBooking.getTitle());
 
@@ -146,6 +134,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 					titleLanguageId),
 				title);
 		}
+
+		document.addKeyword(
+			Field.VIEW_ACTION_ID, CalendarActionKeys.VIEW_BOOKING_DETAILS);
 
 		String calendarBookingId = String.valueOf(
 			calendarBooking.getCalendarBookingId());
@@ -282,9 +273,17 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingIndexer.class);
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 }

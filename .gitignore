@@ -102,6 +102,7 @@
 /portal-web/docroot/aui
 /portal-web/docroot/dtd
 /portal-web/docroot/html/icons/_sprite.*
+/portal-web/docroot/resin-data
 /portal-web/docroot/WEB-INF/classes
 /portal-web/docroot/WEB-INF/lib
 /portal-web/docroot/WEB-INF/liferay-portlet-ext.xml

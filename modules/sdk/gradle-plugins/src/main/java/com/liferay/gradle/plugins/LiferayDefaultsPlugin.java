@@ -901,6 +901,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				public Boolean doCall(
 					String group, String replacement, String content) {
 
+					if (gitRepoDir == null) {
+						return true;
+					}
+
 					Version groupVersion = Version.parseVersion(group);
 					Version replacementVersion = Version.parseVersion(
 						replacement);

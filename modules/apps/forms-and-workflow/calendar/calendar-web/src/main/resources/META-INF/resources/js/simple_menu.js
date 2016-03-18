@@ -133,6 +133,8 @@ AUI.add(
 						var handler = getItemHandler(id, items);
 
 						if (handler) {
+							instance._closeMenu();
+
 							handler.apply(instance, arguments);
 						}
 					},

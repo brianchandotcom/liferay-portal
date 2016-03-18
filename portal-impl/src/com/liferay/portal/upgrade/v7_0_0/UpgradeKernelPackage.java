@@ -33,6 +33,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
 			upgradeTable(
+				"Lock_", "className", getClassNames(), WildcardMode.SURROUND);
+			upgradeTable(
 				"ResourceAction", "name", getClassNames(),
 				WildcardMode.SURROUND);
 			upgradeTable(

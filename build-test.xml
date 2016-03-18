@@ -1341,6 +1341,28 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-edge-driver">
+		<sequential>
+			<if>
+				<os family="windows" />
+				<then>
+					<mirrors-get
+						dest="tools/selenium/MicrosoftWebDriver.exe"
+						src="http://www.microsoft.com/en-us/download/webdriver/2.0/MicrosoftWebDriver.exe"
+					/>
+				</then>
+				<else>
+					<if>
+						<equals arg1="${selenium.remote.driver.enabled}" arg2="false" />
+						<then>
+							<fail message="Operating system is not supported." />
+						</then>
+					</if>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-elasticsearch-configuration" >
 		<sequential>
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
@@ -5509,6 +5531,17 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<echo append="true" file="${test.ext.properties.file}">
 					selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
 					selenium.chrome.driver.version=${selenium.chrome.driver.version}
+					selenium.executable.dir.name=${selenium.executable.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="edge" />
+			<then>
+				<prepare-edge-driver />
+
+				<echo append="true" file="${test.ext.properties.file}">
 					selenium.executable.dir.name=${selenium.executable.dir.name}
 				</echo>
 			</then>

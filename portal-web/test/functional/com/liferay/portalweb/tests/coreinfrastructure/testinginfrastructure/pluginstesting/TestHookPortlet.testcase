@@ -19,6 +19,7 @@
 			<var name="portletName" value="Test Hook" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="TestBlob#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute function="AssertVisible" locator1="TestBlob#TEST_PORTLET_BODY_PASSED" />
+		<execute function="AssertTextNotPresent" value1="FAILED" />
 	</command>
 </definition>

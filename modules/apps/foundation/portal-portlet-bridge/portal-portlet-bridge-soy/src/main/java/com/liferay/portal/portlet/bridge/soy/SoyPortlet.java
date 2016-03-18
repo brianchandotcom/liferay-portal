@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletControllersManager;
+import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
 import com.liferay.portal.portlet.bridge.soy.internal.SoyTemplateResourcesCollector;
 
 import java.io.IOException;
@@ -58,8 +58,7 @@ public class SoyPortlet extends MVCPortlet {
 		_bundle = FrameworkUtil.getBundle(this.getClass());
 
 		try {
-			_soyPortletControllersManager = new SoyPortletControllersManager(
-				_bundle);
+			_soyPortletHelper = new SoyPortletHelper(_bundle);
 
 			template = _getTemplate();
 		}
@@ -93,7 +92,7 @@ public class SoyPortlet extends MVCPortlet {
 
 			template.put(
 				TemplateConstants.NAMESPACE,
-				_soyPortletControllersManager.getTemplateNamespace(path));
+				_soyPortletHelper.getTemplateNamespace(path));
 
 			if (propagateRequestParameters) {
 				propagateRequestParameters(portletRequest);
@@ -112,9 +111,8 @@ public class SoyPortlet extends MVCPortlet {
 
 			template.processTemplate(writer);
 
-			String portletJavaScript =
-				_soyPortletControllersManager.getPortletJavaScript(
-					template, path, portletResponse.getNamespace());
+			String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
+				template, path, portletResponse.getNamespace());
 
 			writer.write(portletJavaScript);
 		}
@@ -158,6 +156,6 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	private Bundle _bundle;
-	private SoyPortletControllersManager _soyPortletControllersManager;
+	private SoyPortletHelper _soyPortletHelper;
 
 }

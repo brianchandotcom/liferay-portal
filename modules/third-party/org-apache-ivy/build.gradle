@@ -11,10 +11,6 @@ dependencies {
 	compile group: "org.apache.ivy", name: "ivy", optional, version: "2.4.0"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

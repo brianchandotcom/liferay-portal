@@ -14,10 +14,6 @@ dependencies {
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

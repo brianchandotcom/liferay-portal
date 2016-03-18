@@ -10,7 +10,3 @@ dependencies {
 	provided project(":apps:web-experience:journal:journal-api")
 	provided project(":apps:web-experience:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

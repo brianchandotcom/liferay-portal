@@ -187,7 +187,3 @@ dependencies {
 
 	svg4everybody group: "org.webjars.npm", name: "svg4everybody", transitive: false, version: svg4everybodyVersion
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

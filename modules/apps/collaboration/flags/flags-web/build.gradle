@@ -12,7 +12,3 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

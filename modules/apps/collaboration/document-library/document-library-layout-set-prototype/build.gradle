@@ -11,7 +11,3 @@ dependencies {
 	provided project(":apps:web-experience:rss:rss-web")
 	provided project(":apps:web-experience:site-navigation:site-navigation-language-web")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

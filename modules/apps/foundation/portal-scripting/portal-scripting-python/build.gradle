@@ -4,7 +4,3 @@ dependencies {
 	provided group: "org.python", name: "jython-standalone", version: "2.5.3"
 	provided project(":apps:foundation:portal-scripting:portal-scripting-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

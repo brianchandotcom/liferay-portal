@@ -5,7 +5,3 @@ dependencies {
 	provided project(":apps:collaboration:mentions:mentions-api")
 	provided project(":apps:collaboration:mentions:mentions-web")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

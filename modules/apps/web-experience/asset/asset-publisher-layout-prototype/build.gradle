@@ -7,7 +7,3 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-publisher-web")
 	provided project(":apps:web-experience:asset:asset-tags-navigation-web")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

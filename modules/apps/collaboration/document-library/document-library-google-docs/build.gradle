@@ -12,7 +12,3 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

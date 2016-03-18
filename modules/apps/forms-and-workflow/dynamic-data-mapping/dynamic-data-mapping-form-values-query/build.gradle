@@ -59,7 +59,3 @@ generateGrammarSource {
 	maxHeapSize = "1024m"
 	outputDirectory = new File(temporaryDir, "generated")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

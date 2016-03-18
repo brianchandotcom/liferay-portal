@@ -19,10 +19,6 @@ dependencies {
 	compile group: "org.mvel", name: "mvel2", version: "2.1.0.drools16"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

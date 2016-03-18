@@ -2,10 +2,6 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 
 task publishNodeModule(type: PublishNodeModuleTask)
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 publishNodeModule {
 	dependsOn jar
 	workingDir = "src/main/resources/META-INF/resources/_styled"

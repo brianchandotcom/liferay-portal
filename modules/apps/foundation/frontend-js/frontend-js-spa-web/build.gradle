@@ -49,7 +49,3 @@ dependencies {
 
 	senna group: "com.liferay.webjars", name: "com.liferay.webjars.senna.js", transitive: false, version: sennaVersion
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

@@ -30,10 +30,6 @@ dependencies {
 	provided project(":core:registry-api")
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 mergeLang {
 	sourceDirs = ["../../dynamic-data-mapping/dynamic-data-mapping-lang/src/main/resources/content", "src/main/resources/content"]
 }

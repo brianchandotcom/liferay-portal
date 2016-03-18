@@ -24,7 +24,3 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":core:registry-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

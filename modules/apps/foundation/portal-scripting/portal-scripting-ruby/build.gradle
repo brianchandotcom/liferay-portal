@@ -6,7 +6,3 @@ dependencies {
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal-scripting:portal-scripting-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

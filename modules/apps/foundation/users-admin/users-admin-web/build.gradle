@@ -12,7 +12,3 @@ dependencies {
 	provided project(":apps:foundation:users-admin:users-admin-api")
 	provided project(":apps:web-experience:application-list:application-list-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

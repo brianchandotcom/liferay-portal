@@ -28,7 +28,3 @@ dependencies {
 	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
 	provided project(":core:registry-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

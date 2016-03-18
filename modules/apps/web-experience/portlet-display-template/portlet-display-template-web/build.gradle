@@ -7,7 +7,3 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

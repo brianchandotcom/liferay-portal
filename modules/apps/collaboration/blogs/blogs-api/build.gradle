@@ -5,7 +5,3 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

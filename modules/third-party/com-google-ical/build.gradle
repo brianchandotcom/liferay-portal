@@ -62,7 +62,3 @@ downloadSrc {
 		!FileUtil.exists(project, "src/main/java")
 	}
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

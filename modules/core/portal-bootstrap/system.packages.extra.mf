@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1458281781656
+Bnd-LastModified: 1458301313111
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.7.0_51 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2678,7 +2678,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ortal.kernel.search,com.liferay.portal.kernel.security.pacl,com.lifer
  ay.portal.kernel.service,com.liferay.portal.kernel.service.persistenc
  e.impl,com.liferay.portal.kernel.transaction,com.liferay.portal.kerne
- l.util",com.liferay.portal.kernel.dao.search;version="7.0.0";uses:="c
+ l.util",com.liferay.portal.kernel.dao.search;version="7.1.0";uses:="c
  om.liferay.portal.kernel.exception,com.liferay.portal.kernel.util,jav
  ax.portlet,javax.servlet,javax.servlet.http",com.liferay.portal.kerne
  l.deploy;version="6.3.0";uses:="com.liferay.portal.kernel.deploy.auto
@@ -4630,7 +4630,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  .jdbc;version="[7.0,8)",com.liferay.portal.kernel.dao.jdbc.aop;versio
  n="[6.3,7)",com.liferay.portal.kernel.dao.jdbc.pool.metrics;version="
  [1.0,2)",com.liferay.portal.kernel.dao.orm;version="[7.0,8)",com.life
- ray.portal.kernel.dao.search;version="[7.0,8)",com.liferay.portal.ker
+ ray.portal.kernel.dao.search;version="[7.1,8)",com.liferay.portal.ker
  nel.deploy;version="[6.3,6.4)",com.liferay.portal.kernel.deploy.auto;
  version="[7.0,8)",com.liferay.portal.kernel.deploy.auto.context;versi
  on="[6.3,7)",com.liferay.portal.kernel.deploy.hot;version="[7.0,8)",c

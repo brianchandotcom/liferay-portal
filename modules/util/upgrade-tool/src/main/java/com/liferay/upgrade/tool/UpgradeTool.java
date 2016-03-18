@@ -31,6 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import jline.console.ConsoleReader;
 
@@ -76,6 +77,8 @@ public class UpgradeTool {
 		}
 		catch (Exception e) {
 			System.err.println("Error running upgrade");
+
+			e.printStackTrace();
 		}
 	}
 
@@ -122,8 +125,14 @@ public class UpgradeTool {
 
 		List commands = new ArrayList<>();
 
-		commands.add(JAVA_HOME + "/bin/java");
-		commands.add("-Xmx1024m");
+		if (JAVA_HOME != null) {
+			commands.add(JAVA_HOME + "/bin/java");
+		}
+		else {
+			commands.add("java");
+		}
+
+		commands.add("-Xmx2048m");
 		commands.add("-Dfile.encoding=UTF8");
 		commands.add("-Duser.country=US");
 		commands.add("-Duser.language=en");
@@ -135,6 +144,7 @@ public class UpgradeTool {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
 		processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+		processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
 
 		processBuilder.command(commands);
 
@@ -167,7 +177,7 @@ public class UpgradeTool {
 		try (GogoTelnetClient client = new GogoTelnetClient()) {
 			System.out.println("You are now connected to Gogo Shell");
 
-			System.out.println("Try upgrade:list, verify:list");
+			_printHelp();
 
 			_consoleReader.setPrompt("g! ");
 
@@ -177,24 +187,42 @@ public class UpgradeTool {
 				if (line.equals("exit") || line.equals("quit")) {
 					break;
 				}
+				else if (line.equals("help")) {
+					_printHelp();
+				}
 				else {
 					System.out.println(client.send(line));
 				}
 			}
+
+			System.out.print(
+				"Making sure all upgrades steps have been completed");
+
+			boolean upgrading = true;
+
+			while(upgrading) {
+				System.out.print("...");
+
+				String upgradeSteps =
+					client.send("upgrade:list | grep Registered | grep step");
+
+				upgrading = upgradeSteps.contains("true");
+			}
+			System.out.println("Done");
+
+			System.out.println("Exiting Gogo Shell");
+
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 
 		process.getInputStream().close();
+		process.getOutputStream().close();
+		process.getErrorStream().close();
 
-		int exitCode = process.waitFor();
-
-		if (exitCode == 0) {
-			System.out.println("Upgrade completed");
-		}
-		else {
-			System.out.println("Upgrade failed: " + exitCode);
+		if(!process.waitFor(5, TimeUnit.SECONDS)) {
+			process.destroy();
 		}
 	}
 
@@ -257,6 +285,23 @@ public class UpgradeTool {
 		Path relative = base.relativize(path);
 
 		return relative.toString();
+	}
+
+	private void _printHelp() {
+		System.out.println("\nUpgrade commands:");
+		System.out.println("exit or quit - exit Gogo Shell");
+		System.out.println("help - show upgrade commands");
+		System.out.println("upgrade:execute {module_name} - " +
+			"Execute upgrade for that module");
+		System.out.println("upgrade:list - List all registered upgrades");
+		System.out.println("upgrade:list {module_name} - " +
+			"List the upgrade steps required for that module");
+		System.out.println("upgrade:list | grep Registered - " +
+			"List upgrades that are registered and what version they are at");
+		System.out.println("upgrade:list | grep Registered | grep steps - " +
+			"List upgrades in progress");
+		System.out.println("verify:execute {module_name} - execute a verifier");
+		System.out.println("verify:list - List all registered verifiers");
 	}
 
 	private void _saveProperties() throws IOException {

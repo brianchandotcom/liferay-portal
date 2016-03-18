@@ -27,8 +27,7 @@ wrapSoyTemplates {
 		soyJsFileTree.each {
 			File soyJsFile ->
 
-			soyJsFile.text = soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }")
-			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text + soyJsWrapperFooter
+			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }") + soyJsWrapperFooter
 		}
 	}
 }

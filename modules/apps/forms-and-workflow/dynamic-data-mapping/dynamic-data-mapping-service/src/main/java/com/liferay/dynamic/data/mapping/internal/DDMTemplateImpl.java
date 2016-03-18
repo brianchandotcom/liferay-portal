@@ -17,11 +17,14 @@ package com.liferay.dynamic.data.mapping.internal;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -47,6 +50,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public boolean getCacheable() {
 		return _ddmTemplate.getCacheable();
+	}
+
+	@Override
+	public String getClassName() {
+		return _ddmTemplate.getClassName();
 	}
 
 	@Override
@@ -77,6 +85,36 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public String getDescription(Locale locale) {
 		return _ddmTemplate.getDescription(locale);
+	}
+
+	@Override
+	public String getDescription(Locale locale, boolean useDefault) {
+		return _ddmTemplate.getDescription(locale, useDefault);
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		return _ddmTemplate.getDescription(languageId);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return _ddmTemplate.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return _ddmTemplate.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public String getDescriptionCurrentValue() {
+		return _ddmTemplate.getDescriptionCurrentValue();
+	}
+
+	@Override
+	public Map<Locale, String> getDescriptionMap() {
+		return _ddmTemplate.getDescriptionMap();
 	}
 
 	@Override
@@ -130,6 +168,36 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public String getName(Locale locale, boolean useDefault) {
+		return _ddmTemplate.getName(locale, useDefault);
+	}
+
+	@Override
+	public String getName(String languageId) {
+		return _ddmTemplate.getName(languageId);
+	}
+
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return _ddmTemplate.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _ddmTemplate.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _ddmTemplate.getNameCurrentValue();
+	}
+
+	@Override
+	public Map<Locale, String> getNameMap() {
+		return _ddmTemplate.getNameMap();
+	}
+
+	@Override
 	public long getPrimaryKey() {
 		return _ddmTemplate.getPrimaryKey();
 	}
@@ -157,6 +225,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public long getSmallImageId() {
 		return _ddmTemplate.getSmallImageId();
+	}
+
+	@Override
+	public String getSmallImageType() throws PortalException {
+		return _ddmTemplate.getSmallImageType();
 	}
 
 	@Override
@@ -220,6 +293,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
+		return _ddmTemplate.getWebDavURL(themeDisplay, webDAVToken);
+	}
+
+	@Override
 	public boolean isCacheable() {
 		return _ddmTemplate.isCacheable();
 	}
@@ -277,6 +355,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public void setUuid(String uuid) {
 		_ddmTemplate.setUuid(uuid);
+	}
+
+	@Override
+	public String toXmlString() {
+		return _ddmTemplate.toXmlString();
 	}
 
 	private final com.liferay.dynamic.data.mapping.model.DDMTemplate

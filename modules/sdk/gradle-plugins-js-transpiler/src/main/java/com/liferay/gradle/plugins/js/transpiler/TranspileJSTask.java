@@ -137,12 +137,10 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return _sourceMaps;
 	}
 
-	@Input
 	public List<String> getSoySrcIncludes() {
 		return GradleUtil.toStringList(_soySrcIncludes);
 	}
 
-	@Input
 	public List<String> getSrcIncludes() {
 		return GradleUtil.toStringList(_srcIncludes);
 	}

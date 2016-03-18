@@ -8,7 +8,7 @@ Bundle-ClassPath:\
 	lib/jackson-core.jar
 Bundle-Name: Liferay Portal Security SSO Google
 Bundle-SymbolicName: com.liferay.portal.security.sso.google
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.google,\
 	com.liferay.portal.security.sso.google.configuration,\

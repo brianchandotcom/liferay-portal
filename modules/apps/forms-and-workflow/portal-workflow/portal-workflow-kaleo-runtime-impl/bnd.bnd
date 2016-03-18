@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Runtime Impl
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.runtime.impl
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
 Liferay-Service: true

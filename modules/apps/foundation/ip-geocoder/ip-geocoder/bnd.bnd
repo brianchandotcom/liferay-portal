@@ -1,6 +1,6 @@
 Bundle-Name: Liferay IP Geocoder
 Bundle-SymbolicName: com.liferay.ip.geocoder
-Bundle-Version: 1.0.7
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.ip.geocoder
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

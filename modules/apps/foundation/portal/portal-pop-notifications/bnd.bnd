@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal POP Notifications
 Bundle-SymbolicName: com.liferay.portal.pop.notifications
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
 -liferay-includeresource:\

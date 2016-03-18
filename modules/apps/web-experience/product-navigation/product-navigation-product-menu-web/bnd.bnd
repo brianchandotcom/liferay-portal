@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Product Navigation Product Menu Web
 Bundle-SymbolicName: com.liferay.product.navigation.product.menu.web
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.product.navigation.product.menu.web.constants,\
 	com.liferay.product.navigation.product.menu.web.display.context

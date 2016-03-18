@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.internal.hits;
 
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -67,13 +68,17 @@ public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
 
 		queryConfig.setHitsProcessingEnabled(false);
 
-		Indexer<?> indexer = FacetedSearcher.getInstance();
+		FacetedSearcher facetedSearcher =
+			facetedSearcherManager.createFacetedSearcher();
 
-		Hits alternateResults = indexer.search(searchContext);
+		Hits alternateResults = facetedSearcher.search(searchContext);
 
 		hits.copy(alternateResults);
 
 		return true;
 	}
+
+	@Reference
+	protected FacetedSearcherManager facetedSearcherManager;
 
 }

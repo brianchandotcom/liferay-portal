@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1458514113418
+Bnd-LastModified: 1458551591524
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.7.0_79 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -3597,7 +3597,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  feray.portal.upgrade;uses:="com.liferay.portal.kernel.upgrade";versio
  n="1.0.0",com.liferay.portal.upgrade.dao.orm;uses:="com.liferay.porta
  l.kernel.dao.db,com.liferay.portal.kernel.upgrade.dao.orm";version="1
- .0.0",com.liferay.portal.upgrade.util;version="1.0.2";uses:="com.life
+ .0.0",com.liferay.portal.upgrade.util;version="1.1.0";uses:="com.life
  ray.portal.kernel.security.pacl,com.liferay.portal.kernel.upgrade,com
  .liferay.portal.kernel.upgrade.util,com.liferay.portal.kernel.xml",co
  m.liferay.portal.upgrade.v5_2_5_to_6_0_0;uses:="com.liferay.portal.ke
@@ -3631,7 +3631,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  eray.portal.kernel.upgrade.v6_2_0,com.liferay.portal.kernel.xml,com.l
  iferay.portal.upgrade.util,com.liferay.portlet,javax.portlet";version
  ="1.0.0",com.liferay.portal.upgrade.v6_2_0.util;version="1.0.0",com.l
- iferay.portal.upgrade.v7_0_0;version="1.0.2";uses:="com.liferay.porta
+ iferay.portal.upgrade.v7_0_0;version="1.1.0";uses:="com.liferay.porta
  l.kernel.dao.orm,com.liferay.portal.kernel.settings,com.liferay.porta
  l.kernel.upgrade,com.liferay.portal.upgrade.util,com.liferay.portal.u
  pgrade.v7_0_0.util,javax.portlet",com.liferay.portal.upgrade.v7_0_0.u
@@ -4841,7 +4841,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  rade.v6_0_6,com.liferay.portal.upgrade.v6_1_0,com.liferay.portal.upgr
  ade.v6_1_0.util,com.liferay.portal.upgrade.v6_1_1,com.liferay.portal.
  upgrade.v6_2_0,com.liferay.portal.upgrade.v6_2_0.util,com.liferay.por
- tal.upgrade.v7_0_0;version="[1.0,2)",com.liferay.portal.upgrade.v7_0_
+ tal.upgrade.v7_0_0;version="[1.1,2)",com.liferay.portal.upgrade.v7_0_
  0.util,com.liferay.portal.upload;version="[1.0,2)",com.liferay.portal
  .util;version="[1.1,2)",com.liferay.portal.verify,com.liferay.portal.
  webdav,com.liferay.portal.webserver,com.liferay.portal.xml;version="[

@@ -208,7 +208,7 @@ public class UpgradeTool {
 
 				upgrading = upgradeSteps.contains("true");
 			}
-			System.out.println("Done");
+			System.out.println("done.");
 
 			System.out.println("Exiting Gogo Shell");
 
@@ -251,6 +251,8 @@ public class UpgradeTool {
 		}
 
 		_getLibs(classPath, new File("lib"));
+
+		_getLibs(classPath, new File(_appServer.getDir(), "bin"));
 
 		_getLibs(classPath, _appServer.getGlobalLibDir());
 

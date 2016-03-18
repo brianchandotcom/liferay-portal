@@ -271,7 +271,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 			$('.layout-prototype-info-message').toggleClass('hide', !layoutPrototypeLinkChecked);
 
-			var propagatableFields = $('#<portlet:namespace />fm .propagatable-field');
+			var propagatableFields = $('#<portlet:namespace />fm_editLayout .propagatable-field');
 
 			propagatableFields.prop('disabled', layoutPrototypeLinkChecked);
 			propagatableFields.toggleClass('disabled', layoutPrototypeLinkChecked);

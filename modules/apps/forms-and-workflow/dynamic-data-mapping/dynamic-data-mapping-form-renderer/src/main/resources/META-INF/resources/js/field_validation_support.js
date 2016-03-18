@@ -108,7 +108,7 @@ AUI.add(
 			validate: function(callback) {
 				var instance = this;
 
-				if (instance.hasValidation()) {
+				if (instance.hasValidation() && !instance.get('readOnly')) {
 					var evaluator = instance.get('evaluator');
 
 					instance.showLoadingFeedback();
@@ -128,7 +128,7 @@ AUI.add(
 					);
 				}
 				else if (callback) {
-					callback.call(instance, false);
+					callback.call(instance, true);
 				}
 			},
 

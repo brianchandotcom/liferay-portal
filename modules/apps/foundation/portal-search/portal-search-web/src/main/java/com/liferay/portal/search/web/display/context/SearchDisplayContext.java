@@ -19,15 +19,17 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.facet.FacetBuilder;
+import com.liferay.portal.kernel.search.facet.FacetManager;
+import com.liferay.portal.kernel.search.facet.FacetManagerUtil;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcherManager;
+import com.liferay.portal.kernel.search.facet.searcher.FacetedSearcherManagerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,9 +42,10 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.facet.SearchFacet;
-import com.liferay.portal.search.facet.util.SearchFacetTracker;
+import com.liferay.portal.search.facet.FacetConstants;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
+import com.liferay.portal.search.web.facet.SearchFacet;
+import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
@@ -97,35 +100,19 @@ public class SearchDisplayContext {
 		searchContext.setQueryConfig(getQueryConfig());
 		searchContext.setStart(searchContainer.getStart());
 
-		Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+		addAssetEntriesFacet(searchContext);
 
-		assetEntriesFacet.setStatic(true);
+		addScopeFacet(searchContext);
 
-		searchContext.addFacet(assetEntriesFacet);
+		addEnabledSearchFacets(themeDisplay.getCompanyId(), searchContext);
 
-		Facet scopeFacet = new ScopeFacet(searchContext);
+		FacetedSearcherManager facetedSearcherManager =
+			FacetedSearcherManagerUtil.getInstance();
 
-		scopeFacet.setStatic(true);
+		FacetedSearcher facetedSearcher =
+			facetedSearcherManager.createFacetedSearcher();
 
-		searchContext.addFacet(scopeFacet);
-
-		for (SearchFacet searchFacet : getEnabledSearchFacets()) {
-			searchFacet.init(
-				themeDisplay.getCompanyId(), getSearchConfiguration(),
-				searchContext);
-
-			Facet facet = searchFacet.getFacet();
-
-			if (facet == null) {
-				continue;
-			}
-
-			searchContext.addFacet(facet);
-		}
-
-		Indexer<?> indexer = FacetedSearcher.getInstance();
-
-		Hits hits = indexer.search(searchContext);
+		Hits hits = facetedSearcher.search(searchContext);
 
 		searchContainer.setTotal(hits.getLength());
 		searchContainer.setResults(hits.toList());
@@ -492,6 +479,40 @@ public class SearchDisplayContext {
 		return _viewInContext;
 	}
 
+	protected void addAssetEntriesFacet(SearchContext searchContext) {
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.ASSET_ENTRIES_FACET, searchContext);
+
+		facetBuilder.setStatic(true);
+
+		searchContext.addFacet(facetBuilder.build());
+	}
+
+	protected void addEnabledSearchFacets(
+			long companyId, SearchContext searchContext)
+		throws Exception {
+
+		for (SearchFacet searchFacet : getEnabledSearchFacets()) {
+			searchFacet.init(
+				companyId, getSearchConfiguration(), searchContext);
+
+			Facet facet = searchFacet.getFacet();
+
+			if (facet != null) {
+				searchContext.addFacet(facet);
+			}
+		}
+	}
+
+	protected void addScopeFacet(SearchContext searchContext) {
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.SCOPE_FACET, searchContext);
+
+		facetBuilder.setStatic(true);
+
+		searchContext.addFacet(facetBuilder.build());
+	}
+
 	protected SearchScope getSearchScope() {
 		String scopeString = ParamUtil.getString(
 			_renderRequest, SearchPortletParameterNames.SCOPE);
@@ -522,6 +543,8 @@ public class SearchDisplayContext {
 	protected ThemeDisplay getThemeDisplay() {
 		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
+
+	protected FacetManager facetManager = FacetManagerUtil.getInstance();
 
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;

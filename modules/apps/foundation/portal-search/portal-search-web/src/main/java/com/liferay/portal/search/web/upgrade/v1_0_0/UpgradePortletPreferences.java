@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.facet.FacetConstants;
 import com.liferay.portal.search.web.constants.SearchPortletKeys;
 import com.liferay.portal.search.web.display.context.SearchScopePreference;
 
@@ -68,6 +69,22 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	}
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
+		{
+			"com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
+			FacetConstants.ASSET_ENTRIES_FACET
+		},
+		{
+			"com.liferay.portal.kernel.search.facet.ModifiedFacet",
+			FacetConstants.MODIFIED_FACET
+		},
+		{
+			"com.liferay.portal.kernel.search.facet.MultiValueFacet",
+			FacetConstants.MULTI_VALUE_FACET
+		},
+		{
+			"com.liferay.portal.kernel.search.facet.ScopeFacet",
+			FacetConstants.SCOPE_FACET
+		},
 		{
 			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
 			"com.liferay.bookmarks.model.BookmarksEntry"

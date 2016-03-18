@@ -82,10 +82,28 @@
 	%>
 
 			<aui:script sandbox="<%= true %>">
+				var focusField;
 				var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
 
 				if (!sectionContent.hasClass('in')) {
 					sectionContent.collapse('show');
+				}
+
+				<%
+				String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
+				%>
+
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(focusField) %>">
+						focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
+					</c:when>
+					<c:otherwise>
+						focusField = sectionContent.find('input:not([type="hidden"]).field').first();
+					</c:otherwise>
+				</c:choose>
+
+				if (focusField) {
+					focusField.focus();
 				}
 			</aui:script>
 

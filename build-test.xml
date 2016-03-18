@@ -3901,6 +3901,8 @@ go]]></replacevalue>
 				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>
 		</if>
+
+		<delete dir="/tmp/sprite-root" />
 	</target>
 
 	<target name="deploy-extra-apps">
@@ -4828,7 +4830,9 @@ mail.session.jndi.name=
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+sprite.root.dir=/tmp/sprite-root</echo>
 
 		<get-testcase-property property.name="captcha.max.challenges" />
 

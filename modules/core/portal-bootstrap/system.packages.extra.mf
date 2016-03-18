@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1458281781656
+Bnd-LastModified: 1458287930309
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.7.0_51 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -4303,7 +4303,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  tal.kernel.service,com.liferay.social.kernel.model,javax.servlet.http
  ",com.liferay.social.kernel.util.comparator;version="1.0.0";uses:="co
  m.liferay.portal.kernel.util,com.liferay.social.kernel.model",com.lif
- eray.trash.kernel.exception;version="1.0.0";uses:="com.liferay.portal
+ eray.trash.kernel.exception;version="1.1.0";uses:="com.liferay.portal
  .kernel.exception",com.liferay.trash.kernel.model;version="1.0.0";use
  s:="com.liferay.expando.kernel.model,com.liferay.portal.kernel.annota
  tion,com.liferay.portal.kernel.bean,com.liferay.portal.kernel.model,c
@@ -4894,7 +4894,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  ray.social.kernel.util;version="[1.0,2)",com.liferay.social.kernel.ut
  il.comparator;version="[1.0,2)",com.liferay.taglib,com.liferay.taglib
  .aui,com.liferay.taglib.servlet,com.liferay.taglib.ui.util,com.lifera
- y.taglib.util,com.liferay.trash.kernel.exception;version="[1.0,2)",co
+ y.taglib.util,com.liferay.trash.kernel.exception;version="[1.1,2)",co
  m.liferay.trash.kernel.model;version="[1.0,1.1)",com.liferay.trash.ke
  rnel.service;version="[1.0,1.1)",com.liferay.trash.kernel.service.per
  sistence;version="[1.0,1.1)",com.liferay.trash.kernel.util;version="[

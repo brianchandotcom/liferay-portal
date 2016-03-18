@@ -54,6 +54,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portlet.trash.model.impl.TrashEntryImpl" %><%@
 page import="com.liferay.trash.kernel.exception.RestoreEntryException" %><%@
+page import="com.liferay.trash.kernel.exception.TrashEntryException" %><%@
 page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
 page import="com.liferay.trash.kernel.model.TrashEntryList" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@

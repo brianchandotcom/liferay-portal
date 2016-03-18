@@ -18,37 +18,33 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNodeScriptTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileTree;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileTree;
-import org.gradle.api.file.FileTreeElement;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.SkipWhenEmpty;
-import org.gradle.api.tasks.util.PatternFilterable;
-import org.gradle.api.tasks.util.PatternSet;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class TranspileJSTask
-	extends ExecuteNodeScriptTask implements PatternFilterable {
+public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 	public TranspileJSTask() {
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_METAL_CLI_TASK_NAME);
-
-		include("**/*.es.js");
 
 		setScriptFile(
 			new Callable<File>() {
@@ -60,63 +56,56 @@ public class TranspileJSTask
 				}
 
 			});
-	}
 
-	@Override
-	public TranspileJSTask exclude(
-		@SuppressWarnings("rawtypes") Closure excludeSpec) {
-
-		_patternFilterable.exclude(excludeSpec);
-
-		return this;
-	}
-
-	@Override
-	public TranspileJSTask exclude(Iterable<String> excludes) {
-		_patternFilterable.exclude(excludes);
-
-		return this;
-	}
-
-	@Override
-	public TranspileJSTask exclude(Spec<FileTreeElement> excludeSpec) {
-		_patternFilterable.exclude(excludeSpec);
-
-		return this;
-	}
-
-	@Override
-	public TranspileJSTask exclude(String ... excludes) {
-		_patternFilterable.exclude(excludes);
-
-		return this;
+		soySrcInclude("**/*.soy.es");
+		srcInclude("**/*.es.js");
 	}
 
 	@Override
 	public void executeNode() {
-		super.setWorkingDir(getWorkingDir());
+		final File sourceDir = getSourceDir();
+		final File workingDir = getWorkingDir();
+
+		if (!sourceDir.equals(workingDir)) {
+			Project project = getProject();
+
+			project.copy(
+				new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.from(sourceDir);
+
+						copySpec.include(getSoySrcIncludes());
+						copySpec.include(getSrcIncludes());
+
+						copySpec.into(workingDir);
+					}
+
+				});
+		}
 
 		super.executeNode();
 	}
 
-	@Override
-	public Set<String> getExcludes() {
-		return _patternFilterable.getExcludes();
+	@Input
+	public String getBundleFileName() {
+		return GradleUtil.toString(_bundleFileName);
 	}
 
-	@Override
-	public Set<String> getIncludes() {
-		return _patternFilterable.getIncludes();
+	@Input
+	public String getGlobalName() {
+		return GradleUtil.toString(_globalName);
+	}
+
+	@Input
+	public String getModuleName() {
+		return GradleUtil.toString(_moduleName);
 	}
 
 	@Input
 	public String getModules() {
 		return GradleUtil.toString(_modules);
-	}
-
-	@OutputDirectory
-	public File getOutputDir() {
-		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
 	public File getSourceDir() {
@@ -128,13 +117,18 @@ public class TranspileJSTask
 	public FileCollection getSourceFiles() {
 		Project project = getProject();
 
-		if (_sourceDir == null) {
+		File sourceDir = getSourceDir();
+
+		if (sourceDir == null) {
 			return project.files();
 		}
 
-		FileTree fileTree = project.fileTree(_sourceDir);
+		ConfigurableFileTree configurableFileTree = project.fileTree(sourceDir);
 
-		return fileTree.matching(_patternFilterable);
+		configurableFileTree.include(getSoySrcIncludes());
+		configurableFileTree.include(getSrcIncludes());
+
+		return configurableFileTree;
 	}
 
 	@Input
@@ -142,66 +136,39 @@ public class TranspileJSTask
 		return _sourceMaps;
 	}
 
-	@Input
-	public int getStage() {
-		return _stage;
+	public List<String> getSoySrcIncludes() {
+		return GradleUtil.toStringList(_soySrcIncludes);
 	}
 
+	public List<String> getSrcIncludes() {
+		return GradleUtil.toStringList(_srcIncludes);
+	}
+
+	@OutputDirectory
 	@Override
 	public File getWorkingDir() {
-		return getSourceDir();
+		return super.getWorkingDir();
 	}
 
-	@Override
-	public TranspileJSTask include(
-		@SuppressWarnings("rawtypes") Closure includeSpec) {
-
-		_patternFilterable.include(includeSpec);
-
-		return this;
+	@Input
+	public boolean isSoySkipMetalGeneration() {
+		return _soySkipMetalGeneration;
 	}
 
-	@Override
-	public TranspileJSTask include(Iterable<String> includes) {
-		_patternFilterable.include(includes);
-
-		return this;
+	public void setBundleFileName(Object bundleFileName) {
+		_bundleFileName = bundleFileName;
 	}
 
-	@Override
-	public TranspileJSTask include(Spec<FileTreeElement> includeSpec) {
-		_patternFilterable.include(includeSpec);
-
-		return this;
+	public void setGlobalName(Object globalName) {
+		_globalName = globalName;
 	}
 
-	@Override
-	public TranspileJSTask include(String ... includes) {
-		_patternFilterable.include(includes);
-
-		return this;
-	}
-
-	@Override
-	public TranspileJSTask setExcludes(Iterable<String> excludes) {
-		_patternFilterable.setExcludes(excludes);
-
-		return this;
-	}
-
-	@Override
-	public TranspileJSTask setIncludes(Iterable<String> includes) {
-		_patternFilterable.setIncludes(includes);
-
-		return this;
+	public void setModuleName(Object moduleName) {
+		_moduleName = moduleName;
 	}
 
 	public void setModules(Object modules) {
 		_modules = modules;
-	}
-
-	public void setOutputDir(Object outputDir) {
-		_outputDir = outputDir;
 	}
 
 	public void setSourceDir(Object sourceDir) {
@@ -212,13 +179,48 @@ public class TranspileJSTask
 		_sourceMaps = sourceMaps;
 	}
 
-	public void setStage(int stage) {
-		_stage = stage;
+	public void setSoySkipMetalGeneration(boolean soySkipMetalGeneration) {
+		_soySkipMetalGeneration = soySkipMetalGeneration;
 	}
 
-	@Override
-	public void setWorkingDir(Object workingDir) {
-		throw new UnsupportedOperationException();
+	public void setSoySrcIncludes(Iterable<?> soySrcIncludes) {
+		_soySrcIncludes.clear();
+
+		soySrcInclude(soySrcIncludes);
+	}
+
+	public void setSoySrcIncludes(Object ... soySrcIncludes) {
+		setSoySrcIncludes(Arrays.asList(soySrcIncludes));
+	}
+
+	public void setSrcIncludes(Iterable<?> srcIncludes) {
+		_srcIncludes.clear();
+
+		srcInclude(srcIncludes);
+	}
+
+	public void setSrcIncludes(Object ... srcIncludes) {
+		setSrcIncludes(Arrays.asList(srcIncludes));
+	}
+
+	public TranspileJSTask soySrcInclude(Iterable<?> soySrcIncludes) {
+		GUtil.addToCollection(_soySrcIncludes, soySrcIncludes);
+
+		return this;
+	}
+
+	public TranspileJSTask soySrcInclude(Object ... soySrcIncludes) {
+		return soySrcInclude(Arrays.asList(soySrcIncludes));
+	}
+
+	public TranspileJSTask srcInclude(Iterable<?> srcIncludes) {
+		GUtil.addToCollection(_srcIncludes, srcIncludes);
+
+		return this;
+	}
+
+	public TranspileJSTask srcInclude(Object ... srcIncludes) {
+		return srcInclude(Arrays.asList(srcIncludes));
 	}
 
 	public static enum SourceMaps {
@@ -231,46 +233,68 @@ public class TranspileJSTask
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		File sourceDir = getSourceDir();
+		String destination = FileUtil.getAbsolutePath(getWorkingDir());
 
 		completeArgs.add("build");
 
+		completeArgs.add("--bundleFileName");
+		completeArgs.add(getBundleFileName());
+
 		completeArgs.add("--dest");
-		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
+		completeArgs.add(destination);
 
 		completeArgs.add("--format");
 		completeArgs.add(getModules());
 
+		completeArgs.add("--globalName");
+		completeArgs.add(getGlobalName());
+
 		completeArgs.add("--moduleName");
-		completeArgs.add("");
+		completeArgs.add(getModuleName());
 
 		SourceMaps sourceMaps = getSourceMaps();
 
-		if (sourceMaps != SourceMaps.DISABLED) {
+		if (sourceMaps != SourceMaps.ENABLED) {
 			completeArgs.add("--source-maps");
+
+			if (sourceMaps == SourceMaps.ENABLED_INLINE) {
+				completeArgs.add("inline");
+			}
+			else {
+				completeArgs.add("false");
+			}
 		}
 
-		if (sourceMaps == SourceMaps.ENABLED_INLINE) {
-			completeArgs.add("inline");
+		completeArgs.add("--soyDest");
+		completeArgs.add(destination);
+
+		completeArgs.add("--soySrc");
+
+		for (String soySrcInclude : getSoySrcIncludes()) {
+			completeArgs.add(soySrcInclude);
+		}
+
+		if (isSoySkipMetalGeneration()) {
+			completeArgs.add("--soySkipMetalGeneration");
 		}
 
 		completeArgs.add("--src");
 
-		for (File file : getSourceFiles()) {
-			completeArgs.add(FileUtil.relativize(file, sourceDir));
+		for (String srcInclude : getSrcIncludes()) {
+			completeArgs.add(srcInclude);
 		}
-
-		completeArgs.add("--stage");
-		completeArgs.add(String.valueOf(getStage()));
 
 		return completeArgs;
 	}
 
+	private Object _bundleFileName = "";
+	private Object _globalName = "";
+	private Object _moduleName = "";
 	private Object _modules = "amd";
-	private Object _outputDir;
-	private final PatternFilterable _patternFilterable = new PatternSet();
 	private Object _sourceDir;
 	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
-	private int _stage = 0;
+	private boolean _soySkipMetalGeneration;
+	private final Set<Object> _soySrcIncludes = new LinkedHashSet<>();
+	private final Set<Object> _srcIncludes = new LinkedHashSet<>();
 
 }

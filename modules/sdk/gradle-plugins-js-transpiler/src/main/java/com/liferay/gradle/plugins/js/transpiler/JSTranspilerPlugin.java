@@ -178,7 +178,19 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		final SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		transpileJSTask.setOutputDir(
+		transpileJSTask.setSourceDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File resourcesDir = getSrcDir(sourceSet.getResources());
+
+					return new File(resourcesDir, "META-INF/resources");
+				}
+
+			});
+
+		transpileJSTask.setWorkingDir(
 			new Callable<File>() {
 
 				@Override
@@ -188,18 +200,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 					return new File(
 						sourceSetOutput.getResourcesDir(),
 						"META-INF/resources");
-				}
-
-			});
-
-		transpileJSTask.setSourceDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File resourcesDir = getSrcDir(sourceSet.getResources());
-
-					return new File(resourcesDir, "META-INF/resources");
 				}
 
 			});

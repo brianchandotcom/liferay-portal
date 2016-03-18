@@ -46,10 +46,6 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_METAL_CLI_TASK_NAME);
 
-		_soySrcIncludes.add("**/*.soy.es");
-
-		_srcIncludes.add("**/*.es.js");
-
 		setScriptFile(
 			new Callable<File>() {
 
@@ -60,6 +56,9 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 				}
 
 			});
+
+		soySrcInclude("**/*.soy.es");
+		srcInclude("**/*.es.js");
 	}
 
 	@Override
@@ -186,6 +185,8 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 	public void setSoySrcIncludes(Iterable<?> soySrcIncludes) {
 		_soySrcIncludes.clear();
+
+		soySrcInclude(soySrcIncludes);
 	}
 
 	public void setSoySrcIncludes(Object ... soySrcIncludes) {
@@ -194,10 +195,32 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 	public void setSrcIncludes(Iterable<?> srcIncludes) {
 		_srcIncludes.clear();
+
+		srcInclude(srcIncludes);
 	}
 
 	public void setSrcIncludes(Object ... srcIncludes) {
 		setSrcIncludes(Arrays.asList(srcIncludes));
+	}
+
+	public TranspileJSTask soySrcInclude(Iterable<?> soySrcIncludes) {
+		GUtil.addToCollection(_soySrcIncludes, soySrcIncludes);
+
+		return this;
+	}
+
+	public TranspileJSTask soySrcInclude(Object ... soySrcIncludes) {
+		return soySrcInclude(Arrays.asList(soySrcIncludes));
+	}
+
+	public TranspileJSTask srcInclude(Iterable<?> srcIncludes) {
+		GUtil.addToCollection(_srcIncludes, srcIncludes);
+
+		return this;
+	}
+
+	public TranspileJSTask srcInclude(Object ... srcIncludes) {
+		return srcInclude(Arrays.asList(srcIncludes));
 	}
 
 	public static enum SourceMaps {

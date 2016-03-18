@@ -55,6 +55,7 @@ public class ConfigJSModulesTask
 				DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME);
 
 		include("**/*.es.js*");
+		include("**/*.soy.js*");
 
 		setScriptFile(
 			new Callable<File>() {

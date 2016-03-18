@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,88 +35,128 @@ import java.util.Map;
  * @author Allen Chiang
  * @author Alex Wallace
  */
+@ProviderType
 public class Field implements Serializable {
 
+	@Deprecated
 	public static final String ANY = StringPool.STAR;
 
+	@Deprecated
 	public static final String ARTICLE_ID = "articleId";
 
+	@Deprecated
 	public static final String ASSET_CATEGORY_ID = "assetCategoryId";
 
+	@Deprecated
 	public static final String ASSET_CATEGORY_IDS = "assetCategoryIds";
 
+	@Deprecated
 	public static final String ASSET_CATEGORY_TITLE = "assetCategoryTitle";
 
+	@Deprecated
 	public static final String ASSET_CATEGORY_TITLES = "assetCategoryTitles";
 
+	@Deprecated
 	public static final String ASSET_PARENT_CATEGORY_ID = "parentCategoryId";
 
+	@Deprecated
 	public static final String ASSET_PARENT_CATEGORY_IDS = "parentCategoryIds";
 
+	@Deprecated
 	public static final String ASSET_TAG_IDS = "assetTagIds";
 
+	@Deprecated
 	public static final String ASSET_TAG_NAMES = "assetTagNames";
 
+	@Deprecated
 	public static final String ASSET_VOCABULARY_ID = "assetVocabularyId";
 
+	@Deprecated
 	public static final String ASSET_VOCABULARY_IDS = "assetVocabularyIds";
 
+	@Deprecated
 	public static final String CAPTION = "caption";
 
+	@Deprecated
 	public static final String CATEGORY_ID = "categoryId";
 
+	@Deprecated
 	public static final String CLASS_NAME_ID = "classNameId";
 
+	@Deprecated
 	public static final String CLASS_PK = "classPK";
 
+	@Deprecated
 	public static final String CLASS_TYPE_ID = "classTypeId";
 
+	@Deprecated
 	public static final String COMMENTS = "comments";
 
+	@Deprecated
 	public static final String COMPANY_ID = "companyId";
 
+	@Deprecated
 	public static final String CONTENT = "content";
 
+	@Deprecated
 	public static final String CREATE_DATE = "createDate";
 
+	@Deprecated
 	public static final String DEFAULT_LANGUAGE_ID = "defaultLanguageId";
 
+	@Deprecated
 	public static final String DESCRIPTION = "description";
 
+	@Deprecated
 	public static final String ENTRY_CLASS_NAME = "entryClassName";
 
+	@Deprecated
 	public static final String ENTRY_CLASS_PK = "entryClassPK";
 
+	@Deprecated
 	public static final String EXPIRATION_DATE = "expirationDate";
 
+	@Deprecated
 	public static final String FOLDER_ID = "folderId";
 
+	@Deprecated
 	public static final String GEO_LOCATION = "geoLocation";
 
+	@Deprecated
 	public static final String GROUP_ID = "groupId";
 
+	@Deprecated
 	public static final String GROUP_ROLE_ID = "groupRoleId";
 
+	@Deprecated
 	public static final String HIDDEN = "hidden";
 
+	@Deprecated
 	public static final String KEYWORD_SEARCH = "keywordSearch";
 
+	@Deprecated
 	public static final String[] KEYWORDS = {
 		Field.ASSET_CATEGORY_TITLES, Field.ASSET_TAG_NAMES, Field.COMMENTS,
 		Field.CONTENT, Field.DESCRIPTION, Field.PROPERTIES, Field.TITLE,
 		Field.URL, Field.USER_NAME
 	};
 
+	@Deprecated
 	public static final String LANGUAGE_ID = "languageId";
 
+	@Deprecated
 	public static final String LAYOUT_UUID = "layoutUuid";
 
+	@Deprecated
 	public static final String MODIFIED_DATE = "modified";
 
+	@Deprecated
 	public static final String NAME = "name";
 
+	@Deprecated
 	public static final String NODE_ID = "nodeId";
 
+	@Deprecated
 	public static final String ORGANIZATION_ID = "organizationId";
 
 	/**
@@ -123,62 +165,89 @@ public class Field implements Serializable {
 	@Deprecated
 	public static final String PORTLET_ID = "portletId";
 
+	@Deprecated
 	public static final String PRIORITY = "priority";
 
+	@Deprecated
 	public static final String PROPERTIES = "properties";
 
+	@Deprecated
 	public static final String PUBLISH_DATE = "publishDate";
 
+	@Deprecated
 	public static final String RATINGS = "ratings";
 
+	@Deprecated
 	public static final String RELATED_ENTRY = "relatedEntry";
 
+	@Deprecated
 	public static final String REMOVED_BY_USER_NAME = "removedByUserName";
 
+	@Deprecated
 	public static final String REMOVED_DATE = "removedDate";
 
+	@Deprecated
 	public static final String ROLE_ID = "roleId";
 
+	@Deprecated
 	public static final String ROOT_ENTRY_CLASS_NAME = "rootEntryClassName";
 
+	@Deprecated
 	public static final String ROOT_ENTRY_CLASS_PK = "rootEntryClassPK";
 
+	@Deprecated
 	public static final String SCOPE_GROUP_ID = "scopeGroupId";
 
+	@Deprecated
 	public static final String SNIPPET = "snippet";
 
+	@Deprecated
 	public static final String SPELL_CHECK_WORD = "spellCheckWord";
 
+	@Deprecated
 	public static final String STAGING_GROUP = "stagingGroup";
 
+	@Deprecated
 	public static final String STATUS = "status";
 
+	@Deprecated
 	public static final String SUBTITLE = "subtitle";
 
+	@Deprecated
 	public static final String TITLE = "title";
 
+	@Deprecated
 	public static final String TREE_PATH = "treePath";
 
+	@Deprecated
 	public static final String TYPE = "type";
 
+	@Deprecated
 	public static final String UID = "uid";
 
+	@Deprecated
 	public static final String[] UNSCORED_FIELD_NAMES = {
 		Field.ASSET_CATEGORY_IDS, Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 		Field.ENTRY_CLASS_PK, Field.FOLDER_ID, Field.GROUP_ID,
 		Field.GROUP_ROLE_ID, Field.ROLE_ID, Field.SCOPE_GROUP_ID, Field.USER_ID
 	};
 
+	@Deprecated
 	public static final String URL = "url";
 
+	@Deprecated
 	public static final String USER_GROUP_ID = "userGroupId";
 
+	@Deprecated
 	public static final String USER_ID = "userId";
 
+	@Deprecated
 	public static final String USER_NAME = "userName";
 
+	@Deprecated
 	public static final String VERSION = "version";
 
+	@Deprecated
 	public static final String VIEW_COUNT = "viewCount";
 
 	public static boolean validateFieldName(String name) {

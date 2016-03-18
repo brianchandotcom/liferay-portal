@@ -894,6 +894,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				});
 		}
 
+		replaceRegexTask.replaceOnlyIf(
+			new Closure<Boolean>(null) {
+
+				@SuppressWarnings("unused")
+				public Boolean doCall(
+					String group, String replacement, String content) {
+
+					Version groupVersion = Version.parseVersion(group);
+					Version replacementVersion = Version.parseVersion(
+						replacement);
+
+					if (groupVersion.getMajor() !=
+							replacementVersion.getMajor()) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
 		replaceRegexTask.setDescription(
 			"Updates the project version in external files.");
 		replaceRegexTask.setIgnoreUnmatched(true);

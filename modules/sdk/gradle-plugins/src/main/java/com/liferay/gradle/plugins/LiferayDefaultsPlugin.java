@@ -901,7 +901,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				public Boolean doCall(
 					String group, String replacement, String content) {
 
-					if (gitRepoDir == null) {
+					String projectPath = project.getPath();
+
+					if ((gitRepoDir == null) &&
+						!projectPath.startsWith(":core:")) {
+
 						return true;
 					}
 

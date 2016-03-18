@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.index;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface IndexStatusManager {
 
 	public boolean isIndexReadOnly();

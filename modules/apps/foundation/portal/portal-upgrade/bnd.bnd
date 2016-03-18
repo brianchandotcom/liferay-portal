@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Upgrade
 Bundle-SymbolicName: com.liferay.portal.upgrade
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.portal.upgrade.registry
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Upgrade and Verify

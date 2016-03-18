@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Directory Web
 Bundle-SymbolicName: com.liferay.site.navigation.directory.web
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Web-ContextPath: /site-navigation-directory-web

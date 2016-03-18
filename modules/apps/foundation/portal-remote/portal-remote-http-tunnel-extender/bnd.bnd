@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Remote HTTP Tunnel Extender
 Bundle-SymbolicName: com.liferay.portal.remote.http.tunnel.extender
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 Provide-Capability:\

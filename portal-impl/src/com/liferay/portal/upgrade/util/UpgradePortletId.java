@@ -247,9 +247,7 @@ public class UpgradePortletId extends UpgradeProcess {
 		throws Exception {
 
 		try {
-			runSQL(
-				"update Portlet set portletId = '" + newRootPortletId +
-					"' where portletId = '" + oldRootPortletId + "'");
+			updatePortletId(oldRootPortletId, newRootPortletId);
 
 			updateResourceAction(oldRootPortletId, newRootPortletId);
 
@@ -263,6 +261,15 @@ public class UpgradePortletId extends UpgradeProcess {
 				_log.warn(e, e);
 			}
 		}
+	}
+
+	protected void updatePortletId(
+			String oldRootPortletId, String newRootPortletId)
+		throws Exception {
+
+		runSQL(
+			"update Portlet set portletId = '" + newRootPortletId +
+				"' where portletId = '" + oldRootPortletId + "'");
 	}
 
 	protected void updateResourceAction(String oldName, String newName)

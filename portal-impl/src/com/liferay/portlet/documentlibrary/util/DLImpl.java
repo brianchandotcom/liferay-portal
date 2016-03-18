@@ -1255,8 +1255,8 @@ public class DLImpl implements DL {
 		}
 	}
 
-	private final ServiceTrackerList<PortletLayoutFinder>
-		_serviceTrackerList = ServiceTrackerCollections.openList(
+	private final ServiceTrackerList<PortletLayoutFinder> _serviceTrackerList =
+		ServiceTrackerCollections.openList(
 			PortletLayoutFinder.class,
 			"(model.class.name=" + FileEntry.class.getName() + ")");
 

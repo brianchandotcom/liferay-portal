@@ -67,7 +67,7 @@ public class NodeExecutorFactory {
 		_nodeExecutors.removeNodeTypeDependentObjects(nodeType);
 	}
 
-	private final NodeTypeDependentObjectRegistry<NodeExecutor>
-		_nodeExecutors = new NodeTypeDependentObjectRegistry<>();
+	private final NodeTypeDependentObjectRegistry<NodeExecutor> _nodeExecutors =
+		new NodeTypeDependentObjectRegistry<>();
 
 }

@@ -171,8 +171,8 @@ public class ServiceMonitorAdvice
 		return false;
 	}
 
-	private static final ThreadLocal<DataSample>
-		_dataSampleThreadLocal = new AutoResetThreadLocal<>(
+	private static final ThreadLocal<DataSample> _dataSampleThreadLocal =
+		new AutoResetThreadLocal<>(
 			ServiceMonitorAdvice.class + "._dataSampleThreadLocal");
 	private static boolean _inclusiveMode = true;
 	private static boolean _monitorServiceRequest;

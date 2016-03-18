@@ -97,8 +97,8 @@ public class PermissionUpdateHandlerRegistryUtil {
 	private void _register(PermissionUpdateHandler permissionUpdateHandler) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceRegistration<PermissionUpdateHandler>
-			serviceRegistration = registry.registerService(
+		ServiceRegistration<PermissionUpdateHandler> serviceRegistration =
+			registry.registerService(
 				(Class<PermissionUpdateHandler>)(Class<?>)
 					PermissionUpdateHandler.class,
 				permissionUpdateHandler);

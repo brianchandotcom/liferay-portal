@@ -64,7 +64,7 @@ public class TaskAssignmentSelectorTracker {
 		_taskAssignmentSelectors.remove(assigneeClassName);
 	}
 
-	private final Map<String, TaskAssignmentSelector>
-		_taskAssignmentSelectors = new ConcurrentHashMap<>();
+	private final Map<String, TaskAssignmentSelector> _taskAssignmentSelectors =
+		new ConcurrentHashMap<>();
 
 }

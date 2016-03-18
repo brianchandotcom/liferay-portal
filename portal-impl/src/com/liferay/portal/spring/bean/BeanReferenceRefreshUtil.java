@@ -139,8 +139,8 @@ public class BeanReferenceRefreshUtil {
 		}
 
 		private final BeanFactory _beanFactory;
-		private final Map<Object, List<RefreshPoint>>
-			_beansToRefresh = new IdentityHashMap<>();
+		private final Map<Object, List<RefreshPoint>> _beansToRefresh =
+			new IdentityHashMap<>();
 
 	}
 

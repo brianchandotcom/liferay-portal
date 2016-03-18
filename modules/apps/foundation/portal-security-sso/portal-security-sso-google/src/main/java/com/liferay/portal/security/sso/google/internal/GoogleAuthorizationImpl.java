@@ -127,9 +127,8 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 			getGoogleAuthorizationCodeFlow(companyId, scopes);
 
-		GoogleAuthorizationCodeRequestUrl
-			googleAuthorizationCodeRequestUrl =
-				googleAuthorizationCodeFlow.newAuthorizationUrl();
+		GoogleAuthorizationCodeRequestUrl googleAuthorizationCodeRequestUrl =
+			googleAuthorizationCodeFlow.newAuthorizationUrl();
 
 		googleAuthorizationCodeRequestUrl =
 			googleAuthorizationCodeRequestUrl.setRedirectUri(returnRequestUri);

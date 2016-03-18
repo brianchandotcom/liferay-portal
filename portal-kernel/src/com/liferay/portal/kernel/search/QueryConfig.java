@@ -413,8 +413,8 @@ public class QueryConfig implements Serializable {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX), 5);
 
-	private static final int
-		_INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD = GetterUtil.getInteger(
+	private static final int _INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD =
+		GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD),
 			50);

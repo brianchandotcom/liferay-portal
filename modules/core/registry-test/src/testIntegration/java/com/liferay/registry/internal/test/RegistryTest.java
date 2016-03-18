@@ -903,8 +903,8 @@ public class RegistryTest {
 			AtomicReference<TrackedOne> referenceA = new AtomicReference<>();
 			AtomicReference<TrackedOne> referenceB = new AtomicReference<>();
 
-			MockServiceTrackerCustomizer
-				mockServiceTrackerCustomizer = new MockServiceTrackerCustomizer(
+			MockServiceTrackerCustomizer mockServiceTrackerCustomizer =
+				new MockServiceTrackerCustomizer(
 					interfaceOneA, interfaceOneB, referenceA, referenceB);
 
 			ServiceTracker<InterfaceOne, TrackedOne> serviceTracker =

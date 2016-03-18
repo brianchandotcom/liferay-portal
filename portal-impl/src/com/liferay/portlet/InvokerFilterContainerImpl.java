@@ -187,8 +187,8 @@ public class InvokerFilterContainerImpl
 		new CopyOnWriteArrayList<>();
 	private final List<ResourceFilter> _resourceFilters =
 		new CopyOnWriteArrayList<>();
-	private final List<ServiceRegistrationTuple>
-		_serviceRegistrationTuples = new CopyOnWriteArrayList<>();
+	private final List<ServiceRegistrationTuple> _serviceRegistrationTuples =
+		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
 
 	private static class ServiceRegistrationTuple {

@@ -174,8 +174,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			com.liferay.dynamic.data.mapping.model.DDMStructure
-				structure = _ddmStructureLocalService.getStructure(
+			com.liferay.dynamic.data.mapping.model.DDMStructure structure =
+				_ddmStructureLocalService.getStructure(
 					ddmStructure.getStructureId());
 
 			Element referenceElement =

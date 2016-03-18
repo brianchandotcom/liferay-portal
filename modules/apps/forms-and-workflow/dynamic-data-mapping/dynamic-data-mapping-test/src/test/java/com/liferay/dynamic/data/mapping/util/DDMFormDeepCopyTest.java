@@ -179,14 +179,14 @@ public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 		Assert.assertEquals(
 			"expression", copyDDMFormField.getVisibilityExpression());
 
-		DDMFormFieldOptions
-			copyDDMFormFieldOptions = copyDDMFormField.getDDMFormFieldOptions();
+		DDMFormFieldOptions copyDDMFormFieldOptions =
+			copyDDMFormField.getDDMFormFieldOptions();
 
 		Assert.assertEquals(
 			LocaleUtil.BRAZIL, copyDDMFormFieldOptions.getDefaultLocale());
 
-		Map<String, LocalizedValue>
-			copyOptions = copyDDMFormFieldOptions.getOptions();
+		Map<String, LocalizedValue> copyOptions =
+			copyDDMFormFieldOptions.getOptions();
 
 		Assert.assertTrue(copyOptions.containsKey("teste"));
 

@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.tools.ant.Project;
 
 import org.json.JSONObject;
@@ -43,24 +46,65 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<p>To include a plugin fix for this pull request, please ");
-		sb.append("edit your <a href=\"https://github.com/");
-		sb.append(project.getProperty("github.pull.request.head.username"));
-		sb.append("/");
-		sb.append(project.getProperty("portal.repository"));
-		sb.append("/blob/");
-		sb.append(project.getProperty("github.pull.request.head.branch"));
-		sb.append("/git-commit-plugins\">git-commit-plugins</a>. ");
+		Matcher matcher = _pattern.matcher(consoleOutput);
 
-		sb.append("Click <a href=\"https://in.liferay.com/web/");
-		sb.append("global.engineering/blog/-/blogs/new-tests-for-the-pull-");
-		sb.append("request-tester-\">here</a> for more details.</p>");
+		if (matcher.find()) {
+			String group = matcher.group(0);
 
-		int end = consoleOutput.indexOf("merge-test-results:");
+			sb.append("<p>");
+			sb.append(group);
+			sb.append("</p>");
+			sb.append("<ul>");
 
-		sb.append(getConsoleOutputSnippet(consoleOutput, true, end));
+			int x = matcher.start() + group.length() + 1;
+
+			int failures = Integer.parseInt(matcher.group(1));
+
+			for (int i = 0; i < failures; i++) {
+				if (i == 10) {
+					sb.append("<li>...</li>");
+
+					break;
+				}
+
+				int y = consoleOutput.indexOf("\n", x);
+
+				String pluginName = consoleOutput.substring(x, y);
+
+				sb.append("<li>");
+				sb.append(pluginName.replace("[echo] ", ""));
+				sb.append("</li>");
+
+				x = y + 1;
+			}
+
+			sb.append("</ul>");
+		}
+		else {
+			sb.append(
+				"<p>To include a plugin fix for this pull request, please ");
+			sb.append("edit your <a href=\"https://github.com/");
+			sb.append(project.getProperty("github.pull.request.head.username"));
+			sb.append("/");
+			sb.append(project.getProperty("portal.repository"));
+			sb.append("/blob/");
+			sb.append(project.getProperty("github.pull.request.head.branch"));
+			sb.append("/git-commit-plugins\">git-commit-plugins</a>. ");
+
+			sb.append("Click <a href=\"https://in.liferay.com/web/");
+			sb.append(
+				"global.engineering/blog/-/blogs/new-tests-for-the-pull-");
+			sb.append("request-tester-\">here</a> for more details.</p>");
+
+			int end = consoleOutput.indexOf("merge-test-results:");
+
+			sb.append(getConsoleOutputSnippet(consoleOutput, true, end));
+		}
 
 		return sb.toString();
 	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(\\d+) of \\d+ plugins? failed to compile:");
 
 }

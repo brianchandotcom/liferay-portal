@@ -36,9 +36,9 @@ import org.osgi.framework.Bundle;
 /**
  * @author Bruno Basto
  */
-public class SoyPortletControllersManager {
+public class SoyPortletHelper {
 
-	public SoyPortletControllersManager(Bundle bundle) throws Exception {
+	public SoyPortletHelper(Bundle bundle) throws Exception {
 		_bundle = bundle;
 
 		_moduleName = getModuleName();

@@ -27,7 +27,5 @@ Liferay-Service: true
 -liferay-includeresource:\
 	@backport-util-concurrent-*.jar,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
 	@net.fortuna.ical4j-*.jar

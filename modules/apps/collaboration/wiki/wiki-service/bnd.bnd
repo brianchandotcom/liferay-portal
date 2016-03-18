@@ -69,6 +69,4 @@ Liferay-Service: true
 	@../../../../../lib/portal/jspwiki.jar,\
 	@../../../../../lib/portal/oro.jar,\
 	@../../../../../lib/portal/oscache.jar,\
-	@../../../../../lib/portal/stringtemplate.jar,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class
+	@../../../../../lib/portal/stringtemplate.jar

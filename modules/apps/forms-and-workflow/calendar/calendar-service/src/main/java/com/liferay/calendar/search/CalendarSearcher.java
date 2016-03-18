@@ -16,8 +16,8 @@ package com.liferay.calendar.search;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.portal.kernel.search.BaseSearcher;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.search.constants.FieldNames;
 
 /**
  * @author Adam Brandizzi
@@ -32,10 +32,10 @@ public class CalendarSearcher extends BaseSearcher {
 
 	public CalendarSearcher() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.UID);
+			FieldNames.COMPANY_ID, FieldNames.ENTRY_CLASS_NAME,
+			FieldNames.ENTRY_CLASS_PK, FieldNames.UID);
 		setDefaultSelectedLocalizedFieldNames(
-			Field.DESCRIPTION, Field.NAME, "resourceName");
+			FieldNames.DESCRIPTION, FieldNames.NAME, "resourceName");
 		setFilterSearch(true);
 		setPermissionAware(true);
 		setSelectAllLocales(true);

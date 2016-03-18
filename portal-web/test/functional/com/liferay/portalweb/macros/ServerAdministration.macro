@@ -77,12 +77,32 @@
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_POP_SERVER" value1="pop.gmail.com" />
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_PORT" value1="995" />
 		<execute function="Check" locator1="ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
-		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_USER_NAME" value1="${userName}" />
+
+		<if>
+			<equals arg1="needsReply" arg2="true" />
+			<then>
+				<execute function="Type" locator1="ServerAdministrationMail#INCOMING_USER_NAME" value1="recent:${userName}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="ServerAdministrationMail#INCOMING_USER_NAME" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_PASSWORD" value1="${userPassword}" />
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_SMTP_SERVER" value1="smtp.gmail.com" />
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_PORT" value1="465" />
 		<execute function="Check" locator1="ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX" />
-		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_USER_NAME" value1="${userName}" />
+
+		<if>
+			<equals arg1="needsReply" arg2="true" />
+			<then>
+				<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_USER_NAME" value1="recent:${userName}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_USER_NAME" value1="${userName}" />
+			</else>
+		</if>
+
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_PASSWORD" value1="${userPassword}" />
 		<execute function="AssertClick" locator1="CPServeradministrationMail#SAVE_BUTTON" value1="Save" />
 

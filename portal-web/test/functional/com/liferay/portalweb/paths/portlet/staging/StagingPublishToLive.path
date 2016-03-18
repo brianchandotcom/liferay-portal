@@ -182,12 +182,12 @@
 <!--DATE_RANGE-->
 <tr>
 	<td>DATE_RANGE_START_DATE</td>
-	<td>xpath=(//input[contains(@name,'startDate') and contains(@type,'text')])[1]</td>
+	<td>xpath=(//ul[contains(@class,'date-range-options')]//input[contains(@name,'startDate') and contains(@type,'text')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_RANGE_END_DATE</td>
-	<td>xpath=(//input[contains(@name,'endDate') and contains(@type,'text')])[1]</td>
+	<td>xpath=(//ul[contains(@class,'date-range-options')]//input[contains(@name,'endDate') and contains(@type,'text')])[1]</td>
 	<td></td>
 </tr>
 <tr>

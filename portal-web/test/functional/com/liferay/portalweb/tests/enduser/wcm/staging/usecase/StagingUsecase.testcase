@@ -653,7 +653,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page 1" />
-			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -680,7 +679,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page 2" />
-			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1045,6 +1043,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />

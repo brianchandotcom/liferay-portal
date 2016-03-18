@@ -1047,13 +1047,14 @@
 	</command>
 
 	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
-		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
+		<property name="custom.properties" value="message.boards.message.formats.default=html{line.separator}pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}mail.session.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory{line.separator}mail.session.mail.pop3.socketFactory.class=javax.net.ssl.SSLSocketFactory" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="needsReply" value="true" />
 			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
 			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
@@ -1172,6 +1173,10 @@
 
 		<execute function="Pause" locator1="60000" />
 
+		<execute function="Refresh" />
+
+		<execute function="AssertVisible" locator1="Notifications#PROFILE_BADGE_COUNT" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1180,24 +1185,13 @@
 			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
-		<var name="key_threadSubject" value="MB Thread Message Subject" />
-
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_LAST_POST" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="2 Posts" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_LAST_POST" value1="userfn userln" />
-		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="MB Thread Message Subject" />
-
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_1" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="MB Thread Message Body" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_BODY_2" value1="MB Thread Message Subject Reply" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_2" value1="userfn userln" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_2" value1="0 (0 Votes)" />
+		<execute macro="MessageboardsThread#viewReplyPG">
+			<var name="postCount" value="2" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Message Subject Reply" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="userName" value="userfn userln" />
+		</execute>
 
 		<execute macro="Gmail#tearDown">
 			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />

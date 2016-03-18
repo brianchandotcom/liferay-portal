@@ -16,8 +16,6 @@ liferay {
 }
 
 wrapSoyTemplates {
-	dependsOn transpileJS
-
 	doLast {
 		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
 

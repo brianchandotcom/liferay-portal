@@ -62,7 +62,7 @@ serverURL.setParameter("tabs2", tabs2);
 	Properties properties = null;
 
 	if (tabs2.equals("portal-properties")) {
-		properties = PropsUtil.getProperties();
+		properties = PropsUtil.getProperties(true);
 	}
 	else {
 		properties = System.getProperties();

@@ -298,8 +298,13 @@ public class TranspileJSTask
 
 		if (sourceMaps != SourceMaps.ENABLED) {
 			completeArgs.add("--source-maps");
-			completeArgs.add(
-				sourceMaps == SourceMaps.ENABLED_INLINE ? "inline" : "false");
+
+			if (sourceMaps == SourceMaps.ENABLED_INLINE) {
+				completeArgs.add("inline");
+			}
+			else {
+				completeArgs.add("false");
+			}
 		}
 
 		completeArgs.add("--soySrc");

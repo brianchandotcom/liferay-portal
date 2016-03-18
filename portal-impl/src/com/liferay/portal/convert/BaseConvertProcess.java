@@ -109,6 +109,6 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseConvertProcess.class);
 
-	private String[] _paramValues = null;
+	private String[] _paramValues;
 
 }

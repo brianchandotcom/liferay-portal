@@ -467,6 +467,17 @@ public class JavaClass {
 			checkMutableFieldType(javaTerm, javaFieldType);
 		}
 
+		if (!isFinal && !javaTerm.isPublic() &&
+			!_fileName.endsWith("ObjectGraphUtilTest.java")) {
+
+			matcher = _isNullPattern.matcher(javaTermContent);
+
+			if (matcher.find()) {
+				_classContent = StringUtil.replace(
+					_classContent, javaTermContent, matcher.replaceFirst(";$1"));
+			}
+		}
+
 		if (!javaTerm.isPrivate()) {
 			return;
 		}
@@ -1435,6 +1446,8 @@ public class JavaClass {
 	private final String _fileName;
 	private final String _indent;
 	private final List<JavaClass> _innerClasses = new ArrayList<>();
+	private final Pattern _isNullPattern = Pattern.compile(
+		" =\\s+null;(\\s+)$");
 	private final JavaSourceProcessor _javaSourceProcessor;
 	private final List<String> _javaTermAccessLevelModifierExcludes;
 	private Set<JavaTerm> _javaTerms;

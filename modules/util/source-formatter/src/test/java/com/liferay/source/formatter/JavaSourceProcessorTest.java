@@ -222,6 +222,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testNullVariable() throws Exception {
+		test("NullVariable.testjava");
+	}
+
+	@Test
 	public void testPackagePath() throws Exception {
 		test("PackagePath.testjava", "Incorrect package path:");
 	}

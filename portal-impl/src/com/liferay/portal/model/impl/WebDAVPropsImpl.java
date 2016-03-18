@@ -156,6 +156,6 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 	private static final String _PROPS = "<properties />";
 
-	private Document _document = null;
+	private Document _document;
 
 }

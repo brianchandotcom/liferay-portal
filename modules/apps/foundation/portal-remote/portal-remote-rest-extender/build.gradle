@@ -22,7 +22,3 @@ deploy {
 		rename new RenameDependencyClosure(project, configurations.provided.name)
 	}
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

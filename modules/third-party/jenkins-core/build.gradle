@@ -17,10 +17,6 @@ dependencies {
 	compile group: "org.jenkins-ci.main", name: jenkinsCoreName, optional, version: jenkinsCoreVersion
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

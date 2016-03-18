@@ -14,7 +14,3 @@ dependencies {
 	provided project(":apps:web-experience:site:site-api")
 	provided project(":apps:web-experience:site:site-item-selector-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

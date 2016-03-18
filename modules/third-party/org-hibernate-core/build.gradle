@@ -29,10 +29,6 @@ deployJar {
 	}
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

@@ -16,7 +16,3 @@ dependencies {
 	provided project(":apps:web-experience:staging:staging-taglib")
 	provided project(":apps:web-experience:trash:trash-taglib")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

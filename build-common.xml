@@ -1601,7 +1601,6 @@ rerun your task.
 				file="${basedir}/.gradle/gradle.properties"
 			>
 				app.server.type=${app.server.type}
-				auto.deploy.dir=${liferay.home}/osgi/apps
 				baseline.jar.report.level=${baseline.jar.report.level}
 				baseline.jar.report.only.dirty.packages=${baseline.jar.report.only.dirty.packages}
 				jsp.precompile.enabled=${jsp.precompile.enabled}

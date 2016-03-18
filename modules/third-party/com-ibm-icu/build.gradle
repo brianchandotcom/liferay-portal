@@ -47,7 +47,3 @@ deployJar {
 		"liferay-icu4j.jar"
 	}
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

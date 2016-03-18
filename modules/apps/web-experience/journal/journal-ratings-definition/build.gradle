@@ -6,7 +6,3 @@ dependencies {
 	provided project(":apps:collaboration:ratings:ratings-api")
 	provided project(":apps:web-experience:journal:journal-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

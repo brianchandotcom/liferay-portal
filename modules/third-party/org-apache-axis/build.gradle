@@ -11,10 +11,6 @@ dependencies {
 	compile group: "axis", name: "axis", optional, version: "1.4"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

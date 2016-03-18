@@ -25,7 +25,3 @@ deployConfigs {
 	from "configs"
 	into new File(liferay.liferayHome, "osgi/configs")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

@@ -10,7 +10,3 @@ dependencies {
 	provided project(":apps:web-experience:product-navigation:product-navigation-control-menu-api")
 	provided project(":apps:web-experience:product-navigation:product-navigation-taglib")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

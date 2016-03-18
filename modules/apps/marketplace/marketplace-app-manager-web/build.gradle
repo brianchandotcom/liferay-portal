@@ -13,7 +13,3 @@ dependencies {
 	provided project(":apps:marketplace:marketplace-store-web")
 	provided project(":apps:web-experience:application-list:application-list-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

@@ -1241,6 +1241,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					addTaskCopyLibs(project);
 					addTaskUpdateBundleVersion(project);
 					configureBundleDefaultInstructions(project, publishing);
+					configureDeployDir(project);
 					configureTaskJavadoc(project);
 
 					if (hasBaseline(project)) {
@@ -1309,6 +1310,30 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						taskExecutionGraph.hasTask(jarTask)) {
 
 						configureBundleInstructions(project);
+					}
+				}
+
+			});
+	}
+
+	protected void configureDeployDir(final Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					String archivesBaseName = getArchivesBaseName(project);
+
+					if (archivesBaseName.startsWith("com.liferay.portal.")) {
+						return new File(
+							liferayExtension.getLiferayHome(), "osgi/portal");
+					}
+					else {
+						return new File(
+							liferayExtension.getLiferayHome(), "osgi/modules");
 					}
 				}
 

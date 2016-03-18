@@ -12,7 +12,3 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-tags-navigation-web")
 	provided project(":apps:web-experience:layout:layout-set-prototype-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

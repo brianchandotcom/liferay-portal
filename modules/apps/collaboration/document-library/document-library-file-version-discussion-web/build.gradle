@@ -6,7 +6,3 @@ dependencies {
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

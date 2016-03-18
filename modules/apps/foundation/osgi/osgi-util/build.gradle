@@ -20,7 +20,3 @@ dependencies {
 	testIntegrationCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
 	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

@@ -14,7 +14,3 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:foundation:xstream:xstream-configurator-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

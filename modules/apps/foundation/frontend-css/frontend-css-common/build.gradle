@@ -49,10 +49,6 @@ dependencies {
 	bourbon group: "org.webjars.bower", name: "bourbon", transitive: false, version: bourbonVersion
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 publishNodeModule {
 	dependsOn jar
 	workingDir = "src/main/resources/META-INF/resources"

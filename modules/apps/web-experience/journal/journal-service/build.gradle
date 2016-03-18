@@ -33,7 +33,3 @@ dependencies {
 	provided project(":apps:web-experience:journal:journal-lang")
 	provided project(":core:registry-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

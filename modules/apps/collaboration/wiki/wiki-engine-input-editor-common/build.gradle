@@ -8,7 +8,3 @@ dependencies {
 	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":core:registry-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

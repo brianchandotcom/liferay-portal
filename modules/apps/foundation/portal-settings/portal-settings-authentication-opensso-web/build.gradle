@@ -12,7 +12,3 @@ dependencies {
 	provided project(":apps:foundation:portal-settings:portal-settings-api")
 	provided project(":apps:foundation:portal-settings:portal-settings-web")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

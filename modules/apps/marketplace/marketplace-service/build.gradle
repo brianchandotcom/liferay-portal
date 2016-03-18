@@ -15,7 +15,3 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:marketplace:marketplace-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

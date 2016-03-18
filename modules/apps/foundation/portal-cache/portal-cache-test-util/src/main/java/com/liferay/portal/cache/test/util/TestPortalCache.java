@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.test;
+package com.liferay.portal.cache.test.util;
 
 import com.liferay.portal.cache.BasePortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

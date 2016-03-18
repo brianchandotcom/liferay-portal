@@ -4,7 +4,3 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

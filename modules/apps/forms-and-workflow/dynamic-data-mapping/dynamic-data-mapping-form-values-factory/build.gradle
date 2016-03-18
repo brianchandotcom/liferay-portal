@@ -15,7 +15,3 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

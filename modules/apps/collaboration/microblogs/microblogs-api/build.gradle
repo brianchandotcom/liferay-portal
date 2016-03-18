@@ -4,7 +4,3 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided project(":apps:foundation:osgi:osgi-util")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

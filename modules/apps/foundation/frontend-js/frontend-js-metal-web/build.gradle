@@ -64,7 +64,3 @@ configJSModules {
 dependencies {
 	metalComponents group: "com.liferay.webjars", name: "com.liferay.webjars.metal-components", transitive: false, version: metalComponentsVersion
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

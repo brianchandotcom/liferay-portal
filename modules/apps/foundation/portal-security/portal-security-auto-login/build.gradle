@@ -7,7 +7,3 @@ dependencies {
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal-security:portal-security-export-import-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

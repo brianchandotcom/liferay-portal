@@ -8,7 +8,3 @@ dependencies {
 	provided group: "xalan", name: "xalan", version: "2.7.2"
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

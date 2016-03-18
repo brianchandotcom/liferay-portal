@@ -12,7 +12,3 @@ dependencies {
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

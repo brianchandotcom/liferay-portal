@@ -34,7 +34,3 @@ deploy {
 		include "org.eclipse.equinox.http.servlet.jar"
 	}
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

@@ -11,7 +11,3 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

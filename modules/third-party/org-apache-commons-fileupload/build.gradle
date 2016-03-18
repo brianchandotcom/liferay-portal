@@ -15,10 +15,6 @@ dependencies {
 	provided group: "portlet-api", name: "portlet-api", transitive: false, version: "1.0"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 patch {
 	ext {
 		autoClean = false

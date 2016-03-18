@@ -5,7 +5,3 @@ dependencies {
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal:portal-spring-extender")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

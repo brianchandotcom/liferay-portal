@@ -160,10 +160,6 @@ dependencies {
 	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 publishNodeModule {
 	dependsOn jar
 	workingDir = "src/main/resources/META-INF/resources/_unstyled"

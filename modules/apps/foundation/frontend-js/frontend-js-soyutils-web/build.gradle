@@ -27,7 +27,3 @@ classes {
 dependencies {
 	soyutils group: "org.webjars.bower", name: "soyutils", transitive: false, version: soyutilsVersion
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

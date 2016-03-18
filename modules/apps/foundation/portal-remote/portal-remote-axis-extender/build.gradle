@@ -11,7 +11,3 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	provided project(":apps:foundation:osgi:osgi-util")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

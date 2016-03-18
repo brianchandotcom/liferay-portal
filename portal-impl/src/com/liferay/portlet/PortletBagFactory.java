@@ -621,8 +621,8 @@ public class PortletBagFactory {
 			Portlet portlet, Filter filter, Map<String, Object> properties)
 		throws Exception {
 
-		ServiceTrackerList<PreferencesValidator>
-			preferencesValidatorInstances = ServiceTrackerCollections.openList(
+		ServiceTrackerList<PreferencesValidator> preferencesValidatorInstances =
+			ServiceTrackerCollections.openList(
 				PreferencesValidator.class, filter, properties);
 
 		if (Validator.isNotNull(portlet.getPreferencesValidator())) {

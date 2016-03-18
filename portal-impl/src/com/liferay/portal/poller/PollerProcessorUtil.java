@@ -119,12 +119,11 @@ public class PollerProcessorUtil {
 					String[] skeletonProxyMethodSignatures =
 						skeletonProxyMethodSignaturesFuture.get();
 
-					Class<? extends PollerProcessor>
-						stubPollerClass =
-							(Class<? extends PollerProcessor>)
-								IntrabandProxyUtil.getStubClass(
-									PollerProcessor.class,
-									PollerProcessor.class.getName());
+					Class<? extends PollerProcessor> stubPollerClass =
+						(Class<? extends PollerProcessor>)
+							IntrabandProxyUtil.getStubClass(
+								PollerProcessor.class,
+								PollerProcessor.class.getName());
 
 					IntrabandProxyInstallationUtil.checkProxyMethodSignatures(
 						skeletonProxyMethodSignatures,

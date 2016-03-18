@@ -93,7 +93,7 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 		}
 	}
 
-	private final Map<String, Map<String, RatingsType>>
-		_groupRatingsTypeMaps = new HashMap<>();
+	private final Map<String, Map<String, RatingsType>> _groupRatingsTypeMaps =
+		new HashMap<>();
 
 }

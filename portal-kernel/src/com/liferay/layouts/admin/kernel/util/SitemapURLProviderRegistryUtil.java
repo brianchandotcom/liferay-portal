@@ -107,8 +107,8 @@ public class SitemapURLProviderRegistryUtil {
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final
 		ServiceTracker<SitemapURLProvider, SitemapURLProvider> _serviceTracker;
-	private final Map<String, SitemapURLProvider>
-		_sitemapURLProviders = new ConcurrentHashMap<>();
+	private final Map<String, SitemapURLProvider> _sitemapURLProviders =
+		new ConcurrentHashMap<>();
 
 	private class SitemapURLProviderServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

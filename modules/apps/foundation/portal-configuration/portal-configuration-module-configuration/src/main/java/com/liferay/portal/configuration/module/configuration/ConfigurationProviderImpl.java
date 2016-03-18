@@ -80,10 +80,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 					typedSettings);
 			}
 
-			ConfigurationInvocationHandler<T>
-				configurationInvocationHandler =
-					new ConfigurationInvocationHandler<>(
-						clazz, configurationOverrideInstance, typedSettings);
+			ConfigurationInvocationHandler<T> configurationInvocationHandler =
+				new ConfigurationInvocationHandler<>(
+					clazz, configurationOverrideInstance, typedSettings);
 
 			return configurationInvocationHandler.createProxy();
 		}

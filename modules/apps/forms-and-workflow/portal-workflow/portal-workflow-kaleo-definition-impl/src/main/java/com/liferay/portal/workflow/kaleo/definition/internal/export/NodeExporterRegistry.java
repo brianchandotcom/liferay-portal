@@ -68,7 +68,7 @@ public class NodeExporterRegistry {
 		_nodeExporters.removeNodeTypeDependentObjects(nodeType);
 	}
 
-	private final NodeTypeDependentObjectRegistry<NodeExporter>
-		_nodeExporters = new NodeTypeDependentObjectRegistry<>();
+	private final NodeTypeDependentObjectRegistry<NodeExporter> _nodeExporters =
+		new NodeTypeDependentObjectRegistry<>();
 
 }

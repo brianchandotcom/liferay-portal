@@ -1269,8 +1269,8 @@ public class SelectorIntrabandTest {
 			new CountDownLatch(1);
 		public static volatile CountDownLatch
 			isWarnEnabledCalledCountDownLatch = new CountDownLatch(1);
-		public static volatile CountDownLatch
-			warnCalledCountDownLatch = new CountDownLatch(1);
+		public static volatile CountDownLatch warnCalledCountDownLatch =
+			new CountDownLatch(1);
 
 		public static void reset() {
 			errorCalledCountDownLatch = new CountDownLatch(1);

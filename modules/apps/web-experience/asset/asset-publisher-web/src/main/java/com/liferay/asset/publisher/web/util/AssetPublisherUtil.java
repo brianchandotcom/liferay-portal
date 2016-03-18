@@ -1928,7 +1928,7 @@ public class AssetPublisherUtil {
 
 		};
 
-	private final List<AssetEntryQueryProcessor>
-		_assetEntryQueryProcessors = new CopyOnWriteArrayList<>();
+	private final List<AssetEntryQueryProcessor> _assetEntryQueryProcessors =
+		new CopyOnWriteArrayList<>();
 
 }

@@ -249,8 +249,8 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		SuggesterResult.Entry suggesterResultEntry = new SuggesterResult.Entry(
 			text.string());
 
-		List<? extends Suggest.Suggestion.Entry.Option>
-			suggestionEntryOptions = suggestionEntry.getOptions();
+		List<? extends Suggest.Suggestion.Entry.Option> suggestionEntryOptions =
+			suggestionEntry.getOptions();
 
 		for (Suggest.Suggestion.Entry.Option suggestionEntryOption :
 				suggestionEntryOptions) {

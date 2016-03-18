@@ -275,8 +275,8 @@ public class StringParser {
 		"[\\{\\}\\(\\)\\[\\]\\*\\+\\?\\$\\^\\.\\#\\\\]");
 	private static final Pattern _fragmentPattern = Pattern.compile(
 		"\\{.+?\\}");
-	private static final Map<String, StringParser>
-		_stringParserFragmentsCache = new ConcurrentReferenceValueHashMap<>(
+	private static final Map<String, StringParser> _stringParserFragmentsCache =
+		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 	private final String _builder;

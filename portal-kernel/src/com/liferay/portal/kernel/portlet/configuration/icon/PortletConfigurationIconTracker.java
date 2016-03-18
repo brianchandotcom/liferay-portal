@@ -42,14 +42,12 @@ public class PortletConfigurationIconTracker {
 		getPortletConfigurationIcons(
 			String portletId, PortletRequest portletRequest) {
 
-		List<PortletConfigurationIcon>
-			portletConfigurationIcons = new ArrayList<>();
+		List<PortletConfigurationIcon> portletConfigurationIcons =
+			new ArrayList<>();
 
 		for (String path : getPaths(portletId, portletRequest)) {
-			List<PortletConfigurationIcon>
-				portletPortletConfigurationIcons =
-					_serviceTrackerMap.getService(
-						getKey(StringPool.STAR, path));
+			List<PortletConfigurationIcon> portletPortletConfigurationIcons =
+				_serviceTrackerMap.getService(getKey(StringPool.STAR, path));
 
 			if (portletPortletConfigurationIcons != null) {
 				portletConfigurationIcons.addAll(

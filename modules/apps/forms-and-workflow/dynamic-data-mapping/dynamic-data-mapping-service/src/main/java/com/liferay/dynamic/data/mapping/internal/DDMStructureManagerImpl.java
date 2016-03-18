@@ -77,8 +77,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			com.liferay.dynamic.data.mapping.model.DDMForm translatedDDMForm =
 				_ddmBeanTranslator.translate(ddmForm);
 
-			com.liferay.dynamic.data.mapping.model.DDMStructure
-				ddmStructure = _ddmStructureLocalService.addStructure(
+			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+				_ddmStructureLocalService.addStructure(
 					userId, groupId, parentStructureKey, classNameId,
 					structureKey, nameMap, descriptionMap, translatedDDMForm,
 					_ddm.getDefaultDDMFormLayout(translatedDDMForm),
@@ -161,8 +161,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		List<com.liferay.dynamic.data.mapping.model.DDMStructure>
-			structures = _ddmStructureLocalService.getClassStructures(
+		List<com.liferay.dynamic.data.mapping.model.DDMStructure> structures =
+			_ddmStructureLocalService.getClassStructures(
 				companyId, classNameId);
 
 		for (com.liferay.dynamic.data.mapping.model.DDMStructure

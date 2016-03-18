@@ -106,8 +106,8 @@ public class JSONUtil {
 		return _objectWriter;
 	}
 
-	private static final Map<Class<?>, ObjectReader>
-		_classObjectReaderMap = new HashMap<>();
+	private static final Map<Class<?>, ObjectReader> _classObjectReaderMap =
+		new HashMap<>();
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 	private static ObjectWriter _objectWriter;
 	private static final Map<TypeReference<?>, ObjectReader>

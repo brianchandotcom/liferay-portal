@@ -89,14 +89,14 @@ public class XStreamConfiguratorRegistryUtil {
 		return _xStreamConfigurators;
 	}
 
-	private static final XStreamConfiguratorRegistryUtil
-		_instance = new XStreamConfiguratorRegistryUtil();
+	private static final XStreamConfiguratorRegistryUtil _instance =
+		new XStreamConfiguratorRegistryUtil();
 
 	private final BundleContext _bundleContext;
 	private final ServiceTracker<XStreamConfigurator, XStreamConfigurator>
 		_serviceTracker;
-	private final Set<XStreamConfigurator>
-		_xStreamConfigurators = new ConcurrentHashSet<>();
+	private final Set<XStreamConfigurator> _xStreamConfigurators =
+		new ConcurrentHashSet<>();
 
 	private class XStreamConfiguratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

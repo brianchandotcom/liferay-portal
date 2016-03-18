@@ -38,8 +38,8 @@ public class ModuleFrameworkTestUtil {
 
 		Collection<Long> bundleIds = new ArrayList<>();
 
-		Collection<ServiceReference<T>>
-			serviceReferences = registry.getServiceReferences(clazz, filter);
+		Collection<ServiceReference<T>> serviceReferences =
+			registry.getServiceReferences(clazz, filter);
 
 		for (ServiceReference<T> serviceReference : serviceReferences) {
 			Long bundleId = (Long)serviceReference.getProperty(

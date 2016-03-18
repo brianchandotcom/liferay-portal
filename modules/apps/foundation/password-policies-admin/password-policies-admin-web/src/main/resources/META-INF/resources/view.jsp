@@ -177,6 +177,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 				form.attr('method', 'post');
 				form.fm('passwordPolicyIds').val(passwordPolicyIds);
 
+				document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+
 				submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');
 			}
 		}

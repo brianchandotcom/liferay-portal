@@ -70,6 +70,10 @@ public class ReplaceRegexTask extends DefaultTask {
 		return GradleUtil.toString(_replacement);
 	}
 
+	public List<Closure<Boolean>> getReplaceOnlyIf() {
+		return _replaceOnlyIfClosures;
+	}
+
 	public boolean isIgnoreUnmatched() {
 		return _ignoreUnmatched;
 	}
@@ -103,6 +107,20 @@ public class ReplaceRegexTask extends DefaultTask {
 
 	public ReplaceRegexTask pre(Iterable<Closure<String>> preClosures) {
 		GUtil.addToCollection(_preClosures, preClosures);
+
+		return this;
+	}
+
+	public ReplaceRegexTask replaceOnlyIf(
+		Closure<Boolean> ... replaceOnlyIfClosures) {
+
+		return replaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
+	}
+
+	public ReplaceRegexTask replaceOnlyIf(
+		Iterable<Closure<Boolean>> replaceOnlyIfClosures) {
+
+		GUtil.addToCollection(_replaceOnlyIfClosures, replaceOnlyIfClosures);
 
 		return this;
 	}
@@ -148,6 +166,18 @@ public class ReplaceRegexTask extends DefaultTask {
 		_replacement = replacement;
 	}
 
+	public void setReplaceOnlyIf(Closure<Boolean> ... replaceOnlyIfClosures) {
+		setReplaceOnlyIf(Arrays.asList(replaceOnlyIfClosures));
+	}
+
+	public void setReplaceOnlyIf(
+		Iterable<Closure<Boolean>> replaceOnlyIfClosures) {
+
+		_replaceOnlyIfClosures.clear();
+
+		replaceOnlyIf(replaceOnlyIfClosures);
+	}
+
 	protected void replaceRegex(File file, Pattern pattern, String replacement)
 		throws IOException {
 
@@ -165,11 +195,31 @@ public class ReplaceRegexTask extends DefaultTask {
 		Matcher matcher = pattern.matcher(newContent);
 
 		if (matcher.find()) {
+			boolean replace = true;
+
 			int groupCount = matcher.groupCount();
 
-			newContent =
-				newContent.substring(0, matcher.start(groupCount)) +
-					replacement + newContent.substring(matcher.end(groupCount));
+			String group = matcher.group(groupCount);
+
+			for (Closure<Boolean> closure : getReplaceOnlyIf()) {
+				if (!closure.call(group, replacement, newContent)) {
+					replace = false;
+
+					break;
+				}
+			}
+
+			if (replace) {
+				newContent =
+					newContent.substring(0, matcher.start(groupCount)) +
+						replacement +
+							newContent.substring(matcher.end(groupCount));
+			}
+			else if (_logger.isInfoEnabled()) {
+				_logger.info(
+					"Skipped replacement of " + group + " to " + replacement +
+						" in " + file);
+			}
 		}
 		else if (content.equals(newContent)) {
 			String message = "Unable to match " + pattern + " in " + file;
@@ -185,9 +235,11 @@ public class ReplaceRegexTask extends DefaultTask {
 			throw new GradleException(message);
 		}
 
-		Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
+		if (!content.equals(newContent)) {
+			Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
 
-		_matchedFiles.add(file);
+			_matchedFiles.add(file);
+		}
 	}
 
 	private static final Logger _logger = Logging.getLogger(
@@ -198,5 +250,7 @@ public class ReplaceRegexTask extends DefaultTask {
 	private final Map<String, FileCollection> _matches = new LinkedHashMap<>();
 	private final List<Closure<String>> _preClosures = new ArrayList<>();
 	private Object _replacement;
+	private final List<Closure<Boolean>> _replaceOnlyIfClosures =
+		new ArrayList<>();
 
 }

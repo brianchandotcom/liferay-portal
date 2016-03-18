@@ -38,8 +38,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.ScopeFacet}
  */
+@Deprecated
 public class ScopeFacet extends MultiValueFacet {
 
 	public ScopeFacet(SearchContext searchContext) {

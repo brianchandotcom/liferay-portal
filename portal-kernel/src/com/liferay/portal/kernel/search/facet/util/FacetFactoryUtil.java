@@ -30,7 +30,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.facet.FacetManager}
  */
+@Deprecated
 public class FacetFactoryUtil {
 
 	public static Facet create(

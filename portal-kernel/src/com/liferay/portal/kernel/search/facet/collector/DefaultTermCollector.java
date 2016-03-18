@@ -15,8 +15,10 @@
 package com.liferay.portal.kernel.search.facet.collector;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.DefaultTermCollector}
  */
+@Deprecated
 public class DefaultTermCollector implements TermCollector {
 
 	public DefaultTermCollector(String term, int frequency) {

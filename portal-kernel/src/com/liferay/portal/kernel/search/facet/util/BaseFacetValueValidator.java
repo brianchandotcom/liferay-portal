@@ -17,8 +17,10 @@ package com.liferay.portal.kernel.search.facet.util;
 import com.liferay.portal.kernel.search.SearchContext;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.BaseFacetValueValidator}
  */
+@Deprecated
 public class BaseFacetValueValidator implements FacetValueValidator {
 
 	@Override

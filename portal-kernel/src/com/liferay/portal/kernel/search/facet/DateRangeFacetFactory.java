@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.DateRangeFacetFactory}
  */
+@Deprecated
 public class DateRangeFacetFactory implements FacetFactory {
 
 	@Override

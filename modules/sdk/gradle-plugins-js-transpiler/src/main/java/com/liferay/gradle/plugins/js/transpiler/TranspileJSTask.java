@@ -337,7 +337,7 @@ public class TranspileJSTask
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private Object _sourceDir;
 	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
-	private boolean _soySkipMetalGeneration = false;
+	private boolean _soySkipMetalGeneration;
 	private final List<Object> _soySrcIncludes = new ArrayList<>();
 	private final List<Object> _srcIncludes = new ArrayList<>();
 

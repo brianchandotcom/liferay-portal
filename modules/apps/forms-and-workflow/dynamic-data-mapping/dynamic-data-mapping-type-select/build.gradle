@@ -8,9 +8,6 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
 
-String soyJsWrapperHeader = "AUI.add('liferay-ddm-form-field-select-template', function(A) {";
-String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
-
 task wrapSoyTemplates
 
 classes {
@@ -26,6 +23,9 @@ wrapSoyTemplates {
 
 	doLast {
 		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
+
+		String soyJsWrapperHeader = "AUI.add('liferay-ddm-form-field-select-template', function(A) {"
+		String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
 
 		soyJsFileTree.each {
 			File soyJsFile ->

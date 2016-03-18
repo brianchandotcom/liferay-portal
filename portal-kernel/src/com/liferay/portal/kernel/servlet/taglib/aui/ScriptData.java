@@ -217,16 +217,16 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			sb.append(CharPool.UNDERLINE);
 		}
 
-		boolean lastCharacterWasInvalid = false;
+		boolean startNewWord = false;
 
 		for (int i = 1; i < name.length(); i++) {
 			c = name.charAt(i);
 
 			if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) {
-				if (lastCharacterWasInvalid) {
+				if (startNewWord) {
 					sb.append((char)(c - 32));
 
-					lastCharacterWasInvalid = false;
+					startNewWord = false;
 				}
 				else {
 					sb.append(c);
@@ -239,12 +239,12 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 				sb.append(c);
 
-				lastCharacterWasInvalid = false;
+				startNewWord = false;
 			}
 			else {
 				modified = true;
 
-				lastCharacterWasInvalid = true;
+				startNewWord = true;
 			}
 		}
 

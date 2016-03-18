@@ -359,15 +359,15 @@ public class JournalArticleAssetRenderer
 						_article.getUrlTitle()));
 		}
 
-		String urlViewInContext = getLayoutURL(
+		String hitLayoutURL = getHitLayoutURL(
 			layout.isPrivateLayout(), noSuchEntryRedirect, themeDisplay);
 
-		if (urlViewInContext.equals(noSuchEntryRedirect)) {
-			urlViewInContext = getLayoutURL(
+		if (hitLayoutURL.equals(noSuchEntryRedirect)) {
+			hitLayoutURL = getHitLayoutURL(
 				!layout.isPrivateLayout(), noSuchEntryRedirect, themeDisplay);
 		}
 
-		return urlViewInContext;
+		return hitLayoutURL;
 	}
 
 	@Override
@@ -500,7 +500,7 @@ public class JournalArticleAssetRenderer
 		}
 	}
 
-	protected String getLayoutURL(
+	protected String getHitLayoutURL(
 			boolean privateLayout, String noSuchEntryRedirect,
 			ThemeDisplay themeDisplay)
 		throws PortalException {

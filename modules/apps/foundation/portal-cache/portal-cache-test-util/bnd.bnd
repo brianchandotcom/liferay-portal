@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Cache Test Util
+Bundle-SymbolicName: com.liferay.portal.cache.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.cache.test.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Cache Engines

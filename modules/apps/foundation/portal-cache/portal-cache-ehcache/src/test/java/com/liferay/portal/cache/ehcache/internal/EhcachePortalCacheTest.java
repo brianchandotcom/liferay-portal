@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestPortalCacheManager;
-import com.liferay.portal.cache.test.TestPortalCacheReplicator;
+import com.liferay.portal.cache.test.util.TestPortalCacheListener;
+import com.liferay.portal.cache.test.util.TestPortalCacheManager;
+import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

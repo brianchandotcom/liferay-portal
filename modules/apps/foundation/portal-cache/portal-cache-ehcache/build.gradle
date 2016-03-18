@@ -5,5 +5,5 @@ dependencies {
 	provided project(":apps:foundation:portal-cache:portal-cache")
 	provided project(":apps:foundation:portal-cache:portal-cache-ehcache-provider")
 
-	testCompile project(":apps:foundation:portal-cache:portal-cache-test")
+	testCompile project(":apps:foundation:portal-cache:portal-cache-test-util")
 }

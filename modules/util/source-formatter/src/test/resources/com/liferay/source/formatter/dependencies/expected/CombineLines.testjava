@@ -155,6 +155,11 @@ public class CombineLines extends SuperClass {
 				"Hello World Hello World Hello";
 	}
 
+	protected final List<String> listWithAMediumLongVariableName =
+		new ArrayList<>();
+	protected final List<String> listWithAnLongerNameThanTheMediumLongNameOne =
+		new ArrayList<>();
+
 	private class SubClass1
 		extends SomeOtherClassWithALongNameThatDoesNotFitOnPreviousLine {
 	}

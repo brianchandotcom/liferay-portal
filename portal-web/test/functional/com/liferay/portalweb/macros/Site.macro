@@ -374,15 +374,16 @@
 
 		<execute function="AssertClick" locator1="Button#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
+		<var name="key_iframeTitle" value="Assign Site Roles" />
+
+		<execute function="AssertElementPresent" locator1="IFrame#IFRAME_TITLE" />
 		<execute function="AssertVisible" locator1="Button#DONE" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Pause" locator1="5000" />
-
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
 		<var name="key_roleName" value="${roleName}" />
 

@@ -47,10 +47,11 @@ import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
-import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.facet.FacetBuilder;
+import com.liferay.portal.kernel.search.facet.FacetConstants;
+import com.liferay.portal.kernel.search.facet.FacetManager;
+import com.liferay.portal.kernel.search.facet.FacetManagerUtil;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
@@ -897,13 +898,15 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		multiValueFacet.setFieldName(Field.ASSET_CATEGORY_IDS);
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getAssetCategoryIds());
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.ASSET_CATEGORY_IDS_FACET, searchContext);
 
-		searchContext.addFacet(multiValueFacet);
+		facetBuilder.setStatic(true);
+		facetBuilder.setValues(searchContext.getAssetCategoryIds());
+
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected void addSearchAssetCategoryTitles(
@@ -958,13 +961,15 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		multiValueFacet.setFieldName(Field.ASSET_TAG_NAMES);
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getAssetTagNames());
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.ASSET_TAG_NAMES_FACET, searchContext);
 
-		searchContext.addFacet(multiValueFacet);
+		facetBuilder.setStatic(true);
+		facetBuilder.setValues(searchContext.getAssetTagNames());
+
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected Filter addSearchClassTypeIds(
@@ -991,11 +996,14 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		Facet facet = new AssetEntriesFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		facet.setStatic(true);
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.ASSET_ENTRIES_FACET, searchContext);
 
-		searchContext.addFacet(facet);
+		facetBuilder.setStatic(true);
+
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected Map<String, Query> addSearchExpando(
@@ -1045,31 +1053,36 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		multiValueFacet.setFieldName(Field.TREE_PATH);
-		multiValueFacet.setStatic(true);
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.TREE_PATH_FACET, searchContext);
+
+		facetBuilder.setStatic(true);
 
 		long[] folderIds = searchContext.getFolderIds();
 
 		if (ArrayUtil.isNotEmpty(folderIds)) {
 			folderIds = ArrayUtil.remove(folderIds, _DEFAULT_FOLDER_ID);
 
-			multiValueFacet.setValues(folderIds);
+			facetBuilder.setValues(folderIds);
 		}
 
-		searchContext.addFacet(multiValueFacet);
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected void addSearchGroupId(
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		Facet facet = new ScopeFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		facet.setStatic(true);
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.SCOPE_FACET, searchContext);
 
-		searchContext.addFacet(facet);
+		facetBuilder.setStatic(true);
+
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected Map<String, Query> addSearchKeywords(
@@ -1096,12 +1109,14 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		multiValueFacet.setFieldName(Field.LAYOUT_UUID);
-		multiValueFacet.setStatic(true);
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.LAYOUT_UUID_FACET, searchContext);
 
-		searchContext.addFacet(multiValueFacet);
+		facetBuilder.setStatic(true);
+
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected Map<String, Query> addSearchLocalizedTerm(
@@ -1183,19 +1198,21 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter queryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		FacetManager facetManager = FacetManagerUtil.getInstance();
 
-		multiValueFacet.setFieldName(Field.USER_ID);
-		multiValueFacet.setStatic(true);
+		FacetBuilder facetBuilder = facetManager.createFacetBuilder(
+			FacetConstants.USER_ID_FACET, searchContext);
+
+		facetBuilder.setStatic(true);
 
 		long userId = GetterUtil.getLong(
 			searchContext.getAttribute(Field.USER_ID));
 
 		if (userId > 0) {
-			multiValueFacet.setValues(new long[] {userId});
+			facetBuilder.setValues(new long[] {userId});
 		}
 
-		searchContext.addFacet(multiValueFacet);
+		searchContext.addFacet(facetBuilder.build());
 	}
 
 	protected void addSelectedLocalizedFieldNames(

@@ -1975,7 +1975,7 @@
 			<var name="localizedText" value="WC contenu WebContent" />
 			<var name="localizedTitle" value="WC WebContent Titre" />
 			<var name="lowercaseLanguageCode" value="fr" />
-			<var name="panelHeading" value="Structure et modèle" />
+			<var name="panelHeading" value="Structure et gabarit" />
 			<var name="structureLocalizationName" value="nom de la structure de wc" />
 			<var name="templateLocalizationName" value="nom de la template de wc" />
 			<var name="webContentTranslationLanguage" value="français (France)" />

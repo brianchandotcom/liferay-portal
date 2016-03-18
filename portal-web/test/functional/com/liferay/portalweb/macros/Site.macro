@@ -15,7 +15,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -255,7 +255,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="Click" locator1="Button#ADD" />
+		<execute function="Click" locator1="Button#DONE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

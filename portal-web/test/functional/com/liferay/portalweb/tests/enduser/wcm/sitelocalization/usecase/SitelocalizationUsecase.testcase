@@ -67,6 +67,7 @@
 		</execute>
 
 		<execute macro="Page#viewPageLocalization">
+			<var name="category" value="Navigation" />
 			<var name="defaultSiteLanguageKey" value="es_ES" />
 			<var name="page" value="Language Test Page" />
 		</execute>

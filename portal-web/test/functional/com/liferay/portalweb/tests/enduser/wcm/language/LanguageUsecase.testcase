@@ -115,7 +115,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Webcontentanzeige" />
+			<var name="portletName" value="Webcontent-Anzeige" />
 			<var name="portletOption" value="Webcontent bearbeiten" />
 		</execute>
 

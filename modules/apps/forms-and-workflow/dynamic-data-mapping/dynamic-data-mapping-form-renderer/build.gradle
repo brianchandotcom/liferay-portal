@@ -30,14 +30,14 @@ liferay {
 wrapSoyTemplates {
 	dependsOn transpileJS
 
-    doLast {
-        FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
+	doLast {
+		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
 
-        soyJsFileTree.each {
-            File soyJsFile ->
+		soyJsFileTree.each {
+			File soyJsFile ->
 
-            soyJsFile.text = soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }")
-            soyJsFile.text = soyJsWrapperHeader + soyJsFile.text + soyJsWrapperFooter
-        }
-    }
+			soyJsFile.text = soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }")
+			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text + soyJsWrapperFooter
+		}
+	}
 }

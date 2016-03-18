@@ -15,7 +15,6 @@
 package com.liferay.gradle.plugins.js.transpiler;
 
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeScriptTask;
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -203,6 +202,10 @@ public class TranspileJSTask
 		return _soySkipMetalGeneration;
 	}
 
+	public void setBundleFileName(Object bundleFileName) {
+		_bundleFileName = bundleFileName;
+	}
+
 	@Override
 	public TranspileJSTask setExcludes(Iterable<String> excludes) {
 		_patternFilterable.setExcludes(excludes);
@@ -210,19 +213,15 @@ public class TranspileJSTask
 		return this;
 	}
 
+	public void setGlobalName(Object globalName) {
+		_globalName = globalName;
+	}
+
 	@Override
 	public TranspileJSTask setIncludes(Iterable<String> includes) {
 		_patternFilterable.setIncludes(includes);
 
 		return this;
-	}
-
-	public void setBundleFileName(Object bundleFileName) {
-		_bundleFileName = bundleFileName;
-	}
-
-	public void setGlobalName(Object globalName) {
-		_globalName = globalName;
 	}
 
 	public void setModuleName(Object moduleName) {

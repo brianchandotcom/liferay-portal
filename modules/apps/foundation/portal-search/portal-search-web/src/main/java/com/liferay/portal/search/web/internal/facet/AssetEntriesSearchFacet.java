@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.web.facet;
+package com.liferay.portal.search.web.internal.facet;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.facet.ModifiedFacet;
+import com.liferay.portal.kernel.search.facet.FacetManager;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.facet.BaseJSPSearchFacet;
-import com.liferay.portal.search.facet.SearchFacet;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.FacetConstants;
+import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
+import com.liferay.portal.search.web.facet.SearchFacet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 
@@ -36,11 +45,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class ModifiedSearchFacet extends BaseJSPSearchFacet {
+public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
+
+	public List<AssetRendererFactory<?>> getAssetRendererFactories(
+		long companyId) {
+
+		return AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+			companyId);
+	}
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/modified.jsp";
+		return "/facets/configuration/asset_entries.jsp";
 	}
 
 	@Override
@@ -51,48 +67,47 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("frequencyThreshold", 0);
+		jsonObject.put("frequencyThreshold", 1);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (int i = 0; i < _LABELS.length; i++) {
-			JSONObject range = JSONFactoryUtil.createJSONObject();
-
-			range.put("label", _LABELS[i]);
-			range.put("range", _RANGES[i]);
-
-			jsonArray.put(range);
+		for (String assetType : getAssetTypes(companyId)) {
+			jsonArray.put(assetType);
 		}
 
-		jsonObject.put("ranges", jsonArray);
+		jsonObject.put("values", jsonArray);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
+
 		facetConfiguration.setFieldName(getFieldName());
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.0);
+		facetConfiguration.setWeight(1.5);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/modified.jsp";
+		return "/facets/view/asset_entries.jsp";
 	}
 
 	@Override
 	public String getFacetClassName() {
-		return ModifiedFacet.class.getName();
+		return FacetConstants.ASSET_ENTRIES_FACET;
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.MODIFIED_DATE;
+		return Field.ENTRY_CLASS_NAME;
 	}
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		int frequencyThreshold = ParamUtil.getInteger(
@@ -100,39 +115,32 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 		jsonObject.put("frequencyThreshold", frequencyThreshold);
 
+		String[] assetTypes = StringUtil.split(
+			ParamUtil.getString(actionRequest, getClassName() + "assetTypes"));
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		String[] rangesIndexes = StringUtil.split(
-			ParamUtil.getString(
-				actionRequest, getClassName() + "rangesIndexes"));
-
-		for (String rangesIndex : rangesIndexes) {
-			JSONObject rangeJSONObject = JSONFactoryUtil.createJSONObject();
-
-			String label = ParamUtil.getString(
-				actionRequest, getClassName() + "label_" + rangesIndex);
-			String range = ParamUtil.getString(
-				actionRequest, getClassName() + "range_" + rangesIndex);
-
-			rangeJSONObject.put("label", label);
-			rangeJSONObject.put("range", range);
-
-			jsonArray.put(rangeJSONObject);
+		if (ArrayUtil.isEmpty(assetTypes)) {
+			assetTypes = getAssetTypes(themeDisplay.getCompanyId());
 		}
 
-		jsonObject.put("ranges", jsonArray);
+		for (String assetType : assetTypes) {
+			jsonArray.put(assetType);
+		}
+
+		jsonObject.put("values", jsonArray);
 
 		return jsonObject;
 	}
 
 	@Override
 	public String getLabel() {
-		return "any-time";
+		return "any-asset";
 	}
 
 	@Override
 	public String getTitle() {
-		return "modified-date";
+		return "asset-type";
 	}
 
 	@Override
@@ -143,13 +151,31 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		super.setServletContext(servletContext);
 	}
 
-	private static final String[] _LABELS = new String[] {
-		"past-hour", "past-24-hours", "past-week", "past-month", "past-year"
-	};
+	protected String[] getAssetTypes(long companyId) {
+		List<String> assetTypes = new ArrayList<>();
 
-	private static final String[] _RANGES = new String[] {
-		"[past-hour TO *]", "[past-24-hours TO *]", "[past-week TO *]",
-		"[past-month TO *]", "[past-year TO *]"
-	};
+		List<AssetRendererFactory<?>> assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				companyId);
+
+		for (int i = 0; i < assetRendererFactories.size(); i++) {
+			AssetRendererFactory<?> assetRendererFactory =
+				assetRendererFactories.get(i);
+
+			if (!assetRendererFactory.isSearchable()) {
+				continue;
+			}
+
+			assetTypes.add(assetRendererFactory.getClassName());
+		}
+
+		return ArrayUtil.toStringArray(assetTypes);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setFacetManager(FacetManager facetManager) {
+		super.setFacetManager(facetManager);
+	}
 
 }

@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.web.facet;
+package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.facet.FacetManager;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.facet.BaseJSPSearchFacet;
-import com.liferay.portal.search.facet.SearchFacet;
+import com.liferay.portal.search.facet.FacetConstants;
+import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
+import com.liferay.portal.search.web.facet.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
@@ -34,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class ScopeSearchFacet extends BaseJSPSearchFacet {
+public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/scopes.jsp";
+		return "/facets/configuration/users.jsp";
 	}
 
 	@Override
@@ -59,24 +60,24 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.6);
+		facetConfiguration.setWeight(1.1);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/scopes.jsp";
+		return "/facets/view/users.jsp";
 	}
 
 	@Override
 	public String getFacetClassName() {
-		return ScopeFacet.class.getName();
+		return FacetConstants.MULTI_VALUE_FACET;
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.GROUP_ID;
+		return Field.USER_NAME;
 	}
 
 	@Override
@@ -99,12 +100,12 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "any-site";
+		return "any-user";
 	}
 
 	@Override
 	public String getTitle() {
-		return "sites";
+		return "user";
 	}
 
 	@Override
@@ -113,6 +114,12 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setFacetManager(FacetManager facetManager) {
+		super.setFacetManager(facetManager);
 	}
 
 }

@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.web.facet;
+package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.search.facet.FacetManager;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.facet.BaseJSPSearchFacet;
-import com.liferay.portal.search.facet.SearchFacet;
+import com.liferay.portal.search.facet.FacetConstants;
+import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
+import com.liferay.portal.search.web.facet.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
@@ -34,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
+public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/asset_tags.jsp";
+		return "/facets/configuration/scopes.jsp";
 	}
 
 	@Override
@@ -49,7 +50,6 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("displayStyle", "list");
 		jsonObject.put("frequencyThreshold", 1);
 		jsonObject.put("maxTerms", 10);
 		jsonObject.put("showAssetCount", true);
@@ -60,32 +60,30 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.4);
+		facetConfiguration.setWeight(1.6);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/asset_tags.jsp";
+		return "/facets/view/scopes.jsp";
 	}
 
 	@Override
 	public String getFacetClassName() {
-		return MultiValueFacet.class.getName();
+		return FacetConstants.SCOPE_FACET;
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.ASSET_TAG_NAMES;
+		return Field.GROUP_ID;
 	}
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String displayStyleFacet = ParamUtil.getString(
-			actionRequest, getClassName() + "displayStyleFacet", "list");
 		int frequencyThreshold = ParamUtil.getInteger(
 			actionRequest, getClassName() + "frequencyThreshold", 1);
 		int maxTerms = ParamUtil.getInteger(
@@ -93,7 +91,6 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 		boolean showAssetCount = ParamUtil.getBoolean(
 			actionRequest, getClassName() + "showAssetCount", true);
 
-		jsonObject.put("displayStyle", displayStyleFacet);
 		jsonObject.put("frequencyThreshold", frequencyThreshold);
 		jsonObject.put("maxTerms", maxTerms);
 		jsonObject.put("showAssetCount", showAssetCount);
@@ -103,12 +100,12 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "any-tag";
+		return "any-site";
 	}
 
 	@Override
 	public String getTitle() {
-		return "tag";
+		return "sites";
 	}
 
 	@Override
@@ -117,6 +114,12 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setFacetManager(FacetManager facetManager) {
+		super.setFacetManager(facetManager);
 	}
 
 }

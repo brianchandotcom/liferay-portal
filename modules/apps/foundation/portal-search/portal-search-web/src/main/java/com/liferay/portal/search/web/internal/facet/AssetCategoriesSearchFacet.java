@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.web.facet;
+package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.search.facet.FacetManager;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.facet.BaseJSPSearchFacet;
-import com.liferay.portal.search.facet.SearchFacet;
+import com.liferay.portal.search.facet.FacetConstants;
+import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
+import com.liferay.portal.search.web.facet.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
@@ -34,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class FolderSearchFacet extends BaseJSPSearchFacet {
+public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/folders.jsp";
+		return "/facets/configuration/asset_categories.jsp";
 	}
 
 	@Override
@@ -49,6 +50,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("displayStyle", "list");
 		jsonObject.put("frequencyThreshold", 1);
 		jsonObject.put("maxTerms", 10);
 		jsonObject.put("showAssetCount", true);
@@ -59,30 +61,32 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.2);
+		facetConfiguration.setWeight(1.3);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/folders.jsp";
+		return "/facets/view/asset_categories.jsp";
 	}
 
 	@Override
 	public String getFacetClassName() {
-		return MultiValueFacet.class.getName();
+		return FacetConstants.ASSET_CATEGORY_IDS_FACET;
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.FOLDER_ID;
+		return Field.ASSET_CATEGORY_IDS;
 	}
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		String displayStyleFacet = ParamUtil.getString(
+			actionRequest, getClassName() + "displayStyleFacet", "list");
 		int frequencyThreshold = ParamUtil.getInteger(
 			actionRequest, getClassName() + "frequencyThreshold", 1);
 		int maxTerms = ParamUtil.getInteger(
@@ -90,6 +94,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 		boolean showAssetCount = ParamUtil.getBoolean(
 			actionRequest, getClassName() + "showAssetCount", true);
 
+		jsonObject.put("displayStyle", displayStyleFacet);
 		jsonObject.put("frequencyThreshold", frequencyThreshold);
 		jsonObject.put("maxTerms", maxTerms);
 		jsonObject.put("showAssetCount", showAssetCount);
@@ -99,12 +104,12 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "any-folder";
+		return "any-category";
 	}
 
 	@Override
 	public String getTitle() {
-		return "folder";
+		return "category";
 	}
 
 	@Override
@@ -113,6 +118,12 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setFacetManager(FacetManager facetManager) {
+		super.setFacetManager(facetManager);
 	}
 
 }

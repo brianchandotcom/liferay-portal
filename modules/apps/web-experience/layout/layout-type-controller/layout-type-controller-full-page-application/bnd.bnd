@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Type Controller Full Page Application
 Bundle-SymbolicName: com.liferay.layout.type.controller.full.page.application
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /layout-type-controller-full-page-application

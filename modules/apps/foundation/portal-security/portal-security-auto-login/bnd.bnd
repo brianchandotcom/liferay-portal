@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security Auto Login
 Bundle-SymbolicName: com.liferay.portal.security.auto.login
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.security.auto.login.basic.auth.header,\
 	com.liferay.portal.security.auto.login.remember.me,\

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Configuration Metatype Definitons Annotations
 Bundle-SymbolicName: com.liferay.portal.configuration.metatype.definitions.annotations
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Metatype

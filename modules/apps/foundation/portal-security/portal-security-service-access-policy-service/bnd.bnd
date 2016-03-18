@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security Service Access Policy Service
 Bundle-SymbolicName: com.liferay.portal.security.service.access.policy.service
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.portal.security.service.access.policy.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

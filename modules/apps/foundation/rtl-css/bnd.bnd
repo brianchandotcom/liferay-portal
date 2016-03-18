@@ -1,6 +1,6 @@
 Bundle-Name: Liferay RTL CSS
 Bundle-SymbolicName: com.liferay.rtl.css
-Bundle-Version: 1.0.6
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.rtl.css
 Import-Package:\
 	!org.junit,\

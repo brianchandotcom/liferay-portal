@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Message Boards API
 Bundle-SymbolicName: com.liferay.message.boards.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.message.boards.*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards

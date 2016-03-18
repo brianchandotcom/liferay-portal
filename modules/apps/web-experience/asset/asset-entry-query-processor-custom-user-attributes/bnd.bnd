@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Entry Query Processor Custom User Attributes
 Bundle-SymbolicName: com.liferay.asset.entry.query.processor.custom.user.attributes
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
 Liferay-Require-SchemaVersion: 1.0.0

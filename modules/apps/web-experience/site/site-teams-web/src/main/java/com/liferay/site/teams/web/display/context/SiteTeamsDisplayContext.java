@@ -106,6 +106,15 @@ public class SiteTeamsDisplayContext {
 		searchContainer.setEmptyResultsMessage(
 			"there-are-no-site-teams.-you-can-add-a-site-team-by-clicking-" +
 				"the-plus-button-on-the-bottom-right-corner");
+
+		if (Validator.isNull(getKeywords())) {
+			searchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			searchContainer.setSearch(true);
+		}
+
 		searchContainer.setId("teams");
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

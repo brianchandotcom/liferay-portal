@@ -31,6 +31,8 @@ SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, po
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
 
+userGroupSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
+
 LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 userGroupParams.put("userGroupsTeams", Long.valueOf(team.getTeamId()));

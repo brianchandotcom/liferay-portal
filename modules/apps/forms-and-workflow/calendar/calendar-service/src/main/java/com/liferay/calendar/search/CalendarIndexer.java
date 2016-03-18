@@ -87,7 +87,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, FieldNames.DESCRIPTION, true);
-		addSearchLocalizedTerm(searchQuery, searchContext, FieldNames.NAME, true);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, FieldNames.NAME, true);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, "resourceName", true);
 	}

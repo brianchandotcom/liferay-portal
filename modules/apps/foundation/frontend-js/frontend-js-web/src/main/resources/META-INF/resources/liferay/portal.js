@@ -118,7 +118,7 @@
 						cssClass: 'tooltip-help',
 						html: true,
 						opacity: 1,
-						stickDuration: 300,
+						stickDuration: 100,
 						visible: false,
 						zIndex: Liferay.zIndex.TOOLTIP
 					}
@@ -145,12 +145,43 @@
 			cached.set(BODY_CONTENT, text);
 			cached.set(TRIGGER, obj);
 
+			var tooltipTimeout;
+			var tooltip = cached.get('boundingBox');
+
+			var hideTooltip = function() {
+				tooltipTimeout = A.later(
+					cached.stickDuration,
+					tooltip,
+					function() {
+						cached.hide();
+					}
+				);
+			};
+
 			obj.detach('hover');
+			tooltip.detach('hover');
 
 			obj.on(
 				'hover',
 				A.bind('_onBoundingBoxMouseenter', cached),
-				A.bind('_onBoundingBoxMouseleave', cached)
+				hideTooltip
+			);
+
+			tooltip.on(
+				'hover',
+				function(event) {
+					tooltipTimeout.cancel();
+
+					obj.on(
+						'lfr-tooltip|mouseenter',
+						function(event) {
+							tooltipTimeout.cancel();
+
+							this.detach('lfr-tooltip|mouseenter');
+						}
+					);
+				},
+				hideTooltip
 			);
 
 			cached.show();

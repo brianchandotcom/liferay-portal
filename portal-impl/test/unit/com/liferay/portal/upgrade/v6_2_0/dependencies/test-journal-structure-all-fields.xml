@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<dynamic-element name="boolean" type="boolean" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Boolean Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="document_library" type="document_library" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Document Library Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="image_1" type="image" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Image Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="image_2" type="image" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="label"><![CDATA[image_2]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="image_3" type="image" index-type="">
+		<meta-data>
+			<entry name="label"><![CDATA[image_3]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="link_to_layout" type="link_to_layout" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Link To Page Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="list" type="list" index-type="" repeatable="false">
+		<dynamic-element name="List Item 01" index-type="" type="value 01" repeatable="false" />
+		<dynamic-element name="List Item 02" index-type="" type="value 02" repeatable="false" />
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[List Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="multi_list" type="multi-list" index-type="" repeatable="false">
+		<dynamic-element name="Multi Item 01" type="value 01" repeatable="false" />
+		<dynamic-element name="Multi Item 02" type="value 02" repeatable="false" />
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Multi Select Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="selection_break" type="selection_break" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Selection Break Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="contact" type="text" index-type="text" repeatable="true">
+		<dynamic-element name="phone" type="text" index-type="text" repeatable="true">
+			<dynamic-element name="ext" type="text" index-type="text" repeatable="false">
+				<meta-data>
+					<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+					<entry name="instructions"><![CDATA[]]></entry>
+					<entry name="label"><![CDATA[Ext]]></entry>
+					<entry name="predefinedValue"><![CDATA[]]></entry>
+					<entry name="required"><![CDATA[false]]></entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data>
+				<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+				<entry name="instructions"><![CDATA[]]></entry>
+				<entry name="label"><![CDATA[Phone]]></entry>
+				<entry name="predefinedValue"><![CDATA[]]></entry>
+				<entry name="required"><![CDATA[false]]></entry>
+			</meta-data>
+		</dynamic-element>
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Contact]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="text" type="text" index-type="text" repeatable="true">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[These are some instructions.]]></entry>
+			<entry name="label"><![CDATA[Text Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[test]]></entry>
+			<entry name="required"><![CDATA[true]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="text_box" type="text_box" index-type="" repeatable="true">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[Text Area Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="text_area" type="text_area" index-type="" repeatable="false">
+		<meta-data>
+			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
+			<entry name="instructions"><![CDATA[]]></entry>
+			<entry name="label"><![CDATA[HTML Field]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="required"><![CDATA[false]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

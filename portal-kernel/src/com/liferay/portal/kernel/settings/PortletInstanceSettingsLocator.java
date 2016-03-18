@@ -128,7 +128,7 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 	}
 
 	private final String _configurationPid;
-	private Boolean _embeddedPortlet = null;
+	private Boolean _embeddedPortlet;
 	private final Layout _layout;
 	private final String _portletInstanceKey;
 	private final SettingsLocatorHelper _settingsLocatorHelper =

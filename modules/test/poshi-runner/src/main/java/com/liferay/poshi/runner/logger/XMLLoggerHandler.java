@@ -784,6 +784,6 @@ public final class XMLLoggerHandler {
 	private static int _btnLinkVarId;
 	private static final Map<String, LoggerElement> _loggerElements =
 		new HashMap<>();
-	private static LoggerElement _xmlLogLoggerElement = null;
+	private static LoggerElement _xmlLogLoggerElement;
 
 }

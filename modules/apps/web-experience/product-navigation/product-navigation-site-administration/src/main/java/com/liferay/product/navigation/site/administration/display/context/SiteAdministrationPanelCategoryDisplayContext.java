@@ -465,7 +465,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private final RecentGroupManager _recentGroupManager;
-	private Boolean _showStagingInfo = null;
+	private Boolean _showStagingInfo;
 	private String _stagingGroupURL;
 	private String _stagingLabel;
 	private final ThemeDisplay _themeDisplay;

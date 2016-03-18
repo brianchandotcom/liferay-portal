@@ -113,8 +113,8 @@ public class FileLockRetryUtilTest {
 		);
 	}
 
-	private FileChannel _fileChannel = null;
-	private FileLock _fileLock = null;
-	private Path _filePath = null;
+	private FileChannel _fileChannel;
+	private FileLock _fileLock;
+	private Path _filePath;
 
 }

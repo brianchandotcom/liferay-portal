@@ -4,7 +4,7 @@
 	<import file="../build-common-java.xml" />
 
 	<property name="artifact.version" value="1.0.0" />
-	<property name="deploy.dir" value="${app.server.resin.lib.global.dir}" />
+	<property name="deploy.dir" value="${app.server.resin.lib.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 
 	<path id="web-lib.classpath">

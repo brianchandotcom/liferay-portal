@@ -17,11 +17,13 @@ package com.liferay.dynamic.data.mapping.internal;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
@@ -54,10 +56,20 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		return _ddmStructure.getAvailableLanguageIds();
+	}
+
+	@Override
 	public List<String> getChildrenFieldNames(String fieldName)
 		throws PortalException {
 
 		return _ddmStructure.getChildrenFieldNames(fieldName);
+	}
+
+	@Override
+	public String getClassName() {
+		return _ddmStructure.getClassName();
 	}
 
 	@Override
@@ -102,6 +114,11 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getDefaultLanguageId() {
+		return _ddmStructure.getDefaultLanguageId();
+	}
+
+	@Override
 	public String getDefinition() {
 		return _ddmStructure.getDefinition();
 	}
@@ -114,6 +131,31 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public String getDescription(Locale locale) {
 		return _ddmStructure.getDescription(locale);
+	}
+
+	@Override
+	public String getDescription(Locale locale, boolean useDefault) {
+		return _ddmStructure.getDescription(locale, useDefault);
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		return _ddmStructure.getDescription(languageId);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return _ddmStructure.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return _ddmStructure.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public String getDescriptionCurrentValue() {
+		return _ddmStructure.getDescriptionCurrentValue();
 	}
 
 	@Override
@@ -132,6 +174,20 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getFieldLabel(String fieldName, Locale locale)
+		throws PortalException {
+
+		return _ddmStructure.getFieldLabel(fieldName, locale);
+	}
+
+	@Override
+	public String getFieldLabel(String fieldName, String locale)
+		throws PortalException {
+
+		return _ddmStructure.getFieldLabel(fieldName, locale);
+	}
+
+	@Override
 	public Set<String> getFieldNames() {
 		return _ddmStructure.getFieldNames();
 	}
@@ -141,6 +197,30 @@ public class DDMStructureImpl implements DDMStructure {
 		throws PortalException {
 
 		return _ddmStructure.getFieldProperty(fieldName, property);
+	}
+
+	@Override
+	public boolean getFieldRepeatable(String fieldName) throws PortalException {
+		return _ddmStructure.getFieldRepeatable(fieldName);
+	}
+
+	@Override
+	public boolean getFieldRequired(String fieldName) throws PortalException {
+		return _ddmStructure.getFieldRequired(fieldName);
+	}
+
+	@Override
+	public String getFieldTip(String fieldName, Locale locale)
+		throws PortalException {
+
+		return _ddmStructure.getFieldTip(fieldName, locale);
+	}
+
+	@Override
+	public String getFieldTip(String fieldName, String locale)
+		throws PortalException {
+
+		return _ddmStructure.getFieldTip(fieldName, locale);
 	}
 
 	@Override
@@ -195,6 +275,26 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getName(String languageId) {
+		return _ddmStructure.getName(languageId);
+	}
+
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return _ddmStructure.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _ddmStructure.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _ddmStructure.getNameCurrentValue();
+	}
+
+	@Override
 	public Map<Locale, String> getNameMap() {
 		return _ddmStructure.getNameMap();
 	}
@@ -225,6 +325,11 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getStorageType() {
+		return _ddmStructure.getStorageType();
+	}
+
+	@Override
 	public long getStructureId() {
 		return _ddmStructure.getStructureId();
 	}
@@ -232,6 +337,22 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public String getStructureKey() {
 		return _ddmStructure.getStructureKey();
+	}
+
+	@Override
+	public List<DDMTemplate> getTemplates() throws PortalException {
+		List<com.liferay.dynamic.data.mapping.model.DDMTemplate> ddmTemplates =
+			_ddmStructure.getTemplates();
+
+		List<DDMTemplate> templates = new ArrayList<>();
+
+		for (com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate :
+				ddmTemplates) {
+
+			templates.add(new DDMTemplateImpl(ddmTemplate));
+		}
+
+		return templates;
 	}
 
 	@Override
@@ -260,13 +381,28 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
+		return _ddmStructure.getWebDavURL(themeDisplay, webDAVToken);
+	}
+
+	@Override
 	public boolean hasField(String fieldName) {
 		return _ddmStructure.hasField(fieldName);
 	}
 
 	@Override
+	public boolean isFieldRepeatable(String fieldName) throws PortalException {
+		return _ddmStructure.isFieldRepeatable(fieldName);
+	}
+
+	@Override
 	public boolean isFieldTransient(String fieldName) throws PortalException {
 		return _ddmStructure.isFieldTransient(fieldName);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ddmStructure.isNew();
 	}
 
 	@Override
@@ -334,6 +470,11 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public void setUuid(String uuid) {
 		_ddmStructure.setUuid(uuid);
+	}
+
+	@Override
+	public String toXmlString() {
+		return _ddmStructure.toXmlString();
 	}
 
 	private final com.liferay.dynamic.data.mapping.model.DDMStructure

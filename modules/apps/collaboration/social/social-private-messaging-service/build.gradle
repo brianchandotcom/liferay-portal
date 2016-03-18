@@ -20,6 +20,7 @@ dependencies {
 	provided project(":apps:collaboration:social:social-private-messaging-api")
 	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
 	provided project(":apps:foundation:osgi:osgi-util")
+	provided project(":apps:foundation:portal:portal-content")
 	provided project(":apps:foundation:portal:portal-spring-extender")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }

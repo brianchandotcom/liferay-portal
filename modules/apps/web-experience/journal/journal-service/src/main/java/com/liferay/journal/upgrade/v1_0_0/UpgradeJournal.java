@@ -16,6 +16,7 @@ package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.portal.content.ContentUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.XMLUtil;
 
 import java.sql.PreparedStatement;

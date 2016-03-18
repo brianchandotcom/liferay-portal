@@ -10,6 +10,7 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:map:map-api")
 	provided project(":apps:foundation:map:map-taglib")
+	provided project(":apps:foundation:portal:portal-content")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:foundation:users-admin:users-admin-web")
 	provided project(":apps:web-experience:application-list:application-list-api")

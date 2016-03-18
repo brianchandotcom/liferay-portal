@@ -79,6 +79,8 @@ import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceB
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -426,6 +428,11 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
 
+		if (!dlFileShortcut.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		if (dlFileShortcut.isInTrashExplicitly()) {
 			restoreFileShortcutFromTrash(userId, fileShortcut);
 		}
@@ -485,6 +492,10 @@ public class DLAppHelperLocalServiceImpl
 		// File shortcut
 
 		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
+
+		if (dlFileShortcut.isInTrash()) {
+			throw new TrashEntryException();
+		}
 
 		int oldStatus = dlFileShortcut.getStatus();
 
@@ -641,6 +652,11 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		if (!dlFileEntry.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		dlFileEntry.setFileName(
 			TrashUtil.getOriginalTitle(dlFileEntry.getTitle(), "fileName"));
 		dlFileEntry.setTitle(
@@ -713,6 +729,13 @@ public class DLAppHelperLocalServiceImpl
 			long userId, FileShortcut fileShortcut)
 		throws PortalException {
 
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
+
+		if (!dlFileShortcut.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		// File shortcut
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
@@ -746,6 +769,11 @@ public class DLAppHelperLocalServiceImpl
 		// Folder
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		if (!dlFolder.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
 
 		dlFolder.setName(TrashUtil.getOriginalTitle(dlFolder.getName()));
 
@@ -1167,6 +1195,11 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		if (!dlFileEntry.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		if (dlFileEntry.isInTrashExplicitly()) {
 			restoreFileEntryFromTrash(userId, fileEntry);
 
@@ -1270,6 +1303,10 @@ public class DLAppHelperLocalServiceImpl
 
 	protected FileEntry doMoveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
+
+		if (fileEntry.isInTrash()) {
+			throw new TrashEntryException();
+		}
 
 		// File versions
 
@@ -1382,6 +1419,11 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
+		if (!dlFolder.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		if (dlFolder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folder);
 		}
@@ -1442,9 +1484,15 @@ public class DLAppHelperLocalServiceImpl
 	protected Folder doMoveFolderToTrash(long userId, Folder folder)
 		throws PortalException {
 
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		if (dlFolder.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
 		// Folder
 
-		DLFolder dlFolder = dlFolderLocalService.updateStatus(
+		dlFolder = dlFolderLocalService.updateStatus(
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 

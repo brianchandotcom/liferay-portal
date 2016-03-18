@@ -70,6 +70,8 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.ArrayList;
@@ -591,6 +593,10 @@ public class CalendarBookingLocalServiceImpl
 			long userId, CalendarBooking calendarBooking)
 		throws PortalException {
 
+		if (calendarBooking.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
 		// Calendar booking
 
 		if (!calendarBooking.isMasterBooking()) {
@@ -647,6 +653,11 @@ public class CalendarBookingLocalServiceImpl
 		// Calendar booking
 
 		CalendarBooking calendarBooking = getCalendarBooking(calendarBookingId);
+
+		if (!calendarBooking.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
 
 		if (!calendarBooking.isMasterBooking()) {
 			return calendarBooking;

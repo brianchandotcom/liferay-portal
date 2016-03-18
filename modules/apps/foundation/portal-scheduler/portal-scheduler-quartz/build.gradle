@@ -6,7 +6,3 @@ dependencies {
 	provided project(":apps:foundation:portal-scheduler:portal-scheduler")
 	provided project(":apps:foundation:portal:portal-upgrade")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

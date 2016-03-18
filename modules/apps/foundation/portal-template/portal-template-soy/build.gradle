@@ -19,7 +19,3 @@ dependencies {
 	provided group: "org.sonatype.sisu.inject", name: "cglib", version: "2.2.1-v20090111"
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

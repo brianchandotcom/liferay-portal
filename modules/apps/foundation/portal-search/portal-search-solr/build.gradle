@@ -25,10 +25,6 @@ dependencies {
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}
-
 test {
 	systemProperty "com.liferay.portal.search.solr.test.unit.started", System.getProperty("com.liferay.portal.search.solr.test.unit.started")
 }

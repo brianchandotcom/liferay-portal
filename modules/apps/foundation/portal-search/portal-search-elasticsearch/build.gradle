@@ -41,7 +41,3 @@ dependencies {
 	provided group: "org.yaml", name: "snakeyaml", version: "1.15"
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

@@ -6,7 +6,3 @@ dependencies {
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-api")
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-definition-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

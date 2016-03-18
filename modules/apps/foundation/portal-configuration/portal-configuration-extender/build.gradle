@@ -37,10 +37,6 @@ copyTestLibs {
 	into "test-lib"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}
-
 testIntegration {
 	dependsOn copyTestLibs
 	finalizedBy cleanCopyTestLibs

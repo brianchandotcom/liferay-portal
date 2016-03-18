@@ -5,7 +5,3 @@ dependencies {
 
 	testCompile project(":apps:foundation:portal-cache:portal-cache-test")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

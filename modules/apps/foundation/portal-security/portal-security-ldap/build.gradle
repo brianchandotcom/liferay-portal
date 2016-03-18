@@ -88,7 +88,3 @@ public class ${javaClass}"""
 	maxHeapSize = "1512m"
 	outputDirectory = new File(temporaryDir, "generated")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

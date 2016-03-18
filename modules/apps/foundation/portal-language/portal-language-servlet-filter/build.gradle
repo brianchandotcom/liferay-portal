@@ -9,7 +9,3 @@ dependencies {
 	provided project(":apps:foundation:osgi:osgi-service-tracker-collections")
 	provided project(":apps:foundation:osgi:osgi-util")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

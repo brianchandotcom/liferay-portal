@@ -9,7 +9,3 @@ dependencies {
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-output-stream-container")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

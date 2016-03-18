@@ -14,12 +14,38 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal.definition;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.EventListener;
 
 /**
  * @author Raymond Augé
  */
 public class ListenerDefinition {
+
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ListenerDefinition)) {
+			return false;
+		}
+
+		ListenerDefinition listenerDefinition = (ListenerDefinition)obj;
+
+		EventListener eventListener = listenerDefinition.getEventListener();
+
+		Class<?> listenerClass = _eventListener.getClass();
+
+		Class<?> objectListenerClass = eventListener.getClass();
+
+		if (Validator.equals(listenerClass, objectListenerClass)) {
+			return true;
+		}
+
+		return false;
+	}
 
 	public EventListener getEventListener() {
 		return _eventListener;

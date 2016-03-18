@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.constants.FieldNames;
 
 import java.util.Locale;
 
@@ -55,10 +55,10 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 	public CalendarIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.UID);
+			FieldNames.COMPANY_ID, FieldNames.ENTRY_CLASS_NAME,
+			FieldNames.ENTRY_CLASS_PK, FieldNames.UID);
 		setDefaultSelectedLocalizedFieldNames(
-			Field.DESCRIPTION, Field.NAME, "resourceName");
+			FieldNames.DESCRIPTION, FieldNames.NAME, "resourceName");
 		setFilterSearch(true);
 		setPermissionAware(true);
 		setSelectAllLocales(true);
@@ -86,8 +86,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		throws Exception {
 
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, true);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
+			searchQuery, searchContext, FieldNames.DESCRIPTION, true);
+		addSearchLocalizedTerm(searchQuery, searchContext, FieldNames.NAME, true);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, "resourceName", true);
 	}
@@ -102,8 +102,9 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		Document document = getBaseModelDocument(CLASS_NAME, calendar);
 
 		document.addLocalizedKeyword(
-			Field.DESCRIPTION, calendar.getDescriptionMap(), true);
-		document.addLocalizedKeyword(Field.NAME, calendar.getNameMap(), true);
+			FieldNames.DESCRIPTION, calendar.getDescriptionMap(), true);
+		document.addLocalizedKeyword(
+			FieldNames.NAME, calendar.getNameMap(), true);
 		document.addKeyword("calendarId", calendar.getCalendarId());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
@@ -126,7 +127,7 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.NAME, Field.DESCRIPTION);
+			document, FieldNames.NAME, FieldNames.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

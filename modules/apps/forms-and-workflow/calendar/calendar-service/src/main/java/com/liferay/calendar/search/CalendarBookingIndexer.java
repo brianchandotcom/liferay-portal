@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
@@ -38,7 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.search.FieldNames;
+import com.liferay.portal.search.constants.FieldNames;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
@@ -60,9 +59,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	public CalendarBookingIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.UID);
-		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
+			FieldNames.COMPANY_ID, FieldNames.ENTRY_CLASS_NAME,
+			FieldNames.ENTRY_CLASS_PK, FieldNames.UID);
+		setDefaultSelectedLocalizedFieldNames(FieldNames.DESCRIPTION, FieldNames.TITLE);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -101,11 +100,11 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				descriptionLanguageId);
 
 			if (descriptionLanguageId.equals(descriptionDefaultLanguageId)) {
-				document.addText(Field.DESCRIPTION, description);
+				document.addText(FieldNames.DESCRIPTION, description);
 			}
 
 			document.addText(
-				Field.DESCRIPTION.concat(StringPool.UNDERLINE).concat(
+				FieldNames.DESCRIPTION.concat(StringPool.UNDERLINE).concat(
 					descriptionLanguageId),
 				description);
 		}
@@ -120,20 +119,21 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			String title = calendarBooking.getTitle(titleLanguageId);
 
 			if (titleLanguageId.equals(titleDefaultLanguageId)) {
-				document.addText(Field.TITLE, title);
+				document.addText(FieldNames.TITLE, title);
 			}
 
 			document.addText(
-				Field.TITLE.concat(StringPool.UNDERLINE).concat(
+				FieldNames.TITLE.concat(StringPool.UNDERLINE).concat(
 					titleLanguageId),
 				title);
 		}
 
-		document.addKeyword(Field.RELATED_ENTRY, true);
+		document.addKeyword(FieldNames.RELATED_ENTRY, true);
 		document.addKeyword(
-			Field.CLASS_NAME_ID,
+			FieldNames.CLASS_NAME_ID,
 			_classNameLocalService.getClassNameId(Calendar.class));
-		document.addKeyword(Field.CLASS_PK, calendarBooking.getCalendarId());
+		document.addKeyword(
+			FieldNames.CLASS_PK, calendarBooking.getCalendarId());
 		document.addKeyword(
 			FieldNames.VIEW_ACTION_ID, CalendarActionKeys.VIEW_BOOKING_DETAILS);
 
@@ -160,7 +160,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
+			document, FieldNames.TITLE, FieldNames.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

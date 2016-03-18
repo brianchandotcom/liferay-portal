@@ -120,6 +120,9 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	public void deleteDataProviderInstance(long dataProviderInstanceId)
 		throws PortalException;
 
+	public void deleteDataProviderInstances(long companyId, long groupId)
+		throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/

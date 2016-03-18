@@ -113,6 +113,11 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 		getService().deleteDataProviderInstance(dataProviderInstanceId);
 	}
 
+	public static void deleteDataProviderInstances(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteDataProviderInstances(companyId, groupId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

@@ -17,12 +17,18 @@ package com.liferay.dynamic.data.mapping.web.lar;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -39,16 +45,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -207,6 +218,9 @@ public class DDMStructureStagedModelDataHandler
 
 		exportDDMForm(portletDataContext, structure, structureElement);
 
+		exportDDMDataProviderInstances(
+			portletDataContext, structure, structureElement);
+
 		exportDDMFormLayout(portletDataContext, structure, structureElement);
 
 		portletDataContext.addClassedModel(
@@ -284,6 +298,9 @@ public class DDMStructureStagedModelDataHandler
 		DDMForm ddmForm = getImportDDMForm(
 			portletDataContext, structureElement);
 
+		importDDMDataProviderInstances(
+			portletDataContext, structureElement, ddmForm);
+
 		DDMFormLayout ddmFormLayout = getImportDDMFormLayout(
 			portletDataContext, structureElement);
 
@@ -357,6 +374,44 @@ public class DDMStructureStagedModelDataHandler
 
 		structureKeys.put(
 			structure.getStructureKey(), importedStructure.getStructureKey());
+	}
+
+	protected void exportDDMDataProviderInstances(
+			PortletDataContext portletDataContext, DDMStructure structure,
+			Element structureElement)
+		throws PortalException {
+
+		Set<Long> ddmDataProviderInstanceIdSet = new HashSet<>();
+
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks =
+			_ddmDataProviderInstanceLinkLocalService.
+				getDataProviderInstanceLinks(structure.getStructureId());
+
+		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
+				ddmDataProviderInstanceLinks) {
+
+			long ddmDataProviderInstanceId =
+				ddmDataProviderInstanceLink.getDataProviderInstanceId();
+
+			DDMDataProviderInstance ddmDataProviderInstance =
+				_ddmDataProviderInstanceLocalService.getDDMDataProviderInstance(
+					ddmDataProviderInstanceId);
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, structure, ddmDataProviderInstance,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
+
+			ddmDataProviderInstanceIdSet.add(
+				ddmDataProviderInstance.getDataProviderInstanceId());
+		}
+
+		String ddmDataProviderInstanceIds = ArrayUtil.toString(
+			ddmDataProviderInstanceIdSet.toArray(
+				new Long[ddmDataProviderInstanceIdSet.size()]),
+			StringPool.BLANK);
+
+		structureElement.addAttribute(
+			_DDM_DATA_PROVIDER_INSTANCE_IDS, ddmDataProviderInstanceIds);
 	}
 
 	protected void exportDDMForm(
@@ -434,6 +489,53 @@ public class DDMStructureStagedModelDataHandler
 
 		return _ddmFormLayoutJSONDeserializer.deserialize(
 			serializedDDMFormLayout);
+	}
+
+	protected void importDDMDataProviderInstances(
+			PortletDataContext portletDataContext, Element structureElement,
+			DDMForm ddmForm)
+		throws PortletDataException {
+
+		String[] ddmDataProviderInstanceIds = StringUtil.split(
+			structureElement.attributeValue(_DDM_DATA_PROVIDER_INSTANCE_IDS));
+
+		if (ArrayUtil.isEmpty(ddmDataProviderInstanceIds)) {
+			return;
+		}
+
+		Map<Long, Long> dataProviderInstanceIdMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMDataProviderInstance.class);
+
+		for (String ddmDataProviderInstanceId : ddmDataProviderInstanceIds) {
+			long oldDDMDataProviderInstanceId = Long.parseLong(
+				ddmDataProviderInstanceId);
+
+			long newDDMDataProviderInstanceId = MapUtil.getLong(
+				dataProviderInstanceIdMap, oldDDMDataProviderInstanceId);
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, DDMDataProviderInstance.class,
+				newDDMDataProviderInstanceId);
+		}
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (!ddmFormField.getType().equals(DDMFormFieldType.SELECT)) {
+				continue;
+			}
+
+			long oldDDMDataProviderInstanceId = Long.valueOf(
+				String.valueOf(
+					ddmFormField.getProperty("ddmDataProviderInstanceId")));
+
+			long newDDMDataProviderInstanceId = MapUtil.getLong(
+				dataProviderInstanceIdMap, oldDDMDataProviderInstanceId);
+
+			ddmFormField.setProperty(
+				"ddmDataProviderInstanceId", newDDMDataProviderInstanceId);
+		}
 	}
 
 	protected boolean isModifiedStructure(
@@ -518,8 +620,19 @@ public class DDMStructureStagedModelDataHandler
 		_userLocalService = userLocalService;
 	}
 
+	private static final String _DDM_DATA_PROVIDER_INSTANCE_IDS =
+		"ddm-data-provider-instance-ids";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureStagedModelDataHandler.class);
+
+	@Reference
+	private DDMDataProviderInstanceLinkLocalService
+		_ddmDataProviderInstanceLinkLocalService;
+
+	@Reference
+	private DDMDataProviderInstanceLocalService
+		_ddmDataProviderInstanceLocalService;
 
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;

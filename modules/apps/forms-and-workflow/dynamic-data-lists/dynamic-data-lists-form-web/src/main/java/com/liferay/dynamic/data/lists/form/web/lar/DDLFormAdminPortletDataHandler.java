@@ -23,12 +23,14 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -77,13 +79,23 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DDLRecord.class),
 			new StagedModelType(DDLRecordSet.class));
+
+		PortletDataHandlerControl[] formsPortletDataHandlerControlChildren =
+			new PortletDataHandlerControl[] {
+				new PortletDataHandlerBoolean(
+					NAMESPACE, "ddm-data-provider", true, false, null,
+					DDMDataProviderInstance.class.getName())
+			};
+
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "forms", true, false, null,
+				NAMESPACE, "forms", true, false,
+				formsPortletDataHandlerControlChildren,
 				DDLRecordSet.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "form-entries", true, false, null,
-				DDLRecord.class.getName()));
+				DDLRecord.class.getName())
+		);
 	}
 
 	protected DynamicQuery createRecordSetDynamicQuery() {
@@ -234,6 +246,20 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 			for (Element ddmStructureElement : ddmStructureElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmStructureElement);
+			}
+
+			Element ddmDataProviderInstancesElement =
+				portletDataContext.getImportDataGroupElement(
+					DDMDataProviderInstance.class);
+
+			List<Element> ddmDataProviderInstanceElements =
+				ddmDataProviderInstancesElement.elements();
+
+			for (Element ddmDataProviderInstanceElement :
+					ddmDataProviderInstanceElements) {
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, ddmDataProviderInstanceElement);
 			}
 		}
 

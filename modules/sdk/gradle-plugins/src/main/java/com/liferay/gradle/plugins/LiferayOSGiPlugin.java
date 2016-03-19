@@ -68,6 +68,8 @@ import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
+import org.gradle.api.tasks.compile.CompileOptions;
+import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.internal.Factory;
 
 /**
@@ -87,6 +89,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureArchivesBaseName(project);
 		configureDescription(project);
 		configureSourceSetMain(project);
+
+		if (GradleUtil.isRunningInsideDaemon()) {
+			configureTasksJavaCompileFork(project, true);
+		}
+
 		configureVersion(project);
 
 		project.afterEvaluate(
@@ -581,6 +588,31 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			sourceSet.getResources();
 
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
+	}
+
+	protected void configureTaskJavaCompileFork(
+		JavaCompile javaCompile, boolean fork) {
+
+		CompileOptions compileOptions = javaCompile.getOptions();
+
+		compileOptions.setFork(fork);
+	}
+
+	protected void configureTasksJavaCompileFork(
+		Project project, final boolean fork) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			JavaCompile.class,
+			new Action<JavaCompile>() {
+
+				@Override
+				public void execute(JavaCompile javaCompile) {
+					configureTaskJavaCompileFork(javaCompile, fork);
+				}
+
+			});
 	}
 
 	protected void configureVersion(Project project) {

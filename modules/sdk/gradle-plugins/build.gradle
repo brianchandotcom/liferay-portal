@@ -24,5 +24,5 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
-	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.8"
+	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.8.1"
 }

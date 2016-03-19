@@ -147,10 +147,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"select fileEntryId, groupId, folderId, extension, title," +
 						" version from DLFileEntry");
 				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update DLFileEntry set fileName = ?, title = ? " +
-							"where fileEntryId = ?");
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update DLFileEntry set fileName = ?, title = ? " +
+								"where fileEntryId = ?"));
 				PreparedStatement ps3 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,

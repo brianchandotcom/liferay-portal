@@ -222,7 +222,7 @@ public class MVCCPortalCacheTest {
 		}
 
 		@Around(
-			"execution(protected * com.liferay.portal.cache.test." +
+			"execution(protected * com.liferay.portal.cache.test.util." +
 				"TestPortalCache.doPutIfAbsent(..))"
 		)
 		public Object doPutIfAbsent(ProceedingJoinPoint proceedingJoinPoint)
@@ -238,7 +238,7 @@ public class MVCCPortalCacheTest {
 		}
 
 		@Around(
-			"execution(protected * com.liferay.portal.cache.test." +
+			"execution(protected * com.liferay.portal.cache.test.util." +
 				"TestPortalCache.doReplace(..))"
 		)
 		public Object doReplace(ProceedingJoinPoint proceedingJoinPoint)

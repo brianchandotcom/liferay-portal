@@ -1,11 +1,6 @@
 <definition>
 	<command name="changeTemplate">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Web Content Display" />
-			<var name="portletOption" value="Edit Web Content" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Structure and Template" />
@@ -23,7 +18,7 @@
 		<execute function="Confirm" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Structure and Template" />
@@ -134,12 +129,7 @@
 				</execute>
 			</then>
 			<else>
-				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletName" value="Web Content Display" />
-					<var name="portletOption" value="Edit Web Content" />
-				</execute>
-
-				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+				<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Structure and Template" />
@@ -152,7 +142,7 @@
 		</if>
 
 		<execute function="SelectFrameTop" />
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="Template Edit" />
 
 		<if>
@@ -174,7 +164,7 @@
 				<execute function="Click" locator1="Button#CLOSE_IFRAME" />
 
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+				<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Structure and Template" />

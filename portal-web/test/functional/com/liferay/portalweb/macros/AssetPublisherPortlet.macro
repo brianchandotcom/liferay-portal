@@ -90,7 +90,7 @@
 
 		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_CATEGORY_CHECKBOX" />
 
-		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

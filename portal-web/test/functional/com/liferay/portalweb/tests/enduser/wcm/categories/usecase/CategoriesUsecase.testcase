@@ -959,6 +959,10 @@
 
 		<var name="key_larFileName" value="${larFileName}" />
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
@@ -968,6 +972,10 @@
 		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />

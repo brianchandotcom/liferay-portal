@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Social Activity Web
 Bundle-SymbolicName: com.liferay.social.activity.web
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-activity-web

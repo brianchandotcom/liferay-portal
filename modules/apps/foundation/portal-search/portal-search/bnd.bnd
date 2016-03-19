@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search
 Bundle-SymbolicName: com.liferay.portal.search
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.search.analysis.*;version=${plugin.full.version},\
 	com.liferay.portal.search.buffer.*;version=${plugin.full.version},\

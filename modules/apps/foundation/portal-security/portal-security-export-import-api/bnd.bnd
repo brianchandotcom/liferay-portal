@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security Export Import API
 Bundle-SymbolicName: com.liferay.portal.security.exportimport.api
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.portal.security.exportimport
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

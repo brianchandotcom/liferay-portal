@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Social Private Messaging API
 Bundle-SymbolicName: com.liferay.social.privatemessaging.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.social.privatemessaging.configuration,\
 	com.liferay.social.privatemessaging.constants,\

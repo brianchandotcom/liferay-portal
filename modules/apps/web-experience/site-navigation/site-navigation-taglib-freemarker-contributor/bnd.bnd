@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Taglib FreeMarker Contributor
 Bundle-SymbolicName: com.liferay.site.navigation.taglib.freemarker.contributor
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Fragment-Host: com.liferay.portal.template.freemarker
 Import-Package: com.liferay.site.navigation.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:

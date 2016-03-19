@@ -1,6 +1,6 @@
 Bundle-Name: Liferay IP Geocoder Sample Web
 Bundle-SymbolicName: com.liferay.ip.geocoder.sample.web
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Web-ContextPath: /ip-geocoder-sample-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot

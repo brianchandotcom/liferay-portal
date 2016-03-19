@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Item Selector Upload Web
 Bundle-SymbolicName: com.liferay.item.selector.upload.web
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector
 Web-ContextPath: /item-selector-upload-web

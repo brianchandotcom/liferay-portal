@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1458281781656
+Bnd-LastModified: 1458340452538
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
@@ -2235,7 +2235,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .persistence,com.liferay.portal.kernel.util",com.liferay.blogs.kernel
  .util.comparator;version="1.0.0";uses:="com.liferay.blogs.kernel.mode
  l,com.liferay.portal.kernel.util",com.liferay.counter;version="1.0.0"
- ,com.liferay.counter.kernel;version="2.0.0",com.liferay.counter.kerne
+ ,com.liferay.counter.kernel;version="2.1.0",com.liferay.counter.kerne
  l.exception;version="1.0.0";uses:="com.liferay.portal.kernel.exceptio
  n",com.liferay.counter.kernel.model;version="1.0.0";uses:="com.lifera
  y.expando.kernel.model,com.liferay.portal.kernel.annotation,com.lifer
@@ -2430,10 +2430,10 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .model,com.liferay.portal.kernel.util",com.liferay.mobile.device.rule
  s.kernel;version="1.0.0";uses:="com.liferay.expando.kernel.model,com.
  liferay.exportimport.kernel.lar",com.liferay.osgi.service.tracker.col
- lections;version="1.0.2";uses:="org.osgi.framework",com.liferay.osgi.
- service.tracker.collections.list;version="1.0.2";uses:="org.osgi.fram
+ lections;version="2.0.0";uses:="org.osgi.framework",com.liferay.osgi.
+ service.tracker.collections.list;version="2.0.0";uses:="org.osgi.fram
  ework,org.osgi.util.tracker",com.liferay.osgi.service.tracker.collect
- ions.map;version="1.0.2";uses:="com.liferay.osgi.service.tracker.coll
+ ions.map;version="2.0.0";uses:="com.liferay.osgi.service.tracker.coll
  ections,org.osgi.framework,org.osgi.util.tracker",com.liferay.portal;
  version="1.0.0",com.liferay.portal.action;uses:="com.liferay.portal.k
  ernel.exception,com.liferay.portal.kernel.json,com.liferay.portal.ker
@@ -4580,7 +4580,7 @@ Import-Package: aQute.bnd.annotation;version="[1.44,2)",aQute.bnd.anno
  iferay.message.boards.kernel.service.persistence;version="[1.0,1.1)",
  com.liferay.message.boards.kernel.util.comparator;version="[1.0,2)",c
  om.liferay.mobile.device.rules.kernel;version="[1.0,2)",com.liferay.o
- sgi.service.tracker.collections;version="[1.0,2)",com.liferay.osgi.se
+ sgi.service.tracker.collections;version="[2.0,3)",com.liferay.osgi.se
  rvice.tracker.collections.internal,com.liferay.osgi.service.tracker.c
  ollections.internal.list,com.liferay.osgi.service.tracker.collections
  .internal.map,com.liferay.portal.action,com.liferay.portal.apache.bri

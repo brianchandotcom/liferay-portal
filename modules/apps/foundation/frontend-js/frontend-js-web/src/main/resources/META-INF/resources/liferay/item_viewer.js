@@ -35,13 +35,7 @@ AUI.add(
 
 		var CSS_PREVIEW_TIMEOUT_MESSAGE = 'preview-timeout-message';
 
-		var CSS_SIDENAV_CONTAINER = 'sidenav-container';
-
-		var CSS_SIDENAV_MENU_SLIDER = 'sidenav-menu-slider';
-
 		var STR_BLANK = '';
-
-		var STR_DATA_METADATA_RENDERED = 'data-metadata-rendered';
 
 		var STR_DOT = '.';
 
@@ -51,17 +45,15 @@ AUI.add(
 
 		var STR_SRC_NODE = 'srcNode';
 
-		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="glyphicon glyphicon-chevron-left ' + CSS_ICON_MONOSPACED + '"></span><span>{0}</span></button>';
+		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="' + CSS_ICON_MONOSPACED + '">' + Liferay.Util.getLexiconIconTpl('angle-left') + '</span><span class="lfr-item-viewer-close-text truncate-text">{0}</span></button>';
 
-		var TPL_INFO_ICON = '<span class="glyphicon glyphicon-info-sign lfr-item-viewer-icon-info"></span>';
+		var TPL_INFO_ICON = '<a class="lfr-item-viewer-icon-info-link" data-content=".image-viewer-focused" data-target=".image-viewer-sidenav" data-toggle="sidenav" data-type="fixed-push" href=""><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('info-circle') + '</span></a>';
 
 		var TPL_INFO_TAB_BODY = '<div class="{className} fade in tab-pane" id="{tabId}">{content}</div>';
 
-		var TPL_INFO_TAB_BODY_CONTENT = '<h5>{h5}</h5><p>{p}</p>';
+		var TPL_INFO_TAB_BODY_CONTENT = '<dt class="{dtClassName}">{dt}</dt><dd class="{ddClassName}">{dd}</dd>';
 
-		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-{columnSize}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
-
-		var bootstrapColumns = 12;
+		var TPL_INFO_TAB_TITLE = '<li class="{className}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -117,22 +109,29 @@ AUI.add(
 					TPL_CAPTION: '<p class="' + CSS_CAPTION + '"></p>',
 
 					TPL_CONTROL_LEFT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_LEFT_BASE + ' ' + CSS_FOOTER_CONTROL_LEFT + '" href="javascript:;">' +
-						'<span class="glyphicon glyphicon-chevron-left ' + CSS_ICON_MONOSPACED + '"></span>' +
+						'<span class="' + CSS_ICON_MONOSPACED + '">' + Liferay.Util.getLexiconIconTpl('angle-left') + '</span>' +
 					'</a>',
 
 					TPL_CONTROL_RIGHT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_RIGHT_BASE + ' ' + CSS_FOOTER_CONTROL_RIGHT + '" href="javascript:;">' +
-						'<span class="glyphicon glyphicon-chevron-right ' + CSS_ICON_MONOSPACED + '"></span>' +
+						'<span class="' + CSS_ICON_MONOSPACED + '">' + Liferay.Util.getLexiconIconTpl('angle-right') + '</span>' +
 					'</a>',
 
-					TPL_IMAGE_CONTAINER: '<div class="closed ' + CSS_IMAGE_CONTAINER + ' ' + CSS_SIDENAV_CONTAINER + ' sidenav-right">' +
-						'<div class="' + CSS_SIDENAV_MENU_SLIDER + '">' +
-							'<div class="' + CSS_IMAGE_INFO + ' sidebar sidebar-inverse sidebar-menu">' +
-								'<div class="sidebar-header"><ul class="nav nav-tabs product-menu-tabs"></ul></div>' +
-								'<div class="sidebar-body"><div class="tab-content"></div></div>' +
+					TPL_IMAGE_CONTAINER: '<div class="' + CSS_IMAGE_CONTAINER + '">' +
+						'<p class="fade preview-timeout-message text-muted">' + Liferay.Language.get('preview-image-is-taking-longer-than-expected') + '</p>' +
+					'</div>',
+
+					TPL_SIDENAV: '<div class="closed image-viewer-sidenav sidenav-fixed sidenav-menu-slider sidenav-right">' +
+						'<div class="image-viewer-sidenav-menu sidebar sidebar-default sidenav-menu">' +
+							'<div class="sidebar-header">' +
+								'<a class="' + CSS_ICON_MONOSPACED + ' image-viewer-sidenav-close sidenav-close visible-xs" href="">' + Liferay.Util.getLexiconIconTpl('times') + '</a>' +
+								'<h4 class="image-viewer-sidenav-header">' +
+									'<ul class="nav nav-tabs nav-tabs-default"></ul>' +
+								'</h4>' +
+							'</div>' +
+							'<div class="image-viewer-sidenav-body sidebar-body">' +
+								'<div class="tab-content"></div>' +
 							'</div>' +
 						'</div>' +
-						'<span class="glyphicon glyphicon-time text-muted ' + CSS_LOADING_ICON + '"></span>' +
-						'<p class="fade preview-timeout-message text-muted">' + Liferay.Language.get('preview-image-is-taking-longer-than-expected') + '</p>' +
 					'</div>',
 
 					initializer: function() {
@@ -153,6 +152,12 @@ AUI.add(
 							Do.before('_beforeOnClickControl', instance, '_onClickControl', instance),
 							Do.before('_beforeSyncInfoUI', instance, '_syncInfoUI', instance)
 						];
+					},
+
+					renderUI: function() {
+						LiferayItemViewer.superclass.renderUI.apply(this, arguments);
+
+						this._renderSidenav();
 					},
 
 					updateCurrentImage: function(imageData) {
@@ -196,12 +201,16 @@ AUI.add(
 					_afterGetCurrentImage: function(event) {
 						var instance = this;
 
+						var retVal;
+
 						if (instance._showPreviewError) {
-							return new Do.AlterReturn(
+							retVal = new Do.AlterReturn(
 								'Return error message node',
 								instance.get(STR_SRC_NODE).one(STR_DOT + CSS_PREVIEW_TIMEOUT_MESSAGE)
 							);
 						}
+
+						return retVal;
 					},
 
 					_afterShow: function() {
@@ -225,10 +234,8 @@ AUI.add(
 
 						var image = instance._getCurrentImage();
 
-						if (metadata && !image.attr(STR_DATA_METADATA_RENDERED)) {
+						if (metadata) {
 							instance._populateImageMetadata(image, metadata);
-
-							image.attr(STR_DATA_METADATA_RENDERED, true);
 						}
 					},
 
@@ -239,27 +246,20 @@ AUI.add(
 					_beforeSyncInfoUI: function() {
 						var instance = this;
 
+						var retVal;
+
 						if (!instance.get(STR_RENDER_CONTROLS)) {
-							return new Do.Halt();
+							retVal = new Do.Halt();
 						}
+
+						return retVal;
 					},
 
 					_bindSidebarEvents: function() {
 						var instance = this;
 
 						if (instance.get(STR_RENDER_SIDEBAR)) {
-							var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
-
-							sidebarNode.sideNavigation(
-								{
-									content: sidebarNode.find('.image-viewer-base-image'),
-									equalHeight: false,
-									position: 'right',
-									toggler: instance._infoIconEl.getDOMNode(),
-									useDelegate: false,
-									width: '300px'
-								}
-							);
+							AUI.$('[data-toggle="sidenav"]').sideNavigation();
 						}
 					},
 
@@ -291,14 +291,14 @@ AUI.add(
 					_populateImageMetadata: function(image, metadata) {
 						var instance = this;
 
-						var imageInfoNode = image.siblings(STR_DOT + CSS_SIDENAV_MENU_SLIDER).one(STR_DOT + CSS_IMAGE_INFO);
+						var imageViewer = image.ancestor('.image-viewer');
+						var sidenavTabContent = imageViewer.one('.image-viewer-sidenav .tab-content');
+						var sidenavTabList = imageViewer.one('.image-viewer-sidenav ul');
 
-						var imageInfoNodeTabContent = imageInfoNode.one('.tab-content');
-						var imageInfoNodeTabList = imageInfoNode.one('ul');
+						sidenavTabContent.all('.tab-pane').remove();
+						sidenavTabList.all('li').remove();
 
 						metadata = JSON.parse(metadata);
-
-						var tabsCount = metadata.groups.length;
 
 						metadata.groups.forEach(
 							function(group, index) {
@@ -309,24 +309,25 @@ AUI.add(
 										TPL_INFO_TAB_TITLE,
 										{
 											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
-											columnSize: bootstrapColumns / tabsCount,
 											tabId: groupId,
 											tabTitle: group.title
 										}
 									)
 								);
 
-								imageInfoNodeTabList.append(tabTitleNode);
+								sidenavTabList.append(tabTitleNode);
 
 								var dataStr = group.data.reduce(
 									function(previousValue, currentValue) {
 										return previousValue + Lang.sub(
 											TPL_INFO_TAB_BODY_CONTENT,
-												{
-													h5: currentValue.key,
-													p: currentValue.value
-												}
-											);
+											{
+												dd: currentValue.value,
+												ddClassName: '',
+												dt: currentValue.key,
+												dtClassName: 'h5'
+											}
+										);
 									},
 									STR_BLANK
 								);
@@ -342,9 +343,20 @@ AUI.add(
 									)
 								);
 
-								imageInfoNodeTabContent.append(tabContentNode);
+								sidenavTabContent.append(tabContentNode);
 							}
 						);
+					},
+
+					_renderControls: function() {
+						var imageViewerBase = A.one(STR_DOT + CSS_IMAGE_VIEWER_BASE);
+						var imageViewerClose = A.one('.image-viewer-close');
+
+						this._closeEl = A.Node.create(this.TPL_CLOSE);
+
+						if (imageViewerBase && !imageViewerClose) {
+							imageViewerBase.prepend(this._closeEl);
+						}
 					},
 
 					_renderFooter: function() {
@@ -363,17 +375,20 @@ AUI.add(
 						instance._captionEl = captionEl;
 
 						if (instance.get(STR_RENDER_CONTROLS)) {
-							container.append(instance.get('controlPrevious'));
-
+							var controlsContainer = A.Node.create('<div class="image-viewer-footer-controls"></div>');
 							var infoEl = A.Node.create(instance.TPL_INFO);
+
+							controlsContainer.append(instance.get('controlPrevious'));
 
 							infoEl.selectable();
 
-							container.append(infoEl);
+							controlsContainer.append(infoEl);
 
 							instance._infoEl = infoEl;
 
-							container.append(instance.get('controlNext'));
+							controlsContainer.append(instance.get('controlNext'));
+
+							container.append(controlsContainer);
 						}
 
 						if (instance.get(STR_RENDER_SIDEBAR)) {
@@ -382,6 +397,18 @@ AUI.add(
 							container.append(infoIconEl);
 
 							instance._infoIconEl = infoIconEl;
+						}
+					},
+
+					_renderSidenav: function() {
+						var instance = this;
+
+						var sidenav = A.one('.image-viewer-sidenav');
+
+						if (!sidenav) {
+							var container = A.Node.create(instance.TPL_SIDENAV);
+
+							A.one('.image-viewer-base-image-list').insert(container, 'before');
 						}
 					},
 
@@ -418,9 +445,13 @@ AUI.add(
 					_showPreviewErrorMessage: function() {
 						var instance = this;
 
+						var loadingIcon = instance.get(STR_SRC_NODE).one('.' + CSS_LOADING_ICON);
+
 						instance._showPreviewError = true;
 
-						instance.get(STR_SRC_NODE).one('.' + CSS_LOADING_ICON).hide();
+						if (loadingIcon) {
+							loadingIcon.hide();
+						}
 
 						instance.fire('animate');
 					},

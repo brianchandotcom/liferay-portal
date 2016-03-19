@@ -130,6 +130,14 @@ public class AssetBrowserDisplayContext {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
+		if (Validator.isNull(getKeywords())) {
+			assetBrowserSearch.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			assetBrowserSearch.setSearch(true);
+		}
+
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		int total = getTotal();

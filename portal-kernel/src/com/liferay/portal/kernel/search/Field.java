@@ -179,6 +179,8 @@ public class Field implements Serializable {
 
 	public static final String VERSION = "version";
 
+	public static final String VIEW_ACTION_ID = "viewActionId";
+
 	public static final String VIEW_COUNT = "viewCount";
 
 	public static boolean validateFieldName(String name) {

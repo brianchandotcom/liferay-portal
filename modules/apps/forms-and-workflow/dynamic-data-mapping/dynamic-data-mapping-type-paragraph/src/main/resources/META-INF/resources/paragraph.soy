@@ -8,7 +8,7 @@
  * @param text
  * @param visible
  */
-{template .paragraph}
+{template .paragraph autoescape="deprecated-contextual"}
 	<div class="form-group form-inline{$visible ? '' : ' hide'} liferay-ddm-form-field-paragraph" data-fieldname="{$name}">
 		<label class="control-label" for="{$name}">{$label}</label>
 

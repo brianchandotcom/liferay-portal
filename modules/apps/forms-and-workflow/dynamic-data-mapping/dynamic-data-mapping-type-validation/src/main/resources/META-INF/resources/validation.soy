@@ -31,7 +31,7 @@
 	<div class="form-group{$visible ? '' : ' hide'} lfr-ddm-form-field-validation" data-fieldname="{$name}">
 		<div class="form-group">
 			<label class="control-label" for="{$name}EnableValidation">
-				<input class="enable-validation toggle-switch" {$enableValidationValue ? 'checked="checked"' : ''} id="{$name}EnableValidation" type="checkbox" value="true" />
+				<input class="enable-validation toggle-switch" {$enableValidationValue ? 'checked' : ''} id="{$name}EnableValidation" type="checkbox" value="true" />
 
 				<span aria-hidden="true" class="toggle-switch-bar">
 					<span class="toggle-switch-handle" data-label-off="{$enableValidationMessage}" data-label-on="{$disableValidationMessage}"></span>

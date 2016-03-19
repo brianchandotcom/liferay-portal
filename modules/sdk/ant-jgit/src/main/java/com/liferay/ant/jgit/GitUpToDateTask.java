@@ -42,20 +42,6 @@ import org.eclipse.jgit.util.FS;
  */
 public class GitUpToDateTask extends Task implements Condition {
 
-	public static void main(String[] args) throws Exception {
-		File gitDir = new File(args[0]);
-		String path = args[1];
-		String since = args[2];
-		String ignoredMessagePattern = args[3];
-
-		String relativePath = PathUtil.toRelativePath(gitDir, path);
-
-		boolean upToDate = _isUpToDate(
-			gitDir, relativePath, since, ignoredMessagePattern);
-
-		System.out.println(upToDate);
-	}
-
 	@Override
 	public boolean eval() throws BuildException {
 		if (_path == null) {
@@ -96,9 +82,18 @@ public class GitUpToDateTask extends Task implements Condition {
 				}
 			}
 
-			try {
-				return _isUpToDate(
-					gitDir, relativePath, _since, _ignoredMessagePattern);
+			try (Repository repository = RepositoryCache.open(
+					FileKey.exact(gitDir, FS.DETECTED))) {
+
+				if (UpToDateUtil.isClean(new Git(repository), relativePath) &&
+					!UpToDateUtil.hasChangedSince(
+						repository, relativePath, _since,
+						_ignoredMessagePattern)) {
+
+					return true;
+				}
+
+				return false;
 			}
 			catch (Exception e) {
 				throw new BuildException(
@@ -227,25 +222,6 @@ public class GitUpToDateTask extends Task implements Condition {
 		_upToDateMap = upToDateMap;
 
 		return upToDateMap;
-	}
-
-	private static boolean _isUpToDate(
-			File gitDir, String relativePath, String since,
-			String ignoredMessagePattern)
-		throws Exception {
-
-		try (Repository repository = RepositoryCache.open(
-				FileKey.exact(gitDir, FS.DETECTED))) {
-
-			if (UpToDateUtil.isClean(new Git(repository), relativePath) &&
-				!UpToDateUtil.hasChangedSince(
-					repository, relativePath, since, ignoredMessagePattern)) {
-
-				return true;
-			}
-
-			return false;
-		}
 	}
 
 	private static volatile Map<String, Boolean> _upToDateMap;

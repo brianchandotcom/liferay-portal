@@ -854,45 +854,43 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						return;
 					}
 
-					String replacement = replaceRegexTask.getReplacement();
-
 					for (Object file : replaceRegexTask.getMatchedFiles()) {
 						_logger.lifecycle(
 							"Project version in " + project.relativePath(file) +
-								" updated to " + replacement);
+								" updated");
 					}
 				}
 
 			});
 
-		if (gitRepoDir != null) {
-			replaceRegexTask.pre(
-				new Closure<String>(null) {
+		replaceRegexTask.pre(
+			new Closure<String>(null) {
 
-					@SuppressWarnings("unused")
-					public String doCall(String content, File file) {
-						String fileName = file.getName();
+				@SuppressWarnings("unused")
+				public String doCall(String content, File file) {
+					String fileName = file.getName();
 
-						if (!fileName.equals("build.gradle")) {
-							return content;
-						}
-
-						if (FileUtil.isChild(file, gitRepoDir)) {
-							return content.replaceAll(
-								getModuleDependencyRegex(project),
-								Matcher.quoteReplacement(
-									getProjectDependency(project)));
-						}
-						else {
-							return content.replaceAll(
-								Pattern.quote(getProjectDependency(project)),
-								Matcher.quoteReplacement(
-									getModuleDependency(project)));
-						}
+					if (!fileName.equals("build.gradle")) {
+						return content;
 					}
 
-				});
-		}
+					if ((gitRepoDir != null) &&
+						FileUtil.isChild(file, gitRepoDir)) {
+
+						return content.replaceAll(
+							getModuleDependencyRegex(project),
+							Matcher.quoteReplacement(
+								getProjectDependency(project)));
+					}
+					else {
+						return content.replaceAll(
+							Pattern.quote(getProjectDependency(project)),
+							Matcher.quoteReplacement(
+								getModuleDependency(project, true)));
+					}
+				}
+
+			});
 
 		replaceRegexTask.replaceOnlyIf(
 			new Closure<Boolean>(null) {
@@ -901,16 +899,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				public Boolean doCall(
 					String group, String replacement, String content) {
 
-					if (gitRepoDir == null) {
+					String projectPath = project.getPath();
+
+					if ((gitRepoDir == null) &&
+						!projectPath.startsWith(":core:")) {
+
 						return true;
 					}
 
-					Version groupVersion = Version.parseVersion(group);
-					Version replacementVersion = Version.parseVersion(
-						replacement);
+					Version groupVersion = getVersion(group);
+					Version replacementVersion = getVersion(replacement);
 
-					if (groupVersion.getMajor() !=
-							replacementVersion.getMajor()) {
+					if ((groupVersion == null) ||
+						(replacementVersion == null) ||
+						(groupVersion.getMajor() !=
+							replacementVersion.getMajor())) {
 
 						return true;
 					}
@@ -2009,7 +2012,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return project.file("lib");
 	}
 
-	protected String getModuleDependency(Project project) {
+	protected String getModuleDependency(
+		Project project, boolean roundedMajorVersion) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("group: \"");
@@ -2017,7 +2022,21 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		sb.append("\", name: \"");
 		sb.append(getArchivesBaseName(project));
 		sb.append("\", version: \"");
-		sb.append(project.getVersion());
+
+		String versionString = String.valueOf(project.getVersion());
+
+		if (roundedMajorVersion) {
+			Version version = getVersion(versionString);
+
+			if (version != null) {
+				version = new Version(version.getMajor(), 0, 0);
+
+				versionString = version.toString();
+			}
+		}
+
+		sb.append(versionString);
+
 		sb.append('"');
 
 		return sb.toString();
@@ -2064,19 +2083,26 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
-	protected boolean hasBaseline(Project project) {
+	protected Version getVersion(Object version) {
 		try {
-			Version version = Version.parseVersion(
-				String.valueOf(project.getVersion()));
-
-			if (version.compareTo(_LOWEST_BASELINE_VERSION) > 0) {
-				return true;
-			}
+			return Version.parseVersion(String.valueOf(version));
 		}
 		catch (IllegalArgumentException iae) {
 			if (_logger.isDebugEnabled()) {
-				_logger.debug("Unable to parse project version", iae);
+				_logger.debug("Unable to parse " + version, iae);
 			}
+
+			return null;
+		}
+	}
+
+	protected boolean hasBaseline(Project project) {
+		Version version = getVersion(project.getVersion());
+
+		if ((version != null) &&
+			(version.compareTo(_LOWEST_BASELINE_VERSION) > 0)) {
+
+			return true;
 		}
 
 		return false;

@@ -3572,45 +3572,54 @@ public class PortalImpl implements Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request) {
 
-		List<PersistentHttpServletRequestWrapper>
-			persistentHttpServletRequestWrappers = new ArrayList<>();
+		HttpServletRequest originalRequest = null;
 
-		HttpServletRequest originalRequest = request;
+		HttpServletRequestWrapper currentRequestWrapper = null;
 
-		while (originalRequest instanceof HttpServletRequestWrapper) {
-			if (originalRequest instanceof
+		HttpServletRequest currentRequest = request;
+
+		while (currentRequest instanceof HttpServletRequestWrapper) {
+			if (currentRequest instanceof
 					PersistentHttpServletRequestWrapper) {
 
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
-						(PersistentHttpServletRequestWrapper)originalRequest;
+						(PersistentHttpServletRequestWrapper)currentRequest;
 
-				persistentHttpServletRequestWrappers.add(
-					persistentHttpServletRequestWrapper.clone());
+				persistentHttpServletRequestWrapper =
+					persistentHttpServletRequestWrapper.clone();
+
+				if (originalRequest == null) {
+					originalRequest = persistentHttpServletRequestWrapper;
+				}
+
+				if (currentRequestWrapper != null) {
+					currentRequestWrapper.setRequest(
+						persistentHttpServletRequestWrapper);
+				}
+
+				currentRequestWrapper = persistentHttpServletRequestWrapper;
 			}
 
 			// Get original request so that portlets inside portlets render
 			// properly
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)originalRequest;
+				(HttpServletRequestWrapper)currentRequest;
 
-			originalRequest =
+			currentRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
-		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
-			i--) {
-
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				persistentHttpServletRequestWrappers.get(i);
-
-			httpServletRequestWrapper.setRequest(originalRequest);
-
-			originalRequest = httpServletRequestWrapper;
+		if (currentRequestWrapper != null) {
+			currentRequestWrapper.setRequest(currentRequest);
 		}
 
-		return originalRequest;
+		if (originalRequest != null) {
+			return originalRequest;
+		}
+
+		return currentRequest;
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -30,6 +31,7 @@ import com.liferay.portal.util.test.PortletContainerTestUtil;
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -61,6 +63,60 @@ public class PortalImplTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_atomicState.close();
+	}
+
+	@Test
+	public void testGetOriginalServletRequest() {
+		HttpServletRequest request = new MockHttpServletRequest();
+
+		Assert.assertSame(
+			request, PortalUtil.getOriginalServletRequest(request));
+
+		HttpServletRequestWrapper requestWrapper1 =
+			new HttpServletRequestWrapper(request);
+
+		Assert.assertSame(
+			request, PortalUtil.getOriginalServletRequest(requestWrapper1));
+
+		HttpServletRequestWrapper requestWrapper2 =
+			new HttpServletRequestWrapper(requestWrapper1);
+
+		Assert.assertSame(
+			request, PortalUtil.getOriginalServletRequest(requestWrapper2));
+
+		HttpServletRequestWrapper requestWrapper3 =
+			new PersistentHttpServletRequestWrapper1(requestWrapper2);
+
+		HttpServletRequest originalRequest =
+			PortalUtil.getOriginalServletRequest(requestWrapper3);
+
+		Assert.assertSame(
+			PersistentHttpServletRequestWrapper1.class,
+			originalRequest.getClass());
+		Assert.assertNotSame(requestWrapper3, originalRequest);
+		Assert.assertSame(
+			request, ((HttpServletRequestWrapper)originalRequest).getRequest());
+
+		HttpServletRequestWrapper requestWrapper4 =
+			new PersistentHttpServletRequestWrapper2(requestWrapper3);
+
+		originalRequest = PortalUtil.getOriginalServletRequest(requestWrapper4);
+
+		Assert.assertSame(
+			PersistentHttpServletRequestWrapper2.class,
+			originalRequest.getClass());
+		Assert.assertNotSame(requestWrapper4, originalRequest);
+
+		originalRequest =
+			(HttpServletRequest)
+				((HttpServletRequestWrapper)originalRequest).getRequest();
+
+		Assert.assertSame(
+			PersistentHttpServletRequestWrapper1.class,
+			originalRequest.getClass());
+		Assert.assertNotSame(requestWrapper3, originalRequest);
+		Assert.assertSame(
+			request, ((HttpServletRequestWrapper)originalRequest).getRequest());
 	}
 
 	@Test
@@ -152,5 +208,27 @@ public class PortalImplTest {
 	}
 
 	private static AtomicState _atomicState;
+
+	private static class PersistentHttpServletRequestWrapper1
+		extends PersistentHttpServletRequestWrapper {
+
+		private PersistentHttpServletRequestWrapper1(
+			HttpServletRequest request) {
+
+			super(request);
+		}
+
+	}
+
+	private static class PersistentHttpServletRequestWrapper2
+		extends PersistentHttpServletRequestWrapper {
+
+		private PersistentHttpServletRequestWrapper2(
+			HttpServletRequest request) {
+
+			super(request);
+		}
+
+	}
 
 }

@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Upgrade Tool
 Bundle-SymbolicName: com.liferay.upgrade.tool
 Bundle-Version: 1.0.0
-Include-Resource: \
-	@jline-2.12.jar
+Include-Resource:\
+	@jline-2.12.jar,\
+	@commons-cli-1.3.1.jar
 Main-Class: com.liferay.upgrade.tool.UpgradeTool

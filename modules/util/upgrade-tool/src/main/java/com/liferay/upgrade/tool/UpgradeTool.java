@@ -282,9 +282,7 @@ public class UpgradeTool {
 		process.getOutputStream().close();
 		process.getErrorStream().close();
 
-		if (!process.waitFor(5, TimeUnit.SECONDS)) {
-			process.destroy();
-		}
+		process.destroy();
 	}
 
 	public void verifyProperties() {

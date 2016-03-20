@@ -77,6 +77,7 @@ public class DDMStructureStagedModelDataHandlerTest
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
+
 		setUpDDMDataProvider();
 		setUpDDMFormValuesJSONDeserializer();
 	}
@@ -89,28 +90,32 @@ public class DDMStructureStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
+		// Parent structure
+
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), _CLASS_NAME,
 			DDMStructureTestUtil.getSampleDDMForm(
 				RandomTestUtil.randomString()));
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId());
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
-		DDMFormValues ddmFormValues = getDDMDataProviderInstanceFormValues();
+		// Data provider instance
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), "Data provider");
 
+		DDMFormValues ddmFormValues = getDDMDataProviderInstanceFormValues();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
 		DDMDataProviderInstance ddmDataProviderInstance =
 			DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
 				TestPropsValues.getUserId(), group.getGroupId(), nameMap,
 				nameMap, ddmFormValues, "rest", serviceContext);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMDataProviderInstance.class,
@@ -125,15 +130,15 @@ public class DDMStructureStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId());
+		// Parent structure
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
 			DDMStructure.class.getSimpleName());
 
 		DDMStructure parentStructure = (DDMStructure)dependentStagedModels.get(
 			0);
+
+		// Data provider instance
 
 		dependentStagedModels = dependentStagedModelsMap.get(
 			DDMDataProviderInstance.class.getSimpleName());
@@ -151,6 +156,10 @@ public class DDMStructureStagedModelDataHandlerTest
 			ddmDataProviderInstance.getDataProviderInstanceId());
 
 		ddmForm.addDDMFormField(selectDDMFormField);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
 
 		return DDMStructureTestUtil.addStructure(
 			group.getGroupId(), _CLASS_NAME, parentStructure.getStructureId(),
@@ -273,6 +282,8 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		super.validateImportedStagedModel(stagedModel, importedStagedModel);
 
+		// Structure
+
 		DDMStructure structure = (DDMStructure)stagedModel;
 		DDMStructure importedStructure = (DDMStructure)importedStagedModel;
 
@@ -287,6 +298,8 @@ public class DDMStructureStagedModelDataHandlerTest
 			structure.getStorageType(), importedStructure.getStorageType());
 		Assert.assertEquals(structure.getType(), importedStructure.getType());
 
+		// Data provider instance
+
 		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
 			DDMDataProviderInstanceLinkLocalServiceUtil.
 				getDataProviderInstanceLinks(structure.getStructureId());
@@ -299,19 +312,25 @@ public class DDMStructureStagedModelDataHandlerTest
 		Assert.assertEquals(1, dataProviderInstanceLinks.size());
 		Assert.assertEquals(1, importedDataProviderInstanceLinks.size());
 
-		long dataProviderInstanceId = dataProviderInstanceLinks.get(
-			0).getDataProviderInstanceId();
+		DDMDataProviderInstanceLink dataProviderInstanceLink =
+			dataProviderInstanceLinks.get(0);
+
+		long dataProviderInstanceId =
+			dataProviderInstanceLink.getDataProviderInstanceId();
 
 		DDMDataProviderInstance dataProviderInstance =
 			DDMDataProviderInstanceLocalServiceUtil.getDataProviderInstance(
 				dataProviderInstanceId);
 
-		dataProviderInstanceId = importedDataProviderInstanceLinks.get(
-			0).getDataProviderInstanceId();
+		DDMDataProviderInstanceLink importedDataProviderInstanceLink =
+			importedDataProviderInstanceLinks.get(0);
+
+		long importedDataProviderInstanceId =
+			importedDataProviderInstanceLink.getDataProviderInstanceId();
 
 		DDMDataProviderInstance importedDataProviderInstance =
 			DDMDataProviderInstanceLocalServiceUtil.getDataProviderInstance(
-				dataProviderInstanceId);
+				importedDataProviderInstanceId);
 
 		Assert.assertEquals(
 			getDDMDataProviderInstanceFormValues(dataProviderInstance),

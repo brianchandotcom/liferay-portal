@@ -17,10 +17,13 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -34,7 +37,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,33 +50,33 @@ public class UpgradeJournalTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpHttpUtil();
 		setUpHtmlUtil();
+		setUpHttpUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}
 
 	@Test
 	public void testGetDDMXSD() throws Exception {
-		String expectedXSD = read("test-ddm-structure-all-fields.xml");
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		String expectedDDMXSD = read("test-ddm-structure-all-fields.xml");
 
 		UpgradeJournal upgradeJournal = new UpgradeJournal();
 
 		upgradeJournal.setUpStrutureAttributesMappings();
 
-		String actualXSD = upgradeJournal.getDDMXSD(
-			read("test-journal-structure-all-fields.xml"), defaultLocale);
+		String journalXSD = read("test-journal-structure-all-fields.xml");
 
-		Element expectedRoot = SAXReaderUtil.read(expectedXSD).getRootElement();
-		Element actualRoot = SAXReaderUtil.read(actualXSD).getRootElement();
+		String actualDDMXSD = upgradeJournal.getDDMXSD(
+			journalXSD, LocaleUtil.getSiteDefault());
+
+		Element expectedRootElement = getRootElement(expectedDDMXSD);
+		Element actualRootElement = getRootElement(actualDDMXSD);
 
 		List<Element> elements = new ArrayList<>(1);
 
-		elements.add(actualRoot);
+		elements.add(actualRootElement);
 
-		Assert.assertTrue(containsElement(expectedRoot, elements));
+		Assert.assertTrue(containsElement(expectedRootElement, elements));
 	}
 
 	protected boolean containsElement(
@@ -119,9 +121,15 @@ public class UpgradeJournalTest {
 		return ignoredAttributes.toArray(new String[0]);
 	}
 
+	protected Element getRootElement(String xml) throws Exception {
+		Document document = SAXReaderUtil.read(xml);
+
+		return document.getRootElement();
+	}
+
 	protected boolean matchAttribute(
 		Attribute expectedAttribute, List<Attribute> actualAttributeList,
-		String...ignoredAttributes) {
+		String... ignoredAttributes) {
 
 		if (ArrayUtil.contains(
 				ignoredAttributes, expectedAttribute.getName())) {
@@ -136,9 +144,10 @@ public class UpgradeJournalTest {
 				continue;
 			}
 
-			if (actualAttribute.getName().equals(expectedAttribute.getName()) &&
-				actualAttribute.getValue(
-					).equals(expectedAttribute.getValue())) {
+			if (Validator.equals(
+					actualAttribute.getName(), expectedAttribute.getName()) &&
+				Validator.equals(
+					actualAttribute.getValue(), expectedAttribute.getValue())) {
 
 				return true;
 			}
@@ -149,7 +158,7 @@ public class UpgradeJournalTest {
 
 	protected boolean matchElement(
 		Element expectedElement, Element actualElement,
-		String...ignoredAttributes) {
+		String... ignoredAttributes) {
 
 		if (expectedElement.attributeCount() !=
 				actualElement.attributeCount()) {
@@ -166,9 +175,10 @@ public class UpgradeJournalTest {
 			}
 		}
 
-		if (expectedElement.elements().isEmpty()) {
-			if (expectedElement.getStringValue(
-					).equals(actualElement.getStringValue())) {
+		if (ListUtil.isEmpty(expectedElement.elements())) {
+			if (Validator.equals(
+					expectedElement.getStringValue(),
+					actualElement.getStringValue())) {
 
 				return true;
 			}

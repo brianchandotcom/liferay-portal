@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +33,7 @@ import java.util.Set;
 /**
  * @author Leonardo Barros
  */
+@ProviderType
 public interface DDMStructure extends StagedGroupedModel {
 
 	@Override

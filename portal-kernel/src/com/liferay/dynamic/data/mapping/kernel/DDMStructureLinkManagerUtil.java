@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
@@ -22,6 +24,7 @@ import java.util.List;
 /**
  * @author Rafael Praxedes
  */
+@ProviderType
 public class DDMStructureLinkManagerUtil {
 
 	public static DDMStructureLink addStructureLink(

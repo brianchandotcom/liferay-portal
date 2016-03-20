@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,6 +27,7 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,6 +36,14 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import jline.console.ConsoleReader;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 /**
  * @author David Truong
@@ -71,9 +81,57 @@ public class UpgradeTool {
 
 	public static void main(String[] args) {
 		try {
-			UpgradeTool upgradeTool = new UpgradeTool();
+			Options options = _getOptions();
+
+			CommandLineParser parser = new DefaultParser();
+
+			CommandLine cmd = parser.parse(options, args);
+
+			if (cmd.hasOption("help")) {
+				HelpFormatter formatter = new HelpFormatter();
+
+				formatter.printHelp("Liferay Database Upgrade Tool", options);
+
+				return;
+			}
+
+			String jvmOpts;
+
+			if (cmd.hasOption("jvmOpts")) {
+				jvmOpts = cmd.getOptionValue("jvmOpts");
+			}
+			else {
+				jvmOpts =
+					"-Xmx2048m -Dfile.encoding=UTF8 -Duser.country=US " +
+						"-Duser.language=en -Duser.timezone=GMT";
+			}
+
+			File logFile;
+
+			if (cmd.hasOption("logFile")) {
+				logFile = new File(cmd.getOptionValue("logFile"));
+			}
+			else {
+				logFile = new File("upgrade.log");
+			}
+
+			if (logFile.exists()) {
+				String fileName = logFile.getName();
+
+				logFile.renameTo(
+					new File(fileName + "." + logFile.lastModified()));
+
+				logFile = new File(fileName);
+			}
+
+			UpgradeTool upgradeTool = new UpgradeTool(jvmOpts, logFile);
 
 			upgradeTool.upgrade();
+		}
+		catch (ParseException pe) {
+			System.err.println("Failed to parse command line properties");
+
+			pe.printStackTrace();
 		}
 		catch (Exception e) {
 			System.err.println("Error running upgrade");
@@ -82,7 +140,7 @@ public class UpgradeTool {
 		}
 	}
 
-	public UpgradeTool() throws Exception {
+	public UpgradeTool(String jvmOpts, File logFile) throws Exception {
 		_consoleReader = new ConsoleReader();
 
 		_portalPropertiesFile = new File("portal-ext.properties");
@@ -116,14 +174,21 @@ public class UpgradeTool {
 				System.err.println("Could not load server.properties");
 			}
 		}
+
+		_jvmOpts = jvmOpts;
+
+		_logFile = logFile;
 	}
 
 	public void upgrade() throws Exception {
 		verifyProperties();
 
+		System.setOut(
+			new TeePrintStream(new FileOutputStream(_logFile), System.out));
+
 		String classPath = _getClassPath();
 
-		List commands = new ArrayList<>();
+		List<String> commands = new ArrayList<>();
 
 		if (JAVA_HOME != null) {
 			commands.add(JAVA_HOME + "/bin/java");
@@ -132,19 +197,14 @@ public class UpgradeTool {
 			commands.add("java");
 		}
 
-		commands.add("-Xmx2048m");
-		commands.add("-Dfile.encoding=UTF8");
-		commands.add("-Duser.country=US");
-		commands.add("-Duser.language=en");
-		commands.add("-Duser.timezone=GMT");
+		commands.addAll(Arrays.asList(_jvmOpts.split(" ")));
 		commands.add("-cp");
 		commands.add(classPath);
 		commands.add("com.liferay.portal.tools.DBUpgrader");
 
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
-		processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
-		processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+		processBuilder.redirectErrorStream(true);
 
 		processBuilder.command(commands);
 
@@ -200,14 +260,15 @@ public class UpgradeTool {
 
 			boolean upgrading = true;
 
-			while(upgrading) {
+			while (upgrading) {
 				System.out.print("...");
 
-				String upgradeSteps =
-					client.send("upgrade:list | grep Registered | grep step");
+				String upgradeSteps = client.send(
+					"upgrade:list | grep Registered | grep step");
 
 				upgrading = upgradeSteps.contains("true");
 			}
+
 			System.out.println("done.");
 
 			System.out.println("Exiting Gogo Shell");
@@ -221,7 +282,7 @@ public class UpgradeTool {
 		process.getOutputStream().close();
 		process.getErrorStream().close();
 
-		if(!process.waitFor(5, TimeUnit.SECONDS)) {
+		if (!process.waitFor(5, TimeUnit.SECONDS)) {
 			process.destroy();
 		}
 	}
@@ -237,6 +298,18 @@ public class UpgradeTool {
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+
+	private static Options _getOptions() {
+		Options options = new Options();
+
+		options.addOption(new Option("h", "help", false, "print this message"));
+		options.addOption(
+			new Option(
+				"j", "jvmOpts", true, "set the JVM_OPTS of the upgrade"));
+		options.addOption(new Option("l", "logFile", true, "name of log file"));
+
+		return options;
 	}
 
 	private String _getClassPath() throws Exception {
@@ -293,15 +366,19 @@ public class UpgradeTool {
 		System.out.println("\nUpgrade commands:");
 		System.out.println("exit or quit - exit Gogo Shell");
 		System.out.println("help - show upgrade commands");
-		System.out.println("upgrade:execute {module_name} - " +
-			"Execute upgrade for that module");
+		System.out.println(
+			"upgrade:execute {module_name} - Execute upgrade for that module");
 		System.out.println("upgrade:list - List all registered upgrades");
-		System.out.println("upgrade:list {module_name} - " +
-			"List the upgrade steps required for that module");
-		System.out.println("upgrade:list | grep Registered - " +
-			"List upgrades that are registered and what version they are at");
-		System.out.println("upgrade:list | grep Registered | grep steps - " +
-			"List upgrades in progress");
+		System.out.println(
+			"upgrade:list {module_name} - " +
+				"List the upgrade steps required for that module");
+		System.out.println(
+			"upgrade:list | grep Registered - " +
+				"List upgrades that are registered and what version they are " +
+					"at");
+		System.out.println(
+			"upgrade:list | grep Registered | grep steps - " +
+				"List upgrades in progress");
 		System.out.println("verify:execute {module_name} - execute a verifier");
 		System.out.println("verify:list - List all registered verifiers");
 	}
@@ -471,6 +548,8 @@ public class UpgradeTool {
 
 	private AppServer _appServer;
 	private final ConsoleReader _consoleReader;
+	private final String _jvmOpts;
+	private final File _logFile;
 	private final Properties _portalProperties;
 	private final File _portalPropertiesFile;
 	private final Properties _serverProperties;

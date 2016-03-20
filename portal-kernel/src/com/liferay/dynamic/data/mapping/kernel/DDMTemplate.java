@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,6 +27,7 @@ import java.util.Map;
 /**
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface DDMTemplate extends StagedGroupedModel {
 
 	public boolean getCacheable();

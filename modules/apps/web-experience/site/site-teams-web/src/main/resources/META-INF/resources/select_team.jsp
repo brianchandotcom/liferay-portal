@@ -69,7 +69,7 @@ teamSearch.setTotal(teamsCount);
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -104,6 +104,8 @@ teamSearch.setTotal(teamsCount);
 			long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultTeamIds"), 0L);
 
 			long[] teamIds = ParamUtil.getLongValues(request, "teamIds", defaultTeamIds);
+
+			boolean disabled = ArrayUtil.contains(teamIds, curTeam.getTeamId());
 			%>
 
 			<c:choose>
@@ -118,7 +120,7 @@ teamSearch.setTotal(teamsCount);
 					>
 						<h5>
 							<c:choose>
-								<c:when test="<%= !ArrayUtil.contains(teamIds, curTeam.getTeamId()) %>">
+								<c:when test="<%= !disabled %>">
 									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 										<%= HtmlUtil.escape(curTeam.getName()) %>
 									</aui:a>
@@ -134,6 +136,23 @@ teamSearch.setTotal(teamsCount);
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							cssClass='<%= disabled ? StringPool.BLANK : "selector-button" %>'
+							data="<%= data %>"
+							icon="users"
+							resultRow="<%= row %>"
+							subtitle="<%= curTeam.getDescription() %>"
+							title="<%= curTeam.getName() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="content-column name-column title-column"
@@ -141,7 +160,7 @@ teamSearch.setTotal(teamsCount);
 						truncate="<%= true %>"
 					>
 						<c:choose>
-							<c:when test="<%= !ArrayUtil.contains(teamIds, curTeam.getTeamId()) %>">
+							<c:when test="<%= !disabled %>">
 								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 									<%= HtmlUtil.escape(curTeam.getName()) %>
 								</aui:a>

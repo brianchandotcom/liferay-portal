@@ -17,6 +17,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
+	provided project(":apps:foundation:content:content-util")
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")
 	provided project(":apps:foundation:portal:portal-dao-orm-custom-sql")

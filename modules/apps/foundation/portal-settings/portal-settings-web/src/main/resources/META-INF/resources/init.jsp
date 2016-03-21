@@ -29,7 +29,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
+<%@ page import="com.liferay.content.util.ContentUtil" %><%@
+page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
 page import="com.liferay.portal.kernel.exception.AccountNameException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyMxException" %><%@
 page import="com.liferay.portal.kernel.exception.CompanyVirtualHostException" %><%@
@@ -77,8 +78,7 @@ page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
-page import="com.liferay.taglib.servlet.JspWriterHttpServletResponse" %><%@
-page import="com.liferay.util.ContentUtil" %>
+page import="com.liferay.taglib.servlet.JspWriterHttpServletResponse" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collection" %><%@

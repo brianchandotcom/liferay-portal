@@ -24,6 +24,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-values-query")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
+	provided project(":apps:foundation:content:content-util")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:osgi:osgi-util")
 	provided project(":apps:foundation:portal-configuration:portal-configuration-metatype")

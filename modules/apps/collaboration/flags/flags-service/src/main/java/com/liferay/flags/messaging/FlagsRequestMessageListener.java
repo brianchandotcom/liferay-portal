@@ -14,6 +14,7 @@
 
 package com.liferay.flags.messaging;
 
+import com.liferay.content.util.ContentUtil;
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-import com.liferay.util.ContentUtil;
 
 import java.io.IOException;
 

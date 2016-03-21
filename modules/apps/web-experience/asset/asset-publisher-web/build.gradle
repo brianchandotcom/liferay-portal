@@ -11,6 +11,7 @@ dependencies {
 	provided project(":apps:collaboration:flags:flags-taglib")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-taglib")
+	provided project(":apps:foundation:content:content-util")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-web")
 	provided project(":apps:foundation:portal:portal-upgrade")
 	provided project(":apps:foundation:rss:rss-util")

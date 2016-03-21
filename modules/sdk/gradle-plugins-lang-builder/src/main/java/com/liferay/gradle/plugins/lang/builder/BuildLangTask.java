@@ -24,6 +24,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
@@ -102,15 +104,7 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	public void setTranslate(boolean translate) {
-		String translateClientId = getTranslateClientId();
-
-		if (Validator.isNull(translateClientId)) {
-			_translate = false;
-		}
-
-		else {
-			_translate = translate;
-		}
+		_translate = translate;
 	}
 
 	public void setTranslateClientId(Object translateClientId) {
@@ -138,27 +132,37 @@ public class BuildLangTask extends JavaExec {
 						getPortalLanguagePropertiesFile(), getWorkingDir()));
 		}
 
-		args.add("lang.translate=" + isTranslate());
+		boolean translate = isTranslate();
 
-		String translateClientId = getTranslateClientId();
+		if (translate) {
+			String translateClientId = getTranslateClientId();
+			String translateClientSecret = getTranslateClientSecret();
 
-		if (Validator.isNotNull(translateClientId)) {
-			args.add("lang.translate.client.id=" + translateClientId);
+			if (Validator.isNull(translateClientId) ||
+				Validator.isNull(translateClientSecret)) {
+
+				if (_logger.isWarnEnabled()) {
+					_logger.warn(
+						"Credentials have not been specified, translation is " +
+							"disabled.");
+				}
+
+				translate = false;
+			}
+			else {
+				args.add("lang.translate.client.id=" + translateClientId);
+				args.add(
+					"lang.translate.client.secret=" + translateClientSecret);
+			}
 		}
 
-		else {
-			System.out.println(
-				"Warning: Please pass in credentials to translate");
-		}
-
-		String translateClientSecret = getTranslateClientSecret();
-
-		if (Validator.isNotNull(translateClientSecret)) {
-			args.add("lang.translate.client.secret=" + translateClientSecret);
-		}
+		args.add("lang.translate=" + translate);
 
 		return args;
 	}
+
+	private static final Logger _logger = Logging.getLogger(
+		BuildLangTask.class);
 
 	private Object _langDir;
 	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;

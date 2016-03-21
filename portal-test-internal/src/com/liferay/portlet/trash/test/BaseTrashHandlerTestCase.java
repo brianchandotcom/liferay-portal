@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
@@ -951,60 +953,6 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashBaseModelAndParent() throws Exception {
-		Assume.assumeTrue(this instanceof WhenHasParent);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
-
-		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		whenHasParent.moveParentBaseModelToTrash(
-			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialTrashEntriesCount + 2,
-			getTrashEntriesCount(group.getGroupId()));
-
-		TrashHandler parentTrashHandler =
-			TrashHandlerRegistryUtil.getTrashHandler(
-				whenHasParent.getParentBaseModelClassName());
-
-		if (Validator.equals(
-				getBaseModelClassName(),
-				whenHasParent.getParentBaseModelClassName())) {
-
-			Assert.assertEquals(
-				0,
-				parentTrashHandler.getTrashContainedModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-			Assert.assertEquals(
-				1,
-				parentTrashHandler.getTrashContainerModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-		}
-		else {
-			Assert.assertEquals(
-				1,
-				parentTrashHandler.getTrashContainedModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-			Assert.assertEquals(
-				0,
-				parentTrashHandler.getTrashContainerModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-		}
-	}
-
-	@Test
 	public void testTrashBaseModelAndParentAndDeleteGroupTrashEntries()
 		throws Exception {
 
@@ -1132,6 +1080,60 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testTrashBaseModelAndParentAndRestore() throws Exception {
+		Assume.assumeTrue(this instanceof WhenHasParent);
+
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		whenHasParent.moveParentBaseModelToTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialTrashEntriesCount + 2,
+			getTrashEntriesCount(group.getGroupId()));
+
+		TrashHandler parentTrashHandler =
+			TrashHandlerRegistryUtil.getTrashHandler(
+				whenHasParent.getParentBaseModelClassName());
+
+		if (Validator.equals(
+				getBaseModelClassName(),
+				whenHasParent.getParentBaseModelClassName())) {
+
+			Assert.assertEquals(
+				0,
+				parentTrashHandler.getTrashContainedModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+			Assert.assertEquals(
+				1,
+				parentTrashHandler.getTrashContainerModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+		}
+		else {
+			Assert.assertEquals(
+				1,
+				parentTrashHandler.getTrashContainedModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+			Assert.assertEquals(
+				0,
+				parentTrashHandler.getTrashContainerModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+		}
 	}
 
 	@Test
@@ -1279,10 +1281,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
@@ -1317,10 +1319,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -1792,6 +1794,26 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 	}
 
+	@Test(expected = TrashEntryException.class)
+	public void testTrashParentAndBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
+
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		whenHasParent.moveParentBaseModelToTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+	}
+
 	@Test
 	public void testTrashParentAndDeleteGroupTrashEntries() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasParent);
@@ -1943,6 +1965,41 @@ public abstract class BaseTrashHandlerTestCase {
 				whenIsIndexableBaseModel.searchBaseModelsCount(
 					getBaseModelClass(), group.getGroupId()));
 		}
+	}
+
+	@Test(expected = RestoreEntryException.class)
+	public void testTrashParentAndRestoreParentAndBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
+		Assume.assumeTrue(
+			this instanceof WhenIsRestorableParentBaseModelFromTrash);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
+
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		whenHasParent.moveParentBaseModelToTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		WhenIsRestorableParentBaseModelFromTrash
+			whenIsRestorableParentBaseModelFromTrash =
+				(WhenIsRestorableParentBaseModelFromTrash)this;
+
+		whenIsRestorableParentBaseModelFromTrash.
+			restoreParentBaseModelFromTrash(
+				(Long)parentBaseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 	}
 
 	@Test

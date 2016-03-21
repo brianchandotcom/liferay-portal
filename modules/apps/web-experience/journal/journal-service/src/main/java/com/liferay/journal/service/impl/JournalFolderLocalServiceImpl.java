@@ -62,6 +62,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -569,6 +571,11 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
+		if (!folder.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		if (folder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folderId);
 		}
@@ -615,6 +622,10 @@ public class JournalFolderLocalServiceImpl
 
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
+
+		if (folder.isInTrash()) {
+			throw new TrashEntryException();
+		}
 
 		String title = folder.getName();
 
@@ -705,6 +716,11 @@ public class JournalFolderLocalServiceImpl
 
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
+
+		if (!folder.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
 
 		folder.setName(TrashUtil.getOriginalTitle(folder.getName()));
 

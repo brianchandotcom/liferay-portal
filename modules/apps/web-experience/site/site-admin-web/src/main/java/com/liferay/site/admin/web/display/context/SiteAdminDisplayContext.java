@@ -205,25 +205,6 @@ public class SiteAdminDisplayContext {
 		return portletURL;
 	}
 
-	public String getRowURL(Group group) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		PortletURL siteAdministrationURL = getSiteAdministrationURL(
-			group.getGroupId());
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
-
-			return siteAdministrationURL.toString();
-		}
-
-		return null;
-	}
-
 	public GroupSearch getSearchContainer() throws PortalException {
 		return _groupSearchProvider.getGroupSearch(
 			_liferayPortletRequest, getPortletURL());

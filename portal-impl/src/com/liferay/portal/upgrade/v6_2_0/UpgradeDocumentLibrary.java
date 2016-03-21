@@ -68,6 +68,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		// DLFileEntryType
 
+		runSQL("drop index IX_E9B6A85B on DLFileEntryType");
+
 		alter(
 			DLFileEntryTypeTable.class,
 			new AlterTableAddColumn("fileEntryTypeKey STRING"),

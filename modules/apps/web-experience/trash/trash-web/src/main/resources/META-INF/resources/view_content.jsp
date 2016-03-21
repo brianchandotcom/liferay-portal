@@ -142,12 +142,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						cssClass="type-column"
-						name="type"
-						value="<%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>"
-					/>
-
 					<liferay-ui:search-container-column-jsp
 						cssClass="entry-action-column"
 						path="/view_content_action.jsp"

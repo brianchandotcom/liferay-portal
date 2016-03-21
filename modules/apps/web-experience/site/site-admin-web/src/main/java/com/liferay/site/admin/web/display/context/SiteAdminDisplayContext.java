@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
+import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupSearchProvider;
 
@@ -93,10 +96,25 @@ public class SiteAdminDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle == null) {
-			_displayStyle = ParamUtil.getString(
-				_request, "displayStyle", "list");
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
+
+		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
+		}
+		else {
+			portalPreferences.setValue(
+				SiteAdminPortletKeys.SITE_ADMIN, "display-style", displayStyle);
+		}
+
+		_displayStyle = displayStyle;
 
 		return _displayStyle;
 	}

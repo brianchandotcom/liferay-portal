@@ -30,10 +30,12 @@ request.setAttribute("view.jsp-groupSearchContainer", groupSearch);
 
 PortletURL mainURL = renderResponse.createRenderURL();
 
+mainURL.setParameter("mvcPath", "/view.jsp");
+
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sites"), mainURL.toString());
 
 if (group != null) {
-	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+	SitesUtil.addPortletBreadcrumbEntries(group, request, mainURL);
 
 	renderResponse.setTitle(HtmlUtil.escape(group.getDescriptiveName(locale)));
 }

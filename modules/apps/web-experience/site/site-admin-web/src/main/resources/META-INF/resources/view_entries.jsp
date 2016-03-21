@@ -51,9 +51,8 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 				%>
 
 				<liferay-portlet:renderURL var="viewSubsitesURL">
-					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="mvcPath" value="/view.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:search-container-column-text>

@@ -26,7 +26,7 @@
 
 	if (hasAddChildSitePermisison && (row != null)) {
 		viewSubsitesURL = renderResponse.createRenderURL();
-		viewSubsitesURL.setParameter("backURL", currentURL);
+		viewSubsitesURL.setParameter("mvcPath", "/view.jsp");
 		viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
 	}
 	%>

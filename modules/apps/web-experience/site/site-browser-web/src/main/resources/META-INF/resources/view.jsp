@@ -30,47 +30,39 @@ String[] types = siteBrowserDisplayContext.getTypes();
 GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 %>
 
-<c:choose>
-	<c:when test='<%= !type.equals("parent-sites") || (types.length > 1) %>'>
-		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="sites" selected="<%= types.length == 1 %>" />
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<c:choose>
+			<c:when test="<%= types.length == 1 %>">
+				<aui:nav-item label="sites" selected="<%= true %>" />
+			</c:when>
+			<c:when test="<%= types.length > 1 %>">
 
-				<c:if test="<%= types.length > 1 %>">
-
-					<%
+				<%
+				for (String curType : types) {
 					PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 
-					for (String curType : types) {
-						portletURL.setParameter("type", curType);
-					%>
+					portletURL.setParameter("type", curType);
+				%>
 
-						<aui:nav-item href="<%= portletURL.toString() %>" label="<%= curType %>" selected="<%= curType.equals(type) %>" />
+					<aui:nav-item href="<%= portletURL.toString() %>" label="<%= curType %>" selected="<%= curType.equals(type) %>" />
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</c:if>
-			</aui:nav>
+			</c:when>
+		</c:choose>
+	</aui:nav>
 
-			<c:if test='<%= !type.equals("parent-sites") %>'>
-				<aui:nav-bar-search>
-					<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
-					</aui:form>
-				</aui:nav-bar-search>
-			</c:if>
-		</aui:nav-bar>
-	</c:when>
-	<c:otherwise>
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="sites" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-	</c:otherwise>
-</c:choose>
+	<c:if test='<%= !type.equals("parent-sites") %>'>
+		<aui:nav-bar-search>
+			<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>

@@ -31,6 +31,7 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -73,9 +74,12 @@ public class JavaClass {
 			List<String> testAnnotationsExcludes)
 		throws Exception {
 
-		Set<JavaTerm> javaTerms = getJavaTerms();
+		Set<JavaTerm> javaTerms = Collections.emptySet();
 
-		if (javaTerms == null) {
+		try {
+			javaTerms = getJavaTerms();
+		}
+		catch (InvalidJavaTermException ijte) {
 			if (!_javaSourceProcessor.isExcludedPath(
 					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
 				!_javaSourceProcessor.isExcludedPath(
@@ -83,7 +87,8 @@ public class JavaClass {
 
 				_javaSourceProcessor.processErrorMessage(
 					_fileName,
-					"Parsing error while retrieving java terms " + _fileName);
+					"Parsing error around line " + ijte.getLineCount() + ": " +
+						_fileName);
 			}
 
 			return _classContent;
@@ -948,13 +953,13 @@ public class JavaClass {
 
 		String javaTermContent = _classContent.substring(startPos, endPos);
 
-		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
-			return null;
-		}
-
 		int lineCount =
 			_lineCount +
 				_javaSourceProcessor.getLineCount(_classContent, startPos) - 1;
+
+		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
+			throw new InvalidJavaTermException(lineCount);
+		}
 
 		JavaTerm javaTerm = new JavaTerm(
 			name, type, javaTermContent, lineCount, _indent);
@@ -1017,10 +1022,6 @@ public class JavaClass {
 
 				Tuple tuple = getJavaTermTuple(line, _classContent, index);
 
-				if (tuple == null) {
-					return null;
-				}
-
 				int javaTermEndPosition = 0;
 
 				if (lastCommentOrAnnotationPos == -1) {
@@ -1036,10 +1037,6 @@ public class JavaClass {
 					JavaTerm javaTerm = getJavaTerm(
 						javaTermName, javaTermType, javaTermStartPosition,
 						javaTermEndPosition);
-
-					if (javaTerm == null) {
-						return null;
-					}
 
 					if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 						staticBlocks.add(javaTerm);
@@ -1099,10 +1096,6 @@ public class JavaClass {
 			JavaTerm javaTerm = getJavaTerm(
 				javaTermName, javaTermType, javaTermStartPosition,
 				javaTermEndPosition);
-
-			if (javaTerm == null) {
-				return null;
-			}
 
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 				staticBlocks.add(javaTerm);
@@ -1197,7 +1190,9 @@ public class JavaClass {
 		return null;
 	}
 
-	protected Tuple getJavaTermTuple(String line, String content, int index) {
+	protected Tuple getJavaTermTuple(String line, String content, int index)
+		throws Exception {
+
 		int posStartNextLine = index;
 
 		while (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
@@ -1232,11 +1227,15 @@ public class JavaClass {
 			}
 		}
 
-		if (line.startsWith(_indent + "static {")) {
-			return new Tuple("static", JavaTerm.TYPE_STATIC_BLOCK);
+		if (!line.startsWith(_indent + "static {")) {
+			int lineCount =
+				_lineCount + _javaSourceProcessor.getLineCount(content, index) -
+					1;
+
+			throw new InvalidJavaTermException(lineCount);
 		}
 
-		return null;
+		return new Tuple("static", JavaTerm.TYPE_STATIC_BLOCK);
 	}
 
 	protected Tuple getJavaTermTuple(
@@ -1301,18 +1300,12 @@ public class JavaClass {
 			boolean checkOuterClass)
 		throws Exception {
 
-		Set<JavaTerm> javaTerms = getJavaTerms();
-
-		if (javaTerms == null) {
-			return false;
-		}
-
 		if (checkOuterClass && (_outerClass != null)) {
 			return _outerClass.isFinalableField(
 				javaTerm, javaTermClassName, pattern, true);
 		}
 
-		for (JavaTerm curJavaTerm : javaTerms) {
+		for (JavaTerm curJavaTerm : getJavaTerms()) {
 			if (!curJavaTerm.isMethod() &&
 				(!curJavaTerm.isConstructor() ||
 				 javaTermClassName.equals(_name))) {

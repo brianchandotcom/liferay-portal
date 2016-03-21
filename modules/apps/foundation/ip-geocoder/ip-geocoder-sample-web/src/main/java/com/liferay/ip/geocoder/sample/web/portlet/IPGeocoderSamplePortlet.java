@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -31,10 +32,32 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero
+ * @author Andrea Di Giorgi
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-ip-geocoder-sample",
+		"com.liferay.portlet.display-category=category.tools",
+		"com.liferay.portlet.icon=/icons/ip_geocoder_sample.png",
+		"javax.portlet.display-name=IP Geocoder Sample",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + IPGeocoderSamplePortletKeys.IP_GEOCODER_SAMPLE,
+		"javax.portlet.portlet-info.keywords=IP Geocoder Sample",
+		"javax.portlet.portlet-info.short-title=IP Geocoder Sample",
+		"javax.portlet.portlet-info.title=IP Geocoder Sample",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class IPGeocoderSamplePortlet extends MVCPortlet {
 
 	@Override

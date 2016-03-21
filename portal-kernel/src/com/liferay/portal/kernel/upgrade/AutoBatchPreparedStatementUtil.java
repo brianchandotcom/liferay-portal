@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.PropsUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -80,6 +82,9 @@ public class AutoBatchPreparedStatementUtil {
 	private AutoBatchPreparedStatementUtil() {
 	}
 
+	private static final int _HIBERNATE_JDBC_BATCH_SIZE = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE));
+
 	private static final Method _addBatchMethod;
 	private static final Method _closeMethod;
 	private static final Method _executeBatch;
@@ -119,7 +124,7 @@ public class AutoBatchPreparedStatementUtil {
 
 			_preparedStatement.addBatch();
 
-			if (++_count >= PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
+			if (++_count >= _HIBERNATE_JDBC_BATCH_SIZE) {
 				_preparedStatement.executeBatch();
 
 				_count = 0;
@@ -147,7 +152,7 @@ public class AutoBatchPreparedStatementUtil {
 			if (method.equals(_addBatchMethod)) {
 				_preparedStatement.addBatch();
 
-				if (++_count >= PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
+				if (++_count >= _HIBERNATE_JDBC_BATCH_SIZE) {
 					_executeBatch();
 				}
 

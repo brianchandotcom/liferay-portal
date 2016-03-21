@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.lists.web.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -106,43 +108,50 @@ public class UpgradeDDLFormPortletId
 
 	@Override
 	protected void updateInstanceablePortletPreferences(
-			String oldRootPortletId, String newRootPortletId)
+			final String oldRootPortletId, final String newRootPortletId)
 		throws Exception {
 
-		DynamicQuery dynamicQuery =
-			_portletPreferencesLocalService.dynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_portletPreferencesLocalService.getActionableDynamicQuery();
 
-		Junction disjunction = RestrictionsFactoryUtil.disjunction();
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-		Property portletIdProperty = PropertyFactoryUtil.forName("portletId");
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Junction disjunction =
+						RestrictionsFactoryUtil.disjunction();
 
-		disjunction.add(portletIdProperty.eq(oldRootPortletId));
-		disjunction.add(
-			portletIdProperty.like(oldRootPortletId + "_INSTANCE_%"));
-		disjunction.add(
-			portletIdProperty.like(oldRootPortletId + "_USER_%_INSTANCE_%"));
+					Property portletIdProperty = PropertyFactoryUtil.forName(
+						"portletId");
 
-		dynamicQuery.add(disjunction);
+					disjunction.add(portletIdProperty.eq(oldRootPortletId));
+					disjunction.add(
+						portletIdProperty.like(
+							oldRootPortletId + "_INSTANCE_%"));
+					disjunction.add(
+						portletIdProperty.like(
+							oldRootPortletId + "_USER_%_INSTANCE_%"));
 
-		List<PortletPreferences> portletPreferences =
-			_portletPreferencesLocalService.dynamicQuery(dynamicQuery);
+					dynamicQuery.add(disjunction);
+				}
 
-		for (PortletPreferences portletPreference : portletPreferences) {
-			String newPortletId = StringUtil.replace(
-				portletPreference.getPortletId(), oldRootPortletId,
-				newRootPortletId);
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<PortletPreferences>() {
 
-			String newPreferences = StringUtil.replace(
-				portletPreference.getPreferences(), "</portlet-preferences>",
-				"<preference><name>formView</name><value>true</value>" +
-					"</preference></portlet-preferences>");
+				@Override
+				public void performAction(PortletPreferences portletPreference)
+					throws PortalException {
 
-			portletPreference.setPortletId(newPortletId);
-			portletPreference.setPreferences(newPreferences);
+					updatePortletPreferences(
+						portletPreference, oldRootPortletId, newRootPortletId);
+				}
 
-			_portletPreferencesLocalService.updatePortletPreferences(
-				portletPreference);
-		}
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -163,6 +172,26 @@ public class UpgradeDDLFormPortletId
 				_log.warn(e, e);
 			}
 		}
+	}
+
+	protected void updatePortletPreferences(
+		PortletPreferences portletPreferences, String oldRootPortletId,
+		String newRootPortletId) {
+
+		String newPortletId = StringUtil.replace(
+			portletPreferences.getPortletId(), oldRootPortletId,
+			newRootPortletId);
+
+		String newPreferences = StringUtil.replace(
+			portletPreferences.getPreferences(), "</portlet-preferences>",
+			"<preference><name>formView</name><value>true</value>" +
+				"</preference></portlet-preferences>");
+
+		portletPreferences.setPortletId(newPortletId);
+		portletPreferences.setPreferences(newPreferences);
+
+		_portletPreferencesLocalService.updatePortletPreferences(
+			portletPreferences);
 	}
 
 	@Override

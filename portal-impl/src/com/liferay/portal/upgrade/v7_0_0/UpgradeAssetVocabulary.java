@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.sql.PreparedStatement;
@@ -59,36 +60,26 @@ public class UpgradeAssetVocabulary extends UpgradeProcess {
 
 	protected void updateAssetVocabularies() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select vocabularyId, settings_ from AssetVocabulary");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update AssetVocabulary set settings_ = ? where " +
+						"vocabularyId = ?");
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				long vocabularyId = rs.getLong("vocabularyId");
 				String settings = rs.getString("settings_");
 
-				updateAssetVocabulary(
-					vocabularyId, upgradeVocabularySettings(settings));
+				ps2.setString(1, upgradeVocabularySettings(settings));
+				ps2.setLong(2, vocabularyId);
+
+				ps2.addBatch();
 			}
-		}
-	}
 
-	protected void updateAssetVocabulary(long vocabularyId, String settings)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update AssetVocabulary set settings_ = ? where vocabularyId " +
-					"= ?")) {
-
-			ps.setString(1, settings);
-			ps.setLong(2, vocabularyId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update vocabulary " + vocabularyId, e);
-			}
+			ps2.executeBatch();
 		}
 	}
 

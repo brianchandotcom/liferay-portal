@@ -92,8 +92,9 @@ teamSearch.setTotal(teamsCount);
 			rowVar="row"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
+				cssClass="content-column name-column title-column"
 				name="name"
+				truncate="<%= true %>"
 			>
 
 				<%
@@ -123,7 +124,9 @@ teamSearch.setTotal(teamsCount);
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
 				name="description"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(curTeam.getDescription()) %>"
 			/>
 		</liferay-ui:search-container-row>

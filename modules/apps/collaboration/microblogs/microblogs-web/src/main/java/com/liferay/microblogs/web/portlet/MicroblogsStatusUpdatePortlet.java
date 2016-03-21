@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.config-jsp=/status_update/configuration.jsp",
 		"javax.portlet.init-param.view-template=/status_update/view.jsp",
 		"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE,
-		"javax.portlet.portlet-info.keyworkds=Microblogs Status Update",
+		"javax.portlet.portlet-info.keywords=Microblogs Status Update",
 		"javax.portlet.portlet-info.short-title=Microblogs Status Update",
 		"javax.portlet.portlet-info.title=Microblogs Status Update",
 		"javax.portlet.resource-bundle=content.Language",

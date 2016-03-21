@@ -23,7 +23,7 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 String displayStyle = siteItemSelectorViewDisplayContext.getDisplayStyle();
 String target = ParamUtil.getString(request, "target");
 
-PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
+GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 %>
 
 <liferay-frontend:management-bar>
@@ -31,6 +31,13 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= groupSearch.getOrderByCol() %>"
+				orderByType="<%= groupSearch.getOrderByType() %>"
+				orderColumns='<%= new String[] {"name", "type"} %>'
 				portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
 			/>
 		</liferay-frontend:management-bar-filters>
@@ -43,7 +50,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
+<aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
@@ -51,7 +58,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 	</c:if>
 
 	<liferay-ui:search-container
-		searchContainer="<%= siteItemSelectorViewDisplayContext.getGroupSearch() %>"
+		searchContainer="<%= groupSearch %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"

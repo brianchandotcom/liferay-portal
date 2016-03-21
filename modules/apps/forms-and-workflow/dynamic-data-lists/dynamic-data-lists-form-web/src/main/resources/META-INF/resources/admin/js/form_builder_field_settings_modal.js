@@ -62,9 +62,20 @@ AUI.add(
 
 						instance._showDefaultToolbar();
 
-						instance._modal.syncHeight();
-
 						var field = instance._fieldBeingEdited;
+
+						var settingsForm = field.get('settingsForm');
+
+						var container = settingsForm.get('container');
+
+						container.appendTo(instance._getBodyNode());
+
+						settingsForm.render();
+
+						var modal = instance._modal;
+
+						modal.syncHeight();
+						modal.align();
 
 						instance._previousSettings = JSON.stringify(field.getSettings());
 					},
@@ -133,6 +144,12 @@ AUI.add(
 						modal.get('boundingBox').addClass(CSS_FIELD_SETTINGS_MODAL);
 
 						instance._getFooterNode().prepend(A.Node.create(TPL_CONFIRMATION_MESSAGE));
+					},
+
+					_getBodyNode: function() {
+						var instance = this;
+
+						return instance._modal.getStdModNode(A.WidgetStdMod.BODY);
 					},
 
 					_getFooterNode: function() {

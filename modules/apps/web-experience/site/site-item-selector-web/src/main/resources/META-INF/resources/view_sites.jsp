@@ -34,12 +34,14 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 				portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
 			/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= groupSearch.getOrderByCol() %>"
-				orderByType="<%= groupSearch.getOrderByType() %>"
-				orderColumns='<%= new String[] {"name", "type"} %>'
-				portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
-			/>
+			<c:if test="<%= siteItemSelectorViewDisplayContext.isShowSortFilter() %>">
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= groupSearch.getOrderByCol() %>"
+					orderByType="<%= groupSearch.getOrderByType() %>"
+					orderColumns='<%= new String[] {"name", "type"} %>'
+					portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
+				/>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons

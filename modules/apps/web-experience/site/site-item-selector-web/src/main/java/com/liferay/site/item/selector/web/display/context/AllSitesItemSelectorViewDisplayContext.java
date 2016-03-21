@@ -65,6 +65,11 @@ public class AllSitesItemSelectorViewDisplayContext
 		return true;
 	}
 
+	@Override
+	public boolean isShowSortFilter() {
+		return true;
+	}
+
 	protected void addBreadcrumbEntries(PortletURL portletURL) {
 		Group group = getGroup();
 

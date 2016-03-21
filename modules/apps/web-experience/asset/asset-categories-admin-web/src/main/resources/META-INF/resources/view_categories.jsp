@@ -70,7 +70,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
@@ -135,6 +135,28 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 					<liferay-ui:search-container-column-jsp
 						path="/category_action.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/category_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="categories"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= curCategory.getDescription() %>"
+							title="<%= curCategory.getName() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text

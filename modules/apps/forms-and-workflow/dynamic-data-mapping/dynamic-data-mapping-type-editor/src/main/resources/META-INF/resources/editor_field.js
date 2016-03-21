@@ -50,7 +50,13 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						return instance._alloyEditor.getHTML();
+						var value = EditorField.superclass.getValue.apply(instance, arguments);
+
+						if (instance._alloyEditor) {
+							value = instance._alloyEditor.getHTML();
+						}
+
+						return value;
 					},
 
 					render: function() {
@@ -58,9 +64,9 @@ AUI.add(
 
 						EditorField.superclass.render.apply(instance, arguments);
 
-						if (!instance.get('readOnly')) {
-							var editorNode = instance.getEditorNode();
+						var editorNode = instance.getEditorNode();
 
+						if (editorNode.inDoc() && !instance.get('readOnly')) {
 							var name = instance.getQualifiedName();
 
 							var value = instance.getContextValue();
@@ -102,7 +108,9 @@ AUI.add(
 
 						EditorField.superclass.setValue.apply(instance, arguments);
 
-						instance._alloyEditor.setHTML(value);
+						if (instance._alloyEditor) {
+							instance._alloyEditor.setHTML(value);
+						}
 					},
 
 					_onChangeEditor: function() {

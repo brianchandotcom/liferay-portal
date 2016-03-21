@@ -108,11 +108,18 @@ teamSearch.setTotal(teamsCount);
 				long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultTeamIds"), 0L);
 
 				long[] teamIds = ParamUtil.getLongValues(request, "teamIds", defaultTeamIds);
-
-				boolean disabled = ArrayUtil.contains(teamIds, curTeam.getTeamId());
 				%>
 
-				<aui:button cssClass="btn btn-link selector-button" data="<%= data %>" disabled="<%= disabled %>" value="<%= HtmlUtil.escape(curTeam.getName()) %>" />
+				<c:choose>
+					<c:when test="<%= !ArrayUtil.contains(teamIds, curTeam.getTeamId()) %>">
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(curTeam.getName()) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(curTeam.getName()) %>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

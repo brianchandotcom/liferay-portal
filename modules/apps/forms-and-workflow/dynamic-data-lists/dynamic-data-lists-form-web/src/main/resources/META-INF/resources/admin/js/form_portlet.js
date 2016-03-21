@@ -23,6 +23,9 @@ AUI.add(
 					editForm: {
 					},
 
+					evaluatorURL: {
+					},
+
 					formBuilder: {
 						valueFn: '_valueFormBuilder'
 					},
@@ -409,6 +412,7 @@ AUI.add(
 							{
 								dataProviders: instance.get('dataProviders'),
 								definition: instance.get('definition'),
+								evaluatorURL: instance.get('evaluatorURL'),
 								pagesJSON: layout.pages,
 								portletNamespace: instance.get('namespace')
 							}

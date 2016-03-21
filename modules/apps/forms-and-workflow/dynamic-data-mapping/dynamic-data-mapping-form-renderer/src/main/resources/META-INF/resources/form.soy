@@ -28,8 +28,10 @@
  * Prints the JavaScript form renderer.
  *
  * @param containerId
+ * @param dataProviderURL
  * @param definition
  * @param evaluation
+ * @param evaluatorURL
  * @param fieldTypes
  * @param layout
  * @param portletNamespace
@@ -42,8 +44,6 @@
  * @param values
  */
 {template .form_renderer_js autoescape="deprecated-contextual"}
-	<link href="/o/dynamic-data-mapping-form-renderer/css/main.css" rel="stylesheet" type="text/css" />
-
 	<script type="text/javascript">
 		AUI().use(
 			'liferay-ddm-form-renderer',
@@ -56,8 +56,10 @@
 					new Liferay.DDM.Renderer.Form(
 						{lb}
 							container: '#{$containerId}',
+							dataProviderURL: '{$dataProviderURL|noAutoescape}',
 							definition: {$definition|noAutoescape},
 							evaluation: {$evaluation|noAutoescape},
+							evaluatorURL: '{$evaluatorURL|noAutoescape}',
 
 							{if $layout}
 								layout: {$layout|noAutoescape},

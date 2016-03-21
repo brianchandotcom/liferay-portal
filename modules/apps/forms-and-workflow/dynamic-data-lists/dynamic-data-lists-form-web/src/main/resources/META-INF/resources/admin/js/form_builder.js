@@ -41,6 +41,9 @@ AUI.add(
 						valueFn: '_valueDeserializer'
 					},
 
+					evaluatorURL: {
+					},
+
 					fieldTypes: {
 						setter: '_setFieldTypes',
 						valueFn: '_valueFieldTypes'
@@ -154,6 +157,7 @@ AUI.add(
 								{
 									builder: instance,
 									dataProviders: instance.get('dataProviders'),
+									evaluatorURL: instance.get('evaluatorURL'),
 									portletNamespace: instance.get('portletNamespace'),
 									readOnly: true
 								}

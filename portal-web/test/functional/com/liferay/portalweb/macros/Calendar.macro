@@ -907,7 +907,11 @@
 	<command name="viewNoRSS">
 		<execute function="Open" locator1="${rssURL}" />
 
-		<execute function="AssertElementPresent" locator1="CalendarConfiguration#ERROR_HEADER" />
+		<var name="pageName" value="Welcome" />
+
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="viewOtherCalendarMenulist">

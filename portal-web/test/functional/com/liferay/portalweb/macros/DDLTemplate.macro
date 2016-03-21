@@ -347,10 +347,13 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute function="ScrollWebElementIntoView" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
+
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
-
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlTemplateName}" />
 	</command>
 

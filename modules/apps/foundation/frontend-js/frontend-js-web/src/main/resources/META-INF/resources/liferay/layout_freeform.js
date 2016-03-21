@@ -5,47 +5,6 @@ AUI.add(
 
 		var Layout = Liferay.Layout;
 
-		Layout.register = function() {
-			var freeformLayoutDefaults = A.merge(
-				Layout.DEFAULT_LAYOUT_OPTIONS,
-				{
-					after: {
-						'drag:start': function(event) {
-							var instance = this;
-
-							var node = DDM.activeDrag.get('node');
-							var nodeId = node.get('id');
-
-							var proxyNode = instance.get('proxyNode');
-
-							proxyNode.one('.portlet-topper').html(Layout._getPortletTitle(nodeId));
-						}
-					},
-					lazyStart: false,
-					on: {
-						'drag:end': function(event) {
-							var instance = this;
-
-							var node = event.target.get('node');
-
-							node.removeClass('yui3-dd-dragging');
-						}
-					},
-					proxy: {
-						positionProxy: true
-					}
-				}
-			);
-
-			var dragConfig = A.namespace.call(freeformLayoutDefaults, 'delegateConfig.dragConfig');
-
-			dragConfig.startCentered = false;
-
-			Layout.layoutHandler = new Layout.FreeFormLayout(freeformLayoutDefaults);
-
-			Layout.syncDraggableClassUI();
-		};
-
 		var FreeFormLayout = A.Component.create(
 			{
 				ATTRS: {
@@ -208,6 +167,47 @@ AUI.add(
 							proxyNode.set('offsetWidth', offsetWidth);
 						}
 					}
+				},
+
+				register: function() {
+					var freeformLayoutDefaults = A.merge(
+						Layout.DEFAULT_LAYOUT_OPTIONS,
+						{
+							after: {
+								'drag:start': function(event) {
+									var instance = this;
+
+									var node = DDM.activeDrag.get('node');
+									var nodeId = node.get('id');
+
+									var proxyNode = instance.get('proxyNode');
+
+									proxyNode.one('.portlet-topper').html(Layout._getPortletTitle(nodeId));
+								}
+							},
+							lazyStart: false,
+							on: {
+								'drag:end': function(event) {
+									var instance = this;
+
+									var node = event.target.get('node');
+
+									node.removeClass('yui3-dd-dragging');
+								}
+							},
+							proxy: {
+								positionProxy: true
+							}
+						}
+					);
+
+					var dragConfig = A.namespace.call(freeformLayoutDefaults, 'delegateConfig.dragConfig');
+
+					dragConfig.startCentered = false;
+
+					Layout.layoutHandler = new Layout.FreeFormLayout(freeformLayoutDefaults);
+
+					Layout.syncDraggableClassUI();
 				}
 			}
 		);

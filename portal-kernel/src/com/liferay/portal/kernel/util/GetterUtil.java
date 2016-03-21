@@ -246,7 +246,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		value = value.toLowerCase();
+		value = _toLowerCase(value);
 		value = value.trim();
 
 		if (value.equals(BOOLEANS[0]) || value.equals(BOOLEANS[1]) ||
@@ -1142,6 +1142,39 @@ public class GetterUtil {
 		}
 
 		return (short)i;
+	}
+
+	private static String _toLowerCase(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		StringBuilder sb = null;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c > 127) {
+
+				// Found non-ascii char, fallback to the slow unicode detection
+
+				return s.toLowerCase(LocaleUtil.getDefault());
+			}
+
+			if ((c >= 'A') && (c <= 'Z')) {
+				if (sb == null) {
+					sb = new StringBuilder(s);
+				}
+
+				sb.setCharAt(i, (char)(c + 32));
+			}
+		}
+
+		if (sb == null) {
+			return s;
+		}
+
+		return sb.toString();
 	}
 
 }

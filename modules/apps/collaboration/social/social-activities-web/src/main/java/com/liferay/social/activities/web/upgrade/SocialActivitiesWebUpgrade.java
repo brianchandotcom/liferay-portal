@@ -16,6 +16,7 @@ package com.liferay.social.activities.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.util.ReplacePortletId;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
@@ -34,11 +35,15 @@ public class SocialActivitiesWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.social.activities.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
+		UpgradePortletId upgradePortletId = new ReplacePortletId() {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
+					new String[] {
+						"1_WAR_soportlet",
+						SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
+					},
 					new String[] {
 						"116", SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
 					}

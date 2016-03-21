@@ -13,4 +13,12 @@
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
+
+	<command name="viewSuccessMessageText">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="AssertVisible" locator1="Message#SUCCESS" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${sucessMessage}" />
+	</command>
 </definition>

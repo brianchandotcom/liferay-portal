@@ -71,4 +71,25 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 	</command>
+
+	<command name="ViewSuccessMessageText" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="Blogs Content" />
+			<var name="entryTitle" value="Blogs Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="sucessMessage" value="Your request completed successfully." />
+		</execute>
+	</command>
 </definition>

@@ -179,8 +179,23 @@ public class AssetCategoriesDisplayContext {
 		categoriesSearchContainer.setOrderByComparator(orderByComparator);
 
 		categoriesSearchContainer.setOrderByType(orderByType);
-		categoriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+
+		EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(
+			_renderResponse);
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("^(?!.*");
+		sb.append(_renderResponse.getNamespace());
+		sb.append("redirect).*(/vocabulary/");
+		sb.append(getVocabularyId());
+		sb.append("/category/");
+		sb.append(getCategoryId());
+		sb.append(")");
+
+		rowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		categoriesSearchContainer.setRowChecker(rowChecker);
 
 		List<AssetCategory> categories = null;
 		int categoriesCount = 0;
@@ -357,8 +372,21 @@ public class AssetCategoriesDisplayContext {
 		vocabulariesSearchContainer.setOrderByComparator(orderByComparator);
 
 		vocabulariesSearchContainer.setOrderByType(orderByType);
-		vocabulariesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+
+		EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(
+			_renderResponse);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("^(?!.*");
+		sb.append(_renderResponse.getNamespace());
+		sb.append("redirect).*(/vocabulary/");
+		sb.append(getVocabularyId());
+		sb.append(")");
+
+		rowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
+
+		vocabulariesSearchContainer.setRowChecker(rowChecker);
 
 		List<AssetVocabulary> vocabularies = null;
 		int vocabulariesCount = 0;

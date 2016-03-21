@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.lists.search;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,9 +30,11 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -89,6 +94,8 @@ public class DDLRecordSetIndexer extends BaseIndexer<DDLRecordSet> {
 		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), recordSet.getCompanyId(), document,
 			isCommitImmediately());
+
+		reindexRecords(recordSet);
 	}
 
 	@Override
@@ -104,6 +111,14 @@ public class DDLRecordSetIndexer extends BaseIndexer<DDLRecordSet> {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexRecordSets(companyId);
+	}
+
+	protected void reindexRecords(DDLRecordSet recordSet) throws Exception {
+		List<DDLRecord> records = recordSet.getRecords();
+		Indexer<DDLRecord> indexer = _indexerRegistry.nullSafeGetIndexer(
+			DDLRecord.class);
+
+		indexer.reindex(records);
 	}
 
 	protected void reindexRecordSets(long companyId) throws Exception {
@@ -143,10 +158,29 @@ public class DDLRecordSetIndexer extends BaseIndexer<DDLRecordSet> {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetLocalService(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDLRecordVersionLocalService(
+		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
+
+		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
 	}
 
 	private static final int[] _REINDEX_SCOPES = new int[] {
@@ -157,5 +191,9 @@ public class DDLRecordSetIndexer extends BaseIndexer<DDLRecordSet> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordSetIndexer.class);
 
+	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private IndexerRegistry _indexerRegistry;
+
 }

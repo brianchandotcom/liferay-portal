@@ -51,7 +51,7 @@ teamSearch.setTotal(teamsCount);
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= teamsCount <= 0 %>"
+	disabled="<%= (teamsCount <= 0) && !searchTerms.isSearch() %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-filters>

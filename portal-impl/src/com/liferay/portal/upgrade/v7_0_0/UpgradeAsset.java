@@ -14,25 +14,15 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
-import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.Arrays;
 
 /**
  * @author Gergely Mathe
@@ -47,7 +37,6 @@ public class UpgradeAsset extends UpgradeProcess {
 			new AlterColumnType("summary", "TEXT null"));
 
 		updateAssetEntries();
-		updateAssetVocabularies();
 	}
 
 	protected long getDDMStructureId(String structureKey) throws Exception {
@@ -90,10 +79,10 @@ public class UpgradeAsset extends UpgradeProcess {
 				ps1.setBoolean(1, false);
 
 				try (PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(
-								"update AssetEntry set listable = ? where " +
-									"classNameId = ? and classPK = ?"));
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"update AssetEntry set listable = ? where " +
+								"classNameId = ? and classPK = ?");
 					ResultSet rs = ps1.executeQuery()) {
 
 					while (rs.next()) {
@@ -111,76 +100,5 @@ public class UpgradeAsset extends UpgradeProcess {
 			}
 		}
 	}
-
-	protected void updateAssetVocabularies() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select vocabularyId, settings_ from AssetVocabulary");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long vocabularyId = rs.getLong("vocabularyId");
-				String settings = rs.getString("settings_");
-
-				updateAssetVocabulary(
-					vocabularyId, upgradeVocabularySettings(settings));
-			}
-		}
-	}
-
-	protected void updateAssetVocabulary(long vocabularyId, String settings)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update AssetVocabulary set settings_ = ? where vocabularyId " +
-					"= ?")) {
-
-			ps.setString(1, settings);
-			ps.setLong(2, vocabularyId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update vocabulary " + vocabularyId, e);
-			}
-		}
-	}
-
-	protected String upgradeVocabularySettings(String settings) {
-		UnicodeProperties properties = new UnicodeProperties(true);
-
-		properties.fastLoad(settings);
-
-		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			new AssetVocabularySettingsHelper();
-
-		vocabularySettingsHelper.setMultiValued(
-			GetterUtil.getBoolean(properties.getProperty("multiValued"), true));
-
-		long[] classNameIds = StringUtil.split(
-			properties.getProperty("selectedClassNameIds"), 0L);
-
-		long[] classTypePKs = new long[classNameIds.length];
-
-		Arrays.fill(classTypePKs, AssetCategoryConstants.ALL_CLASS_TYPE_PK);
-
-		long[] requiredClassNameIds = StringUtil.split(
-			properties.getProperty("requiredClassNameIds"), 0L);
-
-		boolean[] requireds = new boolean[classNameIds.length];
-
-		for (int i = 0; i < classNameIds.length; i++) {
-			requireds[i] = ArrayUtil.contains(
-				requiredClassNameIds, classNameIds[i]);
-		}
-
-		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
-			classNameIds, classTypePKs, requireds);
-
-		return vocabularySettingsHelper.toString();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeAsset.class);
 
 }

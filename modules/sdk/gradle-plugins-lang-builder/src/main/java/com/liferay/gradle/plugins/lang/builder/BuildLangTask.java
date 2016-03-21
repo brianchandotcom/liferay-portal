@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.lang.builder;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.lang.builder.LangBuilderArgs;
 
 import java.io.File;
@@ -23,6 +24,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
@@ -61,11 +64,13 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	@Input
+	@Optional
 	public String getTranslateClientId() {
 		return GradleUtil.toString(_translateClientId);
 	}
 
 	@Input
+	@Optional
 	public String getTranslateClientSecret() {
 		return GradleUtil.toString(_translateClientSecret);
 	}
@@ -127,12 +132,37 @@ public class BuildLangTask extends JavaExec {
 						getPortalLanguagePropertiesFile(), getWorkingDir()));
 		}
 
-		args.add("lang.translate=" + isTranslate());
-		args.add("lang.translate.client.id=" + getTranslateClientId());
-		args.add("lang.translate.client.secret=" + getTranslateClientSecret());
+		boolean translate = isTranslate();
+
+		if (translate) {
+			String translateClientId = getTranslateClientId();
+			String translateClientSecret = getTranslateClientSecret();
+
+			if (Validator.isNull(translateClientId) ||
+				Validator.isNull(translateClientSecret)) {
+
+				if (_logger.isWarnEnabled()) {
+					_logger.warn(
+						"Credentials have not been specified, translation is " +
+							"disabled.");
+				}
+
+				translate = false;
+			}
+			else {
+				args.add("lang.translate.client.id=" + translateClientId);
+				args.add(
+					"lang.translate.client.secret=" + translateClientSecret);
+			}
+		}
+
+		args.add("lang.translate=" + translate);
 
 		return args;
 	}
+
+	private static final Logger _logger = Logging.getLogger(
+		BuildLangTask.class);
 
 	private Object _langDir;
 	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;

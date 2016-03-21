@@ -16,10 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="trash"
->
+<liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-sidenav-toggler-button
 			disabled="<%= false %>"
@@ -41,35 +38,5 @@
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= trashDisplayContext.getPortletURL() %>"
 		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= trashDisplayContext.getOrderByCol() %>"
-			orderByType="<%= trashDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"removed-date"} %>'
-			portletURL="<%= trashDisplayContext.getPortletURL() %>"
-		/>
 	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			disabled="<%= false %>"
-			href="javascript:;"
-			icon="info-circle"
-			label="info"
-			sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-		/>
-
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedEntries" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
-
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedEntries').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
-		}
-	);
-</aui:script>

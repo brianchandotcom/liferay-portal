@@ -79,10 +79,10 @@ public class UpgradeAsset extends UpgradeProcess {
 				ps1.setBoolean(1, false);
 
 				try (PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(
-								"update AssetEntry set listable = ? where " +
-									"classNameId = ? and classPK = ?"));
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"update AssetEntry set listable = ? where " +
+								"classNameId = ? and classPK = ?");
 					ResultSet rs = ps1.executeQuery()) {
 
 					while (rs.next()) {

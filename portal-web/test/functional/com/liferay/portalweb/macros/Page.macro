@@ -276,11 +276,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoTab">
-			<var name="tab" value="Look and Feel" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Logo" />
+			<var name="tab" value="Advanced" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />

@@ -38,7 +38,7 @@ deploy {
 	description = "Assembles the project and deploys it to Liferay."
 	from "dist"
 	group = "build"
-	into new File(project.properties["liferay.home"], "deploy")
+	into new File(project.properties["liferay.home"], "osgi/modules")
 }
 
 tasks.all {

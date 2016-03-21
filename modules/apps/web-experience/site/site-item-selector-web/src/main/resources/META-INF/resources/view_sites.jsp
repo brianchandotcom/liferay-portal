@@ -43,7 +43,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list", "icon"} %>'
+			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
 			portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -93,6 +93,25 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 			%>
 
 			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="sites"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+							</aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<span><%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
@@ -149,7 +168,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:otherwise>
+				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="content-column name-column title-column"
 						name="name"
@@ -165,7 +184,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 						name="type"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
-				</c:otherwise>
+				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 

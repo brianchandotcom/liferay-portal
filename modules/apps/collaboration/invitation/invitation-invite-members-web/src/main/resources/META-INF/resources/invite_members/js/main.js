@@ -8,10 +8,6 @@ AUI.add(
 		InviteMembers.NAME = 'soinvitemembers';
 
 		InviteMembers.ATTRS = {
-			dialog: {
-				value: null
-			},
-
 			portletNamespace: {
 				value: ''
 			}

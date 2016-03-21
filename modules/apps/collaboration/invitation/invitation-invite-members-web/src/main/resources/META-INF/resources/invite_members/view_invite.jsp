@@ -126,7 +126,6 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 <aui:script use="aui-base,datasource-io,datatype-number,liferay-so-invite-members,liferay-so-invite-members-list">
 	new Liferay.SO.InviteMembers(
 		{
-			dialog: Liferay.Util.getWindow(),
 			portletNamespace: '<portlet:namespace />'
 		}
 	);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-fragment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+	version="3.0">
+
+	<name>fragment6</name>
+	<ordering>
+		<before>
+			<name>fragment5</name>
+		</before>
+	</ordering>
+	<context-param>
+		<param-name>name</param-name>
+		<param-value>value5</param-value>
+	</context-param>
+
+</web-fragment>

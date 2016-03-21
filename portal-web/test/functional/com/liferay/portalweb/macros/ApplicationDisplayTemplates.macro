@@ -69,6 +69,9 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
+		<execute function="AssertVisible" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
+		<execute function="AssertElementPresent" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
+
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="RSS Test ADT" />
 
 		<execute function="Click" locator1="ApplicationDisplayTemplates#RSS_FEEDS" />
@@ -105,7 +108,10 @@
 
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+		<execute function="AssertVisible" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
+		<execute function="AssertElementPresent" locator1="ApplicationDisplayTemplates#PORTLET_PREFERENCES" />
+
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
 
 		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 

@@ -155,6 +155,10 @@ public interface ExportImportHelper {
 			long plid, String portletId, String defaultRange)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public Layout getExportableLayout(ThemeDisplay themeDisplay)
 		throws PortalException;
 

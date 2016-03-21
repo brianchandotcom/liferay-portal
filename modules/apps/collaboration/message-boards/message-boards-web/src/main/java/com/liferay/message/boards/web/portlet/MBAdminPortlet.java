@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-message-boards",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/message_boards/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/message_boards/css/main.css",
 		"com.liferay.portlet.icon=/message_boards/icons/message_boards.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

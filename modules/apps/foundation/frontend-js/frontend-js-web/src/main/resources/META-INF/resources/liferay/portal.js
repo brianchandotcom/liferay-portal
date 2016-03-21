@@ -111,6 +111,7 @@
 			var instance = this;
 
 			var cached = instance._cached;
+			var hideTooltipTask = instance._hideTooltipTask;
 
 			if (!cached) {
 				cached = new A.Tooltip(
@@ -129,8 +130,14 @@
 					A.bind('_syncUIPosAlign', cached)
 				);
 
+				hideTooltipTask = A.debounce('_onBoundingBoxMouseleave', cached.get('stickDuration'), cached);
+
+				instance._hideTooltipTask = hideTooltipTask;
+
 				instance._cached = cached;
 			}
+
+			hideTooltipTask.cancel();
 
 			if (obj.jquery) {
 				obj = obj[0];
@@ -145,43 +152,25 @@
 			cached.set(BODY_CONTENT, text);
 			cached.set(TRIGGER, obj);
 
-			var tooltipTimeout;
-			var tooltip = cached.get('boundingBox');
+			var boundingBox = cached.get('boundingBox');
 
-			var hideTooltip = function() {
-				tooltipTimeout = A.later(
-					cached.stickDuration,
-					tooltip,
-					function() {
-						cached.hide();
-					}
-				);
-			};
-
+			boundingBox.detach('hover');
 			obj.detach('hover');
-			tooltip.detach('hover');
 
 			obj.on(
 				'hover',
 				A.bind('_onBoundingBoxMouseenter', cached),
-				hideTooltip
+				hideTooltipTask
 			);
 
-			tooltip.on(
+			boundingBox.on(
 				'hover',
 				function(event) {
-					tooltipTimeout.cancel();
+					hideTooltipTask.cancel();
 
-					obj.on(
-						'lfr-tooltip|mouseenter',
-						function(event) {
-							tooltipTimeout.cancel();
-
-							this.detach('lfr-tooltip|mouseenter');
-						}
-					);
+					obj.once('mouseenter', hideTooltipTask.cancel);
 				},
-				hideTooltip
+				hideTooltipTask
 			);
 
 			cached.show();

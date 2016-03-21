@@ -59,7 +59,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
@@ -131,6 +131,32 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 					<liferay-ui:search-container-column-jsp
 						path="/vocabulary_action.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/vocabulary_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="categories"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= vocabulary.getDescription() %>"
+							title="<%= vocabulary.getName() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - vocabulary.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text

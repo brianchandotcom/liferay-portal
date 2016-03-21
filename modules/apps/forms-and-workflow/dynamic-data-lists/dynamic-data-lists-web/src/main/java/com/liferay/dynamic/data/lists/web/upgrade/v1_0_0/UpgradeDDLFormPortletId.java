@@ -137,6 +137,7 @@ public class UpgradeDDLFormPortletId
 				}
 
 			});
+		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.
 				PerformActionMethod<PortletPreferences>() {

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/microblogs/view.jsp",
 		"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
-		"javax.portlet.portlet-info.keyworkds=Microblogs",
+		"javax.portlet.portlet-info.keywords=Microblogs",
 		"javax.portlet.portlet-info.short-title=Microblogs",
 		"javax.portlet.portlet-info.title=Microblogs",
 		"javax.portlet.resource-bundle=content.Language",

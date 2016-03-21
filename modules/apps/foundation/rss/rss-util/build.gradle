@@ -1,6 +1,6 @@
 dependencies {
 	provided group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "jdom", name: "jdom", version: "1.0"
 	provided group: "rome", name: "rome", version: "1.0"

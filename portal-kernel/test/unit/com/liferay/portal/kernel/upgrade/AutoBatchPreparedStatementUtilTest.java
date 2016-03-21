@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.nio.intraband.CancelingPortalExecutorManagerUtilAdvice;

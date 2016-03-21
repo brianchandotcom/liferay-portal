@@ -16,9 +16,9 @@ package com.liferay.portal.upgrade.v6_1_0.util;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

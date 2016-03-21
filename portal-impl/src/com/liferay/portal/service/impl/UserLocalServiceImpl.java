@@ -5721,8 +5721,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			resetFailedLoginAttempts(user);
 		}
 
-		// PLACEHOLDER 02
-
 		return authResult;
 	}
 

@@ -19,8 +19,6 @@
 <%
 String tabs3 = ParamUtil.getString(request, "tabs3", "new-export-process");
 
-Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "exportImport");
@@ -81,7 +79,7 @@ portletURL.setParameter("portletResource", portletResource);
 			<aui:input name="tabs1" type="hidden" value="export_import" />
 			<aui:input name="tabs2" type="hidden" value="export" />
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-			<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
+			<aui:input name="plid" type="hidden" value="<%= plid %>" />
 			<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
@@ -96,7 +94,7 @@ portletURL.setParameter("portletResource", portletResource);
 					<%
 					PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 
-					PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
+					PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, plid, false);
 					%>
 
 					<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
@@ -161,7 +159,7 @@ portletURL.setParameter("portletResource", portletResource);
 					<c:if test="<%= !portletDataHandler.isDisplayPortlet() %>">
 
 						<%
-						DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, themeDisplay.getScopeGroupId(), false, exportableLayout.getPlid(), selPortlet.getPortletId(), ExportImportDateUtil.RANGE_ALL);
+						DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, themeDisplay.getScopeGroupId(), false, plid, selPortlet.getPortletId(), ExportImportDateUtil.RANGE_ALL);
 
 						Date startDate = dateRange.getStartDate();
 						Date endDate = dateRange.getEndDate();

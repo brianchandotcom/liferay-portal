@@ -68,6 +68,10 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 									<portlet:param name="urlTitle" value="<%= previousEntry.getUrlTitle() %>" />
 								</portlet:renderURL>
 
+								<liferay-util:html-top outputKey="blogs_previous_entry_link">
+									<link href="<%= previousEntryURL.toString() %>" rel="prev" />
+								</liferay-util:html-top>
+
 								<%
 								String smallImageURL = previousEntry.getSmallImageURL(themeDisplay);
 								%>
@@ -105,6 +109,10 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 									<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 									<portlet:param name="urlTitle" value="<%= nextEntry.getUrlTitle() %>" />
 								</portlet:renderURL>
+
+								<liferay-util:html-top outputKey="blogs_next_entry_link">
+									<link href="<%= nextEntryURL.toString() %>" rel="next" />
+								</liferay-util:html-top>
 
 								<%
 								String smallImageURL = nextEntry.getSmallImageURL(themeDisplay);

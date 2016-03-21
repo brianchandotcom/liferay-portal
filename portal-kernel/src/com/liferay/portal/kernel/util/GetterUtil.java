@@ -246,8 +246,9 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		value = _toLowerCase(value);
 		value = value.trim();
+
+		value = _toLowerCase(value);
 
 		if (value.equals(BOOLEANS[0]) || value.equals(BOOLEANS[1]) ||
 			value.equals(BOOLEANS[2]) || value.equals(BOOLEANS[3]) ||

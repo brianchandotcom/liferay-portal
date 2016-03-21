@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_PREFERENCES</td>
+	<td>//ul[@class='palette-item-content']//li/span[contains(.,'Portlet Preferences')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

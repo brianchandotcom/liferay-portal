@@ -24,6 +24,11 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
+transpileJS {
+	soySrcIncludes = ""
+	srcIncludes = "**/*.es.js"
+}
+
 wrapSoyTemplates {
 	doLast {
 		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")

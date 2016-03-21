@@ -64,8 +64,6 @@ public class JavaClass {
 		_javaTermAccessLevelModifierExcludes =
 			javaTermAccessLevelModifierExcludes;
 		_javaSourceProcessor = javaSourceProcessor;
-
-		_javaTerms = getJavaTerms();
 	}
 
 	public String formatJavaTerms(
@@ -75,7 +73,9 @@ public class JavaClass {
 			List<String> testAnnotationsExcludes)
 		throws Exception {
 
-		if (_javaTerms == null) {
+		Set<JavaTerm> javaTerms = getJavaTerms();
+
+		if (javaTerms == null) {
 			if (!_javaSourceProcessor.isExcludedPath(
 					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
 				!_javaSourceProcessor.isExcludedPath(
@@ -89,7 +89,7 @@ public class JavaClass {
 			return _classContent;
 		}
 
-		if (_javaTerms.isEmpty()) {
+		if (javaTerms.isEmpty()) {
 			return _classContent;
 		}
 
@@ -97,7 +97,7 @@ public class JavaClass {
 
 		JavaTerm previousJavaTerm = null;
 
-		Iterator<JavaTerm> itr = _javaTerms.iterator();
+		Iterator<JavaTerm> itr = javaTerms.iterator();
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
@@ -161,7 +161,7 @@ public class JavaClass {
 			}
 		}
 
-		fixJavaTermsDividers(_javaTerms, javaTermSortExcludes);
+		fixJavaTermsDividers(javaTerms, javaTermSortExcludes);
 
 		return _classContent;
 	}
@@ -978,6 +978,10 @@ public class JavaClass {
 	}
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
+		if (_javaTerms != null) {
+			return _javaTerms;
+		}
+
 		Set<JavaTerm> javaTerms = new TreeSet<>(new JavaTermComparator(false));
 		List<JavaTerm> staticBlocks = new ArrayList<>();
 
@@ -1108,7 +1112,9 @@ public class JavaClass {
 			}
 		}
 
-		return addStaticBlocks(javaTerms, staticBlocks);
+		_javaTerms = addStaticBlocks(javaTerms, staticBlocks);
+
+		return _javaTerms;
 	}
 
 	protected Tuple getJavaTermTuple(String line, String accessModifier) {
@@ -1291,10 +1297,13 @@ public class JavaClass {
 	}
 
 	protected boolean isFinalableField(
-		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
-		boolean checkOuterClass) {
+			JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
+			boolean checkOuterClass)
+		throws Exception {
 
-		if (_javaTerms == null) {
+		Set<JavaTerm> javaTerms = getJavaTerms();
+
+		if (javaTerms == null) {
 			return false;
 		}
 
@@ -1303,7 +1312,7 @@ public class JavaClass {
 				javaTerm, javaTermClassName, pattern, true);
 		}
 
-		for (JavaTerm curJavaTerm : _javaTerms) {
+		for (JavaTerm curJavaTerm : javaTerms) {
 			if (!curJavaTerm.isMethod() &&
 				(!curJavaTerm.isConstructor() ||
 				 javaTermClassName.equals(_name))) {

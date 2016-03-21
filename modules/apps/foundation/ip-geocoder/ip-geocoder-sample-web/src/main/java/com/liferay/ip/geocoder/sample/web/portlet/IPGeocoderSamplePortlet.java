@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-ip-geocoder-sample",
 		"com.liferay.portlet.display-category=category.tools",
-		"com.liferay.portlet.icon=/icons/ip_geocoder_sample.png",
 		"javax.portlet.display-name=IP Geocoder Sample",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",

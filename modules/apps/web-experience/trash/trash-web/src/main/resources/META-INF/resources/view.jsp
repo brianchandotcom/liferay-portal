@@ -243,7 +243,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="type-column"
+						cssClass="text-column type-column"
 						name="type"
 						value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
 					/>
@@ -280,7 +280,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							%>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="list-group-item-field"
+								cssClass="entry-action-column"
 								path="/view_content_action.jsp"
 							/>
 						</c:otherwise>

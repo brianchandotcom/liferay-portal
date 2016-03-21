@@ -69,7 +69,7 @@ teamSearch.setTotal(teamsCount);
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -91,44 +91,75 @@ teamSearch.setTotal(teamsCount);
 			modelVar="curTeam"
 			rowVar="row"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
-				name="name"
-				truncate="<%= true %>"
-			>
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+			<%
+			Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("teamdescription", curTeam.getDescription());
-				data.put("teamid", curTeam.getTeamId());
-				data.put("teamname", curTeam.getName());
+			data.put("teamdescription", curTeam.getDescription());
+			data.put("teamid", curTeam.getTeamId());
+			data.put("teamname", curTeam.getName());
 
-				Group group = themeDisplay.getScopeGroup();
+			Group group = themeDisplay.getScopeGroup();
 
-				long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultTeamIds"), 0L);
+			long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultTeamIds"), 0L);
 
-				long[] teamIds = ParamUtil.getLongValues(request, "teamIds", defaultTeamIds);
-				%>
+			long[] teamIds = ParamUtil.getLongValues(request, "teamIds", defaultTeamIds);
+			%>
 
-				<c:choose>
-					<c:when test="<%= !ArrayUtil.contains(teamIds, curTeam.getTeamId()) %>">
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(curTeam.getName()) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= HtmlUtil.escape(curTeam.getName()) %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="users"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column description-column"
-				name="description"
-				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(curTeam.getDescription()) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<c:choose>
+								<c:when test="<%= !ArrayUtil.contains(teamIds, curTeam.getTeamId()) %>">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= HtmlUtil.escape(curTeam.getName()) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(curTeam.getName()) %>
+								</c:otherwise>
+							</c:choose>
+						</h5>
+
+						<h6 class="text-default">
+							<span><%= curTeam.getDescription() %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						truncate="<%= true %>"
+					>
+						<c:choose>
+							<c:when test="<%= !ArrayUtil.contains(teamIds, curTeam.getTeamId()) %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= HtmlUtil.escape(curTeam.getName()) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(curTeam.getName()) %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
+						name="description"
+						truncate="<%= true %>"
+						value="<%= HtmlUtil.escape(curTeam.getDescription()) %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

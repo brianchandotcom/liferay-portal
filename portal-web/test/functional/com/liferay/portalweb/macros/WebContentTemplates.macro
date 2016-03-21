@@ -26,18 +26,10 @@
 				<equals arg1="${templateLanguage}" arg2="xsl" />
 				<then>
 					<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-
-					<var name="key_panelHeading" value="Details" />
-
-					<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="Details" />
 				</then>
 			</elseif>
 			<else>
 				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-
-				<var name="key_panelHeading" value="Details" />
-
-				<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="Details" />
 			</else>
 		</if>
 

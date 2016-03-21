@@ -183,12 +183,6 @@ AUI.add(
 						);
 					},
 
-					_isActionUrl: function(url) {
-						var uri = new A.Url(url);
-
-						return uri.getParameter('p_p_lifecycle') === 1;
-					},
-
 					_getAllElements: function(onlySelected) {
 						var instance = this;
 
@@ -209,6 +203,12 @@ AUI.add(
 						var checked = onlySelected ? ':' + STR_CHECKED : '';
 
 						return host.get(STR_CONTENT_BOX).all(selector + checked);
+					},
+
+					_isActionUrl: function(url) {
+						var uri = new A.Url(url);
+
+						return uri.getParameter('p_p_lifecycle') === 1;
 					},
 
 					_notifyRowToggle: function() {

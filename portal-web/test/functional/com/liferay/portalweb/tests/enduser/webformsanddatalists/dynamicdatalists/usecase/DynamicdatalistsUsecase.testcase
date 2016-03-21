@@ -478,8 +478,6 @@
 	<command name="AddXSSToHTMLField" priority="4">
 		<description message="This is a use case for LPS-50549." />
 
-		<property name="hook.plugins.includes" value="antisamy-hook" />
-
 		<var name="ddlRecordFieldData1">
 			<![CDATA[<img src=x onerror=alert(/xss/) />]]>
 		</var>
@@ -572,7 +570,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#deleteCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
+			<var name="ddlRecordFieldData" value="(Preview)" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1477,7 +1475,10 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute macro="DDLNavigator#gotoDDLRecordEditViaWorkflow" />
+		<execute macro="DDLNavigator#gotoDDLRecordEditViaWorkflow">
+			<var name="userName" value="userfn userln" />
+			<var name="workflowStatus" value="Pending (Update)" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

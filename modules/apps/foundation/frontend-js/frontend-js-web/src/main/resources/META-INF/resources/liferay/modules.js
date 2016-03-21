@@ -620,6 +620,7 @@
 						path: 'search_container_select.js',
 						requires: [
 							'aui-component',
+							'aui-url',
 							'plugin'
 						]
 					},

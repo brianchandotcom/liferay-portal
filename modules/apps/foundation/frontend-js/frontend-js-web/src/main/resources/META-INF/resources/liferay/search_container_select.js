@@ -278,6 +278,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'plugin']
+		requires: ['aui-component', 'aui-url', 'plugin']
 	}
 );

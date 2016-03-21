@@ -27,7 +27,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 String type = siteBrowserDisplayContext.getType();
 String[] types = siteBrowserDisplayContext.getTypes();
 
-PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
+GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 %>
 
 <c:choose>
@@ -39,6 +39,8 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 				<c:if test="<%= types.length > 1 %>">
 
 					<%
+					PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
+
 					for (String curType : types) {
 						portletURL.setParameter("type", curType);
 					%>
@@ -54,7 +56,7 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 
 			<c:if test='<%= !type.equals("parent-sites") %>'>
 				<aui:nav-bar-search>
-					<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+					<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" name="searchFm">
 						<liferay-ui:input-search markupView="lexicon" />
 					</aui:form>
 				</aui:nav-bar-search>
@@ -75,21 +77,28 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				portletURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= groupSearch.getOrderByCol() %>"
+				orderByType="<%= groupSearch.getOrderByType() %>"
+				orderColumns='<%= new String[] {"name", "type"} %>'
+				portletURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
+<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
-		searchContainer="<%= siteBrowserDisplayContext.getGroupSearch() %>"
+		searchContainer="<%= groupSearch %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"

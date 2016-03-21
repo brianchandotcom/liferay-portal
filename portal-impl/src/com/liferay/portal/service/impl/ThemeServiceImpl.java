@@ -41,10 +41,10 @@ public class ThemeServiceImpl extends ThemeServiceBaseImpl {
 		for (Theme theme : themes) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("theme_id", theme.getThemeId());
-			jsonObject.put("theme_name", theme.getName());
 			jsonObject.put(
 				"servlet_context_name", theme.getServletContextName());
+			jsonObject.put("theme_id", theme.getThemeId());
+			jsonObject.put("theme_name", theme.getName());
 
 			jsonArray.put(jsonObject);
 		}

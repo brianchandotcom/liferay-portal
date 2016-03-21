@@ -361,10 +361,10 @@ public class CalendarUtil {
 		jsonObject.put(
 			"calendarResourceName",
 			calendarResource.getName(themeDisplay.getLocale()));
-		jsonObject.put("color", ColorUtil.toHexString(calendar.getColor()));
-		jsonObject.put("defaultCalendar", calendar.isDefaultCalendar());
 		jsonObject.put("classNameId", calendarResource.getClassNameId());
 		jsonObject.put("classPK", calendarResource.getClassPK());
+		jsonObject.put("color", ColorUtil.toHexString(calendar.getColor()));
+		jsonObject.put("defaultCalendar", calendar.isDefaultCalendar());
 		jsonObject.put("groupId", calendar.getGroupId());
 		jsonObject.put(
 			"hasWorkflowDefinitionLink",

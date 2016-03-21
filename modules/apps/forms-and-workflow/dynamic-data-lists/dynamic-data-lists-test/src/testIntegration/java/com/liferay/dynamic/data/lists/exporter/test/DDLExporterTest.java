@@ -256,10 +256,10 @@ public class DDLExporterTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("groupId", fileEntry.getGroupId());
-		jsonObject.put("title", fileEntry.getTitle());
 		jsonObject.put("name", fileEntry.getTitle());
-		jsonObject.put("uuid", fileEntry.getUuid());
 		jsonObject.put("tempFile", "false");
+		jsonObject.put("title", fileEntry.getTitle());
+		jsonObject.put("uuid", fileEntry.getUuid());
 
 		return jsonObject.toString();
 	}

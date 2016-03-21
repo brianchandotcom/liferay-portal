@@ -150,8 +150,8 @@ public class AlloyEditorConfigContributor
 		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
 
 		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
-		styleFormatsJSONObject.put("name", "styles");
 		styleFormatsJSONObject.put("cfg", stylesJSONObject);
+		styleFormatsJSONObject.put("name", "styles");
 
 		return styleFormatsJSONObject;
 	}

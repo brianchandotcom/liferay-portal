@@ -58,8 +58,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 			});
 
 		soySrcInclude("**/*.soy");
-		srcInclude("**/*.es.js");
-		srcInclude("**/*.soy.js");
+		srcInclude("**/*.es.js", "**/*.soy.js");
 	}
 
 	@Override

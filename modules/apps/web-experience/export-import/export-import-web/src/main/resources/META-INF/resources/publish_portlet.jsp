@@ -78,12 +78,10 @@ portletURL.setParameter("tabs3", "current-and-previous");
 	<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
 
 	<c:choose>
-		<c:when test="<%= (themeDisplay.getURLPublishToLive() == null) && !layout.isTypeControlPanel() %>">
-		</c:when>
 		<c:when test="<%= Validator.isNotNull(errorMessageKey) %>">
 			<liferay-ui:message key="<%= errorMessageKey %>" />
 		</c:when>
-		<c:otherwise>
+		<c:when test="<%= (themeDisplay.getURLPublishToLive() != null) || layout.isTypeControlPanel() %>">
 			<aui:nav-bar markupView="lexicon">
 				<aui:nav cssClass="navbar-nav">
 
@@ -549,6 +547,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 				Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
 				Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);
 			</aui:script>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
 </div>

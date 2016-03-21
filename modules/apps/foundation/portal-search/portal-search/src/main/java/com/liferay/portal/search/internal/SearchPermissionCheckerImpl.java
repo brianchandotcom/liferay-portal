@@ -192,6 +192,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	protected void doAddPermissionFields_6(
 			long companyId, long groupId, String className, String classPK,
+			Document doc)
+		throws Exception {
+
+		doAddPermissionFields_6(
+			companyId, groupId, className, classPK, ActionKeys.VIEW, doc);
+	}
+
+	protected void doAddPermissionFields_6(
+			long companyId, long groupId, String className, String classPK,
 			String actionId, Document doc)
 		throws Exception {
 

@@ -394,6 +394,14 @@ public class AssetCategoriesDisplayContext {
 				scopeGroupId, true, vocabulariesSearchContainer.getStart(),
 				vocabulariesSearchContainer.getEnd(),
 				vocabulariesSearchContainer.getOrderByComparator());
+
+			if (vocabulariesCount == 0) {
+				vocabulariesCount =
+					AssetVocabularyServiceUtil.getGroupVocabulariesCount(
+						scopeGroupId);
+
+				vocabulariesSearchContainer.setTotal(vocabulariesCount);
+			}
 		}
 
 		vocabulariesSearchContainer.setResults(vocabularies);

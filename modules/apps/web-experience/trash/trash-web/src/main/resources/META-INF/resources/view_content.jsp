@@ -46,7 +46,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/view_content_toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 

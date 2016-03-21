@@ -23,6 +23,9 @@ public class PortalWebResourceConstants {
 
 	public static final String RESOURCE_TYPE_EDITOR_ALLOYEDITOR = "alloyeditor";
 
+	public static final String RESOURCE_TYPE_EDITOR_BBCODEEDITOR =
+		"bbcodeeditor";
+
 	public static final String RESOURCE_TYPE_EDITOR_CKEDITOR = "ckeditor";
 
 	public static final String RESOURCE_TYPE_EDITOR_SIMPLEEDITOR =

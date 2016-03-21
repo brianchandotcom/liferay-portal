@@ -55,7 +55,7 @@
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>"
 		/>
@@ -106,6 +106,27 @@
 					<liferay-ui:search-container-column-jsp
 						path="/tag_action.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetTagsDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/tag_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="tag"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= tag.getName() %>"
+						>
+							<liferay-frontend:vertical-card-footer>
+								<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(tag.getAssetCount()) %></span>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Validator.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text

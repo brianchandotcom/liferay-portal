@@ -888,6 +888,47 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
+	protected String formatJSONObject(String content) {
+		Matcher jsonObjectPutBlockMatcher = jsonObjectPutBlockPattern.matcher(
+			content);
+
+		while (jsonObjectPutBlockMatcher.find()) {
+			String jsonObjectPutBlock = jsonObjectPutBlockMatcher.group();
+
+			Matcher jsonObjectPutMatcher = jsonObjectPutPattern.matcher(
+				jsonObjectPutBlock);
+
+			String previousParameters = null;
+			String previousPutObjectName = null;
+
+			while (jsonObjectPutMatcher.find()) {
+				String parameters = jsonObjectPutMatcher.group(2);
+
+				List<String> parametersList = splitParameters(parameters);
+
+				String putObjectName = parametersList.get(0);
+
+				if ((previousPutObjectName != null) &&
+					(previousPutObjectName.compareToIgnoreCase(putObjectName) >
+						0)) {
+
+					String newJSONObjectPutBlock = StringUtil.replaceFirst(
+						jsonObjectPutBlock, previousParameters, parameters);
+					newJSONObjectPutBlock = StringUtil.replaceLast(
+						newJSONObjectPutBlock, parameters, previousParameters);
+
+					return StringUtil.replace(
+						content, jsonObjectPutBlock, newJSONObjectPutBlock);
+				}
+
+				previousParameters = parameters;
+				previousPutObjectName = putObjectName;
+			}
+		}
+
+		return content;
+	}
+
 	protected String formatStringBundler(
 		String fileName, String content, int maxLineLength) {
 
@@ -2372,6 +2413,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(
 		"<%=(.+?)%>");
+	protected static Pattern jsonObjectPutBlockPattern = Pattern.compile(
+		"(\t*\\w*(json|JSON)Object\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
+	protected static Pattern jsonObjectPutPattern = Pattern.compile(
+		"\t*\\w*(json|JSON)Object\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static Pattern mergeLangPattern = Pattern.compile(

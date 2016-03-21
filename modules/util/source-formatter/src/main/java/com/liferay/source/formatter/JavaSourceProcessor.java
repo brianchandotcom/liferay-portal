@@ -800,6 +800,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
+		newContent = formatJSONObject(newContent);
+
 		newContent = formatStringBundler(
 			fileName, newContent, _MAX_LINE_LENGTH);
 

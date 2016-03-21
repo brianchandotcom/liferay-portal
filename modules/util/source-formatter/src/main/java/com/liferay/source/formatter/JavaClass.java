@@ -1041,8 +1041,14 @@ public class JavaClass {
 					if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 						staticBlocks.add(javaTerm);
 					}
-					else {
-						javaTerms.add(javaTerm);
+					else if (!javaTerms.add(javaTerm)) {
+						_javaSourceProcessor.processErrorMessage(
+							_fileName,
+							"Duplicate " + javaTermName + ": " + _fileName);
+
+						_javaTerms = Collections.emptySet();
+
+						return _javaTerms;
 					}
 				}
 
@@ -1100,8 +1106,13 @@ public class JavaClass {
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 				staticBlocks.add(javaTerm);
 			}
-			else {
-				javaTerms.add(javaTerm);
+			else if (!javaTerms.add(javaTerm)) {
+				_javaSourceProcessor.processErrorMessage(
+					_fileName, "Duplicate " + javaTermName + ": " + _fileName);
+
+				_javaTerms = Collections.emptySet();
+
+				return _javaTerms;
 			}
 		}
 

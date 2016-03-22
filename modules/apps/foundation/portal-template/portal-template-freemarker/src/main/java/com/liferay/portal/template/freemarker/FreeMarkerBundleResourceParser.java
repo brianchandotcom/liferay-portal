@@ -14,10 +14,21 @@
 
 package com.liferay.portal.template.freemarker;
 
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.template.ClassLoaderResourceParser;
+import com.liferay.portal.template.TemplateResourceParser;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {
+		"lang.type=" + TemplateConstants.LANG_TYPE_FTL
+	},
+	service = TemplateResourceParser.class
+)
 public class FreeMarkerBundleResourceParser extends ClassLoaderResourceParser {
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.URLResourceParser;
 
 import java.io.IOException;
@@ -29,9 +30,18 @@ import java.net.URL;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(
+	immediate = true,
+	property = {
+		"lang.type=" + TemplateConstants.LANG_TYPE_FTL
+	},
+	service = TemplateResourceParser.class
+)
 public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 	@Override

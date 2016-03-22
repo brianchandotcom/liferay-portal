@@ -40,9 +40,13 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	searchContainerId="teams"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= siteTeamsDisplayContext.getPortletURL() %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= siteTeamsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -132,6 +136,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= team.getDescription() %>"
 							title="<%= team.getName() %>"
+							url="<%= rowURL != null ? rowURL.toString() : null %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

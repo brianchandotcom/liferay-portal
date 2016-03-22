@@ -23,7 +23,7 @@ long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroup");
@@ -94,9 +94,13 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

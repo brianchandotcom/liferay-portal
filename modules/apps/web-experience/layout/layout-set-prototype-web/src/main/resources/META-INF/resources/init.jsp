@@ -38,6 +38,8 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.LayoutSetPrototype" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetPrototypeServiceUtil" %><%@
@@ -69,6 +71,8 @@ page import="javax.portlet.WindowState" %>
 
 <%
 LayoutSetPrototypeDisplayContext layoutSetPrototypeDisplayContext = new LayoutSetPrototypeDisplayContext(renderRequest, renderResponse, request);
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 %>
 
 <%@ include file="/init-ext.jsp" %>

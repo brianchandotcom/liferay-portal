@@ -357,6 +357,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkMissingAuthor(String content, String fileName) {
+		if (!content.contains(" * @author ")) {
+			processErrorMessage(fileName, "Missing author: " + fileName);
+		}
+	}
+
+	protected void checkPackagePath(
+		String content, String fileName, String packagePath) {
+
+		if (!content.contains(
+				"package " + packagePath + StringPool.SEMICOLON)) {
+
+			processErrorMessage(
+				fileName, "Incorrect package path: " + fileName);
+		}
+	}
+
 	protected void checkRegexPattern(
 		String regexPattern, String fileName, int lineCount) {
 
@@ -518,12 +535,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String packagePath = ToolsUtil.getPackagePath(file);
 
-		if (!content.contains(
-				"package " + packagePath + StringPool.SEMICOLON)) {
-
-			processErrorMessage(
-				fileName, "Incorrect package path: " + fileName);
-		}
+		checkPackagePath(content, fileName, packagePath);
 
 		if (packagePath.endsWith(".model")) {
 			if (content.contains("extends " + className + "Model")) {
@@ -554,9 +566,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "UTF-8: " + fileName);
 		}
 
-		if (!newContent.contains(" * @author ")) {
-			processErrorMessage(fileName, "Missing author: " + fileName);
-		}
+		checkMissingAuthor(newContent, fileName);
 
 		newContent = fixDataAccessConnection(className, newContent);
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);

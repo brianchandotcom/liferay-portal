@@ -117,6 +117,11 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return false;
 	}
 
+	@Override
+	public boolean isShowSortFilter() {
+		return false;
+	}
+
 	protected final PortletURL portletURL;
 	protected final HttpServletRequest request;
 

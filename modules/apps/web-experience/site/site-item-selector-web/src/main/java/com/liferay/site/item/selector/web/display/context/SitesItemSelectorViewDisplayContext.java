@@ -47,4 +47,6 @@ public interface SitesItemSelectorViewDisplayContext {
 
 	public boolean isShowChildSitesLink();
 
+	public boolean isShowSortFilter();
+
 }

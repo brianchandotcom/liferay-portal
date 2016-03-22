@@ -23,7 +23,7 @@ GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteW
 String displayStyle = siteItemSelectorViewDisplayContext.getDisplayStyle();
 String target = ParamUtil.getString(request, "target");
 
-PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
+GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 %>
 
 <liferay-frontend:management-bar>
@@ -33,17 +33,26 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
 			/>
+
+			<c:if test="<%= siteItemSelectorViewDisplayContext.isShowSortFilter() %>">
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= groupSearch.getOrderByCol() %>"
+					orderByType="<%= groupSearch.getOrderByType() %>"
+					orderColumns='<%= new String[] {"name", "type"} %>'
+					portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
+				/>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list", "icon"} %>'
+			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
 			portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
+<aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
@@ -51,7 +60,7 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 	</c:if>
 
 	<liferay-ui:search-container
-		searchContainer="<%= siteItemSelectorViewDisplayContext.getGroupSearch() %>"
+		searchContainer="<%= groupSearch %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
@@ -86,6 +95,25 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 			%>
 
 			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="sites"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+							</aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<span><%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
@@ -142,9 +170,11 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:otherwise>
+				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 					>
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
@@ -152,10 +182,11 @@ PortletURL portletURL = siteItemSelectorViewDisplayContext.getPortletURL();
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="text-column type-column"
 						name="type"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
-				</c:otherwise>
+				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>
 

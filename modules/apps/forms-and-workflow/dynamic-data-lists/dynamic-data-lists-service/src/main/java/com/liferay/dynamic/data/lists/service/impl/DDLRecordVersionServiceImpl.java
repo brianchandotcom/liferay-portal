@@ -24,9 +24,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
- * Provides the remote service for accessing, adding, deleting, and updating
- * dynamic data list (DDL) record versions. Its methods include permission
- * checks.
+ * Provides the remote service for accessing dynamic data list (DDL) record
+ * versions. Its methods include permission checks.
  *
  * @author Marcellus Tavares
  */
@@ -34,7 +33,7 @@ public class DDLRecordVersionServiceImpl
 	extends DDLRecordVersionServiceBaseImpl {
 
 	/**
-	 * Returns a record version with the ID.
+	 * Returns the record version matching the ID.
 	 *
 	 * @param  recordVersionId the primary key of the record version
 	 * @return the record version with the ID
@@ -56,8 +55,10 @@ public class DDLRecordVersionServiceImpl
 	}
 
 	/**
-	 * Returns a record version matching the record's primary key and version.
+	 * Returns a record version matching the record's primary key and specified version.
 	 *
+	 * @param  recordId the primary key of the record
+	 * @param  version the version of the record to return
 	 * @return the record version macthing the record primary key and version
 	 * @throws PortalException if the matching record set is not found or if the
 	 *         user do not have the required permission to access the record set
@@ -77,6 +78,7 @@ public class DDLRecordVersionServiceImpl
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the matching record versions
+	 * @throws PortalException
 	 */
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(long recordId)
@@ -96,17 +98,17 @@ public class DDLRecordVersionServiceImpl
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
+	 * and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	 * full result set.
 	 * </p>
 	 *
 	 * @param  recordId the primary key of the record
 	 * @param  start the lower bound of the range of record versions to return
 	 * @param  end the upper bound of the range of record versions to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the record versions
+	 * @param  orderByComparator the comparator used to order the record versions
 	 * @return the range of matching record versions ordered by the comparator
+	 * @throws PortalException
 	 */
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(
@@ -126,6 +128,7 @@ public class DDLRecordVersionServiceImpl
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the number of matching record versions
+	 * @throws PortalException
 	 */
 	@Override
 	public int getRecordVersionsCount(long recordId) throws PortalException {

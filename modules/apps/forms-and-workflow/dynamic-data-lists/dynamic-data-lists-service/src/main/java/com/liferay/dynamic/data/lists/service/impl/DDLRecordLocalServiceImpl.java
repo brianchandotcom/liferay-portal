@@ -82,14 +82,15 @@ import java.util.Map;
 public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
-	 * Adds a record referencing a record set.
+	 * Adds a record referencing the record set.
 	 *
 	 * @param  userId the primary key of the record's creator/owner
 	 * @param  groupId the primary key of the record's group
 	 * @param  recordSetId the primary key of the record set
 	 * @param  displayIndex the index position in which the record is displayed
 	 *         in the spreadsheet view
-	 * @param  ddmFormValues the record values. See {@link DDMFormValues}.
+	 * @param  ddmFormValues the record values. See DDMFormValues in the
+	 *         dynamic-data-mapping-api module.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         the UUID, guest permissions, and group permissions for the
 	 *         record.
@@ -162,19 +163,26 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	/**
 	 * Adds a record referencing the record set.
 	 *
-	 * @param      userId the primary key of the record's creator/owner
-	 * @param      groupId the primary key of the record's group
-	 * @param      recordSetId the primary key of the record set
-	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheet view.
-	 * @param      fields the record values. See {@link Fields}.
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the UUID, guest permissions, and group permissions for
-	 *             the record.
-	 * @return     the record
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
-	 *             DDMFormValues, ServiceContext)}
+	 * @param userId
+	 *            the primary key of the record's creator/owner
+	 * @param groupId
+	 *            the primary key of the record's group
+	 * @param recordSetId
+	 *            the primary key of the record set
+	 * @param displayIndex
+	 *            the index position in which the record is displayed in the
+	 *            spreadsheet view.
+	 * @param fields
+	 *            the record values. See the dynamic-data-mapping-api module's
+	 *            Fields class for more information.
+	 * @param serviceContext
+	 *            the service context to be applied. This can set the UUID,
+	 *            guest permissions, and group permissions for the record.
+	 * @return the record
+	 * @throws PortalException
+	 *             if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by
+	 *             {@link #addRecord(long, long, int, DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -295,7 +303,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Disassociates the locale from record.
+	 * Disassociates the locale from the record.
 	 *
 	 * @param      recordId the primary key of the record
 	 * @param      locale the locale to be used to delete the localized record
@@ -373,21 +381,27 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to QueryUtil#ALL_POS will return the full result
-	 * set.
+	 * and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	 * full result set.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the record's company
-	 * @param  status the record's workflow status. For more information look at
-	 *         the constants starting with the "STATUS_" prefix in {@link
-	 *         WorkflowConstants}.
-	 * @param  scope the record's scope. For more information look at the
-	 *         constants starting with the "SCOPE_" prefix in {@link
-	 *         DDLRecordSetConstants}.
-	 * @param  start the lower bound of the range of records to return
-	 * @param  end the upper bound of the range of records to return (not
-	 *         inclusive)
-	 * @param  orderByComparator the comparator to order the records
+	 * @param companyId
+	 *            the primary key of the record's company
+	 * @param status
+	 *            the record's workflow status. For more information search the
+	 *            portal kernel's WorkflowConstants class for constants starting
+	 *            with the "STATUS_" prefix.
+	 * @param scope
+	 *            the record's scope. For more information search the
+	 *            dynamic-data-lists-api module's DDLRecordSetConstants class
+	 *            for constants starting with the "SCOPE_" prefix.
+	 * @param start
+	 *            the lower bound of the range of records to return
+	 * @param end
+	 *            the upper bound of the range of records to return (not
+	 *            inclusive)
+	 * @param orderByComparator
+	 *            the comparator to order the records
 	 * @return the range of matching records ordered by the comparator
 	 */
 	@Override
@@ -403,14 +417,16 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * Returns the number of records matching the company, workflow status, and
 	 * scope.
 	 *
-	 * @param  companyId the primary key of the record's company
-	 * @param  status the record's workflow status. For more information look at
-	 *         the constants starting with the "STATUS_" prefix in {@link
-	 *         WorkflowConstants} for constants starting with the "STATUS_"
-	 *         prefix.
-	 * @param  scope the record's scope. For more information look at the
-	 *         constants starting with the "SCOPE_" prefix in {@link
-	 *         DDLRecordSetConstants}.
+	 * @param companyId
+	 *            the primary key of the record's company
+	 * @param status
+	 *            the record's workflow status. For more information search the
+	 *            portal kernel's WorkflowConstants class for constants starting
+	 *            with the "STATUS_" prefix.
+	 * @param scope
+	 *            the record's scope. For more information search the
+	 *            dynamic-data-lists-api module's DDLRecordSetConstants class
+	 *            for constants starting with the "SCOPE_" prefix.
 	 * @return the number of matching records
 	 */
 	@Override
@@ -419,12 +435,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the DDM form values object associated with record storage ID.
+	 * Returns the DDM form values object associated with the record storage ID.
+	 * In module dynamic-data-lists-api, see the method getDDMFormValues in
+	 * class DDLRecord.
 	 *
 	 * @param  ddmStorageId the storage ID associated with the record
 	 * @return the DDM form values
 	 * @throws StorageException
-	 * @see    DDLRecord#getDDMFormValues()
 	 */
 	@Override
 	public DDMFormValues getDDMFormValues(long ddmStorageId)
@@ -495,18 +512,23 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
+	 * and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	 * full result set.
 	 * </p>
 	 *
-	 * @param  recordSetId the record's record set ID
-	 * @param  status the record's workflow status. For more information look at
-	 *         the constants starting with the "STATUS_" prefix in {@link
-	 *         WorkflowConstants}.
-	 * @param  start the lower bound of the range of records to return
-	 * @param  end the upper bound of the range of records to return (not
-	 *         inclusive)
-	 * @param  orderByComparator the comparator to order the records
+	 * @param recordSetId
+	 *            the record's record set ID
+	 * @param status
+	 *            the record's workflow status. For more information search the
+	 *            portal kernel's WorkflowConstants class for constants starting
+	 *            with the "STATUS_" prefix.
+	 * @param start
+	 *            the lower bound of the range of records to return
+	 * @param end
+	 *            the upper bound of the range of records to return (not
+	 *            inclusive)
+	 * @param orderByComparator
+	 *            the comparator to order the records
 	 * @return the range of matching records ordered by the comparator
 	 */
 	@Override
@@ -534,10 +556,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * Returns the number of records matching the record set ID and workflow
 	 * status.
 	 *
-	 * @param  recordSetId the record's record set ID
-	 * @param  status the record's workflow status. For more information look at
-	 *         the constants starting with the "STATUS_" prefix in {@link
-	 *         WorkflowConstants}.
+	 * @param recordSetId
+	 *            the record's record set ID
+	 * @param status
+	 *            the record's workflow status. For more information search the
+	 *            portal kernel's WorkflowConstants class for constants starting
+	 *            with the "STATUS_" prefix.
 	 * @return the number of matching records
 	 */
 	@Override
@@ -654,7 +678,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * search context.
 	 *
 	 * @param  searchContext the search context to be applied for searching
-	 *         records. For more information, see {@link SearchContext}.
+	 *         records. For more information, see the portal kernel's
+	 *         SearchContext class.
 	 * @return the hits of the records that matched the search criteria.
 	 */
 	@Override
@@ -674,7 +699,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * Searches for records documents indexed by the search engine.
 	 *
 	 * @param  searchContext the search context to be applied for searching
-	 *         documents. For more information, see {@link SearchContext}.
+	 *         documents. For more information, see the portal kernel's
+	 *         SearchContext class.
 	 * @return BaseModelSearchResult containing the list of records that matched
 	 *         the search criteria
 	 */
@@ -790,7 +816,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 *         change increments the record's major version number
 	 * @param  displayIndex the index position in which the record is displayed
 	 *         in the spreadsheet view
-	 * @param  ddmFormValues the record values. See {@link DDMFormValues}
+	 * @param  ddmFormValues the record values. See DDMFormValues in the
+	 *         dynamic-data-mapping-api module.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         the record modified date.
 	 * @return the record
@@ -872,7 +899,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 *             change increments the record's major version number
 	 * @param      displayIndex the index position in which the record is
 	 *             displayed in the spreadsheat view.
-	 * @param      fields the record values. See {@link Fields}.
+	 * @param      fields the record values. See the dynamic-data-mapping-api
+	 *             module's Fields class for more information.
 	 * @param      mergeFields whether to merge the new fields with the existing
 	 *             ones; otherwise replace the existing fields
 	 * @param      serviceContext the service context to be applied. This can
@@ -919,7 +947,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * @param      userId the primary key of the user updating the record
 	 * @param      recordId the primary key of the record
 	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheet view.
+	 *             displayed in the spreadsheet view
 	 * @param      fieldsMap the record values. The fieldsMap is a map of field
 	 *             names and its Serializable values.
 	 * @param      mergeFields whether to merge the new fields with the existing
@@ -963,9 +991,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user updating the record's workflow
 	 *         status
 	 * @param  recordVersionId the primary key of the record version
-	 * @param  status the record version's workflow status. For more information
-	 *         see {@link WorkflowConstants} for constants starting with the
-	 *         "STATUS_" prefix.
+	 * @param  status
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         the modification date and status date.
 	 * @return the record

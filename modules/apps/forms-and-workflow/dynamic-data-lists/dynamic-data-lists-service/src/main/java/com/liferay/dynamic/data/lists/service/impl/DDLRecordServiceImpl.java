@@ -40,17 +40,19 @@ import java.util.Map;
 public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 	/**
-	 * Adds a record referencing a record set.
+	 * Adds a record referencing the record set.
 	 *
 	 * @param  groupId the primary key of the record's group
 	 * @param  recordSetId the primary key of the record set
 	 * @param  displayIndex the index position in which the record is displayed
 	 *         in the spreadsheat view
-	 * @param  ddmFormValues the record values. See {@link DDMFormValues}.
+	 * @param  ddmFormValues the record values. See DDMFormValues in the
+	 *         dynamic-data-mapping-api module.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         the UUID, guest permissions, and group permissions for the
 	 *         record.
 	 * @return the record
+	 * @throws PortalException
 	 */
 	@Override
 	public DDLRecord addRecord(
@@ -67,19 +69,25 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a record referencing a record set.
+	 * Adds a record referencing the record set.
 	 *
-	 * @param      groupId the primary key of the record's group
-	 * @param      recordSetId the primary key of the record set
-	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheat view
-	 * @param      fields the record values. See {@link Fields}.
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the UUID, guest permissions, and group permissions for
-	 *             the record.
-	 * @return     the record
-	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
-	 *             DDMFormValues, ServiceContext)}
+	 * @param groupId
+	 *            the primary key of the record's group
+	 * @param recordSetId
+	 *            the primary key of the record set
+	 * @param displayIndex
+	 *            the index position in which the record is displayed in the
+	 *            spreadsheat view
+	 * @param fields
+	 *            the record values. See the Fields class in the
+	 *            dynamic-data-mapping-api module.
+	 * @param serviceContext
+	 *            the service context to be applied. This can set the UUID,
+	 *            guest permissions, and group permissions for the record.
+	 * @return the record
+	 * @throws PortalException
+	 * @deprecated As of 7.0.0, replaced by
+	 *             {@link #addRecord(long, long, int, DDMFormValues, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -97,7 +105,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a record referencing a record set.
+	 * Adds a record referencing the record set.
 	 *
 	 * @param      groupId the primary key of the record's group
 	 * @param      recordSetId the primary key of the record set
@@ -109,6 +117,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *             set the UUID, guest permissions, and group permissions for
 	 *             the record.
 	 * @return     the record
+	 * @throws     PortalException
 	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
 	 *             DDMFormValues, ServiceContext)}
 	 */
@@ -130,7 +139,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Deletes the record and its resources.
 	 *
-	 * @param recordId the primary key of the record to be deleted
+	 * @param  recordId the primary key of the record to be deleted
+	 * @throws PortalException
 	 */
 	@Override
 	public void deleteRecord(long recordId) throws PortalException {
@@ -150,6 +160,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *             record values
 	 * @param      serviceContext the service context to be applied. This can
 	 *             set the record modified date.
+	 * @return
+	 * @throws     PortalException
 	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
 	 *             int, DDMFormValues, ServiceContext)}
 	 */
@@ -173,6 +185,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the record with the ID
+	 * @throws PortalException
 	 */
 	@Override
 	public DDLRecord getRecord(long recordId) throws PortalException {
@@ -187,10 +200,11 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	/**
 	 * Reverts the record to a given version.
 	 *
-	 * @param recordId the primary key of the record
-	 * @param version the version to be reverted
-	 * @param serviceContext the service context to be applied. This can set the
-	 *        record modified date.
+	 * @param  recordId the primary key of the record
+	 * @param  version the version to be reverted
+	 * @param  serviceContext the service context to be applied. This can set
+	 *         the record modified date.
+	 * @throws PortalException
 	 */
 	@Override
 	public void revertRecord(
@@ -227,10 +241,12 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *         causes the increment of the major version number.
 	 * @param  displayIndex the index position in which the record is displayed
 	 *         in the spreadsheat view
-	 * @param  ddmFormValues the record values. See {@link DDMFormValues}.
+	 * @param  ddmFormValues the record values. See DDMFormValues in the
+	 *         dynamic-data-mapping-api module.
 	 * @param  serviceContext the service context to be applied. This can set
 	 *         the record modified date.
 	 * @return the record
+	 * @throws PortalException
 	 */
 	@Override
 	public DDLRecord updateRecord(
@@ -256,10 +272,13 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *             changes causes the increment of the major version number.
 	 * @param      displayIndex the index position in which the record is
 	 *             displayed in the spreadsheat view
-	 * @param      fields the record values. See {@link Fields}.
+	 * @param      fields the record values. See the Fields class in the
+	 *             dynamic-data-mapping-api module.
+	 * @param      mergeFields
 	 * @param      serviceContext the service context to be applied. This can
 	 *             set the record modified date.
 	 * @return     the record
+	 * @throws     PortalException
 	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
 	 *             int, DDMFormValues, ServiceContext)}
 	 */
@@ -288,9 +307,11 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	 *             displayed in the spreadsheat view
 	 * @param      fieldsMap the record values. The fieldsMap is a map of field
 	 *             names and its Serializable values.
+	 * @param      mergeFields
 	 * @param      serviceContext the service context to be applied. This can
 	 *             set the record modified date.
 	 * @return     the record
+	 * @throws     PortalException
 	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
 	 *             int, DDMFormValues, ServiceContext)}
 	 */

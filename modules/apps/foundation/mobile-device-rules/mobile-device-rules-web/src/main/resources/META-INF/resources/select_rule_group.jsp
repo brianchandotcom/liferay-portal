@@ -94,7 +94,9 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
 				name="name"
+				truncate="<%= true %>"
 			>
 
 				<%
@@ -122,7 +124,9 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
 				name="description"
+				truncate="<%= true %>"
 				value="<%= ruleGroup.getDescription(locale) %>"
 			/>
 		</liferay-ui:search-container-row>

@@ -77,10 +77,6 @@ public class LiveUsers {
 		return getSessionUsers(companyId).size();
 	}
 
-	// PLACEHOLDER 01
-	// PLACEHOLDER 02
-	// PLACEHOLDER 03
-
 	public static UserTracker getUserTracker(long companyId, String sessionId) {
 		return _instance._getUserTracker(companyId, sessionId);
 	}
@@ -428,16 +424,6 @@ public class LiveUsers {
 
 		UserTracker userTracker = sessionUsers.get(sessionId);
 
-		// PLACEHOLDER 04
-		// PLACEHOLDER 05
-		// PLACEHOLDER 06
-		// PLACEHOLDER 07
-		// PLACEHOLDER 08
-		// PLACEHOLDER 09
-		// PLACEHOLDER 10
-		// PLACEHOLDER 11
-		// PLACEHOLDER 12
-
 		if ((userTracker == null) &&
 			PropsValues.SESSION_TRACKER_MEMORY_ENABLED) {
 
@@ -471,20 +457,6 @@ public class LiveUsers {
 		Map<String, UserTracker> sessionUsers = _getSessionUsers(companyId);
 
 		UserTracker userTracker = sessionUsers.remove(sessionId);
-
-		// PLACEHOLDER 13
-		// PLACEHOLDER 14
-		// PLACEHOLDER 15
-		// PLACEHOLDER 16
-		// PLACEHOLDER 17
-		// PLACEHOLDER 18
-		// PLACEHOLDER 19
-		// PLACEHOLDER 20
-		// PLACEHOLDER 21
-		// PLACEHOLDER 22
-		// PLACEHOLDER 23
-		// PLACEHOLDER 24
-		// PLACEHOLDER 25
 
 		if (userTracker == null) {
 			return;
@@ -547,8 +519,6 @@ public class LiveUsers {
 	private static final Log _log = LogFactoryUtil.getLog(LiveUsers.class);
 
 	private static final LiveUsers _instance = new LiveUsers();
-
-	// PLACEHOLDER 26
 
 	private final Map<String, Map<Long, Map<Long, Set<String>>>> _clusterUsers =
 		new ConcurrentHashMap<>();

@@ -1272,43 +1272,6 @@ public class LayoutImportController implements ImportController {
 					"portal build number " + buildNumber);
 		}
 
-		// Portlets compatibility
-
-		Element portletsElement = rootElement.element("portlets");
-
-		List<Element> portletElements = portletsElement.elements("portlet");
-
-		for (Element portletElement : portletElements) {
-			String portletId = GetterUtil.getString(
-				portletElement.attributeValue("portlet-id"));
-
-			if (Validator.isNull(portletId)) {
-				continue;
-			}
-
-			String schemaVersion = GetterUtil.getString(
-				portletElement.attributeValue("schema-version"));
-
-			Portlet portlet = _portletLocalService.getPortletById(
-				companyId, portletId);
-
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("Portlet's schema version ");
-				sb.append(schemaVersion);
-				sb.append(" in the LAR is not valid for the deployed portlet ");
-				sb.append(portletId);
-				sb.append(" with schema version ");
-				sb.append(portletDataHandler.getSchemaVersion());
-
-				throw new LayoutImportException(sb.toString());
-			}
-		}
-
 		// Type
 
 		String larType = headerElement.attributeValue("type");
@@ -1371,6 +1334,43 @@ public class LayoutImportController implements ImportController {
 
 			throw new LARTypeException(
 				"A site template can only be imported to a site template");
+		}
+
+		// Portlets compatibility
+
+		Element portletsElement = rootElement.element("portlets");
+
+		List<Element> portletElements = portletsElement.elements("portlet");
+
+		for (Element portletElement : portletElements) {
+			String portletId = GetterUtil.getString(
+				portletElement.attributeValue("portlet-id"));
+
+			if (Validator.isNull(portletId)) {
+				continue;
+			}
+
+			String schemaVersion = GetterUtil.getString(
+				portletElement.attributeValue("schema-version"));
+
+			Portlet portlet = _portletLocalService.getPortletById(
+				companyId, portletId);
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Portlet's schema version ");
+				sb.append(schemaVersion);
+				sb.append(" in the LAR is not valid for the deployed portlet ");
+				sb.append(portletId);
+				sb.append(" with schema version ");
+				sb.append(portletDataHandler.getSchemaVersion());
+
+				throw new LayoutImportException(sb.toString());
+			}
 		}
 
 		// Available locales

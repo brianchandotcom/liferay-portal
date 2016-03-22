@@ -61,7 +61,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -79,7 +79,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 	</div>
 </c:if>
 
-<div class="container-fluid-1280">
+<aui:form cssClass="container-fluid-1280" name="selectThemeFm">
 	<liferay-ui:search-container
 		id="themes"
 		iteratorURL="<%= portletURL %>"
@@ -97,64 +97,104 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 		>
 
 			<%
-			row.setCssClass("col-md-2 col-sm-3 col-xs-6");
-
 			PluginPackage selPluginPackage = theme.getPluginPackage();
-
-			String cssClass = "theme-selector";
-
-			if (themeId.equals(theme.getThemeId())) {
-				cssClass += " selected";
-			}
-
-			String subtitle = StringPool.NBSP;
-
-			if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
-				subtitle = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
-			}
-
-			String thumbnailSrc = HtmlUtil.escapeAttribute(theme.getStaticResourcePath()) + HtmlUtil.escapeAttribute(theme.getImagesPath()) + "/thumbnail.png";
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("themeid", theme.getThemeId());
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<liferay-frontend:vertical-card
-					cssClass="<%= cssClass %>"
-					data="<%= data %>"
-					imageUrl="<%= thumbnailSrc %>"
-					resultRow="<%= row %>"
-					subtitle="<%= subtitle %>"
-					title="<%= theme.getName() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-image
+						src='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+
+						<h5>
+							<c:choose>
+								<c:when test="<%= !themeId.equals(theme.getThemeId()) %>">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= theme.getName() %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= theme.getName() %>
+								</c:otherwise>
+							</c:choose>
+						</h5>
+
+						<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
+							<h6 class="text-default">
+								<span><%= LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor()) %></span>
+							</h6>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-3 col-xs-6");
+
+					String author = StringPool.NBSP;
+
+					if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
+						author = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
+					}
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:vertical-card
+							cssClass='<%= themeId.equals(theme.getThemeId()) ? StringPool.BLANK : "selector-button" %>'
+							data="<%= data %>"
+							imageUrl='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
+							subtitle="<%= author %>"
+							title="<%= theme.getName() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						truncate="<%= true %>"
+					>
+						<c:choose>
+							<c:when test="<%= !themeId.equals(theme.getThemeId()) %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= theme.getName() %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= theme.getName() %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
+					<%
+					String author = StringPool.BLANK;
+
+					if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
+						author = selPluginPackage.getAuthor();
+					}
+					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="author-column text-column"
+						name="author"
+						value="<%= author %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
-</div>
+</aui:form>
 
-<aui:script use="aui-base">
-	var themes = A.one('#<portlet:namespace />themes');
-
-	themes.delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
-
-			themes.all('.theme-selector').removeClass('selected');
-
-			currentTarget.addClass('selected');
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
-				{
-					data: currentTarget.attr('data-themeid')
-				}
-			);
-		},
-		'.theme-selector'
-	);
+<aui:script>
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectThemeFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

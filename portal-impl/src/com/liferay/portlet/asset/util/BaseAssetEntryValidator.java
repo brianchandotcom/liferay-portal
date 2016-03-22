@@ -60,8 +60,10 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
 
-		for (AssetVocabulary vocabulary : vocabularies) {
-			validate(classNameId, classTypePK, categoryIds, vocabulary);
+		if (isAssetCategorizable(classNameId)) {
+			for (AssetVocabulary vocabulary : vocabularies) {
+				validate(classNameId, classTypePK, categoryIds, vocabulary);
+			}
 		}
 	}
 
@@ -89,10 +91,6 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		if (!vocabulary.isAssociatedToClassNameIdAndClassTypePK(
 				classNameId, classTypePK)) {
 
-			return;
-		}
-
-		if (!isAssetCategorizable(classNameId)) {
 			return;
 		}
 

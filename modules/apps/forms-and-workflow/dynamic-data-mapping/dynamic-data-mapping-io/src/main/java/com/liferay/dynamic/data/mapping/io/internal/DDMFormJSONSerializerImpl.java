@@ -193,10 +193,10 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		for (String optionValue : optionValues) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			jsonObject.put("value", optionValue);
 			jsonObject.put(
 				"label",
 				toJSONObject(ddmFormFieldOptions.getOptionLabels(optionValue)));
+			jsonObject.put("value", optionValue);
 
 			jsonArray.put(jsonObject);
 		}

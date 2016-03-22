@@ -411,6 +411,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
 
+		newContent = formatJSONObject(newContent);
+
 		newContent = formatStringBundler(fileName, newContent, -1);
 
 		checkXSS(fileName, newContent);

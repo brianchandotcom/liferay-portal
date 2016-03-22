@@ -247,8 +247,8 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("groupId", RandomTestUtil.randomLong());
-		jsonObject.put("privateLayout", RandomTestUtil.randomBoolean());
 		jsonObject.put("layoutId", RandomTestUtil.randomLong());
+		jsonObject.put("privateLayout", RandomTestUtil.randomBoolean());
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 			"LinkToPage", new UnlocalizedValue(jsonObject.toString()));

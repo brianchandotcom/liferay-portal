@@ -265,8 +265,8 @@ public class PollerRequestHandlerImpl
 		JSONObject pollerResponseHeaderJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		pollerResponseHeaderJSONObject.put("userId", pollerHeader.getUserId());
 		pollerResponseHeaderJSONObject.put("suspendPolling", suspendPolling);
+		pollerResponseHeaderJSONObject.put("userId", pollerHeader.getUserId());
 
 		return pollerResponseHeaderJSONObject;
 	}

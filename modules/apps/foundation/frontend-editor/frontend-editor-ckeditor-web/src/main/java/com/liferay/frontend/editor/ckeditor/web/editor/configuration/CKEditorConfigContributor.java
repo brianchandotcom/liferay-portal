@@ -130,8 +130,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			styleJSONObject.put("attributes", attributesJSONObject);
 		}
 
-		styleJSONObject.put("name", styleFormatName);
 		styleJSONObject.put("element", element);
+		styleJSONObject.put("name", styleFormatName);
 
 		return styleJSONObject;
 	}

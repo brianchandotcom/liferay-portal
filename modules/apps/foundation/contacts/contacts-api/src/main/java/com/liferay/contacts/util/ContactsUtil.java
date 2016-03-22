@@ -59,9 +59,9 @@ public class ContactsUtil {
 	public static JSONObject getEntryJSONObject(Entry entry) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("comments", entry.getComments());
 		jsonObject.put("emailAddress", entry.getEmailAddress());
 		jsonObject.put("entryId", String.valueOf(entry.getEntryId()));
-		jsonObject.put("comments", entry.getComments());
 		jsonObject.put("fullName", entry.getFullName());
 		jsonObject.put("portalUser", false);
 

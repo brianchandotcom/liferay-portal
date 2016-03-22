@@ -390,9 +390,9 @@ public class LicenseUtil {
 
 		JSONObject jsonObject = new JSONObjectImpl();
 
-		jsonObject.put("version", 2);
-		jsonObject.put("orderUuid", orderUuid);
 		jsonObject.put("liferayVersion", ReleaseInfo.getBuildNumber());
+		jsonObject.put("orderUuid", orderUuid);
+		jsonObject.put("version", 2);
 
 		if (Validator.isNull(productEntryName)) {
 			jsonObject.put(Constants.CMD, "QUERY");
@@ -412,8 +412,8 @@ public class LicenseUtil {
 						productEntryName, StringPool.DASH);
 
 					if (productNameArray.length >= 3) {
-						jsonObject.put("offeringEntryId", productNameArray[1]);
 						jsonObject.put("clusterId", productNameArray[2]);
+						jsonObject.put("offeringEntryId", productNameArray[1]);
 					}
 				}
 			}

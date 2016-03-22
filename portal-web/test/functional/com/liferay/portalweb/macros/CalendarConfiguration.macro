@@ -3,12 +3,6 @@
 		<execute function="Uncheck" locator1="CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX" />
 	</command>
 
-	<command name="disableRSS">
-		<execute macro="CalendarConfiguration#gotoRSS" />
-
-		<execute function="Uncheck" locator1="CalendarConfiguration#RSS_ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-	</command>
-
 	<command name="editTimeZonePacific">
 		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
 
@@ -30,7 +24,7 @@
 	<command name="enableRSS">
 		<execute macro="CalendarConfiguration#gotoRSS" />
 
-		<execute function="Check" locator1="CalendarConfiguration#RSS_ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
+		<execute function="Click" locator1="CalendarConfiguration#RSS_ENABLE_RSS_SUBSCRIPTION_SWITCHER" />
 	</command>
 
 	<command name="gotoRSS">
@@ -78,5 +72,9 @@
 		<execute macro="CalendarConfiguration#enableRSS" />
 
 		<execute macro="CalendarConfiguration#save" />
+	</command>
+
+	<command name="viewRSSOptionsDisabled">
+		<execute function="AssertElementNotPresent" locator1="CalendarConfiguration#RSS_SETTING_OPTIONS" />
 	</command>
 </definition>

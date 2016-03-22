@@ -141,7 +141,6 @@
 		<execute macro="Calendar#view">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="My Calendars" />
-			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="user" value="${user}" />
 		</execute>
 	</command>
@@ -862,9 +861,10 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="optionSet" value="true" />
 			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2573,7 +2573,9 @@
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
-		<execute macro="CalendarConfiguration#disableRSS" />
+		<execute macro="CalendarConfiguration#enableRSS" />
+
+		<execute macro="CalendarConfiguration#viewRSSOptionsDisabled" />
 
 		<execute macro="CalendarConfiguration#save" />
 
@@ -2658,7 +2660,6 @@
 		<execute macro="Calendar#view">
 			<var name="calendarName" value="${calendarNameEdit}" />
 			<var name="calendarType" value="My Calendars" />
-			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="user" value="${user}" />
 		</execute>
 	</command>

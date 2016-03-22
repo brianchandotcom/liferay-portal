@@ -92,7 +92,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -165,6 +165,28 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 					<liferay-ui:search-container-column-jsp
 						path="/rule_actions.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/rule_actions.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="mobile-portrait"
+							resultRow="<%= row %>"
+							subtitle="<%= rule.getDescription(locale) %>"
+							title="<%= rule.getName(locale) %>"
+							url="<%= rowURL.toString() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - rule.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<%@ include file="/rule_columns.jspf" %>

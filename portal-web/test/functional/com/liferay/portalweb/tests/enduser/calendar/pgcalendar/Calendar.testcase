@@ -2573,7 +2573,7 @@
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
-		<execute macro="CalendarConfiguration#disableRSS" />
+		<execute macro="CalendarConfiguration#enableRSS" />
 
 		<execute macro="CalendarConfiguration#save" />
 

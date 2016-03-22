@@ -97,8 +97,8 @@
 </tr>
 <!--RSS-->
 <tr>
-	<td>RSS_ENABLE_RSS_SUBSCRIPTION_CHECKBOX</td>
-	<td>//input[contains(@id,'enableRss')]</td>
+	<td>RSS_ENABLE_RSS_SUBSCRIPTION_SWITCHER</td>
+	<td>//label[contains(.,'Enable RSS Subscription')]//span[@class='toggle-switch-handle']</td>
 	<td></td>
 </tr>
 </tbody>

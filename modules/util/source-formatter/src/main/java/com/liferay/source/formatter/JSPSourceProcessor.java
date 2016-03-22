@@ -380,7 +380,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName, "move imports to init.jsp: " + fileName);
 		}
 
-		newContent = fixCopyright(newContent, absolutePath, fileName);
+		newContent = fixCopyright(newContent, absolutePath, fileName, null);
 
 		newContent = StringUtil.replace(
 			newContent,

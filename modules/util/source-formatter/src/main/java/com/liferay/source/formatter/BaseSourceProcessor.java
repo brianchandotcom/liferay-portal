@@ -561,7 +561,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String fixCopyright(
-			String content, String absolutePath, String fileName)
+			String content, String absolutePath, String fileName,
+			String className)
 		throws IOException {
 
 		if (_copyright == null) {

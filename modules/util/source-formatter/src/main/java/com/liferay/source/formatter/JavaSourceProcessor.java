@@ -357,7 +357,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkMissingAuthor(String content, String fileName) {
+	protected void checkMissingAuthor(
+		String content, String fileName, String className) {
+
 		if (!content.contains(" * @author ")) {
 			processErrorMessage(fileName, "Missing author: " + fileName);
 		}
@@ -551,7 +553,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
 		}
 
-		newContent = fixCopyright(newContent, absolutePath, fileName);
+		newContent = fixCopyright(
+			newContent, absolutePath, fileName, className);
 
 		if (newContent.contains(className + ".java.html")) {
 			processErrorMessage(fileName, "Java2HTML: " + fileName);
@@ -566,7 +569,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "UTF-8: " + fileName);
 		}
 
-		checkMissingAuthor(newContent, fileName);
+		checkMissingAuthor(newContent, fileName, className);
 
 		newContent = fixDataAccessConnection(className, newContent);
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);

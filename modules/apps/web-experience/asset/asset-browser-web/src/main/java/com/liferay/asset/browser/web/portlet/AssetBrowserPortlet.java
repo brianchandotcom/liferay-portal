@@ -14,8 +14,14 @@
 
 package com.liferay.asset.browser.web.portlet;
 
+import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,4 +48,21 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AssetBrowserPortlet extends MVCPortlet {
+
+	public void changeDisplayStyle(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		String displayStyle = ParamUtil.getString(
+			actionRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
+
+		portalPreferences.setValue(
+			AssetBrowserPortletKeys.ASSET_BROWSER, "display-style",
+			displayStyle);
+	}
+
 }

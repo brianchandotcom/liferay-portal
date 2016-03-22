@@ -976,7 +976,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
@@ -1261,6 +1260,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
 
 		if (relengDir != null) {
+			GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
+
 			WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 				project);
 

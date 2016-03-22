@@ -15,6 +15,7 @@
 package com.liferay.asset.browser.web.display.context;
 
 import com.liferay.asset.browser.web.configuration.AssetBrowserWebConfigurationValues;
+import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.search.AssetBrowserSearch;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -177,11 +180,15 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle != null) {
+		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		_displayStyle = portalPreferences.getValue(
+			AssetBrowserPortletKeys.ASSET_BROWSER, "display-style", "list");
 
 		return _displayStyle;
 	}

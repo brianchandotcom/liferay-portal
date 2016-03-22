@@ -20,6 +20,8 @@
 	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
 
 	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+
+	String errorSection = null;
 	%>
 
 	<!-- Begin fragment <%= sectionId %> -->
@@ -37,7 +39,7 @@
 
 			});
 
-		String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+		errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
 		if (Validator.equals(formNavigatorEntry.getKey(), errorSection)) {
 			request.setAttribute(WebKeys.ERROR_SECTION, null);
@@ -76,40 +78,47 @@
 		<!-- End fragment <%= sectionId %> -->
 
 	<%
-		String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+		String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
-		if (Validator.equals(curFormNavigatorEntry.getKey(), errorSection)) {
-	%>
+		if (Validator.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
+			errorSection = curErrorSection;
 
-			<aui:script sandbox="<%= true %>">
-				var focusField;
-				var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
-
-				if (!sectionContent.hasClass('in')) {
-					sectionContent.collapse('show');
-				}
-
-				<%
-				String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
-				%>
-
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(focusField) %>">
-						focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
-					</c:when>
-					<c:otherwise>
-						focusField = sectionContent.find('input:not([type="hidden"]).field').first();
-					</c:otherwise>
-				</c:choose>
-
-				if (focusField) {
-					focusField.focus();
-				}
-			</aui:script>
-
-	<%
 			request.setAttribute(WebKeys.ERROR_SECTION, null);
 		}
+	}
+	%>
+
+	<%
+	if (Validator.isNotNull(errorSection)) {
+	%>
+
+		<aui:script sandbox="<%= true %>">
+			var focusField;
+			var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
+
+			if (!sectionContent.hasClass('in')) {
+				sectionContent.collapse('show');
+			}
+
+			<%
+			String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
+			%>
+
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(focusField) %>">
+					focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
+				</c:when>
+				<c:otherwise>
+					focusField = sectionContent.find('input:not([type="hidden"]).field').first();
+				</c:otherwise>
+			</c:choose>
+
+			if (focusField) {
+				focusField.focus();
+			}
+		</aui:script>
+
+	<%
 	}
 	%>
 

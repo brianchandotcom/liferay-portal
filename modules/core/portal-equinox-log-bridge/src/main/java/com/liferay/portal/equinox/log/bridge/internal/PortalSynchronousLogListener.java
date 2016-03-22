@@ -19,6 +19,7 @@ import org.eclipse.equinox.log.SynchronousLogListener;
 import org.eclipse.osgi.framework.log.FrameworkLogEntry;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 import org.osgi.service.log.LogEntry;
 import org.osgi.service.log.LogService;
 
@@ -101,7 +102,18 @@ public class PortalSynchronousLogListener implements SynchronousLogListener {
 		else if ((level == LogService.LOG_WARNING) && log.isWarnEnabled()) {
 			log.warn(_FORMAT, message, context, throwable);
 		}
+
+		if ((throwable != null) && (throwable instanceof BundleException) &&
+			(_JENKINS_HOME != null) &&
+			throwable.getMessage().startsWith("Could not resolve module")) {
+
+			log.error(_FORMAT, "Stopping the portal!", context, throwable);
+
+			System.exit(1);
+		}
 	}
+
+	private static final String _JENKINS_HOME = System.getenv("JENKINS_HOME");
 
 	private static final String _FORMAT = "{} {}";
 

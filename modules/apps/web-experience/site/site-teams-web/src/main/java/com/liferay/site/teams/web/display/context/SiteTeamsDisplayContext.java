@@ -142,7 +142,7 @@ public class SiteTeamsDisplayContext {
 			return false;
 		}
 
-		if (Validator.isNull(getKeywords())) {
+		if (Validator.isNotNull(getKeywords())) {
 			return false;
 		}
 

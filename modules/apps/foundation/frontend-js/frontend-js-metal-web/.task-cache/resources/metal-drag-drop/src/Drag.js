@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-attribute/src/Attribute', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal-events/src/events', 'metal-position/src/all/position'], function (exports, _metal, _dom, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _events, _position) {
+define("frontend-js-metal-web@1.0.2/metal-drag-drop/src/Drag", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-attribute/src/Attribute', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal-events/src/events', 'metal-position/src/all/position'], function (exports, _metal, _dom, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _events, _position) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

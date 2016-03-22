@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-tooltip/src/Tooltip", ['exports', './TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', './Tooltip.soy'], function (exports, _TooltipBase2, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.2/metal-tooltip/src/Tooltip", ['exports', './TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', './Tooltip.soy'], function (exports, _TooltipBase2, _JQueryAdapter) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

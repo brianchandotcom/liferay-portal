@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-position/src/Align", ['exports', './Position'], function (exports, _Position) {
+define("frontend-js-metal-web@1.0.2/metal-position/src/Align", ['exports', './Position'], function (exports, _Position) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

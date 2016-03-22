@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal/src/metal", ['exports', './core', './array/array', './async/async', './disposable/Disposable', './object/object', './string/string'], function (exports, _core, _array, _async, _Disposable, _object, _string) {
+define("frontend-js-metal-web@1.0.2/metal/src/metal", ['exports', './core', './array/array', './async/async', './disposable/Disposable', './object/object', './string/string'], function (exports, _core, _array, _async, _Disposable, _object, _string) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

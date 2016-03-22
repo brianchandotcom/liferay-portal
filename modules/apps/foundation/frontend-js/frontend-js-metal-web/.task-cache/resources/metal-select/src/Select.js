@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-select/src/Select", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Select.soy', 'metal-jquery-adapter/src/JQueryAdapter', 'metal-dropdown/src/Dropdown'], function (exports, _metal, _dom, _Select, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.2/metal-select/src/Select", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Select.soy', 'metal-jquery-adapter/src/JQueryAdapter', 'metal-dropdown/src/Dropdown'], function (exports, _metal, _dom, _Select, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-soy/src/SoyAop", ['exports', './SoyTemplates'], function (exports, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.2/metal-soy/src/SoyAop", ['exports', './SoyTemplates'], function (exports, _SoyTemplates) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-component/src/surfaces/SurfaceRenderer", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-html/src/html', '../Component', '../ComponentCollector', '../ComponentRenderer', '../EventsCollector', './SurfaceCollector'], function (exports, _metal, _dom, _html, _Component, _ComponentCollector, _ComponentRenderer2, _EventsCollector, _SurfaceCollector) {
+define("frontend-js-metal-web@1.0.2/metal-component/src/surfaces/SurfaceRenderer", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-html/src/html', '../Component', '../ComponentCollector', '../ComponentRenderer', '../EventsCollector', './SurfaceCollector'], function (exports, _metal, _dom, _html, _Component, _ComponentCollector, _ComponentRenderer2, _EventsCollector, _SurfaceCollector) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

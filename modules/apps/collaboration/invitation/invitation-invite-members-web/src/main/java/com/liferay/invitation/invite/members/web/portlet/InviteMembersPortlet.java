@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.footer-portlet-javascript=/invite_members/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/invite_members/css/main.css",
-		"com.liferay.portlet.icon=/invite_members/icon.png",
+		"com.liferay.portlet.icon=/icons/invite_members.png",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Invite Members",
 		"javax.portlet.expiration-cache=0",

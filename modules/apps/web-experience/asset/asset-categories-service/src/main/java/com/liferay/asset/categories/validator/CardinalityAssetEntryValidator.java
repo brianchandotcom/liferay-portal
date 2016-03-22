@@ -12,26 +12,37 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.categories.validator;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.kernel.util.AssetEntryValidator;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan Fernández
  */
-public class BaseAssetEntryValidator implements AssetEntryValidator {
+@Component(
+	immediate = true, property = {"model.class.name=*"},
+	service = AssetEntryValidator.class
+)
+public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(
@@ -39,29 +50,41 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 			long[] categoryIds, String[] entryNames)
 		throws PortalException {
 
-		List<AssetVocabulary> vocabularies =
-			AssetVocabularyLocalServiceUtil.getGroupVocabularies(
-				groupId, false);
+		if (className.equals(DLFileEntryConstants.getClassName())) {
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				classTypePK);
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+			if ((dlFileEntry == null) ||
+				(dlFileEntry.getRepositoryId() != groupId)) {
+
+				return;
+			}
+		}
+
+		List<AssetVocabulary> vocabularies =
+			_assetVocabularyLocalService.getGroupVocabularies(groupId, false);
+
+		Group group = _groupLocalService.getGroup(groupId);
 
 		if (!group.isCompany()) {
-			Group companyGroup = GroupLocalServiceUtil.fetchCompanyGroup(
+			Group companyGroup = _groupLocalService.fetchCompanyGroup(
 				group.getCompanyId());
 
 			if (companyGroup != null) {
 				vocabularies = ListUtil.copy(vocabularies);
 
 				vocabularies.addAll(
-					AssetVocabularyLocalServiceUtil.getGroupVocabularies(
+					_assetVocabularyLocalService.getGroupVocabularies(
 						companyGroup.getGroupId()));
 			}
 		}
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
-		for (AssetVocabulary vocabulary : vocabularies) {
-			validate(classNameId, classTypePK, categoryIds, vocabulary);
+		if (isAssetCategorizable(classNameId)) {
+			for (AssetVocabulary vocabulary : vocabularies) {
+				validate(classNameId, classTypePK, categoryIds, vocabulary);
+			}
 		}
 	}
 
@@ -81,6 +104,32 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	protected void validate(
 			long classNameId, long classTypePK, final long[] categoryIds,
 			AssetVocabulary vocabulary)
@@ -89,10 +138,6 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 		if (!vocabulary.isAssociatedToClassNameIdAndClassTypePK(
 				classNameId, classTypePK)) {
 
-			return;
-		}
-
-		if (!isAssetCategorizable(classNameId)) {
 			return;
 		}
 
@@ -110,5 +155,10 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 				vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
 		}
 	}
+
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private ClassNameLocalService _classNameLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

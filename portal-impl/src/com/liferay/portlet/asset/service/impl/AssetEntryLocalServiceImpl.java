@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.portlet.asset.util.AssetEntryValidatorRegistry;
 import com.liferay.portlet.asset.util.AssetSearcher;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 
@@ -905,8 +906,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		assetEntryValidator.validate(
-			groupId, className, classTypePK, categoryIds, tagNames);
+		for (AssetEntryValidator assetEntryValidator :
+				assetEntryValidatorRegistry.getAssetEntryValidators(
+					className)) {
+
+			assetEntryValidator.validate(
+				groupId, className, classTypePK, categoryIds, tagNames);
+		}
 	}
 
 	/**
@@ -1049,7 +1055,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		indexer.reindex(className, entry.getClassPK());
 	}
 
-	@BeanReference(type = AssetEntryValidator.class)
-	protected AssetEntryValidator assetEntryValidator;
+	@BeanReference(type = AssetEntryValidatorRegistry.class)
+	protected AssetEntryValidatorRegistry assetEntryValidatorRegistry;
 
 }

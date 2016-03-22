@@ -179,7 +179,8 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 </div>
 
 <%
-PortalUtil.setPageSubtitle(entry.getTitle(), request);
+PortalUtil.setPageTitle(entry.getTitle(), request);
+PortalUtil.setPageSubtitle(entry.getSubtitle(), request);
 PortalUtil.setPageDescription(entry.getDescription(), request);
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId());

@@ -16,13 +16,14 @@ package com.liferay.journal.content.web.portlet.configuration.icon;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.display.context.JournalContentDisplayContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -39,19 +40,8 @@ public class EditTemplatePortletConfigurationIcon
 	extends BaseJournalArticlePortletConfigurationIcon {
 
 	@Override
-	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "edit-template");
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		JournalContentDisplayContext journalContentDisplayContext =
-			getJournalContentDisplayContext(portletRequest, portletResponse);
-
-		return journalContentDisplayContext.getURLEditTemplate();
+	public String getJspPath() {
+		return "/edit_template.jsp";
 	}
 
 	@Override
@@ -79,6 +69,15 @@ public class EditTemplatePortletConfigurationIcon
 	@Override
 	public boolean isUseDialog() {
 		return true;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

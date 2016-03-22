@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -42,21 +44,16 @@ public class EditJournalArticlePortletConfigurationIcon
 	extends BaseJournalArticlePortletConfigurationIcon {
 
 	@Override
+	public String getJspPath() {
+		return "/edit_article.jsp";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
 		return LanguageUtil.get(resourceBundle, "edit-web-content");
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		JournalContentDisplayContext journalContentDisplayContext =
-			getJournalContentDisplayContext(portletRequest, portletResponse);
-
-		return journalContentDisplayContext.getURLEdit();
 	}
 
 	@Override
@@ -77,13 +74,12 @@ public class EditJournalArticlePortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
-	@Override
-	public boolean isUseDialog() {
-		return true;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

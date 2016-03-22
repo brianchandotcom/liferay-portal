@@ -61,7 +61,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -97,8 +97,6 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 		>
 
 			<%
-			row.setCssClass("col-md-2 col-sm-3 col-xs-6");
-
 			PluginPackage selPluginPackage = theme.getPluginPackage();
 
 			String cssClass = "theme-selector";
@@ -113,26 +111,54 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 				subtitle = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
 			}
 
-			String thumbnailSrc = HtmlUtil.escapeAttribute(theme.getStaticResourcePath()) + HtmlUtil.escapeAttribute(theme.getImagesPath()) + "/thumbnail.png";
+			String thumbnailSrc = theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png";
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("themeid", theme.getThemeId());
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<liferay-frontend:vertical-card
-					cssClass="<%= cssClass %>"
-					data="<%= data %>"
-					imageUrl="<%= thumbnailSrc %>"
-					resultRow="<%= row %>"
-					subtitle="<%= subtitle %>"
-					title="<%= theme.getName() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-image
+						src="<%= thumbnailSrc %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+
+						<h5>
+							<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+								<%= theme.getName() %>
+							</aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<span><%= subtitle %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-3 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:vertical-card
+							cssClass="<%= cssClass %>"
+							data="<%= data %>"
+							imageUrl="<%= thumbnailSrc %>"
+							subtitle="<%= subtitle %>"
+							title="<%= theme.getName() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
 

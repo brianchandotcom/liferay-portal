@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Switcher.soy.js', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _SwitcherSoy, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.2/metal-switcher/src/Switcher", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Switcher.soy.js', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _SwitcherSoy, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

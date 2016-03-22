@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-list/src/List", ['exports', 'metal-dom/src/all/dom', './List.soy.js', 'metal-jquery-adapter/src/JQueryAdapter', './ListItem.js'], function (exports, _dom, _ListSoy, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.2/metal-list/src/List", ['exports', 'metal-dom/src/all/dom', './List.soy.js', 'metal-jquery-adapter/src/JQueryAdapter', './ListItem.js'], function (exports, _dom, _ListSoy, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/screen/EventScreen.es", ['exports', 'metal-dom/src/dom', 'senna/src/screen/HtmlScreen', 'metal-dom/src/globalEval', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _dom, _HtmlScreen2, _globalEval, _Promise, _Utils) {
+define("frontend-js-spa-web@1.0.2/liferay/screen/EventScreen.es", ['exports', 'metal-dom/src/dom', 'senna/src/screen/HtmlScreen', 'metal-dom/src/globalEval', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _dom, _HtmlScreen2, _globalEval, _Promise, _Utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

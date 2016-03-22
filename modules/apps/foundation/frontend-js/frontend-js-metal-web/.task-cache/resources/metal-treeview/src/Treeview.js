@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-treeview/src/Treeview", ['exports', 'metal-dom/src/all/dom', './Treeview.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _dom, _Treeview, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.2/metal-treeview/src/Treeview", ['exports', 'metal-dom/src/all/dom', './Treeview.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _dom, _Treeview, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

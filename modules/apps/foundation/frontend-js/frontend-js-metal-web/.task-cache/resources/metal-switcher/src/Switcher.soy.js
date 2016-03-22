@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.0/metal-switcher/src/Switcher.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.2/metal-switcher/src/Switcher.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

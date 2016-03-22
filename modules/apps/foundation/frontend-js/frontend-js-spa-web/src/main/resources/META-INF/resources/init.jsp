@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <liferay-theme:defineObjects />
 
-<aui:script position="inline" require="frontend-js-spa-web@1.0.0/liferay/init.es">
+<aui:script position="inline" require="frontend-js-spa-web/liferay/init.es">
 	var app = Liferay.SPA.app;
 
 	app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);

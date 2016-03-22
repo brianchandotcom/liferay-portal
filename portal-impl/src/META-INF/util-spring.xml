@@ -502,6 +502,9 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
+	<bean id="com.liferay.portal.template.ClassLoaderResourceParser" class="com.liferay.portal.template.ClassLoaderResourceParser" />
+	<bean id="com.liferay.portal.template.DDMTemplateResourceParser" class="com.liferay.portal.template.DDMTemplateResourceParser" />
+	<bean id="com.liferay.portal.template.ThemeResourceParser" class="com.liferay.portal.template.ThemeResourceParser" />
 	<bean id="com.liferay.portal.util.Portal" class="com.liferay.portal.util.PortalImpl" />
 	<bean class="com.liferay.portal.verify.model.AddressVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.AnnouncementsEntryVerifiableModel" />

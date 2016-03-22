@@ -15,10 +15,10 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.ConcurrentUpgradePortletPreferences;
 
 import javax.portlet.PortletPreferences;
 
@@ -26,7 +26,7 @@ import javax.portlet.PortletPreferences;
  * @author Eduardo Garcia
  * @author Jorge Ferrer
  */
-public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
+public class UpgradeAssetPublisher extends ConcurrentUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {

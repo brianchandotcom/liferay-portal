@@ -16,6 +16,10 @@ package com.liferay.portal.scripting.executor.groovy;
 
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
+
+/**
+ * @author Michael C. Han
+ */
 class GroovyListTypeUtil {
 
 	static Map listTypesmap = new HashMap<>();

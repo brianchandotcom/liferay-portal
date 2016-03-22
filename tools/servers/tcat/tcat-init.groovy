@@ -12,7 +12,11 @@
  * details.
  */
 
+import com.mulesoft.tcat.ServerProfileManager;
 import com.mulesoft.tcat.util.InstallBuilder;
+
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.mule.galaxy.Item;
 import org.mule.galaxy.NotFoundException;
@@ -22,11 +26,6 @@ import org.mule.galaxy.script.Script;
 import org.mule.galaxy.script.ScriptManager;
 import org.mule.galaxy.type.TypeManager;
 import org.mule.galaxy.util.IOUtils;
-
-import com.mulesoft.tcat.ServerProfileManager;
-
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
 
 import org.springframework.context.ApplicationContext;
 

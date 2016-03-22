@@ -53,8 +53,9 @@ class GroovyDDMStructure {
 			scriptingContext.getServiceContext());
 	}
 
-	static DDMStructure fetchStructure(GroovyScriptingContext scriptingContext,
-		GroovySite groovySite_, String structureKey_) {
+	static DDMStructure fetchStructure(
+		GroovyScriptingContext scriptingContext, GroovySite groovySite_,
+		String structureKey_) {
 
 		long classnameId = ClassNameLocalServiceUtil.getClassNameId(
 			DDLRecordSet.class);

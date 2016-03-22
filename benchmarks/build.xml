@@ -4,6 +4,11 @@
 	<import file="../build-common.xml" />
 
 	<target name="build-sample-sql">
+		<gradle-execute
+			dir="../modules/util/portal-tools-sample-sql-builder"
+			task="deploy"
+		/>
+
 		<path id="sample.sql.builder.classpath">
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.dynamic.data.*.jar" />
 			<fileset dir="${sdk.dir}/dist" includes="com.liferay.journal.*.jar" />

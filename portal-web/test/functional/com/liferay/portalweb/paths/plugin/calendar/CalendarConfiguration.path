@@ -101,6 +101,11 @@
 	<td>//label[contains(.,'Enable RSS Subscription')]//span[@class='toggle-switch-handle']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RSS_SETTING_OPTIONS</td>
+	<td>//div[@class='rss-settings-options']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

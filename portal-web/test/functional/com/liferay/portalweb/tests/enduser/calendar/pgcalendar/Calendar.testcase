@@ -2575,6 +2575,8 @@
 
 		<execute macro="CalendarConfiguration#enableRSS" />
 
+		<execute macro="CalendarConfiguration#viewRSSOptionsDisabled" />
+
 		<execute macro="CalendarConfiguration#save" />
 
 		<execute macro="Navigator#gotoPage">

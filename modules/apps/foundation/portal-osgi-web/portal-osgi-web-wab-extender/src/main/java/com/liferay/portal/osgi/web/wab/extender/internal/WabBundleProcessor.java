@@ -46,6 +46,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -143,27 +144,20 @@ public class WabBundleProcessor {
 				webXMLDefinitionLoader.loadWebXML();
 
 			if (!webXMLDefinition.isMetadataComplete()) {
-				BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
-				Collection<String> resources = bundleWiring.listResources(
-					"META-INF/", "web-fragment.xml",
-					BundleWiring.LISTRESOURCES_RECURSE);
+				Enumeration<URL> resources = _bundle.getResources(
+					"META-INF/web-fragment.xml");
 
 				List<WebXMLDefinition> webFragments = new ArrayList<>();
 
 				if (resources != null) {
-					for (String resource : resources) {
-						URL url = _bundle.getResource(resource);
+					while (resources.hasMoreElements()) {
+						URL url = resources.nextElement();
+						WebXMLDefinitionLoader webFragmentsDefinitionLoader =
+							new WebXMLDefinitionLoader(
+								_bundle, saxParserFactory, _logger);
 
-						if (url != null) {
-							WebXMLDefinitionLoader
-								webFragmentsDefinitionLoader =
-									new WebXMLDefinitionLoader(
-										_bundle, saxParserFactory, _logger);
-
-							webFragments.add(
-								webFragmentsDefinitionLoader.loadWebXML(url));
-						}
+						webFragments.add(
+							webFragmentsDefinitionLoader.loadWebXML(url));
 					}
 				}
 
@@ -941,24 +935,20 @@ public class WabBundleProcessor {
 	}
 
 	protected void initServletContainerInitializers(
-		Bundle bundle, ServletContext servletContext) {
+			Bundle bundle, ServletContext servletContext)
+		throws IOException {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		Collection<String> initializerResources = bundleWiring.listResources(
-			"META-INF/services", "javax.servlet.ServletContainerInitializer",
-			BundleWiring.LISTRESOURCES_RECURSE);
+		Enumeration<URL> initializerResources = bundle.getResources(
+			"META-INF/services/javax.servlet.ServletContainerInitializer");
 
 		if (initializerResources == null) {
 			return;
 		}
 
-		for (String initializerResource : initializerResources) {
-			URL url = bundle.getResource(initializerResource);
-
-			if (url == null) {
-				continue;
-			}
+		while (initializerResources.hasMoreElements()) {
+			URL url = initializerResources.nextElement();
 
 			try (InputStream inputStream = url.openStream()) {
 				String fqcn = StringUtil.read(inputStream);

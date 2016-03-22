@@ -5,12 +5,6 @@ AUI.add(
 
 		var CSS_DRAGGABLE = 'portlet-draggable';
 
-		var layoutModule = 'liferay-layout-column';
-
-		if (themeDisplay.isFreeformLayout()) {
-			layoutModule = 'liferay-layout-freeform';
-		}
-
 		var LAYOUT_CONFIG = Liferay.Data.layoutConfig;
 
 		var Layout = {
@@ -354,64 +348,82 @@ AUI.add(
 			}
 		};
 
-		Liferay.provide(
-			Layout,
-			'init',
-			function(options) {
-				options = options || Layout.options;
+		Layout.init = function(options) {
+			options = options || Layout.options;
 
-				options.handles = A.Array(options.handles);
+			options.handles = A.Array(options.handles);
 
-				Layout.PROXY_NODE.append(Layout.PORTLET_TOPPER);
+			Layout.PROXY_NODE.append(Layout.PORTLET_TOPPER);
 
-				var layoutContainer = options.container;
+			var layoutContainer = options.container;
 
-				Layout._layoutContainer = A.one(layoutContainer);
+			Layout._layoutContainer = A.one(layoutContainer);
 
-				Layout.DEFAULT_LAYOUT_OPTIONS = {
-					columnContainer: layoutContainer,
-					delegateConfig: {
-						container: layoutContainer,
-						dragConfig: {
-							clickPixelThresh: 0,
-							clickTimeThresh: 250,
-							plugins: [
-								{
-									cfg: {
-										horizontal: false,
-										scrollDelay: 30
-									},
-									fn: A.Plugin.DDWinScroll
-								}
-							]
-						},
-						handles: options.handles,
-						invalid: options.invalid
+			Layout.DEFAULT_LAYOUT_OPTIONS = {
+				columnContainer: layoutContainer,
+				delegateConfig: {
+					container: layoutContainer,
+					dragConfig: {
+						clickPixelThresh: 0,
+						clickTimeThresh: 250,
+						plugins: [
+							{
+								cfg: {
+									horizontal: false,
+									scrollDelay: 30
+								},
+								fn: A.Plugin.DDWinScroll
+							}
+						]
 					},
-					dragNodes: options.dragNodes,
-					dropContainer: function(dropNode) {
-						return dropNode.one(options.dropContainer);
-					},
-					dropNodes: Layout.getActiveDropNodes(),
-					lazyStart: true,
-					proxy: {
-						resizeFrame: false
+					handles: options.handles,
+					invalid: options.invalid
+				},
+				dragNodes: options.dragNodes,
+				dropContainer: function(dropNode) {
+					return dropNode.one(options.dropContainer);
+				},
+				dropNodes: Layout.getActiveDropNodes(),
+				lazyStart: true,
+				proxy: {
+					resizeFrame: false
+				}
+			};
+
+			var layoutModule = 'liferay-layout-column';
+
+			if (themeDisplay.isFreeformLayout()) {
+				layoutModule = 'liferay-layout-freeform';
+			}
+
+			A.use(
+				layoutModule,
+				function() {
+					if (themeDisplay.isFreeformLayout()) {
+						Layout.FreeFormLayout.register();
 					}
-				};
+					else {
+						Layout.ColumnLayout.register();
+					}
 
-				Layout.register();
+					Layout.bindDragDropListeners();
 
-				Layout.bindDragDropListeners();
+					Layout.updateEmptyColumnsInfo();
 
-				Layout.updateEmptyColumnsInfo();
+					Liferay.after('closePortlet', Layout._afterPortletClose);
+					Liferay.on('closePortlet', Layout._onPortletClose);
 
-				Liferay.after('closePortlet', Layout._afterPortletClose);
-				Liferay.on('closePortlet', Layout._onPortletClose);
+					Liferay.on(
+						'screenFlip',
+						function() {
+							Layout.getLayoutHandler().destroy();
+						}
+					);
 
-				Layout.INITIALIZED = true;
-			},
-			[layoutModule]
-		);
+					Layout.INITIALIZED = true;
+				}
+			);
+		};
 
 		Liferay.provide(
 			Layout,

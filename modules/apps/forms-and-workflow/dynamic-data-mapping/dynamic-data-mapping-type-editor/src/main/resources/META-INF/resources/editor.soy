@@ -39,6 +39,8 @@
 			<input id="{$name}" name="{$name}" type="hidden" value="{$value}" />
 		</div>
 
-		{$childElementsHTML|noAutoescape}
+		{if $childElementsHTML}
+			{$childElementsHTML|noAutoescape}
+		{/if}
 	</div>
 {/template}

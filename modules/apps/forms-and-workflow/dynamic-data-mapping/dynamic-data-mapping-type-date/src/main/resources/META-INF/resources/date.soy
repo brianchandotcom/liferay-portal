@@ -38,6 +38,8 @@
 			<span class="input-group-addon"><span class="icon-calendar"></span></span>
 		</div>
 
-		{$childElementsHTML|noAutoescape}
+		{if $childElementsHTML}
+			{$childElementsHTML|noAutoescape}
+		{/if}
 	</div>
 {/template}

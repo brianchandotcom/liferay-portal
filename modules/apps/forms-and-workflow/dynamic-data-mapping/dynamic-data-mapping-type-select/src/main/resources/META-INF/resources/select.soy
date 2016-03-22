@@ -50,7 +50,9 @@
 				</select>
 			</div>
 
-			{$childElementsHTML|noAutoescape}
+			{if $childElementsHTML}
+				{$childElementsHTML|noAutoescape}
+			{/if}
 		</div>
 	</div>
 {/template}

@@ -17,7 +17,7 @@ ddm.radio = function(opt_data, opt_ignored) {
     var optionData51 = optionList51[optionIndex51];
     output += ((! opt_data.inline) ? '<div class="radio">' : '') + '<label class="radio-default' + soy.$$escapeHtmlAttribute(opt_data.inline ? ' radio-inline' : '') + ' radio-option-' + soy.$$escapeHtmlAttribute(optionData51.value) + '" for="' + soy.$$escapeHtmlAttribute(optionData51.value) + '"><input class="field" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' id="' + soy.$$escapeHtmlAttribute(optionData51.value) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" ' + soy.$$filterHtmlAttributes(optionData51.status) + ' type="radio" value="' + soy.$$escapeHtmlAttribute(optionData51.value) + '" /> ' + soy.$$escapeHtml(optionData51.label) + '</label>' + ((! opt_data.inline) ? '</div>' : '');
   }
-  output += '</div>' + soy.$$filterNoAutoescape(opt_data.childElementsHTML) + '</div>';
+  output += '</div>' + ((opt_data.childElementsHTML) ? soy.$$filterNoAutoescape(opt_data.childElementsHTML) : '') + '</div>';
   return output;
 };
 if (goog.DEBUG) {

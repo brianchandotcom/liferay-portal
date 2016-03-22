@@ -71,7 +71,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -122,10 +122,64 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			keyProperty="ruleGroupId"
 			modelVar="ruleGroup"
 		>
-			<%@ include file="/rule_group_columns.jspf" %>
+
+			<%
+			Group group = GroupLocalServiceUtil.getGroup(ruleGroup.getGroupId());
+
+			String rowHREF = null;
+
+			if (MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP)) {
+			%>
+
+				<portlet:renderURL var="editRulesURL">
+					<portlet:param name="mvcPath" value="/view_rules.jsp" />
+					<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				</portlet:renderURL>
+
+			<%
+				rowHREF = editRulesURL;
+			}
+			%>
+
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="mobile-portrait"
+						toggleRowChecker="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ruleGroup.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</h6>
+
+						<h5>
+							<aui:a href="<%= rowHREF %>"><%= ruleGroup.getName(locale) %></aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<%= HtmlUtil.escape(ruleGroup.getDescription(locale)) %>
+						</h6>
+
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="scope" /></strong>: <%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/rule_group_actions.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<%@ include file="/rule_group_columns.jspf" %>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
 	</liferay-ui:search-container>
 </aui:form>
 

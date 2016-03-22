@@ -14,25 +14,6 @@
  */
 --%>
 
-<%
-Group group = GroupLocalServiceUtil.getGroup(ruleGroup.getGroupId());
-
-String rowHREF = null;
-
-if (MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP)) {
-%>
-
-	<portlet:renderURL var="editRulesURL">
-		<portlet:param name="mvcPath" value="/view_rules.jsp" />
-		<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	</portlet:renderURL>
-
-<%
-	rowHREF = editRulesURL;
-}
-%>
-
 <liferay-ui:search-container-column-text
 	cssClass="content-column name-column title-column"
 	href="<%= rowHREF %>"

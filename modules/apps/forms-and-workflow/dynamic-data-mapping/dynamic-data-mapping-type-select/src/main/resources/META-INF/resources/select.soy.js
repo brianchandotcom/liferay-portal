@@ -17,7 +17,7 @@ ddm.select = function(opt_data, opt_ignored) {
     var optionData62 = optionList62[optionIndex62];
     output += '<option dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" ' + soy.$$filterHtmlAttributes(optionData62.status) + ' value="' + soy.$$escapeHtmlAttribute(optionData62.value) + '">' + soy.$$escapeHtml(optionData62.label) + '</option>';
   }
-  output += '</select></div>' + soy.$$filterNoAutoescape(opt_data.childElementsHTML) + '</div></div>';
+  output += '</select></div>' + ((opt_data.childElementsHTML) ? soy.$$filterNoAutoescape(opt_data.childElementsHTML) : '') + '</div></div>';
   return output;
 };
 if (goog.DEBUG) {

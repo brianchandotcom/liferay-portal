@@ -14,12 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Rafael Praxedes
  */
+@ProviderType
 public interface StorageEngineManager {
 
 	public static final String STORAGE_TYPE_DEFAULT = "json";

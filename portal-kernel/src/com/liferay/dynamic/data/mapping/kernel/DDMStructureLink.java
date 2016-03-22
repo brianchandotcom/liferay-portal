@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Rafael Praxedes
  */
+@ProviderType
 public interface DDMStructureLink {
 
 	public String getClassName();

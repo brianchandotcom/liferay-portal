@@ -196,7 +196,10 @@
 	line-height: normal;
 
 	&.sidenav-fixed {
+		bottom: 0;
+
 		@include sm {
+			bottom: 47px;
 			position: absolute;
 		}
 	}
@@ -215,10 +218,10 @@
 }
 
 .image-viewer-sidenav-close {
-		display: block;
-		float: right;
-		margin-right: -10px;
-		margin-top: -15px;
+	display: block;
+	float: right;
+	margin-right: -10px;
+	margin-top: -15px;
 }
 
 .sidenav-transition .image-viewer-base-image-list-inner {

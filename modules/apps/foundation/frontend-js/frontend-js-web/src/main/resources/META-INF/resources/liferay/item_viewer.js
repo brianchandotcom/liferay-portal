@@ -155,9 +155,13 @@ AUI.add(
 					},
 
 					renderUI: function() {
+						var instance = this;
+
 						LiferayItemViewer.superclass.renderUI.apply(this, arguments);
 
-						this._renderSidenav();
+						if (instance.get(STR_RENDER_CONTROLS) && instance.get(STR_RENDER_SIDEBAR)) {
+							instance._renderSidenav();
+						}
 					},
 
 					updateCurrentImage: function(imageData) {
@@ -234,7 +238,7 @@ AUI.add(
 
 						var image = instance._getCurrentImage();
 
-						if (metadata) {
+						if (instance.get(STR_RENDER_CONTROLS) && metadata) {
 							instance._populateImageMetadata(image, metadata);
 						}
 					},
@@ -258,7 +262,7 @@ AUI.add(
 					_bindSidebarEvents: function() {
 						var instance = this;
 
-						if (instance.get(STR_RENDER_SIDEBAR)) {
+						if (instance.get(STR_RENDER_CONTROLS) && instance.get(STR_RENDER_SIDEBAR)) {
 							AUI.$('[data-toggle="sidenav"]').sideNavigation();
 						}
 					},
@@ -292,6 +296,7 @@ AUI.add(
 						var instance = this;
 
 						var imageViewer = image.ancestor('.image-viewer');
+
 						var sidenavTabContent = imageViewer.one('.image-viewer-sidenav .tab-content');
 						var sidenavTabList = imageViewer.one('.image-viewer-sidenav ul');
 
@@ -389,27 +394,23 @@ AUI.add(
 							controlsContainer.append(instance.get('controlNext'));
 
 							container.append(controlsContainer);
-						}
 
-						if (instance.get(STR_RENDER_SIDEBAR)) {
-							var infoIconEl = A.Node.create(TPL_INFO_ICON);
+							if (instance.get(STR_RENDER_SIDEBAR)) {
+								var infoIconEl = A.Node.create(TPL_INFO_ICON);
 
-							container.append(infoIconEl);
+								container.append(infoIconEl);
 
-							instance._infoIconEl = infoIconEl;
+								instance._infoIconEl = infoIconEl;
+							}
 						}
 					},
 
 					_renderSidenav: function() {
 						var instance = this;
 
-						var sidenav = A.one('.image-viewer-sidenav');
+						var imageViewerSidenav = A.Node.create(instance.TPL_SIDENAV);
 
-						if (!sidenav) {
-							var container = A.Node.create(instance.TPL_SIDENAV);
-
-							A.one('.image-viewer-base-image-list').insert(container, 'before');
-						}
+						instance.get('contentBox').prepend(imageViewerSidenav);
 					},
 
 					_setLinks: function(val) {

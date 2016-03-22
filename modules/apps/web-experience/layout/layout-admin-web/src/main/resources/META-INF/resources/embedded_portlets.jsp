@@ -119,18 +119,20 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 			>
 
 				<liferay-ui:search-container-column-text
-					cssClass="text-strong"
+					cssClass="content-column name-column title-column"
 					name="title"
-				>
-					<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
-				</liferay-ui:search-container-column-text>
+					truncate="<%= true %>"
+					value="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="content-column portlet-id-column"
 					name="portlet-id"
 					property="portletId"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="status-column text-column"
 					name="status"
 				>
 					<c:choose>
@@ -150,7 +152,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="list-group-item-field"
+					cssClass="entry-action-column"
 					path="/embedded_portlets_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

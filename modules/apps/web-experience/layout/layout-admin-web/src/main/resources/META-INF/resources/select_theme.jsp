@@ -79,7 +79,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 	</div>
 </c:if>
 
-<div class="container-fluid-1280">
+<aui:form cssClass="container-fluid-1280" name="selectThemeFm">
 	<liferay-ui:search-container
 		id="themes"
 		iteratorURL="<%= portletURL %>"
@@ -99,12 +99,6 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 			<%
 			PluginPackage selPluginPackage = theme.getPluginPackage();
 
-			String cssClass = "theme-selector";
-
-			if (themeId.equals(theme.getThemeId())) {
-				cssClass += " selected";
-			}
-
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("themeid", theme.getThemeId());
@@ -121,9 +115,16 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 					>
 
 						<h5>
-							<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
-								<%= theme.getName() %>
-							</aui:a>
+							<c:choose>
+								<c:when test="<%= !themeId.equals(theme.getThemeId()) %>">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= theme.getName() %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= theme.getName() %>
+								</c:otherwise>
+							</c:choose>
 						</h5>
 
 						<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
@@ -147,7 +148,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:vertical-card
-							cssClass="<%= cssClass %>"
+							cssClass='<%= themeId.equals(theme.getThemeId()) ? StringPool.BLANK : "selector-button" %>'
 							data="<%= data %>"
 							imageUrl='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
 							subtitle="<%= author %>"
@@ -161,9 +162,16 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 						name="name"
 						truncate="<%= true %>"
 					>
-						<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
-							<%= theme.getName() %>
-						</aui:a>
+						<c:choose>
+							<c:when test="<%= !themeId.equals(theme.getThemeId()) %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= theme.getName() %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= theme.getName() %>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 
 					<%
@@ -185,27 +193,8 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
-</div>
+</aui:form>
 
-<aui:script use="aui-base">
-	var themes = A.one('#<portlet:namespace />themes');
-
-	themes.delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
-
-			themes.all('.theme-selector').removeClass('selected');
-
-			currentTarget.addClass('selected');
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
-				{
-					data: currentTarget.attr('data-themeid')
-				}
-			);
-		},
-		'.theme-selector'
-	);
+<aui:script>
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectThemeFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

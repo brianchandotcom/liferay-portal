@@ -42,7 +42,7 @@ else {
 
 <aui:button cssClass="btn btn-default" id="changeTheme" value="change-current-theme" />
 
-<aui:script use="aui-io-request,aui-parse-content,liferay-item-selector-dialog">
+<aui:script use="aui-io-request,aui-parse-content">
 	var Util = Liferay.Util;
 
 	var selThemeId = '<%= selTheme.getThemeId() %>';
@@ -59,52 +59,54 @@ else {
 		function(event) {
 			event.preventDefault();
 
+			var currentTarget = $(event.currentTarget);
+
 			url = Util.addParams('<portlet:namespace />themeId=' + selThemeId, '<%= selectThemeURL %>');
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			Util.selectEntity(
 				{
-					eventName: '<portlet:namespace />selectTheme',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem && (selThemeId != selectedItem)) {
-								themeContainer.html('<div class="loading-animation"></div>');
-
-								var data = Util.ns(
-									'<portlet:namespace />',
-									{
-										themeId: selectedItem
-									}
-								);
-
-								A.io.request(
-									'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" /></portlet:renderURL>',
-									{
-										data: data,
-										on: {
-											success: function(event, id, obj) {
-												var responseData = this.get('responseData');
-
-												themeContainer.plug(A.Plugin.ParseContent);
-
-												themeContainer.setContent(responseData);
-
-												selThemeId = selectedItem;
-											}
-										}
-									}
-								);
-							}
-						}
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
 					},
-					'strings.add': '<liferay-ui:message key="done" />',
+					eventName: '<portlet:namespace />selectTheme',
 					title: '<liferay-ui:message key="available-themes" />',
-					url: url
+					uri: url
+				},
+				function(event) {
+					var selectedItem = event.themeid;
+
+					if (selectedItem && (selThemeId != selectedItem)) {
+						themeContainer.html('<div class="loading-animation"></div>');
+
+						var data = Util.ns(
+							'<portlet:namespace />',
+							{
+								themeId: selectedItem
+							}
+						);
+
+						A.io.request(
+							'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" /></portlet:renderURL>',
+							{
+								data: data,
+								on: {
+									success: function(event, id, obj) {
+										var responseData = this.get('responseData');
+
+										themeContainer.plug(A.Plugin.ParseContent);
+
+										themeContainer.setContent(responseData);
+
+										selThemeId = selectedItem;
+									}
+								}
+							}
+						);
+					}
 				}
 			);
-
-			itemSelectorDialog.open();
 		}
 	);
 </aui:script>

@@ -1,12 +1,4 @@
 .portlet-layouts-admin {
-	.color-scheme-selector, .theme-selector {
-		cursor: pointer;
-
-		&.selected {
-			box-shadow: 0 0 0 2px #65B6F0;
-		}
-	}
-
 	.customization-settings #main-content {
 		.portlet-column {
 			border: 1px solid #65B6F0;

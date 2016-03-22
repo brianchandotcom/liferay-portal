@@ -202,12 +202,6 @@ public class SiteBrowserDisplayContext {
 		}
 		else if (type.equals("parent-sites")) {
 		}
-		else if (groupSearchTerms.isAdvancedSearch()) {
-			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
-				groupSearchTerms.getName(), groupSearchTerms.getDescription(),
-				getGroupParams(), groupSearchTerms.isAndOperator());
-		}
 		else {
 			total = GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
@@ -251,13 +245,6 @@ public class SiteBrowserDisplayContext {
 			total += additionalSites;
 
 			groupSearch.setTotal(total);
-		}
-		else if (groupSearchTerms.isAdvancedSearch()) {
-			groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), _CLASS_NAME_IDS,
-				groupSearchTerms.getName(), groupSearchTerms.getDescription(),
-				getGroupParams(), groupSearchTerms.isAndOperator(), start, end,
-				groupSearch.getOrderByComparator());
 		}
 		else {
 			groups = GroupLocalServiceUtil.search(

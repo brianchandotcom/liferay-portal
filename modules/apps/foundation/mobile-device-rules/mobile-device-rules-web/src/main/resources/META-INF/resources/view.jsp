@@ -71,7 +71,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -172,6 +172,29 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					<liferay-ui:search-container-column-jsp
 						path="/rule_group_actions.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/rule_group_actions.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="mobile-portrait"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= HtmlUtil.escape(ruleGroup.getDescription(locale)) %>"
+							title="<%= ruleGroup.getName(locale) %>"
+							url="<%= rowHREF %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ruleGroup.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<%@ include file="/rule_group_columns.jspf" %>

@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/liferay/screen/RenderURLScreen.es", ['exports', './EventScreen.es'], function (exports, _EventScreen2) {
+define("frontend-js-spa-web@1.0.2/liferay/screen/RenderURLScreen.es", ['exports', './EventScreen.es'], function (exports, _EventScreen2) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

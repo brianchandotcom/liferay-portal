@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/senna/src/surface/Surface", ['exports', '../globals/globals', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-promise/src/promise/Promise'], function (exports, _globals, _metal, _dom, _Promise) {
+define("frontend-js-spa-web@1.0.2/senna/src/surface/Surface", ['exports', '../globals/globals', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-promise/src/promise/Promise'], function (exports, _globals, _metal, _dom, _Promise) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.0/metal-dom/src/events", ['./dom', './features'], function (_dom, _features) {
+define("frontend-js-spa-web@1.0.2/metal-dom/src/events", ['./dom', './features'], function (_dom, _features) {
 	'use strict';
 
 	var _dom2 = _interopRequireDefault(_dom);

@@ -87,7 +87,7 @@ AUI.add(
 										}
 									},
 									namespace: name,
-									onChangeMethod: A.bind(instance._onChangeEditor, instance),
+									onChangeMethod: A.bind(A.debounce(instance._onChangeEditor, 100), instance),
 									plugins: [],
 									textMode: false
 								}

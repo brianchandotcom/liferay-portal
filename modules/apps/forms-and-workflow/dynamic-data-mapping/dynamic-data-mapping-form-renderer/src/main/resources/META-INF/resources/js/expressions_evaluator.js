@@ -33,6 +33,10 @@ AUI.add(
 
 						var form = instance.get('form');
 
+						if (instance._request) {
+							instance._request.stop();
+						}
+
 						if (enabled && form && !instance.evaluating()) {
 							instance.fire('evaluationStarted');
 
@@ -76,7 +80,7 @@ AUI.add(
 
 						var form = instance.get('form');
 
-						A.io.request(
+						instance._request = A.io.request(
 							instance.get('evaluationURL'),
 							{
 								data: {
@@ -87,8 +91,11 @@ AUI.add(
 								dataType: 'JSON',
 								method: 'POST',
 								on: {
-									failure: function() {
-										callback.call(instance, null);
+									failure: function(event) {
+										if (event.details[1].statusText !== 'abort') {
+											callback.call(instance, null);
+										}
+										callback.call(instance, {});
 									},
 									success: function() {
 										var result = this.get('responseData');

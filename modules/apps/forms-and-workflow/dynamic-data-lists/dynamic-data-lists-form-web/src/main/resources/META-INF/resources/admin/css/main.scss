@@ -113,6 +113,10 @@ $horizontal-spacing: 35px;
 		outline: none;
 	}
 
+	.alloy-editor {
+		padding-right: 4px;
+	}
+
 	.form-builder-field-settings-content {
 		.form-group {
 			margin-bottom: 40px;
@@ -383,6 +387,12 @@ $horizontal-spacing: 35px;
 
 	.icon-asterisk {
 		margin-left: 4px;
+	}
+
+	.liferay-ddm-form-field-editor .form-control-feedback {
+		margin-top: -25px;
+		position: absolute;
+		z-index: 2;
 	}
 
 	.radio-inline {

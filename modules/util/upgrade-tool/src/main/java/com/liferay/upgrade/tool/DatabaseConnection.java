@@ -85,9 +85,17 @@ public class DatabaseConnection {
 		return _port;
 	}
 
+	public String getProtocol() {
+		return _protocol;
+	}
+
 	public String getUrl() {
 		return _protocol + _host + (_port > 0 ? ":" + _port : "") +
 			_databaseName + _params;
+	}
+
+	public void setClassName(String className) {
+		_className = className;
 	}
 
 	public void setDatabaseName(String databaseName) {
@@ -106,6 +114,10 @@ public class DatabaseConnection {
 		_port = port;
 	}
 
+	public void setProtocol(String protocol) {
+		_protocol = protocol;
+	}
+
 	private DatabaseConnection(
 		String className, String protocol, String host, int port,
 		String databaseName, String params) {
@@ -118,11 +130,11 @@ public class DatabaseConnection {
 		_params = params;
 	}
 
-	private final String _className;
+	private String _className;
 	private String _databaseName;
 	private String _host;
 	private String _params;
 	private int _port;
-	private final String _protocol;
+	private String _protocol;
 
 }

@@ -27,9 +27,10 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -46,8 +47,7 @@ import java.util.Set;
 public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	public DefaultTemplateResourceLoader(
-		String name, String[] templateResourceParserClassNames,
-		long modificationCheckInterval, MultiVMPool multiVMPool,
+		String name, long modificationCheckInterval, MultiVMPool multiVMPool,
 		SingleVMPool singleVMPool) {
 
 		if (Validator.isNull(name)) {
@@ -55,27 +55,12 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				"Template resource loader name is null");
 		}
 
-		if (templateResourceParserClassNames == null) {
-			throw new IllegalArgumentException(
-				"Template resource parser class names is null");
-		}
-
 		_name = name;
 
-		for (String templateResourceParserClassName :
-				templateResourceParserClassNames) {
+		_templateResourceParsers = ServiceTrackerCollections.openList(
+			TemplateResourceParser.class, "(lang.type=" + _name + ")");
 
-			try {
-				TemplateResourceParser templateResourceParser =
-					(TemplateResourceParser)InstanceFactory.newInstance(
-						templateResourceParserClassName);
-
-				_templateResourceParsers.add(templateResourceParser);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		_templateResourceParsers.open();
 
 		_modificationCheckInterval = modificationCheckInterval;
 
@@ -106,6 +91,15 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			cacheListener, PortalCacheListenerScope.ALL);
 	}
 
+	@Deprecated
+	public DefaultTemplateResourceLoader(
+		String name, String[] templateResourceParserClassNames,
+		long modificationCheckInterval, MultiVMPool multiVMPool,
+		SingleVMPool singleVMPool) {
+
+		this(name, modificationCheckInterval, multiVMPool, singleVMPool);
+	}
+
 	@Override
 	public void clearCache() {
 		_multiVMPortalCache.removeAll();
@@ -125,7 +119,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_singleVMPool.removePortalCache(
 			_singleVMPortalCache.getPortalCacheName());
 
-		_templateResourceParsers.clear();
+		_templateResourceParsers.close();
 	}
 
 	@Override
@@ -202,7 +196,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			return templateResourceParsers;
 		}
 
-		return _templateResourceParsers;
+		return new HashSet<>(_templateResourceParsers);
 	}
 
 	private TemplateResource _loadFromCache(
@@ -346,8 +340,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private final String _name;
 	private final SingleVMPool _singleVMPool;
 	private final PortalCache<String, TemplateResource> _singleVMPortalCache;
-	private final Set<TemplateResourceParser> _templateResourceParsers =
-		new HashSet<>();
+	private final ServiceTrackerList<TemplateResourceParser>
+		_templateResourceParsers;
 
 	private static class NullHolderTemplateResource
 		implements TemplateResource {

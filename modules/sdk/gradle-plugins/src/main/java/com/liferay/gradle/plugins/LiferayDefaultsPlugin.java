@@ -254,58 +254,81 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			"org.springframework", "spring-test", "3.2.15.RELEASE");
 	}
 
-	protected BaselineTask addTaskBaseline(
+	protected Task addTaskBaseline(
 		final Project project, final Configuration baselineConfiguration) {
 
-		GradleUtil.applyPlugin(project, ReportingBasePlugin.class);
+		Task task;
 
-		BaselineTask baselineTask = GradleUtil.addTask(
-			project, BASELINE_TASK_NAME, BaselineTask.class);
+		if (baselineConfiguration != null) {
+			GradleUtil.applyPlugin(project, ReportingBasePlugin.class);
 
-		final Jar jar = (Jar)GradleUtil.getTask(
-			project, JavaPlugin.JAR_TASK_NAME);
+			BaselineTask baselineTask = GradleUtil.addTask(
+				project, BASELINE_TASK_NAME, BaselineTask.class);
 
-		baselineTask.dependsOn(jar);
+			final Jar jar = (Jar)GradleUtil.getTask(
+				project, JavaPlugin.JAR_TASK_NAME);
 
-		baselineTask.setDescription(
+			baselineTask.dependsOn(jar);
+
+			baselineTask.setNewJarFile(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return jar.getArchivePath();
+					}
+
+				});
+
+			baselineTask.setOldJarFile(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return baselineConfiguration.getSingleFile();
+					}
+
+				});
+
+			baselineTask.setSourceDir(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						SourceSet sourceSet = GradleUtil.getSourceSet(
+							project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+						return GradleUtil.getSrcDir(sourceSet.getResources());
+					}
+
+				});
+
+			task = baselineTask;
+		}
+		else {
+			task = project.task(BASELINE_TASK_NAME);
+
+			task.doLast(
+				new Action<Task>() {
+
+					@Override
+					public void execute(Task task) {
+						if (_logger.isLifecycleEnabled()) {
+							_logger.lifecycle(
+								"Unable to baseline, " + project +
+									" has never been released.");
+						}
+					}
+
+				});
+		}
+
+		task.setDescription(
 			"Compares the public API of this project with the public API of " +
 				"the previous released version, if found.");
-		baselineTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
-		baselineTask.setNewJarFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return jar.getArchivePath();
-				}
-
-			});
-
-		baselineTask.setOldJarFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return baselineConfiguration.getSingleFile();
-				}
-
-			});
-
-		baselineTask.setSourceDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-					return GradleUtil.getSrcDir(sourceSet.getResources());
-				}
-
-			});
-
-		return baselineTask;
+		return task;
 	}
 
 	protected Copy addTaskCopyLibs(Project project) {
@@ -1264,18 +1287,20 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
+					Configuration baselineConfiguration = null;
+
+					if (hasBaseline(project)) {
+						baselineConfiguration = addConfigurationBaseline(
+							project);
+					}
+
+					addTaskBaseline(project, baselineConfiguration);
+
 					addTaskCopyLibs(project);
 					addTaskUpdateBundleVersion(project);
 					configureBundleDefaultInstructions(project, publishing);
 					configureDeployDir(project);
 					configureTaskJavadoc(project);
-
-					if (hasBaseline(project)) {
-						Configuration baselineConfiguration =
-							addConfigurationBaseline(project);
-
-						addTaskBaseline(project, baselineConfiguration);
-					}
 				}
 
 			});

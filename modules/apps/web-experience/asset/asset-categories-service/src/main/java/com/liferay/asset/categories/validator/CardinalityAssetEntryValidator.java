@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -26,18 +29,17 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.asset.util.AssetEntryValidator;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
  */
 @Component(
-	immediate = true,
-	property = {
-		"model.class.name=*"
-	},
+	immediate = true, property = {"model.class.name=*"},
 	service = AssetEntryValidator.class
 )
 public class CardinalityAssetEntryValidator implements AssetEntryValidator {
@@ -47,6 +49,17 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 			long groupId, String className, long classTypePK,
 			long[] categoryIds, String[] entryNames)
 		throws PortalException {
+
+		if (className.equals(DLFileEntryConstants.getClassName())) {
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				classTypePK);
+
+			if ((dlFileEntry == null) ||
+				(dlFileEntry.getRepositoryId() != groupId)) {
+
+				return;
+			}
+		}
 
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyLocalServiceUtil.getGroupVocabularies(
@@ -92,6 +105,13 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
 	protected void validate(
 			long classNameId, long classTypePK, final long[] categoryIds,
 			AssetVocabulary vocabulary)
@@ -117,5 +137,7 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 				vocabulary, AssetCategoryException.TOO_MANY_CATEGORIES);
 		}
 	}
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

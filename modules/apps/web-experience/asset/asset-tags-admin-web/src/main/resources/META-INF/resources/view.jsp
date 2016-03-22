@@ -55,7 +55,7 @@
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>"
 		/>
@@ -83,26 +83,74 @@
 			keyProperty="tagId"
 			modelVar="tag"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="content-column title-column name-column"
-				name="name"
-				truncate="<%= true %>"
-				value="<%= tag.getName() %>"
-			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="usages-column"
-				name="usages"
-				value="<%= String.valueOf(tag.getAssetCount()) %>"
-			/>
+			<c:choose>
+				<c:when test='<%= Validator.equals(assetTagsDisplayContext.getDisplayStyle(), "descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="tag"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/tag_action.jsp"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<%= tag.getName() %>
+						</h5>
+
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(tag.getAssetCount()) %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/tag_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetTagsDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/tag_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="tag"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= tag.getName() %>"
+						>
+							<liferay-frontend:vertical-card-footer>
+								<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(tag.getAssetCount()) %></span>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column title-column name-column"
+						name="name"
+						truncate="<%= true %>"
+						value="<%= tag.getName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="usages-column"
+						name="usages"
+						value="<%= String.valueOf(tag.getAssetCount()) %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/tag_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

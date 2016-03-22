@@ -14,26 +14,16 @@
 
 package com.liferay.source.formatter;
 
-import java.io.File;
-
 import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
-public class GroovySourceProcessor extends BaseSourceProcessor {
+public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
 	public String[] getIncludes() {
 		return _INCLUDES;
-	}
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
 	}
 
 	@Override

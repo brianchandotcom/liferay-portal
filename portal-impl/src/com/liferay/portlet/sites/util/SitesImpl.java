@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -250,6 +251,11 @@ public class SitesImpl implements Sites {
 		serviceContext.setAttribute(
 			"layoutPrototypeUuid", layoutPrototype.getUuid());
 
+		LayoutTypePortlet targetLayoutType =
+			(LayoutTypePortlet)targetLayout.getLayoutType();
+
+		List<String> targetLayoutPortletIds = targetLayoutType.getPortletIds();
+
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(), targetLayout.getParentLayoutId(),
@@ -269,6 +275,9 @@ public class SitesImpl implements Sites {
 		copyPortletSetups(layoutPrototypeLayout, targetLayout);
 
 		copyLookAndFeel(targetLayout, layoutPrototypeLayout);
+
+		deleteObsoletePortlets(
+			targetLayoutPortletIds, targetLayout, layoutPrototypeLayout);
 
 		targetLayout = LayoutLocalServiceUtil.getLayout(targetLayout.getPlid());
 
@@ -1995,6 +2004,24 @@ public class SitesImpl implements Sites {
 			groupId, privateLayout);
 
 		mergeLayoutSetPrototypeLayouts(group, layoutSet);
+	}
+
+	private void deleteObsoletePortlets(
+			List<String> targetLayoutPortletIds, Layout targetLayout,
+			Layout sourceLayout)
+		throws Exception {
+
+		LayoutTypePortlet sourceLayoutType =
+			(LayoutTypePortlet)sourceLayout.getLayoutType();
+
+		List<String> removePortletIds = new ArrayList<>(targetLayoutPortletIds);
+
+		removePortletIds.removeAll(sourceLayoutType.getPortletIds());
+
+		PortletLocalServiceUtil.deletePortlets(
+			targetLayout.getCompanyId(),
+			removePortletIds.toArray(new String[removePortletIds.size()]),
+			targetLayout.getPlid());
 	}
 
 	private static final String _TEMP_DIR =

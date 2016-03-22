@@ -345,6 +345,9 @@ public class UpgradeTool {
 				else if (lib.isDirectory()) {
 					_getLibs(classPath, lib);
 				}
+				else {
+					System.out.println("Skipping file: " + lib.getName());
+				}
 			}
 		}
 	}
@@ -426,42 +429,62 @@ public class UpgradeTool {
 				response = "mariadb";
 			}
 
-			DatabaseConnection database = databases.get(response);
+			DatabaseConnection databaseConnection = databases.get(response);
 
 			System.out.println(
-				"Please enter your database host (" + database.getHost() +
-					"):");
+				"Please enter your database JDBC driver protocol (" +
+					databaseConnection.getProtocol() + "):");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				database.setHost(response);
+				databaseConnection.setProtocol(response);
+			}
+
+			System.out.println(
+				"Please enter your database JDBC driver class name(" +
+					databaseConnection.getClassName() + "):");
+
+			response = _consoleReader.readLine();
+
+			if (!response.equals("")) {
+				databaseConnection.setClassName(response);
+			}
+
+			System.out.println(
+				"Please enter your database host (" +
+					databaseConnection.getHost() + "):");
+
+			response = _consoleReader.readLine();
+
+			if (!response.equals("")) {
+				databaseConnection.setHost(response);
 			}
 
 			System.out.println(
 				"Please enter your database port (" +
-					(database.getPort() > 0 ? database.getPort() : "none") +
-						"):");
+					(databaseConnection.getPort() > 0 ?
+						databaseConnection.getPort() : "none") + "):");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
 				if (response.equals("none")) {
-					database.setPort(0);
+					databaseConnection.setPort(0);
 				}
 				else {
-					database.setPort(Integer.parseInt(response));
+					databaseConnection.setPort(Integer.parseInt(response));
 				}
 			}
 
 			System.out.println(
 				"Please enter your database name (" +
-					database.getDatabaseName() + "):");
+					databaseConnection.getDatabaseName() + "):");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				database.setDatabaseName(response);
+				databaseConnection.setDatabaseName(response);
 			}
 
 			System.out.println("Please enter your database username: ");
@@ -473,9 +496,10 @@ public class UpgradeTool {
 			String password = _consoleReader.readLine();
 
 			_portalProperties.setProperty(
-				"jdbc.default.driverClassName", database.getClassName());
+				"jdbc.default.driverClassName",
+				databaseConnection.getClassName());
 			_portalProperties.setProperty(
-				"jdbc.default.url", database.getUrl());
+				"jdbc.default.url", databaseConnection.getUrl());
 			_portalProperties.setProperty("jdbc.default.username", username);
 			_portalProperties.setProperty("jdbc.default.password", password);
 		}

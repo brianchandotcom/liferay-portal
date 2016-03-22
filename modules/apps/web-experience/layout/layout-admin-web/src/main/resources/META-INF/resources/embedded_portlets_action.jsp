@@ -30,6 +30,7 @@ Portlet portlet = (Portlet)row.getObject();
 
 <liferay-ui:icon
 	icon="times"
+	linkCssClass="icon-monospaced text-default"
 	markupView="lexicon"
 	url="<%= deleteEmbeddedPortletsURL %>"
 />

@@ -72,7 +72,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -118,43 +118,77 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 				modelVar="portlet"
 			>
 
-				<liferay-ui:search-container-column-text
-					cssClass="content-column name-column title-column"
-					name="title"
-					truncate="<%= true %>"
-					value="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-				/>
+				<%
+				String status = StringPool.BLANK;
 
-				<liferay-ui:search-container-column-text
-					cssClass="content-column portlet-id-column"
-					name="portlet-id"
-					property="portletId"
-				/>
+				if (!portlet.isActive()) {
+					status = LanguageUtil.get(request, "inactive");
+				}
+				else if (!portlet.isReady()) {
+					status = LanguageUtil.format(request, "is-not-ready", "portlet");
+				}
+				else if (portlet.isUndeployedPortlet()) {
+					status = LanguageUtil.get(request, "undeployed");
+				}
+				else {
+					status = LanguageUtil.get(request, "active");
+				}
+				%>
 
-				<liferay-ui:search-container-column-text
-					cssClass="status-column text-column"
-					name="status"
-				>
-					<c:choose>
-						<c:when test="<%= !portlet.isActive() %>">
-							<liferay-ui:message key="inactive" />
-						</c:when>
-						<c:when test="<%= !portlet.isReady() %>">
-							<liferay-ui:message arguments="portlet" key="is-not-ready" />
-						</c:when>
-						<c:when test="<%= portlet.isUndeployedPortlet() %>">
-							<liferay-ui:message key="undeployed" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="active" />
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:search-container-column-text>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<liferay-ui:search-container-column-icon
+							icon="archive"
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/embedded_portlets_action.jsp"
-				/>
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
+							<h5>
+								<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+							</h5>
+
+							<h6 class="text-default">
+								<span><%= portlet.getPortletId() %></span>
+							</h6>
+
+							<h6 class="text-default">
+								<strong><liferay-ui:message key="status" /></strong>: <%= status %>
+							</h6>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-jsp
+							path="/embedded_portlets_action.jsp"
+						/>
+					</c:when>
+					<c:when test='<%= displayStyle.equals("list") %>'>
+						<liferay-ui:search-container-column-text
+							cssClass="content-column name-column title-column"
+							name="title"
+							truncate="<%= true %>"
+							value="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="content-column portlet-id-column"
+							name="portlet-id"
+							property="portletId"
+							truncate="<%= true %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="status-column text-column"
+							name="status"
+							value="<%= status %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action-column"
+							path="/embedded_portlets_action.jsp"
+						/>
+					</c:when>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="none" />

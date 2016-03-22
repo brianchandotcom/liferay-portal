@@ -39,7 +39,7 @@ PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 		/>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list", "icon"} %>'
+			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>

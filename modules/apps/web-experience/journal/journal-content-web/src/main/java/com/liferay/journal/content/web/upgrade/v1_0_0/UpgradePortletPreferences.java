@@ -16,12 +16,12 @@ package com.liferay.journal.content.web.upgrade.v1_0_0;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.ConcurrentUpgradePortletPreferences;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,8 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Julio Camarero
  */
-public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences
+	extends ConcurrentUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {

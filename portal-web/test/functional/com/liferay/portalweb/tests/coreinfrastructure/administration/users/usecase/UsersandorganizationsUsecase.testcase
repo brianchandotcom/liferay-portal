@@ -644,7 +644,7 @@
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Go to Control Panel" />
+			<var name="permissionDefinitionValue" value="View Control Panel Menu" />
 			<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
 			<var name="permissionNavigationValue" value="General Permissions" />
 			<var name="roleName" value="Authenticated" />
@@ -780,14 +780,14 @@
 			</execute>
 		</for>
 
-		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
-
-		<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
 
 		<for list="${siteNameList}" param="siteName" >
-			<execute macro="ProductMenuHelper#viewSite">
-				<var name="site" value="${siteName}" />
-			</execute>
+			<var name="key_siteName" value="${siteName}" />
+
+			<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 		</for>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -812,9 +812,6 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
-
-		<execute function="AssertVisible" locator1="ProductMenu#SITES_POPUP" />
 		<execute function="AssertTextPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Site Name H" />
 	</command>
 

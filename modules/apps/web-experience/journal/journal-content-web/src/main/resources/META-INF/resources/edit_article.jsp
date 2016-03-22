@@ -17,20 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-journalContentDisplayContext.clearCache();
+String editArticleURL = journalContentDisplayContext.getURLEdit();
+String windowId = HtmlUtil.escape(PortalUtil.getPortletId(request)) + "_editAsset";
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
-Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), referringPortletResource);
+Map<String, Object> data = new HashMap<String, Object>();
+data.put("id", windowId);
 %>
 
-<aui:script>
-	Liferay.fire(
-		'closeWindow',
-		{
-			id: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_editAsset',
-			portletAjaxable: <%= selPortlet.isAjaxable() %>,
-			refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
-		}
-	);
-</aui:script>
+<liferay-ui:icon
+	data="<%= data %>"
+	id="editWebContentIcon"
+	message="edit-web-content"
+	url="<%= editArticleURL %>"
+	useDialog="<%= true %>"
+/>

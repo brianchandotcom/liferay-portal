@@ -32,7 +32,7 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:actionURL>
 
-<aui:form action='<%= HttpUtil.addParameter(copyApplicationsURL, "refererPlid", plid) %>' name="fm_copyApplications">
+<aui:form action='<%= HttpUtil.addParameter(copyApplicationsURL, "refererPlid", plid) %>' name="copyApplicationsFm">
 	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>' />
 	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
@@ -65,7 +65,7 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 					function(event) {
 						popUp.hide();
 
-						var form = A.one('#<portlet:namespace />fm_copyApplications');
+						var form = A.one('#<portlet:namespace />copyApplicationsFm');
 
 						if (form) {
 							form.append(content);

@@ -814,6 +814,11 @@ public abstract class LiferayConverter {
 		int value = inputIContainer.seekKeyFrame(index, -1, 0);
 
 		if (value < 0) {
+			value = inputIContainer.seekKeyFrame(index, -1,
+				IContainer.SEEK_FLAG_BACKWARDS);
+		}
+
+		if (value < 0) {
 			throw new RuntimeException("Error while seeking file");
 		}
 

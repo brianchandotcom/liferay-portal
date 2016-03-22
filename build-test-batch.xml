@@ -1034,8 +1034,9 @@ ${output.content}</echo>
 	<target name="semantic-versioning-jdk7">
 		<run-batch-test>
 			<test-action>
-				<fileset dir="${project.dir}/baseline-reports" id="log.files">
-					<include name="*.log" />
+				<fileset dir="${project.dir}" id="log.files">
+					<include name="baseline-reports/*.log" />
+					<include name="modules/**/baseline.log" />
 				</fileset>
 
 				<pathconvert pathsep="," property="log.files" refid="log.files" />
@@ -1060,6 +1061,26 @@ ${output.content}</echo>
 				<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
 
 				<prepare-test-build />
+
+				<if>
+					<available file="${env.TOP_LEVEL_SHARED_DIR}/modules.base.dir.names.properties" />
+					<then>
+						<property file="${env.TOP_LEVEL_SHARED_DIR}/modules.base.dir.names.properties" />
+
+						<if>
+							<isset property="modules.base.dir.names.with.changes" />
+							<then>
+								<for list="${modules.base.dir.names.with.changes}" param="modules.base.dir.name">
+									<sequential>
+										<echo>Executing 'baseline' on '@{modules.base.dir.name}'</echo>
+
+										<gradle-execute dir="@{modules.base.dir.name}" task="baseline" />
+									</sequential>
+								</for>
+							</then>
+						</if>
+					</then>
+				</if>
 			</test-set-up>
 		</run-batch-test>
 	</target>

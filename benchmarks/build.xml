@@ -6,7 +6,7 @@
 	<target name="build-sample-sql">
 		<gradle-execute
 			dir="../modules/util/portal-tools-sample-sql-builder"
-			task="deploy"
+			task="jar"
 		/>
 
 		<path id="sample.sql.builder.classpath">

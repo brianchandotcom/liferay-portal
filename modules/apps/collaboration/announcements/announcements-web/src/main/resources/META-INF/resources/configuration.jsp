@@ -253,8 +253,6 @@ if (!roles.isEmpty()) {
 	customizeAnnouncementsDisplayedCheckbox.on(
 		'change',
 		function() {
-			var announcementsdisplayedPanel = A.one('#announcementsDisplayedPanel');
-
 			var announcementsDisplayed = form.one('#<portlet:namespace />announcementsDisplayed');
 
 			if (announcementsDisplayed) {

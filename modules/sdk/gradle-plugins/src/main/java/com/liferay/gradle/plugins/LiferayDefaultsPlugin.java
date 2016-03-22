@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -469,9 +470,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected Task addTaskPrintArtifactPublishCommands(
 		File gitRepoDir, final File portalRootDir,
+		final BuildChangeLogTask buildChangeLogTask,
 		final WritePropertiesTask recordArtifactTask, boolean testProject) {
 
-		final Project project = recordArtifactTask.getProject();
+		final Project project = buildChangeLogTask.getProject();
 
 		Task task = project.task(PRINT_ARTIFACT_PUBLISH_COMMANDS);
 
@@ -647,11 +649,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					commands.add(
 						_getGradleCommand(
-							gradleRelativePath,
-							ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME,
+							gradleRelativePath, buildChangeLogTask.getName(),
 							gradleDaemon));
 
-					commands.add("git add --all .");
+					commands.add(
+						"git add " +
+							project.relativePath(
+								buildChangeLogTask.getChangeLogFile()));
 
 					commands.add(
 						_getGitCommitCommand("change log", true, true));
@@ -734,7 +738,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return task;
 	}
 
-	protected WritePropertiesTask addTaskRecordArtifact(Project project) {
+	protected WritePropertiesTask addTaskRecordArtifact(
+		Project project, File destinationDir) {
+
 		final WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
 			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
 
@@ -789,7 +795,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		writePropertiesTask.setDescription(
 			"Records the commit ID and the artifact URLs.");
-		writePropertiesTask.setOutputFile("artifact.properties");
+		writePropertiesTask.setOutputFile(
+			new File(destinationDir, "artifact.properties"));
 
 		return writePropertiesTask;
 	}
@@ -976,7 +983,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
@@ -1229,10 +1235,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
-		final File gitRepoDir = getRootDir(project, ".gitrepo");
+		File gitRepoDir = getRootDir(project, ".gitrepo");
 		final File portalRootDir = getRootDir(
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
+		File relengDir = getRelengDir(project);
 		boolean testProject = isTestProject(project);
 
 		applyPlugins(project);
@@ -1258,13 +1265,25 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
-		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
-			project);
 
-		addTaskPrintArtifactPublishCommands(
-			gitRepoDir, portalRootDir, recordArtifactTask, testProject);
-		addTaskPrintStaleArtifact(
-			portalRootDir, recordArtifactTask, testProject);
+		if (relengDir != null) {
+			GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
+
+			BuildChangeLogTask buildChangeLogTask =
+				(BuildChangeLogTask)GradleUtil.getTask(
+					project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
+
+			WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
+				project, relengDir);
+
+			addTaskPrintArtifactPublishCommands(
+				gitRepoDir, portalRootDir, buildChangeLogTask,
+				recordArtifactTask, testProject);
+			addTaskPrintStaleArtifact(
+				portalRootDir, recordArtifactTask, testProject);
+			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
+			configureTaskProcessResources(buildChangeLogTask);
+		}
 
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project, gitRepoDir);
@@ -1344,7 +1363,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					// to know if we are publishing a snapshot or not.
 
 					configureTaskUploadArchives(
-						project, recordArtifactTask, updateFileVersionsTask);
+						project, updateFileVersionsTask);
 
 					if (hasPlugin(project, BundlePlugin.class)) {
 						configureProjectBndProperties(project);
@@ -1636,6 +1655,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
 	}
 
+	protected void configureTaskBuildChangeLog(
+		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
+
+		buildChangeLogTask.setChangeLogFile(
+			new File(destinationDir, "liferay-releng.changelog"));
+	}
+
 	protected void configureTaskEnabledIfStale(
 		Task task, WritePropertiesTask recordArtifactTask,
 		boolean testProject) {
@@ -1766,6 +1792,32 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			minimalJavadocOptions.setOverview(
 				project.relativePath(overviewFile));
 		}
+	}
+
+	protected void configureTaskProcessResources(
+		final BuildChangeLogTask buildChangeLogTask) {
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			buildChangeLogTask.getProject(),
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		copy.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildChangeLogTask.getChangeLogFile();
+				}
+
+			},
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("META-INF");
+				}
+
+			});
 	}
 
 	protected void configureTaskPublishNodeModule(
@@ -1904,8 +1956,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskUploadArchives(
-		Project project, WritePropertiesTask recordArtifactTask,
-		ReplaceRegexTask updateFileVersionsTask) {
+		Project project, ReplaceRegexTask updateFileVersionsTask) {
 
 		String version = String.valueOf(project.getVersion());
 
@@ -1916,9 +1967,14 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
-		uploadArchivesTask.dependsOn(recordArtifactTask);
-
 		TaskContainer taskContainer = project.getTasks();
+
+		Task recordArtifactTask = taskContainer.findByName(
+			RECORD_ARTIFACT_TASK_NAME);
+
+		if (recordArtifactTask != null) {
+			uploadArchivesTask.dependsOn(recordArtifactTask);
+		}
 
 		TaskCollection<PublishNodeModuleTask> publishNodeModuleTasks =
 			taskContainer.withType(PublishNodeModuleTask.class);
@@ -2091,6 +2147,18 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected String getProjectDependency(Project project) {
 		return "project(\"" + project.getPath() + "\")";
+	}
+
+	protected File getRelengDir(Project project) {
+		File relengDir = new File(project.getRootDir(), ".releng");
+
+		if (!relengDir.exists()) {
+			return null;
+		}
+
+		return new File(
+			relengDir,
+			FileUtil.relativize(project.getProjectDir(), project.getRootDir()));
 	}
 
 	protected File getRootDir(Project project, String markerFileName) {

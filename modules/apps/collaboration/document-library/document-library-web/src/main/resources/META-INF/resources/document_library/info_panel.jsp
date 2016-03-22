@@ -23,6 +23,10 @@ List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRA
 List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
 List<FileShortcut> fileShortcuts = (List<FileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
 
+Map<String, Object> infoPanelToggleData = new HashMap<String, Object>();
+
+infoPanelToggleData.put("toggle", liferayPortletResponse.getNamespace() + "infoPanelId");
+
 if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmpty(fileShortcuts)) {
 	long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"), ParamUtil.getLong(request, "folderId"));
 
@@ -109,6 +113,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 			<ul class="list-inline list-unstyled sidebar-header-actions">
 				<li>
 					<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
+				</li>
+				<li>
+					<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" data="<%= infoPanelToggleData %>" image="times" markupView="lexicon" url="javascript:;" />
 				</li>
 			</ul>
 
@@ -275,6 +282,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				<li>
 					<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
 				</li>
+				<li>
+					<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" data="<%= infoPanelToggleData %>" image="times" markupView="lexicon" url="javascript:;" />
+				</li>
 			</ul>
 
 			<h4><%= HtmlUtil.escape(fileShortcut.getToTitle()) %></h4>
@@ -362,7 +372,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></h4>
+			<ul class="list-inline list-unstyled">
+				<li>
+					<h4><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></h4>
+				</li>
+				<li>
+					<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" data="<%= infoPanelToggleData %>" image="times" markupView="lexicon" url="javascript:;" />
+				</li>
+			</ul>
 		</div>
 
 		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">

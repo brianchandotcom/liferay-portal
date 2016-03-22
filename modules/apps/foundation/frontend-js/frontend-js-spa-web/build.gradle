@@ -32,6 +32,7 @@ cache {
 		skipTaskDependency transpileJS
 
 		testFile "build.gradle"
+		testFile "package.json"
 		testFile fileTree(dir: "src/main/resources/META-INF/resources", exclude: "**/*.jsp")
 	}
 }

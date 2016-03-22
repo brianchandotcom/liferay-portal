@@ -68,35 +68,43 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 
 			<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
 
-			<div>
-				<liferay-ui:message key="folder" />
-			</div>
+			<h5 class="text-default">
+				<span>
+					<liferay-ui:message key="folder" />
+				</span>
+			</h5>
 		</div>
 
 		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
 			<liferay-ui:section>
 				<div class="sidebar-body">
-					<h5><strong><liferay-ui:message key="num-of-items" /></strong></h5>
+					<dl>
+						<dt class="h5">
+							<liferay-ui:message key="num-of-items" />
+						</dt>
 
-					<%
-					long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+						<%
+						long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-					if (folder != null) {
-						folderId = folder.getFolderId();
-					}
-					%>
+						if (folder != null) {
+							folderId = folder.getFolderId();
+						}
+						%>
 
-					<p>
-						<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
-					</p>
+						<dd>
+							<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
+						</dd>
 
-					<c:if test="<%= folder != null %>">
-						<h5><strong><liferay-ui:message key="created" /></strong></h5>
+						<c:if test="<%= folder != null %>">
+							<dt class="h5">
+								<liferay-ui:message key="created" />
+							</dt>
 
-						<p>
-							<%= HtmlUtil.escape(folder.getUserName()) %>
-						</p>
-					</c:if>
+							<dd>
+								<%= HtmlUtil.escape(folder.getUserName()) %>
+							</dd>
+						</c:if>
+					</dl>
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
@@ -121,9 +129,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 
 			<h4><%= fileEntry.getTitle() %></h4>
 
-			<div>
-				<liferay-ui:message key="document" />
-			</div>
+			<h5 class="text-default">
+				<span>
+					<liferay-ui:message key="document" />
+				</span>
+			</h5>
 		</div>
 
 		<liferay-ui:tabs names="details,versions" refresh="<%= false %>" type="dropdown">
@@ -169,39 +179,51 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL" type="resource" value="<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
 					</c:if>
 
-					<h5><strong><liferay-ui:message key="created" /></strong></h5>
+					<dl>
+						<dt class="h5">
+							<liferay-ui:message key="created" />
+						</dt>
 
-					<p>
-						<%= HtmlUtil.escape(fileEntry.getUserName()) %>
-					</p>
+						<dd>
+							<%= HtmlUtil.escape(fileEntry.getUserName()) %>
+						</dd>
 
-					<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
-						<h5><strong><liferay-ui:message key="description" /></strong></h5>
+						<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+							<dt class="h5">
+								<liferay-ui:message key="description" />
+							</dt>
 
-						<p>
-							<%= fileEntry.getDescription() %>
-						</p>
-					</c:if>
+							<dd>
+								<%= fileEntry.getDescription() %>
+							</dd>
+						</c:if>
 
-					<h5><strong><liferay-ui:message key="size" /></strong></h5>
+						<dt class="h5">
+							<liferay-ui:message key="size" />
+						</dt>
 
-					<p>
-						<%= HtmlUtil.escape(TextFormatter.formatStorageSize(fileEntry.getSize(), locale)) %>
-					</p>
+						<dd>
+							<%= HtmlUtil.escape(TextFormatter.formatStorageSize(fileEntry.getSize(), locale)) %>
+						</dd>
 
-					<c:if test="<%= Validator.isNotNull(fileVersion.getExtension()) %>">
-						<h5><strong><liferay-ui:message key="extension" /></strong></h5>
+						<c:if test="<%= Validator.isNotNull(fileVersion.getExtension()) %>">
+							<dt class="h5">
+								<liferay-ui:message key="extension" />
+							</dt>
 
-						<p>
-							<%= HtmlUtil.escape(fileVersion.getExtension()) %>
-						</p>
-					</c:if>
+							<dd>
+								<%= HtmlUtil.escape(fileVersion.getExtension()) %>
+							</dd>
+						</c:if>
 
-					<h5><strong><liferay-ui:message key="version" /></strong></h5>
+						<dt class="h5">
+							<liferay-ui:message key="version" />
+						</dt>
 
-					<p>
-						<%= HtmlUtil.escape(fileVersion.getVersion()) %>
-					</p>
+						<dd>
+							<%= HtmlUtil.escape(fileVersion.getVersion()) %>
+						</dd>
+					</dl>
 
 					<%
 					long assetClassPK = 0;
@@ -289,9 +311,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 
 			<h4><%= HtmlUtil.escape(fileShortcut.getToTitle()) %></h4>
 
-			<div>
-				<liferay-ui:message key="shortcut" />
-			</div>
+			<h5 class="text-default">
+				<span>
+					<liferay-ui:message key="shortcut" />
+				</span>
+			</h5>
 		</div>
 
 		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
@@ -302,70 +326,93 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 					FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 					%>
 
-					<h5><strong><liferay-ui:message key="description" /></strong></h5>
+					<dl>
+						<dt class="h5">
+							<liferay-ui:message key="description" />
+						</dt>
 
-					<p><%= HtmlUtil.escape(fileEntry.getDescription()) %></p>
-
-					<%
-					Group fileEntryGroup = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
-
-					Group fileEntrySiteGroup = fileEntryGroup;
-
-					while ((fileEntrySiteGroup != null) && !fileEntrySiteGroup.isSite()) {
-						fileEntrySiteGroup = fileEntrySiteGroup.getParentGroup();
-					}
-					%>
-
-					<c:if test="<%= fileEntrySiteGroup != null %>">
-						<h5><strong><liferay-ui:message key="target-site" /></strong></h5>
-
-						<p><%= HtmlUtil.escape(fileEntrySiteGroup.getName(locale)) %></p>
-					</c:if>
-
-					<h5><strong><liferay-ui:message key="target-folder" /></strong></h5>
-
-					<p>
+						<dd>
+							<%= HtmlUtil.escape(fileEntry.getDescription()) %>
+						</dd>
 
 						<%
-						Folder folder = fileEntry.getFolder();
+						Group fileEntryGroup = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+
+						Group fileEntrySiteGroup = fileEntryGroup;
+
+						while ((fileEntrySiteGroup != null) && !fileEntrySiteGroup.isSite()) {
+							fileEntrySiteGroup = fileEntrySiteGroup.getParentGroup();
+						}
 						%>
 
-						<portlet:renderURL var="targetFolderURL">
-							<portlet:param name="mvcRenderCommand" value="/document_library/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-						</portlet:renderURL>
+						<c:if test="<%= fileEntrySiteGroup != null %>">
+							<dt class="h5">
+								<liferay-ui:message key="target-site" />
+							</dt>
 
-						<a href="<%= targetFolderURL %>">
-							<c:choose>
-								<c:when test="<%= folder.getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-									<liferay-ui:message key="home" />
-								</c:when>
-								<c:otherwise>
-									<%= HtmlUtil.escape(folder.getName()) %>
-								</c:otherwise>
-							</c:choose>
-						</a>
-					</p>
+							<dd>
+								<%= HtmlUtil.escape(fileEntrySiteGroup.getName(locale)) %>
+							</dd>
+						</c:if>
 
-					<h5><strong><liferay-ui:message key="size" /></strong></h5>
+						<dt class="h5">
+							<liferay-ui:message key="target-folder" />
+						</dt>
 
-					<p><%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %></p>
+						<dd>
 
-					<c:if test="<%= fileEntry.getModel() instanceof DLFileEntry %>">
+							<%
+							Folder folder = fileEntry.getFolder();
+							%>
 
-						<%
-						DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-						DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
-						%>
+							<portlet:renderURL var="targetFolderURL">
+								<portlet:param name="mvcRenderCommand" value="/document_library/view" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+							</portlet:renderURL>
 
-						<h5><strong><liferay-ui:message key="document-type" /></strong></h5>
+							<a href="<%= targetFolderURL %>">
+								<c:choose>
+									<c:when test="<%= folder.getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+										<liferay-ui:message key="home" />
+									</c:when>
+									<c:otherwise>
+										<%= HtmlUtil.escape(folder.getName()) %>
+									</c:otherwise>
+								</c:choose>
+							</a>
+						</dd>
 
-						<p><%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %></p>
-					</c:if>
+						<dt class="h5">
+							<liferay-ui:message key="size" />
+						</dt>
 
-					<h5><strong><liferay-ui:message key="content-type" /></strong></h5>
+						<dd>
+							<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>
+						</dd>
 
-					<p><%= HtmlUtil.escape(fileEntry.getMimeType()) %></p>
+						<c:if test="<%= fileEntry.getModel() instanceof DLFileEntry %>">
+
+							<%
+							DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+							DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
+							%>
+
+							<dt class="h5">
+								<liferay-ui:message key="document-type" />
+							</dt>
+
+							<dd>
+								<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>
+							</dd>
+						</c:if>
+
+						<dt class="h5">
+							<liferay-ui:message key="content-type" />
+						</dt>
+
+						<dd>
+							<%= HtmlUtil.escape(fileEntry.getMimeType()) %>
+						</dd>>
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
@@ -385,7 +432,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
 			<liferay-ui:section>
 				<div class="sidebar-body">
-					<h5><strong><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></strong></h5>
+					<h5 class="text-default">
+						<span>
+							<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" />
+						</span>
+					</h5>
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>

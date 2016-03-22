@@ -67,7 +67,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive", "list"} %>'
+				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
@@ -127,6 +127,22 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 						<h6 class="text-default">
 							<%= ruleGroup.getDescription(locale) %>
 						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							cssClass='<%= (ruleGroupInstance == null) ? "selector-button" : StringPool.BLANK %>'
+							data="<%= data %>"
+							icon="mobile-portrait"
+							subtitle="<%= ruleGroup.getDescription(locale) %>"
+							title="<%= ruleGroup.getName(locale) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>

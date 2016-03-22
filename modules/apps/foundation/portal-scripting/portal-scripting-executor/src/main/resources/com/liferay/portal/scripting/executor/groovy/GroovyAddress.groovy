@@ -35,8 +35,8 @@ class GroovyAddress {
 
 	GroovyAddress(
 		long userId_, String className_, long classPK_, String street1_,
-		String city_, String zip_, long regionId_, long countryId_,
-		int typeId_, boolean mailing_, boolean primary_) {
+		String city_, String zip_, long regionId_, long countryId_, int typeId_,
+		boolean mailing_, boolean primary_) {
 
 		userId = userId_;
 		className = className_;

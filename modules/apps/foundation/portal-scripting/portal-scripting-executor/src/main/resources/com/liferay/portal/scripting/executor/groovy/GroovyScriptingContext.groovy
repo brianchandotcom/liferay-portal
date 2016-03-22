@@ -14,9 +14,9 @@
 
 package com.liferay.portal.scripting.executor.groovy;
 
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 class GroovyScriptingContext {
 
 	static Map<Locale, String> getLocalizationMap(String value) {
-		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
+		Map<Locale, String> localizationMap = new HashMap<>();
 
 		localizationMap.put(LocaleUtil.getDefault(), value);
 

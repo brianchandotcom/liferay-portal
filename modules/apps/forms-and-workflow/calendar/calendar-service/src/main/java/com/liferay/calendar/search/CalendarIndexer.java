@@ -15,7 +15,9 @@
 package com.liferay.calendar.search;
 
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -29,7 +31,9 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -140,6 +145,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), calendar.getCompanyId(), document,
 			isCommitImmediately());
+
+		reindexCalendarBookings(calendar);
 	}
 
 	@Override
@@ -154,6 +161,18 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexCalendars(companyId);
+	}
+
+	protected void reindexCalendarBookings(Calendar calendar)
+		throws SearchException {
+
+		List<CalendarBooking> calendarBookings =
+			_calendarBookingLocalService.getCalendarBookings(
+				calendar.getCalendarId());
+		Indexer<CalendarBooking> indexer = this._indexerRegistry.getIndexer(
+			CalendarBooking.class);
+
+		indexer.reindex(calendarBookings);
 	}
 
 	protected void reindexCalendars(long companyId) throws PortalException {
@@ -189,15 +208,29 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setCalendarLocalService(
 		CalendarLocalService calendarLocalService) {
 
 		_calendarLocalService = calendarLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarIndexer.class);
 
+	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarLocalService _calendarLocalService;
+	private IndexerRegistry _indexerRegistry;
 
 }

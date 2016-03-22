@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnablesExecutorUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
@@ -52,6 +54,9 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Julio Camarero
  */
@@ -68,39 +73,79 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		upgrade(UpgradeKernelPackage.class);
 
-		upgrade(UpgradeAddress.class);
-		upgrade(UpgradeAsset.class);
-		upgrade(UpgradeAssetTagsResourcePermission.class);
-		upgrade(UpgradeCompanyId.class);
-		upgrade(UpgradeDocumentLibrary.class);
-		upgrade(UpgradeDocumentLibraryPortletId.class);
-		upgrade(UpgradeDocumentLibraryPreferences.class);
-		upgrade(UpgradeEmailAddress.class);
-		upgrade(UpgradeEmailNotificationPreferences.class);
-		upgrade(UpgradeExpando.class);
-		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeLastPublishDate.class);
-		upgrade(UpgradeListType.class);
-		upgrade(UpgradeLookAndFeel.class);
-		upgrade(UpgradeMembershipRequest.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeModules.class);
-		upgrade(UpgradeOrganization.class);
-		upgrade(UpgradeOrgLabor.class);
-		upgrade(UpgradePhone.class);
-		upgrade(UpgradePortalPreferences.class);
-		upgrade(UpgradePortletDisplayTemplatePreferences.class);
-		upgrade(UpgradePortletId.class);
-		upgrade(UpgradePostgreSQL.class);
-		upgrade(UpgradeRatings.class);
-		upgrade(UpgradeRelease.class);
-		upgrade(UpgradeRepository.class);
-		upgrade(UpgradeRepositoryEntry.class);
-		upgrade(UpgradeResourcePermission.class);
-		upgrade(UpgradeSharding.class);
-		upgrade(UpgradeSocial.class);
-		upgrade(UpgradeSubscription.class);
-		upgrade(UpgradeWebsite.class);
+		List<ThrowableAwareRunnable> throwableAwareRunnables =
+			new ArrayList<>();
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeAsset.class);
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeExpando.class);
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeLookAndFeel.class);
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeAddress.class);
+					upgrade(UpgradeAssetTagsResourcePermission.class);
+					upgrade(UpgradeCompanyId.class);
+					upgrade(UpgradeDocumentLibrary.class);
+					upgrade(UpgradeDocumentLibraryPortletId.class);
+					upgrade(UpgradeDocumentLibraryPreferences.class);
+					upgrade(UpgradeEmailAddress.class);
+					upgrade(UpgradeEmailNotificationPreferences.class);
+					upgrade(UpgradeGroup.class);
+					upgrade(UpgradeLastPublishDate.class);
+					upgrade(UpgradeListType.class);
+					upgrade(UpgradeMembershipRequest.class);
+					upgrade(UpgradeMessageBoards.class);
+					upgrade(UpgradeModules.class);
+					upgrade(UpgradeOrganization.class);
+					upgrade(UpgradeOrgLabor.class);
+					upgrade(UpgradePhone.class);
+					upgrade(UpgradePortalPreferences.class);
+					upgrade(UpgradePortletDisplayTemplatePreferences.class);
+					upgrade(UpgradePortletId.class);
+					upgrade(UpgradePostgreSQL.class);
+					upgrade(UpgradeRatings.class);
+					upgrade(UpgradeRelease.class);
+					upgrade(UpgradeRepository.class);
+					upgrade(UpgradeRepositoryEntry.class);
+					upgrade(UpgradeResourcePermission.class);
+					upgrade(UpgradeSharding.class);
+					upgrade(UpgradeSocial.class);
+					upgrade(UpgradeSubscription.class);
+					upgrade(UpgradeWebsite.class);
+				}
+
+			});
+
+		ThrowableAwareRunnablesExecutorUtil.execute(throwableAwareRunnables);
 
 		clearIndexesCache();
 	}

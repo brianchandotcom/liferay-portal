@@ -89,12 +89,19 @@ define("frontend-js-spa-web@1.0.0/liferay/screen/EventScreen.es", ['exports', 'm
 			});
 		};
 
+		EventScreen.prototype.beforeScreenFlip = function beforeScreenFlip() {
+			Liferay.fire('beforeScreenFlip', {
+				app: Liferay.SPA.app,
+				screen: this
+			});
+		};
+
 		EventScreen.prototype.flip = function flip(surfaces) {
 			var _this2 = this;
 
 			document.body.className = this.virtualDocument.querySelector('body').className;
 
-			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
+			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_Promise.CancellablePromise.resolve(this.beforeScreenFlip())).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,
 					screen: _this2

@@ -26,8 +26,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Provides the local service for accessing, adding, deleting, and updating
- * dynamic data list (DDL) record versions.
+ * Provides the local service for accessing dynamic data list (DDL) record
+ * versions.
  *
  * @author Marcellus Tavares
  */
@@ -35,10 +35,11 @@ public class DDLRecordVersionLocalServiceImpl
 	extends DDLRecordVersionLocalServiceBaseImpl {
 
 	/**
-	 * Returns a record's latest record version.
+	 * Returns the record's latest record version.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the latest record version for the given record
+	 * @throws PortalException
 	 */
 	@Override
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
@@ -61,7 +62,7 @@ public class DDLRecordVersionLocalServiceImpl
 	}
 
 	/**
-	 * Returns a record version with the ID.
+	 * Returns the record version by its ID.
 	 *
 	 * @param  recordVersionId the primary key of the record version
 	 * @return the record version with the ID
@@ -91,23 +92,22 @@ public class DDLRecordVersionLocalServiceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all record versions matching the record.
+	 * Returns an ordered range of record versions matching the record's ID.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
+	 * and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	 * full result set.
 	 * </p>
 	 *
 	 * @param  recordId the primary key of the record
 	 * @param  start the lower bound of the range of record versions to return
 	 * @param  end the upper bound of the range of record versions to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator to order the record versions
+	 * @param  orderByComparator the comparator used to order the record versions
 	 * @return the range of matching record versions ordered by the comparator
 	 */
 	@Override
@@ -120,7 +120,7 @@ public class DDLRecordVersionLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of record versions matching the record.
+	 * Returns the number of record versions matching the record ID.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the number of matching record versions

@@ -92,7 +92,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -136,10 +136,43 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 				<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
 			</liferay-portlet:renderURL>
 
-			<%@ include file="/rule_columns.jspf" %>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="mobile-portrait"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - rule.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</h6>
+
+						<h5>
+							<aui:a href="<%= rowURL.toString() %>"><%= rule.getName(locale) %></aui:a>
+						</h5>
+
+						<h6 class="text-default">
+							<%= rule.getDescription(locale) %>
+						</h6>
+
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="type" /></strong>: <%= rule.getType() %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/rule_actions.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<%@ include file="/rule_columns.jspf" %>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
 	</liferay-ui:search-container>
 </div>
 

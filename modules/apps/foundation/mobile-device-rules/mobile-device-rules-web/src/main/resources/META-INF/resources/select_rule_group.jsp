@@ -67,7 +67,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
+				displayViews='<%= new String[] {"descriptive", "list"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
@@ -93,45 +93,71 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			modelVar="ruleGroup"
 		>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
-				name="name"
-				truncate="<%= true %>"
-			>
+			<%
+			MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
 
-				<%
-				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
-				%>
+			Map<String, Object> data = new HashMap<String, Object>();
 
-				<c:choose>
-					<c:when test="<%= ruleGroupInstance == null %>">
+			data.put("rulegroupid", ruleGroup.getRuleGroupId());
+			data.put("rulegroupname", ruleGroup.getName());
+			%>
 
-						<%
-						Map<String, Object> data = new HashMap<String, Object>();
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="mobile-portrait"
+					/>
 
-						data.put("rulegroupid", ruleGroup.getRuleGroupId());
-						data.put("rulegroupname", ruleGroup.getName());
-						%>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<c:choose>
+								<c:when test="<%= ruleGroupInstance == null %>">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= ruleGroup.getName(locale) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= ruleGroup.getName(locale) %>
+								</c:otherwise>
+							</c:choose>
+						</h5>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= ruleGroup.getName(locale) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= ruleGroup.getName(locale) %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+						<h6 class="text-default">
+							<%= ruleGroup.getDescription(locale) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						truncate="<%= true %>"
+					>
+						<c:choose>
+							<c:when test="<%= ruleGroupInstance == null %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= ruleGroup.getName(locale) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= ruleGroup.getName(locale) %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column description-column"
-				name="description"
-				truncate="<%= true %>"
-				value="<%= ruleGroup.getDescription(locale) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
+						name="description"
+						truncate="<%= true %>"
+						value="<%= ruleGroup.getDescription(locale) %>"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" type="more" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
 	</liferay-ui:search-container>
 </aui:form>
 

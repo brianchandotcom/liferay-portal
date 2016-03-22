@@ -94,7 +94,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.friendly-url-mapping=private_messaging",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.icon=/icons/private_messaging.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",

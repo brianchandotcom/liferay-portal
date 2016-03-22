@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.css-class-wrapper=contacts-portlet",
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.icon=/icon.png",
+		"com.liferay.portlet.icon=/icons/contacts_center.png",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=Profile",
 		"javax.portlet.expiration-cache=0",

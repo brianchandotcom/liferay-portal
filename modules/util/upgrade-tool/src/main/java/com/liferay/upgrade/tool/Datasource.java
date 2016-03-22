@@ -17,10 +17,10 @@ package com.liferay.upgrade.tool;
 /**
  * @author David Truong
  */
-public class DatabaseConnection {
+public class Datasource {
 
-	public static DatabaseConnection getDB2Connection() {
-		return new DatabaseConnection(
+	public static Datasource getDB2Connection() {
+		return new Datasource(
 			"com.ibm.db2.jcc.DB2Driver", "jdbc:db2://", "localhost", 50000,
 			"/lportal",
 			":deferPrepares=false;fullyMaterializeInputStreams=true;" +
@@ -28,16 +28,16 @@ public class DatabaseConnection {
 					"progressiveStreaming=2;");
 	}
 
-	public static DatabaseConnection getMariaDBConnection() {
-		return new DatabaseConnection(
+	public static Datasource getMariaDBConnection() {
+		return new Datasource(
 			"org.mariadb.jdbc.Driver", "jdbc:mariadb://", "localhost", 0,
 			"/lportal",
 			"?useUnicode=true&characterEncoding=UTF-8" +
 				"&useFastDateParsing=false");
 	}
 
-	public static DatabaseConnection getMySQLConnection() {
-		return new DatabaseConnection(
+	public static Datasource getMySQLConnection() {
+		return new Datasource(
 			"com.mysql.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
 			"/lportal",
 			"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
@@ -45,26 +45,26 @@ public class DatabaseConnection {
 					"&useFastDateParsing=false&useUnicode=true");
 	}
 
-	public static DatabaseConnection getOracleConnection() {
-		return new DatabaseConnection(
+	public static Datasource getOracleConnection() {
+		return new Datasource(
 			"oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@", "localhost", 1521,
 			":xe", "");
 	}
 
-	public static DatabaseConnection getPostgreSQLConnection() {
-		return new DatabaseConnection(
+	public static Datasource getPostgreSQLConnection() {
+		return new Datasource(
 			"org.postgresql.Driver", "jdbc:postgresql://", "localhost", 5432,
 			"/lportal", "");
 	}
 
-	public static DatabaseConnection getSQLServerConnection() {
-		return new DatabaseConnection(
+	public static Datasource getSQLServerConnection() {
+		return new Datasource(
 			"com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://",
 			"localhost", 0, "/lportal", "");
 	}
 
-	public static DatabaseConnection getSybaseConnection() {
-		return new DatabaseConnection(
+	public static Datasource getSybaseConnection() {
+		return new Datasource(
 			"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:", "localhost",
 			5000, "/lportal", "");
 	}
@@ -118,7 +118,7 @@ public class DatabaseConnection {
 		_protocol = protocol;
 	}
 
-	private DatabaseConnection(
+	private Datasource(
 		String className, String protocol, String host, int port,
 		String databaseName, String params) {
 

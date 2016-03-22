@@ -421,12 +421,12 @@ public class UpgradeTool {
 				System.out.println(name);
 			}
 
-			System.out.println("Please enter your database (mariadb): ");
+			System.out.println("Please enter your database (mysql): ");
 
 			response = _consoleReader.readLine();
 
 			if (response.equals("")) {
-				response = "mariadb";
+				response = "mysql";
 			}
 
 			DatabaseConnection databaseConnection = databases.get(response);

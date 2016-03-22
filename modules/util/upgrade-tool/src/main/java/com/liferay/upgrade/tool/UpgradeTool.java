@@ -51,33 +51,6 @@ public class UpgradeTool {
 
 	public static final String JAVA_HOME = System.getenv("JAVA_HOME");
 
-	public static final Map<String, AppServer> appServers =
-		new LinkedHashMap<>();
-	public static final Map<String, DatabaseConnection> databases =
-		new LinkedHashMap<>();
-
-	static {
-		databases.put("db2", DatabaseConnection.getDB2Connection());
-		databases.put("mariadb", DatabaseConnection.getMariaDBConnection());
-		databases.put("mysql", DatabaseConnection.getMySQLConnection());
-		databases.put("oracle", DatabaseConnection.getOracleConnection());
-		databases.put(
-			"postgresql", DatabaseConnection.getPostgreSQLConnection());
-		databases.put("sqlserver", DatabaseConnection.getSQLServerConnection());
-		databases.put("sybase", DatabaseConnection.getSybaseConnection());
-	}
-
-	static {
-		appServers.put("jboss", AppServer.getJBossEAP());
-		appServers.put("jonas", AppServer.getJOnAS());
-		appServers.put("resin", AppServer.getResin());
-		appServers.put("tcserver", AppServer.getTCServer());
-		appServers.put("tomcat", AppServer.getTomcat());
-		appServers.put("weblogic", AppServer.getWeblogic());
-		appServers.put("websphere", AppServer.getWebsphere());
-		appServers.put("wildfly", AppServer.getWildfly());
-	}
-
 	public static void main(String[] args) {
 		try {
 			Options options = _getOptions();
@@ -142,21 +115,26 @@ public class UpgradeTool {
 	public UpgradeTool(String jvmOpts, File logFile) throws Exception {
 		_consoleReader = new ConsoleReader();
 
-		_portalPropertiesFile = new File("portal-ext.properties");
+		_datasourcePropertiesFile = new File(
+			"portal-upgrade-datasource.properties");
 
-		_portalProperties = new Properties();
+		_datasourceProperties = new Properties();
 
-		if (_portalPropertiesFile.exists()) {
+		if (_datasourcePropertiesFile.exists()) {
 			try (
 				InputStream inputStream =
-					new FileInputStream(_portalPropertiesFile)) {
+					new FileInputStream(_datasourcePropertiesFile)) {
 
-				_portalProperties.load(inputStream);
+				_datasourceProperties.load(inputStream);
 			}
 			catch (IOException ioe) {
-				System.err.println("Could not load portal-ext.properties");
+				System.err.println("Could not load server.properties");
 			}
 		}
+
+		_jvmOpts = jvmOpts;
+
+		_logFile = logFile;
 
 		_serverPropertiesFile = new File("server.properties");
 
@@ -174,9 +152,22 @@ public class UpgradeTool {
 			}
 		}
 
-		_jvmOpts = jvmOpts;
+		_upgradePropertiesFile = new File("portal-upgrade-ext.properties");
 
-		_logFile = logFile;
+		_upgradeProperties = new Properties();
+
+		if (_upgradePropertiesFile.exists()) {
+			try (
+				InputStream inputStream =
+					new FileInputStream(_upgradePropertiesFile)) {
+
+				_upgradeProperties.load(inputStream);
+			}
+			catch (IOException ioe) {
+				System.err.println(
+					"Could not load portal-upgrade-ext.properties");
+			}
+		}
 	}
 
 	public void upgrade() throws Exception {
@@ -197,6 +188,7 @@ public class UpgradeTool {
 		}
 
 		commands.addAll(Arrays.asList(_jvmOpts.split(" ")));
+		commands.add("-Dexternal-properties=portal-upgrade.properties");
 		commands.add("-cp");
 		commands.add(classPath);
 		commands.add("com.liferay.portal.tools.DBUpgrader");
@@ -233,49 +225,61 @@ public class UpgradeTool {
 			ioe.printStackTrace();
 		}
 
-		try (GogoTelnetClient client = new GogoTelnetClient()) {
-			System.out.println("You are now connected to Gogo Shell");
+		boolean upgrading = true;
 
-			_printHelp();
+		while (upgrading) {
+			try (GogoTelnetClient client = new GogoTelnetClient()) {
+				System.out.println("You are now connected to Gogo Shell");
 
-			_consoleReader.setPrompt("g! ");
+				_printHelp();
 
-			String line;
+				_consoleReader.setPrompt("g! ");
 
-			while ((line = _consoleReader.readLine()) != null) {
-				if (line.equals("exit") || line.equals("quit")) {
-					break;
+				String line;
+
+				while ((line = _consoleReader.readLine()) != null) {
+					if (line.equals("exit") || line.equals("quit")) {
+						break;
+					}
+					else if (line.equals("upgrade:help")) {
+						_printHelp();
+					}
+					else {
+						System.out.println(client.send(line));
+					}
 				}
-				else if (line.equals("help")) {
-					_printHelp();
-				}
-				else {
-					System.out.println(client.send(line));
-				}
-			}
 
-			System.out.print(
-				"Making sure all upgrades steps have been completed");
-
-			boolean upgrading = true;
-
-			while (upgrading) {
-				System.out.print("...");
+				System.out.print(
+					"Making sure all upgrades steps have been completed");
 
 				String upgradeSteps = client.send(
 					"upgrade:list | grep Registered | grep step");
 
 				upgrading = upgradeSteps.contains("true");
+
+				if (upgrading) {
+					System.out.println(
+						"...one of your upgrades is still running or failed");
+					System.out.println("Are you sure you want to exit (y/N)?");
+
+					_consoleReader.setPrompt("");
+
+					String response = _consoleReader.readLine();
+
+					if (response.equals("y")) {
+						upgrading = false;
+					}
+				}
+				else {
+					System.out.println("...done.");
+				}
 			}
-
-			System.out.println("done.");
-
-			System.out.println("Exiting Gogo Shell");
-
+			catch (Exception e) {
+				upgrading = false;
+			}
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
+
+		System.out.println("Exiting Gogo Shell");
 
 		process.getInputStream().close();
 		process.getOutputStream().close();
@@ -286,9 +290,11 @@ public class UpgradeTool {
 
 	public void verifyProperties() {
 		try {
-			_verifyPortalProperties();
+			_verifyDatasourceProperties();
 
 			_verifyServerProperties();
+
+			_verifyUpgradeProperties();
 
 			_saveProperties();
 		}
@@ -322,6 +328,8 @@ public class UpgradeTool {
 
 		_getLibs(classPath, new File("lib"));
 
+		_getLibs(classPath, new File("."));
+
 		_getLibs(classPath, new File(_appServer.getDir(), "bin"));
 
 		_getLibs(classPath, _appServer.getGlobalLibDir());
@@ -345,9 +353,6 @@ public class UpgradeTool {
 				else if (lib.isDirectory()) {
 					_getLibs(classPath, lib);
 				}
-				else {
-					System.out.println("Skipping file: " + lib.getName());
-				}
 			}
 		}
 	}
@@ -365,7 +370,7 @@ public class UpgradeTool {
 	private void _printHelp() {
 		System.out.println("\nUpgrade commands:");
 		System.out.println("exit or quit - exit Gogo Shell");
-		System.out.println("help - show upgrade commands");
+		System.out.println("upgrade:help - show upgrade commands");
 		System.out.println(
 			"upgrade:execute {module_name} - Execute upgrade for that module");
 		System.out.println("upgrade:list - List all registered upgrades");
@@ -384,9 +389,11 @@ public class UpgradeTool {
 	}
 
 	private void _saveProperties() throws IOException {
+		_store(_datasourceProperties, _datasourcePropertiesFile);
+
 		_store(_serverProperties, _serverPropertiesFile);
 
-		_store(_portalProperties, _portalPropertiesFile);
+		_store(_upgradeProperties, _upgradePropertiesFile);
 	}
 
 	private void _store(Properties props, File propertyFile)
@@ -400,91 +407,94 @@ public class UpgradeTool {
 		}
 	}
 
-	private void _verifyPortalProperties() throws IOException {
-		String value = _portalProperties.getProperty("liferay.home");
+	private void _verifyDatasourceProperties() throws IOException {
+		String value = _datasourceProperties.getProperty(
+			"jdbc.default.driverClassName");
 
 		if ((value == null) || value.equals("")) {
-			System.out.print("Please enter your Liferay home (../): ");
+			String response;
 
-			String response = _consoleReader.readLine();
+			Datasource datasource = null;
 
-			if (response.equals("")) {
-				response = "../";
+			while (datasource == null) {
+				System.out.print("[ ");
+
+				for (String name : _datasources.keySet()) {
+					System.out.print(name + " ");
+				}
+
+				System.out.println("]");
+
+				System.out.println("Please enter your database (mysql): ");
+
+				response = _consoleReader.readLine();
+
+				if (response.equals("")) {
+					response = "mysql";
+				}
+
+				datasource = _datasources.get(response);
+
+				if (datasource == null) {
+					System.err.println(
+						response + " is not a supported database");
+				}
 			}
-
-			File liferayHome = new File(response);
-
-			_portalProperties.setProperty(
-				"liferay.home", liferayHome.getCanonicalPath());
-
-			for (String name : databases.keySet()) {
-				System.out.println(name);
-			}
-
-			System.out.println("Please enter your database (mysql): ");
-
-			response = _consoleReader.readLine();
-
-			if (response.equals("")) {
-				response = "mysql";
-			}
-
-			DatabaseConnection databaseConnection = databases.get(response);
 
 			System.out.println(
 				"Please enter your database JDBC driver protocol (" +
-					databaseConnection.getProtocol() + "):");
+					datasource.getProtocol() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				databaseConnection.setProtocol(response);
+				datasource.setProtocol(response);
 			}
 
 			System.out.println(
 				"Please enter your database JDBC driver class name(" +
-					databaseConnection.getClassName() + "):");
+					datasource.getClassName() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				databaseConnection.setClassName(response);
+				datasource.setClassName(response);
 			}
 
 			System.out.println(
-				"Please enter your database host (" +
-					databaseConnection.getHost() + "):");
+				"Please enter your database host (" + datasource.getHost() +
+					"): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				databaseConnection.setHost(response);
+				datasource.setHost(response);
 			}
 
 			System.out.println(
 				"Please enter your database port (" +
-					(databaseConnection.getPort() > 0 ?
-						databaseConnection.getPort() : "none") + "):");
+					(datasource.getPort() > 0 ?
+						datasource.getPort() : "none") + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
 				if (response.equals("none")) {
-					databaseConnection.setPort(0);
+					datasource.setPort(0);
 				}
 				else {
-					databaseConnection.setPort(Integer.parseInt(response));
+					datasource.setPort(Integer.parseInt(response));
 				}
 			}
 
 			System.out.println(
 				"Please enter your database name (" +
-					databaseConnection.getDatabaseName() + "):");
+					datasource.getDatabaseName() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				databaseConnection.setDatabaseName(response);
+				datasource.setDatabaseName(response);
 			}
 
 			System.out.println("Please enter your database username: ");
@@ -495,13 +505,14 @@ public class UpgradeTool {
 
 			String password = _consoleReader.readLine();
 
-			_portalProperties.setProperty(
-				"jdbc.default.driverClassName",
-				databaseConnection.getClassName());
-			_portalProperties.setProperty(
-				"jdbc.default.url", databaseConnection.getUrl());
-			_portalProperties.setProperty("jdbc.default.username", username);
-			_portalProperties.setProperty("jdbc.default.password", password);
+			_datasourceProperties.setProperty(
+				"jdbc.default.driverClassName", datasource.getClassName());
+			_datasourceProperties.setProperty(
+				"jdbc.default.url", datasource.getUrl());
+			_datasourceProperties.setProperty(
+				"jdbc.default.username", username);
+			_datasourceProperties.setProperty(
+				"jdbc.default.password", password);
 		}
 	}
 
@@ -509,26 +520,39 @@ public class UpgradeTool {
 		String value = _serverProperties.getProperty("dir");
 
 		if ((value == null) || value.equals("")) {
-			for (String appServer : appServers.keySet()) {
-				System.out.println(appServer);
+			String response;
+
+			while (_appServer == null) {
+				System.out.print("[ ");
+
+				for (String appServer : _appServers.keySet()) {
+					System.out.print(appServer + " ");
+				}
+
+				System.out.println("]");
+
+				System.out.println("Please enter your app server (tomcat): ");
+
+				response = _consoleReader.readLine();
+
+				if (response.equals("")) {
+					response = "tomcat";
+				}
+
+				_appServer = _appServers.get(response);
+
+				if (_appServer == null) {
+					System.err.println(
+						response + " is not a supported app server");
+				}
 			}
-
-			System.out.println("Please enter your app server (tomcat):");
-
-			String response = _consoleReader.readLine();
-
-			if (response.equals("")) {
-				response = "tomcat";
-			}
-
-			_appServer = appServers.get(response);
 
 			File dir = _appServer.getDir();
 			File globalLibDir = _appServer.getGlobalLibDir();
 			File portalDir = _appServer.getPortalDir();
 
 			System.out.println(
-				"Please enter your app server dir (" + dir + "):");
+				"Please enter your app server dir (" + dir + "): ");
 
 			response = _consoleReader.readLine();
 
@@ -537,7 +561,7 @@ public class UpgradeTool {
 			}
 
 			System.out.println(
-				"Please enter your global lib dir (" + globalLibDir + "):");
+				"Please enter your global lib dir (" + globalLibDir + "): ");
 
 			response = _consoleReader.readLine();
 
@@ -567,13 +591,58 @@ public class UpgradeTool {
 		}
 	}
 
+	private void _verifyUpgradeProperties() throws IOException {
+		String value = _upgradeProperties.getProperty("liferay.home");
+
+		if ((value == null) || value.equals("")) {
+			System.out.println("Please enter your Liferay home (../): ");
+
+			String response = _consoleReader.readLine();
+
+			if (response.equals("")) {
+				response = "../";
+			}
+
+			File liferayHome = new File(response);
+
+			_upgradeProperties.setProperty(
+				"liferay.home", liferayHome.getCanonicalPath());
+		}
+	}
+
+	private static final Map<String, AppServer> _appServers =
+		new LinkedHashMap<>();
+	private static final Map<String, Datasource> _datasources =
+		new LinkedHashMap<>();
+
+	static {
+		_appServers.put("jboss", AppServer.getJBossEAP());
+		_appServers.put("jonas", AppServer.getJOnAS());
+		_appServers.put("resin", AppServer.getResin());
+		_appServers.put("tcserver", AppServer.getTCServer());
+		_appServers.put("tomcat", AppServer.getTomcat());
+		_appServers.put("weblogic", AppServer.getWeblogic());
+		_appServers.put("websphere", AppServer.getWebsphere());
+		_appServers.put("wildfly", AppServer.getWildfly());
+
+		_datasources.put("db2", Datasource.getDB2Connection());
+		_datasources.put("mariadb", Datasource.getMariaDBConnection());
+		_datasources.put("mysql", Datasource.getMySQLConnection());
+		_datasources.put("oracle", Datasource.getOracleConnection());
+		_datasources.put("postgresql", Datasource.getPostgreSQLConnection());
+		_datasources.put("sqlserver", Datasource.getSQLServerConnection());
+		_datasources.put("sybase", Datasource.getSybaseConnection());
+	}
+
 	private AppServer _appServer;
 	private final ConsoleReader _consoleReader;
+	private final Properties _datasourceProperties;
+	private final File _datasourcePropertiesFile;
 	private final String _jvmOpts;
 	private final File _logFile;
-	private final Properties _portalProperties;
-	private final File _portalPropertiesFile;
 	private final Properties _serverProperties;
 	private final File _serverPropertiesFile;
+	private final Properties _upgradeProperties;
+	private final File _upgradePropertiesFile;
 
 }

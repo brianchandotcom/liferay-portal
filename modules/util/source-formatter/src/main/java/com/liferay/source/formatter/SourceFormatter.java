@@ -144,6 +144,7 @@ public class SourceFormatter {
 		sourceProcessors.add(new CSSSourceProcessor());
 		sourceProcessors.add(new FTLSourceProcessor());
 		sourceProcessors.add(new GradleSourceProcessor());
+		sourceProcessors.add(new GroovySourceProcessor());
 		sourceProcessors.add(new JavaSourceProcessor());
 		sourceProcessors.add(new JSONSourceProcessor());
 		sourceProcessors.add(new JSPSourceProcessor());

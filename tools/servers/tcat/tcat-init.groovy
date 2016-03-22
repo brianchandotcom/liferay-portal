@@ -12,14 +12,14 @@
  * details.
  */
 
-import com.mulesoft.tcat.util.InstallBuilder
+import com.mulesoft.tcat.util.InstallBuilder;
 
 import org.mule.galaxy.Item;
 import org.mule.galaxy.NotFoundException;
 import org.mule.galaxy.Registry;
 import org.mule.galaxy.impl.jcr.JcrUtil;
 import org.mule.galaxy.script.Script;
-import org.mule.galaxy.script.ScriptManager
+import org.mule.galaxy.script.ScriptManager;
 import org.mule.galaxy.type.TypeManager;
 import org.mule.galaxy.util.IOUtils;
 
@@ -30,7 +30,7 @@ import javax.jcr.Session;
 
 import org.springframework.context.ApplicationContext;
 
-import org.springmodules.jcr.JcrCallback
+import org.springmodules.jcr.JcrCallback;
 
 /**
  * This tcat-init.groovy script initializes the Tcat admin server by loading

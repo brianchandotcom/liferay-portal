@@ -1282,6 +1282,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			addTaskPrintStaleArtifact(
 				portalRootDir, recordArtifactTask, testProject);
 			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
+			configureTaskProcessResources(buildChangeLogTask);
 		}
 
 		final ReplaceRegexTask updateFileVersionsTask =
@@ -1791,6 +1792,32 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			minimalJavadocOptions.setOverview(
 				project.relativePath(overviewFile));
 		}
+	}
+
+	protected void configureTaskProcessResources(
+		final BuildChangeLogTask buildChangeLogTask) {
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			buildChangeLogTask.getProject(),
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		copy.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildChangeLogTask.getChangeLogFile();
+				}
+
+			},
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("META-INF");
+				}
+
+			});
 	}
 
 	protected void configureTaskPublishNodeModule(

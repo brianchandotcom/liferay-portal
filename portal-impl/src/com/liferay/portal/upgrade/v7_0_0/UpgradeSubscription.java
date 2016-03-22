@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -169,37 +170,38 @@ public class UpgradeSubscription extends UpgradeProcess {
 		}
 	}
 
-	protected void updateSubscriptionGroupId(
-			long subscriptionId, long classNameId, long classPK)
-		throws Exception {
-
-		long groupId = getGroupId(classNameId, classPK);
-
-		if ((groupId == 0) && hasGroup(classPK)) {
-			groupId = classPK;
-		}
-
-		if (groupId != 0) {
-			runSQL(
-				"update Subscription set groupId = " + groupId + " where " +
-					"subscriptionId = " + subscriptionId);
-		}
-	}
-
 	protected void updateSubscriptionGroupIds() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select subscriptionId, classNameId, classPK from " +
 					"Subscription");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update Subscription set groupId = ? where " +
+						"subscriptionId = ?");
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				long subscriptionId = rs.getLong("subscriptionId");
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 
-				updateSubscriptionGroupId(subscriptionId, classNameId, classPK);
+				long groupId = getGroupId(classNameId, classPK);
+
+				if ((groupId == 0) && hasGroup(classPK)) {
+					groupId = classPK;
+				}
+
+				if (groupId != 0) {
+					ps2.setLong(1, groupId);
+					ps2.setLong(2, subscriptionId);
+
+					ps2.addBatch();
+				}
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

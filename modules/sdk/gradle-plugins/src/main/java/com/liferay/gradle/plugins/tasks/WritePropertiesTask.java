@@ -73,6 +73,10 @@ public class WritePropertiesTask extends DefaultTask {
 	public void writeProperties() throws IOException {
 		File outputFile = getOutputFile();
 
+		File outputDir = outputFile.getParentFile();
+
+		outputDir.mkdirs();
+
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
 				outputFile.toPath(), StandardCharsets.ISO_8859_1)) {
 

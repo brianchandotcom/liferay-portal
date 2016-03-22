@@ -30,10 +30,4 @@ public interface SoyTemplateEngineConfiguration {
 	@Meta.AD(deflt = "60", required = false)
 	public int resourceModificationCheck();
 
-	@Meta.AD(
-		deflt = "com.liferay.portal.template.soy.SoyTemplateBundleResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
-		required = false
-	)
-	public String[] templateParsers();
-
 }

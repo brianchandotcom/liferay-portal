@@ -28,6 +28,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,6 +52,7 @@ public class SoyTemplateResourceLoader implements TemplateResourceLoader {
 		_defaultTemplateResourceLoader.clearCache(templateId);
 	}
 
+	@Deactivate
 	@Override
 	public void destroy() {
 		_defaultTemplateResourceLoader.destroy();
@@ -78,8 +80,7 @@ public class SoyTemplateResourceLoader implements TemplateResourceLoader {
 			SoyTemplateEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
-			TemplateConstants.LANG_TYPE_SOY,
-			_soyTemplateEngineConfiguration.templateParsers(),
+			TemplateConstants.LANG_TYPE_SOY, null,
 			_soyTemplateEngineConfiguration.resourceModificationCheck(),
 			_multiVMPool, _singleVMPool);
 	}

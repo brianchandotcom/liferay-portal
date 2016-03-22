@@ -72,7 +72,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -161,6 +161,28 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 						<liferay-ui:search-container-column-jsp
 							path="/embedded_portlets_action.jsp"
 						/>
+					</c:when>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+
+						<%
+						row.setCssClass("col-md-2 col-sm-3 col-xs-6");
+						%>
+
+						<liferay-ui:search-container-column-text>
+							<liferay-frontend:icon-vertical-card
+								actionJsp="/embedded_portlets_action.jsp"
+								actionJspServletContext="<%= application %>"
+								icon="archive"
+								resultRow="<%= row %>"
+								rowChecker="<%= searchContainer.getRowChecker() %>"
+								subtitle="<%= portlet.getPortletId() %>"
+								title="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+							>
+								<liferay-frontend:vertical-card-footer>
+									<%= status %>
+								</liferay-frontend:vertical-card-footer>
+							</liferay-frontend:icon-vertical-card>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("list") %>'>
 						<liferay-ui:search-container-column-text

@@ -734,7 +734,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return task;
 	}
 
-	protected WritePropertiesTask addTaskRecordArtifact(Project project) {
+	protected WritePropertiesTask addTaskRecordArtifact(
+		Project project, File destinationDir) {
+
 		final WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
 			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
 
@@ -789,7 +791,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		writePropertiesTask.setDescription(
 			"Records the commit ID and the artifact URLs.");
-		writePropertiesTask.setOutputFile("artifact.properties");
+		writePropertiesTask.setOutputFile(
+			new File(destinationDir, "artifact.properties"));
 
 		return writePropertiesTask;
 	}
@@ -1263,7 +1266,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 
 			WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
-				project);
+				project, relengDir);
 
 			addTaskPrintArtifactPublishCommands(
 				gitRepoDir, portalRootDir, recordArtifactTask, testProject);

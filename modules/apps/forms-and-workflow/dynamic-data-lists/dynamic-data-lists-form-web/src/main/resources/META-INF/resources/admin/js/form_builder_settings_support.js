@@ -101,10 +101,6 @@ AUI.add(
 			renderSettingsPanel: function() {
 				var instance = this;
 
-				var settingsForm = instance.get('settingsForm');
-
-				settingsForm.render();
-
 				instance._updateSettingsFormValues();
 			},
 

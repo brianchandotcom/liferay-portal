@@ -25,12 +25,6 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
-Calendar calendar = Calendar.getInstance();
-
-int offset = GetterUtil.getInteger(recentPostsDateOffset);
-
-calendar.add(Calendar.DATE, -offset);
-
 boolean showBreadcrumb = ParamUtil.getBoolean(request, "showBreadcrumb", true);
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");

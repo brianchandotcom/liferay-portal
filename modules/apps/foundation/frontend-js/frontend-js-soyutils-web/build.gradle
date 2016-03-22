@@ -6,7 +6,7 @@ configurations {
 
 task buildSoyutils(type: Copy)
 
-String soyutilsVersion = "2012.12.21"
+String closureTemplatesVersion = "20140422.0.0"
 
 buildSoyutils {
 	eachFile new StripPathSegmentsAction(5)
@@ -15,7 +15,7 @@ buildSoyutils {
 		zipTree(configurations.soyutils.singleFile)
 	}
 
-	include "META-INF/resources/webjars/soyutils/${soyutilsVersion}/soyutils.js"
+	include "META-INF/resources/webjars/closure-templates/${closureTemplatesVersion}/soyutils.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 }
@@ -25,5 +25,5 @@ classes {
 }
 
 dependencies {
-	soyutils group: "org.webjars.bower", name: "soyutils", transitive: false, version: soyutilsVersion
+	soyutils group: "org.webjars.npm", name: "closure-templates", transitive: false, version: closureTemplatesVersion
 }

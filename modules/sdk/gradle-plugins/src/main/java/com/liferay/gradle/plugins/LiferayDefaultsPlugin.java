@@ -1235,7 +1235,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
-		final File gitRepoDir = getRootDir(project, ".gitrepo");
+		File gitRepoDir = getRootDir(project, ".gitrepo");
 		final File portalRootDir = getRootDir(
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);

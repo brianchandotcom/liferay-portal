@@ -17,13 +17,14 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.upgrade.ConcurrentUpgradePortletPreferences;
 
 import javax.portlet.PortletPreferences;
 
 /**
  * @author Eduardo Garcia
  */
-public class UpgradeLookAndFeel extends BaseUpgradePortletPreferences {
+public class UpgradeLookAndFeel extends ConcurrentUpgradePortletPreferences {
 
 	@Override
 	protected String getUpdatePortletPreferencesWhereClause() {

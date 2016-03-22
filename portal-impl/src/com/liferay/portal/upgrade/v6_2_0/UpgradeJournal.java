@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.upgrade.ConcurrentUpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 
 import java.sql.PreparedStatement;
@@ -46,7 +47,7 @@ import javax.portlet.PortletPreferences;
  * @author Juan Fernández
  * @author Bruno Basto
  */
-public class UpgradeJournal extends BaseUpgradePortletPreferences {
+public class UpgradeJournal extends ConcurrentUpgradePortletPreferences {
 
 	protected void addDDMStructure(
 			String uuid_, long ddmStructureId, long groupId, long companyId,

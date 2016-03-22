@@ -1233,6 +1233,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final File portalRootDir = getRootDir(
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
+		File relengDir = getRelengDir(project);
 		boolean testProject = isTestProject(project);
 
 		applyPlugins(project);
@@ -1258,13 +1259,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
-		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
-			project);
 
-		addTaskPrintArtifactPublishCommands(
-			gitRepoDir, portalRootDir, recordArtifactTask, testProject);
-		addTaskPrintStaleArtifact(
-			portalRootDir, recordArtifactTask, testProject);
+		if (relengDir != null) {
+			WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
+				project);
+
+			addTaskPrintArtifactPublishCommands(
+				gitRepoDir, portalRootDir, recordArtifactTask, testProject);
+			addTaskPrintStaleArtifact(
+				portalRootDir, recordArtifactTask, testProject);
+		}
 
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project, gitRepoDir);
@@ -1344,7 +1348,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					// to know if we are publishing a snapshot or not.
 
 					configureTaskUploadArchives(
-						project, recordArtifactTask, updateFileVersionsTask);
+						project, updateFileVersionsTask);
 
 					if (hasPlugin(project, BundlePlugin.class)) {
 						configureProjectBndProperties(project);
@@ -1904,8 +1908,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskUploadArchives(
-		Project project, WritePropertiesTask recordArtifactTask,
-		ReplaceRegexTask updateFileVersionsTask) {
+		Project project, ReplaceRegexTask updateFileVersionsTask) {
 
 		String version = String.valueOf(project.getVersion());
 
@@ -1916,9 +1919,14 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
-		uploadArchivesTask.dependsOn(recordArtifactTask);
-
 		TaskContainer taskContainer = project.getTasks();
+
+		Task recordArtifactTask = taskContainer.findByName(
+			RECORD_ARTIFACT_TASK_NAME);
+
+		if (recordArtifactTask != null) {
+			uploadArchivesTask.dependsOn(recordArtifactTask);
+		}
 
 		TaskCollection<PublishNodeModuleTask> publishNodeModuleTasks =
 			taskContainer.withType(PublishNodeModuleTask.class);
@@ -2091,6 +2099,18 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected String getProjectDependency(Project project) {
 		return "project(\"" + project.getPath() + "\")";
+	}
+
+	protected File getRelengDir(Project project) {
+		File relengDir = new File(project.getRootDir(), ".releng");
+
+		if (!relengDir.exists()) {
+			return null;
+		}
+
+		return new File(
+			relengDir,
+			FileUtil.relativize(project.getProjectDir(), project.getRootDir()));
 	}
 
 	protected File getRootDir(Project project, String markerFileName) {

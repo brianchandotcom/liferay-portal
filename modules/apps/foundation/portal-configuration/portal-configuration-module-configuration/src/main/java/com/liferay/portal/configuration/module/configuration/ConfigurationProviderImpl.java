@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -116,13 +115,13 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String portletInstanceKey = portletInstance.getPortletInstanceKey();
 
 		if (Validator.isNotNull(configurationPid)) {
-			return ConfigurationProviderUtil.getConfiguration(
+			return getConfiguration(
 				clazz,
 				new PortletInstanceSettingsLocator(
 					layout, portletInstanceKey, configurationPid));
 		}
 		else {
-			return ConfigurationProviderUtil.getConfiguration(
+			return getConfiguration(
 				clazz,
 				new PortletInstanceSettingsLocator(layout, portletInstanceKey));
 		}

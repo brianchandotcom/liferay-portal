@@ -4076,17 +4076,15 @@ Any installation with a customized asset validator.
 
 You should create a new OSGi component that implements
 `AssetEntryValidator`, and define for which models it will be
-applicable by using the `model.class.name` OSGi property.
+applicable by using the `model.class.name` OSGi property or an asterisk if it
+applies to any model.
+
+If you were using the MinimalAssetEntryValidator, this functionality can still
+be added deploying the module asset-tags-validator.
 
 #### Why was this change made?
 
-The default asset entry validator ensured that all assets of a
-particular type honored required vocabulary restrictions . In general,
-this was incorrect, as there may be different models of the same type
-that require different validation (e.g. A D&M FileEntry vs an
-attachment); additionally, in the context of a modular application, it
-was very difficult to extend or modify this behaviour without
-introducing dependencies between the core and the modules that
-required custom validation logic.
+This change has been made as part of the modularization efforts to decouple the
+different parts of the portal.
 
 ---------------------------------------

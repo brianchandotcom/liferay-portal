@@ -51,6 +51,23 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testDuplicateConstructors() throws Exception {
+		test(
+			"DuplicateConstructors.testjava",
+			"Duplicate DuplicateConstructors:");
+	}
+
+	@Test
+	public void testDuplicateMethods() throws Exception {
+		test("DuplicateMethods.testjava", "Duplicate method:");
+	}
+
+	@Test
+	public void testDuplicateVariables() throws Exception {
+		test("DuplicateVariables.testjava", "Duplicate _s2:");
+	}
+
+	@Test
 	public void testExceedMaxLineLength() throws Exception {
 		test("ExceedMaxLineLength.testjava", "> 80:", 37);
 	}

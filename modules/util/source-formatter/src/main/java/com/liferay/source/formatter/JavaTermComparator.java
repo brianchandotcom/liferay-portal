@@ -48,13 +48,16 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 	protected int compareParameterTypes(
 		JavaTerm javaTerm1, JavaTerm javaTerm2) {
 
+		List<String> parameterTypes1 = javaTerm1.getParameterTypes();
 		List<String> parameterTypes2 = javaTerm2.getParameterTypes();
 
 		if (parameterTypes2.isEmpty()) {
+			if (parameterTypes1.isEmpty()) {
+				return 0;
+			}
+
 			return 1;
 		}
-
-		List<String> parameterTypes1 = javaTerm1.getParameterTypes();
 
 		if (parameterTypes1.isEmpty()) {
 			return -1;
@@ -82,6 +85,10 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			if (parameterType1.compareTo(parameterType2) != 0) {
 				return -parameterType1.compareTo(parameterType2);
 			}
+		}
+
+		if (parameterTypes1.size() == parameterTypes2.size()) {
+			return 0;
 		}
 
 		return -1;

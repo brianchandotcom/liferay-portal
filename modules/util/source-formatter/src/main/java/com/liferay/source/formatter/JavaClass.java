@@ -31,6 +31,7 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -64,8 +65,6 @@ public class JavaClass {
 		_javaTermAccessLevelModifierExcludes =
 			javaTermAccessLevelModifierExcludes;
 		_javaSourceProcessor = javaSourceProcessor;
-
-		_javaTerms = getJavaTerms();
 	}
 
 	public String formatJavaTerms(
@@ -75,7 +74,12 @@ public class JavaClass {
 			List<String> testAnnotationsExcludes)
 		throws Exception {
 
-		if (_javaTerms == null) {
+		Set<JavaTerm> javaTerms = Collections.emptySet();
+
+		try {
+			javaTerms = getJavaTerms();
+		}
+		catch (InvalidJavaTermException ijte) {
 			if (!_javaSourceProcessor.isExcludedPath(
 					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
 				!_javaSourceProcessor.isExcludedPath(
@@ -83,13 +87,14 @@ public class JavaClass {
 
 				_javaSourceProcessor.processErrorMessage(
 					_fileName,
-					"Parsing error while retrieving java terms " + _fileName);
+					"Parsing error around line " + ijte.getLineCount() + ": " +
+						_fileName);
 			}
 
 			return _classContent;
 		}
 
-		if (_javaTerms.isEmpty()) {
+		if (javaTerms.isEmpty()) {
 			return _classContent;
 		}
 
@@ -97,7 +102,7 @@ public class JavaClass {
 
 		JavaTerm previousJavaTerm = null;
 
-		Iterator<JavaTerm> itr = _javaTerms.iterator();
+		Iterator<JavaTerm> itr = javaTerms.iterator();
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
@@ -161,7 +166,7 @@ public class JavaClass {
 			}
 		}
 
-		fixJavaTermsDividers(_javaTerms, javaTermSortExcludes);
+		fixJavaTermsDividers(javaTerms, javaTermSortExcludes);
 
 		return _classContent;
 	}
@@ -948,13 +953,13 @@ public class JavaClass {
 
 		String javaTermContent = _classContent.substring(startPos, endPos);
 
-		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
-			return null;
-		}
-
 		int lineCount =
 			_lineCount +
 				_javaSourceProcessor.getLineCount(_classContent, startPos) - 1;
+
+		if (Validator.isNull(name) || !isValidJavaTerm(javaTermContent)) {
+			throw new InvalidJavaTermException(lineCount);
+		}
 
 		JavaTerm javaTerm = new JavaTerm(
 			name, type, javaTermContent, lineCount, _indent);
@@ -978,6 +983,10 @@ public class JavaClass {
 	}
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
+		if (_javaTerms != null) {
+			return _javaTerms;
+		}
+
 		Set<JavaTerm> javaTerms = new TreeSet<>(new JavaTermComparator(false));
 		List<JavaTerm> staticBlocks = new ArrayList<>();
 
@@ -1013,10 +1022,6 @@ public class JavaClass {
 
 				Tuple tuple = getJavaTermTuple(line, _classContent, index);
 
-				if (tuple == null) {
-					return null;
-				}
-
 				int javaTermEndPosition = 0;
 
 				if (lastCommentOrAnnotationPos == -1) {
@@ -1033,15 +1038,17 @@ public class JavaClass {
 						javaTermName, javaTermType, javaTermStartPosition,
 						javaTermEndPosition);
 
-					if (javaTerm == null) {
-						return null;
-					}
-
 					if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 						staticBlocks.add(javaTerm);
 					}
-					else {
-						javaTerms.add(javaTerm);
+					else if (!javaTerms.add(javaTerm)) {
+						_javaSourceProcessor.processErrorMessage(
+							_fileName,
+							"Duplicate " + javaTermName + ": " + _fileName);
+
+						_javaTerms = Collections.emptySet();
+
+						return _javaTerms;
 					}
 				}
 
@@ -1096,19 +1103,22 @@ public class JavaClass {
 				javaTermName, javaTermType, javaTermStartPosition,
 				javaTermEndPosition);
 
-			if (javaTerm == null) {
-				return null;
-			}
-
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
 				staticBlocks.add(javaTerm);
 			}
-			else {
-				javaTerms.add(javaTerm);
+			else if (!javaTerms.add(javaTerm)) {
+				_javaSourceProcessor.processErrorMessage(
+					_fileName, "Duplicate " + javaTermName + ": " + _fileName);
+
+				_javaTerms = Collections.emptySet();
+
+				return _javaTerms;
 			}
 		}
 
-		return addStaticBlocks(javaTerms, staticBlocks);
+		_javaTerms = addStaticBlocks(javaTerms, staticBlocks);
+
+		return _javaTerms;
 	}
 
 	protected Tuple getJavaTermTuple(String line, String accessModifier) {
@@ -1191,7 +1201,9 @@ public class JavaClass {
 		return null;
 	}
 
-	protected Tuple getJavaTermTuple(String line, String content, int index) {
+	protected Tuple getJavaTermTuple(String line, String content, int index)
+		throws Exception {
+
 		int posStartNextLine = index;
 
 		while (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
@@ -1226,11 +1238,15 @@ public class JavaClass {
 			}
 		}
 
-		if (line.startsWith(_indent + "static {")) {
-			return new Tuple("static", JavaTerm.TYPE_STATIC_BLOCK);
+		if (!line.startsWith(_indent + "static {")) {
+			int lineCount =
+				_lineCount + _javaSourceProcessor.getLineCount(content, index) -
+					1;
+
+			throw new InvalidJavaTermException(lineCount);
 		}
 
-		return null;
+		return new Tuple("static", JavaTerm.TYPE_STATIC_BLOCK);
 	}
 
 	protected Tuple getJavaTermTuple(
@@ -1291,19 +1307,16 @@ public class JavaClass {
 	}
 
 	protected boolean isFinalableField(
-		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
-		boolean checkOuterClass) {
-
-		if (_javaTerms == null) {
-			return false;
-		}
+			JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
+			boolean checkOuterClass)
+		throws Exception {
 
 		if (checkOuterClass && (_outerClass != null)) {
 			return _outerClass.isFinalableField(
 				javaTerm, javaTermClassName, pattern, true);
 		}
 
-		for (JavaTerm curJavaTerm : _javaTerms) {
+		for (JavaTerm curJavaTerm : getJavaTerms()) {
 			if (!curJavaTerm.isMethod() &&
 				(!curJavaTerm.isConstructor() ||
 				 javaTermClassName.equals(_name))) {

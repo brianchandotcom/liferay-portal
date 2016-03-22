@@ -58,6 +58,8 @@
 			</div>
 		{/if}
 
-		{$childElementsHTML|noAutoescape}
+		{if $childElementsHTML}
+			{$childElementsHTML|noAutoescape}
+		{/if}
 	</div>
 {/template}

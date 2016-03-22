@@ -25,8 +25,6 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
-MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
-
 Set<Long> categorySubscriptionClassPKs = null;
 Set<Long> threadSubscriptionClassPKs = null;
 
@@ -51,8 +49,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
-
-request.setAttribute("view.jsp-categoryDisplay", categoryDisplay);
 
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);
@@ -334,6 +330,8 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 		if (groupThreadsUserId > 0) {
 			portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 		}
+
+		MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
 		%>
 
 		<div class="main-content-body">

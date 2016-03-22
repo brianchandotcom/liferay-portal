@@ -165,7 +165,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("col-md-2 col-sm-3 col-xs-6");
+						row.setCssClass("entry-card lfr-asset-item");
 						%>
 
 						<liferay-ui:search-container-column-text>

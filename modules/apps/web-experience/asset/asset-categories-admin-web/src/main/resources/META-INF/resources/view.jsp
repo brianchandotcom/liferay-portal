@@ -59,7 +59,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
@@ -97,92 +97,110 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
-				href="<%= rowURL %>"
-				name="name"
-				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"
-			/>
+			<c:choose>
+				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="categories"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column description-column"
-				name="description"
-				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - vocabulary.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</h6>
 
-			<liferay-ui:search-container-column-date
-				cssClass="create-date-column text-column"
-				name="create-date"
-				property="createDate"
-			/>
+						<h5>
+							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></aui:a>
+						</h5>
 
-			<liferay-ui:search-container-column-text
-				cssClass="number-of-categories-column"
-				name="number-of-categories"
-				value="<%= String.valueOf(vocabulary.getCategoriesCount()) %>"
-			/>
+						<h6 class="text-default">
+							<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>
+						</h6>
 
-			<liferay-ui:search-container-column-text
-				cssClass="asset-type-column text-column"
-				name="asset-type"
-			>
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="number-of-categories" /></strong>: <%= vocabulary.getCategoriesCount() %>
+						</h6>
 
-				<%
-				long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
-				long[] selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="asset-type" /></strong>: <%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
 
-				for (int i = 0; i < selectedClassNameIds.length; i++) {
-					long classNameId = selectedClassNameIds[i];
-					long classTypePK = selectedClassTypePKs[i];
+					<liferay-ui:search-container-column-jsp
+						path="/vocabulary_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "icon") %>'>
 
-					String name = LanguageUtil.get(request, "all-asset-types");
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
 
-					if (classNameId != AssetCategoryConstants.ALL_CLASS_NAME_ID) {
-						if (classTypePK != -1) {
-							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/vocabulary_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="categories"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= vocabulary.getDescription() %>"
+							title="<%= vocabulary.getName() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - vocabulary.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
 
-							ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+							<liferay-frontend:vertical-card-footer>
+								<%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= Validator.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						href="<%= rowURL %>"
+						name="name"
+						truncate="<%= true %>"
+						value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"
+					/>
 
-							ClassType classType = classTypeReader.getClassType(classTypePK, locale);
+					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
+						name="description"
+						truncate="<%= true %>"
+						value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
+					/>
 
-							name = classType.getName();
-						}
-						else {
-							name = ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId));
-						}
-					}
+					<liferay-ui:search-container-column-date
+						cssClass="create-date-column text-column"
+						name="create-date"
+						property="createDate"
+					/>
 
-					StringBundler sb = new StringBundler();
+					<liferay-ui:search-container-column-text
+						cssClass="number-of-categories-column"
+						name="number-of-categories"
+						value="<%= String.valueOf(vocabulary.getCategoriesCount()) %>"
+					/>
 
-					sb.append(name);
+					<liferay-ui:search-container-column-text
+						cssClass="asset-type-column text-column"
+						name="asset-type"
+						value="<%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>"
+					/>
 
-					if (vocabulary.isRequired(classNameId, classTypePK)) {
-						sb.append(StringPool.SPACE);
-						sb.append(StringPool.STAR);
-					}
-
-					if ((i + 1) < selectedClassNameIds.length) {
-						sb.append(StringPool.COMMA);
-					}
-				%>
-
-					<%= sb.toString() %>
-
-				<%
-				}
-				%>
-
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				path="/vocabulary_action.jsp"
-			/>
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/vocabulary_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

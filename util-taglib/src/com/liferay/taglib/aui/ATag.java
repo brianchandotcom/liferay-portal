@@ -65,7 +65,7 @@ public class ATag extends BaseATag {
 				jspWriter.write("class=\"sr-only\">");
 				jspWriter.write(
 					LanguageUtil.get(resourceBundle, "opens-new-window"));
-				jspWriter.write("</span>");
+				jspWriter.write("</span></svg>");
 			}
 
 			jspWriter.write("</a>");

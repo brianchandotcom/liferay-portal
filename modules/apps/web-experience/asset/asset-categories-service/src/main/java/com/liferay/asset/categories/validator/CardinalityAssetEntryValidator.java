@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.categories.validator;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
@@ -25,13 +25,22 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portlet.asset.util.AssetEntryValidator;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.List;
 
 /**
  * @author Juan Fernández
  */
-public class BaseAssetEntryValidator implements AssetEntryValidator {
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=*"
+	},
+	service = AssetEntryValidator.class
+)
+public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(

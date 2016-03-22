@@ -473,7 +473,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final BuildChangeLogTask buildChangeLogTask,
 		final WritePropertiesTask recordArtifactTask, boolean testProject) {
 
-		final Project project = recordArtifactTask.getProject();
+		final Project project = buildChangeLogTask.getProject();
 
 		Task task = project.task(PRINT_ARTIFACT_PUBLISH_COMMANDS);
 

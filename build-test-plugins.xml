@@ -232,6 +232,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 	</target>
 
 	<target name="test-plugin">
+		<echo>Compiling ${test.plugin}</echo>
+
 		<if>
 			<or>
 				<contains string="${test.plugin}" substring="layouttpl" />

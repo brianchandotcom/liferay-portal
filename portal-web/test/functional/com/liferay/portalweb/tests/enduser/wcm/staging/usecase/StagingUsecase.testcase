@@ -3135,7 +3135,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation" />
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
 		<execute macro="Staging#markAsReadyForPublication" />
@@ -3171,7 +3171,7 @@
 		</execute>
 
 		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Navigation" />
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

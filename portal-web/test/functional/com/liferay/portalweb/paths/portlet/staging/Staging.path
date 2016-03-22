@@ -140,7 +140,7 @@
 <!--PAGE_VARIATION_MENULIST-->
 <tr>
 	<td>PAGE_VARIATION_MENULIST_NAME</td>
-	<td>//ul//li//a[contains(.,'${key_pageVariationName}') and contains(@class,'disabled')]</td>
+	<td>//a[contains(.,'${key_pageVariationName}') and contains(@href,'layoutBranchId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,11 +184,6 @@
 <tr>
 	<td>STAGING_MENU_HISTORY_BUTTON</td>
 	<td>//a[contains(@id,'viewHistoryLink')]/span/i</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON</td>
-	<td>//span[@class='staging-bar-control-toggle']//span[@class='toggle-switch-bar' and not (@aria-hidden='true')] </td>
 	<td></td>
 </tr>
 <tr>

@@ -102,7 +102,7 @@
 	</command>
 
 	<command name="gotoURLDetail">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="Click" locator1="DocumentsAndMediaDocument#DETAILS_URL" />
 	</command>

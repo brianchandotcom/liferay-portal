@@ -511,9 +511,9 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			<then>
-				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			</then>
 		</if>
 
@@ -534,9 +534,11 @@
 
 	<command name="markAsReadyForPublication">
 		<if>
-			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			<then>
-				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+				<execute function="AssertNotChecked" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+
+				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			</then>
 		</if>
 	</command>
@@ -714,9 +716,9 @@
 
 	<command name="schedulePublishToLivePG">
 		<if>
-			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			<then>
-				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			</then>
 		</if>
 
@@ -769,9 +771,9 @@
 
 	<command name="setContentDateRange">
 		<if>
-			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+			<condition function="IsElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			<then>
-				<execute function="Check#checkToggleSwitch" locator1="Staging#STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON" />
+				<execute function="Check#toggleSwitch" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
 			</then>
 		</if>
 

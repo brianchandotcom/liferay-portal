@@ -404,6 +404,8 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
+		<execute macro="Staging#markAsReadyForPublication" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1192,6 +1194,8 @@
 		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
+
+		<execute macro="DMNavigator#gotoURLDetail" />
 
 		<execute function="AssertClick" locator1="Link#URL" value1="URL" />
 

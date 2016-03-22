@@ -12,17 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.tags.validator;
 
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.util.AssetEntryValidator;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class MinimalAssetEntryValidator extends BaseAssetEntryValidator {
+@Component(
+	immediate = true, property = {"model.class.name=*"},
+	service = AssetEntryValidator.class
+)
+public class AtLeastOneTagAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(

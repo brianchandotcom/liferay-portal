@@ -97,7 +97,7 @@ public class UpgradeDDLFormPortletId
 
 		Property scopeProperty = PropertyFactoryUtil.forName("scope");
 
-		dynamicQuery.add(scopeProperty.eq(name));
+		dynamicQuery.add(scopeProperty.eq(scope));
 
 		Property roleIdProperty = PropertyFactoryUtil.forName("roleId");
 

@@ -20,17 +20,6 @@
 	orderable="<%= true %>"
 	truncate="<%= true %>"
 >
-
-	<%
-	PortletURL viewSubsitesURL = null;
-
-	if (hasAddChildSitePermisison && (row != null)) {
-		viewSubsitesURL = renderResponse.createRenderURL();
-		viewSubsitesURL.setParameter("mvcPath", "/view.jsp");
-		viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
-	}
-	%>
-
 	<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
 	<c:if test="<%= curGroup.isOrganization() %>">

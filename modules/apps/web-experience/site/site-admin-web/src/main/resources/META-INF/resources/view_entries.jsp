@@ -38,22 +38,71 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 	>
 
 		<%
+		List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
+
 		boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
 
 		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
+
+		PortletURL viewSubsitesURL = null;
+
+		if (hasAddChildSitePermisison && (row != null)) {
+			viewSubsitesURL = renderResponse.createRenderURL();
+
+			viewSubsitesURL.setParameter("mvcPath", "/view.jsp");
+			viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
+		}
 		%>
 
 		<c:choose>
+			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
+						<liferay-ui:search-container-column-image
+							src="<%= siteImageURL %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-icon
+							icon="sites"
+						/>
+					</c:otherwise>
+				</c:choose>
+
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<h5>
+						<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+					</h5>
+
+					<c:if test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="child-sites" /></strong>: <%= childSites.size() %>
+						</h6>
+					</c:if>
+
+					<h6 class="text-default">
+						<c:choose>
+							<c:when test="<%= curGroup.isActive() %>">
+								<liferay-ui:message key="active" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="not-active" />
+							</c:otherwise>
+						</c:choose>
+					</h6>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-jsp
+					path="/site_action.jsp"
+				/>
+			</c:when>
 			<c:when test='<%= displayStyle.equals("icon") %>'>
 
 				<%
 				row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
 				%>
-
-				<liferay-portlet:renderURL var="viewSubsitesURL">
-					<portlet:param name="mvcPath" value="/view.jsp" />
-					<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-				</liferay-portlet:renderURL>
 
 				<liferay-ui:search-container-column-text>
 					<c:choose>
@@ -66,7 +115,7 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								showCheckbox="<%= false %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= hasAddChildSitePermisison ? viewSubsitesURL.toString() : null %>"
+								url="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : null %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:vertical-card>
@@ -80,7 +129,7 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								showCheckbox="<%= false %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= hasAddChildSitePermisison ? viewSubsitesURL.toString() : null %>"
+								url="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : null %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:icon-vertical-card>
@@ -89,11 +138,6 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>
-
-				<%
-				List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
-				%>
-
 				<%@ include file="/site_columns.jspf" %>
 			</c:otherwise>
 		</c:choose>

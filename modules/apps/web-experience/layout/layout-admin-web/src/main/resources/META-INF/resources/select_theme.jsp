@@ -61,7 +61,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -105,14 +105,6 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 				cssClass += " selected";
 			}
 
-			String subtitle = StringPool.NBSP;
-
-			if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
-				subtitle = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
-			}
-
-			String thumbnailSrc = theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png";
-
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("themeid", theme.getThemeId());
@@ -121,7 +113,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-image
-						src="<%= thumbnailSrc %>"
+						src='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -134,26 +126,59 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 							</aui:a>
 						</h5>
 
-						<h6 class="text-default">
-							<span><%= subtitle %></span>
-						</h6>
+						<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor()) %>">
+							<h6 class="text-default">
+								<span><%= LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor()) %></span>
+							</h6>
+						</c:if>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
 					row.setCssClass("col-md-2 col-sm-3 col-xs-6");
+
+					String author = StringPool.NBSP;
+
+					if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
+						author = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
+					}
 					%>
 
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:vertical-card
 							cssClass="<%= cssClass %>"
 							data="<%= data %>"
-							imageUrl="<%= thumbnailSrc %>"
-							subtitle="<%= subtitle %>"
+							imageUrl='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
+							subtitle="<%= author %>"
 							title="<%= theme.getName() %>"
 						/>
 					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						truncate="<%= true %>"
+					>
+						<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+							<%= theme.getName() %>
+						</aui:a>
+					</liferay-ui:search-container-column-text>
+
+					<%
+					String author = StringPool.BLANK;
+
+					if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
+						author = selPluginPackage.getAuthor();
+					}
+					%>
+
+					<liferay-ui:search-container-column-text
+						cssClass="author-column text-column"
+						name="author"
+						value="<%= author %>"
+					/>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

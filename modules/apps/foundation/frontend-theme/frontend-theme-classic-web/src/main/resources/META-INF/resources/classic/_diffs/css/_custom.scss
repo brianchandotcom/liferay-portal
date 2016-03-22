@@ -65,6 +65,10 @@ body {
 					margin-bottom: 0;
 				}
 			}
+
+			li.open > a:focus {
+				@include tab-focus;
+			}
 		}
 
 		.navbar-blank > li {

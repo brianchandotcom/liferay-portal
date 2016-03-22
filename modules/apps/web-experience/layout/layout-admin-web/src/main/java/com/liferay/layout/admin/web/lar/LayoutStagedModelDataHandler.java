@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.lar;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -82,6 +83,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -605,8 +607,9 @@ public class LayoutStagedModelDataHandler
 		}
 		else if (layout.isTypeLinkToLayout()) {
 			importLinkedLayout(
-				portletDataContext, layout, importedLayout, layoutElement,
-				layouts);
+				portletDataContext, layout, importedLayout, layoutElement);
+
+			updateTypeSettings(importedLayout, layout);
 		}
 		else {
 			updateTypeSettings(importedLayout, layout);
@@ -992,8 +995,7 @@ public class LayoutStagedModelDataHandler
 
 	protected void importLinkedLayout(
 			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout, Element layoutElement,
-			Map<Long, Layout> layouts)
+			Layout importedLayout, Element layoutElement)
 		throws Exception {
 
 		UnicodeProperties typeSettingsProperties =
@@ -1006,63 +1008,15 @@ public class LayoutStagedModelDataHandler
 		String linkedToLayoutUuid = layoutElement.attributeValue(
 			"linked-to-layout-uuid");
 
-		if (Validator.isNull(linkedToLayoutUuid)) {
+		if (Validator.isNull(linkedToLayoutUuid) || (linkToLayoutId <= 0)) {
 			return;
 		}
 
-		if (linkToLayoutId <= 0) {
-			updateTypeSettings(importedLayout, layout);
-
-			return;
-		}
-
-		Element linkedToLayoutElement =
-			portletDataContext.getReferenceDataElement(
-				layout, Layout.class, layout.getGroupId(), linkedToLayoutUuid);
-
-		if (linkedToLayoutElement != null) {
-			String linkedToLayoutPath = linkedToLayoutElement.attributeValue(
-				"path");
-
-			Layout linkedToLayout =
-				(Layout)portletDataContext.getZipEntryAsObject(
-					linkedToLayoutPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, linkedToLayout);
-
-			Layout importedLinkedLayout = layouts.get(linkToLayoutId);
-
-			if (importedLinkedLayout == null) {
-				throw new NoSuchLayoutException(
-					"Layout with layout id " + linkToLayoutId +
-						" that is linked from layout with layout id " +
-							layout.getLayoutId() + " does not exist");
-			}
-
-			typeSettingsProperties.setProperty(
-				"privateLayout",
-				String.valueOf(importedLinkedLayout.isPrivateLayout()));
-			typeSettingsProperties.setProperty(
-				"linkToLayoutId",
-				String.valueOf(importedLinkedLayout.getLayoutId()));
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("Unable to link layout with friendly URL ");
-				sb.append(layout.getFriendlyURL());
-				sb.append(" and layout id ");
-				sb.append(layout.getLayoutId());
-				sb.append(" to layout with layout id ");
-				sb.append(linkToLayoutId);
-
-				_log.warn(sb.toString());
-			}
-		}
-
-		updateTypeSettings(importedLayout, layout);
+		ExportImportProcessCallbackRegistryUtil.registerCallback(
+			new ImportLinkedLayoutCallable(
+				portletDataContext.getScopeGroupId(),
+				portletDataContext.isPrivateLayout(), importedLayout.getUuid(),
+				linkedToLayoutUuid));
 	}
 
 	@Override
@@ -1387,5 +1341,70 @@ public class LayoutStagedModelDataHandler
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
 	private PortletLocalService _portletLocalService;
 	private ResourceLocalService _resourceLocalService;
+
+	private class ImportLinkedLayoutCallable implements Callable<Void> {
+
+		public ImportLinkedLayoutCallable(
+			long groupId, boolean privateLayout, String layoutUuid,
+			String linkedToLayoutUuid) {
+
+			_groupId = groupId;
+			_privateLayout = privateLayout;
+			_layoutUuid = layoutUuid;
+			_linkedToLayoutUuid = linkedToLayoutUuid;
+		}
+
+		@Override
+		public Void call() throws Exception {
+			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				_layoutUuid, _groupId, _privateLayout);
+
+			if (layout == null) {
+				return null;
+			}
+
+			Layout linkedToLayout =
+				_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					_linkedToLayoutUuid, _groupId, _privateLayout);
+
+			if (linkedToLayout == null) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Unable to link layout with friendly URL ");
+					sb.append(layout.getFriendlyURL());
+					sb.append(" and layout id ");
+					sb.append(layout.getLayoutId());
+					sb.append(" to layout with layout uuid ");
+					sb.append(_linkedToLayoutUuid);
+
+					_log.warn(sb.toString());
+				}
+
+				return null;
+			}
+
+			UnicodeProperties typeSettingsProperties =
+				layout.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty(
+				"privateLayout",
+				String.valueOf(linkedToLayout.isPrivateLayout()));
+			typeSettingsProperties.setProperty(
+				"linkToLayoutId", String.valueOf(linkedToLayout.getLayoutId()));
+
+			layout.setTypeSettingsProperties(typeSettingsProperties);
+
+			_layoutLocalService.updateLayout(layout);
+
+			return null;
+		}
+
+		private final long _groupId;
+		private final String _layoutUuid;
+		private final String _linkedToLayoutUuid;
+		private final boolean _privateLayout;
+
+	}
 
 }

@@ -15,7 +15,10 @@
 package com.liferay.layout.admin.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -94,10 +97,30 @@ public class LayoutStagedModelDataHandlerTest
 
 		initImport();
 
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
 		Layout exportedLayout = (Layout)readExportedStagedModel(layout);
 
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, exportedLayout);
+
+		Layout exportedLinkedLayout = (Layout)readExportedStagedModel(
+			linkedLayout);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedLinkedLayout);
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
 
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			linkedLayout.getUuid(), liveGroup.getGroupId(), false);

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import java.io.IOException;
+
 import java.util.List;
 
 /**

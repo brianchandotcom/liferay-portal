@@ -53,7 +53,7 @@ body {
 	.navbar-blank {
 		float: none;
 
-		 > li {
+		> li {
 			float: none;
 
 			& > a {
@@ -65,6 +65,10 @@ body {
 				& > a {
 					color: #000;
 				}
+			}
+
+			&.open > a:focus {
+				@include tab-focus;
 			}
 		}
 	}

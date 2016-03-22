@@ -122,6 +122,8 @@ public class IndexerRequest {
 		sb.append(_method);
 		sb.append(", modelClassName=");
 		sb.append(_modelClassName);
+		sb.append(", modelPrimaryKey=");
+		sb.append(_modelPrimaryKey);
 		sb.append("}");
 
 		return sb.toString();

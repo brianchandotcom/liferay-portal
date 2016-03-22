@@ -486,7 +486,7 @@ public class WabProcessor {
 			_pluginDir, "WEB-INF/liferay-plugin-package.properties");
 
 		if (!file.exists()) {
-			return null;
+			return new Properties();
 		}
 
 		try {

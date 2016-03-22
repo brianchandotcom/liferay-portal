@@ -18,17 +18,17 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.kernel.util.AssetEntryValidator;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portlet.asset.util.AssetEntryValidator;
 
 import java.util.List;
 
@@ -62,25 +62,24 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		}
 
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyLocalServiceUtil.getGroupVocabularies(
-				groupId, false);
+			_assetVocabularyLocalService.getGroupVocabularies(groupId, false);
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
 		if (!group.isCompany()) {
-			Group companyGroup = GroupLocalServiceUtil.fetchCompanyGroup(
+			Group companyGroup = _groupLocalService.fetchCompanyGroup(
 				group.getCompanyId());
 
 			if (companyGroup != null) {
 				vocabularies = ListUtil.copy(vocabularies);
 
 				vocabularies.addAll(
-					AssetVocabularyLocalServiceUtil.getGroupVocabularies(
+					_assetVocabularyLocalService.getGroupVocabularies(
 						companyGroup.getGroupId()));
 			}
 		}
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		if (isAssetCategorizable(classNameId)) {
 			for (AssetVocabulary vocabulary : vocabularies) {
@@ -106,10 +105,29 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	protected void validate(
@@ -138,6 +156,9 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 		}
 	}
 
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private ClassNameLocalService _classNameLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

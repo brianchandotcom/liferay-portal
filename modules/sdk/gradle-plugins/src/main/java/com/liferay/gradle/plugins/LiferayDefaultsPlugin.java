@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -469,6 +470,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	protected Task addTaskPrintArtifactPublishCommands(
 		File gitRepoDir, final File portalRootDir,
+		final BuildChangeLogTask buildChangeLogTask,
 		final WritePropertiesTask recordArtifactTask, boolean testProject) {
 
 		final Project project = recordArtifactTask.getProject();
@@ -647,11 +649,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					commands.add(
 						_getGradleCommand(
-							gradleRelativePath,
-							ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME,
+							gradleRelativePath, buildChangeLogTask.getName(),
 							gradleDaemon));
 
-					commands.add("git add --all .");
+					commands.add(
+						"git add " +
+							project.relativePath(
+								buildChangeLogTask.getChangeLogFile()));
 
 					commands.add(
 						_getGitCommitCommand("change log", true, true));
@@ -1265,13 +1269,19 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		if (relengDir != null) {
 			GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 
+			BuildChangeLogTask buildChangeLogTask =
+				(BuildChangeLogTask)GradleUtil.getTask(
+					project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
+
 			WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 				project, relengDir);
 
 			addTaskPrintArtifactPublishCommands(
-				gitRepoDir, portalRootDir, recordArtifactTask, testProject);
+				gitRepoDir, portalRootDir, buildChangeLogTask,
+				recordArtifactTask, testProject);
 			addTaskPrintStaleArtifact(
 				portalRootDir, recordArtifactTask, testProject);
+			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 		}
 
 		final ReplaceRegexTask updateFileVersionsTask =
@@ -1642,6 +1652,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			project, "baseline.jar.report.only.dirty.packages", true);
 
 		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
+	}
+
+	protected void configureTaskBuildChangeLog(
+		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
+
+		buildChangeLogTask.setChangeLogFile(
+			new File(destinationDir, "liferay-releng.changelog"));
 	}
 
 	protected void configureTaskEnabledIfStale(

@@ -27,63 +27,61 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 %>
 
 <div class="taglib-rss-settings">
-	<aui:fieldset markupView="lexicon">
-		<aui:input label="enable-rss-subscription" name="preferences--enableRss--" type="checkbox" value="<%= enabled %>" />
+	<aui:input label="enable-rss-subscription" name="preferences--enableRss--" type="toggle-switch" value="<%= enabled %>" />
 
-		<div class="rss-settings-options" id="<portlet:namespace />rssOptions">
-			<c:if test="<%= nameEnabled %>">
-				<aui:input label="rss-feed-name" name="preferences--rssName--" type="text" value="<%= name %>" />
-			</c:if>
+	<div class="rss-settings-options" id="<portlet:namespace />rssOptions">
+		<c:if test="<%= nameEnabled %>">
+			<aui:input label="rss-feed-name" name="preferences--rssName--" type="text" value="<%= name %>" />
+		</c:if>
 
-			<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value="<%= delta %>">
-				<aui:option label="1" />
-				<aui:option label="2" />
-				<aui:option label="3" />
-				<aui:option label="4" />
-				<aui:option label="5" />
-				<aui:option label="10" />
-				<aui:option label="15" />
-				<aui:option label="20" />
-				<aui:option label="25" />
-				<aui:option label="30" />
-				<aui:option label="40" />
-				<aui:option label="50" />
-				<aui:option label="60" />
-				<aui:option label="70" />
-				<aui:option label="80" />
-				<aui:option label="90" />
-				<aui:option label="100" />
-			</aui:select>
+		<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value="<%= delta %>">
+			<aui:option label="1" />
+			<aui:option label="2" />
+			<aui:option label="3" />
+			<aui:option label="4" />
+			<aui:option label="5" />
+			<aui:option label="10" />
+			<aui:option label="15" />
+			<aui:option label="20" />
+			<aui:option label="25" />
+			<aui:option label="30" />
+			<aui:option label="40" />
+			<aui:option label="50" />
+			<aui:option label="60" />
+			<aui:option label="70" />
+			<aui:option label="80" />
+			<aui:option label="90" />
+			<aui:option label="100" />
+		</aui:select>
 
-			<aui:select label="display-style" name="preferences--rssDisplayStyle--">
+		<aui:select label="display-style" name="preferences--rssDisplayStyle--">
 
-				<%
-				for (String curDisplayStyle : displayStyles) {
-				%>
+			<%
+			for (String curDisplayStyle : displayStyles) {
+			%>
 
-					<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
+				<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</aui:select>
+		</aui:select>
 
-			<aui:select label="format" name="preferences--rssFeedType--">
+		<aui:select label="format" name="preferences--rssFeedType--">
 
-				<%
-				for (String type : RSSUtil.FEED_TYPES) {
-				%>
+			<%
+			for (String type : RSSUtil.FEED_TYPES) {
+			%>
 
-					<aui:option label="<%= RSSUtil.getFeedTypeName(type) %>" selected="<%= feedType.equals(type) %>" value="<%= type %>" />
+				<aui:option label="<%= RSSUtil.getFeedTypeName(type) %>" selected="<%= feedType.equals(type) %>" value="<%= type %>" />
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</aui:select>
-		</div>
-	</aui:fieldset>
+		</aui:select>
+	</div>
 </div>
 
 <aui:script>

@@ -12,6 +12,8 @@ update DLFileEntry set classNameId = 0;
 update DLFileEntry set classPK = 0;
 update DLFileEntry set manualCheckInRequired = FALSE;
 
+drop index IX_E9B6A85B on DLFileEntryType;
+
 alter table DLFileRank add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;

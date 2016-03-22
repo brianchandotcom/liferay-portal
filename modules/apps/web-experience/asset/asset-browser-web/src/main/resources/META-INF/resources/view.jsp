@@ -154,8 +154,9 @@
 				</c:when>
 				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column title-column"
 						name="title"
+						truncate="<%= true %>"
 					>
 						<c:choose>
 							<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
@@ -170,21 +171,26 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
 						name="description"
+						truncate="<%= true %>"
 						value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="user-name-column text-column"
 						name="user-name"
 						value="<%= PortalUtil.getUserName(assetEntry) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
+						cssClass="modified-date-column text-column"
 						name="modified-date"
 						value="<%= assetEntry.getModifiedDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="site-column text-column"
 						name="site"
 						value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 					/>

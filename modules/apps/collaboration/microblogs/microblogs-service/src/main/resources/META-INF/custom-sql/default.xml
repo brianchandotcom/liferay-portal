@@ -7,7 +7,7 @@
 				COUNT(DISTINCT MicroblogsEntry.microblogsEntryId) AS COUNT_VALUE
 			FROM
 				MicroblogsEntry
-			LEFT JOIN
+			LEFT OUTER JOIN
 				SocialRelation ON
 					(MicroblogsEntry.userId = SocialRelation.userId2)
 			WHERE
@@ -23,6 +23,9 @@
 					) OR
 					(
 						MicroblogsEntry.userId = ?
+					) OR
+					(
+						MicroblogsEntry.socialRelationType = 0
 					)
 				) AND
 				(
@@ -169,7 +172,7 @@
 				DISTINCT MicroblogsEntry.microblogsEntryId, MicroblogsEntry.createDate
 			FROM
 				MicroblogsEntry
-			LEFT JOIN
+			LEFT OUTER JOIN
 				SocialRelation ON
 					(MicroblogsEntry.userId = SocialRelation.userId2)
 			WHERE
@@ -185,6 +188,9 @@
 					) OR
 					(
 						MicroblogsEntry.userId = ?
+					) OR
+					(
+						MicroblogsEntry.socialRelationType = 0
 					)
 				) AND
 				(

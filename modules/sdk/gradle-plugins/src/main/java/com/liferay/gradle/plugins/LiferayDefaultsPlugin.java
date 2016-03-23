@@ -54,6 +54,7 @@ import java.lang.reflect.Method;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -810,59 +811,75 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		Action<Task> action = new Action<Task>() {
 
+			private void _update(
+					Project project, Object fileName, String oldSub,
+					String newSub)
+				throws IOException {
+
+				File file = project.file(fileName);
+
+				if (!file.exists()) {
+					if (_logger.isInfoEnabled()) {
+						_logger.info(
+							"Unable to find " + project.relativePath(file));
+					}
+
+					return;
+				}
+
+				Path path = file.toPath();
+
+				String content = new String(
+					Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+				String newContent = content.replace(oldSub, newSub);
+
+				if (content.equals(newContent)) {
+					if (_logger.isWarnEnabled()) {
+						_logger.warn(
+							"Unable to update " + project.relativePath(file));
+					}
+
+					return;
+				}
+
+				Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
+
+				if (_logger.isLifecycleEnabled()) {
+					_logger.lifecycle("Updated " + project.relativePath(file));
+				}
+			}
+
 			@Override
 			public void execute(Task task) {
 				try {
 					Project project = task.getProject();
 
-					File bndFile = project.file("bnd.bnd");
-
-					if (!bndFile.exists()) {
-						if (_logger.isInfoEnabled()) {
-							_logger.info("Unable to find " + bndFile);
-						}
-
-						return;
-					}
-
-					String bndContent = new String(
-						Files.readAllBytes(bndFile.toPath()),
-						StandardCharsets.UTF_8);
-
 					VersionNumber versionNumber = VersionNumber.parse(
 						String.valueOf(project.getVersion()));
 
-					VersionNumber nextVersionNumber = new VersionNumber(
+					VersionNumber newVersionNumber = new VersionNumber(
 						versionNumber.getMajor(), versionNumber.getMinor(),
 						versionNumber.getMicro() + 1,
 						versionNumber.getQualifier());
 
-					String nextBndContent = bndContent.replace(
+					_update(
+						project, "bnd.bnd",
 						Constants.BUNDLE_VERSION + ": " + versionNumber,
-						Constants.BUNDLE_VERSION + ": " + nextVersionNumber);
+						Constants.BUNDLE_VERSION + ": " + newVersionNumber);
 
-					if (bndContent.equals(nextBndContent)) {
-						if (_logger.isWarnEnabled()) {
-							_logger.warn(
-								"Unable to update " + Constants.BUNDLE_VERSION);
-						}
+					File moduleConfigFile = getModuleConfigFile(project);
 
-						return;
-					}
-
-					Files.write(
-						bndFile.toPath(),
-						nextBndContent.getBytes(StandardCharsets.UTF_8));
-
-					if (_logger.isLifecycleEnabled()) {
-						_logger.lifecycle(
-							Constants.BUNDLE_VERSION + " of " + project +
-								" updated to " + nextVersionNumber);
+					if (moduleConfigFile != null) {
+						_update(
+							project, moduleConfigFile,
+							"\"version\": \"" + versionNumber + "\"",
+							"\"version\": \"" + newVersionNumber + "\"");
 					}
 				}
 				catch (IOException ioe) {
 					throw new GradleException(
-						"Unable to update " + Constants.BUNDLE_VERSION, ioe);
+						"Unable to update bundle version", ioe);
 				}
 			}
 
@@ -1010,18 +1027,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void checkVersion(Project project) {
-		if (!hasPlugin(project, JSModuleConfigGeneratorPlugin.class)) {
-			return;
-		}
+		File moduleConfigFile = getModuleConfigFile(project);
 
-		ConfigJSModulesTask configJSModulesTask =
-			(ConfigJSModulesTask)GradleUtil.getTask(
-				project,
-				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
-
-		File moduleConfigFile = configJSModulesTask.getModuleConfigFile();
-
-		if (!moduleConfigFile.exists()) {
+		if ((moduleConfigFile == null) || !moduleConfigFile.exists()) {
 			return;
 		}
 
@@ -2134,6 +2142,19 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 
 		return project.file("lib");
+	}
+
+	protected File getModuleConfigFile(Project project) {
+		if (!hasPlugin(project, JSModuleConfigGeneratorPlugin.class)) {
+			return null;
+		}
+
+		ConfigJSModulesTask configJSModulesTask =
+			(ConfigJSModulesTask)GradleUtil.getTask(
+				project,
+				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
+
+		return configJSModulesTask.getModuleConfigFile();
 	}
 
 	protected String getModuleDependency(

@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.login.web.portlet.util.LoginUtil" %><%@
+<%@ page import="com.liferay.content.util.ContentUtil" %><%@
+page import="com.liferay.login.web.portlet.util.LoginUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException" %><%@
@@ -89,8 +90,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
-page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.util.ContentUtil" %>
+page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Date" %>

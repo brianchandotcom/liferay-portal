@@ -80,6 +80,16 @@
 
 	<target name="clean-app">
 		<delete dir="${dist.dir}" />
+
+		<exec executable="git" dir="${releng.app.dir}">
+			<arg line="clean" />
+			<arg line="-f" />
+		</exec>
+
+		<exec executable="git" dir="${releng.app.dir}">
+			<arg line="checkout" />
+			<arg line="app.changelog" />
+		</exec>
 	</target>
 
 	<target name="dist-module-artifacts" depends="check-stale-artifacts,get-artifact-versions-previous-release">

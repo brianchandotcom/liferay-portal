@@ -158,7 +158,11 @@ portletURL.setParameter("tabs3", "current-and-previous");
 													<li class="tree-item">
 														<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
-														<aui:input label="configuration" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+														<%
+														String rootControlId = PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId();
+														%>
+
+														<aui:input label="configuration" name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
 
 														<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
 															<ul class="lfr-tree list-unstyled">
@@ -168,8 +172,10 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 																			<%
 																			request.setAttribute("render_controls.jsp-action", Constants.PUBLISH);
+																			request.setAttribute("render_controls.jsp-childControl", false);
 																			request.setAttribute("render_controls.jsp-controls", configurationControls);
 																			request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
+																			request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
 																			%>
 
 																			<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
@@ -359,7 +365,11 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																	<span class="badge badge-warning" id="<portlet:namespace />deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 																</liferay-util:buffer>
 
-																<aui:input label='<%= LanguageUtil.get(request, "content") + badgeHTML %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+																<%
+																String rootControlId = PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId();
+																%>
+
+																<aui:input label='<%= LanguageUtil.get(request, "content") + badgeHTML %>' name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
 
 																<%
 																PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
@@ -377,9 +387,11 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 																							<%
 																							request.setAttribute("render_controls.jsp-action", Constants.PUBLISH);
+																							request.setAttribute("render_controls.jsp-childControl", false);
 																							request.setAttribute("render_controls.jsp-controls", exportControls);
 																							request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 																							request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+																							request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
 																							%>
 
 																							<ul class="lfr-tree list-unstyled">

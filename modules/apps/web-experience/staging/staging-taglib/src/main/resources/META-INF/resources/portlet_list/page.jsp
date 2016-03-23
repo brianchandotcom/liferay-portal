@@ -64,7 +64,7 @@
 
 		long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 
-		boolean displayCounts = (exportModelCount != 0) || (modelDeletionCount != 0);
+		boolean displayCounts = (exportModelCount > 0) || (modelDeletionCount > 0);
 
 		if (!type.equals(Constants.EXPORT)) {
 			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
@@ -97,6 +97,7 @@
 						if (exportControls != null) {
 							if (type.equals(Constants.EXPORT)) {
 								request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+								request.setAttribute("render_controls.jsp-childControl", false);
 								request.setAttribute("render_controls.jsp-controls", exportControls);
 								request.setAttribute("render_controls.jsp-disableInputs", disableInputs);
 								request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
@@ -115,6 +116,7 @@
 							}
 							else if (liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
 								request.setAttribute("render_controls.jsp-action", Constants.PUBLISH);
+								request.setAttribute("render_controls.jsp-childControl", false);
 								request.setAttribute("render_controls.jsp-controls", exportControls);
 								request.setAttribute("render_controls.jsp-disableInputs", disableInputs);
 								request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);

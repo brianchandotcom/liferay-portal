@@ -222,7 +222,11 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 													</liferay-util:buffer>
 
-													<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" />
+													<%
+													String rootControlId = PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId();
+													%>
+
+													<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= rootControlId %>" type="checkbox" />
 
 													<%
 													PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
@@ -238,10 +242,13 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																		<%
 																		if (importControls != null) {
-																			request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																			request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
+																			request.setAttribute("render_controls.jsp-childControl", false);
 																			request.setAttribute("render_controls.jsp-controls", importControls);
 																			request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 																			request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+																			request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
+																			request.setAttribute("render_controls.jsp-rootControlId", rootControlId);
 																		%>
 
 																			<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(importMetadataControls) ? "content" : StringPool.BLANK %>'>

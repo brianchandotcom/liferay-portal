@@ -18,11 +18,13 @@
 
 <%
 String action = (String)request.getAttribute("render_controls.jsp-action");
+boolean childControl = GetterUtil.getBoolean(String.valueOf(request.getAttribute("render_controls.jsp-childControl")));
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("render_controls.jsp-disableInputs"), false);
 ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_controls.jsp-manifestSummary");
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("render_controls.jsp-parameterMap"), Collections.emptyMap());
 String portletId = (String)request.getAttribute("render_controls.jsp-portletId");
+String rootControlId = (String)request.getAttribute("render_controls.jsp-rootControlId");
 
 if (Validator.isNotNull(portletId)) {
 	PortletBag portletBag = PortletBagPool.get(portletId);
@@ -66,6 +68,10 @@ for (int i = 0; i < controls.length; i++) {
 
 				data.put("name", controlLabel);
 
+				if (!childControl) {
+					data.put("root-control-id", liferayPortletResponse.getNamespace() + rootControlId);
+				}
+
 				PortletDataHandlerControl[] children = control.getChildren();
 
 				String controlName = Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : (control.getControlName() + StringPool.UNDERLINE + portletId);
@@ -77,6 +83,7 @@ for (int i = 0; i < controls.length; i++) {
 					<ul class="list-unstyled" id="<portlet:namespace /><%= controlName %>Controls">
 
 						<%
+						request.setAttribute("render_controls.jsp-childControl", true);
 						request.setAttribute("render_controls.jsp-controls", children);
 						%>
 

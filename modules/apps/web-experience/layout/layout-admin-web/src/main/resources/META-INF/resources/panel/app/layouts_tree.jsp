@@ -112,7 +112,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<c:if test="<%= layoutsTreeDisplayContext.isShowExpandLayoutSetButton(false) %>">
 									<li>
-										<a href="javascript:;" id="<portlet:namespace/>expandPagesLink"><liferay-ui:message key="expand" /></a>
+										<a href="javascript:;" id="<portlet:namespace/>expandPagesLink"><liferay-ui:message key="expand-area" /></a>
 									</li>
 								</c:if>
 
@@ -185,7 +185,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								<c:if test="<%= layoutsTreeDisplayContext.isShowExpandLayoutSetButton(false) %>">
 									<li>
-										<a href="javascript:;" id="<portlet:namespace/>expandPagesLink"><liferay-ui:message key="expand" /></a>
+										<a href="javascript:;" id="<portlet:namespace/>expandPagesLink"><liferay-ui:message key="expand-area" /></a>
 									</li>
 								</c:if>
 

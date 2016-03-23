@@ -310,46 +310,46 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				return;
 			}
 
-				EnumMap<Path, String[]> map = _ordering.getRoutes();
+			EnumMap<Path, String[]> map = _ordering.getRoutes();
 
-				List<String> namesBefore = new ArrayList<>(2);
+			List<String> namesBefore = new ArrayList<>(2);
 
-				if (_nameBefore != null) {
-					namesBefore.add(_nameBefore);
-				}
+			if (_nameBefore != null) {
+				namesBefore.add(_nameBefore);
+			}
 
-				if (_othersBeforeSet) {
-					namesBefore.add(OrderingImpl.OTHERS);
-				}
+			if (_othersBeforeSet) {
+				namesBefore.add(OrderingImpl.OTHERS);
+			}
 
-				if (ListUtil.isNotEmpty(namesBefore)) {
-					map.put(Path.BEFORE, namesBefore.toArray(new String[0]));
-				}
+			if (ListUtil.isNotEmpty(namesBefore)) {
+				map.put(Path.BEFORE, namesBefore.toArray(new String[0]));
+			}
 
-				List<String> namesAfter = new ArrayList<>(2);
+			List<String> namesAfter = new ArrayList<>(2);
 
-				if (_nameAfter != null) {
-					namesAfter.add(_nameAfter);
-				}
+			if (_nameAfter != null) {
+				namesAfter.add(_nameAfter);
+			}
 
-				if (_othersAfterSet) {
-					namesAfter.add(OrderingImpl.OTHERS);
-				}
+			if (_othersAfterSet) {
+				namesAfter.add(OrderingImpl.OTHERS);
+			}
 
-				if (ListUtil.isNotEmpty(namesAfter)) {
-					map.put(Path.AFTER, namesAfter.toArray(new String[0]));
-				}
+			if (ListUtil.isNotEmpty(namesAfter)) {
+				map.put(Path.AFTER, namesAfter.toArray(new String[0]));
+			}
 
-				_nameAfter = null;
-				_nameBefore = null;
-				_othersAfterSet = false;
-				_othersBeforeSet = false;
+			_nameAfter = null;
+			_nameBefore = null;
+			_othersAfterSet = false;
+			_othersBeforeSet = false;
 
-				_ordering.setRoutes(map);
+			_ordering.setRoutes(map);
 
-				_webXMLDefinition.setOrdering(_ordering);
+			_webXMLDefinition.setOrdering(_ordering);
 
-				_ordering = null;
+			_ordering = null;
 		}
 		else if (qName.equals("url-pattern")) {
 			if (_filterMapping != null) {

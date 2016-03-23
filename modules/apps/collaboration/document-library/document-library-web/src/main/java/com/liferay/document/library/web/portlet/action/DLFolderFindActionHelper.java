@@ -54,10 +54,13 @@ public class DLFolderFindActionHelper extends BaseDLFindActionHelper {
 	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		Folder folder = _dlAppLocalService.getFolder(primaryKey);
+		if (primaryKey > 0) {
+			Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
-		portletURL.setParameter(
-			"folderId", String.valueOf(folder.getFolderId()));
+			primaryKey = folder.getFolderId();
+		}
+
+		portletURL.setParameter("folderId", String.valueOf(primaryKey));
 	}
 
 	@Override

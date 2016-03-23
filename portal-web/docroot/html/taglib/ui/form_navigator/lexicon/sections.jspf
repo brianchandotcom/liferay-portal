@@ -113,8 +113,13 @@
 				</c:otherwise>
 			</c:choose>
 
-			if (focusField) {
-				focusField.focus();
+			if (focusField.length) {
+				Liferay.on(
+					'<portlet:namespace />formReady',
+					function(event) {
+						focusField.focus();
+					}
+				);
 			}
 		</aui:script>
 

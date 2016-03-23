@@ -2059,7 +2059,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String sortAttributes(
 			String fileName, String line, String tag, int lineCount,
-			boolean allowApostropheDelimeter)
+			boolean escapeQuotes)
 		throws Exception {
 
 		String s = tag;
@@ -2149,7 +2149,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 						StringPool.QUOTE + value + StringPool.QUOTE);
 				}
-				else if (!allowApostropheDelimeter) {
+				else if (escapeQuotes) {
 					String newValue = StringUtil.replace(
 						value, StringPool.QUOTE, "&quot;");
 

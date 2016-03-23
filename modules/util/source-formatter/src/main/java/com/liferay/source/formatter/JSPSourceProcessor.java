@@ -853,7 +853,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				while (matcher.find()) {
 					line = sortAttributes(
-						fileName, line, matcher.group(), lineCount, true);
+						fileName, line, matcher.group(), lineCount, false);
 				}
 
 				if (readAttributes) {
@@ -985,7 +985,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					}
 					else {
 						line = sortAttributes(
-							fileName, line, trimmedLine, lineCount, true);
+							fileName, line, trimmedLine, lineCount, false);
 					}
 				}
 

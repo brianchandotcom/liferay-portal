@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_MY_SITES</td>
 	<td>//li[contains(@id,'MySitesPortlet')]/a[contains(.,'My Sites')]</td>
 	<td></td>

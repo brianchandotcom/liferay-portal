@@ -2143,13 +2143,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (delimeter == CharPool.APOSTROPHE) {
-				if (!value.contains(StringPool.QUOTE)) {
-					return StringUtil.replace(
-						line,
-						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-						StringPool.QUOTE + value + StringPool.QUOTE);
-				}
-				else if (escapeQuotes) {
+				if (escapeQuotes) {
 					String newValue = StringUtil.replace(
 						value, StringPool.QUOTE, "&quot;");
 
@@ -2157,6 +2151,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						line,
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 						StringPool.QUOTE + newValue + StringPool.QUOTE);
+				}
+
+				if (!value.contains(StringPool.QUOTE) ||
+					!tagName.contains(StringPool.COLON)) {
+
+					return StringUtil.replace(
+						line,
+						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+						StringPool.QUOTE + value + StringPool.QUOTE);
 				}
 			}
 

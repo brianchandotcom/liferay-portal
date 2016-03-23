@@ -979,6 +979,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatReturnStatements(fileName, newContent);
 
+		newContent = fixMissingEmptyLineAfterSettingVariable(newContent);
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
@@ -1169,6 +1171,61 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return StringUtil.replaceFirst(
 					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
 			}
+		}
+
+		return content;
+	}
+
+	protected String fixMissingEmptyLineAfterSettingVariable(String content) {
+		Matcher matcher = _setVariablePattern.matcher(content);
+
+		while (matcher.find()) {
+			if (content.charAt(matcher.end()) == CharPool.NEW_LINE) {
+				continue;
+			}
+
+			int x = content.indexOf(";\n", matcher.end());
+
+			if (x == -1) {
+				return content;
+			}
+
+			String nextCommand = content.substring(matcher.end() - 1, x + 1);
+
+			if (nextCommand.contains("{\n")) {
+				continue;
+			}
+
+			String variableName = matcher.group(1);
+
+			Pattern pattern2 = Pattern.compile("\\W(" + variableName + ")\\.");
+
+			Matcher matcher2 = pattern2.matcher(nextCommand);
+
+			if (!matcher2.find()) {
+				continue;
+			}
+
+			x = matcher2.start(1);
+
+			if (ToolsUtil.isInsideQuotes(nextCommand, x)) {
+				continue;
+			}
+
+			x += matcher.end();
+
+			int y = content.lastIndexOf("\ttry (", x);
+
+			if (y != -1) {
+				int z = content.indexOf(") {\n", y);
+
+				if (z > x) {
+					continue;
+				}
+			}
+
+			return StringUtil.replaceFirst(
+				content, "\n", "\n\n", matcher.end(2));
 		}
 
 		return content;
@@ -4192,6 +4249,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _secureXmlExcludes;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+	private Pattern _setVariablePattern = Pattern.compile(
+		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExcludes;

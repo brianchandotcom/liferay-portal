@@ -293,6 +293,7 @@ public class AuthTokenWhitelistUtilTest {
 			"p_p_resource_id", TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		themeDisplay.setLifecycleResource(true);
 
 		mockHttpServletRequest.setAttribute(

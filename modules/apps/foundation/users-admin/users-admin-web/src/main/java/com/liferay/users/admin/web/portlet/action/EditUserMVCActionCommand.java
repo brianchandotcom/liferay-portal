@@ -362,6 +362,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 				if (updateLanguageId && themeDisplay.isI18n()) {
 					String i18nLanguageId = user.getLanguageId();
+
 					int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
 
 					if (pos != -1) {

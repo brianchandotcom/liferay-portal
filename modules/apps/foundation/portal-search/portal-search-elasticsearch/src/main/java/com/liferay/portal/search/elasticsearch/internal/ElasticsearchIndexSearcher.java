@@ -675,6 +675,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		for (Terms.Bucket bucket : buckets) {
 			Aggregations bucketAggregations = bucket.getAggregations();
+
 			TopHits topHits = bucketAggregations.get(
 				GroupByTranslator.TOP_HITS_AGGREGATION_NAME);
 

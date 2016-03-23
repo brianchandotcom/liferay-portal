@@ -252,6 +252,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
+
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(

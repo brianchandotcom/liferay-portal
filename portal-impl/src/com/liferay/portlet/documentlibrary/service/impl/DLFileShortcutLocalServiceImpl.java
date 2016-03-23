@@ -53,6 +53,7 @@ public class DLFileShortcutLocalServiceImpl
 		// File shortcut
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		folderId = getFolderId(user.getCompanyId(), folderId);
 
 		validate(user, toFileEntryId);

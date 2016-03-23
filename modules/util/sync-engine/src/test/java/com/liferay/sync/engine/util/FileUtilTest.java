@@ -137,6 +137,7 @@ public class FileUtilTest {
 		Assert.assertTrue(Files.exists(sourceFilePath));
 
 		Path targetDirectoryFilePath = Files.createTempDirectory("test");
+
 		Path targetFilePath = targetDirectoryFilePath.resolve(
 			sourceFilePath.getFileName());
 

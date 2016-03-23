@@ -52,6 +52,7 @@ public class ThemeImporter {
 
 		Element importDataRootElement =
 			portletDataContext.getImportDataRootElement();
+
 		Element headerElement = importDataRootElement.element("header");
 
 		String themeId = layoutSet.getThemeId();

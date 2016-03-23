@@ -5072,8 +5072,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// User
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		Company company = companyPersistence.findByPrimaryKey(
 			user.getCompanyId());
+
 		String password = oldPassword;
 		screenName = getLogin(screenName);
 		emailAddress = StringUtil.toLowerCase(emailAddress.trim());

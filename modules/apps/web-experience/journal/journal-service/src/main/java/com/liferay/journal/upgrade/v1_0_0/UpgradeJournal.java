@@ -206,6 +206,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		while (matcher.find()) {
 			String oldFieldName = matcher.group(1);
+
 			String newFieldName = oldFieldName.replaceAll(
 				_INVALID_FIELD_NAME_CHARS_REGEX, StringPool.BLANK);
 

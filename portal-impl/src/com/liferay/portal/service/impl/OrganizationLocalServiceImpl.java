@@ -177,6 +177,7 @@ public class OrganizationLocalServiceImpl
 		// Organization
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		parentOrganizationId = getParentOrganizationId(
 			user.getCompanyId(), parentOrganizationId);
 

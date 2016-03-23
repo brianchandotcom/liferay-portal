@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.dependencies;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+
 import java.util.concurrent.Callable;
 
 /**
@@ -21,12 +23,17 @@ import java.util.concurrent.Callable;
  */
 public class MissingEmptyLines {
 
-	public void method() {
+	public void method1() {
 		Callable<Void> callable = new Callable<Void>() {
 			@Override
 			public Void call() {
 				return null;
 			}
 		};
+	}
+
+	public String method2() {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+		themeDisplay.setSignedIn(true);
 	}
 }

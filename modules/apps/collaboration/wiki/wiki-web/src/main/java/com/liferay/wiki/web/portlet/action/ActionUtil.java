@@ -97,6 +97,7 @@ public class ActionUtil {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
 		long groupId = themeDisplay.getScopeGroupId();
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

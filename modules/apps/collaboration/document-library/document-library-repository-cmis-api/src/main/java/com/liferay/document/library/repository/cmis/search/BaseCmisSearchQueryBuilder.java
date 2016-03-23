@@ -334,6 +334,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 			}
 
 			String value = queryTerm.getValue();
+
 			String[] terms = value.split(_STAR_PATTERN);
 
 			CMISConjunction cmisConjunction = new CMISConjunction();

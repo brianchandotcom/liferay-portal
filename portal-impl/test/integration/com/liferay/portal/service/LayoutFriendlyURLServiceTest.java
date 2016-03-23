@@ -79,6 +79,7 @@ public class LayoutFriendlyURLServiceTest {
 
 		Layout layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), false, nameMap, friendlyURLMap);
+
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
 				layout.getPlid());

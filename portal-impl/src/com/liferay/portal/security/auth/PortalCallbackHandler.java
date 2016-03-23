@@ -36,10 +36,12 @@ public class PortalCallbackHandler implements CallbackHandler, Serializable {
 		for (int i = 0; i < callbacks.length; i++) {
 			if (callbacks[i] instanceof NameCallback) {
 				NameCallback nameCallback = (NameCallback)callbacks[i];
+
 				nameCallback.setName(_name);
 			}
 			else if (callbacks[i] instanceof PasswordCallback) {
 				PasswordCallback passCallback = (PasswordCallback)callbacks[i];
+
 				passCallback.setPassword(_password.toCharArray());
 			}
 		}

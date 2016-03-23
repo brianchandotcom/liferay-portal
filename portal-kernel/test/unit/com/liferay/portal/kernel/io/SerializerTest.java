@@ -655,7 +655,9 @@ public class SerializerTest {
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
 		String className = clazz.getName();
+
 		String contextName = StringPool.NULL;
+
 		byte[] contextNameBytes = contextName.getBytes(StringPool.UTF8);
 
 		Assert.assertEquals(

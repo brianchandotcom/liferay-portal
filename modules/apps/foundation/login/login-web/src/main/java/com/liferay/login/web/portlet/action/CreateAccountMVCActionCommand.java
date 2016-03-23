@@ -107,6 +107,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
+
 		HttpSession session = request.getSession();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

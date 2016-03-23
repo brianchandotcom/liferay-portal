@@ -381,6 +381,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
+
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
@@ -462,6 +463,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
+
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -752,6 +754,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
+
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

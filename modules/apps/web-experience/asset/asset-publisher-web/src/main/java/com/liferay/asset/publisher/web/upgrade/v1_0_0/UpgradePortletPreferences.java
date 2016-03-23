@@ -253,6 +253,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 					Validator.isNotNull(ddmFormField.getIndexType())) {
 
 					StringBundler sb = new StringBundler(7);
+
 					sb.append(values[0]);
 					sb.append(_DDM_FIELD_SEPARATOR);
 					sb.append(ddmFormField.getIndexType());

@@ -246,7 +246,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Message
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		userName = user.isDefaultUser() ? userName : user.getFullName();
+
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 

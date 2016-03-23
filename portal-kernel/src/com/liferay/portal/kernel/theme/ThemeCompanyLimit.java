@@ -67,6 +67,7 @@ public class ThemeCompanyLimit implements Serializable {
 
 			if (themeCompanyId.isPattern()) {
 				Pattern pattern = Pattern.compile(themeCompanyIdValue);
+
 				Matcher matcher = pattern.matcher(String.valueOf(companyId));
 
 				if (matcher.matches()) {

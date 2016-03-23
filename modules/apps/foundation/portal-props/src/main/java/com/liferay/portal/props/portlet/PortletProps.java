@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.portlet;
+package com.liferay.portal.props.portlet;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;

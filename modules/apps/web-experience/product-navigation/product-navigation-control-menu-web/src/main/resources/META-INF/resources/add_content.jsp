@@ -32,7 +32,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 
 <aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
 	<div class="input-group search-bar">
-		<input class="form-control" id="<portlet:namespace />searchContent" name="<portlet:namespace />searchContent" placeholder='<%= LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD %>' type="text" />
+		<input class="form-control" id="<portlet:namespace />searchContent" name="<portlet:namespace />searchContent" placeholder="<%= LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD %>" type="text" />
 
 		<span class="input-group-btn">
 			<liferay-ui:icon icon="search" markupView="lexicon" />

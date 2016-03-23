@@ -89,7 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -114,33 +114,63 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			keyProperty="feedId"
 			modelVar="feed"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="id-column text-column"
-				name="id"
-				property="feedId"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="rss-svg"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
-				name="name"
-				property="name"
-				truncate="<%= true %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<%= feed.getName() %>
+						</h5>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column description-column"
-				name="description"
-				property="description"
-				truncate="<%= true %>"
-			/>
+						<h6 class="text-default">
+							<%= feed.getDescription() %>
+						</h6>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/feed_action.jsp"
-			/>
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="id" /></strong>: <%= feed.getId() %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/feed_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="id-column text-column"
+						name="id"
+						property="feedId"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						property="name"
+						truncate="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
+						name="description"
+						property="description"
+						truncate="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/feed_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

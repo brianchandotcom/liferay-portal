@@ -201,19 +201,27 @@ public class JspCPlugin implements Plugin<Project> {
 			webAppDir = warPluginConvention.getWebAppDir();
 		}
 		else {
-			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-			SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
-
-			Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-			Iterator<File> iterator = srcDirs.iterator();
-
-			webAppDir = iterator.next();
+			webAppDir = getResourcesDir(project);
 		}
 
-		jspCExtension.setWebAppDir(webAppDir);
+		compileJSPTask.setWebAppDir(webAppDir);
+
+		return compileJSPTask;
+	}
+
+	protected File getResourcesDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getResources());
+	}
+
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
 	}
 
 }

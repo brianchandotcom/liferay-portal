@@ -41,8 +41,8 @@ import java.nio.file.StandardCopyOption;
  */
 public class JarUtil {
 
-	public static void downloadAndInstallJar(
-			URL url, String libPath, String name, URLClassLoader urlClassLoader)
+	public static Path downloadAndInstallJar(
+			URL url, String libPath, String name)
 		throws Exception {
 
 		String protocol = url.getProtocol();
@@ -86,6 +86,15 @@ public class JarUtil {
 		if (_log.isInfoEnabled()) {
 			_log.info("Downloaded " + url + " to " + path);
 		}
+
+		return path;
+	}
+
+	public static void downloadAndInstallJar(
+			URL url, String libPath, String name, URLClassLoader urlClassLoader)
+		throws Exception {
+
+		Path path = downloadAndInstallJar(url, libPath, name);
 
 		URI uri = path.toUri();
 

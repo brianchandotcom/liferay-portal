@@ -897,6 +897,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		task.doLast(action);
 
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					String version = String.valueOf(project.getVersion());
+
+					if (version.contains("LIFERAY-PATCHED-")) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
 		task.setDescription(
 			"Updates the project version in the " + Constants.BUNDLE_VERSION +
 				" header.");

@@ -37,15 +37,17 @@ public class OrderingCircularDependencyException extends Exception {
 		Ordering.Path path, List<WebXMLDefinition> webXMLDefinitions) {
 
 		StringBuilder message = new StringBuilder();
-		message.append("Circular dependencies detected when traversing '");
 
+		message.append("Circular dependencies detected when traversing '");
 		message.append(path.name());
 		message.append("' declarations:");
 
 		for (WebXMLDefinition webXMLDefinition : webXMLDefinitions) {
 			Ordering someOrdering = webXMLDefinition.getOrdering();
+
 			EnumMap<Ordering.Path, String[]> someRoutes =
 				someOrdering.getRoutes();
+
 			String[] someNames = someRoutes.get(path);
 
 			if (someNames.length != 0) {

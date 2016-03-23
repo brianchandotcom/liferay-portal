@@ -57,11 +57,11 @@ public class WebFragmentOrderUtil {
 	 * This method returns an ordered version of the specified list of
 	 * web-fragment.xml descriptors and assumes that there is no
 	 * absolute ordering.
-	 * @param configList
+	 * @param	configList
 	 * @return
-	 * @throws OrderingBeforeAndAfterException
-	 * @throws OrderingCircularDependencyException
-	 * @throws OrderingMaxAttemptsException
+	 * @throws	OrderingBeforeAndAfterException
+	 * @throws	OrderingCircularDependencyException
+	 * @throws	OrderingMaxAttemptsException
 	 */
 	public static List<WebXMLDefinition> getOrder(
 			List<WebXMLDefinition> configList)
@@ -78,10 +78,9 @@ public class WebFragmentOrderUtil {
 		// was not being considered correctly in the ordering algorithm.
 
 		// This preSort method puts all of the documents with specified
-
-		//ordering as early on in the list of documents as possible for to
-		//consider it quickly, and be able to use its ordering algorithm
-		//to the best of its ability to achieve the specified ordering.
+		// ordering as early on in the list of documents as possible for to
+		// consider it quickly, and be able to use its ordering algorithm
+		// to the best of its ability to achieve the specified ordering.
 
 		configList = preSort(configList);
 
@@ -89,16 +88,14 @@ public class WebFragmentOrderUtil {
 			new WebXMLDefinition[configList.size()]);
 
 		// This is a multiple pass sorting routine which gets the documents
-
-		//close to the order they need to be in
+		// close to the order they need to be in
 
 		innerSort(configs);
 
 		// This is the final sort which checks the list from left to right to
-
-		//see if they are in the specified order and if they are not, it moves
-		//the incorrectly placed document(s) to the right into its proper place,
-		//and shifts others left as necessary.
+		// see if they are in the specified order and if they are not, it moves
+		// the incorrectly placed document(s) to the right into its proper place,
+		// and shifts others left as necessary.
 
 		postSort(configs);
 
@@ -150,7 +147,9 @@ public class WebFragmentOrderUtil {
 		}
 
 		Set<String> keySet = map.keySet();
+
 		String[] orderedNames = keySet.toArray(new String[keySet.size()]);
+
 		Arrays.sort(orderedNames);
 
 		return orderedNames;
@@ -161,6 +160,7 @@ public class WebFragmentOrderUtil {
 
 		String configName = config.getFragmentName();
 		Ordering configOrdering = config.getOrdering();
+
 		EnumMap<Ordering.Path, String[]> orderingRoutes =
 			configOrdering.getRoutes();
 
@@ -197,6 +197,7 @@ public class WebFragmentOrderUtil {
 		}
 
 		Set<String> keySet = map.keySet();
+
 		String[] namesToCheck = keySet.toArray(new String[keySet.size()]);
 
 		for (String name : namesToCheck) {
@@ -217,8 +218,7 @@ public class WebFragmentOrderUtil {
 			checkForBothBeforeAndAfter(config);
 
 			// Map the routes along both paths, checking for
-
-			//"circular references" along each path
+			// "circular references" along each path
 
 			for (Ordering.Path path : Ordering.Path.values()) {
 				mapRoutes(config, path, configs);
@@ -272,6 +272,7 @@ public class WebFragmentOrderUtil {
 		List<WebXMLDefinition> orderedList = new ArrayList<>();
 
 		List<WebXMLDefinition> configList = new CopyOnWriteArrayList<>();
+
 		configList.addAll(configs);
 
 		for (String name : absoluteOrder) {
@@ -286,7 +287,9 @@ public class WebFragmentOrderUtil {
 
 				if (!found && name.equals(fragmentName)) {
 					found = true;
+
 					orderedList.add(config);
+
 					configList.remove(config);
 				}
 				else if (found && name.equals(fragmentName)) {
@@ -333,8 +336,10 @@ public class WebFragmentOrderUtil {
 
 				if (isDisordered(configs[first], configs[second])) {
 					WebXMLDefinition temp = configs[first];
+
 					configs[first] = configs[second];
 					configs[second] = temp;
+
 					attempting = true;
 				}
 			}
@@ -385,9 +390,9 @@ public class WebFragmentOrderUtil {
 		// config2 should be before others, but it is not
 
 		if (config2Ordering.isBeforeOthers() &&
-		 !config2Ordering.isAfter(config1Name) &&
+			!config2Ordering.isAfter(config1Name) &&
 			!(config1Ordering.isBeforeOthers() &&
-			 config2Ordering.isBeforeOthers())) {
+			config2Ordering.isBeforeOthers())) {
 
 			return true;
 		}
@@ -402,6 +407,7 @@ public class WebFragmentOrderUtil {
 
 		String configName = config.getFragmentName();
 		Ordering configOrdering = config.getOrdering();
+
 		EnumMap<Ordering.Path, String[]> configOrderingRoutes =
 			configOrdering.getRoutes();
 		String[] routePathNames = configOrderingRoutes.get(path);
@@ -567,6 +573,7 @@ public class WebFragmentOrderUtil {
 
 		for (WebXMLDefinition config : configs) {
 			Ordering configOrdering = config.getOrdering();
+
 			EnumMap<Ordering.Path, String[]> configOrderingRoutes =
 				configOrdering.getRoutes();
 			String[] beforePathNames = configOrderingRoutes.get(

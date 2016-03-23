@@ -55,8 +55,8 @@ public class JspCPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		Configuration jspCConfiguration = addJspCConfiguration(project);
-		Configuration jspCToolConfiguration = addJspCToolConfiguration(project);
+		Configuration jspCConfiguration = addConfigurationJspC(project);
+		Configuration jspCToolConfiguration = addConfigurationJspCTool(project);
 
 		final CompileJSPTask generateJSPJavaTask = addTaskGenerateJSPJava(
 			project, jspCConfiguration, jspCToolConfiguration);
@@ -69,13 +69,13 @@ public class JspCPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					addJspCDependencies(project);
+					addDependenciesJspC(project);
 				}
 
 			});
 	}
 
-	protected Configuration addJspCConfiguration(Project project) {
+	protected Configuration addConfigurationJspC(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -86,7 +86,28 @@ public class JspCPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addJspCDependencies(Project project) {
+	protected Configuration addConfigurationJspCTool(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, TOOL_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesJspCTool(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures Liferay Jasper JspC for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addDependenciesJspC(Project project) {
 		DependencyHandler dependencyHandler = project.getDependencies();
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
@@ -109,28 +130,7 @@ public class JspCPlugin implements Plugin<Project> {
 		dependencyHandler.add(CONFIGURATION_NAME, configuration);
 	}
 
-	protected Configuration addJspCToolConfiguration(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, TOOL_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					addJspCToolDependencies(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures Liferay Jasper JspC for this project.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
-	protected void addJspCToolDependencies(Project project) {
+	protected void addDependenciesJspCTool(Project project) {
 		GradleUtil.addDependency(
 			project, TOOL_CONFIGURATION_NAME, "org.apache.ant", "ant", "1.9.4");
 		GradleUtil.addDependency(

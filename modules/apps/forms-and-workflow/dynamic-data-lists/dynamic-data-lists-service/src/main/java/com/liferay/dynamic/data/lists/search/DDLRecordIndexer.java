@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -48,7 +47,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -78,22 +77,12 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
-		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
-	}
-
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
-
-		return DDLRecordPermission.contains(
-			permissionChecker, entryClassPK, actionId);
 	}
 
 	@Override
@@ -156,8 +145,15 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 		DDLRecordVersion recordVersion = ddlRecord.getRecordVersion();
 
+		DDLRecordSet recordSet = recordVersion.getRecordSet();
+
+		document.addKeyword(
+			Field.CLASS_NAME_ID,
+			_classNameLocalService.getClassNameId(DDLRecordSet.class));
+		document.addKeyword(Field.CLASS_PK, recordSet.getRecordSetId());
 		document.addKeyword(
 			Field.CLASS_TYPE_ID, recordVersion.getRecordSetId());
+		document.addKeyword(Field.RELATED_ENTRY, true);
 		document.addKeyword(Field.STATUS, recordVersion.getStatus());
 		document.addKeyword(Field.VERSION, recordVersion.getVersion());
 
@@ -165,8 +161,6 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			"ddmContent",
 			extractDDMContent(recordVersion, LocaleUtil.getSiteDefault()));
 		document.addKeyword("recordSetId", recordVersion.getRecordSetId());
-
-		DDLRecordSet recordSet = recordVersion.getRecordSet();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
@@ -353,6 +347,13 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	}
 
 	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
 
@@ -391,6 +392,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordIndexer.class);
 
+	private ClassNameLocalService _classNameLocalService;
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;

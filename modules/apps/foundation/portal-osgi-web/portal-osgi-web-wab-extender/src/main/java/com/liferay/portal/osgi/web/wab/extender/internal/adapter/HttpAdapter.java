@@ -169,7 +169,8 @@ public class HttpAdapter {
 			else if (method.getName().equals("getInitParameterNames") &&
 					 (args == null)) {
 
-				return Collections.emptyEnumeration();
+				return Collections.enumeration(
+					Collections.singleton("osgi.http.endpoint"));
 			}
 			else if (method.getName().equals("getJspConfigDescriptor") &&
 					 JspConfigDescriptor.class.isAssignableFrom(

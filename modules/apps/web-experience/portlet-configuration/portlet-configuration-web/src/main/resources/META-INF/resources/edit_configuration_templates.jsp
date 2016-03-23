@@ -154,19 +154,19 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 					</c:when>
 					<c:when test='<%= displayStyle.equals("list") %>'>
 						<liferay-ui:search-container-column-text
-							cssClass="name-column"
+							cssClass="content-column name-column title-column"
 							name="name"
 							truncate="<%= true %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="user-name-column"
+							cssClass="text-column user-name-column"
 							name="user-name"
 							property="userName"
 						/>
 
 						<liferay-ui:search-container-column-date
-							cssClass="modified-date-column"
+							cssClass="modified-date-column text-column"
 							name="modified-date"
 							property="modifiedDate"
 						/>

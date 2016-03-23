@@ -1,5 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.content.util", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.map.api", version: "2.0.0"

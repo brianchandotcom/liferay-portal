@@ -851,7 +851,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				matcher = _jspTagAttributes.matcher(line);
 
-				if (matcher.find()) {
+				while (matcher.find()) {
 					String attributes = matcher.group(1);
 
 					Matcher attributeValueMatcher =

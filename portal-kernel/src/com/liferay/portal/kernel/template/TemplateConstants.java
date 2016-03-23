@@ -49,6 +49,8 @@ public interface TemplateConstants {
 
 	public static final String NAMESPACE = "namespace";
 
+	public static final String RENDER_STRICT = "_RENDER_STRICT_";
+
 	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";
 
 	public static final String TEMPLATE_ID = "template_id";

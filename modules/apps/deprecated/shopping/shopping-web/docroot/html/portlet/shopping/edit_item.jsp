@@ -571,7 +571,7 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 	function <portlet:namespace />editItemQuantities() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var itemQuantitiesURL = '<liferay-portlet:renderURL anchor="false" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>';
+		var itemQuantitiesURL = '<liferay-portlet:renderURL anchor="<%= false %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>';
 
 		<%
 		for (int i = 0; i < fieldsCount; i++) {

@@ -11,7 +11,7 @@
 	<short-name>liferay-product-navigation</short-name>
 	<uri>http://liferay.com/tld/product-navigation</uri>
 	<tag>
-		<description>Creates a component for site administrators to manage their sites. It is shown by default in the top of the page and includes links to open/close the product menu, the simulation menu or the add applications menu.</description>
+		<description>Creates a component for site administrators to manage their sites. It is shown by default at the top of the page and includes links to open/close the Product Menu, Simulation Menu, or Add Applications Menu.</description>
 		<name>control-menu</name>
 		<tag-class>com.liferay.product.navigation.taglib.servlet.taglib.ProductNavigationControlMenuTag</tag-class>
 		<body-content>JSP</body-content>

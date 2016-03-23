@@ -1,5 +1,5 @@
 diff --git a/org/apache/jasper/runtime/TldScanner.java b/org/apache/jasper/runtime/TldScanner.java
-index 0d3e9c8..3ec378a 100644
+index 0d3e9c8..c7d6aa0 100644
 --- a/org/apache/jasper/runtime/TldScanner.java
 +++ b/org/apache/jasper/runtime/TldScanner.java
 @@ -343,7 +343,9 @@ public class TldScanner implements ServletContainerInitializer {
@@ -13,3 +13,8 @@ index 0d3e9c8..3ec378a 100644
  
          // Make a local copy of the system jar cache 
          jarTldCacheLocal.putAll(jarTldCache);
+@@ -823,3 +825,4 @@ public class TldScanner implements ServletContainerInitializer {
+         }
+     }
+ }
++/* @generated */

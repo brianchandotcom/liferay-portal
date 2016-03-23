@@ -28,6 +28,20 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 portletURL.setParameter("redirect", redirect);
 
+FeedSearch feedSearch = new FeedSearch(renderRequest, portletURL);
+
+feedSearch.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+FeedSearchTerms searchTerms = (FeedSearchTerms)feedSearch.getSearchTerms();
+
+int feedsCount = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+
+feedSearch.setTotal(feedsCount);
+
+List feeds = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), feedSearch.getStart(), feedSearch.getEnd(), feedSearch.getOrderByComparator());
+
+feedSearch.setResults(feeds);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -39,14 +53,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		<aui:nav-item label="feeds" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= (feedsCount > 0) || searchTerms.isSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
+	disabled="<%= (feedsCount <= 0) && !searchTerms.isSearch() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="feeds"
 >
@@ -90,26 +107,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 <aui:form action="<%= deleteFeedsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="feeds"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		searchContainer="<%= new FeedSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= feedSearch %>"
 	>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			FeedSearchTerms searchTerms = (FeedSearchTerms)searchContainer.getSearchTerms();
-
-			total = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
-
-			searchContainer.setTotal(total);
-
-			results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFeed"
 			keyProperty="feedId"

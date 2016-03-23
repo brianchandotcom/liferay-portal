@@ -417,7 +417,10 @@ public class WebFragmentOrderUtil {
 				for (WebXMLDefinition otherConfig : webXMLs) {
 					String otherConfigName = otherConfig.getFragmentName();
 
-					if (routePathName.equals(otherConfigName)) {
+					if (!routePathName.equals(otherConfigName)) {
+						continue;
+					}
+
 						Ordering otherConfigOrdering =
 							otherConfig.getOrdering();
 
@@ -486,7 +489,6 @@ public class WebFragmentOrderUtil {
 								configOrderingRoutes.get(oppositePath));
 							configOrdering.setRoutes(routes);
 						}
-					}
 				}
 			}
 		}

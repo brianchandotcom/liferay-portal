@@ -64,7 +64,7 @@
 	</target>
 
 	<target name="check-stale-artifacts" depends="check-app-version">
-		<!-- <exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
+		<exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>
@@ -75,7 +75,7 @@
 					<equals arg1="${stale.artifacts.output}" arg2="" />
 				</not>
 			</condition>
-		</fail> -->
+		</fail>
 	</target>
 
 	<target name="clean-app">

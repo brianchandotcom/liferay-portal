@@ -383,6 +383,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		Writer writer = new UnsyncStringWriter();
 
 		template.put(TemplateConstants.NAMESPACE, namespace);
+		template.put(TemplateConstants.RENDER_STRICT, Boolean.FALSE);
 
 		template.processTemplate(writer);
 

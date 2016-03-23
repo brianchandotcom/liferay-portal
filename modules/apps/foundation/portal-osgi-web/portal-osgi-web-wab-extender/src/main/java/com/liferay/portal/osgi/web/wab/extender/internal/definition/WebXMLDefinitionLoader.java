@@ -371,13 +371,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	}
 
 	public WebXMLDefinition loadWebXML() throws Exception {
-		URL url = _bundle.getEntry("WEB-INF/web.xml");
-
-		if (url != null) {
-			loadWebXML(url);
-		}
-
-		return _webXMLDefinition;
+		return loadWebXML(_bundle.getEntry("WEB-INF/web.xml"));
 	}
 
 	public WebXMLDefinition loadWebXML(URL url) throws Exception {

@@ -84,18 +84,23 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:search-container-column-text
+					cssClass="author-column content-column title-column"
 					name="author"
 					property="userName"
-				/>
-
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					property="modifiedDate"
+					truncate="<%= true %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="content-column message-column"
 					name="message"
+					truncate="<%= true %>"
 					value="<%= HtmlUtil.extractText(content) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					cssClass="modified-date-column text-column"
+					name="modified-date"
+					property="modifiedDate"
 				/>
 			</c:otherwise>
 		</c:choose>

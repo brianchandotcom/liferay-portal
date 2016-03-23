@@ -316,7 +316,7 @@ public class JspServlet extends HttpServlet {
 				private final ServletContext _jspServletContext =
 					(ServletContext)Proxy.newProxyInstance(
 						_jspBundleClassloader, _INTERFACES,
-						new JspServletContextInvocationHandler(servletContext));
+						new JspServletContextInvocationHandler(servletContext, _bundle));
 
 			});
 	}
@@ -476,9 +476,14 @@ public class JspServlet extends HttpServlet {
 		implements InvocationHandler {
 
 		public JspServletContextInvocationHandler(
-			ServletContext servletContext) {
+			ServletContext servletContext, Bundle bundle) {
 
 			_servletContext = servletContext;
+			_bundle = bundle;
+		}
+
+		public int hashCode() {
+			return _servletContext.hashCode();
 		}
 
 		@Override
@@ -498,7 +503,40 @@ public class JspServlet extends HttpServlet {
 				return getResourcePaths((String)args[0]);
 			}
 
+			Method adapterMethod = _contextAdapterMethods.get(method);
+
+			if (adapterMethod != null) {
+				return adapterMethod.invoke(this, args);
+			}
+
 			return method.invoke(_servletContext, args);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+
+			if (this == obj) {
+				return true;
+			}
+
+			if (obj instanceof JspServletContextInvocationHandler) {
+				JspServletContextInvocationHandler jspServletContextInvocationHandler =
+					(JspServletContextInvocationHandler) obj;
+
+				if (Validator.equals(_bundle, jspServletContextInvocationHandler.getBundle())) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return _servletContext.equals(obj);
+			}
+		}
+
+		public Bundle getBundle() {
+			return _bundle;
 		}
 
 		private URL getExtension(String path) {
@@ -611,8 +649,57 @@ public class JspServlet extends HttpServlet {
 			return paths;
 		}
 
+		private final Bundle _bundle;
 		private final ServletContext _servletContext;
 
 	}
 
+	private static Map<Method, Method> _createContextAdapterMethods() {
+		Map<Method, Method> methods = new HashMap<>();
+
+		Method[] adapterMethods =
+			JspServletContextInvocationHandler.class.getDeclaredMethods();
+
+		for (Method adapterMethod : adapterMethods) {
+			String name = adapterMethod.getName();
+			Class<?>[] parameterTypes = adapterMethod.getParameterTypes();
+
+			try {
+				Method method = ServletContext.class.getMethod(
+					name, parameterTypes);
+
+				methods.put(method, adapterMethod);
+			}
+			catch (NoSuchMethodException nsme1) {
+			}
+		}
+
+		try {
+			Method equalsMethod = Object.class.getMethod(
+				"equals", Object.class);
+
+			Method equalsHandlerMethod =
+				JspServletContextInvocationHandler.class.getMethod(
+					"equals", Object.class);
+			methods.put(equalsMethod, equalsHandlerMethod);
+
+			Method hashCodeMethod = Object.class.getMethod(
+				"hashCode", (Class<?>[])null);
+
+			Method hashCodeHandlerMethod =
+				JspServletContextInvocationHandler.class.getMethod(
+					"hashCode", (Class<?>[])null);
+			methods.put(hashCodeMethod, hashCodeHandlerMethod);
+		}
+		catch (NoSuchMethodException nsme) {
+		}
+
+		return Collections.unmodifiableMap(methods);
+	}
+
+	private static final Map<Method, Method> _contextAdapterMethods;
+
+	static {
+		_contextAdapterMethods = _createContextAdapterMethods();
+	}
 }

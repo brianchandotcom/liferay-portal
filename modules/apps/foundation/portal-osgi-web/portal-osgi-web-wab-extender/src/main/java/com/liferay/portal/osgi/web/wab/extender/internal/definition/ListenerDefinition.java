@@ -48,12 +48,13 @@ public class ListenerDefinition {
 	}
 
 	public int hashCode() {
-		if (_eventListener != null) {
-			Class<?> listenerClass = _eventListener.getClass();
-			return listenerClass.hashCode();
+		if (_eventListener == null) {
+			return super.hashCode();
 		}
 
-		return super.hashCode();
+		Class<?> listenerClass = _eventListener.getClass();
+
+		return listenerClass.hashCode();
 	}
 
 	public void setEventListener(EventListener eventListener) {

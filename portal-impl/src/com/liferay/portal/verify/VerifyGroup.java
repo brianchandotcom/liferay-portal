@@ -14,10 +14,11 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -235,27 +236,45 @@ public class VerifyGroup extends VerifyProcess {
 
 	protected void verifySites() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-				Group.class);
+			ActionableDynamicQuery actionableDynamicQuery =
+				GroupLocalServiceUtil.getActionableDynamicQuery();
 
-			dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"classNameId",
-					PortalUtil.getClassNameId(Organization.class)));
-			dynamicQuery.add(RestrictionsFactoryUtil.eq("site", false));
+			actionableDynamicQuery.setAddCriteriaMethod(
+				new ActionableDynamicQuery.AddCriteriaMethod() {
 
-			List<Group> groups = GroupLocalServiceUtil.dynamicQuery(
-				dynamicQuery);
+					@Override
+					public void addCriteria(DynamicQuery dynamicQuery) {
+						dynamicQuery.add(
+							RestrictionsFactoryUtil.eq(
+								"classNameId",
+								PortalUtil.getClassNameId(Organization.class)));
+						dynamicQuery.add(
+							RestrictionsFactoryUtil.eq("site", false));
+					}
 
-			for (Group group : groups) {
-				if ((group.getPrivateLayoutsPageCount() > 0) ||
-					(group.getPublicLayoutsPageCount() > 0)) {
+				});
 
-					group.setSite(true);
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.PerformActionMethod<Group>() {
 
-					GroupLocalServiceUtil.updateGroup(group);
-				}
-			}
+					@Override
+					public void performAction(Group group)
+						throws PortalException {
+
+						if ((group.getPrivateLayoutsPageCount() > 0) ||
+							(group.getPublicLayoutsPageCount() > 0)) {
+
+							group.setSite(true);
+
+							GroupLocalServiceUtil.updateGroup(group);
+						}
+					}
+
+				});
+
+			actionableDynamicQuery.setParallel(true);
+
+			actionableDynamicQuery.performActions();
 		}
 	}
 

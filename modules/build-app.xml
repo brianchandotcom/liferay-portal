@@ -137,7 +137,7 @@
 			</path>
 		</pathconvert>
 
-		<property name="app.artifacts" value="${line.separator}${line.separator}app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
+		<property name="app.artifacts" value="app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
 	<target name="get-app-change-log">
@@ -149,7 +149,7 @@
 			</filterchain>
 		</loadfile>
 
-		<property name="app.change.log" value="${line.separator}app.change.log-${app.version}=${app.ticket.list}" />
+		<property name="app.change.log" value="app.change.log-${app.version}=${app.ticket.list}" />
 	</target>
 
 	<target name="get-app-change-log-header">
@@ -157,7 +157,7 @@
 			<istrue value="${app.first.version}" />
 		</condition>
 
-		<property name="app.change.log.header" value="${app.change.log.version.separator}#${line.separator}# Liferay App Version ${app.version}${line.separator}#${line.separator}" />
+		<property name="app.change.log.header" value="${app.change.log.version.separator}#${line.separator}# Liferay App Version ${app.version}${line.separator}#" />
 	</target>
 
 	<target name="get-app-git-id">
@@ -166,13 +166,18 @@
 			<arg value="head" />
 		</exec>
 
-		<property name="app.git.id" value="${line.separator}${line.separator}app.git.id-${app.version}=${git.rev.parse.output}" />
+		<property name="app.git.id" value="app.git.id-${app.version}=${git.rev.parse.output}" />
 	</target>
 
 	<target name="write-app-change-log" depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id">
+		<property name="double.space" value="${line.separator}${line.separator}" />
+
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log}" />
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.artifacts}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
 	</target>
 </project>

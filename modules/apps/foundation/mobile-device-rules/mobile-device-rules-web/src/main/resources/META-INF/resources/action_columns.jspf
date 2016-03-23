@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-Group group = GroupLocalServiceUtil.getGroup(action.getGroupId());
-%>
-
 <liferay-ui:search-container-column-text
 	cssClass="scope-column text-column"
 	name="scope"

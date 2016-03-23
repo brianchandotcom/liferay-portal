@@ -58,33 +58,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 
 <%@ include file="/layout/mobile_device_rules_toolbar.jspf" %>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />rules').delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
-
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						on: {
-							visibleChange: function(event) {
-								<portlet:namespace />updateRuleGroupInstances();
-							}
-						}
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					title: currentTarget.attr('data-title'),
-					uri: currentTarget.attr('data-uri')
-				}
-			);
-		},
-		'.actions'
-	);
-</aui:script>
-
 <c:if test="<%= themeDisplay.isStateExclusive() %>">
 	<aui:script sandbox="<%= true %>">
 		$('#<portlet:namespace />uniqueRuleGroupInstancesContainer').on(

@@ -18,6 +18,7 @@ import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.SMTPAccount;
 import com.liferay.message.boards.kernel.model.MBMailingList;
 import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 /**
  * @author Brian Wing Shun Chan
  * @author Thiago Moreira
+ * @author Roberto Díaz
  */
 public class MBSubscriptionSender
 	extends GroupSubscriptionCheckSubscriptionSender {
@@ -77,11 +79,24 @@ public class MBSubscriptionSender
 			mailingList.getEmailAddress(), mailingList.getEmailAddress());
 	}
 
+	public void setFullName(String fullName) {
+		_fullName = fullName;
+	}
+
 	protected String getMailingListSubject(String subject, String mailId) {
 		subject = GetterUtil.getString(subject);
 		mailId = GetterUtil.getString(mailId);
 
 		return subject.concat(StringPool.SPACE).concat(mailId);
+	}
+
+	@Override
+	protected void populateNotificationEventJSONObject(
+		JSONObject notificationEventJSONObject) {
+
+		notificationEventJSONObject.put("fullName", _fullName);
+
+		super.populateNotificationEventJSONObject(notificationEventJSONObject);
 	}
 
 	@Override
@@ -103,5 +118,6 @@ public class MBSubscriptionSender
 		MBSubscriptionSender.class);
 
 	private boolean _calledAddMailingListSubscriber;
+	private String _fullName;
 
 }

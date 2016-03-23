@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
@@ -5,12 +6,33 @@ buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
 
+task cleanReleng
 task printLeafProjects
 task setUpPortalTools
 task wrapper(type: Wrapper)
 
 File portalToolsDir = rootProject.file("../tools/sdk/tmp/portal-tools")
 Properties portalToolVersions = _getPortalToolVersions()
+
+cleanReleng << {
+	File relengRootDir = rootProject.file(".releng")
+
+	FileTree relengFileTree = rootProject.fileTree(dir: relengRootDir, include: "**/artifact.properties")
+
+	relengFileTree.each {
+		File relengFile ->
+
+		File relengDir = relengFile.parentFile
+
+		File moduleDir = rootProject.file(FileUtil.relativize(relengDir, relengRootDir))
+
+		if (!moduleDir.exists()) {
+			delete relengDir
+
+			println "Removed " + rootProject.relativePath(relengDir)
+		}
+	}
+}
 
 configurations {
 	all {

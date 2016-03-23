@@ -11,20 +11,24 @@
 	<short-name>liferay-site-navigation</short-name>
 	<uri>http://liferay.com/tld/site-navigation</uri>
 	<tag>
+		<description>Creates a component for users to navigate through a set of layouts (pages).</description>
 		<name>navigation</name>
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The groupID of the DDM Template used for rendering the Navigation (See Application Display Templates).</description>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The Key of the DDM Template used for rendering the Navigation (See Application Display Templates). If not set, the default ADT will be used.</description>
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The depth of children pages shown.</description>
 			<name>displayDepth</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -35,6 +39,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If set to true, some helpful messages aimed to the page administrator will be shown.</description>
 			<name>preview</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -45,11 +50,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Accepted values are: relative, select and absolute.</description>
 			<name>rootLayoutType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The UUID of the page to be used as the Root of the tree of pages.</description>
 			<name>rootLayoutUuid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

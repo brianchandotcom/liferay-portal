@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
+import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -41,12 +42,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.util.VersionNumber;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -58,6 +61,44 @@ import org.w3c.dom.NodeList;
  */
 public class SetupTestableTomcatTask
 	extends DefaultTask implements JmxRemotePortSpec, ManagerSpec {
+
+	public SetupTestableTomcatTask() {
+		_zipUrl = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				File dir = getDir();
+
+				String dirName = dir.getName();
+
+				int start = StringUtil.indexOfDigit(dirName);
+
+				if (start < 0) {
+					return null;
+				}
+
+				VersionNumber versionNumber = VersionNumber.parse(
+					dirName.substring(start));
+
+				if (versionNumber == VersionNumber.UNKNOWN) {
+					return null;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("http://archive.apache.org/dist/tomcat/tomcat-");
+				sb.append(versionNumber.getMajor());
+				sb.append("/v");
+				sb.append(versionNumber);
+				sb.append("/bin/apache-tomcat-");
+				sb.append(versionNumber);
+				sb.append(".zip");
+
+				return sb.toString();
+			}
+
+		};
+	}
 
 	public File getBinDir() {
 		return new File(getDir(), "bin");

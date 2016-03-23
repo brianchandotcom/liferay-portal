@@ -23,6 +23,16 @@ import java.util.List;
  */
 public class StringUtil extends com.liferay.gradle.util.StringUtil {
 
+	public static int indexOfDigit(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if (Character.isDigit(s.charAt(i))) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
 	public static List<String> replaceEnding(
 		Collection<String> strings, String oldEnding, String newEnding) {
 

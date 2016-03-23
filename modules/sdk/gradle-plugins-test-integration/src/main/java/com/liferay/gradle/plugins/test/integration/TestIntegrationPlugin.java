@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.OSDetector;
 
 import groovy.lang.Closure;
 
@@ -306,6 +307,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		startTestableTomcatTask.setDescription(
 			"Starts the local Liferay Tomcat bundle.");
+		startTestableTomcatTask.setExecutable(
+			getTomcatExecutableFileName("catalina"));
+		startTestableTomcatTask.setExecutableArgs(Collections.singleton("run"));
 		startTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		startTestableTomcatTask.setLiferayHome(
@@ -399,6 +403,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		stopTestableTomcatTask.mustRunAfter(testIntegrationTask);
 		stopTestableTomcatTask.setDescription(
 			"Stops the local Liferay Tomcat bundle.");
+		stopTestableTomcatTask.setExecutable(
+			getTomcatExecutableFileName("shutdown"));
 		stopTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		configureBaseAppServerTask(
@@ -602,6 +608,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
+	}
+
+	protected String getTomcatExecutableFileName(String fileName) {
+		if (OSDetector.isWindows()) {
+			fileName += ".bat";
+		}
+
+		return fileName;
 	}
 
 	private static int _updateStartedAppServerStopCounters(

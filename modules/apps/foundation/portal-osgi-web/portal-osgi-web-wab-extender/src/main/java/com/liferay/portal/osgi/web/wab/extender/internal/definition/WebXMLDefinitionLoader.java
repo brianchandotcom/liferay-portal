@@ -379,27 +379,27 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return _webXMLDefinition;
 		}
 
-			try (InputStream inputStream = url.openStream()) {
-				SAXParser saxParser = _saxParserFactory.newSAXParser();
+		try (InputStream inputStream = url.openStream()) {
+			SAXParser saxParser = _saxParserFactory.newSAXParser();
 
-				XMLReader xmlReader = saxParser.getXMLReader();
+			XMLReader xmlReader = saxParser.getXMLReader();
 
-				xmlReader.setContentHandler(this);
+			xmlReader.setContentHandler(this);
 
-				xmlReader.parse(new InputSource(inputStream));
+			xmlReader.parse(new InputSource(inputStream));
 
-				return _webXMLDefinition;
+			return _webXMLDefinition;
+		}
+		catch (SAXParseException saxpe) {
+			String message = saxpe.getMessage();
+
+			if (message.contains("DOCTYPE is disallowed")) {
+				throw new Exception(
+					url + " must be updated to the Servlet 3.0 specification");
 			}
-			catch (SAXParseException saxpe) {
-				String message = saxpe.getMessage();
 
-				if (message.contains("DOCTYPE is disallowed")) {
-					throw new Exception(
-						url + " must be updated to the Servlet 3.0 specification");
-				}
-
-				throw saxpe;
-			}
+			throw saxpe;
+		}
 	}
 
 	@Override

@@ -100,7 +100,7 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -203,6 +203,47 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 					<liferay-ui:search-container-column-jsp
 						path="/site_action.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
+								<liferay-frontend:vertical-card
+									actionJsp="/site_action.jsp"
+									actionJspServletContext="<%= application %>"
+									imageUrl="<%= siteImageURL %>"
+									resultRow="<%= row %>"
+									rowChecker="<%= searchContainer.getRowChecker() %>"
+									title="<%= group.getDescriptiveName(locale) %>"
+									url="<%= rowURL %>"
+								>
+									<liferay-frontend:vertical-card-footer>
+										<strong><liferay-ui:message key="members" /></strong>: <%= String.valueOf(groupUsersCounts.get(group.getGroupId())) %>
+									</liferay-frontend:vertical-card-footer>
+								</liferay-frontend:vertical-card>
+							</c:when>
+							<c:otherwise>
+								<liferay-frontend:icon-vertical-card
+									actionJsp="/site_action.jsp"
+									actionJspServletContext="<%= application %>"
+									icon="sites"
+									resultRow="<%= row %>"
+									rowChecker="<%= searchContainer.getRowChecker() %>"
+									title="<%= group.getDescriptiveName(locale) %>"
+									url="<%= rowURL %>"
+								>
+									<liferay-frontend:vertical-card-footer>
+										<strong><liferay-ui:message key="members" /></strong>: <%= String.valueOf(groupUsersCounts.get(group.getGroupId())) %>
+									</liferay-frontend:vertical-card-footer>
+								</liferay-frontend:icon-vertical-card>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text

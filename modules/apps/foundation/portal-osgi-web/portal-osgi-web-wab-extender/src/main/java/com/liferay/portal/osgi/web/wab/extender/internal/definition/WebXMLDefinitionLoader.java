@@ -310,7 +310,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				return;
 			}
 
-			EnumMap<Path, String[]> map = _ordering.getRoutes();
+			EnumMap<Path, String[]> routes = _ordering.getRoutes();
 
 			List<String> namesBefore = new ArrayList<>(2);
 
@@ -323,7 +323,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			}
 
 			if (ListUtil.isNotEmpty(namesBefore)) {
-				map.put(Path.BEFORE, namesBefore.toArray(new String[0]));
+				routes.put(Path.BEFORE, namesBefore.toArray(new String[0]));
 			}
 
 			List<String> namesAfter = new ArrayList<>(2);
@@ -337,7 +337,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			}
 
 			if (ListUtil.isNotEmpty(namesAfter)) {
-				map.put(Path.AFTER, namesAfter.toArray(new String[0]));
+				routes.put(Path.AFTER, namesAfter.toArray(new String[0]));
 			}
 
 			_nameAfter = null;
@@ -345,7 +345,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_othersAfterSet = false;
 			_othersBeforeSet = false;
 
-			_ordering.setRoutes(map);
+			_ordering.setRoutes(routes);
 
 			_webXMLDefinition.setOrdering(_ordering);
 

@@ -35,11 +35,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_TABLE_SITE_NAME_MEMBERS</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_TABLE_SITE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[5]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

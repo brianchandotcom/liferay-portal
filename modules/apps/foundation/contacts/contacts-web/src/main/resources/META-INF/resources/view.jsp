@@ -266,7 +266,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 									<div class="lfr-contact-grid-item" data-userId="" data-viewSummaryURL="<%= viewContactSummaryURL %>">
 										<div class="lfr-contact-thumb">
-											<img alt="<%= HtmlUtil.escapeAttribute(fullName) %>" src='<%= themeDisplay.getPathImage() + "/user_male_portrait?img_id=0&t=" %>' />
+											<img alt="<%= HtmlUtil.escapeAttribute(fullName) %>" src="<%= themeDisplay.getPathImage() + "/user_male_portrait?img_id=0&t=" %>" />
 										</div>
 
 										<div class="lfr-contact-info">
@@ -352,13 +352,13 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 									<aui:row>
 										<aui:col cssClass="connections contacts-count" width="<%= 100 %>">
-											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key='<%= showOnlySiteMembers ? "you-have-x-connections-in-this-site" : "you-have-x-connections" %>' translateArguments="<%= false %>" /></a>
+											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(connectionUsersCount) %>" key="<%= showOnlySiteMembers ? "you-have-x-connections-in-this-site" : "you-have-x-connections" %>" translateArguments="<%= false %>" /></a>
 										</aui:col>
 									</aui:row>
 
 									<aui:row>
 										<aui:col cssClass="contacts-count followings" width="<%= 100 %>">
-											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(followingUsersCount) %>" key='<%= showOnlySiteMembers ? "you-are-following-x-people-in-this-site" : "you-are-following-x-people" %>' translateArguments="<%= false %>" /></a>
+											<a href="javascript:;"><liferay-ui:message arguments="<%= String.valueOf(followingUsersCount) %>" key="<%= showOnlySiteMembers ? "you-are-following-x-people-in-this-site" : "you-are-following-x-people" %>" translateArguments="<%= false %>" /></a>
 										</aui:col>
 									</aui:row>
 

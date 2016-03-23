@@ -28,7 +28,7 @@
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
 
-				<ul class='<%= disableInputs ? "" : "hide" %>' id="<portlet:namespace />selectContents">
+				<ul class="<%= disableInputs ? "" : "hide" %>" id="<portlet:namespace />selectContents">
 					<li>
 						<div id="<portlet:namespace />range">
 							<ul class="list-unstyled">

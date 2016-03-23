@@ -14,8 +14,7 @@
 		</path>
 	</pathconvert>
 
-	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log">
-	</target>
+	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log" />
 
 	<target name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.dir}.">
@@ -42,8 +41,7 @@
 		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
-	>
-	</target>
+	/>
 
 	<target
 		name="get-artifact-change-log-ticket-list-full"

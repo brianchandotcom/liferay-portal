@@ -123,7 +123,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
 							<liferay-ui:search-container-column-jsp
-								cssClass="list-group-item-field"
 								path="/article_action.jsp"
 							/>
 						</c:if>
@@ -226,6 +225,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
 							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
 								path="/article_action.jsp"
 							/>
 						</c:if>
@@ -288,7 +288,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
 							<liferay-ui:search-container-column-jsp
-								cssClass="list-group-item-field"
 								path="/folder_action.jsp"
 							/>
 						</c:if>
@@ -370,6 +369,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
 							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
 								path="/folder_action.jsp"
 							/>
 						</c:if>

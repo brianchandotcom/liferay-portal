@@ -41,12 +41,29 @@
 
 	<target name="build-app" depends="dist-module-artifacts,write-app-changelog" />
 
-	<target name="check-stale-artifacts">
+	<target name="check-app-version">
+		<fail message="Please provide a value for the property &quot;app.version&quot; when running this target.">
+			<condition>
+				<not>
+					<isset property="${app.version}" />
+				</not>
+			</condition>
+		</fail>
+	</target>
+
+	<target name="check-stale-artifacts" depends="check-app-version">
 		<exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>
-		<fail if="${stale.artifacts.output}" message="Stale artifacts detected:{line.separator}${stale.artifacts.output}" />
+
+		<fail message="Stale artifacts detected:${line.separator}${stale.artifacts.output}">
+			<condition>
+				<not>
+					<equals arg1="${stale.artifacts.output}" arg2="" />
+				</not>
+			</condition>
+		</fail>
 	</target>
 
 	<target name="clean-app">

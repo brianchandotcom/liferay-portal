@@ -6,18 +6,18 @@
 	<short-name>liferay-asset</short-name>
 	<uri>http://liferay.com/tld/asset</uri>
 	<tag>
-		<description>Creates a component that displays a list of vocabularies and categories that can be used to navigate.</description>
+		<description>Creates a component that displays a list of vocabularies and categories that can be used for navigation.</description>
 		<name>asset-categories-navigation</name>
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetCategoriesNavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>If true, when there isn't any category to display, the portlet that uses the taglib won't be shown to end users.</description>
+			<description>Whether the portlet is displayed to end users when there isn't a category to display.</description>
 			<name>hidePortletWhenEmpty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>By default, all vocabularies that are visible to the current scope will be shown. This can be limited to as set of vocabularies, adding their ids to this attribute separated by commas.</description>
+			<description>A comma delimited set of vocabularies that are displayed. By default, all vocabularies that are visible to the current scope are displayed.</description>
 			<name>vocabularyIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

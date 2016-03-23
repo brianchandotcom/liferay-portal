@@ -18,10 +18,9 @@ import com.liferay.sync.engine.documentlibrary.model.SyncContext;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Shinn Lok
@@ -29,68 +28,83 @@ import java.util.regex.Pattern;
 public class ServerInfo {
 
 	public static boolean isCompatible(SyncContext syncContext) {
-		return isCompatible(syncContext.getPluginVersion(), 4);
+		return isCompatible(
+			syncContext.getPluginVersion(), "6.2.0.4", "7.0.0.1");
 	}
 
 	public static boolean supportsDeviceRegistration(long syncAccountId) {
-		return isCompatible(syncAccountId, 7);
+		return isCompatible(syncAccountId, "6.2.0.7", "7.0.0.1");
+	}
+
+	public static boolean supportsModuleFramework(long syncAccountId) {
+		return isCompatible(syncAccountId, "7.0.0.1");
 	}
 
 	public static boolean supportsPartialDownloads(long syncAccountId) {
-		return isCompatible(syncAccountId, 5);
+		return isCompatible(syncAccountId, "6.2.0.5", "7.0.0.1");
 	}
 
 	public static boolean supportsRetrieveFromCache(long syncAccountId) {
-		return isCompatible(syncAccountId, 5);
+		return isCompatible(syncAccountId, "6.2.0.5", "7.0.0.1");
+	}
+
+	protected static int getPluginMajorVersion(String pluginVersion) {
+		String[] pluginVersionParts = pluginVersion.split("\\.");
+
+		return Integer.valueOf(pluginVersionParts[0] + pluginVersionParts[1]);
+	}
+
+	protected static int getPluginPatchVersion(String pluginVersion) {
+		return Integer.valueOf(pluginVersion.split("\\.")[3]);
 	}
 
 	protected static boolean isCompatible(
-		long syncAccountId, int minimumVersion) {
-
-		Boolean compatible = _compatibilityMap.get(
-			syncAccountId + "#" + minimumVersion);
-
-		if (compatible != null) {
-			return compatible;
-		}
+		long syncAccountId, String... pluginMinimumVersions) {
 
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			syncAccountId);
 
-		String pluginVersion = syncAccount.getPluginVersion();
+		return isCompatible(
+			syncAccount.getPluginVersion(), pluginMinimumVersions);
+	}
+
+	protected static boolean isCompatible(
+		String pluginVersion, String... pluginMinimumVersions) {
 
 		if (pluginVersion == null) {
 			return false;
 		}
 
-		compatible = isCompatible(pluginVersion, minimumVersion);
+		String key = pluginVersion + Arrays.toString(pluginMinimumVersions);
 
-		_compatibilityMap.put(syncAccountId + "#" + minimumVersion, compatible);
+		Boolean compatible = _compatibilityMap.get(key);
 
-		return compatible;
-	}
-
-	protected static boolean isCompatible(
-		String pluginVersion, int minimumVersion) {
-
-		Matcher matcher = _pattern.matcher(pluginVersion);
-
-		if (!matcher.find()) {
-			return false;
+		if (compatible != null) {
+			return compatible;
 		}
 
-		if (pluginVersion.startsWith("6.2") &&
-			(Integer.parseInt(matcher.group(1)) < minimumVersion)) {
+		for (String pluginMinimumVersion : pluginMinimumVersions) {
+			if (getPluginMajorVersion(pluginVersion) !=
+					getPluginMajorVersion(pluginMinimumVersion)) {
 
-			return false;
+				continue;
+			}
+
+			if (getPluginPatchVersion(pluginVersion) >=
+					getPluginPatchVersion(pluginMinimumVersion)) {
+
+				_compatibilityMap.put(key, true);
+
+				return true;
+			}
 		}
 
-		return true;
+		_compatibilityMap.put(key, false);
+
+		return false;
 	}
 
 	private static final Map<String, Boolean> _compatibilityMap =
 		new HashMap<>();
-	private static final Pattern _pattern = Pattern.compile(
-		"(?:[0-9]+\\.){3}([0-9]+)");
 
 }

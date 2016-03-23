@@ -123,7 +123,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 		if (uri.startsWith("/download/")) {
 			String contextPath = request.getContextPath();
 
-			if (!contextPath.equals("/sync-web")) {
+			if (!contextPath.equals("/o/sync-web")) {
 				return authVerifierResult;
 			}
 		}

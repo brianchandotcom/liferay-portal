@@ -187,7 +187,7 @@ AUI.add(
 						instance.showFieldSettingsPanel(
 							field,
 							Lang.sub(
-								Liferay.Language.get('edit-x-field'),
+								Liferay.Language.get('edit-x'),
 								[fieldType.get('label')]
 							)
 						);
@@ -321,7 +321,7 @@ AUI.add(
 						instance.showFieldSettingsPanel(
 							field,
 							Lang.sub(
-								Liferay.Language.get('add-x-field'),
+								Liferay.Language.get('add-x'),
 								[fieldType.get('label')]
 							)
 						);

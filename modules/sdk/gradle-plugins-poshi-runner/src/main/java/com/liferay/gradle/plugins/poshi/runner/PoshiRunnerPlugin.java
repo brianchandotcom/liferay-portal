@@ -34,6 +34,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.reporting.DirectoryReport;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
@@ -236,7 +237,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	protected Test addTaskRunPoshi(Project project) {
-		Test test = GradleUtil.addTask(
+		final Test test = GradleUtil.addTask(
 			project, RUN_POSHI_TASK_NAME, Test.class);
 
 		test.dependsOn(
@@ -261,8 +262,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
-					Test test = (Test)task;
-
 					Map<String, Object> systemProperties =
 						test.getSystemProperties();
 
@@ -270,6 +269,26 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 						throw new GradleException(
 							"Please set the property poshiTestName.");
 					}
+				}
+
+			});
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			"com.liferay.test.integration",
+			new Action<Plugin>(){
+
+				@Override
+				public void execute(Plugin plugin) {
+
+					test.dependsOn("_START_TESTABLE_TOMCAT_TASK_NAME");
+
+					Task task = GradleUtil.getTask(
+						test.getProject(), "_STOP_TESTABLE_TOMCAT_TASK_NAME");
+
+					task.mustRunAfter(test);
+
 				}
 
 			});
@@ -396,4 +415,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		systemProperties.put("test.basedir", poshiRunnerExtension.getBaseDir());
 	}
 
+	private final String _START_TESTABLE_TOMCAT_TASK_NAME =
+		"startTestableTomcat";
+	private final String _STOP_TESTABLE_TOMCAT_TASK_NAME =
+		"stopTestableTomcat";
 }

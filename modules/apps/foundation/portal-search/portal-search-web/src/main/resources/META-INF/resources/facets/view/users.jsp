@@ -53,7 +53,7 @@
 					%>
 
 						<li class="facet-value">
-							<a class="<%= userName.equals(curUserName) ? "text-primary" : "text-default" %>" data-value="<%= curUserName %>" href="javascript:;">
+							<a class="<%= userName.equals(curUserName) ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(curUserName) %>" href="javascript:;">
 								<%= HtmlUtil.escape(curUserName) %>
 
 								<c:if test="<%= showAssetCount %>">

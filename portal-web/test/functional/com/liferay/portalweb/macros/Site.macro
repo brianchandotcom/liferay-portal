@@ -644,8 +644,6 @@
 	</command>
 
 	<command name="gotoSiteViaMySitesPG">
-		<var name="key_siteName" value="${siteName}" />
-
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />
 		</execute>
@@ -761,8 +759,6 @@
 	</command>
 
 	<command name="leaveViaMySitesPG">
-		<var name="key_siteName" value="${siteName}" />
-
 		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />
 		</execute>
@@ -1171,8 +1167,6 @@
 	</command>
 
 	<command name="viewMySitesViaMySitesPG">
-		<var name="key_siteName" value="${siteName}" />
-
 		<execute function="AssertTextEquals" locator1="MySites#NAVIGATION_MY_SITES" value1="My Sites" />
 
 		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
@@ -1185,8 +1179,6 @@
 	</command>
 
 	<command name="viewNoMySitesViaMySitesPG">
-		<var name="key_siteName" value="${siteName}" />
-
 		<execute function="AssertElementNotPresent" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />
 		</execute>

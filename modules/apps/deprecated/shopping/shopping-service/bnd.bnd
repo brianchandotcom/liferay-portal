@@ -14,5 +14,6 @@ Export-Package:	\
 	com.liferay.shopping.util,\
 	com.liferay.shopping.verify,\
 	com.liferay.shopping.verify.model
+Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class

@@ -89,7 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -140,6 +140,24 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 					<liferay-ui:search-container-column-jsp
 						path="/feed_action.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/feed_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="rss-svg"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= feed.getDescription() %>"
+							title="<%= feed.getName() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text

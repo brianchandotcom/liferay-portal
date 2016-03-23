@@ -375,6 +375,27 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		stopTestableTomcatTask.doFirst(action);
 
+		action = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				StopAppServerTask stopAppServerTask = (StopAppServerTask)task;
+
+				_startedAppServersReentrantLock.lock();
+
+				try {
+					_startedAppServerBinDirs.remove(
+						stopAppServerTask.getBinDir());
+				}
+				finally {
+					_startedAppServersReentrantLock.unlock();
+				}
+			}
+
+		};
+
+		stopTestableTomcatTask.doLast(action);
+
 		stopTestableTomcatTask.mustRunAfter(testIntegrationTask);
 		stopTestableTomcatTask.setDescription(
 			"Stops the local Liferay Tomcat bundle.");

@@ -315,9 +315,12 @@ public class FileHelperUtilTest {
 	@Test
 	public void testMoveRegularDirectoryWithRegularFile() throws IOException {
 		Path regularFromDirectoryPath = Paths.get("RegularFromDirectory");
+
 		Path regularFromFilePath = regularFromDirectoryPath.resolve(
 			"RegularFromFile");
+
 		Path regularToDirectoryPath = Paths.get("RegularToDirectory");
+
 		Path regularToFilePath = regularToDirectoryPath.resolve(
 			regularFromDirectoryPath.relativize(regularFromFilePath));
 
@@ -427,7 +430,9 @@ public class FileHelperUtilTest {
 
 		Path regularFromFilePath = unmoveableFromDirectoryPath.resolve(
 			"RegularFromFile");
+
 		Path regularToDirectoryPath = Paths.get("RegularToDirectoryPath");
+
 		Path regularToFilePath = regularToDirectoryPath.resolve(
 			unmoveableFromDirectoryPath.relativize(regularFromFilePath));
 

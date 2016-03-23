@@ -255,7 +255,9 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+
 		Group group = groupLocalService.getCompanyGroup(user.getCompanyId());
+
 		long categoryId =
 			PrivateMessagingConstants.PRIVATE_MESSAGING_CATEGORY_ID;
 

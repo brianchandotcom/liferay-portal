@@ -126,7 +126,9 @@ public class JournalRSSUtil {
 		int end = feed.getDelta();
 
 		String orderByCol = feed.getOrderByCol();
+
 		String orderByType = feed.getOrderByType();
+
 		boolean orderByAsc = orderByType.equals("asc");
 
 		OrderByComparator<JournalArticle> obc =

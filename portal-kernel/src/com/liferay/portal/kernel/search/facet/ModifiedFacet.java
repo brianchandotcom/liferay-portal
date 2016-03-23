@@ -55,19 +55,24 @@ public class ModifiedFacet extends RangeFacet {
 		now.set(Calendar.MINUTE, 0);
 
 		Calendar pastHour = (Calendar)now.clone();
+
 		pastHour.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY) - 1);
 
 		Calendar past24Hours = (Calendar)now.clone();
+
 		past24Hours.set(
 			Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 1);
 
 		Calendar pastWeek = (Calendar)now.clone();
+
 		pastWeek.set(Calendar.DAY_OF_YEAR, now.get(Calendar.DAY_OF_YEAR) - 7);
 
 		Calendar pastMonth = (Calendar)now.clone();
+
 		pastMonth.set(Calendar.MONTH, now.get(Calendar.MONTH) - 1);
 
 		Calendar pastYear = (Calendar)now.clone();
+
 		pastYear.set(Calendar.YEAR, now.get(Calendar.YEAR) - 1);
 
 		now.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY) + 1);

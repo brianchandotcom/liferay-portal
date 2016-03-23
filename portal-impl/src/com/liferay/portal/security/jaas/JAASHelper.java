@@ -49,6 +49,7 @@ public class JAASHelper {
 
 		if (jaasAuthType.equals("login")) {
 			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
 			String authType = company.getAuthType();
 
 			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {

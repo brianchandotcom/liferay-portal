@@ -980,9 +980,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		}
 
 		MBCategory category = message.getCategory();
+
 		MBThread oldThread = message.getThread();
+
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			oldThread.getRootMessageId());
+
 		long oldAttachmentsFolderId = message.getAttachmentsFolderId();
 
 		// Message flags

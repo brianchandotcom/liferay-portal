@@ -218,6 +218,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			}
 
 			KaleoTask kaleoTask = kaleoTaskInstanceToken.getKaleoTask();
+
 			KaleoNode kaleoNode = kaleoTask.getKaleoNode();
 
 			List<KaleoTransition> kaleoTransitions =

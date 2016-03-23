@@ -59,6 +59,7 @@ public class CommonPermissionImpl implements CommonPermission {
 
 			if (classPK > 0) {
 				Account account = AccountLocalServiceUtil.getAccount(classPK);
+
 				companyId = account.getCompanyId();
 			}
 

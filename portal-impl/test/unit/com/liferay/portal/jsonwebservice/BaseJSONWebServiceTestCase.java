@@ -201,6 +201,7 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 		}
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
 		return jsonSerializer.serialize(object);
 	}
 
@@ -210,6 +211,7 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 		}
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
 		jsonSerializer.include(includes);
 
 		return jsonSerializer.serialize(object);

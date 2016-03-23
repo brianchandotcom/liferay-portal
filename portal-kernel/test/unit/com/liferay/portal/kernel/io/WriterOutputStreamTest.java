@@ -210,6 +210,7 @@ public class WriterOutputStreamTest {
 		int charNumber = 0;
 
 		String unalignedOutput = "非对齐测试中文输出";
+
 		byte[] unalignedInput = unalignedOutput.getBytes(StringPool.UTF8);
 
 		for (byte b : unalignedInput) {

@@ -265,6 +265,7 @@ public class StagingImpl implements Staging {
 		Layout targetLayout = _layoutLocalService.getLayout(plid);
 
 		Group stagingGroup = targetLayout.getGroup();
+
 		Group liveGroup = stagingGroup.getLiveGroup();
 
 		Layout sourceLayout = _layoutLocalService.getLayoutByUuidAndGroupId(

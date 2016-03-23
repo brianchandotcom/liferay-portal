@@ -689,13 +689,12 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
 		<if>
 			<equals arg1="${membershipType}" arg2="Private" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
+				<execute function="AssertElementNotPresent" locator1="ListGroupItem#ITEM_NAME">
+					<var name="key_itemName" value="${siteName}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${membershipType}" arg2="Restricted" />
@@ -770,10 +769,6 @@
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Available Sites" />
 		</execute>
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />

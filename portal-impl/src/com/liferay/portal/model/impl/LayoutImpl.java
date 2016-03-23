@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -68,7 +70,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
 
@@ -1401,31 +1402,31 @@ public class LayoutImpl extends LayoutBaseImpl {
 				String portletId = StringUtil.split(
 					layoutTypePortlet.getStateMax())[0];
 
-				PortletURLImpl portletURLImpl = new PortletURLImpl(
+				LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 					request, portletId, getPlid(), PortletRequest.ACTION_PHASE);
 
 				try {
-					portletURLImpl.setWindowState(WindowState.NORMAL);
-					portletURLImpl.setPortletMode(PortletMode.VIEW);
+					portletURL.setWindowState(WindowState.NORMAL);
+					portletURL.setPortletMode(PortletMode.VIEW);
 				}
 				catch (PortletException pe) {
 					throw new SystemException(pe);
 				}
 
-				portletURLImpl.setAnchor(false);
+				portletURL.setAnchor(false);
 
 				if (PropsValues.LAYOUT_DEFAULT_P_L_RESET &&
 					!resetRenderParameters) {
 
-					portletURLImpl.setParameter("p_l_reset", "0");
+					portletURL.setParameter("p_l_reset", "0");
 				}
 				else if (!PropsValues.LAYOUT_DEFAULT_P_L_RESET &&
 						 resetRenderParameters) {
 
-					portletURLImpl.setParameter("p_l_reset", "1");
+					portletURL.setParameter("p_l_reset", "1");
 				}
 
-				return portletURLImpl.toString();
+				return portletURL.toString();
 			}
 		}
 

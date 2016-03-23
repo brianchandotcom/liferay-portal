@@ -255,23 +255,25 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_taglibUri = String.valueOf(_stack.pop());
 		}
 		else if (qName.equals("after")) {
+			_after = false;
 			_nameAfter = _name;
 			_name = null;
-			_after = false;
 		}
 		else if (qName.equals("before")) {
+			_before = false;
 			_nameBefore = _name;
 			_name = null;
-			_before = false;
 		}
 		else if (qName.equals("name")) {
 			String name = String.valueOf(_stack.pop());
 
 			if (_namesAbsoluteOrdering != null) {
 				_namesAbsoluteOrdering.add(name);
-			}else if (!_after && !_before) {
+			}
+			else if (!_after && !_before) {
 				_webXMLDefinition.setFragmentName(name);
-			}else {
+			}
+			else {
 				_name = name;
 			}
 		}
@@ -282,7 +284,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			if (_after) {
 				_othersAfterSet = true;
-			}else if (_before) {
+			}
+			else if (_before) {
 				_othersBeforeSet = true;
 			}
 		}
@@ -297,6 +300,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			List<String> absoluteOrderNames =
 				_webXMLDefinition.getAbsoluteOrderNames();
+
 			absoluteOrderNames.addAll(_namesAbsoluteOrdering);
 
 			_namesAbsoluteOrdering = null;
@@ -432,9 +436,11 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		}
 		else if (qName.equals("before")) {
 			_before = true;
-		}else if (qName.equals("web-app")) {
+		}
+		else if (qName.equals("web-app")) {
 			boolean metadataComplete = GetterUtil.getBoolean(
 				attributes.getValue("metadata-complete"));
+
 			_webXMLDefinition.setMetadataComplete(metadataComplete);
 		}
 		else if (Arrays.binarySearch(_LEAVES, qName) > -1) {

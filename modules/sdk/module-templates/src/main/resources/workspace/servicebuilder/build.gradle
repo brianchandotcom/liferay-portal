@@ -1,4 +1,4 @@
 dependencies {
-	compile group: "com.liferay.portal", name: "com.liferay.portal.service", version: "latest.integration"
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.integration"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 }

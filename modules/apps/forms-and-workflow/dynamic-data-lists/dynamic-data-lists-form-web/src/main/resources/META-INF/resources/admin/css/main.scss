@@ -435,73 +435,6 @@ $horizontal-spacing: 35px;
 	padding-right: 21px;
 }
 
-.lfr-ddl-form-builder-field-types-modal {
-	height: 100%;
-	margin: 0;
-	outline: none;
-	width: 100%;
-
-	&.lfr-ddl-form-builder-field-types-modal-hidden {
-		display: none;
-	}
-
-	.form-builder-field-types-list {
-		margin-top: 10px;
-	}
-
-	.modal-body {
-		background-color: #FFF;
-		padding: 15px 25px;
-
-		.field-type {
-			border-radius: 5px;
-			padding: 20px 0;
-
-			&:hover {
-				background-color: #E8F1F7;
-			}
-
-			@include md {
-				float: none;
-				width: auto;
-			}
-
-			.field-type-icon,
-			.field-type-label {
-				color: #879CAC;
-			}
-
-			.field-type-icon {
-				font-size: 0;
-				margin: 0 0 10px;
-
-				.lexicon-icon {
-					height: 18px;
-					width: 18px;
-				}
-			}
-
-			.field-type-label {
-				font-family: inherit;
-				font-size: 12px;
-				font-weight: 500;
-				margin-top: 8px;
-				text-transform: capitalize;
-			}
-		}
-	}
-
-	&.modal-dialog {
-		width: 100%;
-	}
-
-	@include sm {
-		&.modal-dialog {
-			width: 392px;
-		}
-	}
-}
-
 .portal-popup,
 .portlet-forms-admin {
 	.alert {
@@ -1090,11 +1023,6 @@ $horizontal-spacing: 35px;
 			height: 100%;
 			max-height: 100%;
 		}
-	}
-
-	.lfr-ddl-form-builder-field-types-modal {
-		max-height: 550px;
-		width: 500px;
 	}
 }
 

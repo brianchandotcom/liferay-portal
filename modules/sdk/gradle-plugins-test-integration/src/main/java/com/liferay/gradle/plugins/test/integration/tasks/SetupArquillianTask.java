@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
+import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 import java.io.IOException;

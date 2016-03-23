@@ -21,9 +21,9 @@ import com.liferay.gradle.plugins.test.integration.tasks.SetupArquillianTask;
 import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
+import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 
 import groovy.lang.Closure;
@@ -204,9 +204,13 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return new File(
-						testIntegrationTomcatExtension.getLiferayHome(),
-						"osgi");
+					File dir = testIntegrationTomcatExtension.getLiferayHome();
+
+					if (dir != null) {
+						dir = new File(dir, "osgi");
+					}
+
+					return dir;
 				}
 
 			});

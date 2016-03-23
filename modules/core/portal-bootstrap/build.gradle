@@ -1,8 +1,10 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 import org.dm.gradle.plugins.bundle.JarBuilder
 
 task buildSystemPackagesExtraManifest
+task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
 
 File systemPackagesExtraBndFile = file("system.packages.extra.bnd")
@@ -10,7 +12,7 @@ File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
 
 buildSystemPackagesExtraManifest {
 	dependsOn classes
-	dependsOn copyLibs
+	dependsOn copySystemPackagesExtraLibs
 
 	doLast {
 		JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
@@ -33,6 +35,12 @@ buildSystemPackagesExtraManifest {
 			jarBuilder.writeManifestTo it
 		}
 	}
+}
+
+copySystemPackagesExtraLibs {
+	from configurations.provided
+	into "lib"
+	rename new RenameDependencyClosure(project, configurations.provided.name)
 }
 
 copySystemPackagesExtraManifest {

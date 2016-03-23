@@ -71,7 +71,11 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 						%>
 
-						<liferay-ui:search-container-column-text name="title">
+						<liferay-ui:search-container-column-text
+							cssClass="content-column title-column"
+							name="title"
+							truncate="<%= true %>"
+						>
 							<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 
 							<c:if test="<%= !assetEntry.isVisible() %>">
@@ -85,18 +89,19 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
+							cssClass="text-column type-column"
 							name="type"
 							value="<%= assetRendererFactory.getTypeName(locale) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
+							cssClass="modified-date-column text-column"
 							name="modified-date"
 							value="<%= assetEntry.getModifiedDate() %>"
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							align="right"
-							cssClass="list-group-item-field"
+							cssClass="entry-action-column"
 							path="/asset_selection_action.jsp"
 						/>
 					</liferay-ui:search-container-row>

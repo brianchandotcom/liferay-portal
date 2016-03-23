@@ -1,0 +1,38 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-frontend:vertical-card-sticker-bottom>
+	<liferay-ui:user-portrait
+		cssClass="sticker sticker-bottom"
+		imageCssClass="user-icon-lg"
+		userId="<%= articleVersion.getUserId() %>"
+	/>
+</liferay-frontend:vertical-card-sticker-bottom>
+
+<liferay-frontend:vertical-card-header>
+
+	<%
+	Date createDate = articleVersion.getModifiedDate();
+
+	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+	%>
+
+	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(articleVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+</liferay-frontend:vertical-card-header>
+
+<liferay-frontend:vertical-card-footer>
+	<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= articleVersion.getStatus() %>" version="<%= String.valueOf(articleVersion.getVersion()) %>" />
+</liferay-frontend:vertical-card-footer>

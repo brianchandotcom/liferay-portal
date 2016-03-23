@@ -421,74 +421,73 @@ public class WebFragmentOrderUtil {
 						continue;
 					}
 
-						Ordering otherConfigOrdering =
-							otherConfig.getOrdering();
+					Ordering otherConfigOrdering = otherConfig.getOrdering();
 
-						EnumMap<Ordering.Path, String[]>
-							otherConfigOrderingRoutes =
-								otherConfigOrdering.getRoutes();
+					EnumMap<Ordering.Path, String[]> otherConfigOrderingRoutes =
+						otherConfigOrdering.getRoutes();
 
-						String[] otherRoutePathNames =
-							otherConfigOrderingRoutes.get(path);
+					String[] otherRoutePathNames =
+						otherConfigOrderingRoutes.get(path);
 
-						if (Arrays.binarySearch(
-								otherRoutePathNames, configName) >= 0) {
+					if (Arrays.binarySearch(
+							otherRoutePathNames, configName) >= 0) {
 
-							throw new OrderingCircularDependencyException(
-								path, webXMLs);
-						}
+						throw new OrderingCircularDependencyException(
+							path, webXMLs);
+					}
 
-						// If I am before them, they should be informed
-						// that they are after me. Similarly, if I am after
-						// them, then they should be informed that they are
-						// before me.
+					// If I am before them, they should be informed
+					// that they are after me. Similarly, if I am after
+					// them, then they should be informed that they are
+					// before me.
 
-						Ordering.Path oppositePath;
+					Ordering.Path oppositePath;
 
-						if (path == Ordering.Path.BEFORE) {
-							oppositePath = Ordering.Path.AFTER;
-						}
-						else {
-							oppositePath = Ordering.Path.BEFORE;
-						}
+					if (path == Ordering.Path.BEFORE) {
+						oppositePath = Ordering.Path.AFTER;
+					}
+					else {
+						oppositePath = Ordering.Path.BEFORE;
+					}
 
-						String[] oppositePathNames =
-							otherConfigOrderingRoutes.get(oppositePath);
+					String[] oppositePathNames =
+						otherConfigOrderingRoutes.get(oppositePath);
 
-						if (Arrays.binarySearch(
-								oppositePathNames, configName) < 0) {
+					if (Arrays.binarySearch(
+							oppositePathNames, configName) < 0) {
 
-							EnumMap<Ordering.Path, String[]> routes =
-								new EnumMap<>(Ordering.Path.class);
+						EnumMap<Ordering.Path, String[]> routes = new EnumMap<>(
+							Ordering.Path.class);
 
-							routes.put(path, otherRoutePathNames);
-							routes.put(
-								oppositePath,
-								appendAndSort(
-									otherConfigOrderingRoutes.get(oppositePath),
-									new String[] {configName}));
+						routes.put(path, otherRoutePathNames);
+						routes.put(
+							oppositePath,
+							appendAndSort(
+								otherConfigOrderingRoutes.get(oppositePath),
+								new String[] {configName}));
 
-							otherConfigOrdering.setRoutes(routes);
-						}
+						otherConfigOrdering.setRoutes(routes);
+					}
 
-						// If I am before them and they are before others,
-						// then I should be informed that I am before
-						// others too. Similarly, if I am after them and
-						// they are after others, then I should be informed
-						// that I am after others too.
+					// If I am before them and they are before others,
+					// then I should be informed that I am before
+					// others too. Similarly, if I am after them and
+					// they are after others, then I should be informed
+					// that I am after others too.
 
-						if (ArrayUtil.isNotEmpty(otherRoutePathNames)) {
-							EnumMap<Ordering.Path, String[]> routes =
-								new EnumMap<>(Ordering.Path.class);
-							routes.put(
-								path,
-								appendAndSort(
-									routePathNames, otherRoutePathNames));
-							routes.put(
-								oppositePath,
-								configOrderingRoutes.get(oppositePath));
-							configOrdering.setRoutes(routes);
-						}
+					if (ArrayUtil.isNotEmpty(otherRoutePathNames)) {
+						EnumMap<Ordering.Path, String[]> routes = new EnumMap<>(
+							Ordering.Path.class);
+
+						routes.put(
+							path,
+							appendAndSort(routePathNames, otherRoutePathNames));
+						routes.put(
+							oppositePath,
+							configOrderingRoutes.get(oppositePath));
+
+						configOrdering.setRoutes(routes);
+					}
 				}
 			}
 		}

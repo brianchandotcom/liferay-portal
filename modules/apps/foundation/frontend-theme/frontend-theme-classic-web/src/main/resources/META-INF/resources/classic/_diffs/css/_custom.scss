@@ -210,7 +210,12 @@ body {
 		top: 50%;
 
 		@include sm {
-			display: none;
+			padding: 0 0 0 8px;
+			position: relative;
+
+			.lexicon-icon {
+				width: 8px;
+			}
 		}
 	}
 

@@ -54,7 +54,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
 		/>
@@ -95,10 +95,53 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 			keyProperty="actionId"
 			modelVar="action"
 		>
-			<%@ include file="/action_columns.jspf" %>
+
+			<%
+			Group group = GroupLocalServiceUtil.getGroup(action.getGroupId());
+			%>
+
+			<c:choose>
+				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="mobile-portrait"
+						toggleRowChecker="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - action.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						</h6>
+
+						<h5>
+							<%= action.getName(locale) %>
+						</h5>
+
+						<h6 class="text-default">
+							<%= action.getDescription(locale) %>
+						</h6>
+
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="type" /></strong>: <%= LanguageUtil.get(resourceBundle, action.getType()) %>
+						</h6>
+
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="scope" /></strong>: <%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/action_actions.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "list") %>'>
+					<%@ include file="/action_columns.jspf" %>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

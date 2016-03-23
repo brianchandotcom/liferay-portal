@@ -30,11 +30,6 @@
 </tr>
 <!--SITE_TABLE-->
 <tr>
-	<td>SITE_TABLE_SITE_NAME_LINK</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[1]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_TABLE_SITE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[5]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

@@ -181,7 +181,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
+						cssClass="entry-action-column"
 						path="/category_action.jsp"
 					/>
 				</c:when>

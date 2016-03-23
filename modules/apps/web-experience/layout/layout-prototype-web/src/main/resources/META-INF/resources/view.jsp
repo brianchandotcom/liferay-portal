@@ -247,6 +247,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 					/>
 
 					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
 						path="/layout_prototype_action.jsp"
 					/>
 				</c:when>

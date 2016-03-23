@@ -81,7 +81,7 @@
 			%>
 
 			<c:choose>
-				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("descriptive") %>'>
+				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
 							cssClass="user-icon-lg"
@@ -121,7 +121,7 @@
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("icon") %>'>
+				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
@@ -152,7 +152,7 @@
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= assetBrowserDisplayContext.getDisplayStyle().equals("list") %>'>
+				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="content-column title-column"
 						name="title"

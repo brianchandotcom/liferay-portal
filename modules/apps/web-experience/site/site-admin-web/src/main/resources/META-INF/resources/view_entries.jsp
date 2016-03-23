@@ -117,7 +117,6 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 								imageUrl="<%= siteImageURL %>"
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
-								showCheckbox="<%= false %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
 								url="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : null %>"
 							>
@@ -131,7 +130,6 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 								icon="sites"
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
-								showCheckbox="<%= false %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
 								url="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : null %>"
 							>

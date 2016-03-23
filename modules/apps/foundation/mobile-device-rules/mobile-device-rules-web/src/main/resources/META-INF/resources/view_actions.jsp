@@ -95,12 +95,6 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 			keyProperty="actionId"
 			modelVar="action"
 		>
-			<liferay-portlet:renderURL var="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="actionId" value="<%= String.valueOf(action.getActionId()) %>" />
-			</liferay-portlet:renderURL>
-
 			<%@ include file="/action_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

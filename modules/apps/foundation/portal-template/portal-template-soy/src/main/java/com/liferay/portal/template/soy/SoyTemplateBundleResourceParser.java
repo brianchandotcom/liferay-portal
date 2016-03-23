@@ -16,6 +16,7 @@ package com.liferay.portal.template.soy;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.URLResourceParser;
 
 import java.net.URL;
@@ -27,30 +28,25 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true,
+	property = {
+		"lange.type=" + TemplateConstants.LANG_TYPE_SOY
+	},
+	service = TemplateResourceParser.class
+)
 public class SoyTemplateBundleResourceParser extends URLResourceParser {
-
-	public SoyTemplateBundleResourceParser() {
-		Bundle bundle = FrameworkUtil. getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
-
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, stateMask,
-			new CapabilityBundleTrackerCustomizer("soy"));
-
-		_bundleTracker.open();
-	}
 
 	@Override
 	public URL getURL(String templateId) {
@@ -78,8 +74,19 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 		return bundle.getResource(templateName);
 	}
 
-	@Override
-	protected void finalize() throws Throwable {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, stateMask,
+			new CapabilityBundleTrackerCustomizer("soy"));
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
 		_bundleTracker.close();
 	}
 
@@ -92,7 +99,7 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 
 	private final Map<String, Bundle> _bundleProvidersMap =
 		new ConcurrentHashMap<>();
-	private final BundleTracker<List<BundleCapability>> _bundleTracker;
+	private BundleTracker<List<BundleCapability>> _bundleTracker;
 
 	private class CapabilityBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<List<BundleCapability>> {

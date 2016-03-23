@@ -27,6 +27,7 @@ import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRe
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -34,7 +35,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Stack;
 
 import javax.portlet.PortletRequest;
 
@@ -53,12 +54,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.felix.utils.log.Logger;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Raymond Augé
@@ -67,16 +77,20 @@ public class ServletContextHelperRegistrationImpl
 	implements ServletContextHelperRegistration {
 
 	public ServletContextHelperRegistrationImpl(
-		Bundle bundle, Props props, Map<String, Object> properties) {
+		Bundle bundle, Props props, SAXParserFactory saxParserFactory,
+		Logger logger, Map<String, Object> properties) {
 
+		_bundle = bundle;
 		_props = props;
+		_saxParserFactory = saxParserFactory;
+		_logger = logger;
 		_properties = properties;
 
-		String contextPath = getContextPath(bundle);
+		String contextPath = getContextPath();
 
-		_servletContextName = getServletContextName(bundle, contextPath);
+		_servletContextName = getServletContextName(contextPath);
 
-		URL url = bundle.getEntry("WEB-INF/");
+		URL url = _bundle.getEntry("WEB-INF/");
 
 		if (url != null) {
 			_wabShapedBundle = true;
@@ -85,29 +99,25 @@ public class ServletContextHelperRegistrationImpl
 			_wabShapedBundle = false;
 		}
 
-		_bundleContext = bundle.getBundleContext();
+		_bundleContext = _bundle.getBundleContext();
 
 		_customServletContextHelper = new CustomServletContextHelper(
-			bundle, _wabShapedBundle);
+			_bundle, _wabShapedBundle);
 
 		_servletContextHelperServiceRegistration = createServletContextHelper(
-			_bundleContext, _servletContextName, contextPath);
+			contextPath);
 
 		_servletContextListenerServiceRegistration =
-			createServletContextListener(_bundleContext, _servletContextName);
+			createServletContextListener();
 
-		_defaultServletServiceRegistration = createDefaultServlet(
-			_bundleContext, _servletContextName);
+		_defaultServletServiceRegistration = createDefaultServlet();
 
-		_jspServletServiceRegistration = createJspServlet(
-			_bundleContext, _servletContextName);
+		_jspServletServiceRegistration = createJspServlet();
 
-		_portletServletServiceRegistration = createPortletServlet(
-			_bundleContext, _servletContextName);
+		_portletServletServiceRegistration = createPortletServlet();
 
 		_portletServletRequestFilterServiceRegistration =
-			createRestrictPortletServletRequestFilter(
-				_bundleContext, _servletContextName);
+			createRestrictPortletServletRequestFilter();
 	}
 
 	@Override
@@ -141,54 +151,26 @@ public class ServletContextHelperRegistrationImpl
 
 	@Override
 	public void setProperties(Map<String, String> contextParameters) {
-		if (contextParameters.isEmpty()) {
-			return;
-		}
-
-		ServiceReference<ServletContextHelper> serviceReference =
-			_servletContextHelperServiceRegistration.getReference();
-
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		for (String key : serviceReference.getPropertyKeys()) {
-			properties.put(key, serviceReference.getProperty(key));
-		}
-
-		for (Entry<String, String> entry : contextParameters.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue();
-
-			properties.put(
-				HttpWhiteboardConstants.
-					HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + key,
-				value);
-		}
-
-		_servletContextHelperServiceRegistration.setProperties(properties);
 	}
 
-	protected String createContextSelectFilterString(
-		String servletContextName) {
-
+	protected String createContextSelectFilterString() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append('(');
 		sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
 		sb.append('=');
-		sb.append(servletContextName);
+		sb.append(_servletContextName);
 		sb.append(')');
 
 		return sb.toString();
 	}
 
-	protected ServiceRegistration<?> createDefaultServlet(
-		BundleContext bundleContext, String servletContextName) {
-
+	protected ServiceRegistration<?> createDefaultServlet() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString(servletContextName));
+			createContextSelectFilterString());
 
 		String prefix = "/META-INF/resources";
 
@@ -202,13 +184,11 @@ public class ServletContextHelperRegistrationImpl
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN, "/*");
 
-		return bundleContext.registerService(
+		return _bundleContext.registerService(
 			Object.class, new Object(), properties);
 	}
 
-	protected ServiceRegistration<Servlet> createJspServlet(
-		BundleContext bundleContext, String servletContextName) {
-
+	protected ServiceRegistration<Servlet> createJspServlet() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		for (String key : _properties.keySet()) {
@@ -225,20 +205,18 @@ public class ServletContextHelperRegistrationImpl
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString(servletContextName));
+			createContextSelectFilterString());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "jsp");
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			new String[] {"*.jsp", "*.jspx"});
 
-		return bundleContext.registerService(
+		return _bundleContext.registerService(
 			Servlet.class, new JspServletWrapper(), properties);
 	}
 
-	protected ServiceRegistration<Servlet> createPortletServlet(
-		BundleContext bundleContext, String servletContextName) {
-
+	protected ServiceRegistration<Servlet> createPortletServlet() {
 		if (_wabShapedBundle) {
 			return null;
 		}
@@ -247,7 +225,7 @@ public class ServletContextHelperRegistrationImpl
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString(servletContextName));
+			createContextSelectFilterString());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
 			"Portlet Servlet");
@@ -255,12 +233,12 @@ public class ServletContextHelperRegistrationImpl
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			"/portlet-servlet/*");
 
-		return bundleContext.registerService(
+		return _bundleContext.registerService(
 			Servlet.class, new PortletServletWrapper(), properties);
 	}
 
-	protected ServiceRegistration<?> createRestrictPortletServletRequestFilter(
-		BundleContext bundleContext, String servletContextName) {
+	protected ServiceRegistration<?>
+		createRestrictPortletServletRequestFilter() {
 
 		if (_wabShapedBundle) {
 			return null;
@@ -276,7 +254,7 @@ public class ServletContextHelperRegistrationImpl
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString(servletContextName));
+			createContextSelectFilterString());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED,
 			Boolean.TRUE);
@@ -291,50 +269,77 @@ public class ServletContextHelperRegistrationImpl
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, "/*");
 
-		return bundleContext.registerService(
+		return _bundleContext.registerService(
 			Filter.class, new RestrictPortletServletRequestFilter(),
 			properties);
 	}
 
 	protected ServiceRegistration<ServletContextHelper>
-		createServletContextHelper(
-			BundleContext bundleContext, String servletContextName,
-			String contextPath) {
+		createServletContextHelper(String contextPath) {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-			servletContextName);
+			_servletContextName);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
 		properties.put("rtl.required", Boolean.TRUE.toString());
 
-		return bundleContext.registerService(
+		collectContextInitParams(properties);
+
+		return _bundleContext.registerService(
 			ServletContextHelper.class, _customServletContextHelper,
 			properties);
 	}
 
+	private void collectContextInitParams(
+		Dictionary<String, Object> properties) {
+
+		if (!_wabShapedBundle) {
+			return;
+		}
+
+		URL url = _bundle.getEntry("WEB-INF/web.xml");
+
+		if (url == null) {
+			return;
+		}
+
+		try (InputStream inputStream = url.openStream()) {
+			SAXParser saxParser = _saxParserFactory.newSAXParser();
+
+			XMLReader xmlReader = saxParser.getXMLReader();
+
+			xmlReader.setContentHandler(
+				new ContextInitParamHandler(properties));
+
+			xmlReader.parse(new InputSource(inputStream));
+		}
+		catch (Exception e) {
+			_logger.log(Logger.LOG_WARNING, "Could not parse web.xml", e);
+		}
+	}
+
 	protected ServiceRegistration<ServletContextListener>
-		createServletContextListener(
-			BundleContext bundleContext, String servletContextName) {
+		createServletContextListener() {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString(servletContextName));
+			createContextSelectFilterString());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER,
 			Boolean.TRUE.toString());
 
-		return bundleContext.registerService(
+		return _bundleContext.registerService(
 			ServletContextListener.class, _customServletContextHelper,
 			properties);
 	}
 
-	protected String getContextPath(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+	protected String getContextPath() {
+		Dictionary<String, String> headers = _bundle.getHeaders();
 
 		String contextPath = headers.get("Web-ContextPath");
 
@@ -342,13 +347,13 @@ public class ServletContextHelperRegistrationImpl
 			return contextPath;
 		}
 
-		String symbolicName = bundle.getSymbolicName();
+		String symbolicName = _bundle.getSymbolicName();
 
 		return '/' + symbolicName.replaceAll("[^a-zA-Z0-9]", "");
 	}
 
-	protected String getServletContextName(Bundle bundle, String contextPath) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+	protected String getServletContextName(String contextPath) {
+		Dictionary<String, String> headers = _bundle.getHeaders();
 
 		String header = headers.get("Web-ContextName");
 
@@ -367,22 +372,79 @@ public class ServletContextHelperRegistrationImpl
 	private static final String _SERVLET_INIT_PARAM_PREFIX =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
+	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private final Logger _logger;
 	private final ServiceRegistration<?>
 		_portletServletRequestFilterServiceRegistration;
 	private final ServiceRegistration<Servlet>
 		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
 	private final Props _props;
+	private final SAXParserFactory _saxParserFactory;
 	private final ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final ServiceRegistration<ServletContextListener>
 		_servletContextListenerServiceRegistration;
 	private final String _servletContextName;
 	private final boolean _wabShapedBundle;
+
+	private static class ContextInitParamHandler extends DefaultHandler {
+
+		public ContextInitParamHandler(Dictionary<String, Object> properties) {
+			_properties = properties;
+		}
+
+		@Override
+		public void characters(char[] c, int start, int length) {
+			if (_stack.empty()) {
+				return;
+			}
+
+			StringBuilder stringBuilder = _stack.peek();
+
+			stringBuilder.append(c, start, length);
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) {
+			if (qName.equals("context-param")) {
+				_properties.put(
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + _paramName,
+					_paramValue);
+
+				_paramName = null;
+				_paramValue = null;
+			}
+			else if (qName.equals("param-name")) {
+				_paramName = String.valueOf(_stack.pop());
+				_paramName = _paramName.trim();
+			}
+			else if (qName.equals("param-value")) {
+				_paramValue = String.valueOf(_stack.pop());
+				_paramValue = _paramValue.trim();
+			}
+		}
+
+		@Override
+		public void startElement(
+			String uri, String localName, String qName, Attributes attributes) {
+
+			if (qName.equals("param-name") || qName.equals("param-value")) {
+				_stack.push(new StringBuilder());
+			}
+		}
+
+		private String _paramName;
+		private String _paramValue;
+		private final Dictionary<String, Object> _properties;
+		private final Stack<StringBuilder> _stack = new Stack<>();
+
+	}
 
 	private static class JspServletWrapper extends HttpServlet {
 

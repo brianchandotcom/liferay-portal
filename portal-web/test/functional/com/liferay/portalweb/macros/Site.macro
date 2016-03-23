@@ -1164,7 +1164,9 @@
 	</command>
 
 	<command name="viewMySitesViaMySitesPG">
-		<execute function="AssertTextEquals" locator1="MySites#NAVIGATION_MY_SITES" value1="My Sites" />
+		<execute function="AssertTextEquals" locator1="NavBar#NAV_ITEM_LINK" value1="My Sites">
+			<var name="key_navItem" value="My Sites" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />

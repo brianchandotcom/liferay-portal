@@ -306,7 +306,10 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_namesAbsoluteOrdering = null;
 		}
 		else if (qName.equals("ordering")) {
-			if (_ordering != null) {
+			if (_ordering == null) {
+				return;
+			}
+
 				EnumMap<Path, String[]> map = _ordering.getRoutes();
 
 				List<String> namesBefore = new ArrayList<>(2);
@@ -347,7 +350,6 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				_webXMLDefinition.setOrdering(_ordering);
 
 				_ordering = null;
-			}
 		}
 		else if (qName.equals("url-pattern")) {
 			if (_filterMapping != null) {

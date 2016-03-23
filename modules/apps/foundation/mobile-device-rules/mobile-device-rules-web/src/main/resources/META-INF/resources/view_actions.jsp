@@ -54,7 +54,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
 		/>
@@ -134,6 +134,34 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 					<liferay-ui:search-container-column-jsp
 						path="/action_actions.jsp"
 					/>
+				</c:when>
+				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/action_actions.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="mobile-portrait"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= LanguageUtil.get(resourceBundle, group.getScopeLabel(themeDisplay)) %>"
+							title="<%= action.getName(locale) %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - action.getModifiedDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<h6 class="text-default">
+									<%= LanguageUtil.get(resourceBundle, action.getType()) %>
+								</h6>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "list") %>'>
 					<%@ include file="/action_columns.jspf" %>

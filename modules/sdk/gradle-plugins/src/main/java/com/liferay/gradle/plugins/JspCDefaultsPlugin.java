@@ -16,7 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
+import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -104,7 +104,7 @@ public class JspCDefaultsPlugin
 
 		addTaskUnzipJar(project);
 
-		configureJspCExtension(project, liferayExtension);
+		configureTaskGenerateJSPJava(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -113,44 +113,6 @@ public class JspCDefaultsPlugin
 				public void execute(Project project) {
 					addDependenciesJspC(project, liferayExtension);
 					configureTaskCompileJSP(project, liferayExtension);
-				}
-
-			});
-	}
-
-	protected void configureJspCExtension(
-		final Project project, final LiferayExtension liferayExtension) {
-
-		JspCExtension jspCExtension = GradleUtil.getExtension(
-			project, JspCExtension.class);
-
-		jspCExtension.setModuleWeb(true);
-
-		jspCExtension.setPortalDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return liferayExtension.getAppServerPortalDir();
-				}
-
-			});
-
-		jspCExtension.setWebAppDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File unzippedJarDir = getUnzippedJarDir(project);
-
-					File resourcesDir = new File(
-						unzippedJarDir, "META-INF/resources");
-
-					if (resourcesDir.exists()) {
-						return resourcesDir;
-					}
-
-					return unzippedJarDir;
 				}
 
 			});
@@ -177,6 +139,30 @@ public class JspCDefaultsPlugin
 			liferayExtension.getLiferayHome(), "work/" + dirName);
 
 		javaCompile.setDestinationDir(dir);
+	}
+
+	protected void configureTaskGenerateJSPJava(final Project project) {
+		CompileJSPTask compileJSPTask = (CompileJSPTask)GradleUtil.getTask(
+			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
+
+		compileJSPTask.setWebAppDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File unzippedJarDir = getUnzippedJarDir(project);
+
+					File resourcesDir = new File(
+						unzippedJarDir, "META-INF/resources");
+
+					if (resourcesDir.exists()) {
+						return resourcesDir;
+					}
+
+					return unzippedJarDir;
+				}
+
+			});
 	}
 
 	@Override

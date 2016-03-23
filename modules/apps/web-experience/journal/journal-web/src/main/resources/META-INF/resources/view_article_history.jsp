@@ -61,24 +61,24 @@ JournalArticle article = journalDisplayContext.getArticle();
 			searchContainerId="articleVersions"
 		>
 			<liferay-frontend:management-bar-buttons>
-
-				<%
-				PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
-				%>
-
 				<liferay-frontend:management-bar-display-buttons
 					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-					portletURL="<%= displayStyleURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				/>
+
 				<liferay-frontend:management-bar-sort
 					orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
 					orderByType="<%= journalDisplayContext.getOrderByType() %>"
 					orderColumns='<%= new String[] {"version", "display-date", "modified-date"} %>'
-					portletURL="<%= portletURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 

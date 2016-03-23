@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -98,11 +99,12 @@ public class BookmarksEntryAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long groupId,
+		long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			BookmarksPortletKeys.BOOKMARKS, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/bookmarks/edit_entry");
@@ -165,7 +167,13 @@ public class BookmarksEntryAssetRendererFactory
 		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private GroupLocalService _groupLocalService;
 	private ServletContext _servletContext;
 
 }

@@ -3752,6 +3752,11 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page 1" />
 			<var name="siteName" value="Site Name" />
@@ -3761,6 +3766,12 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page 1" />
 			<var name="siteName" value="Site Name" />
@@ -3768,6 +3779,11 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -3793,34 +3809,12 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="WebContent#addPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page 1" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
 

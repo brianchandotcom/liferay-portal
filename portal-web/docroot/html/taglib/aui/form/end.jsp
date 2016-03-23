@@ -80,4 +80,6 @@
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 		A.all('#<%= namespace + name %> .input-container').removeAttribute('disabled');
 	</c:if>
+
+	Liferay.fire('<portlet:namespace />formReady');
 </aui:script>

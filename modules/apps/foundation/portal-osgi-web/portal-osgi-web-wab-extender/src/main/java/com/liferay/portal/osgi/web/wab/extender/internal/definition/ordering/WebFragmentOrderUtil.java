@@ -239,6 +239,7 @@ public class WebFragmentOrderUtil {
 			list,
 			new Comparator<Map.Entry<K, V>>() {
 
+				@Override
 				public int compare(Map.Entry<K, V> a, Map.Entry<K, V> b) {
 					return (b.getValue()).compareTo(a.getValue());
 				}
@@ -319,9 +320,8 @@ public class WebFragmentOrderUtil {
 			if (attempts > _MAX_ATTEMPTS) {
 				throw new OrderingMaxAttemptsException(_MAX_ATTEMPTS);
 			}
-			else {
-				attempting = false;
-			}
+
+			attempting = false;
 
 			int last = configs.length - 1;
 

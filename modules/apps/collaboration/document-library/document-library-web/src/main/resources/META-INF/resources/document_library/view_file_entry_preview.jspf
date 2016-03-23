@@ -151,7 +151,7 @@
 						<div class="lfr-preview-file-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
 							<div class="lfr-preview-file-image-current-column">
 								<div class="lfr-preview-file-image-container">
-									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" id="<portlet:namespace /><%= randomNamespace %>previewFileImage" src='<%= previewFileURL + "1" %>' />
+									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" id="<portlet:namespace /><%= randomNamespace %>previewFileImage" src="<%= previewFileURL + "1" %>" />
 								</div>
 								<span class="hide lfr-preview-file-actions" id="<portlet:namespace /><%= randomNamespace %>previewFileActions">
 									<span class="lfr-preview-file-toolbar" id="<portlet:namespace /><%= randomNamespace %>previewToolbar"></span>

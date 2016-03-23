@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>Provides the Liferay Site Navigation component tags, prefixed with <![CDATA[<code>liferay-site-navigation:</code>]]>. The Site Navigation is the Navigation used by end users to browse a site, such as the Navigation Menu, Breadcrumb, SiteMap... etc.</description>
+	<description>Provides the Liferay Site Navigation component tags, prefixed with <![CDATA[<code>liferay-site-navigation:</code>]]>. Site Navigation is the navigation used by end users to browse a site, such as the Navigation Menu, Breadcrumb, SiteMap, etc.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-site-navigation</short-name>
 	<uri>http://liferay.com/tld/site-navigation</uri>

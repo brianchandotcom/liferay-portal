@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>Provides the Liferay Product Navigation component tags, prefixed with <![CDATA[<code>liferay-product-navigation:</code>]]>. The Product Navigation is the Navigation used by administrators to manage Liferay Portal, such as the Product Menu, the Control Menu... etc.</description>
+	<description>Provides the Liferay Product Navigation component tags, prefixed with <![CDATA[<code>liferay-product-navigation:</code>]]>. Product Navigation is the navigation used by administrators to manage Liferay Portal, such as the Product Menu, Control Menu, etc.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-product-navigation</short-name>
 	<uri>http://liferay.com/tld/product-navigation</uri>

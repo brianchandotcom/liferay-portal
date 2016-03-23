@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>Provides the Liferay Map component tags, prefixed with <![CDATA[<code>liferay-map:</code>]]>. These tags are used for displaying and configuring Maps (Google Maps, OpenStreetMap...)</description>
+	<description>Provides the Liferay Map component tags, prefixed with <![CDATA[<code>liferay-map:</code>]]>. These tags are used for displaying and configuring Maps (e.g., Google Maps, OpenStreetMap, etc.).</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-map</short-name>
 	<uri>http://liferay.com/tld/map</uri>

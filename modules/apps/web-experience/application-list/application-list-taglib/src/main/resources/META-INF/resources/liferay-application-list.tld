@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>Provides the Liferay Application List component tags, prefixed with <![CDATA[<code>liferay-application-list:</code>]]>. This tags are used for displaying application links categorized, mainly for the Product Menu and the Simulation Menu.</description>
+	<description>Provides the Liferay Application List component tags, prefixed with <![CDATA[<code>liferay-application-list:</code>]]>. These tags are used for displaying categorized application links, mainly for the Product Menu and Simulation Menu.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-application-list</short-name>
 	<uri>http://liferay.com/tld/application-list</uri>

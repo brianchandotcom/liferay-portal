@@ -144,8 +144,10 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
 				name="name"
 				orderable="<%= true %>"
+				truncate="<%= true %>"
 			>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(rowURL) %>">
@@ -166,18 +168,21 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="members-column text-column"
 				name="members"
 				value="<%= String.valueOf(groupUsersCounts.get(group.getGroupId())) %>"
 			/>
 
 			<c:if test='<%= tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
 				<liferay-ui:search-container-column-text
+					cssClass="online-now-column text-column"
 					name="online-now"
 					value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
 				/>
 			</c:if>
 
 			<liferay-ui:search-container-column-text
+				cssClass="tags-column text-column"
 				name="tags"
 			>
 				<liferay-ui:asset-tags-summary
@@ -187,7 +192,7 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
+				cssClass="entry-action-column"
 				path="/site_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

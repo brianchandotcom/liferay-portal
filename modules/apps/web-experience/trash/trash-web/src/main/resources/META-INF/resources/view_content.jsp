@@ -46,7 +46,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/view_content_toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
@@ -99,8 +99,9 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="text-strong"
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 					>
 						<c:choose>
 							<c:when test="<%= curTrashHandler.isContainerModel() %>">
@@ -141,13 +142,8 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="<%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>"
-					/>
-
 					<liferay-ui:search-container-column-jsp
-						cssClass="list-group-item-field"
+						cssClass="entry-action-column"
 						path="/view_content_action.jsp"
 					/>
 				</liferay-ui:search-container-row>

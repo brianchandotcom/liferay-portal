@@ -100,7 +100,7 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -133,6 +133,8 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 		>
 
 			<%
+			String siteImageURL = group.getLogoURL(themeDisplay, false);
+
 			String rowURL = StringPool.BLANK;
 
 			if (group.getPublicLayoutsPageCount() > 0) {
@@ -143,60 +145,122 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
-				name="name"
-				orderable="<%= true %>"
-				truncate="<%= true %>"
-			>
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(rowURL) %>">
-						<a href="<%= rowURL %>" target="_blank">
-							<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
-						</a>
-					</c:when>
-					<c:otherwise>
-						<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
-					</c:otherwise>
-				</c:choose>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
+							<liferay-ui:search-container-column-image
+								src="<%= siteImageURL %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-icon
+								icon="sites"
+							/>
+						</c:otherwise>
+					</c:choose>
 
-				<c:if test='<%= !tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription(locale)) %>'>
-					<br />
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(rowURL) %>">
+									<a href="<%= rowURL %>" target="_blank">
+										<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
+								</c:otherwise>
+							</c:choose>
+						</h5>
 
-					<em><%= HtmlUtil.escape(group.getDescription(locale)) %></em>
-				</c:if>
-			</liferay-ui:search-container-column-text>
+						<c:if test='<%= !tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription(locale)) %>'>
+							<h6 class="text-default">
+								<%= HtmlUtil.escape(group.getDescription(locale)) %>
+							</h6>
+						</c:if>
 
-			<liferay-ui:search-container-column-text
-				cssClass="members-column text-column"
-				name="members"
-				value="<%= String.valueOf(groupUsersCounts.get(group.getGroupId())) %>"
-			/>
+						<h6 class="text-default">
+							<liferay-ui:asset-tags-summary
+								className="<%= Group.class.getName() %>"
+								classPK="<%= group.getGroupId() %>"
+							/>
+						</h6>
 
-			<c:if test='<%= tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
-				<liferay-ui:search-container-column-text
-					cssClass="online-now-column text-column"
-					name="online-now"
-					value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
-				/>
-			</c:if>
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="members" /></strong>: <%= String.valueOf(groupUsersCounts.get(group.getGroupId())) %>
+						</h6>
 
-			<liferay-ui:search-container-column-text
-				cssClass="tags-column text-column"
-				name="tags"
-			>
-				<liferay-ui:asset-tags-summary
-					className="<%= Group.class.getName() %>"
-					classPK="<%= group.getGroupId() %>"
-				/>
-			</liferay-ui:search-container-column-text>
+						<c:if test='<%= tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
+							<h6 class="text-default">
+								<strong><liferay-ui:message key="online-now" /></strong>: <%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>
+							</h6>
+						</c:if>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/site_action.jsp"
-			/>
+					<liferay-ui:search-container-column-jsp
+						path="/site_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						orderable="<%= true %>"
+						truncate="<%= true %>"
+					>
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(rowURL) %>">
+								<a href="<%= rowURL %>" target="_blank">
+									<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
+							</c:otherwise>
+						</c:choose>
+
+						<c:if test='<%= !tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription(locale)) %>'>
+							<br />
+
+							<em><%= HtmlUtil.escape(group.getDescription(locale)) %></em>
+						</c:if>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						cssClass="members-column text-column"
+						name="members"
+						value="<%= String.valueOf(groupUsersCounts.get(group.getGroupId())) %>"
+					/>
+
+					<c:if test='<%= tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
+						<liferay-ui:search-container-column-text
+							cssClass="online-now-column text-column"
+							name="online-now"
+							value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
+						/>
+					</c:if>
+
+					<liferay-ui:search-container-column-text
+						cssClass="tags-column text-column"
+						name="tags"
+					>
+						<liferay-ui:asset-tags-summary
+							className="<%= Group.class.getName() %>"
+							classPK="<%= group.getGroupId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/site_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

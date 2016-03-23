@@ -381,14 +381,20 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	}
 
 	public WebXMLDefinition loadWebXML(URL url) throws Exception {
-		if (url != null) {
+		if (url == null) {
+			return _webXMLDefinition;
+		}
+
 			try (InputStream inputStream = url.openStream()) {
 				SAXParser saxParser = _saxParserFactory.newSAXParser();
 
 				XMLReader xmlReader = saxParser.getXMLReader();
 
 				xmlReader.setContentHandler(this);
+
 				xmlReader.parse(new InputSource(inputStream));
+
+				return _webXMLDefinition;
 			}
 			catch (SAXParseException saxpe) {
 				String message = saxpe.getMessage();
@@ -401,9 +407,6 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				throw saxpe;
 			}
-		}
-
-		return _webXMLDefinition;
 	}
 
 	@Override

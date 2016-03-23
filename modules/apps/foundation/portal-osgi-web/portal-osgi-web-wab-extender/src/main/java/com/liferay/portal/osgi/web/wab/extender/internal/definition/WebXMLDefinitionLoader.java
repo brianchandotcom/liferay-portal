@@ -395,8 +395,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				if (message.contains("DOCTYPE is disallowed")) {
 					throw new Exception(
-						url.toString() + "must be updated to the Servlet 2.4 " +
-							"specification");
+						url + " must be updated to the Servlet 3.0 specification");
 				}
 
 				throw saxpe;

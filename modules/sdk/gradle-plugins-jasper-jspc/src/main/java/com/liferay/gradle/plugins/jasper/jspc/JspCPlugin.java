@@ -46,8 +46,6 @@ public class JspCPlugin implements Plugin<Project> {
 
 	public static final String CONFIGURATION_NAME = "jspC";
 
-	public static final String EXTENSION_NAME = "jspC";
-
 	public static final String GENERATE_JSP_JAVA_TASK_NAME = "generateJSPJava";
 
 	public static final String TOOL_CONFIGURATION_NAME = "jspCTool";
@@ -55,9 +53,6 @@ public class JspCPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
-
-		final JspCExtension jspCExtension = GradleUtil.addExtension(
-			project, EXTENSION_NAME, JspCExtension.class);
 
 		Configuration jspCConfiguration = addJspCConfiguration(project);
 		Configuration jspCToolConfiguration = addJspCToolConfiguration(project);
@@ -74,9 +69,6 @@ public class JspCPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					addJspCDependencies(project);
-					configureJspcExtension(project, jspCExtension);
-
-					jspCExtension.copyTo(generateJSPJavaTask);
 				}
 
 			});
@@ -173,22 +165,6 @@ public class JspCPlugin implements Plugin<Project> {
 		compileJSPTask.setDestinationDir(
 			new File(project.getBuildDir(), "jspc"));
 		compileJSPTask.setJspCClasspath(jspCConfiguration);
-
-		return compileJSPTask;
-	}
-
-	protected void configureJspcExtension(
-		Project project, JspCExtension jspCExtension) {
-
-		configureJspCExtensionWebAppDir(project, jspCExtension);
-	}
-
-	protected void configureJspCExtensionWebAppDir(
-		Project project, JspCExtension jspCExtension) {
-
-		if (jspCExtension.getWebAppDir() != null) {
-			return;
-		}
 
 		File webAppDir = null;
 

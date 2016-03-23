@@ -33,18 +33,15 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.SkipWhenEmpty;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
+public class CompileJSPTask extends JavaExec {
 
 	public CompileJSPTask() {
 		setMain("com.liferay.jasper.jspc.JspC");
@@ -61,8 +58,6 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 
 			setStandardInput(new ByteArrayInputStream(jspClasspath.getBytes()));
 		}
-
-		setSystemProperties(getCompleteSystemProperties());
 
 		OutputStream taskErrorOutput = getErrorOutput();
 
@@ -128,22 +123,8 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 		return project.fileTree(args);
 	}
 
-	@InputDirectory
-	@Optional
-	@Override
-	public File getPortalDir() {
-		return GradleUtil.toFile(getProject(), _portalDir);
-	}
-
-	@Override
 	public File getWebAppDir() {
 		return GradleUtil.toFile(getProject(), _webAppDir);
-	}
-
-	@Input
-	@Override
-	public boolean isModuleWeb() {
-		return _moduleWeb;
 	}
 
 	public void setDestinationDir(Object destinationDir) {
@@ -155,21 +136,10 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 	}
 
 	@Override
-	public void setModuleWeb(boolean moduleWeb) {
-		_moduleWeb = moduleWeb;
-	}
-
-	@Override
-	public void setPortalDir(Object portalDir) {
-		_portalDir = portalDir;
-	}
-
-	@Override
 	public JavaExec setStandardOutput(OutputStream outputStream) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public void setWebAppDir(Object webAppDir) {
 		_webAppDir = webAppDir;
 	}
@@ -187,28 +157,11 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 		return completeArgs;
 	}
 
-	protected Map<String, Object> getCompleteSystemProperties() {
-		Map<String, Object> completeSystemProperties = new HashMap<>(
-			getSystemProperties());
-
-		completeSystemProperties.put("jspc.module.web", isModuleWeb());
-
-		File portalDir = getPortalDir();
-
-		if (portalDir != null) {
-			completeSystemProperties.put("jspc.portal.dir", portalDir);
-		}
-
-		return completeSystemProperties;
-	}
-
 	private static final Logger _logger = Logging.getLogger(
 		CompileJSPTask.class);
 
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;
-	private boolean _moduleWeb;
-	private Object _portalDir;
 	private Object _webAppDir;
 
 }

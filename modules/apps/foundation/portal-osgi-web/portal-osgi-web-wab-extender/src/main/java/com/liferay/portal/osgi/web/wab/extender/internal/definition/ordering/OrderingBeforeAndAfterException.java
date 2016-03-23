@@ -15,7 +15,7 @@
 package com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering;
 
 /**
- * @author  Vernon Singleton
+ * @author Vernon Singleton
  * @author Juan Gonzalez
  */
 public class OrderingBeforeAndAfterException extends Exception {

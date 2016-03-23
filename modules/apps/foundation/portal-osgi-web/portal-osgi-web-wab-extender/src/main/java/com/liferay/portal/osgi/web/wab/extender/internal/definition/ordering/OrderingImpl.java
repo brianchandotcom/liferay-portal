@@ -30,6 +30,7 @@ public class OrderingImpl implements Ordering {
 
 	public OrderingImpl() {
 		_routes = new EnumMap<>(Path.class);
+
 		_routes.put(Path.BEFORE, new String[0]);
 		_routes.put(Path.AFTER, new String[0]);
 	}

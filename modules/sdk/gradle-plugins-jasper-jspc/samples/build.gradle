@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "+"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "latest.release"
 	}
 
 	repositories {
@@ -14,19 +14,9 @@ buildscript {
 
 apply plugin: "com.liferay.jasper.jspc"
 
-File liferayHome = file("../../../../../bundles")
-String tomcatVersion = "8.0.32"
-File tomcatPortalDir = new File(liferayHome, "tomcat-${tomcatVersion}/webapps/ROOT")
-
 dependencies {
-	jspC fileTree(dir: new File(liferayHome, "osgi/modules"), include: "*.jar")
-	jspC fileTree(dir: new File(liferayHome, "tomcat-${tomcatVersion}/lib/ext"), include: "*.jar")
-	jspC fileTree(dir: new File(tomcatPortalDir, "WEB-INF/lib"), include: "*.jar")
-}
-
-jspC {
-	moduleWeb = true
-	portalDir = tomcatPortalDir
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
 }
 
 repositories {

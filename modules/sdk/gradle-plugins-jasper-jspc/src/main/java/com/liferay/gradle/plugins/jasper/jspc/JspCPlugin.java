@@ -20,6 +20,7 @@ import java.io.File;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -29,6 +30,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
@@ -46,8 +48,6 @@ public class JspCPlugin implements Plugin<Project> {
 
 	public static final String CONFIGURATION_NAME = "jspC";
 
-	public static final String EXTENSION_NAME = "jspC";
-
 	public static final String GENERATE_JSP_JAVA_TASK_NAME = "generateJSPJava";
 
 	public static final String TOOL_CONFIGURATION_NAME = "jspCTool";
@@ -56,11 +56,8 @@ public class JspCPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		final JspCExtension jspCExtension = GradleUtil.addExtension(
-			project, EXTENSION_NAME, JspCExtension.class);
-
-		Configuration jspCConfiguration = addJspCConfiguration(project);
-		Configuration jspCToolConfiguration = addJspCToolConfiguration(project);
+		Configuration jspCConfiguration = addConfigurationJspC(project);
+		Configuration jspCToolConfiguration = addConfigurationJspCTool(project);
 
 		final CompileJSPTask generateJSPJavaTask = addTaskGenerateJSPJava(
 			project, jspCConfiguration, jspCToolConfiguration);
@@ -73,16 +70,13 @@ public class JspCPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					addJspCDependencies(project);
-					configureJspcExtension(project, jspCExtension);
-
-					jspCExtension.copyTo(generateJSPJavaTask);
+					addDependenciesJspC(project);
 				}
 
 			});
 	}
 
-	protected Configuration addJspCConfiguration(Project project) {
+	protected Configuration addConfigurationJspC(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -93,7 +87,28 @@ public class JspCPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addJspCDependencies(Project project) {
+	protected Configuration addConfigurationJspCTool(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, TOOL_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesJspCTool(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures Liferay Jasper JspC for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addDependenciesJspC(Project project) {
 		DependencyHandler dependencyHandler = project.getDependencies();
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
@@ -116,28 +131,7 @@ public class JspCPlugin implements Plugin<Project> {
 		dependencyHandler.add(CONFIGURATION_NAME, configuration);
 	}
 
-	protected Configuration addJspCToolConfiguration(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, TOOL_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					addJspCToolDependencies(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures Liferay Jasper JspC for this project.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
-	protected void addJspCToolDependencies(Project project) {
+	protected void addDependenciesJspCTool(Project project) {
 		GradleUtil.addDependency(
 			project, TOOL_CONFIGURATION_NAME, "org.apache.ant", "ant", "1.9.4");
 		GradleUtil.addDependency(
@@ -156,7 +150,7 @@ public class JspCPlugin implements Plugin<Project> {
 		javaCompile.setClasspath(jspCToolConfiguration.plus(jspCConfiguration));
 		javaCompile.setDescription("Compile JSP files to check for errors.");
 		javaCompile.setDestinationDir(javaCompile.getTemporaryDir());
-		javaCompile.setGroup("verification");
+		javaCompile.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 		javaCompile.setSource(generateJSPJavaTask.getOutputs());
 
 		return javaCompile;
@@ -166,54 +160,71 @@ public class JspCPlugin implements Plugin<Project> {
 		Project project, Configuration jspCConfiguration,
 		Configuration jspCToolConfiguration) {
 
-		CompileJSPTask compileJSPTask = GradleUtil.addTask(
+		final CompileJSPTask compileJSPTask = GradleUtil.addTask(
 			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
 		compileJSPTask.setClasspath(jspCToolConfiguration);
+		compileJSPTask.setDescription(
+			"Compiles JSP files to Java source files to check for errors.");
 		compileJSPTask.setDestinationDir(
 			new File(project.getBuildDir(), "jspc"));
 		compileJSPTask.setJspCClasspath(jspCConfiguration);
 
-		return compileJSPTask;
-	}
+		compileJSPTask.setWebAppDir(
+			new Callable<File>() {
 
-	protected void configureJspcExtension(
-		Project project, JspCExtension jspCExtension) {
+				@Override
+				public File call() throws Exception {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						compileJSPTask.getProject(),
+						SourceSet.MAIN_SOURCE_SET_NAME);
 
-		configureJspCExtensionWebAppDir(project, jspCExtension);
-	}
+					return getSrcDir(sourceSet.getResources());
+				}
 
-	protected void configureJspCExtensionWebAppDir(
-		Project project, JspCExtension jspCExtension) {
-
-		if (jspCExtension.getWebAppDir() != null) {
-			return;
-		}
-
-		File webAppDir = null;
+			});
 
 		PluginContainer pluginContainer = project.getPlugins();
 
-		if (pluginContainer.hasPlugin(WarPlugin.class)) {
-			WarPluginConvention warPluginConvention = GradleUtil.getConvention(
-				project, WarPluginConvention.class);
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
 
-			webAppDir = warPluginConvention.getWebAppDir();
-		}
-		else {
-			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project, SourceSet.MAIN_SOURCE_SET_NAME);
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskGenerateJSPJavaForWarPlugin(compileJSPTask);
+				}
 
-			SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
+			});
 
-			Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+		return compileJSPTask;
+	}
 
-			Iterator<File> iterator = srcDirs.iterator();
+	protected void configureTaskGenerateJSPJavaForWarPlugin(
+		final CompileJSPTask compileJSPTask) {
 
-			webAppDir = iterator.next();
-		}
+		compileJSPTask.setWebAppDir(
+			new Callable<File>() {
 
-		jspCExtension.setWebAppDir(webAppDir);
+				@Override
+				public File call() throws Exception {
+					WarPluginConvention warPluginConvention =
+						GradleUtil.getConvention(
+							compileJSPTask.getProject(),
+							WarPluginConvention.class);
+
+					return warPluginConvention.getWebAppDir();
+				}
+
+			});
+	}
+
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
 	}
 
 }

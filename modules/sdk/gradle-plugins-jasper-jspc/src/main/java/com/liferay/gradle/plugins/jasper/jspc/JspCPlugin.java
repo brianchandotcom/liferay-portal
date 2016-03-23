@@ -20,6 +20,7 @@ import java.io.File;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -159,7 +160,7 @@ public class JspCPlugin implements Plugin<Project> {
 		Project project, Configuration jspCConfiguration,
 		Configuration jspCToolConfiguration) {
 
-		CompileJSPTask compileJSPTask = GradleUtil.addTask(
+		final CompileJSPTask compileJSPTask = GradleUtil.addTask(
 			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
 		compileJSPTask.setClasspath(jspCToolConfiguration);
@@ -169,30 +170,53 @@ public class JspCPlugin implements Plugin<Project> {
 			new File(project.getBuildDir(), "jspc"));
 		compileJSPTask.setJspCClasspath(jspCConfiguration);
 
-		File webAppDir = null;
+		compileJSPTask.setWebAppDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						compileJSPTask.getProject(),
+						SourceSet.MAIN_SOURCE_SET_NAME);
+
+					return getSrcDir(sourceSet.getResources());
+				}
+
+			});
 
 		PluginContainer pluginContainer = project.getPlugins();
 
-		if (pluginContainer.hasPlugin(WarPlugin.class)) {
-			WarPluginConvention warPluginConvention = GradleUtil.getConvention(
-				project, WarPluginConvention.class);
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
 
-			webAppDir = warPluginConvention.getWebAppDir();
-		}
-		else {
-			webAppDir = getResourcesDir(project);
-		}
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskGenerateJSPJavaForWarPlugin(compileJSPTask);
+				}
 
-		compileJSPTask.setWebAppDir(webAppDir);
+			});
 
 		return compileJSPTask;
 	}
 
-	protected File getResourcesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+	protected void configureTaskGenerateJSPJavaForWarPlugin(
+		final CompileJSPTask compileJSPTask) {
 
-		return getSrcDir(sourceSet.getResources());
+		compileJSPTask.setWebAppDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					WarPluginConvention warPluginConvention =
+						GradleUtil.getConvention(
+							compileJSPTask.getProject(),
+							WarPluginConvention.class);
+
+					return warPluginConvention.getWebAppDir();
+				}
+
+			});
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

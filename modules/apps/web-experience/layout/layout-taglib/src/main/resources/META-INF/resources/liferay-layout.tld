@@ -11,90 +11,108 @@
 	<short-name>liferay-layout</short-name>
 	<uri>http://liferay.com/tld/layout</uri>
 	<tag>
+		<description>Creates a component that displays a tree of Pages</description>
 		<name>layouts-tree</name>
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.LayoutsTreeTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>If true, only pages of type "Display Page" will be checkeables</description>
 			<name>checkContentDisplayPage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If selectableTree is true, this will be the initial state of the checkboxes (true means checked)</description>
 			<name>defaultStateChecked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, the pages in the tree can be dragged and dropped</description>
 			<name>draggableTree</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, the root node will be expanded.</description>
 			<name>expandFirstNode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The ID of the group from which the pages will be shown.</description>
 			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, the layouts that have a workflow status as Incomplete will be grayed out.</description>
 			<name>incomplete</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The html template that will be used to generate the html of each page in the tree.</description>
 			<name>linkTemplate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The base PortletURL that will be used to generate the URL of the nodes.</description>
 			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, the Private Pages from the site will be shown, otherwise, the Public Pages will be shown.</description>
 			<name>privateLayout</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The html template that will be used to generate the html of the root node of the tree.</description>
 			<name>rootLinkTemplate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The text that will be displayed in the root node of the tree.</description>
 			<name>rootNodeName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, the state of open/closed nodes will be persisted and remembered for the next time the user views this tree.</description>
 			<name>saveState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If true, each node will have a checkbox so that the pages can be selected.</description>
 			<name>selectableTree</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>If selectableTree is true, this attribute contains the nodes that are checked initially.</description>
 			<name>selectedLayoutIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The plid (primaryKey) of the Page that is currently selected.</description>
 			<name>selPlid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A unique ID to namespace the tree.</description>
 			<name>treeId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A map of base PortletURLs that can be used to generate several URLs in the nodes. The key of the map will be replaced by the value in the linkTemplate o rootLinkTemplate.</description>
 			<name>portletURLs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

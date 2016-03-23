@@ -35,6 +35,8 @@ import com.liferay.portlet.PortalPreferencesWrapper;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.sql.PreparedStatement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +99,7 @@ public class UpgradeCustomizablePortletsTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_invokeSuper = true;
+		_testUpgrade = true;
 
 		Layout layout1 = getLayout();
 
@@ -225,15 +227,14 @@ public class UpgradeCustomizablePortletsTest
 		return StringUtil.read(inputStream);
 	}
 
-	@Override
 	protected String migratePortletPreferencesToUserPreferences(
 			long userId, long plid, String portletId)
 		throws Exception {
 
-		String newPortletId = portletId;
+		String newPortletId = null;
 
-		if (_invokeSuper) {
-			newPortletId = super.migratePortletPreferencesToUserPreferences(
+		if (_testUpgrade) {
+			newPortletId = _migratePortletPreferencesToUserPreferences(
 				userId, plid, portletId);
 
 			_newPortletIds.add(newPortletId);
@@ -259,6 +260,46 @@ public class UpgradeCustomizablePortletsTest
 		return newPortletId;
 	}
 
+	protected void updatePortletPreferences(
+			long userId, long plid, String portletId, String newPortletId)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update PortletPreferences set ownerId = ?, ownerType = ?, " +
+					"plid = ?, portletId = ? where ownerId = ? and " +
+						"ownerType = ? and plid = ? and portletId = ?")) {
+
+			ps.setLong(1, userId);
+			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_USER);
+			ps.setLong(3, plid);
+			ps.setString(4, newPortletId);
+			ps.setLong(5, 0L);
+			ps.setInt(6, PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+			ps.setLong(7, plid);
+			ps.setString(8, portletId);
+
+			ps.executeUpdate();
+		}
+	}
+
+	private String _migratePortletPreferencesToUserPreferences(
+			long userId, long plid, String portletId)
+		throws Exception {
+
+		if (!PortletConstants.hasInstanceId(portletId)) {
+			return portletId;
+		}
+
+		String instanceId = PortletConstants.getInstanceId(portletId);
+
+		String newPortletId = PortletConstants.assemblePortletId(
+			portletId, userId, instanceId);
+
+		updatePortletPreferences(userId, plid, portletId, newPortletId);
+
+		return newPortletId;
+	}
+
 	private static final String[] _PORTLET_IDS = new String[] {
 		"23", "71_INSTANCE_LhZwzy867qfr", "56_INSTANCE_LhZwzy867qqb",
 		"56_INSTANCE_LhZwzy867qxc"
@@ -267,7 +308,7 @@ public class UpgradeCustomizablePortletsTest
 	@DeleteAfterTestRun
 	private final List<Group> _groups = new ArrayList<>();
 
-	private boolean _invokeSuper;
 	private List<String> _newPortletIds = new ArrayList<>();
+	private boolean _testUpgrade;
 
 }

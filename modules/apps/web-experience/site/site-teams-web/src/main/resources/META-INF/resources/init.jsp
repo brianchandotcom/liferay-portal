@@ -42,15 +42,15 @@ page import="com.liferay.portal.kernel.model.Team" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserGroup" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.TeamLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.TeamServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -67,6 +67,8 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
+page import="com.liferay.site.teams.web.constants.SiteTeamsPortletKeys" %><%@
+page import="com.liferay.site.teams.web.display.context.SiteTeamsDisplayContext" %><%@
 page import="com.liferay.site.teams.web.search.TeamDisplayTerms" %><%@
 page import="com.liferay.site.teams.web.search.TeamSearch" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
@@ -84,5 +86,9 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+%>
 
 <%@ include file="/init-ext.jsp" %>

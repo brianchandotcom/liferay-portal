@@ -80,9 +80,13 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 			/>
 		</liferay-frontend:management-bar-filters>
 
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
-			portletURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

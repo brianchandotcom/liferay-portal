@@ -852,37 +852,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				matcher = _jspTagAttributes.matcher(line);
 
 				while (matcher.find()) {
-					String attributes = matcher.group(1);
-
-					Matcher attributeValueMatcher =
-						_jspTagAttributeValue.matcher(attributes);
-
-					while (attributeValueMatcher.find()) {
-						String delimeter = attributeValueMatcher.group(1);
-						String javaCode = attributeValueMatcher.group(2);
-
-						if (delimeter.equals(StringPool.QUOTE) ^
-							javaCode.contains(StringPool.QUOTE)) {
-
-							continue;
-						}
-
-						String newDelimeter = StringPool.QUOTE;
-
-						if (delimeter.equals(StringPool.QUOTE)) {
-							newDelimeter = StringPool.APOSTROPHE;
-						}
-
-						String match = attributeValueMatcher.group();
-
-						String replacement = StringUtil.replaceFirst(
-							match, delimeter, newDelimeter);
-
-						replacement = StringUtil.replaceLast(
-							replacement, delimeter, newDelimeter);
-
-						line = StringUtil.replace(line, match, replacement);
-					}
+					line = sortAttributes(
+						fileName, line, matcher.group(), lineCount, true);
 				}
 
 				if (readAttributes) {
@@ -1992,8 +1963,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"/.*\\.(jsp[f]?|svg)");
 	private final Pattern _jspTagAttributes = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
-	private final Pattern _jspTagAttributeValue = Pattern.compile(
-		"('|\")<%= (.+?) %>('|\")");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =

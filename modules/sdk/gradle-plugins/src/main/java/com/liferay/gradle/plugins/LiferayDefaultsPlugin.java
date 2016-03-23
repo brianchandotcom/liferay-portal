@@ -612,6 +612,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					commands.add("git add " + project.relativePath("bnd.bnd"));
 
+					File moduleConfigFile = getModuleConfigFile(project);
+
+					if ((moduleConfigFile != null) &&
+						moduleConfigFile.exists()) {
+
+						commands.add(
+							"git add " +
+								project.relativePath(moduleConfigFile));
+					}
+
 					commands.add(_getGitCommitCommand("prep next", true));
 
 					// Commit "artifact properties"

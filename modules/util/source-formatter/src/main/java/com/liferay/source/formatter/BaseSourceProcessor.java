@@ -2064,14 +2064,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String s = tag;
 
-		int x = s.indexOf(CharPool.LESS_THAN);
 		int y = s.indexOf(CharPool.SPACE);
 
-		if ((x == -1) || (x >= y)) {
+		if (y == -1) {
 			return line;
 		}
 
-		String tagName = s.substring(x + 1, y);
+		String tagName = s.substring(1, y);
 
 		s = s.substring(y + 1);
 
@@ -2080,7 +2079,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		boolean wrongOrder = false;
 
-		for (x = 0;;) {
+		for (int x = 0;;) {
 			x = s.indexOf(CharPool.EQUAL);
 
 			if ((x == -1) || (s.length() <= (x + 1))) {

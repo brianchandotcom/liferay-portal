@@ -28,6 +28,20 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 portletURL.setParameter("redirect", redirect);
 
+FeedSearch feedSearch = new FeedSearch(renderRequest, portletURL);
+
+feedSearch.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+FeedSearchTerms searchTerms = (FeedSearchTerms)feedSearch.getSearchTerms();
+
+int feedsCount = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
+
+feedSearch.setTotal(feedsCount);
+
+List feeds = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), feedSearch.getStart(), feedSearch.getEnd(), feedSearch.getOrderByComparator());
+
+feedSearch.setResults(feeds);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -39,14 +53,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		<aui:nav-item label="feeds" selected="<%= true %>" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= (feedsCount > 0) || searchTerms.isSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
+	disabled="<%= (feedsCount <= 0) && !searchTerms.isSearch() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="feeds"
 >
@@ -72,7 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -90,53 +107,88 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 <aui:form action="<%= deleteFeedsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="feeds"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		searchContainer="<%= new FeedSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= feedSearch %>"
 	>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			FeedSearchTerms searchTerms = (FeedSearchTerms)searchContainer.getSearchTerms();
-
-			total = JournalFeedLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator());
-
-			searchContainer.setTotal(total);
-
-			results = JournalFeedLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFeedId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFeed"
 			keyProperty="feedId"
 			modelVar="feed"
 		>
-			<liferay-ui:search-container-column-text
-				name="id"
-				property="feedId"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="rss-svg"
+						toggleRowChecker="<%= true %>"
+					/>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-				property="name"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<%= feed.getName() %>
+						</h5>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				property="description"
-			/>
+						<h6 class="text-default">
+							<%= feed.getDescription() %>
+						</h6>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
-				path="/feed_action.jsp"
-			/>
+						<h6 class="text-default">
+							<strong><liferay-ui:message key="id" /></strong>: <%= feed.getId() %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/feed_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/feed_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="rss-svg"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							subtitle="<%= feed.getDescription() %>"
+							title="<%= feed.getName() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="id-column text-column"
+						name="id"
+						property="feedId"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						property="name"
+						truncate="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="content-column description-column"
+						name="description"
+						property="description"
+						truncate="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/feed_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

@@ -700,7 +700,10 @@
 			<elseif>
 				<equals arg1="${membershipType}" arg2="Restricted" />
 				<then>
-					<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+					<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+						<var name="key_itemName" value="${siteName}" />
+					</execute>
+
 					<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
 					<var name="key_rowEntry" value="${siteName}" />
@@ -722,7 +725,10 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+					<var name="key_itemName" value="${siteName}" />
+				</execute>
+
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
 				<var name="key_rowEntry" value="${siteName}" />
@@ -732,7 +738,11 @@
 				<execute function="AssertClick" locator1="MenuItem#JOIN" value1="Join" />
 
 				<execute macro="Alert#viewSuccessMessage" />
-				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+
+				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+					<var name="key_itemName" value="${siteName}" />
+				</execute>
+
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
 				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
@@ -745,7 +755,10 @@
 	<command name="leaveViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+			<var name="key_itemName" value="${siteName}" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
 		<execute macro="Navigator#gotoNavItem">
@@ -756,7 +769,10 @@
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+			<var name="key_itemName" value="${siteName}" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
 		<var name="key_rowEntry" value="${siteName}" />
@@ -766,7 +782,11 @@
 		<execute function="AssertClick" locator1="MenuItem#LEAVE" value1="Leave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+			<var name="key_itemName" value="${siteName}" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
@@ -1140,14 +1160,21 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="MySites#NAVIGATION_MY_SITES" value1="My Sites" />
-		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+			<var name="key_itemName" value="${siteName}" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="${memberCount}" />
 	</command>
 
 	<command name="viewNoMySitesViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_NAME" />
+		<execute function="AssertElementNotPresent" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+			<var name="key_itemName" value="${siteName}" />
+		</execute>
+
 		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" />
 		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_ACTIONS" />
 	</command>

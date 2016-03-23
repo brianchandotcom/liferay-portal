@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Props
+Bundle-SymbolicName: com.liferay.portal.props
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.props
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

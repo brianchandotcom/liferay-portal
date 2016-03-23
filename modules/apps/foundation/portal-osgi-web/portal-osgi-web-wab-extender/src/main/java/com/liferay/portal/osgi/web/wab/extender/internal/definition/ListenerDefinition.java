@@ -51,6 +51,15 @@ public class ListenerDefinition {
 		return _eventListener;
 	}
 
+	public int hashCode() {
+		if (_eventListener != null) {
+			Class<?> listenerClass = _eventListener.getClass();
+			return listenerClass.hashCode();
+		}
+
+		return super.hashCode();
+	}
+
 	public void setEventListener(EventListener eventListener) {
 		_eventListener = eventListener;
 	}

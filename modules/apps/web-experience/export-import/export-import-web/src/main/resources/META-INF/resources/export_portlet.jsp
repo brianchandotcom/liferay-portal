@@ -399,15 +399,6 @@ portletURL.setParameter("portletResource", portletResource);
 																<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
 																<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
-
-																<c:if test="<%= modelDeletionCount != 0 %>">
-
-																	<%
-																	String deletionsLabel = LanguageUtil.get(request, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
-																	%>
-
-																	<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
-																</c:if>
 															</li>
 														</ul>
 													</div>
@@ -418,6 +409,8 @@ portletURL.setParameter("portletResource", portletResource);
 								</ul>
 							</aui:fieldset>
 						</c:if>
+
+						<liferay-staging:deletions cmd="<%= Constants.EXPORT %>" />
 
 						<%
 						Group group = themeDisplay.getScopeGroup();
@@ -468,8 +461,8 @@ portletURL.setParameter("portletResource", portletResource);
 
 	var exportImport = new Liferay.ExportImport(
 		{
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />fm1,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
 			locale: '<%= locale.toLanguageTag() %>',
@@ -479,7 +472,7 @@ portletURL.setParameter("portletResource", portletResource);
 			rangeAllNode: '#rangeAll',
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
 			timeZone: '<%= timeZone.getID() %>'
 		}
 	);

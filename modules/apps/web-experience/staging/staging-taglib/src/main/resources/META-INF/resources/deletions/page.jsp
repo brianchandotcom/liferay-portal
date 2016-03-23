@@ -16,7 +16,7 @@
 
 <%@ include file="/deletions/init.jsp" %>
 
-<c:if test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) || cmd.equals(Constants.UPDATE) %>">
+<c:if test="<%= cmd.equals(Constants.ADD) || cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) || cmd.equals(Constants.UPDATE) %>">
 	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="deletions" markupView="lexicon">
 		<aui:input disabled="<%= disableInputs %>" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, false) %>" />
 

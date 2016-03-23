@@ -42,7 +42,6 @@ AUI.add(
 				CSS_PREFIX: 'table',
 
 				DATATYPE_VALIDATOR: {
-					'date': 'date',
 					'double': 'number',
 					'integer': 'digits',
 					'long': 'digits'

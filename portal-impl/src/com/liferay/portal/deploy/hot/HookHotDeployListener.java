@@ -1199,21 +1199,19 @@ public class HookHotDeployListener
 				continue;
 			}
 
-			if (locale != null) {
-				String languageId = LocaleUtil.toLanguageId(locale);
+			String languageId = LocaleUtil.toLanguageId(locale);
 
-				try (InputStream inputStream = url.openStream()) {
-					ResourceBundle resourceBundle = new LiferayResourceBundle(
-						inputStream, StringPool.UTF8);
+			try (InputStream inputStream = url.openStream()) {
+				ResourceBundle resourceBundle = new LiferayResourceBundle(
+					inputStream, StringPool.UTF8);
 
-					Map<String, Object> properties = new HashMap<>();
+				Map<String, Object> properties = new HashMap<>();
 
-					properties.put("language.id", languageId);
+				properties.put("language.id", languageId);
 
-					registerService(
-						servletContextName, languagePropertiesLocation,
-						ResourceBundle.class, resourceBundle, properties);
-				}
+				registerService(
+					servletContextName, languagePropertiesLocation,
+					ResourceBundle.class, resourceBundle, properties);
 			}
 		}
 	}

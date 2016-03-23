@@ -413,7 +413,10 @@ public class WebFragmentOrderUtil {
 		String[] routePathNames = configOrderingRoutes.get(path);
 
 		for (String routePathName : routePathNames) {
-			if (!routePathName.equals(OrderingImpl.OTHERS)) {
+			if (routePathName.equals(OrderingImpl.OTHERS)) {
+				continue;
+			}
+
 				for (WebXMLDefinition otherConfig : webXMLs) {
 					String otherConfigName = otherConfig.getFragmentName();
 
@@ -489,7 +492,6 @@ public class WebFragmentOrderUtil {
 						configOrdering.setRoutes(routes);
 					}
 				}
-			}
 		}
 	}
 

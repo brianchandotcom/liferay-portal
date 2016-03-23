@@ -168,7 +168,7 @@
 							<a class="palette-item-inner" data-languageid="<%= curLanguageId %>" href="javascript:;">
 								<aui:icon cssClass="lfr-input-localized-flag" image="<%= StringUtil.toLowerCase(StringUtil.replace(curLanguageId, '_', '-')) %>" markupView="lexicon" />
 
-								<div class='<%= errorLocales.contains(curLocale) ? "lfr-input-localized-state lfr-input-localized-state-error" : "lfr-input-localized-state" %>'></div>
+								<div class="<%= errorLocales.contains(curLocale) ? "lfr-input-localized-state lfr-input-localized-state-error" : "lfr-input-localized-state" %>"></div>
 							</a>
 						</li>
 

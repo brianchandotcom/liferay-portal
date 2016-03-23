@@ -64,7 +64,7 @@
 	</target>
 
 	<target name="check-stale-artifacts" depends="check-app-version">
-		<exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
+		<!-- <exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>
@@ -75,7 +75,7 @@
 					<equals arg1="${stale.artifacts.output}" arg2="" />
 				</not>
 			</condition>
-		</fail>
+		</fail> -->
 	</target>
 
 	<target name="clean-app">
@@ -128,28 +128,7 @@
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />
 	</target>
 
-	<target name="record-app-change-log">
-		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
-			<filterchain>
-				<sortfilter />
-
-				<uniqfilter />
-			</filterchain>
-		</loadfile>
-
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${line.separator}app.change.log-${app.version}=${app.ticket.list}" />
-	</target>
-
-	<target name="record-app-git-id">
-		<exec executable="git" outputproperty="git.rev.parse.output">
-			<arg value="rev-parse" />
-			<arg value="head" />
-		</exec>
-
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${line.separator}${line.separator}app.git.id-${app.version}=${git.rev.parse.output}" />
-	</target>
-
-	<target name="record-app-module-versions">
+	<target name="get-app-artifacts">
 		<pathconvert property="module.versions.list" pathsep=",\${line.separator}&#x0009;">
 			<flattenmapper />
 
@@ -158,23 +137,42 @@
 			</path>
 		</pathconvert>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${line.separator}${line.separator}app.modules-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
+		<property name="app.artifacts" value="${line.separator}${line.separator}app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
-	<target name="write-app-change-log" depends="dist-module-artifacts">
-		<antcall target="write-app-change-log-header" />
-		<antcall target="record-app-change-log" />
-		<antcall target="record-app-git-id" />
-		<antcall target="record-app-module-versions" />
+	<target name="get-app-change-log">
+		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
+			<filterchain>
+				<sortfilter />
+
+				<uniqfilter />
+			</filterchain>
+		</loadfile>
+
+		<property name="app.change.log" value="${line.separator}app.change.log-${app.version}=${app.ticket.list}" />
 	</target>
 
-	<target name="write-app-change-log-header">
+	<target name="get-app-change-log-header">
 		<condition property="app.change.log.version.separator" value="" else="${line.separator}${line.separator}">
 			<istrue value="${app.first.version}" />
 		</condition>
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.version.separator}#${line.separator}" />
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="# Liferay App Version ${app.version}${line.separator}" />
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="#${line.separator}" />
+		<property name="app.change.log.header" value="${app.change.log.version.separator}#${line.separator}# Liferay App Version ${app.version}${line.separator}#${line.separator}" />
+	</target>
+
+	<target name="get-app-git-id">
+		<exec executable="git" outputproperty="git.rev.parse.output">
+			<arg value="rev-parse" />
+			<arg value="head" />
+		</exec>
+
+		<property name="app.git.id" value="${line.separator}${line.separator}app.git.id-${app.version}=${git.rev.parse.output}" />
+	</target>
+
+	<target name="write-app-change-log" depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id">
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
+		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.artifacts}" />
 	</target>
 </project>

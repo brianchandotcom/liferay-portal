@@ -19,7 +19,7 @@ import com.liferay.journal.content.web.display.context.JournalContentDisplayCont
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -31,7 +31,7 @@ import javax.portlet.PortletResponse;
  * @author Julio Camarero
  */
 public abstract class BaseJournalArticlePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	protected JournalContentDisplayContext getJournalContentDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse) {

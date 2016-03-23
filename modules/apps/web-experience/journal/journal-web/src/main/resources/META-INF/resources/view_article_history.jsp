@@ -67,7 +67,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 				%>
 
 				<liferay-frontend:management-bar-display-buttons
-					displayViews='<%= new String[] {"list"} %>'
+					displayViews='<%= new String[] {"descriptive", "list"} %>'
 					portletURL="<%= displayStyleURL %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
@@ -116,56 +116,95 @@ JournalArticle article = journalDisplayContext.getArticle();
 					row.setPrimaryKey(articleVersion.getArticleId() + JournalPortlet.VERSION_SEPARATOR + articleVersion.getVersion());
 					%>
 
-					<liferay-ui:search-container-column-text
-						cssClass="id-column text-column"
-						name="id"
-						value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
-					/>
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("descriptive") %>'>
+							<liferay-ui:search-container-column-text>
+								<liferay-ui:user-portrait
+									cssClass="user-icon-lg"
+									userId="<%= articleVersion.getUserId() %>"
+								/>
+							</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text
-						cssClass="content-column title-column"
-						name="title"
-						truncate="<%= true %>"
-						value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
-					/>
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
 
-					<liferay-ui:search-container-column-text
-						cssClass="text-column version-column"
-						name="version"
-						orderable="<%= true %>"
-					/>
+								<%
+								Date createDate = articleVersion.getModifiedDate();
 
-					<liferay-ui:search-container-column-status
-						cssClass="text-column status-column"
-						name="status"
-					/>
+								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
 
-					<liferay-ui:search-container-column-date
-						cssClass="modified-date-column text-column"
-						name="modified-date"
-						orderable="<%= true %>"
-						property="modifiedDate"
-					/>
+								<h6 class="text-default">
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(articleVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+								</h6>
 
-					<c:if test="<%= article.getDisplayDate() != null %>">
-						<liferay-ui:search-container-column-date
-							cssClass="display-date-column text-column"
-							name="display-date"
-							orderable="<%= true %>"
-							property="displayDate"
-						/>
-					</c:if>
+								<h5>
+									<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>
+								</h5>
 
-					<liferay-ui:search-container-column-text
-						cssClass="author-column text-column"
-						name="author"
-						value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
-					/>
+								<h6 class="text-default">
+									<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= articleVersion.getStatus() %>" version="<%= String.valueOf(articleVersion.getVersion()) %>" />
+								</h6>
+							</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/article_version_action.jsp"
-					/>
+							<liferay-ui:search-container-column-jsp
+								path="/article_version_action.jsp"
+							/>
+						</c:when>
+						<c:when test='<%= displayStyle.equals("list") %>'>
+							<liferay-ui:search-container-column-text
+								cssClass="id-column text-column"
+								name="id"
+								value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="content-column title-column"
+								name="title"
+								truncate="<%= true %>"
+								value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="text-column version-column"
+								name="version"
+								orderable="<%= true %>"
+							/>
+
+							<liferay-ui:search-container-column-status
+								cssClass="text-column status-column"
+								name="status"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="modified-date-column text-column"
+								name="modified-date"
+								orderable="<%= true %>"
+								property="modifiedDate"
+							/>
+
+							<c:if test="<%= article.getDisplayDate() != null %>">
+								<liferay-ui:search-container-column-date
+									cssClass="display-date-column text-column"
+									name="display-date"
+									orderable="<%= true %>"
+									property="displayDate"
+								/>
+							</c:if>
+
+							<liferay-ui:search-container-column-text
+								cssClass="author-column text-column"
+								name="author"
+								value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
+							/>
+
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/article_version_action.jsp"
+							/>
+						</c:when>
+					</c:choose>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

@@ -16,7 +16,7 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.ApplicationContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The ID of the portlet to be rendered.</description>
+			<description>The primary key of the portlet to be rendered.</description>
 			<name>portletId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -33,7 +33,7 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The panel category of which the child categories are displayed.</description>
+			<description>The panel category of the child categories that are displayed.</description>
 			<name>panelCategory</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -45,36 +45,36 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that renders a panelApp. If a panelApp is not passed to the tag, then a link is created. Most of the attributes only apply to when a panelApp is not passed.</description>
+		<description>Creates a component that renders a panel app. If a panel app is not passed to the tag, then a link is created. Most of the attributes only apply to when a panel app is not passed.</description>
 		<name>panel-app</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelAppTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>If the link is marked as active.(only when a panelApp is not passed)</description>
+			<description>Whether the link is marked as active (only useful when a panel app is not passed).</description>
 			<name>active</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The data attribute of the link.(only when a panelApp is not passed)</description>
+			<description>The data attribute of the link (only useful when a panel app is not passed).</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The id of the link.(only when a panelApp is not passed)</description>
+			<description>The ID of the link (only useful when a panel app is not passed).</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The text of the link.(only when a panelApp is not passed)</description>
+			<description>The text of the link (only useful when a panel app is not passed).</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The panelApp to be rendered.</description>
+			<description>The panel app to be rendered.</description>
 			<name>panelApp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -85,14 +85,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The url of the link.(only when a panelApp is not passed)</description>
+			<description>The URL of the link (only useful when a panel app is not passed).</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that displays a collapsable panel with a header and a body that contains the child panel categories and child panel apps of a panel category. It will also display the html gnerated inside the body of this tag.The panel category can have a custom header and a custom body also.</description>
+		<description>Creates a component that displays a collapsable panel with a header and a body that contains the child panel categories and child panel apps of a panel category. It also displays the HTML generated inside the body of this tag. Also, the panel category can have a custom header and a custom body.</description>
 		<name>panel-category</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryTag</tag-class>
 		<body-content>JSP</body-content>
@@ -103,7 +103,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If true, the state (expanded/collapsed) of the panel will be persisted and remembered for the next time the user sees this panel.</description>
+			<description>Whether the state (expanded/collapsed) of the panel is persisted for the next time the user sees this panel.</description>
 			<name>persistState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -114,19 +114,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If false, the body of the panel is not shown (true by default).</description>
+			<description>Whether the body of the panel is displayed.</description>
 			<name>showBody</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If false, the header of the panel is not shown (true by default).</description>
+			<description>Whether the header of the panel is displayed.</description>
 			<name>showHeader</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If true, the panel is expaned by default (Otherwise, panels are collapsed by default).</description>
+			<description>Whether the panel is expanded by default; otherwise, the panel is collapsed by default.</description>
 			<name>showOpen</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -138,20 +138,20 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryBodyTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The panel apps to be displayed. By default they are automatically obtained from the attribute panelCategory.</description>
+			<description>The panel apps to be displayed. By default, they are automatically obtained from the attribute <![CDATA[<code>panelCategory</code>]]>.</description>
 			<name>panelApps</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If true, the panel is expaned by default (Otherwise, panels are collapsed by default).</description>
+			<description>The panel category of the child panel categories and child panel apps that are displayed.</description>
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that displays the content of a panel category. If the panel category has a custom UI, that UI will be rendered. Otherwise, the lifeary-application-list:panel-category tag is invoked.</description>
+		<description>Creates a component that displays the content of a panel category. If the panel category has a custom UI, that UI is rendered. Otherwise, the <![CDATA[<code>lifeary-application-list:panel-category</code>]]> tag is invoked.</description>
 		<name>panel-category-content</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryContentTag</tag-class>
 		<body-content>empty</body-content>
@@ -162,19 +162,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If true, the panel is expaned by default (Otherwise, panels are collapsed by default).</description>
+			<description>Whether the panel is expanded by default; otherwise, the panel is collapsed by default.</description>
 			<name>showOpen</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that displays the panel of a panel category. If the panel category has a custom UI, that UI will be rendered. Otherwise, the lifeary-application-list:panel tag is invoked.</description>
+		<description>Creates a component that displays the panel of a panel category. If the panel category has a custom UI, that UI is rendered. Otherwise, the <![CDATA[<code>liferay-application-list:panel</code>]]> tag is invoked.</description>
 		<name>panel-content</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The panel category of which the panel is displayed.</description>
+			<description>The panel category of the panel that is displayed.</description>
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

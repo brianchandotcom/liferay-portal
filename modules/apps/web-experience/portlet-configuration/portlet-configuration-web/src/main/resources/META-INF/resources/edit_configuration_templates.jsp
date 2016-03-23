@@ -90,7 +90,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -130,28 +130,53 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 				keyProperty="name"
 				modelVar="archivedSettings"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="name-column"
-					name="name"
-					truncate="<%= true %>"
-				/>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<liferay-ui:search-container-column-icon
+							icon="archive"
+						/>
 
-				<liferay-ui:search-container-column-text
-					cssClass="user-name-column"
-					name="user-name"
-					property="userName"
-				/>
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
+							<h6 class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - archivedSettings.getModifiedDate().getTime(), true), HtmlUtil.escape(archivedSettings.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+							</h6>
 
-				<liferay-ui:search-container-column-date
-					cssClass="modified-date-column"
-					name="modified-date"
-					property="modifiedDate"
-				/>
+							<h5>
+								<%= archivedSettings.getName() %>
+							</h5>
+						</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/configuration_template_action.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							path="/configuration_template_action.jsp"
+						/>
+					</c:when>
+					<c:when test='<%= displayStyle.equals("list") %>'>
+						<liferay-ui:search-container-column-text
+							cssClass="name-column"
+							name="name"
+							truncate="<%= true %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							cssClass="user-name-column"
+							name="user-name"
+							property="userName"
+						/>
+
+						<liferay-ui:search-container-column-date
+							cssClass="modified-date-column"
+							name="modified-date"
+							property="modifiedDate"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action-column"
+							path="/configuration_template_action.jsp"
+						/>
+					</c:when>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

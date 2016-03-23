@@ -163,6 +163,8 @@ public class JspCPlugin implements Plugin<Project> {
 			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
 		compileJSPTask.setClasspath(jspCToolConfiguration);
+		compileJSPTask.setDescription(
+			"Compiles JSP files to Java source files to check for errors.");
 		compileJSPTask.setDestinationDir(
 			new File(project.getBuildDir(), "jspc"));
 		compileJSPTask.setJspCClasspath(jspCConfiguration);

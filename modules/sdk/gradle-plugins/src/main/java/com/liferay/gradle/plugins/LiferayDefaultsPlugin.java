@@ -21,6 +21,8 @@ import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
+import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
@@ -39,6 +41,8 @@ import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
+
+import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
 
@@ -1005,6 +1009,38 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
+	protected void checkVersion(Project project) {
+		if (!hasPlugin(project, JSModuleConfigGeneratorPlugin.class)) {
+			return;
+		}
+
+		ConfigJSModulesTask configJSModulesTask =
+			(ConfigJSModulesTask)GradleUtil.getTask(
+				project,
+				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
+
+		File moduleConfigFile = configJSModulesTask.getModuleConfigFile();
+
+		if (!moduleConfigFile.exists()) {
+			return;
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		Map<String, Object> moduleConfigMap =
+			(Map<String, Object>)jsonSlurper.parse(moduleConfigFile);
+
+		String moduleConfigVersion = (String)moduleConfigMap.get("version");
+
+		if (Validator.isNotNull(moduleConfigVersion) &&
+			!moduleConfigVersion.equals(String.valueOf(project.getVersion()))) {
+
+			throw new GradleException(
+				"Version in " + project.relativePath(moduleConfigFile) +
+					" must match project version");
+		}
+	}
+
 	protected void configureArtifacts(
 		Project project, Jar jarJavadocTask, Jar jarSourcesTask,
 		Jar jarTLDDocTask) {
@@ -1352,6 +1388,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public void execute(Project project) {
+					checkVersion(project);
+
 					configureArtifacts(
 						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
 					configureProjectVersion(project);

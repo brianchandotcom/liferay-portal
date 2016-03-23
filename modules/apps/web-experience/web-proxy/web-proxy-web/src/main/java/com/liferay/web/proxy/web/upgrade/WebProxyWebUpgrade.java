@@ -30,11 +30,11 @@ public class WebProxyWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.web.proxy.web", "0.0.0", "1.0.0",
+			"com.liferay.web.proxy.web", "0.0.0", "1.0.2",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.web.proxy.web", "0.0.1", "1.0.0",
+			"com.liferay.web.proxy.web", "0.0.1", "1.0.2",
 			new UpgradePortletId() {
 
 				@Override

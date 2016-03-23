@@ -30,11 +30,11 @@ public class BookmarksWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.bookmarks.web", "0.0.0", "1.0.0",
+			"com.liferay.bookmarks.web", "0.0.0", "1.0.4",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.bookmarks.web", "0.0.1", "1.0.0",
+			"com.liferay.bookmarks.web", "0.0.1", "1.0.4",
 			new UpgradeAdminPortlets(), new UpgradePortletPreferences());
 	}
 

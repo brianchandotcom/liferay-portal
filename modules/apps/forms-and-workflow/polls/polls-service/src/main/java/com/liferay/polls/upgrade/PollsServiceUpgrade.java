@@ -36,7 +36,7 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeKernelPackage(), new UpgradePortletId());
 
 		registry.register(
-			"com.liferay.polls.service", "0.0.2", "1.0.0",
+			"com.liferay.polls.service", "0.0.2", "1.0.3",
 			new UpgradeLastPublishDate());
 	}
 

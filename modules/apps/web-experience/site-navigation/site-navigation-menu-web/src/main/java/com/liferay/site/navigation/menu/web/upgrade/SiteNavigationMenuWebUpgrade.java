@@ -30,11 +30,11 @@ public class SiteNavigationMenuWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.site.navigation.menu.web", "0.0.0", "1.0.0",
+			"com.liferay.site.navigation.menu.web", "0.0.0", "2.0.1",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.site.navigation.menu.web", "0.0.1", "1.0.0",
+			"com.liferay.site.navigation.menu.web", "0.0.1", "2.0.1",
 			new UpgradePortletId(), new UpgradePortletPreferences());
 	}
 

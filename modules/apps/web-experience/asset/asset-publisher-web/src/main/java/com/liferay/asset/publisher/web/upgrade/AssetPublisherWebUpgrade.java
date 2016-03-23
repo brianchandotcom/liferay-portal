@@ -34,11 +34,11 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.asset.publisher.web", "0.0.0", "1.0.0",
+			"com.liferay.asset.publisher.web", "0.0.0", "1.0.4",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.asset.publisher.web", "0.0.1", "1.0.0",
+			"com.liferay.asset.publisher.web", "0.0.1", "1.0.4",
 			new UpgradePortletId(),
 			new UpgradePortletPreferences(
 				_ddmStructureLocalService, _ddmStructureLinkLocalService,

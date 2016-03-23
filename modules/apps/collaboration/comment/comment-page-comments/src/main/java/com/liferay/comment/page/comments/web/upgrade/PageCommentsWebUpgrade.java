@@ -30,7 +30,7 @@ public class PageCommentsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.comment.page.comments.web", "0.0.0", "1.0.0",
+			"com.liferay.comment.page.comments.web", "0.0.0", "1.0.2",
 			new DummyUpgradeStep());
 
 		UpgradePortletId upgradePortletId = new UpgradePortletId() {
@@ -45,7 +45,7 @@ public class PageCommentsWebUpgrade implements UpgradeStepRegistrator {
 		};
 
 		registry.register(
-			"com.liferay.comment.page.comments.web", "0.0.1", "1.0.0",
+			"com.liferay.comment.page.comments.web", "0.0.1", "1.0.2",
 			upgradePortletId);
 	}
 

@@ -28,7 +28,7 @@ public class PrivateMessagingWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.social.privatemessaging.web", "0.0.0", "1.0.0",
+			"com.liferay.social.privatemessaging.web", "0.0.0", "1.0.3",
 			new DummyUpgradeStep());
 	}
 

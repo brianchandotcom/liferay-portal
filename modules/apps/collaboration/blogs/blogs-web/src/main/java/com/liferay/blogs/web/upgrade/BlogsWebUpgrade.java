@@ -33,10 +33,10 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.blogs.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
+			"com.liferay.blogs.web", "0.0.0", "1.0.4", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.blogs.web", "0.0.1", "1.0.0",
+			"com.liferay.blogs.web", "0.0.1", "1.0.4",
 			new UpgradePortletPreferences(),
 			new UpgradePortletSettings(_settingsFactory));
 	}

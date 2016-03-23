@@ -28,7 +28,7 @@ public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.contacts.service", "0.0.1", "1.0.0",
+			"com.liferay.contacts.service", "0.0.1", "2.0.1",
 			new UpgradeEntry());
 	}
 

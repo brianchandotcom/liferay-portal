@@ -31,11 +31,11 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.layout.admin.web", "0.0.0", "1.0.0",
+			"com.liferay.layout.admin.web", "0.0.0", "1.0.3",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.layout.admin.web", "0.0.1", "1.0.0",
+			"com.liferay.layout.admin.web", "0.0.1", "1.0.3",
 			new UpgradeLayout());
 	}
 

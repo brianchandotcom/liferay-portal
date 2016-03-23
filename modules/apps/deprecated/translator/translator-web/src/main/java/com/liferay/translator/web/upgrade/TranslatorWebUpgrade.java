@@ -31,11 +31,11 @@ public class TranslatorWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.translator.web", "0.0.0", "1.0.0",
+			"com.liferay.translator.web", "0.0.0", "1.0.2",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.translator.web", "0.0.1", "1.0.0",
+			"com.liferay.translator.web", "0.0.1", "1.0.2",
 			new UpgradePortletId() {
 
 				@Override

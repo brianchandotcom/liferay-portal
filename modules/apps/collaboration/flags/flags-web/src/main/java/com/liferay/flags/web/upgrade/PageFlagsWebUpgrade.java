@@ -30,10 +30,10 @@ public class PageFlagsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.flags.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
+			"com.liferay.flags.web", "0.0.0", "2.0.1", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.flags.web", "0.0.1", "1.0.0", new UpgradePortletId());
+			"com.liferay.flags.web", "0.0.1", "2.0.1", new UpgradePortletId());
 	}
 
 }

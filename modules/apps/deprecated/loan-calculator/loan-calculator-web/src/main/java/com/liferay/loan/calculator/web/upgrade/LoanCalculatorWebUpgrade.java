@@ -31,11 +31,11 @@ public class LoanCalculatorWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.loan.calculator.web", "0.0.0", "1.0.0",
+			"com.liferay.loan.calculator.web", "0.0.0", "1.0.3",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.loan.calculator.web", "0.0.1", "1.0.0",
+			"com.liferay.loan.calculator.web", "0.0.1", "1.0.3",
 			new UpgradePortletId() {
 
 				@Override

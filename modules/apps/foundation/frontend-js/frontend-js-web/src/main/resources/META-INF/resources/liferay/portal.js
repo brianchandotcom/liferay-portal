@@ -107,7 +107,7 @@
 	Liferay.provide(
 		ToolTip,
 		'show',
-		function(obj, text) {
+		function(obj, text, tooltipConfig) {
 			var instance = this;
 
 			var cached = instance._cached;
@@ -151,6 +151,10 @@
 
 			cached.set(BODY_CONTENT, text);
 			cached.set(TRIGGER, obj);
+
+			for (config in tooltipConfig) {
+				cached.set(config, tooltipConfig[config]);
+			}
 
 			var boundingBox = cached.get('boundingBox');
 

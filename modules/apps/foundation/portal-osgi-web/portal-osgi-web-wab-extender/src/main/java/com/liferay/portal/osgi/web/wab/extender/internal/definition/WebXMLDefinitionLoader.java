@@ -337,10 +337,11 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 					map.put(Path.AFTER, namesAfter.toArray(new String[0]));
 				}
 
-				_othersAfterSet = false;
-				_othersBeforeSet = false;
 				_nameAfter = null;
 				_nameBefore = null;
+				_othersAfterSet = false;
+				_othersBeforeSet = false;
+
 				_ordering.setRoutes(map);
 
 				_webXMLDefinition.setOrdering(_ordering);

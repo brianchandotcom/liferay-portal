@@ -2203,23 +2203,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			s = s.substring(y + 1);
 
 			if (s.startsWith(StringPool.GREATER_THAN)) {
-				x = s.indexOf(CharPool.SPACE);
-
-				if (x == -1) {
-					return line;
-				}
-
-				s = s.substring(x + 1);
-
-				previousAttribute = null;
-				previousAttributeAndValue = null;
+				return line;
 			}
-			else {
-				s = StringUtil.trimLeading(s);
 
-				previousAttribute = attribute;
-				previousAttributeAndValue = currentAttributeAndValue;
-			}
+			s = StringUtil.trimLeading(s);
+
+			previousAttribute = attribute;
+			previousAttributeAndValue = currentAttributeAndValue;
 		}
 	}
 

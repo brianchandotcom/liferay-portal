@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -45,9 +44,7 @@ public class JspCDefaultsPlugin
 
 	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	protected void addDependenciesJspC(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void addDependenciesJspC(Project project) {
 		ConfigurableFileCollection configurableFileCollection = project.files(
 			getUnzippedJarDir(project));
 
@@ -55,10 +52,6 @@ public class JspCDefaultsPlugin
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
-
-		AppServer appServer = liferayExtension.getAppServer();
-
-		appServer.addAdditionalDependencies(JspCPlugin.CONFIGURATION_NAME);
 	}
 
 	@Override
@@ -99,9 +92,6 @@ public class JspCDefaultsPlugin
 	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
 		super.configureDefaults(project, jspCPlugin);
 
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
 		addTaskUnzipJar(project);
 
 		configureTaskGenerateJSPJava(project);
@@ -111,16 +101,14 @@ public class JspCDefaultsPlugin
 
 				@Override
 				public void execute(Project project) {
-					addDependenciesJspC(project, liferayExtension);
-					configureTaskCompileJSP(project, liferayExtension);
+					addDependenciesJspC(project);
+					configureTaskCompileJSP(project);
 				}
 
 			});
 	}
 
-	protected void configureTaskCompileJSP(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void configureTaskCompileJSP(Project project) {
 		boolean jspPrecompileEnabled = GradleUtil.getProperty(
 			project, JSP_PRECOMPILE_ENABLED_PROPERTY_NAME, false);
 
@@ -134,6 +122,9 @@ public class JspCDefaultsPlugin
 		String dirName =
 			_osgiHelper.getBundleSymbolicName(project) + "-" +
 				project.getVersion();
+
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
 
 		File dir = new File(
 			liferayExtension.getLiferayHome(), "work/" + dirName);

@@ -199,10 +199,11 @@ Export-Package:\
 	org.w3c.dom.*;version='1.0',\
 	org.xml.sax.*;version='2.0.2',\
 	*
-Include-Resource:\
-	@com.liferay.osgi.service.tracker.collections-*.jar,\
-	@com.liferay.portal.app.license.api-*.jar,\
-	@com.liferay.registry.api-*.jar,\
+Import-Package: !*
+-includeresource:\
+	@com.liferay.osgi.service.tracker.collections-2.0.0.jar,\
+	@com.liferay.portal.app.license.api-1.0.0.jar,\
+	@com.liferay.registry.api-1.0.0.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/servlet-api.jar,\

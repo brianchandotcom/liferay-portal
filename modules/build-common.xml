@@ -6,7 +6,11 @@
 
 	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
 
-	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew" />
+	<condition property="gradlew.suffix" value=".bat" else="">
+		<os family="windows" />
+	</condition>
+
+	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew${gradlew.suffix}" />
 
 	<macrodef name="print-gradle-alternative">
 		<attribute name="args" />

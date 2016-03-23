@@ -67,7 +67,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 				%>
 
 				<liferay-frontend:management-bar-display-buttons
-					displayViews='<%= new String[] {"descriptive", "list"} %>'
+					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 					portletURL="<%= displayStyleURL %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
@@ -151,6 +151,46 @@ JournalArticle article = journalDisplayContext.getArticle();
 							<liferay-ui:search-container-column-jsp
 								path="/article_version_action.jsp"
 							/>
+						</c:when>
+						<c:when test='<%= displayStyle.equals("icon") %>'>
+
+							<%
+							row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+							%>
+
+							<liferay-ui:search-container-column-text>
+
+								<%
+								String articleImageURL = articleVersion.getArticleImageURL(themeDisplay);
+								%>
+
+								<c:choose>
+									<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
+										<liferay-frontend:vertical-card
+											actionJsp="/article_version_action.jsp"
+											actionJspServletContext="<%= application %>"
+											imageUrl="<%= articleImageURL %>"
+											resultRow="<%= row %>"
+											rowChecker="<%= searchContainer.getRowChecker() %>"
+											title="<%= articleVersion.getTitle(locale) %>"
+										>
+											<%@ include file="/article_version_vertical_card.jspf" %>
+										</liferay-frontend:vertical-card>
+									</c:when>
+									<c:otherwise>
+										<liferay-frontend:icon-vertical-card
+											actionJsp="/article_version_action.jsp"
+											actionJspServletContext="<%= application %>"
+											icon="web-content"
+											resultRow="<%= row %>"
+											rowChecker="<%= searchContainer.getRowChecker() %>"
+											title="<%= articleVersion.getTitle(locale) %>"
+										>
+											<%@ include file="/article_version_vertical_card.jspf" %>
+										</liferay-frontend:icon-vertical-card>
+									</c:otherwise>
+								</c:choose>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= displayStyle.equals("list") %>'>
 							<liferay-ui:search-container-column-text

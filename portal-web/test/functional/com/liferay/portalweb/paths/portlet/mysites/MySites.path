@@ -23,17 +23,6 @@
 	<td>//li[contains(@id,'MySitesPortlet_tabs')]/a[contains(.,'Available Sites')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SITE_TABLE-->
-<tr>
-	<td>SITE_TABLE_SITE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[5]//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

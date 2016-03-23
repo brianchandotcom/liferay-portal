@@ -69,9 +69,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 			/>
 		</liferay-frontend:management-bar-filters>
 
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -151,6 +155,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= curCategory.getDescription() %>"
 							title="<%= curCategory.getName() %>"
+							url="<%= rowURL != null ? rowURL.toString() : null %>"
 						>
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />

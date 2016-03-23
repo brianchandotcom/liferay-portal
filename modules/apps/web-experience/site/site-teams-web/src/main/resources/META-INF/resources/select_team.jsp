@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTeam");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -68,9 +68,13 @@ teamSearch.setTotal(teamsCount);
 			/>
 		</liferay-frontend:management-bar-filters>
 
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

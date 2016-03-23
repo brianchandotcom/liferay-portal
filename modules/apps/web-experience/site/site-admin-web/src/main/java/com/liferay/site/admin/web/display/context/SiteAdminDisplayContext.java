@@ -100,21 +100,11 @@ public class SiteAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
-
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = portalPreferences.getValue(
-				SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
-		}
-		else {
-			portalPreferences.setValue(
-				SiteAdminPortletKeys.SITE_ADMIN, "display-style", displayStyle);
-		}
-
-		_displayStyle = displayStyle;
+		_displayStyle = portalPreferences.getValue(
+			SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
 
 		return _displayStyle;
 	}

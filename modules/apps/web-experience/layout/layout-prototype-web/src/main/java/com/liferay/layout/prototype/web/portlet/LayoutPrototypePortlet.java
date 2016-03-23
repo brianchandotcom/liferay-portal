@@ -18,6 +18,8 @@ import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
@@ -70,6 +72,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class LayoutPrototypePortlet extends MVCPortlet {
+
+	public void changeDisplayStyle(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		String displayStyle = ParamUtil.getString(
+			actionRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
+
+		portalPreferences.setValue(
+			LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE, "display-style",
+			displayStyle);
+	}
 
 	public void deleteLayoutPrototypes(
 			ActionRequest actionRequest, ActionResponse actionResponse)

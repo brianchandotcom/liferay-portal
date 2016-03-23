@@ -21,7 +21,7 @@ String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
 
 Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -70,9 +70,13 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

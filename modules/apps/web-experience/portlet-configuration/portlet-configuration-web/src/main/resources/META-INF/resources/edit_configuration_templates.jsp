@@ -90,7 +90,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -151,6 +151,26 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 						<liferay-ui:search-container-column-jsp
 							path="/configuration_template_action.jsp"
 						/>
+					</c:when>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+
+						<%
+						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+						%>
+
+						<liferay-ui:search-container-column-text>
+							<liferay-frontend:icon-vertical-card
+								actionJsp="/configuration_template_action.jsp"
+								actionJspServletContext="<%= application %>"
+								icon="archive"
+								resultRow="<%= row %>"
+								title="<%= archivedSettings.getName() %>"
+							>
+								<liferay-frontend:vertical-card-header>
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - archivedSettings.getModifiedDate().getTime(), true), HtmlUtil.escape(archivedSettings.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+								</liferay-frontend:vertical-card-header>
+							</liferay-frontend:icon-vertical-card>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("list") %>'>
 						<liferay-ui:search-container-column-text

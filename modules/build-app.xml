@@ -4,15 +4,15 @@
 <project name="build-app">
 	<import file="build-app-module.xml" />
 
-	<condition property="app.first.version">
-		<not>
-			<available file="app.changelog" />
-		</not>
-	</condition>
+	<pathconvert property="app.releng.dir">
+		<filtermapper>
+			<replacestring from="modules" to="modules${file.separator}.releng" />
+		</filtermapper>
 
-	<basename file="${basedir}" property="app.name" />
-
-	<property file="${modules.dir}/../build.properties" />
+		<path>
+			<pathelement location="${basedir}" />
+		</path>
+	</pathconvert>
 
 	<pathconvert pathsep="," property="app.module.dirs">
 		<globmapper from="${modules.dir}${file.separator}*" to="*" />
@@ -25,11 +25,21 @@
 		</path>
 	</pathconvert>
 
-	<mkdir dir="dist" />
+	<mkdir dir="${app.releng.dir}/dist" />
 
 	<pathconvert property="dist.dir">
-		<dirset dir="${basedir}" includes="dist" />
+		<dirset dir="${app.releng.dir}" includes="dist" />
 	</pathconvert>
+
+	<condition property="app.first.version">
+		<not>
+			<available file="${app.releng.dir}/app.changelog" />
+		</not>
+	</condition>
+
+	<basename file="${basedir}" property="app.name" />
+
+	<property file="${modules.dir}/../build.properties" />
 
 	<macrodef name="set-artifact-versions-previous-release">
 		<attribute name="app.version.previous.release" />
@@ -54,7 +64,7 @@
 	</target>
 
 	<target name="check-stale-artifacts" depends="check-app-version">
-		<exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
+		<!-- <exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>
@@ -65,7 +75,7 @@
 					<equals arg1="${stale.artifacts.output}" arg2="" />
 				</not>
 			</condition>
-		</fail>
+		</fail> -->
 	</target>
 
 	<target name="clean-app">
@@ -83,7 +93,7 @@
 	</target>
 
 	<target name="get-app-version-previous-release">
-		<loadfile failonerror="false" property="app.version.previous.release" srcfile="app.changelog">
+		<loadfile failonerror="false" property="app.version.previous.release" srcfile="${app.releng.dir}/app.changelog">
 			<filterchain>
 				<linecontains>
 					<contains value="# " />
@@ -103,7 +113,7 @@
 	</target>
 
 	<target name="get-artifact-versions-previous-release" depends="get-app-version-previous-release">
-		<property file="app.changelog" />
+		<property file="${app.releng.dir}/app.changelog" />
 
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />
 	</target>
@@ -117,7 +127,7 @@
 			</path>
 		</pathconvert>
 
-		<echo append="true" file="app.changelog" message="${line.separator}${line.separator}modules-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
+		<echo append="true" file="${app.releng.dir}/app.changelog" message="${line.separator}${line.separator}modules-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
 	<target name="record-app-ticket-list" depends="dist-module-artifacts">
@@ -125,9 +135,9 @@
 			<istrue value="${app.first.version}" />
 		</condition>
 
-		<echo append="true" file="app.changelog" message="${app.change.log.version.separator}#${line.separator}" />
-		<echo append="true" file="app.changelog" message="# Liferay App Version ${app.version}${line.separator}" />
-		<echo append="true" file="app.changelog" message="#${line.separator}" />
+		<echo append="true" file="${app.releng.dir}/app.changelog" message="${app.change.log.version.separator}#${line.separator}" />
+		<echo append="true" file="${app.releng.dir}/app.changelog" message="# Liferay App Version ${app.version}${line.separator}" />
+		<echo append="true" file="${app.releng.dir}/app.changelog" message="#${line.separator}" />
 
 		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
 			<filterchain>
@@ -137,7 +147,7 @@
 			</filterchain>
 		</loadfile>
 
-		<echo append="true" file="app.changelog" message="${line.separator}change-log-${app.version}=${app.ticket.list}" />
+		<echo append="true" file="${app.releng.dir}/app.changelog" message="${line.separator}change-log-${app.version}=${app.ticket.list}" />
 	</target>
 
 	<target name="write-app-changelog" depends="dist-module-artifacts,record-app-module-versions,record-app-ticket-list" />

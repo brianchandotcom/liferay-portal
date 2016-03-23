@@ -99,11 +99,13 @@ public class CodeCoverageAssertor implements TestRule {
 
 		List<Class<?>> assertClasses = new ArrayList<>();
 
-		ClassLoader classLoader = getClassLoader();
+		if (className != null) {
+			ClassLoader classLoader = getClassLoader();
 
-		Class<?> clazz = classLoader.loadClass(className);
+			Class<?> clazz = classLoader.loadClass(className);
 
-		assertClasses.add(clazz);
+			assertClasses.add(clazz);
+		}
 
 		appendAssertClasses(assertClasses);
 
@@ -124,10 +126,23 @@ public class CodeCoverageAssertor implements TestRule {
 			className = className.substring(0, className.length() - 4);
 		}
 
+		String jvmClassPath = ClassPathUtil.getJVMClassPath(false);
+
+		URL[] urls = ClassPathUtil.getClassPathURLs(jvmClassPath);
+
+		ClassLoader classLoader = new URLClassLoader(urls, null);
+
+		try {
+			classLoader.loadClass(className);
+		}
+		catch (ClassNotFoundException cnfe) {
+			className = null;
+		}
+
 		String[] includes = _includes;
 
 		if (includes == null) {
-			includes = _generateIncludes(className);
+			includes = _generateIncludes(classLoader, className);
 		}
 
 		try {
@@ -146,21 +161,21 @@ public class CodeCoverageAssertor implements TestRule {
 		return clazz.getClassLoader();
 	}
 
-	private String[] _generateIncludes(String mainClassName) throws Exception {
+	private String[] _generateIncludes(
+			ClassLoader classLoader, String mainClassName)
+		throws Exception {
+
 		List<Class<?>> assertClasses = new ArrayList<>();
 
-		String jvmClassPath = ClassPathUtil.getJVMClassPath(false);
+		if (mainClassName != null) {
+			Class<?> mainClass = classLoader.loadClass(mainClassName);
 
-		URL[] urls = ClassPathUtil.getClassPathURLs(jvmClassPath);
+			assertClasses.add(mainClass);
 
-		ClassLoader classLoader = new URLClassLoader(urls, null);
-
-		Class<?> mainClass = classLoader.loadClass(mainClassName);
-
-		assertClasses.add(mainClass);
-
-		if (_includeInnerClasses) {
-			assertClasses.addAll(Arrays.asList(mainClass.getDeclaredClasses()));
+			if (_includeInnerClasses) {
+				assertClasses.addAll(
+					Arrays.asList(mainClass.getDeclaredClasses()));
+			}
 		}
 
 		if (getClass() != CodeCoverageAssertor.class) {

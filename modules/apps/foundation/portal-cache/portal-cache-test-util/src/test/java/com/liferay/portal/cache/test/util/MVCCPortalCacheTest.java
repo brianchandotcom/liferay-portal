@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.cache.internal.mvcc;
+package com.liferay.portal.cache.test.util;
 
 import com.liferay.portal.cache.LowLevelCache;
-import com.liferay.portal.cache.test.util.TestPortalCache;
-import com.liferay.portal.cache.test.util.TestPortalCacheListener;
-import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
+import com.liferay.portal.cache.internal.mvcc.MVCCPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -29,6 +27,7 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -50,7 +49,15 @@ public class MVCCPortalCacheTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
+			new CodeCoverageAssertor() {
+
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.add(MVCCPortalCache.class);
+				}
+
+			},
+			AspectJNewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {

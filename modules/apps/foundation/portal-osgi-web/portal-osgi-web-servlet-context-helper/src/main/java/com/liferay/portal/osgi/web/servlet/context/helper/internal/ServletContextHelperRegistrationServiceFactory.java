@@ -19,6 +19,10 @@ import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRe
 
 import java.util.Map;
 
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.felix.utils.log.Logger;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
@@ -30,9 +34,12 @@ public class ServletContextHelperRegistrationServiceFactory
 	implements ServiceFactory<ServletContextHelperRegistration> {
 
 	public ServletContextHelperRegistrationServiceFactory(
-		Props props, Map<String, Object> properties) {
+		Props props, SAXParserFactory saxParserFactory, Logger logger,
+		Map<String, Object> properties) {
 
 		_props = props;
+		_saxParserFactory = saxParserFactory;
+		_logger = logger;
 		_properties = properties;
 	}
 
@@ -43,7 +50,7 @@ public class ServletContextHelperRegistrationServiceFactory
 			registration) {
 
 		return new ServletContextHelperRegistrationImpl(
-			bundle, _props, _properties);
+			bundle, _props, _saxParserFactory, _logger, _properties);
 	}
 
 	@Override
@@ -55,7 +62,9 @@ public class ServletContextHelperRegistrationServiceFactory
 		servletContextHelperRegistration.close();
 	}
 
+	private final Logger _logger;
 	private final Map<String, Object> _properties;
 	private final Props _props;
+	private final SAXParserFactory _saxParserFactory;
 
 }

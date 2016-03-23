@@ -50,6 +50,12 @@ JournalArticle article = journalDisplayContext.getArticle();
 		portletURL.setParameter("articleId", article.getArticleId());
 		%>
 
+		<aui:nav-bar markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label='<%= LanguageUtil.get(resourceBundle, "versions") %>' selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
+
 		<liferay-frontend:management-bar
 			includeCheckBox="<%= true %>"
 			searchContainerId="articleVersions"

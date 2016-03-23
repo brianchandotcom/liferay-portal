@@ -221,7 +221,9 @@ renderResponse.setTitle(title);
 								modelVar="ddmStructure"
 							>
 								<liferay-ui:search-container-column-text
+									cssClass="content-column name-column title-column"
 									name="name"
+									truncate="<%= true %>"
 									value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 								/>
 
@@ -258,7 +260,7 @@ renderResponse.setTitle(title);
 								</c:if>
 
 								<liferay-ui:search-container-column-text
-									cssClass="list-group-item-field"
+									cssClass="entry-action-column"
 								>
 									<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
 								</liferay-ui:search-container-column-text>

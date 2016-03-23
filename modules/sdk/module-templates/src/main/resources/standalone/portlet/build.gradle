@@ -23,5 +23,3 @@ repositories {
 		url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
 	}
 }
-
-sourceCompatibility = 1.7

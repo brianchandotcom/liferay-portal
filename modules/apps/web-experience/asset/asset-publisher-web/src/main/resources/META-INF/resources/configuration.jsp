@@ -86,18 +86,20 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					modelVar="group"
 				>
 					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
 						name="name"
+						truncate="<%= true %>"
 						value="<%= group.getScopeDescriptiveName(themeDisplay) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="text-column type-column"
 						name="type"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						align="right"
-						cssClass="list-group-item-field"
+						cssClass="entry-action-column"
 					>
 						<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
 							<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />

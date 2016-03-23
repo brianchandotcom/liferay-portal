@@ -121,9 +121,8 @@ public class WebFragmentOrderUtil {
 		if (ListUtil.isEmpty(absoluteOrder)) {
 			return getOrder(configs);
 		}
-		else {
-			return getOrderWithAbsoluteOrder(configs, absoluteOrder);
-		}
+
+		return getOrderWithAbsoluteOrder(configs, absoluteOrder);
 	}
 
 	private static String[] appendAndSort(String[]... groups) {
@@ -380,9 +379,9 @@ public class WebFragmentOrderUtil {
 		// config1 should be after others, but it is not
 
 		if (config1Ordering.isAfterOthers() &&
-		 !config1Ordering.isBefore(config2Name) &&
-				!(config1Ordering.isAfterOthers() &&
-				 config2Ordering.isAfterOthers())) {
+			!config1Ordering.isBefore(config2Name) &&
+			!(config1Ordering.isAfterOthers() &&
+			config2Ordering.isAfterOthers())) {
 
 			return true;
 		}

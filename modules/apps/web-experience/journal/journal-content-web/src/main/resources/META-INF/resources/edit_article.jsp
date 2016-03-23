@@ -17,10 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String editArticleURL = journalContentDisplayContext.getURLEdit();
 String windowId = HtmlUtil.escape(PortalUtil.getPortletId(request)) + "_editAsset";
 
 Map<String, Object> data = new HashMap<String, Object>();
+
 data.put("id", windowId);
 %>
 
@@ -28,6 +28,6 @@ data.put("id", windowId);
 	data="<%= data %>"
 	id="editWebContentIcon"
 	message="edit-web-content"
-	url="<%= editArticleURL %>"
+	url="<%= journalContentDisplayContext.getURLEdit() %>"
 	useDialog="<%= true %>"
 />

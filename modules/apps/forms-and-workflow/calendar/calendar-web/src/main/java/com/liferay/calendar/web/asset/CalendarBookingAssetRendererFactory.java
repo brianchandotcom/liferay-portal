@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -99,7 +100,8 @@ public class CalendarBookingAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, long classTypeId)
+			LiferayPortletResponse liferayPortletResponse, long groupId,
+			long classTypeId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -115,8 +117,8 @@ public class CalendarBookingAssetRendererFactory
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, CalendarPortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			CalendarPortletKeys.CALENDAR, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 
@@ -185,7 +187,13 @@ public class CalendarBookingAssetRendererFactory
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private CalendarBookingLocalService _calendarBookingLocalService;
+	private GroupLocalService _groupLocalService;
 	private ServletContext _servletContext;
 
 }

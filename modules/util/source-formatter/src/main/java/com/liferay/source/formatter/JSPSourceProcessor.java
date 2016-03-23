@@ -1013,7 +1013,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						readAttributes = true;
 					}
 					else {
-						line = sortAttributes(fileName, line, lineCount, true);
+						line = sortAttributes(
+							fileName, line, trimmedLine, lineCount, true);
 					}
 				}
 
@@ -1222,7 +1223,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String formatTagAttributeType(
-			String line, String tag, String attributeAndValue)
+			String line, String tagName, String attributeAndValue)
 		throws Exception {
 
 		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
@@ -1231,11 +1232,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return line;
 		}
 
-		if (tag.startsWith("liferay-")) {
-			tag = tag.substring(8);
+		if (tagName.startsWith("liferay-")) {
+			tagName = tagName.substring(8);
 		}
 
-		JavaClass tagJavaClass = getTagJavaClass(tag);
+		JavaClass tagJavaClass = getTagJavaClass(tagName);
 
 		if (tagJavaClass == null) {
 			return line;

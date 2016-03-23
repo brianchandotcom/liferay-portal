@@ -989,7 +989,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String formatTagAttributeType(
-			String line, String tag, String attributeAndValue)
+			String line, String tagName, String attributeAndValue)
 		throws Exception {
 
 		return line;
@@ -2058,11 +2058,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String sortAttributes(
-			String fileName, String line, int lineCount,
+			String fileName, String line, String tag, int lineCount,
 			boolean allowApostropheDelimeter)
 		throws Exception {
 
-		String s = line;
+		String s = tag;
 
 		int x = s.indexOf(CharPool.LESS_THAN);
 		int y = s.indexOf(CharPool.SPACE);
@@ -2071,7 +2071,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return line;
 		}
 
-		String tag = s.substring(x + 1, y);
+		String tagName = s.substring(x + 1, y);
 
 		s = s.substring(y + 1);
 
@@ -2179,7 +2179,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			newLine = formatTagAttributeType(
-				line, tag, currentAttributeAndValue);
+				line, tagName, currentAttributeAndValue);
 
 			if (!newLine.equals(line)) {
 				return newLine;

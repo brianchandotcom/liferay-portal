@@ -2144,7 +2144,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (delimeter == CharPool.APOSTROPHE) {
-				if (!value.contains(StringPool.QUOTE)) {
+				if (!value.contains(StringPool.QUOTE) ||
+					!tag.contains(StringPool.COLON)) {
+
 					line = StringUtil.replace(
 						line,
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,

@@ -2145,25 +2145,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if (delimeter == CharPool.APOSTROPHE) {
 				if (!value.contains(StringPool.QUOTE)) {
-					line = StringUtil.replace(
+					return StringUtil.replace(
 						line,
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 						StringPool.QUOTE + value + StringPool.QUOTE);
-
-					return sortAttributes(
-						fileName, line, lineCount, allowApostropheDelimeter);
 				}
 				else if (!allowApostropheDelimeter) {
 					String newValue = StringUtil.replace(
 						value, StringPool.QUOTE, "&quot;");
 
-					line = StringUtil.replace(
+					return StringUtil.replace(
 						line,
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 						StringPool.QUOTE + newValue + StringPool.QUOTE);
-
-					return sortAttributes(
-						fileName, line, lineCount, allowApostropheDelimeter);
 				}
 			}
 
@@ -2181,16 +2175,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				line, value, currentAttributeAndValue);
 
 			if (!newLine.equals(line)) {
-				return sortAttributes(
-					fileName, newLine, lineCount, allowApostropheDelimeter);
+				return newLine;
 			}
 
 			newLine = formatTagAttributeType(
 				line, tag, currentAttributeAndValue);
 
 			if (!newLine.equals(line)) {
-				return sortAttributes(
-					fileName, newLine, lineCount, allowApostropheDelimeter);
+				return newLine;
 			}
 
 			if (wrongOrder) {
@@ -2201,12 +2193,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						line, previousAttributeAndValue,
 						currentAttributeAndValue);
 
-					line = StringUtil.replaceLast(
+					return StringUtil.replaceLast(
 						line, currentAttributeAndValue,
 						previousAttributeAndValue);
-
-					return sortAttributes(
-						fileName, line, lineCount, allowApostropheDelimeter);
 				}
 
 				return line;

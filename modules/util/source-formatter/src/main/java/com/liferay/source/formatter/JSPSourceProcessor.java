@@ -849,7 +849,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					checkIfClauseParentheses(ifClause, fileName, lineCount);
 				}
 
-				matcher = _jspTagAttributes.matcher(line);
+				matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
 					line = sortAttributes(
@@ -1961,7 +1961,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
-	private final Pattern _jspTagAttributes = Pattern.compile(
+	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");

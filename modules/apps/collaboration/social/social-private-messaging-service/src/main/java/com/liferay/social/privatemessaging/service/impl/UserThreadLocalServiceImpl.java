@@ -14,6 +14,7 @@
 
 package com.liferay.social.privatemessaging.service.impl;
 
+import com.liferay.content.util.ContentUtil;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -51,7 +52,6 @@ import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys
 import com.liferay.social.privatemessaging.model.PrivateMessagingConstants;
 import com.liferay.social.privatemessaging.model.UserThread;
 import com.liferay.social.privatemessaging.service.base.UserThreadLocalServiceBaseImpl;
-import com.liferay.util.ContentUtil;
 
 import java.io.InputStream;
 

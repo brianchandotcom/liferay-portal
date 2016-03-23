@@ -14,6 +14,7 @@
 
 package com.liferay.hello.velocity.web.portlet;
 
+import com.liferay.content.util.ContentUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.VelocityPortlet;
-import com.liferay.util.ContentUtil;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
@@ -68,7 +68,9 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 			templateId = StringPool.SLASH.concat(templateId);
 		}
 
-		String content = ContentUtil.get("META-INF/resources" + templateId);
+		String content = ContentUtil.get(
+			HelloVelocityPortlet.class.getClassLoader(),
+			"META-INF/resources" + templateId);
 
 		return new StringTemplateResource(templateId, content);
 	}

@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.content.util", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"

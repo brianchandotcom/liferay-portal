@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.exportimport.service.base.ExportImportConfigurationLocalServiceBaseImpl;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.Serializable;
@@ -303,6 +305,10 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfigurationPersistence.findByPrimaryKey(
 				exportImportConfigurationId);
 
+		if (exportImportConfiguration.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
 		int oldStatus = exportImportConfiguration.getStatus();
 
 		exportImportConfiguration = updateStatus(
@@ -327,6 +333,11 @@ public class ExportImportConfigurationLocalServiceImpl
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationPersistence.findByPrimaryKey(
 				exportImportConfigurationId);
+
+		if (!exportImportConfiguration.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			ExportImportConfiguration.class.getName(),

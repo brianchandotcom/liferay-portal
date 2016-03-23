@@ -16,19 +16,19 @@
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The groupID of the DDM Template used for rendering the Navigation (See Application Display Templates).</description>
+			<description>The primary key of the group for the DDM template used for rendering navigation (see Application Display Templates).</description>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Key of the DDM Template used for rendering the Navigation (See Application Display Templates). If not set, the default ADT will be used.</description>
+			<description>The primary key of the DDM template used for rendering navigation (see Application Display Templates). If not set, the default ADT is used.</description>
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The depth of children pages shown.</description>
+			<description>The depth of children pages displayed.</description>
 			<name>displayDepth</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -39,7 +39,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>If set to true, some helpful messages aimed to the page administrator will be shown.</description>
+			<description>Whether to display help messages intended for page administrators.</description>
 			<name>preview</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -50,13 +50,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Accepted values are: relative, select and absolute.</description>
+			<description>The layout type of the root page to be used in the tree of pages. The accepted layout type values are <![CDATA[<code>relative</code>]]>, <![CDATA[<code>select</code>]]>, and <![CDATA[<code>absolute</code>]]>.</description>
 			<name>rootLayoutType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The UUID of the page to be used as the Root of the tree of pages.</description>
+			<description>The UUID of the root page to be used in the tree of pages.</description>
 			<name>rootLayoutUuid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

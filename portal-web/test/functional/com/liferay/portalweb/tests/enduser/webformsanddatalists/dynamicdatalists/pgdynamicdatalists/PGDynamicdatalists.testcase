@@ -347,7 +347,7 @@
 			<var name="fieldName" value="Integer" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#save" />
+		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

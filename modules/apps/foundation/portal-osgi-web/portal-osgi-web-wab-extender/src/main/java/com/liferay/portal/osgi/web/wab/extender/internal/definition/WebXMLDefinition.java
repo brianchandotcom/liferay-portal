@@ -36,6 +36,7 @@ public class WebXMLDefinition {
 	@Override
 	public Object clone() {
 		WebXMLDefinition clonedDefinition = new WebXMLDefinition();
+
 		clonedDefinition.setAbsoluteOrderNames(_absoluteOrderNames);
 		clonedDefinition.setContextParameters(_contextParameters);
 		clonedDefinition.setFilterDefinitions(_filterDefinitions);

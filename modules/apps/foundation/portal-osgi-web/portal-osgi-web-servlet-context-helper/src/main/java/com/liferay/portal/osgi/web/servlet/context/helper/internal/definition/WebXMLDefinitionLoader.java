@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingUtil;

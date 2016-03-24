@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Collection;
@@ -64,7 +65,8 @@ public class MaintenanceUtil {
 			_log.debug(status);
 		}
 
-		_status.append(Time.getRFC822() + " " + status + "<br />");
+		_status.append(
+			Time.getRFC822() + " " + HtmlUtil.escape(status) + "<br />");
 	}
 
 	private void _cancel() {

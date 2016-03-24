@@ -820,6 +820,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isEmailAddressComplete() {
+		if (isDefaultUser()) {
+			return true;
+		}
+
 		if (Validator.isNull(getEmailAddress()) ||
 			(PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&
 			 Validator.isNull(getDisplayEmailAddress()))) {
@@ -832,6 +836,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isEmailAddressVerificationComplete() {
+		if (isDefaultUser()) {
+			return true;
+		}
+
 		boolean emailAddressVerificationRequired = false;
 
 		try {
@@ -885,6 +893,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isSetupComplete() {
+		if (isDefaultUser()) {
+			return true;
+		}
+
 		if (isEmailAddressComplete() && isEmailAddressVerificationComplete() &&
 			!isPasswordReset() && isReminderQueryComplete() &&
 			isTermsOfUseComplete()) {
@@ -897,6 +909,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isTermsOfUseComplete() {
+		if (isDefaultUser()) {
+			return true;
+		}
+
 		boolean termsOfUseRequired = PrefsPropsUtil.getBoolean(
 			getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED,
 			PropsValues.TERMS_OF_USE_REQUIRED);

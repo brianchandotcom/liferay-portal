@@ -16,13 +16,13 @@
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.LayoutsTreeTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether <![CDATA[<code>Display Page</code>]]> type pages are checkable.</description>
+			<description>Whether to make selectable only <![CDATA[<code>Display Page</code>]]> type pages.</description>
 			<name>checkContentDisplayPage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the node checkboxes enabled by <![CDATA[<code>selectableTree</code>]]> are initially checked.</description>
+			<description>Whether to initially select the checkboxes, if <![CDATA[<code>selectableTree</code>]]> is enabled.</description>
 			<name>defaultStateChecked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -34,7 +34,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the root node is expanded.</description>
+			<description>Whether to expand the root node.</description>
 			<name>expandFirstNode</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -46,55 +46,55 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the layouts that have a workflow status of <![CDATA[<code>Incomplete</code>]]> are grayed out.</description>
+			<description>Whether to gray out the layouts that have a workflow status <![CDATA[<code>Incomplete</code>]]>.</description>
 			<name>incomplete</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The HTML template that is used to generate the HTML of each page in the tree.</description>
+			<description>The HTML template to use to generate the HTML of each page in the tree.</description>
 			<name>linkTemplate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The base <![CDATA[<code>PortletURL</code>]]> that is used to generate the URL of the nodes.</description>
+			<description>The base <![CDATA[<code>PortletURL</code>]]> to use to generate the URL of the nodes.</description>
 			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the Private Pages from the site are displayed; otherwise, the Public Pages are displayed.</description>
+			<description>Whether to display the Private Pages from the site; otherwise, the Public Pages are displayed.</description>
 			<name>privateLayout</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The HTML template that is used to generate the HTML for the root node of the tree.</description>
+			<description>The HTML template to use to generate the HTML for the root node of the tree.</description>
 			<name>rootLinkTemplate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The text that is displayed in the root node of the tree.</description>
+			<description>The text to display in the root node of the tree.</description>
 			<name>rootNodeName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the state of open/closed nodes is persisted for the next time the user views this tree.</description>
+			<description>Whether to persist the state of open/closed nodes for the next time the user views this tree.</description>
 			<name>saveState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether each node has a checkbox so the pages can be selected.</description>
+			<description>Whether to provide each node a checkbox so the pages can be selected.</description>
 			<name>selectableTree</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The nodes that are checked initially. These nodes can only be checked if the node checkboxes are enabled by <![CDATA[<code>selectableTree</code>]]>.</description>
+			<description>The nodes that are to be selected initially, if <![CDATA[<code>selectableTree</code>]]> is enabled.</description>
 			<name>selectedLayoutIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -106,7 +106,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A unique primary key to namespace the tree.</description>
+			<description>A unique ID to namespace the tree.</description>
 			<name>treeId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

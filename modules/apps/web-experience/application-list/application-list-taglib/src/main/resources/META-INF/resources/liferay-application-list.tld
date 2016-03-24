@@ -16,7 +16,7 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.ApplicationContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The primary key of the portlet to be rendered.</description>
+			<description>The ID of the portlet to be rendered.</description>
 			<name>portletId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -33,7 +33,7 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The panel category of the child categories that are displayed.</description>
+			<description>The panel category of the child categories to display.</description>
 			<name>panelCategory</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -50,25 +50,25 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelAppTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>Whether the link is marked as active (only useful when a panel app is not passed).</description>
+			<description>Whether to mark the link active if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>active</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The data attribute of the link (only useful when a panel app is not passed).</description>
+			<description>The data attribute to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The ID of the link (only useful when a panel app is not passed).</description>
+			<description>The ID to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The text of the link (only useful when a panel app is not passed).</description>
+			<description>The text to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -85,7 +85,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL of the link (only useful when a panel app is not passed).</description>
+			<description>The URL to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -103,7 +103,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the state (expanded/collapsed) of the panel is persisted for the next time the user sees this panel.</description>
+			<description>Whether to persist the state (expanded/collapsed) of the panel for the next time the user sees this panel.</description>
 			<name>persistState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -114,19 +114,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the body of the panel is displayed.</description>
+			<description>Whether to display the body of the panel.</description>
 			<name>showBody</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the header of the panel is displayed.</description>
+			<description>Whether to display the header of the panel.</description>
 			<name>showHeader</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the panel is expanded by default; otherwise, the panel is collapsed by default.</description>
+			<description>Whether to expand the panel by default; otherwise, the panel is collapsed by default.</description>
 			<name>showOpen</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -144,7 +144,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The panel category of the child panel categories and child panel apps that are displayed.</description>
+			<description>The panel category to display.</description>
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -156,13 +156,13 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The panel category that is displayed.</description>
+			<description>The panel category to display.</description>
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the panel is expanded by default; otherwise, the panel is collapsed by default.</description>
+			<description>Whether to expand the panel by default; otherwise, the panel is collapsed by default.</description>
 			<name>showOpen</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -174,7 +174,7 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelContentTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The panel category of the panel that is displayed.</description>
+			<description>The panel category to display.</description>
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

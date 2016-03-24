@@ -11,13 +11,13 @@
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetCategoriesNavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether the portlet is displayed to end users when there isn't a category to display.</description>
+			<description>Whether to display the portlet to end users when there isn't a category to display.</description>
 			<name>hidePortletWhenEmpty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A comma delimited set of vocabularies that are displayed. By default, all vocabularies that are visible to the current scope are displayed.</description>
+			<description>A comma delimited set of vocabularies to display. By default, all vocabularies that are visible to the current scope are displayed.</description>
 			<name>vocabularyIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

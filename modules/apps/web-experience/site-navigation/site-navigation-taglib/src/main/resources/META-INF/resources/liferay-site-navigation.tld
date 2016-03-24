@@ -16,13 +16,13 @@
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The primary key of the group for the DDM template used for rendering navigation (see Application Display Templates).</description>
+			<description>The group ID of the DDM template to use for rendering the navigation (see Application Display Templates).</description>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The primary key of the DDM template used for rendering navigation (see Application Display Templates). If not set, the default ADT is used.</description>
+			<description>The key of the DDM template to use for rendering the navigation (see Application Display Templates). If not set, the default ADT is used.</description>
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

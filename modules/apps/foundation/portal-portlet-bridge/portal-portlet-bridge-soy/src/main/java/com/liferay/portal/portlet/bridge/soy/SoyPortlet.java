@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -30,7 +31,9 @@ import com.liferay.portal.portlet.bridge.soy.internal.SoyTemplateResourcesCollec
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
@@ -60,6 +63,8 @@ public class SoyPortlet extends MVCPortlet {
 		try {
 			_soyPortletHelper = new SoyPortletHelper(_bundle);
 
+			moduleName = _soyPortletHelper.getModuleName();
+
 			template = _getTemplate();
 		}
 		catch (Exception e) {
@@ -75,6 +80,19 @@ public class SoyPortlet extends MVCPortlet {
 		renderRequest.setAttribute(WebKeys.TEMPLATE, template);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	protected Set<String> getRequiredModules(String path) {
+		Set<String> requiredModules = new LinkedHashSet<>();
+
+		if (moduleName != null) {
+			String controllerName = _soyPortletHelper.getControllerName(path);
+
+			requiredModules.add(
+				moduleName.concat(StringPool.SLASH).concat(controllerName));
+		}
+
+		return requiredModules;
 	}
 
 	@Override
@@ -109,10 +127,21 @@ public class SoyPortlet extends MVCPortlet {
 				writer = new UnsyncStringWriter();
 			}
 
+			String portletNamespace = portletResponse.getNamespace();
+
+			String portletComponentId = portletNamespace.concat(
+				"PortletComponent");
+
+			template.put(
+				"element", StringPool.POUND.concat(portletComponentId));
+			template.put("id", portletComponentId);
+
 			template.processTemplate(writer);
 
+			Set<String> requiredModules = getRequiredModules(path);
+
 			String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
-				template, path, portletResponse.getNamespace());
+				template, requiredModules, portletResponse.getNamespace());
 
 			writer.write(portletJavaScript);
 		}

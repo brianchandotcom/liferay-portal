@@ -14,12 +14,14 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 
 import java.io.File;
 
+import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Andrea Di Giorgi
@@ -27,6 +29,7 @@ import org.gradle.api.tasks.Input;
 public class StartTestableTomcatTask extends StartAppServerTask {
 
 	@Input
+	@Optional
 	public File getLiferayHome() {
 		return GradleUtil.toFile(getProject(), _liferayHome);
 	}
@@ -57,6 +60,11 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 		Project project = getProject();
 
 		File liferayHome = getLiferayHome();
+
+		if (liferayHome == null) {
+			throw new InvalidUserDataException(
+				"No value has been specified for property 'liferayHome'.");
+		}
 
 		project.delete(
 			new File(liferayHome, "data"), new File(liferayHome, "logs"),

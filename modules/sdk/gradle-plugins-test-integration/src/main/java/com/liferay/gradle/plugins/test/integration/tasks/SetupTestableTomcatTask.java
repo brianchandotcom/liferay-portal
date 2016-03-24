@@ -14,11 +14,10 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
+import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
-
-import groovy.lang.Closure;
 
 import groovy.xml.DOMBuilder;
 import groovy.xml.XmlUtil;
@@ -41,12 +40,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.util.VersionNumber;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -58,6 +60,44 @@ import org.w3c.dom.NodeList;
  */
 public class SetupTestableTomcatTask
 	extends DefaultTask implements JmxRemotePortSpec, ManagerSpec {
+
+	public SetupTestableTomcatTask() {
+		_zipUrl = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				File dir = getDir();
+
+				String dirName = dir.getName();
+
+				int start = StringUtil.indexOfDigit(dirName);
+
+				if (start < 0) {
+					return null;
+				}
+
+				VersionNumber versionNumber = VersionNumber.parse(
+					dirName.substring(start));
+
+				if (versionNumber == VersionNumber.UNKNOWN) {
+					return null;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("http://archive.apache.org/dist/tomcat/tomcat-");
+				sb.append(versionNumber.getMajor());
+				sb.append("/v");
+				sb.append(versionNumber);
+				sb.append("/bin/apache-tomcat-");
+				sb.append(versionNumber);
+				sb.append(".zip");
+
+				return sb.toString();
+			}
+
+		};
+	}
 
 	public File getBinDir() {
 		return new File(getDir(), "bin");
@@ -264,20 +304,20 @@ public class SetupTestableTomcatTask
 
 			final File zipFile = FileUtil.get(project, getZipUrl());
 
-			Closure<Void> closure = new Closure<Void>(null) {
+			project.copy(
+				new Action<CopySpec>() {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(2));
-					copySpec.from(project.zipTree(zipFile));
-					copySpec.include("apache-tomcat-*/webapps/manager/**/*");
-					copySpec.into(managerDir.getParentFile());
-					copySpec.setIncludeEmptyDirs(false);
-				}
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.eachFile(new StripPathSegmentsAction(2));
+						copySpec.from(project.zipTree(zipFile));
+						copySpec.include(
+							"apache-tomcat-*/webapps/manager/**/*");
+						copySpec.into(managerDir.getParentFile());
+						copySpec.setIncludeEmptyDirs(false);
+					}
 
-			};
-
-			project.copy(closure);
+				});
 		}
 
 		Document document = null;
@@ -370,19 +410,18 @@ public class SetupTestableTomcatTask
 	protected void setupOsgiModules() {
 		Project project = getProject();
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		project.copy(
+			new Action<CopySpec>() {
 
-			@SuppressWarnings("unused")
-			public void doCall(CopySpec copySpec) {
-				File moduleFrameworkBaseDir = getModuleFrameworkBaseDir();
+				@Override
+				public void execute(CopySpec copySpec) {
+					File moduleFrameworkBaseDir = getModuleFrameworkBaseDir();
 
-				copySpec.from(new File(moduleFrameworkBaseDir, "test"));
-				copySpec.into(new File(moduleFrameworkBaseDir, "modules"));
-			}
+					copySpec.from(new File(moduleFrameworkBaseDir, "test"));
+					copySpec.into(new File(moduleFrameworkBaseDir, "modules"));
+				}
 
-		};
-
-		project.copy(closure);
+			});
 	}
 
 	private static final String[] _TOMCAT_USERS_ROLE_NAMES = {

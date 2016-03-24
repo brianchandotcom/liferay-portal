@@ -14,39 +14,23 @@
 
 package com.liferay.gradle.plugins.test.integration.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.File;
+
+import org.gradle.api.Project;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class StringUtil extends com.liferay.gradle.util.StringUtil {
+public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
-	public static int indexOfDigit(String s) {
-		for (int i = 0; i < s.length(); i++) {
-			if (Character.isDigit(s.charAt(i))) {
-				return i;
-			}
+	public static File toFile(Project project, Object object) {
+		object = toObject(object);
+
+		if (object == null) {
+			return null;
 		}
 
-		return -1;
-	}
-
-	public static List<String> replaceEnding(
-		Collection<String> strings, String oldEnding, String newEnding) {
-
-		List<String> newStrings = new ArrayList<>(strings.size());
-
-		for (String s : strings) {
-			if (s.endsWith(oldEnding)) {
-				s = s.substring(0, s.length() - oldEnding.length()) + newEnding;
-			}
-
-			newStrings.add(s);
-		}
-
-		return newStrings;
+		return project.file(object);
 	}
 
 }

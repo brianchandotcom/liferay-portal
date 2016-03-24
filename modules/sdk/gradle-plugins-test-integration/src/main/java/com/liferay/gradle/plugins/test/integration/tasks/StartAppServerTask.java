@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 
 import java.util.concurrent.Callable;
 

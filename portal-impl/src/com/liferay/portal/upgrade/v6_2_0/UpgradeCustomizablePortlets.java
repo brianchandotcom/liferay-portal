@@ -95,46 +95,6 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 		}
 	}
 
-	protected String migratePortletPreferencesToUserPreferences(
-			long userId, long plid, String portletId)
-		throws Exception {
-
-		if (!PortletConstants.hasInstanceId(portletId)) {
-			return portletId;
-		}
-
-		String instanceId = PortletConstants.getInstanceId(portletId);
-
-		String newPortletId = PortletConstants.assemblePortletId(
-			portletId, userId, instanceId);
-
-		updatePortletPreferences(userId, plid, portletId, newPortletId);
-
-		return newPortletId;
-	}
-
-	protected void updatePortletPreferences(
-			long userId, long plid, String portletId, String newPortletId)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update PortletPreferences set ownerId = ?, ownerType = ?, " +
-					"plid = ?, portletId = ? where ownerId = ? and " +
-						"ownerType = ? and plid = ? and portletId = ?")) {
-
-			ps.setLong(1, userId);
-			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_USER);
-			ps.setLong(3, plid);
-			ps.setString(4, newPortletId);
-			ps.setLong(5, 0L);
-			ps.setInt(6, PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-			ps.setLong(7, plid);
-			ps.setString(8, portletId);
-
-			ps.executeUpdate();
-		}
-	}
-
 	protected void upgradeCustomizablePreferences() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
@@ -196,12 +156,40 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 
 				List<String> newPortletIds = new ArrayList<>();
 
-				for (String customPortletId : StringUtil.split(value)) {
-					String newPortletId =
-						migratePortletPreferencesToUserPreferences(
-							ownerId, plid, customPortletId);
+				try (PreparedStatement ps = connection.prepareStatement(
+						"update PortletPreferences set ownerId = ?, " +
+							"ownerType = ?, plid = ?, portletId = ? where " +
+							"ownerId = ? and ownerType = ? and plid = ? and " +
+							"portletId = ?")) {
 
-					newPortletIds.add(newPortletId);
+					for (String customPortletId : StringUtil.split(value)) {
+						String newPortletId = null;
+
+						if (!PortletConstants.hasInstanceId(customPortletId)) {
+							newPortletIds.add(customPortletId);
+						}
+						else {
+							String instanceId = PortletConstants.getInstanceId(
+								customPortletId);
+
+							newPortletId = PortletConstants.assemblePortletId(
+								customPortletId, ownerId, instanceId);
+
+							ps.setLong(1, ownerId);
+							ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_USER);
+							ps.setLong(3, plid);
+							ps.setString(4, newPortletId);
+							ps.setLong(5, 0L);
+							ps.setInt(6, PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+							ps.setLong(7, plid);
+							ps.setString(8, newPortletId);
+
+							newPortletIds.add(newPortletId);
+							ps.addBatch();
+						}
+					}
+
+					ps.executeBatch();
 				}
 
 				value = StringUtil.merge(newPortletIds);

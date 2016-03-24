@@ -15,13 +15,20 @@
 package com.liferay.dynamic.data.lists.web.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Junction;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Marcellus Tavares
@@ -37,12 +44,48 @@ public class UpgradeDDLFormPortletId
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
-	protected void deleteResourcePermission(long resourcePermissionId)
-		throws Exception {
+	protected void deleteResourcePermissions(
+			final String oldRootPortletId, final String newRootPortletId)
+		throws PortalException {
 
-		runSQL(
-			"delete ResourcePermission where resourcePermissionId = " +
-				resourcePermissionId);
+		ActionableDynamicQuery actionableDynamicQuery =
+			_resourcePermissionLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property nameProperty = PropertyFactoryUtil.forName("name");
+
+					dynamicQuery.add(
+						nameProperty.eq(new String(oldRootPortletId)));
+				}
+
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<ResourcePermission>() {
+
+				@Override
+				public void performAction(ResourcePermission resourcePermission)
+					throws PortalException {
+
+					long total = getResourcePermissionCount(
+						resourcePermission.getCompanyId(), newRootPortletId,
+						resourcePermission.getScope(),
+						resourcePermission.getRoleId());
+
+					if (total > 0) {
+						_resourcePermissionLocalService.
+							deleteResourcePermission(resourcePermission);
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -55,33 +98,91 @@ public class UpgradeDDLFormPortletId
 		};
 	}
 
-	protected boolean hasResourcePermission(
-			long companyId, String name, int scope, String primKey, long roleId)
-		throws Exception {
+	protected long getResourcePermissionCount(
+			final long companyId, final String name, final int scope,
+			final long roleId)
+		throws PortalException {
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select count(*) from ResourcePermission where companyId = ? " +
-					"and name = ? and scope = ? and primKey = ? and roleId " +
-						"= ?")) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_resourcePermissionLocalService.getActionableDynamicQuery();
 
-			ps.setLong(1, companyId);
-			ps.setString(2, name);
-			ps.setInt(3, scope);
-			ps.setString(4, primKey);
-			ps.setLong(5, roleId);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					int count = rs.getInt(1);
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property companyIdProperty = PropertyFactoryUtil.forName(
+						"companyId");
 
-					if (count > 0) {
-						return true;
-					}
+					dynamicQuery.add(companyIdProperty.eq(companyId));
+
+					Property nameProperty = PropertyFactoryUtil.forName("name");
+
+					dynamicQuery.add(nameProperty.eq(name));
+
+					Property scopeProperty = PropertyFactoryUtil.forName(
+						"scope");
+
+					dynamicQuery.add(scopeProperty.eq(scope));
+
+					Property roleIdProperty = PropertyFactoryUtil.forName(
+						"roleId");
+
+					dynamicQuery.add(roleIdProperty.eq(roleId));
 				}
 
-				return false;
-			}
-		}
+			});
+
+		return actionableDynamicQuery.performCount();
+	}
+
+	@Override
+	protected void updateInstanceablePortletPreferences(
+			final String oldRootPortletId, final String newRootPortletId)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_portletPreferencesLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Junction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					Property portletIdProperty = PropertyFactoryUtil.forName(
+						"portletId");
+
+					disjunction.add(portletIdProperty.eq(oldRootPortletId));
+					disjunction.add(
+						portletIdProperty.like(
+							oldRootPortletId + "_INSTANCE_%"));
+					disjunction.add(
+						portletIdProperty.like(
+							oldRootPortletId + "_USER_%_INSTANCE_%"));
+
+					dynamicQuery.add(disjunction);
+				}
+
+			});
+		actionableDynamicQuery.setParallel(true);
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<PortletPreferences>() {
+
+				@Override
+				public void performAction(PortletPreferences portletPreference)
+					throws PortalException {
+
+					updatePortletPreferences(
+						portletPreference, oldRootPortletId, newRootPortletId);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -102,6 +203,38 @@ public class UpgradeDDLFormPortletId
 				_log.warn(e, e);
 			}
 		}
+	}
+
+	protected void updatePortletPreferences(
+		PortletPreferences portletPreferences, String oldRootPortletId,
+		String newRootPortletId) {
+
+		String newPortletId = StringUtil.replace(
+			portletPreferences.getPortletId(), oldRootPortletId,
+			newRootPortletId);
+
+		String newPreferences = StringUtil.replace(
+			portletPreferences.getPreferences(), "</portlet-preferences>",
+			"<preference><name>formView</name><value>true</value>" +
+				"</preference></portlet-preferences>");
+
+		portletPreferences.setPortletId(newPortletId);
+		portletPreferences.setPreferences(newPreferences);
+
+		_portletPreferencesLocalService.updatePortletPreferences(
+			portletPreferences);
+	}
+
+	@Override
+	protected void updateResourcePermission(
+			String oldRootPortletId, String newRootPortletId,
+			boolean updateName)
+		throws Exception {
+
+		deleteResourcePermissions(oldRootPortletId, newRootPortletId);
+
+		super.updateResourcePermission(
+			oldRootPortletId, newRootPortletId, updateName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -20,7 +20,7 @@ import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.Ord
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingBeforeAndAfterException;
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingCircularDependencyException;
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingImpl;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.WebFragmentOrderUtil;
+import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingUtil;
 
 import java.net.URL;
 
@@ -94,7 +94,7 @@ public class WebXMLDefinitionLoaderTest {
 		boolean exceptionThrown = false;
 
 		try {
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 		}
 		catch (Exception e) {
@@ -135,7 +135,7 @@ public class WebXMLDefinitionLoaderTest {
 		boolean exceptionThrown = false;
 
 		try {
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 		}
 		catch (Exception e) {
@@ -328,7 +328,7 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment2Definition);
 
 		List<WebXMLDefinition> sortedDefinitions =
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(3, sortedDefinitions.size());
@@ -399,7 +399,7 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment1Definition);
 
 		List<WebXMLDefinition> sortedDefinitions =
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(2, sortedDefinitions.size());
@@ -464,7 +464,7 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment1Definition);
 
 		List<WebXMLDefinition> sortedDefinitions =
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(3, sortedDefinitions.size());
@@ -533,7 +533,7 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment4Definition);
 
 		List<WebXMLDefinition> sortedDefinitions =
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(3, sortedDefinitions.size());
@@ -591,7 +591,7 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment3Definition);
 
 		List<WebXMLDefinition> sortedDefinitions =
-			WebFragmentOrderUtil.getOrder(
+			OrderingUtil.getOrder(
 				definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(2, sortedDefinitions.size());

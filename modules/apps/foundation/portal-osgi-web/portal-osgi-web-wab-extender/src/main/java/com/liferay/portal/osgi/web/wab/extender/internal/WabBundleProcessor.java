@@ -31,7 +31,7 @@ import com.liferay.portal.osgi.web.wab.extender.internal.definition.ListenerDefi
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.ServletDefinition;
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.wab.extender.internal.definition.WebXMLDefinitionLoader;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.WebFragmentOrderUtil;
+import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -164,7 +164,7 @@ public class WabBundleProcessor {
 				List<WebXMLDefinition> sortedWebFragments = new ArrayList<>();
 
 				if (ListUtil.isNotEmpty(webFragments)) {
-					sortedWebFragments = WebFragmentOrderUtil.getOrder(
+					sortedWebFragments = OrderingUtil.getOrder(
 						webFragments, webXMLDefinition.getAbsoluteOrderNames());
 				}
 

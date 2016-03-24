@@ -36,9 +36,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Vernon Singleton
  * @author Juan Gonzalez
- *
  */
-public class WebFragmentOrderUtil {
+public class OrderingUtil {
 
 	public static Map<String, WebXMLDefinition> getConfigMap(
 		List<WebXMLDefinition> webXMLs) {

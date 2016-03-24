@@ -114,7 +114,9 @@ public class IndexerRequest {
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("{indexer=");
+		sb.append("{classModel=");
+		sb.append(_classedModel);
+		sb.append(", indexer=");
 		sb.append(ClassUtil.getClassName(_indexer));
 		sb.append(", method=");
 		sb.append(_method);
@@ -122,8 +124,6 @@ public class IndexerRequest {
 		sb.append(_modelClassName);
 		sb.append(", modelPrimaryKey=");
 		sb.append(_modelPrimaryKey);
-		sb.append(", classModel=");
-		sb.append(_classedModel);
 		sb.append("}");
 
 		return sb.toString();

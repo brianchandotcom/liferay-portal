@@ -64,8 +64,6 @@ import javax.servlet.annotation.HandlesTypes;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 
-import javax.xml.parsers.SAXParserFactory;
-
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
@@ -115,7 +113,6 @@ public class WabBundleProcessor {
 	}
 
 	public void init(
-			SAXParserFactory saxParserFactory,
 			Dictionary<String, Object> properties)
 		throws Exception {
 

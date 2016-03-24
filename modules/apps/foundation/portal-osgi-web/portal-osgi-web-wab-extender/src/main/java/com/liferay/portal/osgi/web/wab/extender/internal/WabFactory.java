@@ -62,24 +62,6 @@ public class WabFactory extends AbstractExtender {
 		_eventUtil = new EventUtil(_bundleContext);
 		_logger = new Logger(_bundleContext);
 
-		_saxParserFactory.setNamespaceAware(false);
-		_saxParserFactory.setValidating(false);
-		_saxParserFactory.setXIncludeAware(false);
-
-		try {
-			_saxParserFactory.setFeature(_FEATURES_DISALLOW_DOCTYPE_DECL, true);
-			_saxParserFactory.setFeature(
-				_FEATURES_EXTERNAL_GENERAL_ENTITIES, false);
-			_saxParserFactory.setFeature(
-				_FEATURES_EXTERNAL_PARAMETER_ENTITIES, false);
-			_saxParserFactory.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, false);
-		}
-		catch (ParserConfigurationException | SAXNotRecognizedException |
-			   SAXNotSupportedException e) {
-
-			ReflectionUtil.throwException(e);
-		}
-
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
@@ -88,8 +70,7 @@ public class WabFactory extends AbstractExtender {
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
-				_bundleContext, properties, _saxParserFactory, _eventUtil,
-				_logger);
+				_bundleContext, properties, _eventUtil, _logger);
 
 			super.start(_bundleContext);
 		}
@@ -135,32 +116,14 @@ public class WabFactory extends AbstractExtender {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setSAXParserFactory(SAXParserFactory saxParserFactory) {
-		_saxParserFactory = saxParserFactory;
-	}
-
 	@Override
 	protected void warn(Bundle bundle, String message, Throwable t) {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + message, t);
 	}
 
-	private static final String _FEATURES_DISALLOW_DOCTYPE_DECL =
-		"http://apache.org/xml/features/disallow-doctype-decl";
-
-	private static final String _FEATURES_EXTERNAL_GENERAL_ENTITIES =
-		"http://xml.org/sax/features/external-general-entities";
-
-	private static final String _FEATURES_EXTERNAL_PARAMETER_ENTITIES =
-		"http://xml.org/sax/features/external-parameter-entities";
-
-	private static final String _FEATURES_LOAD_EXTERNAL_DTD =
-		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
-
 	private BundleContext _bundleContext;
 	private EventUtil _eventUtil;
 	private Logger _logger;
-	private SAXParserFactory _saxParserFactory;
 
 	@Reference
 	private ServletContextHelperFactory _servletContextHelperFactory;

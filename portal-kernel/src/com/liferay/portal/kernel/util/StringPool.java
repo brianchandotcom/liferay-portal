@@ -170,6 +170,8 @@ public class StringPool {
 
 	public static final String QUOTE = "\"";
 
+	public static final String QUOTE_ENCODED = "&quot;";
+
 	public static final String RAQUO = "&raquo;";
 
 	public static final String RAQUO_CHAR = "\u00BB";

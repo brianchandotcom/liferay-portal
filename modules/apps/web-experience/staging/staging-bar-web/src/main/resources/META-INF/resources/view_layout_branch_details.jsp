@@ -55,7 +55,7 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 			</portlet:actionURL>
 
 			<li>
-				<a class='<%= selected ? "disabled" : StringPool.BLANK %>' href='<%= selected ? "javascript:;" : curLayoutBranchURL %>'>
+				<a class="<%= selected ? "disabled" : StringPool.BLANK %>" href="<%= selected ? "javascript:;" : curLayoutBranchURL %>">
 					<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
 				</a>
 			</li>

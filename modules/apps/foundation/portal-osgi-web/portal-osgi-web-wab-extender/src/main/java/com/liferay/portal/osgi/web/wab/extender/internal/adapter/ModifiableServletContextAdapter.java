@@ -238,25 +238,26 @@ public class ModifiableServletContextAdapter
 		}
 	}
 
+	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (!(obj instanceof ServletContext)) {
 			return true;
 		}
 
-		if (!(obj instanceof ModifiableServletContext)) {
-			return false;
+		ServletContext servletContext = (ServletContext)obj;
+
+		if (obj instanceof ModifiableServletContext) {
+			ModifiableServletContext modifiableServletContext =
+				(ModifiableServletContext)obj;
+
+			servletContext =
+				modifiableServletContext.getWrappedServletContext();
 		}
 
-		ModifiableServletContext modifiableServletContext =
-			(ModifiableServletContext)obj;
-
-		if (Validator.equals(_bundle, modifiableServletContext.getBundle())) {
-			return true;
-		}
-
-		return false;
+		return servletContext.equals(_servletContext);
 	}
 
+	@Override
 	public Bundle getBundle() {
 		return _bundle;
 	}
@@ -341,6 +342,12 @@ public class ModifiableServletContextAdapter
 		return _servletRegistrations;
 	}
 
+	@Override
+	public ServletContext getWrappedServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public int hashCode() {
 		return _servletContext.hashCode();
 	}

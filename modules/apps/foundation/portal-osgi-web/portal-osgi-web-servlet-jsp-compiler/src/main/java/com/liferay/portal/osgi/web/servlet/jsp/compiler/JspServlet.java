@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspBundleClassloader;
+import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspServletContext;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
@@ -316,7 +317,8 @@ public class JspServlet extends HttpServlet {
 				private final ServletContext _jspServletContext =
 					(ServletContext)Proxy.newProxyInstance(
 						_jspBundleClassloader, _INTERFACES,
-						new JspServletContextInvocationHandler(servletContext, _bundle));
+						new JspServletContextInvocationHandler(
+							servletContext, _bundle));
 
 			});
 	}
@@ -450,19 +452,69 @@ public class JspServlet extends HttpServlet {
 		return classNames.toArray(new String[classNames.size()]);
 	}
 
+	private static Map<Method, Method> _createContextAdapterMethods() {
+		Map<Method, Method> methods = new HashMap<>();
+
+		Method[] adapterMethods =
+			JspServletContextInvocationHandler.class.getDeclaredMethods();
+
+		for (Method adapterMethod : adapterMethods) {
+			String name = adapterMethod.getName();
+			Class<?>[] parameterTypes = adapterMethod.getParameterTypes();
+
+			try {
+				Method method = ServletContext.class.getMethod(
+					name, parameterTypes);
+
+				methods.put(method, adapterMethod);
+			}
+			catch (NoSuchMethodException nsme) {
+			}
+		}
+
+		try {
+			Method equalsMethod = Object.class.getMethod(
+				"equals", Object.class);
+
+			Method equalsHandlerMethod =
+				JspServletContextInvocationHandler.class.getMethod(
+					"equals", Object.class);
+			methods.put(equalsMethod, equalsHandlerMethod);
+
+			Method hashCodeMethod = Object.class.getMethod(
+				"hashCode", (Class<?>[])null);
+
+			Method hashCodeHandlerMethod =
+				JspServletContextInvocationHandler.class.getMethod(
+					"hashCode", (Class<?>[])null);
+			methods.put(hashCodeMethod, hashCodeHandlerMethod);
+		}
+		catch (NoSuchMethodException nsme) {
+		}
+
+		return Collections.unmodifiableMap(methods);
+	}
+
 	private static final String _ANALYZED_TLDS =
 		JspServlet.class.getName().concat("#ANALYZED_TLDS");
 
-	private static final Class<?>[] _INTERFACES = {ServletContext.class};
+	private static final Class<?>[] _INTERFACES = {
+		JspServletContext.class, ServletContext.class
+	};
 
 	private static final String _WORK_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) + File.separator + "work" +
 			File.separator;
 
+	private static final Map<Method, Method> _contextAdapterMethods;
 	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
 		JspServlet.class);
 	private static final Pattern _originalJspPattern = Pattern.compile(
 		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
+
+	static {
+		_contextAdapterMethods = _createContextAdapterMethods();
+	}
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
@@ -473,7 +525,7 @@ public class JspServlet extends HttpServlet {
 		new CopyOnWriteArrayList<>();
 
 	private class JspServletContextInvocationHandler
-		implements InvocationHandler {
+		implements InvocationHandler, JspServletContext {
 
 		public JspServletContextInvocationHandler(
 			ServletContext servletContext, Bundle bundle) {
@@ -482,6 +534,29 @@ public class JspServlet extends HttpServlet {
 			_bundle = bundle;
 		}
 
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof ServletContext)) {
+				return false;
+			}
+
+			ServletContext servletContext = (ServletContext)obj;
+
+			if (obj instanceof JspServletContext) {
+				JspServletContext jspServletContext = (JspServletContext)obj;
+
+				servletContext = jspServletContext.getWrappedServletContext();
+			}
+
+			return servletContext.equals(_servletContext);
+		}
+
+		@Override
+		public ServletContext getWrappedServletContext() {
+			return _servletContext;
+		}
+
+		@Override
 		public int hashCode() {
 			return _servletContext.hashCode();
 		}
@@ -510,33 +585,6 @@ public class JspServlet extends HttpServlet {
 			}
 
 			return method.invoke(_servletContext, args);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-
-			if (this == obj) {
-				return true;
-			}
-
-			if (obj instanceof JspServletContextInvocationHandler) {
-				JspServletContextInvocationHandler jspServletContextInvocationHandler =
-					(JspServletContextInvocationHandler) obj;
-
-				if (Validator.equals(_bundle, jspServletContextInvocationHandler.getBundle())) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				return _servletContext.equals(obj);
-			}
-		}
-
-		public Bundle getBundle() {
-			return _bundle;
 		}
 
 		private URL getExtension(String path) {
@@ -654,52 +702,4 @@ public class JspServlet extends HttpServlet {
 
 	}
 
-	private static Map<Method, Method> _createContextAdapterMethods() {
-		Map<Method, Method> methods = new HashMap<>();
-
-		Method[] adapterMethods =
-			JspServletContextInvocationHandler.class.getDeclaredMethods();
-
-		for (Method adapterMethod : adapterMethods) {
-			String name = adapterMethod.getName();
-			Class<?>[] parameterTypes = adapterMethod.getParameterTypes();
-
-			try {
-				Method method = ServletContext.class.getMethod(
-					name, parameterTypes);
-
-				methods.put(method, adapterMethod);
-			}
-			catch (NoSuchMethodException nsme1) {
-			}
-		}
-
-		try {
-			Method equalsMethod = Object.class.getMethod(
-				"equals", Object.class);
-
-			Method equalsHandlerMethod =
-				JspServletContextInvocationHandler.class.getMethod(
-					"equals", Object.class);
-			methods.put(equalsMethod, equalsHandlerMethod);
-
-			Method hashCodeMethod = Object.class.getMethod(
-				"hashCode", (Class<?>[])null);
-
-			Method hashCodeHandlerMethod =
-				JspServletContextInvocationHandler.class.getMethod(
-					"hashCode", (Class<?>[])null);
-			methods.put(hashCodeMethod, hashCodeHandlerMethod);
-		}
-		catch (NoSuchMethodException nsme) {
-		}
-
-		return Collections.unmodifiableMap(methods);
-	}
-
-	private static final Map<Method, Method> _contextAdapterMethods;
-
-	static {
-		_contextAdapterMethods = _createContextAdapterMethods();
-	}
 }

@@ -421,6 +421,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 
+		newContent = formatTaglibVariable(fileName, newContent);
+
 		checkXSS(fileName, newContent);
 
 		// LPS-47682
@@ -1175,6 +1177,41 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
+	protected String formatTaglibVariable(String fileName, String content) {
+		Matcher matcher = _taglibVariablePattern.matcher(content);
+
+		while (matcher.find()) {
+			String taglibValue = matcher.group(3);
+
+			if (taglibValue.contains(StringPool.APOSTROPHE) &&
+				taglibValue.contains(StringPool.QUOTE)) {
+
+				continue;
+			}
+
+			String taglibName = matcher.group(2);
+			String nextTag = matcher.group(4);
+
+			if (!nextTag.contains(taglibName)) {
+				processErrorMessage(
+					fileName,
+					"No need to specify taglib variable: " + fileName + " " +
+						getLineCount(content, matcher.start()));
+
+				continue;
+			}
+
+			content = StringUtil.replaceFirst(
+				content, taglibName, taglibValue, matcher.start(4));
+
+			return content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.BLANK,
+				matcher.start());
+		}
+
+		return content;
+	}
+
 	protected List<String> getJSPDuplicateImports(
 		String fileName, String content, List<String> importLines) {
 
@@ -1920,6 +1957,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
+	private final Pattern _taglibVariablePattern = Pattern.compile(
+		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

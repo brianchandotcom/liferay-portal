@@ -34,6 +34,7 @@ import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -56,6 +57,7 @@ import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -63,6 +65,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -95,22 +98,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTest(project);
 		configureTasksDirectDeploy(project, liferayExtension);
 		configureTasksTest(project);
-	}
-
-	protected void addCleanDeployedFile(Project project, File sourceFile) {
-		Delete delete = (Delete)GradleUtil.getTask(
-			project, BasePlugin.CLEAN_TASK_NAME);
-
-		if (!isCleanDeployed(delete)) {
-			return;
-		}
-
-		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
-
-		File deployedFile = new File(
-			copy.getDestinationDir(), getDeployedFileName(project, sourceFile));
-
-		delete.delete(deployedFile);
 	}
 
 	protected Configuration addConfigurationPortal(
@@ -181,6 +168,71 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		appServer.addAdditionalDependencies(PORTAL_CONFIGURATION_NAME);
 	}
 
+	protected void addDeployedFile(
+		final AbstractArchiveTask abstractArchiveTask, boolean lazy) {
+
+		Project project = abstractArchiveTask.getProject();
+
+		Task task = GradleUtil.getTask(
+			abstractArchiveTask.getProject(), DEPLOY_TASK_NAME);
+
+		if (!(task instanceof Copy)) {
+			return;
+		}
+
+		final Copy copy = (Copy)task;
+
+		Object sourcePath = abstractArchiveTask;
+
+		if (lazy) {
+			sourcePath = new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return abstractArchiveTask.getArchivePath();
+				}
+
+			};
+		}
+
+		copy.from(
+			sourcePath,
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.rename(
+						new Closure<String>(null) {
+
+							public String doCall(String fileName) {
+								return getDeployedFileName(abstractArchiveTask);
+							}
+
+						});
+				}
+
+			});
+
+		Delete delete = (Delete)GradleUtil.getTask(
+			project, BasePlugin.CLEAN_TASK_NAME);
+
+		if (GradleUtil.getProperty(
+				delete, CLEAN_DEPLOYED_PROPERTY_NAME, true)) {
+
+			delete.delete(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return new File(
+							copy.getDestinationDir(),
+							getDeployedFileName(abstractArchiveTask));
+					}
+
+				});
+		}
+	}
+
 	protected LiferayExtension addLiferayExtension(Project project) {
 		LiferayExtension liferayExtension = GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, getLiferayExtensionClass());
@@ -198,11 +250,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
 
-		final Jar jar = (Jar)GradleUtil.getTask(
-			project, JavaPlugin.JAR_TASK_NAME);
-
-		copy.from(jar);
-
 		copy.into(
 			new Callable<File>() {
 
@@ -215,15 +262,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
 
-		project.afterEvaluate(
-			new Action<Project>() {
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
-				@Override
-				public void execute(Project project) {
-					addCleanDeployedFile(project, jar.getArchivePath());
-				}
-
-			});
+		addDeployedFile(jar, false);
 
 		return copy;
 	}
@@ -477,17 +518,24 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected String getDeployedFileName(Project project, File sourceFile) {
-		return sourceFile.getName();
+	protected String getDeployedFileName(
+		AbstractArchiveTask abstractArchiveTask) {
+
+		String fileName = abstractArchiveTask.getBaseName();
+
+		String appendix = abstractArchiveTask.getAppendix();
+
+		if (Validator.isNotNull(appendix)) {
+			fileName += "-" + appendix;
+		}
+
+		fileName += "." + abstractArchiveTask.getExtension();
+
+		return fileName;
 	}
 
 	protected Class<? extends LiferayExtension> getLiferayExtensionClass() {
 		return LiferayExtension.class;
-	}
-
-	protected boolean isCleanDeployed(Delete delete) {
-		return GradleUtil.getProperty(
-			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
 	}
 
 }

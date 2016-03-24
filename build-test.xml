@@ -582,11 +582,18 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					</not>
 				</and>
 				<then>
-					<antcall target="record-test-case-method-names">
-						<param name="test.batch.max.group.size" value="25" />
-						<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
-						<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
-					</antcall>
+					<if>
+						<not>
+							<available file="${project.dir}/test.case.method.names.properties" />
+						</not>
+						<then>
+							<antcall target="record-test-case-method-names">
+								<param name="test.batch.max.group.size" value="25" />
+								<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
+								<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
+							</antcall>
+						</then>
+					</if>
 
 					<loadproperties srcFile="${project.dir}/test.case.method.names.properties">
 						<filterchain>

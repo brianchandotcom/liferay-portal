@@ -44,11 +44,11 @@ public class MarketplaceDeployerActivator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_artifactUrlTransformerServiceRegistration =
-			registerArtifactUrlTransformer(bundleContext);
-
 		_urlStreamHandlerServiceServiceRegistration = registerHandlerService(
 			bundleContext);
+
+		_artifactUrlTransformerServiceRegistration =
+			registerArtifactUrlTransformer(bundleContext);
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE,

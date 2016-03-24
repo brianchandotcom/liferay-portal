@@ -624,6 +624,17 @@ public class SubscriptionSender implements Serializable {
 			subscription, inferredClassName, inferredClassPK);
 	}
 
+	protected void populateNotificationEventJSONObject(
+		JSONObject notificationEventJSONObject) {
+
+		notificationEventJSONObject.put("className", _className);
+		notificationEventJSONObject.put("classPK", _classPK);
+		notificationEventJSONObject.put("entryTitle", _entryTitle);
+		notificationEventJSONObject.put("entryURL", _entryURL);
+		notificationEventJSONObject.put("notificationType", _notificationType);
+		notificationEventJSONObject.put("userId", currentUserId);
+	}
+
 	protected void processMailMessage(MailMessage mailMessage, Locale locale)
 		throws Exception {
 
@@ -862,12 +873,7 @@ public class SubscriptionSender implements Serializable {
 		JSONObject notificationEventJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		notificationEventJSONObject.put("className", _className);
-		notificationEventJSONObject.put("classPK", _classPK);
-		notificationEventJSONObject.put("entryTitle", _entryTitle);
-		notificationEventJSONObject.put("entryURL", _entryURL);
-		notificationEventJSONObject.put("notificationType", _notificationType);
-		notificationEventJSONObject.put("userId", currentUserId);
+		populateNotificationEventJSONObject(notificationEventJSONObject);
 
 		if (UserNotificationManagerUtil.isDeliver(
 				user.getUserId(), portletId, _notificationClassNameId,

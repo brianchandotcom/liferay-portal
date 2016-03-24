@@ -589,8 +589,6 @@ public class RuntimePageImpl implements RuntimePage {
 
 					contentsMap.put(portlet.getPortletId(), sb);
 
-					portletRenderer.finishParallelRender();
-
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Parallely rendered portlet " +
@@ -669,8 +667,10 @@ public class RuntimePageImpl implements RuntimePage {
 			}
 
 			contentsMap.put(portlet.getPortletId(), sb);
+		}
 
-			portletRenderer.finishParallelRender();
+		for (PortletRenderer portletRender : portletRenderers) {
+			portletRender.finishParallelRender();
 		}
 	}
 

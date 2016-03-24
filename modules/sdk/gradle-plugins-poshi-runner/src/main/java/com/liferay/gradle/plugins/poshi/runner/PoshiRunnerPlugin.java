@@ -294,10 +294,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Plugin plugin) {
 
-					test.dependsOn("_START_TESTABLE_TOMCAT_TASK_NAME");
+					test.dependsOn(_START_TESTABLE_TOMCAT_TASK_NAME);
 
 					Task task = GradleUtil.getTask(
-						test.getProject(), "_STOP_TESTABLE_TOMCAT_TASK_NAME");
+						test.getProject(), _STOP_TESTABLE_TOMCAT_TASK_NAME);
 
 					task.mustRunAfter(test);
 				}

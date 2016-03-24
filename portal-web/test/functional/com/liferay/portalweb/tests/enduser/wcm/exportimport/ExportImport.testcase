@@ -280,7 +280,7 @@
 			<var name="fieldName" value="TextName" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#saveCP" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />

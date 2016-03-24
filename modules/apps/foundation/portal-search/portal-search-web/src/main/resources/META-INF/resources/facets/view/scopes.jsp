@@ -24,7 +24,7 @@ if (Validator.isNull(fieldParam)) {
 
 <c:choose>
 	<c:when test="<%= termCollectors.isEmpty() %>">
-		<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
+		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
 	</c:when>
 	<c:otherwise>
 
@@ -42,7 +42,7 @@ if (Validator.isNull(fieldParam)) {
 			</div>
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-					<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 					<ul class="list-unstyled scopes">
 						<li class="default facet-value">

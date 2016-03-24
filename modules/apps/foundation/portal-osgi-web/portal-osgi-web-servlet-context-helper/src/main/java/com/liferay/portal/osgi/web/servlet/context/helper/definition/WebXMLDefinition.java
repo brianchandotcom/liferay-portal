@@ -58,6 +58,10 @@ public class WebXMLDefinition {
 		return _contextParameters;
 	}
 
+	public Exception getException() {
+		return _exception;
+	}
+
 	public Map<String, FilterDefinition> getFilterDefinitions() {
 		return _filterDefinitions;
 	}
@@ -96,6 +100,10 @@ public class WebXMLDefinition {
 
 	public void setContextParameters(Map<String, String> contextParameters) {
 		_contextParameters = contextParameters;
+	}
+
+	public void setException(Exception exception) {
+		_exception = exception;
 	}
 
 	public void setFilterDefinition(
@@ -150,6 +158,7 @@ public class WebXMLDefinition {
 
 	private List<String> _absoluteOrderNames = new ArrayList<>();
 	private Map<String, String> _contextParameters = new HashMap<>();
+	private Exception _exception;
 	private Map<String, FilterDefinition> _filterDefinitions = new HashMap<>();
 	private String _fragmentName = StringPool.BLANK;
 	private final Map<String, String> _jspTaglibMappings = new HashMap<>();

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1458671029150
+Bnd-LastModified: 1458852580762
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
@@ -2139,7 +2139,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ence,com.liferay.portal.kernel.util",com.liferay.blogs.kernel.util.co
  mparator;version="1.0.0";uses:="com.liferay.blogs.kernel.model,com.li
  feray.portal.kernel.util",com.liferay.counter;version="1.0.0",com.lif
- eray.counter.kernel;version="2.1.1",com.liferay.counter.kernel.except
+ eray.counter.kernel;version="2.2.0",com.liferay.counter.kernel.except
  ion;version="1.0.0";uses:="com.liferay.portal.kernel.exception",com.l
  iferay.counter.kernel.model;version="1.0.0";uses:="com.liferay.expand
  o.kernel.model,com.liferay.portal.kernel.annotation,com.liferay.porta
@@ -2892,7 +2892,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ssion,com.liferay.portal.kernel.util",com.liferay.portal.kernel.secur
  ity.pacl;version="6.2.0",com.liferay.portal.kernel.security.pacl.perm
  ission;version="7.0.0";uses:="com.liferay.portal.kernel.util",com.lif
- eray.portal.kernel.security.permission;version="1.0.0";uses:="com.lif
+ eray.portal.kernel.security.permission;version="1.1.0";uses:="com.lif
  eray.portal.kernel.exception,com.liferay.portal.kernel.model,javax.po
  rtlet,javax.servlet.http",com.liferay.portal.kernel.security.permissi
  on.comparator;version="1.0.0",com.liferay.portal.kernel.security.pwd;

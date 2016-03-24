@@ -185,41 +185,6 @@
 		<execute function="AssertTextEquals#assertText" locator1="Message#INFO" value1="There are no threads in this category." />
 	</command>
 
-	<command name="AddMBCategorySubcategoryNullName" priority="3">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="subCategoryDescription" value="MB Subcategory Description" />
-		<var name="subCategoryNullName" value=" " />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addSubcategoryNullPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
-			<var name="subCategoryNullName" value="${subCategoryNullName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewCategoryDefaultPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-	</command>
-
 	<command name="AddMBCategorySubcategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
@@ -1386,56 +1351,6 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadUTF8" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="threadBody" value="MB Thrèad Mèssagè Body" />
-		<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="lastPostUserName" value="Test Test" />
-			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-	</command>
-
 	<command name="AddMBCategoryThreadViewableBySiteMembers" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody1" value="MB Category Thread 1 Message Body" />
@@ -1633,32 +1548,6 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThreadNullBody" priority="3">
-		<var name="threadBody" value="" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadSubject}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-	</command>
-
 	<command name="BanSOUser" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
@@ -1797,30 +1686,6 @@
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
 		</execute>
-	</command>
-
-	<command name="DeleteMBCategory" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#deletePG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
 	<command name="DeleteMBCategorySubcategoryThread" priority="4">
@@ -3904,73 +3769,5 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no top posters." />
-	</command>
-
-	<command name="ViewMessageBoardsThreadStatistics" priority="3">
-		<var name="threadBody" value="MB Thread1 Message Body" />
-		<var name="threadBody2" value="MB Thread2 Message Body" />
-		<var name="threadSubject" value="MB Thread1 Message Subject" />
-		<var name="threadSubject2" value="MB Thread2 Message Subject" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountDefaultPG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="1" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody2}" />
-			<var name="threadSubject" value="${threadSubject2}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="2" />
-			<var name="userName" value="Test Test" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="MessageboardsThread#deletePG">
-			<var name="threadSubject" value="${threadSubject2}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewStatisticsPostsCountPG">
-			<var name="threadPostNumber" value="1" />
-			<var name="userName" value="Test Test" />
-		</execute>
 	</command>
 </definition>

@@ -349,6 +349,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixMissingEmptyLinesBetweenTags(newContent);
 
+		newContent = fixIncorrectClosingTag(newContent);
+
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = formatJSPImportsOrTaglibs(
@@ -575,6 +577,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					content, StringPool.NEW_LINE, StringPool.BLANK,
 					matcher.end(1));
 			}
+		}
+
+		return content;
+	}
+
+	protected String fixIncorrectClosingTag(String content) {
+		Matcher matcher = _incorrectClosingTagPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, " />\n", "\n" + matcher.group(1) + "/>\n",
+				matcher.end(1));
 		}
 
 		return content;
@@ -1955,6 +1969,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _importsPattern = Pattern.compile(
 		"page import=\"(.+)\"");
 	private Set<String> _includeFileNames = new HashSet<>();
+	private Pattern _incorrectClosingTagPattern = Pattern.compile(
+		"\n(\t*)\t((?!<\\w).)* />\n");
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
 			"([\\s\\S]*?)\n\\}\n");

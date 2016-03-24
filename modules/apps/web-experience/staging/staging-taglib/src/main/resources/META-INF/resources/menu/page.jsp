@@ -20,7 +20,6 @@
 String cssClass = "staging-icon-menu " + GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:cssClass"));
 boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:extended"));
 long layoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:layoutSetBranchId"));
-String message = GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:message"));
 boolean onlyActions = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:onlyActions"));
 long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:selPlid"));
 boolean showManageBranches = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:showManageBranches"));

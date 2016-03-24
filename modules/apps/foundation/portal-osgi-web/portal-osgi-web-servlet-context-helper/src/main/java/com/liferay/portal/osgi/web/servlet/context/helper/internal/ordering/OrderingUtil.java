@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.WebXMLDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.Ordering.Path;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingBeforeAndAfterException;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingCircularDependencyException;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingMaxAttemptsException;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;

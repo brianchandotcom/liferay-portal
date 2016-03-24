@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering;
+package com.liferay.portal.osgi.web.servlet.context.helper.ordering;
 
 import java.util.EnumMap;
 

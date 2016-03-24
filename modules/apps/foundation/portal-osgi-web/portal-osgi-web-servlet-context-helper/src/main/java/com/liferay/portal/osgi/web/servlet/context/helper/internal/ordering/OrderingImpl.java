@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering.Path;
 
 import java.util.Arrays;
 import java.util.EnumMap;

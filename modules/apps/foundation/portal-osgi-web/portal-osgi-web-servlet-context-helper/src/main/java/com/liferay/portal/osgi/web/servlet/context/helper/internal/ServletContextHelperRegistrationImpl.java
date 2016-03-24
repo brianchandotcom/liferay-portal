@@ -467,7 +467,15 @@ public class ServletContextHelperRegistrationImpl
 
 	}
 
-	private static class JspServletWrapper extends HttpServlet {
+	public static class JspServletWrapper extends HttpServlet {
+
+		public JspServletWrapper() {
+			this(null);
+		}
+
+		public JspServletWrapper(String jspFile) {
+			this.jspFile = jspFile;
+		}
 
 		@Override
 		public void destroy() {
@@ -489,8 +497,22 @@ public class ServletContextHelperRegistrationImpl
 				ServletRequest servletRequest, ServletResponse servletResponse)
 			throws IOException, ServletException {
 
-			_servlet.service(servletRequest, servletResponse);
+			String curJspFile = (String)servletRequest.getAttribute(
+				JspServlet.JSP_FILE);
+
+			if (jspFile != null) {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
+			}
+
+			try {
+				_servlet.service(servletRequest, servletResponse);
+			}
+			finally {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
+			}
 		}
+
+		protected String jspFile;
 
 		private final Servlet _servlet = new JspServlet();
 

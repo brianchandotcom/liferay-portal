@@ -60,8 +60,6 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_templateResourceParsers = ServiceTrackerCollections.openList(
 			TemplateResourceParser.class, "(lang.type=" + _name + ")");
 
-		_templateResourceParsers.open();
-
 		_modificationCheckInterval = modificationCheckInterval;
 
 		_multiVMPool = multiVMPool;

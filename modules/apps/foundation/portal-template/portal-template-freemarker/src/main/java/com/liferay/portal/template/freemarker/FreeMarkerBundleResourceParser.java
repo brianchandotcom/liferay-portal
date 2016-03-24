@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"lang.type=" + TemplateConstants.LANG_TYPE_FTL
-	},
+	property = {"lang.type=" + TemplateConstants.LANG_TYPE_FTL},
 	service = TemplateResourceParser.class
 )
 public class FreeMarkerBundleResourceParser extends ClassLoaderResourceParser {

@@ -351,6 +351,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixIncorrectClosingTag(newContent);
 
+		newContent = formatMultilineTagAttributes(fileName, newContent);
+
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = formatJSPImportsOrTaglibs(
@@ -1206,6 +1208,33 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
+	protected String formatMultilineTagAttributes(
+			String fileName, String content)
+		throws Exception {
+
+		Matcher matcher = _multilineTagPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tag = matcher.group();
+
+			String singlelineTag = StringUtil.removeChar(
+				StringUtil.trim(tag), CharPool.TAB);
+
+			singlelineTag = StringUtil.replace(
+				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
+
+			String newTag = formatAttributes(
+				fileName, tag, singlelineTag,
+				getLineCount(content, matcher.start() + 1), false);
+
+			if (!tag.equals(newTag)) {
+				return StringUtil.replace(content, tag, newTag);
+			}
+		}
+
+		return content;
+	}
+
 	@Override
 	protected String formatTagAttributeType(
 			String line, String tagName, String attributeAndValue)
@@ -1986,6 +2015,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _missingEmptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)</[a-z-]+:([a-z-]+)>\n(\t*)<[a-z-]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
+	private final Pattern _multilineTagPattern = Pattern.compile(
+		"[\n\t]<[-\\w]+:[-\\w]+\n.*?\n\t*/?>(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +

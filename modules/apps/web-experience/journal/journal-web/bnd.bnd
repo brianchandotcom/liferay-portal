@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Web
 Bundle-SymbolicName: com.liferay.journal.web
-Bundle-Version: 1.0.4
+Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.journal.web.asset,\
 	com.liferay.journal.web.constants,\

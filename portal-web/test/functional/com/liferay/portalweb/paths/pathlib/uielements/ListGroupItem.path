@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_SUB_INFO</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]/../h6[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

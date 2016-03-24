@@ -24,7 +24,6 @@ import java.io.File;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -42,7 +41,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -156,15 +154,17 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	protected void addDependenciesPoshiRunner(
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
-		File poshiRunnerPropertiesFile =
-			poshiRunnerExtension.getPoshiRunnerProperties();
+		File poshiPropertiesFile =
+			poshiRunnerExtension.getPoshiPropertiesFile();
 
-		Properties poshiRunnerProperties = GUtil.loadProperties(
-			poshiRunnerPropertiesFile);
+		if (poshiPropertiesFile.exists()) {
+			File tmpPoshiPropertiesFile = new File(
+				"poshi-runner-ext.properties");
 
-		GradleUtil.addDependency(
-			project, POSHI_RUNNER_CONFIGURATION_NAME,
-			poshiRunnerPropertiesFile);
+			GradleUtil.addDependency(
+				project, POSHI_RUNNER_CONFIGURATION_NAME,
+				tmpPoshiPropertiesFile);
+		}
 
 		GradleUtil.addDependency(
 			project, POSHI_RUNNER_CONFIGURATION_NAME, "com.liferay",

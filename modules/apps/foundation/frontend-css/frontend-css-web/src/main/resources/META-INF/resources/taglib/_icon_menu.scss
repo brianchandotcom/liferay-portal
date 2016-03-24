@@ -57,3 +57,17 @@
 		}
 	}
 }
+
+// LPS-63588
+
+.lfr-icon-menu-open {
+	&:after {
+		clear: both;
+		content: '';
+		display: table;
+	}
+
+	.dropdown-menu {
+		position: static;
+	}
+}

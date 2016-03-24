@@ -131,7 +131,9 @@ AUI.add(
 
 					var alignPoints = DEFAULT_ALIGN_POINTS;
 
-					var defaultHorizontalAlign = STR_LEFT;
+					var defaultOverlayHorizontalAlign = STR_RIGHT;
+
+					var defaultTriggerHorizontalAlign = STR_LEFT;
 
 					var mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY;
 
@@ -140,7 +142,8 @@ AUI.add(
 					var langDir = Liferay.Language.direction[themeDisplay.getLanguageId()] || STR_LTR;
 
 					if (langDir === STR_RTL) {
-						defaultHorizontalAlign = STR_RIGHT;
+						defaultOverlayHorizontalAlign = STR_LEFT;
+						defaultTriggerHorizontalAlign = STR_RIGHT;
 
 						mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY_RTL;
 						mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER_RTL;
@@ -151,10 +154,10 @@ AUI.add(
 
 						var direction = directionMatch && directionMatch[1] || AUTO;
 
-						var overlayHorizontal = mapAlignHorizontalOverlay[direction] || defaultHorizontalAlign;
+						var overlayHorizontal = mapAlignHorizontalOverlay[direction] || defaultOverlayHorizontalAlign;
 						var overlayVertical = MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
 
-						var triggerHorizontal = mapAlignHorizontalTrigger[direction] || defaultHorizontalAlign;
+						var triggerHorizontal = mapAlignHorizontalTrigger[direction] || defaultTriggerHorizontalAlign;
 						var triggerVertical = MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
 
 						alignPoints = [overlayVertical + overlayHorizontal, triggerVertical + triggerHorizontal];
@@ -324,32 +327,36 @@ AUI.add(
 
 					var overlay = instance._overlay;
 
+					var align = overlay.get('align');
+
+					var listNode = menu.one('ul');
+
+					var listNodeHeight = listNode.get('offsetHeight');
+					var listNodeWidth = listNode.get('offsetWidth');
+
+					var modalMask = false;
+
+					align.points = instance._getAlignPoints(cssClass);
+
+					menu.addClass('lfr-icon-menu-open');
+
 					if (Util.isPhone() || Util.isTablet()) {
 						overlay.hide();
 
-						overlay.setAttrs(
-							{
-								align: null,
-								centered: true,
-								modal: true,
-								width: 'auto'
-							}
-						).align();
+						modalMask = true;
 					}
-					else {
-						var align = overlay.get('align');
 
-						align.points = instance._getAlignPoints(cssClass);
+					overlay.setAttrs(
+						{
+							align: align,
+							centered: false,
+							height: listNodeHeight,
+							modal: modalMask,
+							width: listNodeWidth
+						}
+					);
 
-						overlay.setAttrs(
-							{
-								align: align,
-								centered: false,
-								modal: false,
-								width: 'auto'
-							}
-						);
-
+					if (!Util.isPhone() && !Util.isTablet()) {
 						var focusManager = overlay.bodyNode.focusManager;
 
 						if (focusManager) {

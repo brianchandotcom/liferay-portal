@@ -377,7 +377,9 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
-		SummaryLoggerHandler.startSummary(executeElement);
+		if (_functionExecuteElement == executeElement) {
+			SummaryLoggerHandler.startSummary(_functionExecuteElement);
+		}
 
 		CommandLoggerHandler.startCommand(executeElement);
 

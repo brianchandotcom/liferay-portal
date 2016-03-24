@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.Ordering;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingBeforeAndAfterException;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingCircularDependencyException;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingImpl;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingUtil;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingUtil;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingBeforeAndAfterException;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingCircularDependencyException;
 
 import java.net.URL;
 

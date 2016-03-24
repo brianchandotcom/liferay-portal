@@ -46,6 +46,7 @@ public class OrderingUtil {
 
 		for (WebXMLDefinition webxML : webXMLs) {
 			String name = webxML.getFragmentName();
+
 			configMap.put(name, webxML);
 		}
 
@@ -131,7 +132,7 @@ public class OrderingUtil {
 		// OTHERS to be appended
 
 		if (groups[0] != null) {
-			if (containsOthers(groups[0])) {
+			if ((Arrays.binarySearch(groups[0], OrderingImpl.OTHERS) >= 0)) {
 				map.put(OrderingImpl.OTHERS, 1);
 			}
 		}
@@ -222,10 +223,6 @@ public class OrderingUtil {
 				mapRoutes(config, path, configs);
 			}
 		}
-	}
-
-	private static boolean containsOthers(String[] route) {
-		return (Arrays.binarySearch(route, OrderingImpl.OTHERS) >= 0);
 	}
 
 	private static <K, V extends Comparable<? super V>> Map<K, V>

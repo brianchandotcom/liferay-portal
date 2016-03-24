@@ -81,7 +81,7 @@ public class PoshiRunnerExtension {
 	private Object _baseDir = "poshi-tests";
 	private String _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
-	private Object _poshiPropertiesFile;
+	private Object _poshiPropertiesFile = "poshi.properties";
 	private final Project _project;
 	private String _version = "latest.release";
 

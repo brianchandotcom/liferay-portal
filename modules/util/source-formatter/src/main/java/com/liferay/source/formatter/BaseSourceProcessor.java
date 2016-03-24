@@ -2057,7 +2057,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			});
 	}
 
-	protected String sortAttributes(
+	protected String formatAttributes(
 			String fileName, String line, String tag, int lineCount,
 			boolean escapeQuotes)
 		throws Exception {

@@ -852,7 +852,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
-					line = sortAttributes(
+					line = formatAttributes(
 						fileName, line, matcher.group(), lineCount, false);
 				}
 
@@ -984,7 +984,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						readAttributes = true;
 					}
 					else {
-						line = sortAttributes(
+						line = formatAttributes(
 							fileName, line, trimmedLine, lineCount, false);
 					}
 				}

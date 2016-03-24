@@ -22,8 +22,6 @@ AUI.add(
 						var instance = this;
 
 						if (instance._alloyEditor) {
-							delete window[instance.getQualifiedName()];
-
 							instance._alloyEditor.destroy();
 						}
 					},

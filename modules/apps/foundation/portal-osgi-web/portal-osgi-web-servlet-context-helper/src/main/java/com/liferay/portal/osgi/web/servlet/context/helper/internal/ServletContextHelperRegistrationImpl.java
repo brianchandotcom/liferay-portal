@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinitionLoader;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import java.io.IOException;

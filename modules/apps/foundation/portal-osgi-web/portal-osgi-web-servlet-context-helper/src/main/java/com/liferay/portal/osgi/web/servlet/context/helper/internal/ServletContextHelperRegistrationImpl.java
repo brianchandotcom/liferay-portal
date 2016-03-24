@@ -100,17 +100,23 @@ public class ServletContextHelperRegistrationImpl
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
 				new WebXMLDefinitionLoader(_bundle, _saxParserFactory, _logger);
 
+			WebXMLDefinition webXMLDefinition = null;
+
 			try {
-				_webXMLDefinition = webXMLDefinitionLoader.loadWebXML();
+				webXMLDefinition = webXMLDefinitionLoader.loadWebXML();
 			}
 			catch (Exception e) {
-				_webXMLDefinition = new WebXMLDefinition();
+				webXMLDefinition = new WebXMLDefinition();
 
-				_webXMLDefinition.setException(e);
+				webXMLDefinition.setException(e);
 			}
+
+			_webXMLDefinition = webXMLDefinition;
 		}
 		else {
 			_wabShapedBundle = false;
+
+			_webXMLDefinition = new WebXMLDefinition();
 		}
 
 		_bundleContext = _bundle.getBundleContext();

@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
 
 import java.util.HashMap;
@@ -42,6 +44,10 @@ public class PoshiRunnerExtension {
 		return _poshiProperties;
 	}
 
+	public File getPoshiRunnerProperties() {
+		return GradleUtil.toFile(_project, _poshiRunnerProperties);
+	}
+
 	public String getVersion() {
 		return _version;
 	}
@@ -64,6 +70,10 @@ public class PoshiRunnerExtension {
 		_poshiProperties.putAll(poshiProperties);
 	}
 
+	public void setPoshiRunnerProperties(Object poshiRunnerProperties) {
+		_poshiRunnerProperties = poshiRunnerProperties;
+	}
+
 	public void setVersion(String version) {
 		_version = version;
 	}
@@ -71,6 +81,7 @@ public class PoshiRunnerExtension {
 	private Object _baseDir = "poshi-tests";
 	private String _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
+	private Object _poshiRunnerProperties = "poshi-runner.properties";
 	private final Project _project;
 	private String _version = "latest.release";
 

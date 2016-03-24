@@ -88,7 +88,7 @@
 			</execute>
 		</for>
 
-		<execute macro="DDLDataDefinition#saveCP" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 

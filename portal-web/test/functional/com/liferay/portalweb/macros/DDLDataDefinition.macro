@@ -176,7 +176,7 @@
 		</execute>
 	</command>
 
-	<command name="saveCP">
+	<command name="save">
 		<execute macro="DDLDataDefinition#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />

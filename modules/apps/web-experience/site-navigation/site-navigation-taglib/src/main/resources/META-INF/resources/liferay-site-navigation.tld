@@ -6,24 +6,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
+	<description>Provides the Liferay Site Navigation component tags, prefixed with <![CDATA[<code>liferay-site-navigation:</code>]]>. Site Navigation is the navigation used by end users to browse a site, such as the Navigation Menu, Breadcrumb, SiteMap, etc.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-site-navigation</short-name>
 	<uri>http://liferay.com/tld/site-navigation</uri>
 	<tag>
+		<description>Creates a component for users to navigate through a set of layouts (pages).</description>
 		<name>navigation</name>
 		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The group ID of the DDM template to use for rendering the navigation (see Application Display Templates).</description>
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The key of the DDM template to use for rendering the navigation (see Application Display Templates). If not set, the default ADT is used.</description>
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The depth of children pages displayed.</description>
 			<name>displayDepth</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -34,6 +39,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to display help messages intended for page administrators.</description>
 			<name>preview</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -44,11 +50,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The layout type of the root page to be used in the tree of pages. The accepted layout type values are <![CDATA[<code>relative</code>]]>, <![CDATA[<code>select</code>]]>, and <![CDATA[<code>absolute</code>]]>.</description>
 			<name>rootLayoutType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The UUID of the root page to be used in the tree of pages.</description>
 			<name>rootLayoutUuid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

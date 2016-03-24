@@ -295,7 +295,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				String absoluteResourcePath = StringPool.SLASH.concat(
 					resourcePath);
 
-				tldMappings.put(uri.trim(), new String[] {absoluteResourcePath, null});
+				tldMappings.put(
+					uri.trim(), new String[] {absoluteResourcePath, null});
 
 				String urlString = url.toExternalForm();
 

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.ordering;
 
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
-
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 
 /**
  * @author Vernon Singleton

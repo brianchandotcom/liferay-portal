@@ -19,7 +19,6 @@ import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefin
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.WabBundleProcessor;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.FilterRegistrationImpl;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 

@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering.Path;
 import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingBeforeAndAfterException;
 import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingCircularDependencyException;
 import com.liferay.portal.osgi.web.servlet.context.helper.ordering.OrderingMaxAttemptsException;
-import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,8 +98,8 @@ public class OrderingUtil {
 
 		// This is the final sort which checks the list from left to right to
 		// see if they are in the specified order and if they are not, it moves
-		// the incorrectly placed document(s) to the right into its proper place,
-		// and shifts others left as necessary.
+		// the incorrectly placed document(s) to the right into its proper
+		// place, and shifts others left as necessary.
 
 		postSort(configs);
 

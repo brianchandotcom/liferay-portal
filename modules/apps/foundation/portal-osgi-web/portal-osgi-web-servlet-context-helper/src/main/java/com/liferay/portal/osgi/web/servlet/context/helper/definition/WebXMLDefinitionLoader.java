@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingImpl;
@@ -35,8 +36,8 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.Map.Entry;
+import java.util.Stack;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -102,7 +103,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		else if (qName.equals("dispatcher")) {
 			String dispatcher = String.valueOf(_stack.pop());
 
-			dispatcher = dispatcher.toUpperCase();
+			dispatcher = StringUtil.toUpperCase(dispatcher);
 			dispatcher = dispatcher.trim();
 
 			_filterMapping.dispatchers.add(dispatcher);
@@ -395,8 +396,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 					new WebXMLDefinitionLoader(
 						_bundle, _saxParserFactory, _logger);
 
-				webFragments.add(
-					webFragmentsDefinitionLoader.loadWebXML(url));
+				webFragments.add(webFragmentsDefinitionLoader.loadWebXML(url));
 			}
 		}
 
@@ -480,6 +480,62 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		}
 		else if (Arrays.binarySearch(_LEAVES, qName) > -1) {
 			_stack.push(new StringBuilder());
+		}
+	}
+
+	private Filter _getFilterInstance(String filterClassName) {
+		try {
+			Class<?> clazz = _bundle.loadClass(filterClassName);
+
+			Class<? extends Filter> filterClass = clazz.asSubclass(
+				Filter.class);
+
+			return filterClass.newInstance();
+		}
+		catch (Exception e) {
+			_logger.log(
+				Logger.LOG_ERROR,
+				"Bundle " + _bundle + " is unable to load filter " +
+					filterClassName);
+
+			return null;
+		}
+	}
+
+	private EventListener _getListenerInstance(String listenerClassName) {
+		try {
+			Class<?> clazz = _bundle.loadClass(listenerClassName);
+
+			Class<? extends EventListener> eventListenerClass =
+				clazz.asSubclass(EventListener.class);
+
+			return eventListenerClass.newInstance();
+		}
+		catch (Exception e) {
+			_logger.log(
+				Logger.LOG_ERROR,
+				"Bundle " + _bundle + " is unable to load listener " +
+					listenerClassName);
+
+			return null;
+		}
+	}
+
+	private Servlet _getServletInstance(String servletClassName) {
+		try {
+			Class<?> clazz = _bundle.loadClass(servletClassName);
+
+			Class<? extends Servlet> servletClass = clazz.asSubclass(
+				Servlet.class);
+
+			return servletClass.newInstance();
+		}
+		catch (Exception e) {
+			_logger.log(
+				Logger.LOG_ERROR,
+				_bundle + " unable to load servlet " + servletClassName, e);
+
+			return null;
 		}
 	}
 
@@ -765,62 +821,6 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		}
 
 		return assembledWebXML;
-	}
-
-	private Filter _getFilterInstance(String filterClassName) {
-		try {
-			Class<?> clazz = _bundle.loadClass(filterClassName);
-
-			Class<? extends Filter> filterClass = clazz.asSubclass(
-				Filter.class);
-
-			return filterClass.newInstance();
-		}
-		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
-				"Bundle " + _bundle + " is unable to load filter " +
-					filterClassName);
-
-			return null;
-		}
-	}
-
-	private EventListener _getListenerInstance(String listenerClassName) {
-		try {
-			Class<?> clazz = _bundle.loadClass(listenerClassName);
-
-			Class<? extends EventListener> eventListenerClass =
-				clazz.asSubclass(EventListener.class);
-
-			return eventListenerClass.newInstance();
-		}
-		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
-				"Bundle " + _bundle + " is unable to load listener " +
-					listenerClassName);
-
-			return null;
-		}
-	}
-
-	private Servlet _getServletInstance(String servletClassName) {
-		try {
-			Class<?> clazz = _bundle.loadClass(servletClassName);
-
-			Class<? extends Servlet> servletClass = clazz.asSubclass(
-				Servlet.class);
-
-			return servletClass.newInstance();
-		}
-		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
-				_bundle + " unable to load servlet " + servletClassName, e);
-
-			return null;
-		}
 	}
 
 	private static final String[] _LEAVES = new String[] {

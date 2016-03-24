@@ -47,7 +47,7 @@ public class DefaultIndexerRequestBufferExecutor
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Size of indexRequestBuffer: " +
+				"IndexerRequestBuffer size = " +
 					indexerRequestBuffer.getIndexerRequests().size() +
 						" - numRequests to execute: " + numRequests);
 		}

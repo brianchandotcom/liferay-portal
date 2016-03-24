@@ -877,7 +877,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				while (matcher.find()) {
 					line = formatAttributes(
-						fileName, line, matcher.group(), lineCount, false);
+						fileName, line, line.substring(matcher.start()),
+						lineCount, false);
 				}
 
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
@@ -1944,7 +1945,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
 	private final Pattern _jspTaglibPattern = Pattern.compile(
-		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
+		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =

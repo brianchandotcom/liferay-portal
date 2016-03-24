@@ -15,6 +15,7 @@
 package com.liferay.calendar.search;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
+import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
@@ -35,10 +36,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.constants.FieldNames;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
@@ -63,7 +66,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
-		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override
@@ -71,6 +74,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		return CLASS_NAME;
 	}
 
+	@Deprecated
 	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String entryClassName,
@@ -146,6 +150,14 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 					titleLanguageId),
 				title);
 		}
+
+		document.addKeyword(Field.RELATED_ENTRY, true);
+		document.addKeyword(
+			Field.CLASS_NAME_ID,
+			_classNameLocalService.getClassNameId(Calendar.class));
+		document.addKeyword(Field.CLASS_PK, calendarBooking.getCalendarId());
+		document.addKeyword(
+			FieldNames.VIEW_ACTION_ID, CalendarActionKeys.VIEW_BOOKING_DETAILS);
 
 		String calendarBookingId = String.valueOf(
 			calendarBooking.getCalendarBookingId());
@@ -282,9 +294,17 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingIndexer.class);
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 }

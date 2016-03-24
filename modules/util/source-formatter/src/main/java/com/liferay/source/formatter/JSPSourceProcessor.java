@@ -865,6 +865,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						fileName, line, matcher.group(), lineCount, false);
 				}
 
+				if (trimmedLine.matches("<\\w+ .*>.*")) {
+					line = formatAttributes(
+						fileName, line, trimmedLine, lineCount, false);
+				}
+
 				if (!hasUnsortedExceptions) {
 					int x = line.indexOf("<liferay-ui:error exception=\"<%=");
 
@@ -890,11 +895,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						previousException = currentException;
 						currentException = null;
 					}
-				}
-
-				if (trimmedLine.matches("<\\w+ .*>.*")) {
-					line = formatAttributes(
-						fileName, line, trimmedLine, lineCount, false);
 				}
 
 				if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&

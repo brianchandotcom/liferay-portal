@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.osgi.web.wab.extender.internal.WabBundleProcessor;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.Ordering;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.Ordering.Path;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering.Path;
 
 import java.io.InputStream;
 
@@ -174,7 +174,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_servletDefinition.setJSPFile(jspFile);
 
 			_servletDefinition.setServlet(
-				new WabBundleProcessor.JspServletWrapper(jspFile));
+				new ServletContextHelperRegistrationImpl.JspServletWrapper(
+					jspFile));
 		}
 		else if (qName.equals("listener")) {
 			if (_listenerDefinition.getEventListener() != null) {

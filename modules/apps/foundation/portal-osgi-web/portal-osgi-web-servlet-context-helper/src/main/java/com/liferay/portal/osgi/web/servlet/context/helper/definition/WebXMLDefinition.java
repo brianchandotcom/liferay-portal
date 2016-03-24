@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.Ordering;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
 
 import java.util.ArrayList;
 import java.util.HashMap;

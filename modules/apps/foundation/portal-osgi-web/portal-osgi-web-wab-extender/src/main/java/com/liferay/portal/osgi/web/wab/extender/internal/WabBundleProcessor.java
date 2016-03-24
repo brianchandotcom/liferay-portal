@@ -20,18 +20,18 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinitionLoader;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.FilterExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContext;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContextAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptionAdapter;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.FilterDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ListenerDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ServletDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.WebXMLDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.WebXMLDefinitionLoader;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ordering.OrderingUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -304,15 +304,11 @@ public class WabBundleProcessor {
 				assembledFilters.put(filterName, filterEntry.getValue());
 			}
 			else {
-				//Merge a filter
-
 				FilterDefinition webXMLFilterDefinition = webXMLFilters.get(
 					filterName);
 
 				FilterDefinition fragmentFilterDefinition =
 					filterEntry.getValue();
-
-				//Filter init-param
 
 				Map<String, String> webXMLFilterParams = null;
 
@@ -350,10 +346,12 @@ public class WabBundleProcessor {
 						if ((webXMLInitParamValue == null) &&
 							!Validator.equals(
 								assembledInitParamValue, initParamValue)) {
-							//Servlet 3 spec 8.2.3. If two web-fragments
-							//with same param-name and different
-							//param-value does not exist in web.xml,
-							//throw an Exception
+
+							// Servlet 3 spec 8.2.3. If two web-fragments
+							// with same param-name and different
+							// param-value does not exist in web.xml,
+							// throw an Exception
+
 							throw new Exception (
 								"Conflicts for " + initParamName +
 									" in filter "+ filterName);
@@ -364,8 +362,6 @@ public class WabBundleProcessor {
 						}
 					}
 				}
-
-				//Filter DISPATCHER
 
 				List<String> assembledFilterDispatchers =
 					assembledFilterDefinition.getDispatchers();
@@ -379,8 +375,6 @@ public class WabBundleProcessor {
 					}
 				}
 
-				//Filter servlet names
-
 				List<String> assembledFilterServlets =
 					assembledFilterDefinition.getServletNames();
 
@@ -392,8 +386,6 @@ public class WabBundleProcessor {
 						assembledFilterServlets.add(servletName);
 					}
 				}
-
-				//Filter URL patterns
 
 				List<String> assembledFilterURLPatterns =
 					assembledFilterDefinition.getURLPatterns();
@@ -436,15 +428,11 @@ public class WabBundleProcessor {
 				fragmentServlets.put(servletName, servletEntry.getValue());
 			}
 			else {
-				//Merge a servlet
-
 				ServletDefinition webXMLServletDefinition = webXMLServlets.get(
 					servletName);
 
 				ServletDefinition fragmentServletDefinition =
 					servletEntry.getValue();
-
-				//Servlet init-param
 
 				Map<String, String> webXMLServletParams = null;
 
@@ -482,10 +470,12 @@ public class WabBundleProcessor {
 						if ((webXMLInitParamValue == null) &&
 							!Validator.equals(
 								assembledInitParamValue, initParamValue)) {
-							//Servlet 3 spec 8.2.3. If two web-fragments
-							//with same param-name and different
-							//param-value does not exist in web.xml,
-							//throw an Exception
+
+							// Servlet 3 spec 8.2.3. If two web-fragments
+							// with same param-name and different
+							// param-value does not exist in web.xml,
+							// throw an Exception
+
 							throw new Exception (
 								"Conflicts for " + initParamName +
 									" in servlet "+ servletName);
@@ -496,8 +486,6 @@ public class WabBundleProcessor {
 						}
 					}
 				}
-
-				//Servlet URL mappings
 
 				List<String> assembledServletURLPatterns =
 					assembledServletDefinition.getURLPatterns();
@@ -510,8 +498,6 @@ public class WabBundleProcessor {
 						assembledServletURLPatterns.add(urlPattern);
 					}
 				}
-
-				//Servlet JSP file
 
 				if (Validator.isNull(assembledServletDefinition.getJspFile())) {
 					assembledServletDefinition.setJSPFile(
@@ -546,27 +532,21 @@ public class WabBundleProcessor {
 			assembledWebXML.getServletDefinitions();
 
 		for (WebXMLDefinition fragment : webFragments) {
-
-			//Context Params
 			Map<String, String> fragmentContextParameters =
 				fragment.getContextParameters();
 
 			assembleContextParams(
 				assembledContextParameters, fragmentContextParameters);
 
-			//Listeners
 			List<ListenerDefinition> fragmentListeners =
 				fragment.getListenerDefinitions();
 
 			assembleListeners(assembledListeners, fragmentListeners);
 
-			//Filters
 			Map<String, FilterDefinition> fragmentFilters =
 				fragment.getFilterDefinitions();
 
 			assembleFilters(webXMLFilters, assembledFilters, fragmentFilters);
-
-			//Servlets
 
 			Map<String, ServletDefinition> fragmentServlets =
 				fragment.getServletDefinitions();

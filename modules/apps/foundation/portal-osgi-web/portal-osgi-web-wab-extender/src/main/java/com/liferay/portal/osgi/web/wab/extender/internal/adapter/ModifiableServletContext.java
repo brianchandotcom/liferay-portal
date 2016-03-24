@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ListenerDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 
 import java.util.List;
 

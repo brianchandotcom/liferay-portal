@@ -150,6 +150,12 @@ public class WabBundleProcessor {
 			WebXMLDefinition webXMLDefinition =
 				servletContextHelperRegistration.getWebXMLDefinition();
 
+			Exception exception = webXMLDefinition.getException();
+
+			if (exception != null) {
+				throw exception;
+			}
+
 			ServletContext servletContext =
 				ModifiableServletContextAdapter.createInstance(
 					servletContextHelperRegistration.getServletContext(),

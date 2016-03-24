@@ -104,9 +104,9 @@ public class ServletContextHelperRegistrationImpl
 				_webXMLDefinition = webXMLDefinitionLoader.loadWebXML();
 			}
 			catch (Exception e) {
-				_logger.log(
-					Logger.LOG_ERROR,
-					"Fatal error processing web descriptors.", e);
+				_webXMLDefinition = new WebXMLDefinition();
+
+				_webXMLDefinition.setException(e);
 			}
 		}
 		else {

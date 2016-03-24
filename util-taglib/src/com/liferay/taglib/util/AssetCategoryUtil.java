@@ -86,8 +86,6 @@ public class AssetCategoryUtil {
 						continue;
 					}
 
-					category = category.toEscapedModel();
-
 					categoryIdsSb.append(categoryId);
 					categoryIdsSb.append(StringPool.COMMA);
 

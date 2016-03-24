@@ -892,11 +892,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-					!trimmedLine.startsWith("<%") &&
-					!trimmedLine.startsWith("<!") &&
-					trimmedLine.contains(StringPool.GREATER_THAN)) {
-
+				if (trimmedLine.matches("<\\w+ .*>.*")) {
 					line = formatAttributes(
 						fileName, line, trimmedLine, lineCount, false);
 				}

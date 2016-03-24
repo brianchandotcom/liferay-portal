@@ -152,7 +152,7 @@
 			cached.set(BODY_CONTENT, text);
 			cached.set(TRIGGER, obj);
 
-			for (config in tooltipConfig) {
+			for (var config in tooltipConfig) {
 				cached.set(config, tooltipConfig[config]);
 			}
 

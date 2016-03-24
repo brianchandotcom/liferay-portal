@@ -918,6 +918,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 
+			if ((delimeter == CharPool.QUOTE) &&
+				value.contains(StringPool.QUOTE) &&
+				tagName.contains(StringPool.COLON)) {
+
+				return StringUtil.replace(
+					line, StringPool.QUOTE + value + StringPool.QUOTE,
+					StringPool.APOSTROPHE + value + StringPool.APOSTROPHE);
+			}
+
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(attribute);

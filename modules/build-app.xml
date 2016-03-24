@@ -6,7 +6,7 @@
 
 	<pathconvert property="releng.app.dir">
 		<filtermapper>
-			<replacestring from="modules" to="modules${file.separator}.releng" />
+			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
 		</filtermapper>
 
 		<path>
@@ -17,7 +17,7 @@
 	<pathconvert pathsep="," property="app.module.dirs">
 		<globmapper from="${modules.dir}${file.separator}*" to="*" />
 		<path>
-			<dirset dir="${basedir}" excludes="**/*-test">
+			<dirset dir="${basedir}" excludes="**/*-test,**/src/**">
 				<present targetdir="${basedir}">
 					<mapper from="*" to="*/bnd.bnd" type="glob" />
 				</present>
@@ -119,6 +119,10 @@
 			<filterchain>
 				<sortfilter />
 
+				<tokenfilter>
+					<replacestring from="  " to=" " />
+				</tokenfilter>
+
 				<uniqfilter />
 			</filterchain>
 		</loadfile>
@@ -173,17 +177,11 @@
 		<property name="double.space" value="${line.separator}${line.separator}" />
 
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />
-
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
-
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.artifacts}" />
-
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
-
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log}" />
-
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
-
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
 	</target>
 </project>

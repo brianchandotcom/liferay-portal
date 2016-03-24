@@ -6,7 +6,7 @@
 
 	<pathconvert property="releng.module.dir">
 		<filtermapper>
-			<replacestring from="modules" to="modules${file.separator}.releng" />
+			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
 		</filtermapper>
 
 		<path>
@@ -48,7 +48,7 @@
 		description=""
 		unless="${app.has.artifact.previous.release}"
 	>
-		<loadfile property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
+		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
 			<filterchain>
 				<linecontainsregexp>
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
@@ -62,6 +62,8 @@
 			</filterchain>
 		</loadfile>
 
+		<property name="artifact.change.log.ticket.list" value="" />
+
 		<condition property="artifact.has.change.log.ticket.list">
 			<isset property="artifact.change.log.ticket.list" />
 		</condition>
@@ -73,7 +75,7 @@
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 	>
-		<loadfile property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
+		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
 			<filterchain>
 				<tokenfilter>
 					<filetokenizer />
@@ -94,6 +96,8 @@
 				</tokenfilter>
 			</filterchain>
 		</loadfile>
+
+		<property name="artifact.change.log.ticket.list" value="" />
 
 		<condition property="artifact.has.change.log.ticket.list">
 			<isset property="artifact.change.log.ticket.list" />

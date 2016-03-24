@@ -165,9 +165,12 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
@@ -210,7 +213,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#EDIT" />
+		<execute function="Click#makeVisibleClickAt" locator1="Icon#EDIT" />
 
 		<execute function="AssertElementNotPresent" locator1="PGSignin#PORTLET_TITLE" value1="Sign" />
 
@@ -237,8 +240,9 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Organization Name" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">

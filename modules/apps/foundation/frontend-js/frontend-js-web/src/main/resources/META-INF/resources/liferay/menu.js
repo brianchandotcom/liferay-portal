@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-menu',
 	function(A) {
-		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
 		var ARIA_ATTR_ROLE = 'role';
@@ -76,15 +75,7 @@ AUI.add(
 
 		var SELECTOR_SEARCH_CONTAINER = '.lfr-menu-list-search-container';
 
-		var SELECTOR_SEARCH_INPUT = '.lfr-menu-list-search';
-
-		var STR_BLANK = '';
-
 		var TPL_MENU = '<div class="open" />';
-
-		var TPL_SEARCH_BOX = '<div class="lfr-menu-list-search-container">' +
-				'<input aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" autocomplete="off" class="lfr-menu-list-search" id="{searchId}" role="combobox" type="text" />' +
-			'</div>';
 
 		var Menu = function() {
 			var instance = this;

@@ -928,14 +928,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String currentAttributeAndValue = sb.toString();
 
-			String newLine = sortHTMLAttributes(
-				line, value, currentAttributeAndValue);
+			if (!tagName.contains(StringPool.COLON)) {
+				String newLine = sortHTMLAttributes(
+					line, value, currentAttributeAndValue);
 
-			if (!newLine.equals(line)) {
-				return newLine;
+				if (!newLine.equals(line)) {
+					return newLine;
+				}
 			}
 
-			newLine = formatTagAttributeType(
+			String newLine = formatTagAttributeType(
 				line, tagName, currentAttributeAndValue);
 
 			if (!newLine.equals(line)) {

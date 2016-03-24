@@ -56,7 +56,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#save" />
+		<execute macro="DDLDataDefinition#clickSave" />
 
 		<execute macro="Alert#viewRequiredField" />
 	</command>

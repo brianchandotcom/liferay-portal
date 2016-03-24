@@ -74,6 +74,10 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 	</command>
 
+	<command name="clickSave">
+		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="copyCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
@@ -172,18 +176,14 @@
 		</execute>
 	</command>
 
-	<command name="save">
-		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
-	</command>
-
 	<command name="saveCP">
-		<execute macro="DDLDataDefinition#save" />
+		<execute macro="DDLDataDefinition#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#save" />
+		<execute macro="DDLDataDefinition#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

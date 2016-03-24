@@ -1738,14 +1738,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureTaskEnabledIfStale(
-		Task task, WritePropertiesTask recordArtifactTask,
+		Task task, final WritePropertiesTask recordArtifactTask,
 		boolean testProject) {
 
 		if (testProject) {
 			task.setEnabled(false);
 		}
 
-		task.onlyIf(new OutOfDateArtifactSpec(recordArtifactTask));
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return isStale(recordArtifactTask);
+				}
+
+			});
 	}
 
 	protected void configureTaskFindBugs(FindBugs findBugs) {
@@ -2319,6 +2327,70 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return false;
 	}
 
+	protected boolean isStale(WritePropertiesTask recordArtifactTask) {
+		final Project project = recordArtifactTask.getProject();
+
+		Properties artifactProperties = null;
+
+		try {
+			artifactProperties = FileUtil.readProperties(
+				recordArtifactTask.getOutputFile());
+		}
+		catch (IOException ioe) {
+			throw new GradleException(
+				"Unable to read artifact properties", ioe);
+		}
+
+		final String artifactGitId = artifactProperties.getProperty(
+			"artifact.git.id");
+
+		if (Validator.isNull(artifactGitId)) {
+			if (_logger.isInfoEnabled()) {
+				_logger.info(project + " has never been published");
+			}
+
+			return true;
+		}
+
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		project.exec(
+			new Action<ExecSpec>() {
+
+				@Override
+				public void execute(ExecSpec execSpec) {
+					execSpec.commandLine(
+						"git", "log", "--format=%s", artifactGitId + "..HEAD",
+						".");
+
+					execSpec.setStandardOutput(byteArrayOutputStream);
+					execSpec.setWorkingDir(project.getProjectDir());
+				}
+
+			});
+
+		String output = byteArrayOutputStream.toString();
+
+		String[] lines = output.split("\\r?\\n");
+
+		for (String line : lines) {
+			if (_logger.isInfoEnabled()) {
+				_logger.info(line);
+			}
+
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isTestProject(Project project) {
 		String projectName = project.getName();
 
@@ -2433,81 +2505,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 
 		private final File _gitRepoDir;
-
-	}
-
-	private static class OutOfDateArtifactSpec implements Spec<Task> {
-
-		public OutOfDateArtifactSpec(WritePropertiesTask recordArtifactTask) {
-			_recordArtifactTask = recordArtifactTask;
-		}
-
-		@Override
-		public boolean isSatisfiedBy(Task task) {
-			final Project project = task.getProject();
-
-			Properties artifactProperties = null;
-
-			try {
-				artifactProperties = FileUtil.readProperties(
-					_recordArtifactTask.getOutputFile());
-			}
-			catch (IOException ioe) {
-				throw new GradleException(
-					"Unable to read artifact properties", ioe);
-			}
-
-			final String artifactGitId = artifactProperties.getProperty(
-				"artifact.git.id");
-
-			if (Validator.isNull(artifactGitId)) {
-				if (_logger.isInfoEnabled()) {
-					_logger.info(project + " has never been published");
-				}
-
-				return true;
-			}
-
-			final ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			project.exec(
-				new Action<ExecSpec>() {
-
-					@Override
-					public void execute(ExecSpec execSpec) {
-						execSpec.commandLine(
-							"git", "log", "--format=%s",
-							artifactGitId + "..HEAD", ".");
-
-						execSpec.setStandardOutput(byteArrayOutputStream);
-						execSpec.setWorkingDir(project.getProjectDir());
-					}
-
-				});
-
-			String output = byteArrayOutputStream.toString();
-
-			String[] lines = output.split("\\r?\\n");
-
-			for (String line : lines) {
-				if (_logger.isInfoEnabled()) {
-					_logger.info(line);
-				}
-
-				if (Validator.isNull(line)) {
-					continue;
-				}
-
-				if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		private final WritePropertiesTask _recordArtifactTask;
 
 	}
 

@@ -175,6 +175,57 @@ public class ServletContextHelperRegistrationImpl
 	public void setProperties(Map<String, String> contextParameters) {
 	}
 
+	public static class JspServletWrapper extends HttpServlet {
+
+		public JspServletWrapper() {
+			this(null);
+		}
+
+		public JspServletWrapper(String jspFile) {
+			this.jspFile = jspFile;
+		}
+
+		@Override
+		public void destroy() {
+			_servlet.destroy();
+		}
+
+		@Override
+		public ServletConfig getServletConfig() {
+			return _servlet.getServletConfig();
+		}
+
+		@Override
+		public void init(ServletConfig servletConfig) throws ServletException {
+			_servlet.init(servletConfig);
+		}
+
+		@Override
+		public void service(
+				ServletRequest servletRequest, ServletResponse servletResponse)
+			throws IOException, ServletException {
+
+			String curJspFile = (String)servletRequest.getAttribute(
+				JspServlet.JSP_FILE);
+
+			if (jspFile != null) {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
+			}
+
+			try {
+				_servlet.service(servletRequest, servletResponse);
+			}
+			finally {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
+			}
+		}
+
+		protected String jspFile;
+
+		private final Servlet _servlet = new JspServlet();
+
+	}
+
 	protected String createContextSelectFilterString() {
 		StringBuilder sb = new StringBuilder();
 
@@ -430,8 +481,7 @@ public class ServletContextHelperRegistrationImpl
 	private final String _servletContextName;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final boolean _wabShapedBundle;
-	private WebXMLDefinition _webXMLDefinition;
-
+	private final WebXMLDefinition _webXMLDefinition;
 
 	private static class ContextInitParamHandler extends DefaultHandler {
 
@@ -484,57 +534,6 @@ public class ServletContextHelperRegistrationImpl
 		private String _paramValue;
 		private final Dictionary<String, Object> _properties;
 		private final Stack<StringBuilder> _stack = new Stack<>();
-
-	}
-
-	public static class JspServletWrapper extends HttpServlet {
-
-		public JspServletWrapper() {
-			this(null);
-		}
-
-		public JspServletWrapper(String jspFile) {
-			this.jspFile = jspFile;
-		}
-
-		@Override
-		public void destroy() {
-			_servlet.destroy();
-		}
-
-		@Override
-		public ServletConfig getServletConfig() {
-			return _servlet.getServletConfig();
-		}
-
-		@Override
-		public void init(ServletConfig servletConfig) throws ServletException {
-			_servlet.init(servletConfig);
-		}
-
-		@Override
-		public void service(
-				ServletRequest servletRequest, ServletResponse servletResponse)
-			throws IOException, ServletException {
-
-			String curJspFile = (String)servletRequest.getAttribute(
-				JspServlet.JSP_FILE);
-
-			if (jspFile != null) {
-				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
-			}
-
-			try {
-				_servlet.service(servletRequest, servletResponse);
-			}
-			finally {
-				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
-			}
-		}
-
-		protected String jspFile;
-
-		private final Servlet _servlet = new JspServlet();
 
 	}
 

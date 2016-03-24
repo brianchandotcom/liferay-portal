@@ -327,9 +327,8 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment1Definition);
 		definitions.add(fragment2Definition);
 
-		List<WebXMLDefinition> sortedDefinitions =
-			OrderingUtil.getOrder(
-				definitions, webXMLDefinition.getAbsoluteOrderNames());
+		List<WebXMLDefinition> sortedDefinitions = OrderingUtil.getOrder(
+			definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(3, sortedDefinitions.size());
 
@@ -398,9 +397,8 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment2Definition);
 		definitions.add(fragment1Definition);
 
-		List<WebXMLDefinition> sortedDefinitions =
-			OrderingUtil.getOrder(
-				definitions, webXMLDefinition.getAbsoluteOrderNames());
+		List<WebXMLDefinition> sortedDefinitions = OrderingUtil.getOrder(
+			definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(2, sortedDefinitions.size());
 
@@ -463,9 +461,8 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment2Definition);
 		definitions.add(fragment1Definition);
 
-		List<WebXMLDefinition> sortedDefinitions =
-			OrderingUtil.getOrder(
-				definitions, webXMLDefinition.getAbsoluteOrderNames());
+		List<WebXMLDefinition> sortedDefinitions = OrderingUtil.getOrder(
+			definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(3, sortedDefinitions.size());
 
@@ -532,9 +529,8 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment1Definition);
 		definitions.add(fragment4Definition);
 
-		List<WebXMLDefinition> sortedDefinitions =
-			OrderingUtil.getOrder(
-				definitions, webXMLDefinition.getAbsoluteOrderNames());
+		List<WebXMLDefinition> sortedDefinitions = OrderingUtil.getOrder(
+			definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(3, sortedDefinitions.size());
 
@@ -590,9 +586,8 @@ public class WebXMLDefinitionLoaderTest {
 		definitions.add(fragment1Definition);
 		definitions.add(fragment3Definition);
 
-		List<WebXMLDefinition> sortedDefinitions =
-			OrderingUtil.getOrder(
-				definitions, webXMLDefinition.getAbsoluteOrderNames());
+		List<WebXMLDefinition> sortedDefinitions = OrderingUtil.getOrder(
+			definitions, webXMLDefinition.getAbsoluteOrderNames());
 
 		Assert.assertEquals(2, sortedDefinitions.size());
 

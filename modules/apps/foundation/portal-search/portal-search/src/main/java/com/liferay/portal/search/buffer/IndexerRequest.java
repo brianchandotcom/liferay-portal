@@ -116,12 +116,16 @@ public class IndexerRequest {
 
 		sb.append("{classModel=");
 		sb.append(_classedModel);
+		sb.append(", forceSync=");
+		sb.append(_forceSync);
 		sb.append(", indexer=");
 		sb.append(ClassUtil.getClassName(_indexer));
 		sb.append(", method=");
 		sb.append(_method);
 		sb.append(", modelClassName=");
 		sb.append(_modelClassName);
+		sb.append(", modelPrimaryKey=");
+		sb.append(_modelPrimaryKey);
 		sb.append("}");
 
 		return sb.toString();

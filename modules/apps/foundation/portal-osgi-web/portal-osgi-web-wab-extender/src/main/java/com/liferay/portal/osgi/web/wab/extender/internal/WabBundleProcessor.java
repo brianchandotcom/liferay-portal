@@ -144,6 +144,9 @@ public class WabBundleProcessor {
 				return;
 			}
 
+			WebXMLDefinition webXMLDefinition =
+				servletContextHelperRegistration.getWebXMLDefinition();
+
 			ServletContext servletContext =
 				ModifiableServletContextAdapter.createInstance(
 					servletContextHelperRegistration.getServletContext(),
@@ -440,14 +443,16 @@ public class WabBundleProcessor {
 			_bundleContext.getService(
 				_servletContextHelperRegistrationServiceReference);
 
-		servletContextHelperRegistration.setProperties(contextParameters);
+		WebXMLDefinition webXMLDefinition =
+			servletContextHelperRegistration.getWebXMLDefinition();
 
 		ServletContext servletContext =
 			servletContextHelperRegistration.getServletContext();
 
 		_contextName = servletContext.getServletContextName();
 
-		servletContext.setAttribute("jsp.taglib.mappings", jspTaglibMappings);
+		servletContext.setAttribute(
+			"jsp.taglib.mappings", webXMLDefinition.getJspTaglibMappings());
 		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
 		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
 

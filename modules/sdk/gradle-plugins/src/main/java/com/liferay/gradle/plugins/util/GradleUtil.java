@@ -27,7 +27,10 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.file.copy.CopySpecInternal;
+import org.gradle.api.internal.file.copy.DefaultCopySpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -93,6 +96,37 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 			if (name.startsWith("Daemon worker")) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean replaceCopySpecSourcePath(
+		CopySpec copySpec, Object oldSourcePath, Object newSourcePath) {
+
+		if (copySpec instanceof DefaultCopySpec) {
+			DefaultCopySpec defaultCopySpec = (DefaultCopySpec)copySpec;
+
+			Set<Object> sourcePaths = defaultCopySpec.getSourcePaths();
+
+			if (sourcePaths.remove(oldSourcePath)) {
+				sourcePaths.add(newSourcePath);
+
+				return true;
+			}
+		}
+
+		if (copySpec instanceof CopySpecInternal) {
+			CopySpecInternal copySpecInternal = (CopySpecInternal)copySpec;
+
+			for (CopySpec childCopySpec : copySpecInternal.getChildren()) {
+				boolean replaced = replaceCopySpecSourcePath(
+					childCopySpec, oldSourcePath, newSourcePath);
+
+				if (replaced) {
+					return true;
+				}
 			}
 		}
 

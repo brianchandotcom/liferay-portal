@@ -666,11 +666,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		String currentAttributeAndValue = null;
-		String previousAttribute = null;
-		String previousAttributeAndValue = null;
-		String tag = null;
-
 		String currentException = null;
 		String previousException = null;
 
@@ -687,8 +682,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String line = null;
 
 			String previousLine = StringPool.BLANK;
-
-			boolean readAttributes = false;
 
 			boolean javaSource = false;
 
@@ -872,95 +865,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						fileName, line, matcher.group(), lineCount, false);
 				}
 
-				if (readAttributes) {
-					if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
-						!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
-
-						int pos = trimmedLine.indexOf(CharPool.EQUAL);
-
-						if (pos != -1) {
-							String attribute = trimmedLine.substring(0, pos);
-							String newLine = formatTagAttributeType(
-								line, tag, trimmedLine);
-
-							if (!newLine.equals(line)) {
-								line = newLine;
-
-								readAttributes = false;
-							}
-							else if (!trimmedLine.endsWith(
-										StringPool.APOSTROPHE) &&
-									 !trimmedLine.endsWith(
-										 StringPool.GREATER_THAN) &&
-									 !trimmedLine.endsWith(StringPool.QUOTE)) {
-
-								processErrorMessage(
-									fileName,
-									"attribute: " + fileName + " " + lineCount);
-
-								readAttributes = false;
-							}
-							else if (trimmedLine.endsWith(
-										StringPool.APOSTROPHE) &&
-									 (!trimmedLine.contains(StringPool.QUOTE) ||
-									  !tag.contains(StringPool.COLON))) {
-
-								line = StringUtil.replace(
-									line, StringPool.APOSTROPHE,
-									StringPool.QUOTE);
-
-								readAttributes = false;
-							}
-							else if (trimmedLine.endsWith(StringPool.QUOTE) &&
-									 tag.contains(StringPool.COLON) &&
-									 (StringUtil.count(
-										 trimmedLine, CharPool.QUOTE) > 2)) {
-
-								processErrorMessage(
-									fileName,
-									"attribute delimeter: " + fileName + " " +
-										lineCount);
-
-								readAttributes = false;
-							}
-							else if (Validator.isNotNull(previousAttribute)) {
-								if (!isAttributName(attribute) &&
-									!attribute.startsWith(
-										StringPool.LESS_THAN)) {
-
-									processErrorMessage(
-										fileName,
-										"attribute: " + fileName + " " +
-											lineCount);
-
-									readAttributes = false;
-								}
-								else if (Validator.isNull(
-											previousAttributeAndValue) &&
-										 (previousAttribute.compareToIgnoreCase(
-											 attribute) > 0)) {
-
-									previousAttributeAndValue = previousLine;
-									currentAttributeAndValue = line;
-								}
-							}
-
-							if (!readAttributes) {
-								previousAttribute = null;
-								previousAttributeAndValue = null;
-							}
-							else {
-								previousAttribute = attribute;
-							}
-						}
-					}
-					else {
-						previousAttribute = null;
-
-						readAttributes = false;
-					}
-				}
-
 				if (!hasUnsortedExceptions) {
 					int x = line.indexOf("<liferay-ui:error exception=\"<%=");
 
@@ -990,19 +894,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
 					!trimmedLine.startsWith("<%") &&
-					!trimmedLine.startsWith("<!")) {
+					!trimmedLine.startsWith("<!") &&
+					trimmedLine.contains(StringPool.GREATER_THAN)) {
 
-					if (!trimmedLine.contains(StringPool.GREATER_THAN) &&
-						!trimmedLine.contains(StringPool.SPACE)) {
-
-						tag = trimmedLine.substring(1);
-
-						readAttributes = true;
-					}
-					else {
-						line = formatAttributes(
-							fileName, line, trimmedLine, lineCount, false);
-					}
+					line = formatAttributes(
+						fileName, line, trimmedLine, lineCount, false);
 				}
 
 				if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
@@ -1066,13 +962,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (content.endsWith("\n")) {
 			content = content.substring(0, content.length() - 1);
-		}
-
-		if (Validator.isNotNull(previousAttributeAndValue)) {
-			content = StringUtil.replaceFirst(
-				content,
-				previousAttributeAndValue + "\n" + currentAttributeAndValue,
-				currentAttributeAndValue + "\n" + previousAttributeAndValue);
 		}
 
 		if (hasUnsortedExceptions) {

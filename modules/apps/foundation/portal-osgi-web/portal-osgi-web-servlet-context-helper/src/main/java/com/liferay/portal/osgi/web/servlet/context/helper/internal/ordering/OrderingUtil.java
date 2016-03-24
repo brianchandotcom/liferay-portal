@@ -136,7 +136,7 @@ public class OrderingUtil {
 		// OTHERS to be appended
 
 		if (groups[0] != null) {
-			if ((Arrays.binarySearch(groups[0], OrderingImpl.OTHERS) >= 0)) {
+			if (Arrays.binarySearch(groups[0], OrderingImpl.OTHERS) >= 0) {
 				map.put(OrderingImpl.OTHERS, 1);
 			}
 		}

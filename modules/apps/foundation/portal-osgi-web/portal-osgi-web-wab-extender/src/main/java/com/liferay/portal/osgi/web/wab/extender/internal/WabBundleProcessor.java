@@ -112,10 +112,7 @@ public class WabBundleProcessor {
 		}
 	}
 
-	public void init(
-			Dictionary<String, Object> properties)
-		throws Exception {
-
+	public void init(Dictionary<String, Object> properties) throws Exception {
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();

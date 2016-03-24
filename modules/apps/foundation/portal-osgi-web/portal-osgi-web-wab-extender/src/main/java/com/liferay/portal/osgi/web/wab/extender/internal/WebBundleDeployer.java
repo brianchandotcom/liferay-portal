@@ -20,8 +20,6 @@ import java.util.Dictionary;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.xml.parsers.SAXParserFactory;
-
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;

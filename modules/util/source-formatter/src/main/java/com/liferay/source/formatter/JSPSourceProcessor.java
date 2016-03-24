@@ -849,40 +849,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					checkIfClauseParentheses(ifClause, fileName, lineCount);
 				}
 
-				matcher = _jspTagAttributes.matcher(line);
+				matcher = _jspTaglibPattern.matcher(line);
 
-				if (matcher.find()) {
-					String attributes = matcher.group(1);
-
-					Matcher attributeValueMatcher =
-						_jspTagAttributeValue.matcher(attributes);
-
-					while (attributeValueMatcher.find()) {
-						String delimeter = attributeValueMatcher.group(1);
-						String javaCode = attributeValueMatcher.group(2);
-
-						if (delimeter.equals(StringPool.QUOTE) ^
-							javaCode.contains(StringPool.QUOTE)) {
-
-							continue;
-						}
-
-						String newDelimeter = StringPool.QUOTE;
-
-						if (delimeter.equals(StringPool.QUOTE)) {
-							newDelimeter = StringPool.APOSTROPHE;
-						}
-
-						String match = attributeValueMatcher.group();
-
-						String replacement = StringUtil.replaceFirst(
-							match, delimeter, newDelimeter);
-
-						replacement = StringUtil.replaceLast(
-							replacement, delimeter, newDelimeter);
-
-						line = StringUtil.replace(line, match, replacement);
-					}
+				while (matcher.find()) {
+					line = sortAttributes(
+						fileName, line, matcher.group(), lineCount, false);
 				}
 
 				if (readAttributes) {
@@ -1013,7 +984,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						readAttributes = true;
 					}
 					else {
-						line = sortAttributes(fileName, line, lineCount, true);
+						line = sortAttributes(
+							fileName, line, trimmedLine, lineCount, false);
 					}
 				}
 
@@ -1222,7 +1194,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String formatTagAttributeType(
-			String line, String tag, String attributeAndValue)
+			String line, String tagName, String attributeAndValue)
 		throws Exception {
 
 		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
@@ -1231,11 +1203,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return line;
 		}
 
-		if (tag.startsWith("liferay-")) {
-			tag = tag.substring(8);
+		if (tagName.startsWith("liferay-")) {
+			tagName = tagName.substring(8);
 		}
 
-		JavaClass tagJavaClass = getTagJavaClass(tag);
+		JavaClass tagJavaClass = getTagJavaClass(tagName);
 
 		if (tagJavaClass == null) {
 			return line;
@@ -1989,10 +1961,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _jspContents = new HashMap<>();
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
-	private final Pattern _jspTagAttributes = Pattern.compile(
+	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
-	private final Pattern _jspTagAttributeValue = Pattern.compile(
-		"('|\")<%= (.+?) %>('|\")");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =

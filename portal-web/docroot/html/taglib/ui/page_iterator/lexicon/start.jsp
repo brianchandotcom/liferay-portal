@@ -62,7 +62,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					%>
 
 						<li>
-							<a href='<%= deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor %>'><%= String.valueOf(curDelta) %></a>
+							<a href="<%= deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor %>"><%= String.valueOf(curDelta) %></a>
 						</li>
 
 					<%

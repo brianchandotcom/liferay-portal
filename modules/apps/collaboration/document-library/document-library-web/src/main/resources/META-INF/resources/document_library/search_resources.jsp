@@ -368,7 +368,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id='<%= liferayPortletResponse.getNamespace() + "searchResultsContainer" + searchRepositoryId %>'>
+		<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id="<%= liferayPortletResponse.getNamespace() + "searchResultsContainer" + searchRepositoryId %>">
 			<%= searchResults %>
 		</div>
 	</c:otherwise>

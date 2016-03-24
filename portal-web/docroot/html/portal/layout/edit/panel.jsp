@@ -38,11 +38,11 @@ if (selLayout != null) {
 
 <aui:input id='<%= HtmlUtil.escapeAttribute(idPrefix) + "panelSelectedPortlets" %>' name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />
 
-<div class="lfr-tree-loading" id='<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) + "selectPortletsTreeLoading" %>'>
+<div class="lfr-tree-loading" id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) + "selectPortletsTreeLoading" %>">
 	<span class="icon icon-loading lfr-tree-loading-icon"></span>
 </div>
 
-<div id='<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) + "selectPortletsTree" %>' style="margin: 4px;"></div>
+<div id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(idPrefix) + "selectPortletsTree" %>" style="margin: 4px;"></div>
 
 <aui:script use="aui-tree-view">
 	var panelSelectedPortletsEl = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(idPrefix) %>panelSelectedPortlets');

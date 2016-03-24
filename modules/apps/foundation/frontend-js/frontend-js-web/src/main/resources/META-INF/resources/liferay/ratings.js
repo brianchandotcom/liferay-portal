@@ -223,11 +223,14 @@ AUI.add(
 						ratings = Liferay.Ratings.ThumbRating;
 					}
 
-					var ratingInstance = new ratings(config);
+					if (config.type != 'stars' || document.getElementById(config.containerId) != null) {
+						var ratingInstance = new ratings(config);
 
-					instance._INSTANCES[config.id || config.namespace] = ratingInstance;
+						instance._INSTANCES[config.id || config.namespace] = ratingInstance;
 
-					return ratingInstance;
+						return ratingInstance;
+					}
+
 				},
 
 				_registerTask: A.debounce(

@@ -46,10 +46,12 @@ public class DefaultIndexerRequestBufferExecutor
 		Collection<IndexerRequest> completedIndexerRequests = new ArrayList<>();
 
 		if (_log.isDebugEnabled()) {
+			Collection<IndexerRequest> indexerRequests =
+				indexerRequestBuffer.getIndexerRequests();
+
 			_log.debug(
-				"IndexerRequestBuffer size = " +
-					indexerRequestBuffer.getIndexerRequests().size() +
-						" - numRequests to execute: " + numRequests);
+				"Indexer request buffer size " + indexerRequests.size() +
+					" to execute " + numRequests + " requests");
 		}
 
 		int i = 0;
@@ -59,7 +61,7 @@ public class DefaultIndexerRequestBufferExecutor
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Executing indexerRequest " + (i++) + ": " +
+					"Executing indexer request " + (i++) + ": " +
 						indexerRequest);
 			}
 

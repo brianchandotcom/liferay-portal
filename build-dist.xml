@@ -2638,7 +2638,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			  	</offering>
 
 			 	<offering
-			  		id='com.ibm.websphere.IBMJAVA.v71'
+			  		id='com.ibm.websphere.IBMJAVA.v80'
 			  		profile='IBM Websphere 8.5.5.0'>
 			  	</offering>
 			</install>
@@ -2670,7 +2670,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 				<exec dir="${app.server.websphere.dir}/bin" executable="sh">
 					<arg value="-c" />
-					<arg value="./managesdk.sh -enableProfileAll -sdkName 1.7.1_64 -enableServers" />
+					<arg value="./managesdk.sh -enableProfileAll -sdkName 1.8_64 -enableServers" />
 				</exec>
 			</then>
 			<elseif>
@@ -2683,7 +2683,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 					<exec dir="${app.server.websphere.dir}/bin" executable="cmd.exe">
 						<arg value="/c" />
-						<arg value="managesdk.bat -enableProfileAll -sdkName 1.7.1_64 -enableServers" />
+						<arg value="managesdk.bat -enableProfileAll -sdkName 1.8_64 -enableServers" />
 					</exec>
 				</then>
 			</elseif>

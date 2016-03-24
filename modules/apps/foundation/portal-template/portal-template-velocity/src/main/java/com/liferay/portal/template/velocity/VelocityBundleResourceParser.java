@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"lang.type=" + TemplateConstants.LANG_TYPE_VM
-	},
+	property = {"lang.type=" + TemplateConstants.LANG_TYPE_VM},
 	service = TemplateResourceParser.class
 )
 public class VelocityBundleResourceParser extends ClassLoaderResourceParser {

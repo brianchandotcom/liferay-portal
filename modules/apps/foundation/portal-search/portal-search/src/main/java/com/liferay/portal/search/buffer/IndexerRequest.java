@@ -112,7 +112,7 @@ public class IndexerRequest {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{classModel=");
 		sb.append(_classedModel);

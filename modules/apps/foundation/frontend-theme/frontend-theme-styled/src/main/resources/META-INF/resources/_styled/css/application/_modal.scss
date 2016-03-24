@@ -34,3 +34,15 @@
 .modal-open .modal {
 	overflow: hidden;
 }
+
+.portal-popup {
+	.columns-max > .portlet-layout.row {
+		margin-left: 0;
+		margin-right: 0;
+
+		> .portlet-column {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}

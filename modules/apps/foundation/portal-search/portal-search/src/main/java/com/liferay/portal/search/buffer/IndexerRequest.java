@@ -116,6 +116,8 @@ public class IndexerRequest {
 
 		sb.append("{classModel=");
 		sb.append(_classedModel);
+		sb.append(", forceSync=");
+		sb.append(_forceSync);
 		sb.append(", indexer=");
 		sb.append(ClassUtil.getClassName(_indexer));
 		sb.append(", method=");

@@ -44,8 +44,8 @@ public class PoshiRunnerExtension {
 		return _poshiProperties;
 	}
 
-	public File getPoshiRunnerProperties() {
-		return GradleUtil.toFile(_project, _poshiRunnerProperties);
+	public File getPoshiPropertiesFile() {
+		return GradleUtil.toFile(_project, _poshiPropertiesFile);
 	}
 
 	public String getVersion() {
@@ -70,8 +70,8 @@ public class PoshiRunnerExtension {
 		_poshiProperties.putAll(poshiProperties);
 	}
 
-	public void setPoshiRunnerProperties(Object poshiRunnerProperties) {
-		_poshiRunnerProperties = poshiRunnerProperties;
+	public void setPoshiPropertiesFile(Object poshiPropertiesFile) {
+		_poshiPropertiesFile = poshiPropertiesFile;
 	}
 
 	public void setVersion(String version) {
@@ -81,7 +81,7 @@ public class PoshiRunnerExtension {
 	private Object _baseDir = "poshi-tests";
 	private String _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
-	private Object _poshiRunnerProperties = "poshi-runner.properties";
+	private Object _poshiPropertiesFile = "poshi-runner.properties";
 	private final Project _project;
 	private String _version = "latest.release";
 

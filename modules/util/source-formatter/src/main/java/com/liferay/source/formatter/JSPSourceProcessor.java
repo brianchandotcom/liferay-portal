@@ -351,6 +351,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixIncorrectClosingTag(newContent);
 
+		newContent = fixEmptyJavaSourceTag(newContent);
+
 		newContent = formatMultilineTagAttributes(fileName, newContent);
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
@@ -563,6 +565,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		return addIncludedAndReferencedFileNames(
 			fileNames, new HashSet<String>());
+	}
+
+	protected String fixEmptyJavaSourceTag(String content) {
+		Matcher matcher = _emptyJavaSourceTagPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replace(
+				content, matcher.group(), StringPool.BLANK);
+		}
+
+		return content;
 	}
 
 	protected String fixEmptyLineInNestedTags(
@@ -1907,6 +1920,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _defineObjectsPattern = Pattern.compile(
 		"\n\t*(<.*:defineObjects />)\n");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
+	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
+		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
 		"\n(\t*)<[a-z-]*:.*[^/]>\n\n(\t*)<[a-z-]*:.*>\n");
 	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(

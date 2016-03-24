@@ -16,8 +16,10 @@ package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.ordering.OrderingUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering;
 import com.liferay.portal.osgi.web.servlet.context.helper.ordering.Ordering.Path;
 
@@ -28,11 +30,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.Map.Entry;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -372,7 +376,38 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	}
 
 	public WebXMLDefinition loadWebXML() throws Exception {
-		return loadWebXML(_bundle.getEntry("WEB-INF/web.xml"));
+		WebXMLDefinition webXMLDefinition = loadWebXML(
+			_bundle.getEntry("WEB-INF/web.xml"));
+
+		if (webXMLDefinition.isMetadataComplete()) {
+			return webXMLDefinition;
+		}
+
+		Enumeration<URL> resources = _bundle.getResources(
+			"META-INF/web-fragment.xml");
+
+		List<WebXMLDefinition> webFragments = new ArrayList<>();
+
+		if (resources != null) {
+			while (resources.hasMoreElements()) {
+				URL url = resources.nextElement();
+				WebXMLDefinitionLoader webFragmentsDefinitionLoader =
+					new WebXMLDefinitionLoader(
+						_bundle, _saxParserFactory, _logger);
+
+				webFragments.add(
+					webFragmentsDefinitionLoader.loadWebXML(url));
+			}
+		}
+
+		List<WebXMLDefinition> sortedWebFragments = new ArrayList<>();
+
+		if (ListUtil.isNotEmpty(webFragments)) {
+			sortedWebFragments = OrderingUtil.getOrder(
+				webFragments, webXMLDefinition.getAbsoluteOrderNames());
+		}
+
+		return assembleWebXML(webXMLDefinition, sortedWebFragments);
 	}
 
 	public WebXMLDefinition loadWebXML(URL url) throws Exception {
@@ -446,6 +481,290 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		else if (Arrays.binarySearch(_LEAVES, qName) > -1) {
 			_stack.push(new StringBuilder());
 		}
+	}
+
+	private void assembleContextParams(
+		Map<String, String> assembledContextParameters,
+		Map<String, String> fragmentContextParameters) {
+
+		for (Entry<String, String> entry :
+				fragmentContextParameters.entrySet()) {
+
+			String paramName = entry.getKey();
+
+			if (!assembledContextParameters.containsKey(paramName)) {
+				assembledContextParameters.put(paramName, entry.getValue());
+			}
+		}
+	}
+
+	private void assembleFilters(
+			Map<String, FilterDefinition> webXMLFilters,
+			Map<String, FilterDefinition> assembledFilters,
+			Map<String, FilterDefinition> fragmentFilters)
+		throws Exception {
+
+		for (Entry<String, FilterDefinition> filterEntry :
+				fragmentFilters.entrySet()) {
+
+			String filterName = filterEntry.getKey();
+
+			if (!assembledFilters.containsKey(filterName)) {
+				assembledFilters.put(filterName, filterEntry.getValue());
+			}
+			else {
+				FilterDefinition webXMLFilterDefinition = webXMLFilters.get(
+					filterName);
+
+				FilterDefinition fragmentFilterDefinition =
+					filterEntry.getValue();
+
+				Map<String, String> webXMLFilterParams = null;
+
+				if (webXMLFilterDefinition != null) {
+					webXMLFilterParams =
+						webXMLFilterDefinition.getInitParameters();
+				}
+
+				Map<String, String> fragmentFilterParams =
+					fragmentFilterDefinition.getInitParameters();
+
+				FilterDefinition assembledFilterDefinition =
+					assembledFilters.get(filterName);
+
+				Map<String, String> assembledInitParams =
+					assembledFilterDefinition.getInitParameters();
+
+				for (Entry<String, String> initParamEntry :
+						fragmentFilterParams.entrySet()) {
+
+					String initParamName = initParamEntry.getKey();
+					String initParamValue = initParamEntry.getValue();
+
+					String assembledInitParamValue = assembledInitParams.get(
+						initParamName);
+
+					String webXMLInitParamValue = null;
+
+					if (webXMLFilterParams != null) {
+						webXMLInitParamValue = webXMLFilterParams.get(
+							initParamName);
+					}
+
+					if (Validator.isNull(assembledInitParamValue)) {
+						if ((webXMLInitParamValue == null) &&
+							!Validator.equals(
+								assembledInitParamValue, initParamValue)) {
+
+							// Servlet 3 spec 8.2.3. If two web-fragments
+							// with same param-name and different
+							// param-value does not exist in web.xml,
+							// throw an Exception
+
+							throw new Exception (
+								"Conflicts for " + initParamName +
+									" in filter "+ filterName);
+						}
+						else {
+							assembledInitParams.put(
+								initParamName, initParamValue);
+						}
+					}
+				}
+
+				List<String> assembledFilterDispatchers =
+					assembledFilterDefinition.getDispatchers();
+
+				List<String> fragmentDispatchers =
+					fragmentFilterDefinition.getDispatchers();
+
+				for (String dispatcher : fragmentDispatchers) {
+					if (!assembledFilterDispatchers.contains(dispatcher)) {
+						assembledFilterDispatchers.add(dispatcher);
+					}
+				}
+
+				List<String> assembledFilterServlets =
+					assembledFilterDefinition.getServletNames();
+
+				List<String> fragmentFilterServlets =
+					fragmentFilterDefinition.getServletNames();
+
+				for (String servletName : fragmentFilterServlets) {
+					if (!assembledFilterServlets.contains(servletName)) {
+						assembledFilterServlets.add(servletName);
+					}
+				}
+
+				List<String> assembledFilterURLPatterns =
+					assembledFilterDefinition.getURLPatterns();
+
+				List<String> fragmentFilterURLPatterns =
+					fragmentFilterDefinition.getURLPatterns();
+
+				for (String urlPattern : fragmentFilterURLPatterns) {
+					if (!assembledFilterURLPatterns.contains(urlPattern)) {
+						assembledFilterURLPatterns.add(urlPattern);
+					}
+				}
+			}
+		}
+	}
+
+	private void assembleListeners(
+		List<ListenerDefinition> assembledListeners,
+		List<ListenerDefinition> fragmentListeners) {
+
+		for (ListenerDefinition fragmentListener : fragmentListeners) {
+			if (!assembledListeners.contains(fragmentListener)) {
+				assembledListeners.add(fragmentListener);
+			}
+		}
+	}
+
+	private void assembleServlets(
+			Map<String, ServletDefinition> webXMLServlets,
+			Map<String, ServletDefinition> assembledServlets,
+			Map<String, ServletDefinition> fragmentServlets)
+		throws Exception {
+
+		for (Entry<String, ServletDefinition> servletEntry :
+				fragmentServlets.entrySet()) {
+
+			String servletName = servletEntry.getKey();
+
+			if (!assembledServlets.containsKey(servletName)) {
+				fragmentServlets.put(servletName, servletEntry.getValue());
+			}
+			else {
+				ServletDefinition webXMLServletDefinition = webXMLServlets.get(
+					servletName);
+
+				ServletDefinition fragmentServletDefinition =
+					servletEntry.getValue();
+
+				Map<String, String> webXMLServletParams = null;
+
+				if (webXMLServletDefinition != null) {
+					webXMLServletParams =
+						webXMLServletDefinition.getInitParameters();
+				}
+
+				Map<String, String> fragmentServletParams =
+					fragmentServletDefinition.getInitParameters();
+
+				ServletDefinition assembledServletDefinition =
+					assembledServlets.get(servletName);
+
+				Map<String, String> assembledInitParams =
+					assembledServletDefinition.getInitParameters();
+
+				for (Entry<String, String> initParamEntry :
+						fragmentServletParams.entrySet()) {
+
+					String initParamName = initParamEntry.getKey();
+					String initParamValue = initParamEntry.getValue();
+
+					String assembledInitParamValue = assembledInitParams.get(
+						initParamName);
+
+					String webXMLInitParamValue = null;
+
+					if (webXMLServletParams != null) {
+						webXMLInitParamValue = webXMLServletParams.get(
+							initParamName);
+					}
+
+					if (Validator.isNull(assembledInitParamValue)) {
+						if ((webXMLInitParamValue == null) &&
+							!Validator.equals(
+								assembledInitParamValue, initParamValue)) {
+
+							// Servlet 3 spec 8.2.3. If two web-fragments
+							// with same param-name and different
+							// param-value does not exist in web.xml,
+							// throw an Exception
+
+							throw new Exception (
+								"Conflicts for " + initParamName +
+									" in servlet "+ servletName);
+						}
+						else {
+							assembledInitParams.put(
+								initParamName, initParamValue);
+						}
+					}
+				}
+
+				List<String> assembledServletURLPatterns =
+					assembledServletDefinition.getURLPatterns();
+
+				List<String> fragmentServletURLPatterns =
+					fragmentServletDefinition.getURLPatterns();
+
+				for (String urlPattern : fragmentServletURLPatterns) {
+					if (!assembledServletURLPatterns.contains(urlPattern)) {
+						assembledServletURLPatterns.add(urlPattern);
+					}
+				}
+
+				if (Validator.isNull(assembledServletDefinition.getJspFile())) {
+					assembledServletDefinition.setJSPFile(
+						fragmentServletDefinition.getJspFile());
+				}
+			}
+		}
+	}
+
+	private WebXMLDefinition assembleWebXML(
+			WebXMLDefinition webXML, List<WebXMLDefinition> webFragments)
+		throws Exception {
+
+		WebXMLDefinition assembledWebXML = (WebXMLDefinition)webXML.clone();
+
+		Map<String, String> assembledContextParameters =
+			assembledWebXML.getContextParameters();
+
+		List<ListenerDefinition> assembledListeners =
+			assembledWebXML.getListenerDefinitions();
+
+		Map<String, FilterDefinition> webXMLFilters =
+			webXML.getFilterDefinitions();
+
+		Map<String, FilterDefinition> assembledFilters =
+			assembledWebXML.getFilterDefinitions();
+
+		Map<String, ServletDefinition> webXMLServlets =
+			webXML.getServletDefinitions();
+
+		Map<String, ServletDefinition> assembledServlets =
+			assembledWebXML.getServletDefinitions();
+
+		for (WebXMLDefinition fragment : webFragments) {
+			Map<String, String> fragmentContextParameters =
+				fragment.getContextParameters();
+
+			assembleContextParams(
+				assembledContextParameters, fragmentContextParameters);
+
+			List<ListenerDefinition> fragmentListeners =
+				fragment.getListenerDefinitions();
+
+			assembleListeners(assembledListeners, fragmentListeners);
+
+			Map<String, FilterDefinition> fragmentFilters =
+				fragment.getFilterDefinitions();
+
+			assembleFilters(webXMLFilters, assembledFilters, fragmentFilters);
+
+			Map<String, ServletDefinition> fragmentServlets =
+				fragment.getServletDefinitions();
+
+			assembleServlets(
+				webXMLServlets, assembledServlets, fragmentServlets);
+		}
+
+		return assembledWebXML;
 	}
 
 	private Filter _getFilterInstance(String filterClassName) {

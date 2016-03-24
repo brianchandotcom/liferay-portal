@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinitionLoader;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import java.io.IOException;
@@ -94,6 +96,18 @@ public class ServletContextHelperRegistrationImpl
 
 		if (url != null) {
 			_wabShapedBundle = true;
+
+			WebXMLDefinitionLoader webXMLDefinitionLoader =
+				new WebXMLDefinitionLoader(_bundle, _saxParserFactory, _logger);
+
+			try {
+				_webXMLDefinition = webXMLDefinitionLoader.loadWebXML();
+			}
+			catch (Exception e) {
+				_logger.log(
+					Logger.LOG_ERROR,
+					"Fatal error processing web descriptors.", e);
+			}
 		}
 		else {
 			_wabShapedBundle = false;
@@ -146,6 +160,10 @@ public class ServletContextHelperRegistrationImpl
 	@Override
 	public ServletContext getServletContext() {
 		return _customServletContextHelper.getServletContext();
+	}
+
+	public WebXMLDefinition getWebXMLDefinition() {
+		return _webXMLDefinition;
 	}
 
 	@Override
@@ -412,6 +430,8 @@ public class ServletContextHelperRegistrationImpl
 	private final String _servletContextName;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final boolean _wabShapedBundle;
+	private WebXMLDefinition _webXMLDefinition;
+
 
 	private static class ContextInitParamHandler extends DefaultHandler {
 

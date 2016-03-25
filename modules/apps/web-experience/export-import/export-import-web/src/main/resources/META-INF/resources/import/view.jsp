@@ -91,7 +91,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
 			processesNode: '#importProcessesSearchContainer',
-			processesResourceURL: '<%= importProcessesURL.toString() %>',
+			processesResourceURL: '<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
 			timeZone: '<%= timeZone.getID() %>'
 		}
 	);

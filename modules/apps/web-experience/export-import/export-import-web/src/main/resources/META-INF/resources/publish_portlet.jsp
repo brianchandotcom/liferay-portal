@@ -517,7 +517,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 						locale: '<%= locale.toLanguageTag() %>',
 						namespace: '<portlet:namespace />',
 						processesNode: '#publishProcesses',
-						processesResourceURL: '<%= publishProcessesURL.toString() %>',
+						processesResourceURL: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>',
 						rangeAllNode: '#rangeAll',
 						rangeDateRangeNode: '#rangeDateRange',
 						rangeLastNode: '#rangeLast',

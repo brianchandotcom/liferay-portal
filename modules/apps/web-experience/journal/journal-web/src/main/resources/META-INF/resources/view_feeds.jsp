@@ -195,7 +195,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 <aui:script>
 	function <portlet:namespace />deleteFeeds() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
-			submitForm(form);
+			submitForm(document.<portlet:namespace />fm);
 		}
 	}
 </aui:script>

@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
+import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.io.IOException;
@@ -34,9 +35,10 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 	public void init(ServletConfig servletConfig) throws ServletException {
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		_pluginClassLoader = servletContext.getClassLoader();
+		_pluginClassLoader = (ClassLoader)servletContext.getAttribute(
+			PluginContextListener.PLUGIN_CLASS_LOADER);
 
-		if (_pluginClassLoader == ClassLoaderUtil.getPortalClassLoader()) {
+		if (_pluginClassLoader == null) {
 			super.init(servletConfig);
 		}
 		else {
@@ -64,7 +66,7 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 		try {
 			AccessControlThreadLocal.setRemoteAccess(true);
 
-			if (_pluginClassLoader == ClassLoaderUtil.getPortalClassLoader()) {
+			if (_pluginClassLoader == null) {
 				super.service(request, response);
 			}
 			else {

@@ -192,6 +192,7 @@ Export-Package:\
 	org.objectweb.asm.tree.analysis;version='5.0.1',\
 	org.objectweb.asm.util;version='5.0.1',\
 	org.objectweb.asm.xml;version='5.0.1',\
+	org.osgi.resource;-split-package:='merge-last',\
 	org.slf4j;version='1.7.2',\
 	org.slf4j.spi;version='1.7.2',\
 	org.slf4j.helpers;version='1.7.2',\

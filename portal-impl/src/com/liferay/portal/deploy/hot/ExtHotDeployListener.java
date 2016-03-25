@@ -14,6 +14,8 @@
 
 package com.liferay.portal.deploy.hot;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
@@ -49,6 +51,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class ExtHotDeployListener extends BaseHotDeployListener {
 
 	@Override
@@ -162,7 +165,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		installExt(servletContext);
+		installExt(servletContext, hotDeployEvent.getContextClassLoader());
 
 		FileAvailabilityUtil.clearAvailabilities();
 
@@ -200,14 +203,25 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		}
 	}
 
+	/**
+	 * Only use where {@link javax.servlet.ServletContext#getClassLoader()} is
+	 * allowed.
+	 */
+	@Deprecated
 	protected void installExt(ServletContext servletContext) throws Exception {
+		installExt(servletContext, servletContext.getClassLoader());
+	}
+
+	protected void installExt(
+			ServletContext servletContext, ClassLoader portletClassLoader)
+		throws Exception {
+
 		String servletContextName = servletContext.getServletContextName();
 
 		String globalLibDir = PortalUtil.getGlobalLibDir();
 		String portalWebDir = PortalUtil.getPortalWebDir();
 		String portalLibDir = PortalUtil.getPortalLibDir();
-		String pluginWebDir = WebDirDetector.getRootDir(
-			servletContext.getClassLoader());
+		String pluginWebDir = WebDirDetector.getRootDir(portletClassLoader);
 
 		copyJar(servletContext, globalLibDir, "ext-service");
 		copyJar(servletContext, portalLibDir, "ext-impl");

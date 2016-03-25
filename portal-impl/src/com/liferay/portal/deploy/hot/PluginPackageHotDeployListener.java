@@ -123,7 +123,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		PluginPackageUtil.registerInstalledPluginPackage(pluginPackage);
 
-		ClassLoader classLoader = servletContext.getClassLoader();
+		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		initLogger(classLoader);
 		initPortletProps(classLoader);
@@ -164,7 +164,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		destroyServiceComponent(
 			new ServletServiceContextComponentConfiguration(servletContext),
-			servletContext.getClassLoader());
+			hotDeployEvent.getContextClassLoader());
 
 		ServiceRegistrar<PortalCacheConfiguratorSettings> serviceRegistrar =
 			(ServiceRegistrar<PortalCacheConfiguratorSettings>)

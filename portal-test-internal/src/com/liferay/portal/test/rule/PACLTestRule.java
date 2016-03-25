@@ -109,12 +109,9 @@ public class PACLTestRule implements TestRule {
 
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
 
-		ServletContext servletContext = hotDeployEvent.getServletContext();
-
 		ClassLoaderPool.register(
 			hotDeployEvent.getServletContextName(),
-			servletContext.getClassLoader());
-
+			hotDeployEvent.getContextClassLoader());
 		PortletClassLoaderUtil.setServletContextName(
 			hotDeployEvent.getServletContextName());
 
@@ -157,26 +154,21 @@ public class PACLTestRule implements TestRule {
 
 		PortalLifecycleUtil.flushInits();
 
-		final ClassLoader classLoader = _testClass.getClassLoader();
+		ClassLoader classLoader = _testClass.getClassLoader();
 
 		MockServletContext mockServletContext = new MockServletContext(
-			new PACLResourceLoader(classLoader)) {
-
-			@Override
-			public ClassLoader getClassLoader() {
-				return classLoader;
-			}
-
-		};
+			new PACLResourceLoader(classLoader));
 
 		mockServletContext.setServletContextName("a-test-hook");
 
-		HotDeployEvent hotDeployEvent = getHotDeployEvent(mockServletContext);
+		HotDeployEvent hotDeployEvent = getHotDeployEvent(
+			mockServletContext, classLoader);
 
 		HotDeployUtil.fireDeployEvent(hotDeployEvent);
 
 		ClassLoaderPool.register(
-			hotDeployEvent.getServletContextName(), classLoader);
+			hotDeployEvent.getServletContextName(),
+			hotDeployEvent.getContextClassLoader());
 		PortletClassLoaderUtil.setServletContextName(
 			hotDeployEvent.getServletContextName());
 
@@ -192,14 +184,16 @@ public class PACLTestRule implements TestRule {
 		return hotDeployEvent;
 	}
 
-	protected HotDeployEvent getHotDeployEvent(ServletContext servletContext) {
+	protected HotDeployEvent getHotDeployEvent(
+		ServletContext servletContext, ClassLoader classLoader) {
+
 		boolean dependencyManagementEnabled =
 			DependencyManagementThreadLocal.isEnabled();
 
 		try {
 			DependencyManagementThreadLocal.setEnabled(false);
 
-			return new HotDeployEvent(servletContext);
+			return new HotDeployEvent(servletContext, classLoader);
 		}
 		finally {
 			DependencyManagementThreadLocal.setEnabled(

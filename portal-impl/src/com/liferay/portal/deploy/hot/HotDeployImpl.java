@@ -125,9 +125,7 @@ public class HotDeployImpl implements HotDeploy {
 		_deployedServletContextNames.remove(
 			hotDeployEvent.getServletContextName());
 
-		ServletContext servletContext = hotDeployEvent.getServletContext();
-
-		ClassLoader classLoader = servletContext.getClassLoader();
+		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		TemplateManagerUtil.destroy(classLoader);
 
@@ -255,10 +253,8 @@ public class HotDeployImpl implements HotDeploy {
 					_dependentHotDeployEvents);
 
 				for (HotDeployEvent dependentEvent : dependentEvents) {
-					ServletContext servletContext =
-						dependentEvent.getServletContext();
-
-					setContextClassLoader(servletContext.getClassLoader());
+					setContextClassLoader(
+						dependentEvent.getContextClassLoader());
 
 					doFireDeployEvent(dependentEvent);
 
@@ -347,6 +343,7 @@ public class HotDeployImpl implements HotDeploy {
 
 		public HotDeployPortalLifecycle(HotDeployEvent hotDeployEvent) {
 			_servletContext = hotDeployEvent.getServletContext();
+			_classLoader = hotDeployEvent.getContextClassLoader();
 
 			ServletContextPool.put(
 				_servletContext.getServletContextName(), _servletContext);
@@ -380,10 +377,11 @@ public class HotDeployImpl implements HotDeploy {
 
 			_pacl.initPolicy(
 				_servletContext.getServletContextName(),
-				new ServletContextURLContainer(_servletContext),
-				_servletContext.getClassLoader(), properties);
+				new ServletContextURLContainer(_servletContext), _classLoader,
+				properties);
 		}
 
+		private final ClassLoader _classLoader;
 		private final ServletContext _servletContext;
 
 	}

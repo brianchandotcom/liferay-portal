@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.deploy.hot;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,10 +44,22 @@ import javax.servlet.ServletContext;
  * @author Raymond Augé
  * @author Miguel Pastor
  */
+@ProviderType
 public class HotDeployEvent {
 
+	/**
+	 * Only use this constructor in situations where
+	 * {@link javax.servlet.SerlvetContext#getClassLoader()} is allowed.
+	 */
 	public HotDeployEvent(ServletContext servletContext) {
+		this(servletContext, servletContext.getClassLoader());
+	}
+
+	public HotDeployEvent(
+		ServletContext servletContext, ClassLoader contextClassLoader) {
+
 		_servletContext = servletContext;
+		_contextClassLoader = contextClassLoader;
 
 		try {
 			initDependentServletContextNames();
@@ -65,6 +79,10 @@ public class HotDeployEvent {
 		}
 
 		_portalLifecycles.clear();
+	}
+
+	public ClassLoader getContextClassLoader() {
+		return _contextClassLoader;
 	}
 
 	public Set<String> getDependentServletContextNames() {
@@ -162,6 +180,7 @@ public class HotDeployEvent {
 
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployEvent.class);
 
+	private final ClassLoader _contextClassLoader;
 	private final Set<String> _dependentServletContextNames = new TreeSet<>();
 	private PluginPackage _pluginPackage;
 	private final Queue<PortalLifecycle> _portalLifecycles =

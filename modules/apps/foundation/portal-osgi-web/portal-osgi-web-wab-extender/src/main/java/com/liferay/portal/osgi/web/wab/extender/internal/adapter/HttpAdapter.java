@@ -17,6 +17,7 @@ package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -179,7 +180,12 @@ public class HttpAdapter {
 				return null;
 			}
 
-			return method.invoke(_servletContext, args);
+			try {
+				return method.invoke(_servletContext, args);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getCause();
+			}
 		}
 
 		private final ServletContext _servletContext;

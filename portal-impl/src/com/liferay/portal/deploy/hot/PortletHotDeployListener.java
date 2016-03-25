@@ -215,7 +215,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		boolean strutsBridges = false;
 
-		ClassLoader classLoader = servletContext.getClassLoader();
+		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		Iterator<Portlet> itr = portlets.iterator();
 

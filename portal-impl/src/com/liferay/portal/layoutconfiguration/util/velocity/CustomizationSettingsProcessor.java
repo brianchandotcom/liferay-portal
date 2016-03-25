@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -49,9 +51,20 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
-		_pageContext = jspFactory.getPageContext(
-			new JSPSupportServlet(request.getServletContext()), request,
-			response, null, false, 0, false);
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
+		try {
+			ClassLoaderUtil.setContextClassLoader(
+				PortalClassLoaderUtil.getClassLoader());
+
+			_pageContext = jspFactory.getPageContext(
+				new JSPSupportServlet(request.getServletContext()), request,
+				response, null, false, 0, false);
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
 
 		_writer = _pageContext.getOut();
 

@@ -41,7 +41,8 @@ public class PortalDelegateServlet extends SecureServlet {
 	protected void doPortalInit() throws Exception {
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		ClassLoader classLoader = servletContext.getClassLoader();
+		ClassLoader classLoader = (ClassLoader)servletContext.getAttribute(
+			PluginContextListener.PLUGIN_CLASS_LOADER);
 
 		String servletClass = servletConfig.getInitParameter("servlet-class");
 

@@ -149,7 +149,7 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 		ServletContext servletContext = new TestServletContext(
 			"/", resourceLoader);
 
-		return new HotDeployEvent(servletContext);
+		return new HotDeployEvent(servletContext, classLoader);
 	}
 
 	private boolean _dependencyManagementEnabled;

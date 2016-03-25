@@ -128,6 +128,8 @@
 				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
+					row.setCssClass("entry-card lfr-asset-item");
+
 					AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 					%>
 

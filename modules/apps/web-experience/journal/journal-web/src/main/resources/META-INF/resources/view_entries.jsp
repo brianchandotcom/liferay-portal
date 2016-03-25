@@ -130,7 +130,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("article-entry " + row.getCssClass());
+						row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text>

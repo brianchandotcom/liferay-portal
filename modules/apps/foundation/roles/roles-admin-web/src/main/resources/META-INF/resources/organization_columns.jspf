@@ -44,7 +44,7 @@
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
-		row.setCssClass("article-entry selectable");
+		row.setCssClass("entry-card lfr-asset-item selectable");
 		%>
 
 		<liferay-ui:search-container-column-text>

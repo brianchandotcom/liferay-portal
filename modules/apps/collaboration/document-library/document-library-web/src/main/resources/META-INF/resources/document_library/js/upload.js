@@ -136,7 +136,7 @@ AUI.add(
 				'</a>' +
 			'</span>';
 
-		var TPL_ENTRY_WRAPPER = '<li class="article-entry" data-title="{title}"></li>';
+		var TPL_ENTRY_WRAPPER = '<li class="lfr-asset-item data-title="{title}"></li>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',

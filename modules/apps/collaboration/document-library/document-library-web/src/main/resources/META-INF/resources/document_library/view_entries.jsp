@@ -321,7 +321,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						<c:when test='<%= displayStyle.equals("icon") %>'>
 
 							<%
-							row.setCssClass("article-entry");
+							row.setCssClass("entry-card lfr-asset-item");
 							%>
 
 							<liferay-ui:search-container-column-text>

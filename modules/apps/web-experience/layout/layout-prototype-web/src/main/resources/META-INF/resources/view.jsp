@@ -122,6 +122,11 @@
 					/>
 				</c:when>
 				<c:when test="<%= layoutPrototypeDisplayContext.isIconView() %>">
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item");
+					%>
+
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/layout_prototype_action.jsp"

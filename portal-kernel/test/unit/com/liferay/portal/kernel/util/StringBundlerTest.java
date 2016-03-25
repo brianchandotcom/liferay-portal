@@ -752,7 +752,7 @@ public class StringBundlerTest {
 
 		try {
 			Assert.assertEquals(
-				threadLocalBufferLimit,
+				Integer.valueOf(threadLocalBufferLimit),
 				ReflectionTestUtil.getFieldValue(
 					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
 
@@ -835,7 +835,7 @@ public class StringBundlerTest {
 
 		try {
 			Assert.assertEquals(
-				Integer.MAX_VALUE,
+				Integer.valueOf(Integer.MAX_VALUE),
 				ReflectionTestUtil.getFieldValue(
 					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
 			Assert.assertNull(

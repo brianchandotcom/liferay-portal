@@ -386,7 +386,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				ProxyUtil.getInvocationHandler(preparedStatement);
 
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 			Assert.assertTrue(methods.toString(), methods.isEmpty());
 
@@ -396,7 +396,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				new int[0], preparedStatement.executeBatch());
 			Assert.assertTrue(methods.toString(), methods.isEmpty());
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling addBatch passes through when within the Hibernate JDBC
@@ -409,7 +409,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("addBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				1,
+				Integer.valueOf(1),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling addBatch passes through and triggers executeBatch when
@@ -425,7 +425,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("executeBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling addBatch passes through when within the Hibernate JDBC
@@ -438,7 +438,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("addBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				1,
+				Integer.valueOf(1),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling executeBatch passes through when batch is not empty
@@ -450,7 +450,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("executeBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Other methods like execute pass through
@@ -462,7 +462,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("execute"),
 				methods.remove(0));
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 		}
 		finally {
@@ -500,7 +500,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				ProxyUtil.getInvocationHandler(preparedStatement);
 
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 			Assert.assertTrue(methods.toString(), methods.isEmpty());
 
@@ -510,7 +510,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				new int[0], preparedStatement.executeBatch());
 			Assert.assertTrue(methods.toString(), methods.isEmpty());
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling addBatch passes through when within the Hibernate JDBC
@@ -523,7 +523,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("addBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				1,
+				Integer.valueOf(1),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling addBatch passes through and triggers executeBatch when
@@ -539,7 +539,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("executeBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 			Assert.assertEquals(
 				PreparedStatement.class.getMethod("close"), methods.remove(0));
@@ -554,7 +554,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("addBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				1,
+				Integer.valueOf(1),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 
 			// Calling executeBatch passes through when batch is not empty
@@ -566,7 +566,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("executeBatch"),
 				methods.remove(0));
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 			Assert.assertEquals(
 				PreparedStatement.class.getMethod("close"), methods.remove(0));
@@ -580,7 +580,7 @@ public class AutoBatchPreparedStatementUtilTest {
 				PreparedStatement.class.getMethod("execute"),
 				methods.remove(0));
 			Assert.assertEquals(
-				0,
+				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 		}
 		finally {

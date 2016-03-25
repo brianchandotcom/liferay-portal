@@ -98,7 +98,7 @@ public class SecureRandomUtilTest {
 		System.setProperty(_KEY_BUFFER_SIZE, "10");
 
 		Assert.assertEquals(
-			1024,
+			Integer.valueOf(1024),
 			ReflectionTestUtil.getFieldValue(
 				SecureRandomUtil.class, "_BUFFER_SIZE"));
 

@@ -237,7 +237,7 @@ if (layout != null) {
 											request.setAttribute(StagingProcessesWebKeys.BRANCHING_ENABLED, String.valueOf(false));
 											%>
 
-											<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
+											<liferay-staging:menu cssClass="publish-link" onlyActions="<%= true %>" />
 										</c:if>
 
 										<li>

@@ -29,10 +29,6 @@ public class MenuTag extends IncludeTag {
 		_cssClass = cssClass;
 	}
 
-	public void setExtended(boolean extended) {
-		_extended = extended;
-	}
-
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
 		_layoutSetBranchId = layoutSetBranchId;
 	}
@@ -59,7 +55,6 @@ public class MenuTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
-		_extended = true;
 		_layoutSetBranchId = 0;
 		_onlyActions = false;
 		_selPlid = 0;
@@ -75,8 +70,6 @@ public class MenuTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-staging:menu:cssClass", _cssClass);
 		request.setAttribute(
-			"liferay-staging:menu:extended", String.valueOf(_extended));
-		request.setAttribute(
 			"liferay-staging:menu:layoutSetBranchId",
 			String.valueOf(_layoutSetBranchId));
 		request.setAttribute(
@@ -91,7 +84,6 @@ public class MenuTag extends IncludeTag {
 	private static final String _PAGE = "/menu/page.jsp";
 
 	private String _cssClass;
-	private boolean _extended = true;
 	private long _layoutSetBranchId;
 	private boolean _onlyActions;
 	private long _selPlid;

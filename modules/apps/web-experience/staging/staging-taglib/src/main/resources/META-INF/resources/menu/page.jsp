@@ -18,7 +18,6 @@
 
 <%
 String cssClass = "staging-icon-menu " + GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:cssClass"));
-boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:extended"));
 long layoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:layoutSetBranchId"));
 boolean onlyActions = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:onlyActions"));
 long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:selPlid"));
@@ -78,7 +77,7 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 			<aui:nav-bar>
 				<aui:nav cssClass="navbar-nav">
 					<aui:nav-item dropdown="<%= true %>" label="staging">
-						<aui:nav-item cssClass="<%= cssClass %>" label="<%= extended ? message : StringPool.BLANK %>">
+						<aui:nav-item cssClass="<%= cssClass %>">
 							<%@ include file="/menu/staging_actions.jspf" %>
 						</aui:nav-item>
 					</aui:nav-item>

@@ -46,12 +46,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "markAsRead();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-remove" label="mark-as-read" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "markAsRead();" %>' iconCssClass="icon-remove" label="mark-as-read" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

@@ -16,13 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String taglibOnClick = renderResponse.getNamespace() + "exportUsers()";
-%>
-
 <liferay-ui:icon
 	message="export-users"
-	onClick="<%= taglibOnClick %>"
+	onClick='<%= renderResponse.getNamespace() + "exportUsers()" %>'
 	url="javascript:;"
 />
 

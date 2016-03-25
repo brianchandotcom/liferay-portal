@@ -46,7 +46,7 @@
 
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="bookmarkURL" value="https://www.liferay.com" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -94,7 +94,7 @@
 
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="bookmarkURL" value="https://www.liferay.com" />
 		<var name="folderDescription" value="Test Folder Description" />
 		<var name="folderName" value="Test Folder Name" />
 
@@ -201,7 +201,7 @@
 	<command name="DeleteFolderBookmark" priority="5">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="bookmarkURL" value="https://www.liferay.com" />
 		<var name="folderDescription" value="Test Folder Description" />
 		<var name="folderName" value="Test Folder Name" />
 
@@ -277,7 +277,7 @@
 		<var name="bookmarkDescriptionEdit" value="Test Bookmark Description Edit" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkNameEdit" value="Test Bookmark Name Edit" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="bookmarkURL" value="https://www.liferay.com" />
 		<var name="bookmarkURLEdit" value="http://alloyui.com" />
 		<var name="folderDescription" value="Test Folder Description" />
 		<var name="folderName" value="Test Folder Name" />
@@ -324,7 +324,7 @@
 	<command name="MoveFolderBookmarkToFolder" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="bookmarkURL" value="https://www.liferay.com" />
 		<var name="bookmarkURLEdit" value="http://www.alloyui.com" />
 		<var name="folderDescription1" value="Test Folder Description 1" />
 		<var name="folderDescription2" value="Test Folder Description 2" />
@@ -416,7 +416,7 @@
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

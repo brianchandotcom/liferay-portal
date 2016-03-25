@@ -255,14 +255,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</c:if>
 
 								<c:if test="<%= commentTreeDisplayContext.isDeleteActionControlVisible() %>">
-
-									<%
-									String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + index + ");";
-									%>
-
 									<liferay-ui:icon-delete
 										label="<%= true %>"
-										url="<%= taglibDeleteURL %>"
+										url='<%= "javascript:" + randomNamespace + "deleteMessage(" + index + ");" %>'
 									/>
 								</c:if>
 							</liferay-ui:icon-menu>

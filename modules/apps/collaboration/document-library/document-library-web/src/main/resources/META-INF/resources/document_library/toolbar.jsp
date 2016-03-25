@@ -137,11 +137,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="change" label="move" />
 		</c:if>
 
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' id="deleteAction" label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' id="deleteAction" label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

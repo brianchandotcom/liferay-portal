@@ -358,12 +358,7 @@
 							</div>
 
 							<p class="lfr-setup-notice">
-
-								<%
-								String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>";
-								%>
-
-								<liferay-ui:message arguments="<%= taglibArguments %>" key="the-configuration-was-saved-in" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments='<%= "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>" %>' key="the-configuration-was-saved-in" translateArguments="<%= false %>" />
 							</p>
 
 							<%
@@ -383,12 +378,7 @@
 						<c:otherwise>
 							<p>
 								<div class="alert alert-warning">
-
-									<%
-									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
-									%>
-
-									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments='<%= "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>" %>' key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" translateArguments="<%= false %>" />
 								</div>
 							</p>
 

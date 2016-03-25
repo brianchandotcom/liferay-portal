@@ -1215,7 +1215,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 						!trimmedLine.startsWith("<%") &&
 						!trimmedLine.startsWith("<!")) {
 
-						line = sortAttributes(
+						line = formatAttributes(
 							fileName, line, trimmedLine, lineCount, true);
 					}
 					else if (trimmedLine.startsWith("<![CDATA[") &&

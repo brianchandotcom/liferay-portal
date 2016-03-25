@@ -115,7 +115,7 @@
 }
 
 .display-style-icon {
-	.article-entry, .folder-entry {
+	.lfr-asset-folder, .lfr-asset-item {
 		float: left;
 		padding-left: 15px;
 		padding-right: 15px;
@@ -126,23 +126,21 @@
 		}
 	}
 
-	.article-entry {
-		@include respond-to(desktop) {
+	@include respond-to(desktop) {
+		.lfr-asset-item {
 			width: 20%;
 		}
-	}
 
-	.folder-entry {
-		@include respond-to(desktop) {
+		.lfr-asset-folder {
 			width: 25%;
 		}
 	}
 }
 
-.article-entry {
+.lfr-asset-item {
 	min-width: 150px;
 }
 
-.folder-entry {
+.lfr-asset-folder {
 	min-width: 250px;
 }

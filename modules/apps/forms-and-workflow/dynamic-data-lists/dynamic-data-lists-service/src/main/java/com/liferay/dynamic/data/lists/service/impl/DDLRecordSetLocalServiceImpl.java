@@ -420,7 +420,6 @@ public class DDLRecordSetLocalServiceImpl
 	 * @param  orderByComparator the comparator to order the record sets
 	 * @return the range of matching record sets ordered by the comparator
 	 */
-
 	@Override
 	public List<DDLRecordSet> search(
 		long companyId, long groupId, String keywords, int scope, int start,

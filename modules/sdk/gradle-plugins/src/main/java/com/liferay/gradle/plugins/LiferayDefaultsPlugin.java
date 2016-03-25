@@ -35,6 +35,7 @@ import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
@@ -1330,6 +1331,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		applyConfigScripts(project);
 
 		if (testProject || hasTests(project)) {
+			GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
+			GradleUtil.applyPlugin(project, WhipPlugin.class);
+
 			Configuration portalConfiguration = GradleUtil.getConfiguration(
 				project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
 			Configuration portalTestConfiguration = addConfigurationPortalTest(

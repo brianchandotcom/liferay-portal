@@ -226,6 +226,13 @@ public class DDLRecordVersionLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	* Returns the record's latest record version.
+	*
+	* @param recordId the primary key of the record
+	* @return the latest record version for the given record
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -247,18 +254,53 @@ public class DDLRecordVersionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* Returns the record version matching the record and version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the record version
+	* @return the record version matching the record primary key and version
+	* @throws PortalException if a matching record set could not be found
+	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersion(recordId, version);
 	}
 
+	/**
+	* Returns the record version by its ID.
+	*
+	* @param recordVersionId the primary key of the record version
+	* @return the record version with the ID
+	* @throws PortalException if a matching record set could not be found
+	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersion(recordVersionId);
 	}
 
+	/**
+	* Returns an ordered range of record versions matching the record's ID.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordId the primary key of the record
+	* @param start the lower bound of the range of record versions to return
+	* @param end the upper bound of the range of record versions to return
+	(not inclusive)
+	* @param orderByComparator the comparator used to order the record
+	versions
+	* @return the range of matching record versions ordered by the comparator
+	*/
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
@@ -266,6 +308,12 @@ public class DDLRecordVersionLocalServiceUtil {
 				   .getRecordVersions(recordId, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of record versions matching the record ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	*/
 	public static int getRecordVersionsCount(long recordId) {
 		return getService().getRecordVersionsCount(recordId);
 	}

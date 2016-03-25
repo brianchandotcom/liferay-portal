@@ -1,5 +1,5 @@
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.api", version: "2.0.0"
+	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.api", version: "default"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.service", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.web", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"

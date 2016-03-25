@@ -37,8 +37,9 @@ public class DDLRecordVersionServiceImpl
 	 *
 	 * @param  recordVersionId the primary key of the record version
 	 * @return the record version with the ID
-	 * @throws PortalException if the matching record set is not found or if the
-	 *         user do not have the required permission to access the record set
+	 * @throws PortalException if the matching record set could not be found or
+	 *         if the user did not have the required permission to access the
+	 *         record set
 	 */
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
@@ -55,7 +56,7 @@ public class DDLRecordVersionServiceImpl
 	}
 
 	/**
-	 * Returns a record version matching the record's primary key and specified version.
+	 * Returns a record version matching the record and version.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @param  version the version of the record to return
@@ -78,7 +79,7 @@ public class DDLRecordVersionServiceImpl
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the matching record versions
-	 * @throws PortalException
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(long recordId)
@@ -106,9 +107,10 @@ public class DDLRecordVersionServiceImpl
 	 * @param  start the lower bound of the range of record versions to return
 	 * @param  end the upper bound of the range of record versions to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator used to order the record versions
+	 * @param  orderByComparator the comparator used to order the record
+	 *         versions
 	 * @return the range of matching record versions ordered by the comparator
-	 * @throws PortalException
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<DDLRecordVersion> getRecordVersions(
@@ -128,7 +130,7 @@ public class DDLRecordVersionServiceImpl
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the number of matching record versions
-	 * @throws PortalException
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public int getRecordVersionsCount(long recordId) throws PortalException {

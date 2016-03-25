@@ -31,6 +31,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
@@ -152,18 +153,35 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	protected void addDependenciesPoshiRunner(
-		Project project, PoshiRunnerExtension poshiRunnerExtension) {
+		final Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
-		File poshiPropertiesFile =
+		final File poshiPropertiesFile =
 			poshiRunnerExtension.getPoshiPropertiesFile();
 
 		if (poshiPropertiesFile.exists()) {
-			File tmpPoshiPropertiesFile = new File(
-				"poshi-runner-ext.properties");
+			project.copy(
+				new Action<CopySpec>() {
+
+					public void execute(CopySpec copySpec) {
+						copySpec.from(poshiPropertiesFile);
+						copySpec.into(project.getBuildDir());
+
+						copySpec.rename(
+							new Closure<String>(null) {
+
+								@SuppressWarnings("unused")
+								public String doCall(String fileName) {
+									return "poshi-runner-ext.properties";
+								}
+
+							});
+					}
+
+				});
 
 			GradleUtil.addDependency(
 				project, POSHI_RUNNER_CONFIGURATION_NAME,
-				tmpPoshiPropertiesFile);
+				new File(project.getBuildDir(), "poshi-runner-ext.properties"));
 		}
 
 		GradleUtil.addDependency(
@@ -293,7 +311,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Plugin plugin) {
-
 					test.dependsOn(_START_TESTABLE_TOMCAT_TASK_NAME);
 
 					Task task = GradleUtil.getTask(

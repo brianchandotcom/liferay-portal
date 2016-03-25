@@ -39,7 +39,7 @@ public class DDLRecordVersionLocalServiceImpl
 	 *
 	 * @param  recordId the primary key of the record
 	 * @return the latest record version for the given record
-	 * @throws PortalException
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
@@ -66,7 +66,7 @@ public class DDLRecordVersionLocalServiceImpl
 	 *
 	 * @param  recordVersionId the primary key of the record version
 	 * @return the record version with the ID
-	 * @throws PortalException if the mathing record set is not found
+	 * @throws PortalException if a matching record set could not be found
 	 */
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
@@ -76,13 +76,12 @@ public class DDLRecordVersionLocalServiceImpl
 	}
 
 	/**
-	 * Returns the version of a record matching the record's primary key and
-	 * version.
+	 * Returns the record version matching the record and version.
 	 *
 	 * @param  recordId the primary key of the record
 	 * @param  version the record version
-	 * @return the record version macthing the record primary key and version
-	 * @throws PortalException if the mathing record set is not found
+	 * @return the record version matching the record primary key and version
+	 * @throws PortalException if a matching record set could not be found
 	 */
 	@Override
 	public DDLRecordVersion getRecordVersion(long recordId, String version)
@@ -107,7 +106,8 @@ public class DDLRecordVersionLocalServiceImpl
 	 * @param  start the lower bound of the range of record versions to return
 	 * @param  end the upper bound of the range of record versions to return
 	 *         (not inclusive)
-	 * @param  orderByComparator the comparator used to order the record versions
+	 * @param  orderByComparator the comparator used to order the record
+	 *         versions
 	 * @return the range of matching record versions ordered by the comparator
 	 */
 	@Override

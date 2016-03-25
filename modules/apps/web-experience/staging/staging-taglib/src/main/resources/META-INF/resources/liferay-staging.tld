@@ -104,7 +104,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>..</description>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

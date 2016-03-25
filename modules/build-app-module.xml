@@ -121,6 +121,8 @@
 					<deletecharacters chars="," />
 
 					<replacestring from="${Bundle-SymbolicName}-" to="" />
+
+					<replacestring from=".jar" to="" />
 				</tokenfilter>
 
 				<striplinebreaks />

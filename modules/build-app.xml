@@ -45,7 +45,7 @@
 		<attribute name="app.version.previous.release" />
 
 		<sequential>
-			<property name="artifact.versions.previous.release" value="${artifacts-@{app.version.previous.release}}" />
+			<property name="artifact.versions.previous.release" value="${app.artifacts-@{app.version.previous.release}}" />
 		</sequential>
 	</macrodef>
 
@@ -120,7 +120,7 @@
 				<sortfilter />
 
 				<tokenfilter>
-					<replacestring from="  " to=" " />
+					<replaceregex flags="g" pattern="([^ ]|^) +([^ ]|$)" replace="\1 \2" />
 				</tokenfilter>
 
 				<uniqfilter />

@@ -150,6 +150,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public void checkPortlet(Portlet portlet) throws PortalException {
 		initPortletDefaultPermissions(portlet);
 
+		initPortletRootModelDefaultPermissions(portlet);
+
 		initPortletModelDefaultPermissions(portlet);
 
 		initPortletAddToPagePermissions(portlet);
@@ -1185,6 +1187,47 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portlet.getCompanyId(), 0, 0, modelResource, modelResource,
 				false, false, true);
 		}
+	}
+
+	protected void initPortletRootModelDefaultPermissions(Portlet portlet)
+		throws PortalException {
+
+		String rootModel = ResourceActionsUtil.getPortletRootModelResource(
+			portlet.getRootPortletId());
+
+		if (Validator.isBlank(rootModel)) {
+			return;
+		}
+
+		Role guestRole = roleLocalService.getRole(
+			portlet.getCompanyId(), RoleConstants.GUEST);
+		List<String> guestActions =
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(rootModel);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			portlet.getCompanyId(), rootModel,
+			ResourceConstants.SCOPE_INDIVIDUAL, rootModel,
+			guestRole.getRoleId(), guestActions.toArray(new String[0]));
+
+		Role ownerRole = roleLocalService.getRole(
+			portlet.getCompanyId(), RoleConstants.OWNER);
+		List<String> ownerActionIds =
+			ResourceActionsUtil.getModelResourceActions(rootModel);
+
+		resourcePermissionLocalService.setOwnerResourcePermissions(
+			portlet.getCompanyId(), rootModel,
+			ResourceConstants.SCOPE_INDIVIDUAL, rootModel,
+			ownerRole.getRoleId(), 0, ownerActionIds.toArray(new String[0]));
+
+		Role siteMemberRole = roleLocalService.getRole(
+			portlet.getCompanyId(), RoleConstants.SITE_MEMBER);
+		List<String> groupActionIds =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(rootModel);
+
+		resourcePermissionLocalService.setResourcePermissions(
+			portlet.getCompanyId(), rootModel,
+			ResourceConstants.SCOPE_INDIVIDUAL, rootModel,
+			siteMemberRole.getRoleId(), groupActionIds.toArray(new String[0]));
 	}
 
 	protected void readLiferayDisplay(

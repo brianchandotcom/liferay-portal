@@ -60,6 +60,7 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_SITE_TEST</action-key>
+				<action-key>ADD_SITE_TEST2</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>ADD_SITE_TEST</action-key>

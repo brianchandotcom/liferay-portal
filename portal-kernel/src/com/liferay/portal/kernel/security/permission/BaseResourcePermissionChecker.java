@@ -18,10 +18,7 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 
 /**
  * @author Preston Crary
@@ -37,25 +34,6 @@ public abstract class BaseResourcePermissionChecker
 
 		if ((group != null) && group.isStagingGroup()) {
 			classPK = group.getLiveGroupId();
-		}
-
-		try {
-			int count =
-				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-					permissionChecker.getCompanyId(), name,
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(classPK));
-
-			if (count == 0) {
-				ResourceLocalServiceUtil.addResources(
-					permissionChecker.getCompanyId(), classPK, 0, name, classPK,
-					false, true, true);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
 		}
 
 		return permissionChecker.hasPermission(

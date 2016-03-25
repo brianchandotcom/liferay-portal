@@ -1197,8 +1197,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		while (matcher.find()) {
 			String taglibValue = matcher.group(3);
 
-			if (taglibValue.contains(StringPool.APOSTROPHE) &&
-				taglibValue.contains(StringPool.QUOTE)) {
+			if (taglibValue.contains("\\\"") ||
+				(taglibValue.contains(StringPool.APOSTROPHE) &&
+				 taglibValue.contains(StringPool.QUOTE))) {
 
 				continue;
 			}

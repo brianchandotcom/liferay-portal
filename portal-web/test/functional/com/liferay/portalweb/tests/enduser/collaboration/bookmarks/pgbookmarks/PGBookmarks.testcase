@@ -42,7 +42,7 @@
 	</tear-down>
 
 	<command name="AddBookmark" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
@@ -90,7 +90,7 @@
 	</command>
 
 	<command name="AddFolderBookmark" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
@@ -271,7 +271,7 @@
 	</command>
 
 	<command name="EditFolderBookmark" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkDescriptionEdit" value="Test Bookmark Description Edit" />

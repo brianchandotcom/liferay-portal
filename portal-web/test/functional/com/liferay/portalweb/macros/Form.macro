@@ -120,6 +120,11 @@
 			<var name="fieldValue" value="${fieldValue}" />
 		</execute>
 
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+
 		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
 	</command>
 

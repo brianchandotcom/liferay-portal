@@ -90,6 +90,9 @@
 
 	<%
 	if (Validator.isNotNull(errorSection)) {
+		String currentTab = (String)request.getAttribute("currentTab");
+
+		request.setAttribute("errorTab", currentTab);
 	%>
 
 		<aui:script sandbox="<%= true %>">

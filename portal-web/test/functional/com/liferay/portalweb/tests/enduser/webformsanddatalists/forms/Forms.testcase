@@ -332,6 +332,7 @@
 		<execute macro="Form#previewForm">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
+			<var name="fieldValue" value="Preview Form Text entry" />
 		</execute>
 
 		<execute macro="Navigator#closeWindow" />
@@ -350,9 +351,23 @@
 
 		<execute macro="Button#clickConfirm" />
 
-		<execute macro="Form#viewFormPublish">
+		<execute macro="Form#submitFormPublish">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
+			<var name="fieldValue" value="Published form text entry" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldValue" value="Published form text entry" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

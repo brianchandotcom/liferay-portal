@@ -304,6 +304,18 @@ public class InvokerFilterHelper {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #initFilter(ServletContext, String, FilterConfig)}
+	 */
+	@Deprecated
+	protected Filter initFilter(
+		ServletContext servletContext, String filterClassName,
+		String filterName, FilterConfig filterConfig) {
+
+		return initFilter(servletContext, filterClassName, filterConfig);
+	}
+
 	protected void readLiferayFilterWebXML(
 			ServletContext servletContext, String path)
 		throws Exception {

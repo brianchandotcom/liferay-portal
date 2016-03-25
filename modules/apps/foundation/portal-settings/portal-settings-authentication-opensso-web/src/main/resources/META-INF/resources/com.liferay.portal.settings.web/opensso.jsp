@@ -50,12 +50,7 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 	<%@ include file="/com.liferay.portal.settings.web/opensso_user_name.jspf" %>
 
 	<aui:button-row>
-
-		<%
-		String taglibOnClick = renderResponse.getNamespace() + "testOpenSSOSettings();";
-		%>
-
-		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-opensso-configuration" />
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "testOpenSSOSettings();" %>' value="test-opensso-configuration" />
 	</aui:button-row>
 </aui:fieldset>
 

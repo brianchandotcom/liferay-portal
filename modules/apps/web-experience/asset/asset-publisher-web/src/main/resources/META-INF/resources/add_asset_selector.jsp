@@ -104,12 +104,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</aui:fieldset>
 	</aui:fieldset-group>
 
-	<%
-	String taglibOnClick = renderResponse.getNamespace() + "addAssetEntry();";
-	%>
-
 	<aui:button-row>
-		<aui:button cssClass="btn-lg btn-primary" onClick="<%= taglibOnClick %>" value="add" />
+		<aui:button cssClass="btn-lg btn-primary" onClick='<%= renderResponse.getNamespace() + "addAssetEntry();" %>' value="add" />
 	</aui:button-row>
 </div>
 

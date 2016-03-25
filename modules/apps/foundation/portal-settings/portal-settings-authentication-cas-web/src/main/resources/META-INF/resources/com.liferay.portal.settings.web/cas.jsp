@@ -59,12 +59,7 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-no-such-user-redirect-url-help" label="no-such-user-redirect-url" name="cas--noSuchUserRedirectURL" type="text" value="<%= noSuchUserRedirectURL %>" />
 
 	<aui:button-row>
-
-		<%
-		String taglibOnClick = renderResponse.getNamespace() + "testCasSettings();";
-		%>
-
-		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-cas-configuration" />
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "testCasSettings();" %>' value="test-cas-configuration" />
 	</aui:button-row>
 </aui:fieldset>
 

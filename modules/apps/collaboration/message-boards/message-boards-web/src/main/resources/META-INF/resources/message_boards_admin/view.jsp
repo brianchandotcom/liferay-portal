@@ -125,12 +125,7 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 
 		<%
 		taglibURL = "javascript:" + renderResponse.getNamespace() + "lockEntries();";

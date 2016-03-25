@@ -282,12 +282,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	</aui:fieldset>
 
 	<aui:button-row>
-
-		<%
-		String taglibOnClick = renderResponse.getNamespace() + "saveLdap();";
-		%>
-
-		<aui:button cssClass="btn-lg" name="saveButton" onClick="<%= taglibOnClick %>" value="save" />
+		<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveLdap();" %>' value="save" />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 	</aui:button-row>

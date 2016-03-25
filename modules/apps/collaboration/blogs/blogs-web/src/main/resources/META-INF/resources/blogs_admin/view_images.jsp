@@ -84,12 +84,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</c:if>
 
 	<liferay-frontend:management-bar-action-buttons>
-
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteImages();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="times" label="delete" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteImages();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

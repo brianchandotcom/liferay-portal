@@ -95,24 +95,16 @@ boolean ldapPasswordPolicyEnabled = ldapAuthConfiguration.passwordPolicyEnabled(
 						<div class="control">
 							<c:if test="<%= ldapServerConfigurations.size() > 1 %>">
 
-								<%
-								String taglibUpURL = "javascript:" + renderResponse.getNamespace() + "raiseLDAPServerPriority(" + ldapServerId + ");";
-								%>
-
 								<liferay-ui:icon
 									iconCssClass="icon-arrow-up"
 									message="up"
-									url="<%= taglibUpURL %>"
+									url='<%= "javascript:" + renderResponse.getNamespace() + "raiseLDAPServerPriority(" + ldapServerId + ");" %>'
 								/>
-
-								<%
-								String taglibDownURL = "javascript:" + renderResponse.getNamespace() + "lowerLDAPServerPriority(" + ldapServerId + ");";
-								%>
 
 								<liferay-ui:icon
 									iconCssClass="icon-arrow-down"
 									message="down"
-									url="<%= taglibDownURL %>"
+									url='<%= "javascript:" + renderResponse.getNamespace() + "lowerLDAPServerPriority(" + ldapServerId + ");" %>'
 								/>
 							</c:if>
 

@@ -119,7 +119,8 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 							formName='<%= "fm" + assetRenderer.getClassPK() %>'
 							ratingsEnabled="<%= false %>"
 							redirect="<%= currentURL %>"
-							userId="<%= user.getUserId() %>" />
+							userId="<%= user.getUserId() %>"
+						/>
 					</liferay-ui:panel>
 				</c:if>
 

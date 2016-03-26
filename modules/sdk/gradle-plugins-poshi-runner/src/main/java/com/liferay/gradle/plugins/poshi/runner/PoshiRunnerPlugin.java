@@ -277,7 +277,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			EXPAND_POSHI_RUNNER_TASK_NAME);
 
 		test.include("com/liferay/poshi/runner/PoshiRunner.class");
-
 		test.setClasspath(getPoshiRunnerClasspath(project));
 		test.setDescription("Execute tests using Poshi Runner.");
 		test.setGroup("verification");

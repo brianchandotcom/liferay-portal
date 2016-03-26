@@ -61,6 +61,7 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -377,6 +378,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 							EclipsePlugin.getECLIPSE_PROJECT_TASK_NAME()) ||
 						taskName.equals("ideaModule") ||
 						(task instanceof BuildSoyTask)) {
+
+						continue;
+					}
+
+					PluginContainer pluginContainer = project.getPlugins();
+
+					if (pluginContainer.hasPlugin("com.liferay.cache") &&
+						taskName.startsWith("save") &&
+						taskName.endsWith("Cache")) {
 
 						continue;
 					}

@@ -29,11 +29,11 @@ import org.gradle.api.Project;
 public class PoshiRunnerExtension {
 
 	public PoshiRunnerExtension(Project project) {
-		_project = project;
+		this.project = project;
 	}
 
 	public File getBaseDir() {
-		return _project.file(_baseDir);
+		return project.file(_baseDir);
 	}
 
 	public String getOpenCVVersion() {
@@ -45,7 +45,7 @@ public class PoshiRunnerExtension {
 	}
 
 	public File getPoshiPropertiesFile() {
-		return GradleUtil.toFile(_project, _poshiPropertiesFile);
+		return GradleUtil.toFile(project, _poshiPropertiesFile);
 	}
 
 	public String getVersion() {
@@ -78,11 +78,12 @@ public class PoshiRunnerExtension {
 		_version = version;
 	}
 
+	protected final Project project;
+
 	private Object _baseDir = "poshi-tests";
 	private String _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
 	private Object _poshiPropertiesFile = "poshi.properties";
-	private final Project _project;
 	private String _version = "latest.release";
 
 }

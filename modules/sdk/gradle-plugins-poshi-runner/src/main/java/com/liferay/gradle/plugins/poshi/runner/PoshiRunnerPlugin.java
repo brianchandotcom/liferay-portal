@@ -441,7 +441,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		systemProperties.putAll(poshiRunnerExtension.getPoshiProperties());
 
-		systemProperties.put("test.basedir", poshiRunnerExtension.getBaseDir());
+		systemProperties.put(
+			"test.base.dir.name",
+			poshiRunnerExtension.project.relativePath(
+				poshiRunnerExtension.getBaseDir()));
 	}
 
 	private static final String _START_TESTABLE_TOMCAT_TASK_NAME =

@@ -349,6 +349,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixMissingEmptyLinesBetweenTags(newContent);
 
+		newContent = fixIncorrectClosingTag(newContent);
+
+		newContent = fixEmptyJavaSourceTag(newContent);
+
+		newContent = formatMultilineTagAttributes(fileName, newContent);
+
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = formatJSPImportsOrTaglibs(
@@ -416,6 +422,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = formatJSONObject(newContent);
 
 		newContent = formatStringBundler(fileName, newContent, -1);
+
+		newContent = formatTaglibVariable(fileName, newContent);
 
 		checkXSS(fileName, newContent);
 
@@ -559,6 +567,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileNames, new HashSet<String>());
 	}
 
+	protected String fixEmptyJavaSourceTag(String content) {
+		Matcher matcher = _emptyJavaSourceTagPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replace(
+				content, matcher.group(), StringPool.BLANK);
+		}
+
+		return content;
+	}
+
 	protected String fixEmptyLineInNestedTags(
 		String content, Pattern pattern, boolean startTag) {
 
@@ -575,6 +594,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					content, StringPool.NEW_LINE, StringPool.BLANK,
 					matcher.end(1));
 			}
+		}
+
+		return content;
+	}
+
+	protected String fixIncorrectClosingTag(String content) {
+		Matcher matcher = _incorrectClosingTagPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, " />\n", "\n" + matcher.group(1) + "/>\n",
+				matcher.end(1));
 		}
 
 		return content;
@@ -650,11 +681,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		String currentAttributeAndValue = null;
-		String previousAttribute = null;
-		String previousAttributeAndValue = null;
-		String tag = null;
-
 		String currentException = null;
 		String previousException = null;
 
@@ -671,8 +697,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String line = null;
 
 			String previousLine = StringPool.BLANK;
-
-			boolean readAttributes = false;
 
 			boolean javaSource = false;
 
@@ -852,97 +876,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
-					line = sortAttributes(
-						fileName, line, matcher.group(), lineCount, false);
+					line = formatAttributes(
+						fileName, line, line.substring(matcher.start()),
+						lineCount, false);
 				}
 
-				if (readAttributes) {
-					if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
-						!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
-
-						int pos = trimmedLine.indexOf(CharPool.EQUAL);
-
-						if (pos != -1) {
-							String attribute = trimmedLine.substring(0, pos);
-							String newLine = formatTagAttributeType(
-								line, tag, trimmedLine);
-
-							if (!newLine.equals(line)) {
-								line = newLine;
-
-								readAttributes = false;
-							}
-							else if (!trimmedLine.endsWith(
-										StringPool.APOSTROPHE) &&
-									 !trimmedLine.endsWith(
-										 StringPool.GREATER_THAN) &&
-									 !trimmedLine.endsWith(StringPool.QUOTE)) {
-
-								processErrorMessage(
-									fileName,
-									"attribute: " + fileName + " " + lineCount);
-
-								readAttributes = false;
-							}
-							else if (trimmedLine.endsWith(
-										StringPool.APOSTROPHE) &&
-									 (!trimmedLine.contains(StringPool.QUOTE) ||
-									  !tag.contains(StringPool.COLON))) {
-
-								line = StringUtil.replace(
-									line, StringPool.APOSTROPHE,
-									StringPool.QUOTE);
-
-								readAttributes = false;
-							}
-							else if (trimmedLine.endsWith(StringPool.QUOTE) &&
-									 tag.contains(StringPool.COLON) &&
-									 (StringUtil.count(
-										 trimmedLine, CharPool.QUOTE) > 2)) {
-
-								processErrorMessage(
-									fileName,
-									"attribute delimeter: " + fileName + " " +
-										lineCount);
-
-								readAttributes = false;
-							}
-							else if (Validator.isNotNull(previousAttribute)) {
-								if (!isAttributName(attribute) &&
-									!attribute.startsWith(
-										StringPool.LESS_THAN)) {
-
-									processErrorMessage(
-										fileName,
-										"attribute: " + fileName + " " +
-											lineCount);
-
-									readAttributes = false;
-								}
-								else if (Validator.isNull(
-											previousAttributeAndValue) &&
-										 (previousAttribute.compareToIgnoreCase(
-											 attribute) > 0)) {
-
-									previousAttributeAndValue = previousLine;
-									currentAttributeAndValue = line;
-								}
-							}
-
-							if (!readAttributes) {
-								previousAttribute = null;
-								previousAttributeAndValue = null;
-							}
-							else {
-								previousAttribute = attribute;
-							}
-						}
-					}
-					else {
-						previousAttribute = null;
-
-						readAttributes = false;
-					}
+				if (trimmedLine.matches("<\\w+ .*>.*")) {
+					line = formatAttributes(
+						fileName, line, trimmedLine, lineCount, false);
 				}
 
 				if (!hasUnsortedExceptions) {
@@ -969,23 +910,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					if (!hasUnsortedExceptions) {
 						previousException = currentException;
 						currentException = null;
-					}
-				}
-
-				if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-					!trimmedLine.startsWith("<%") &&
-					!trimmedLine.startsWith("<!")) {
-
-					if (!trimmedLine.contains(StringPool.GREATER_THAN) &&
-						!trimmedLine.contains(StringPool.SPACE)) {
-
-						tag = trimmedLine.substring(1);
-
-						readAttributes = true;
-					}
-					else {
-						line = sortAttributes(
-							fileName, line, trimmedLine, lineCount, false);
 					}
 				}
 
@@ -1050,13 +974,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (content.endsWith("\n")) {
 			content = content.substring(0, content.length() - 1);
-		}
-
-		if (Validator.isNotNull(previousAttributeAndValue)) {
-			content = StringUtil.replaceFirst(
-				content,
-				previousAttributeAndValue + "\n" + currentAttributeAndValue,
-				currentAttributeAndValue + "\n" + previousAttributeAndValue);
 		}
 
 		if (hasUnsortedExceptions) {
@@ -1192,6 +1109,33 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
+	protected String formatMultilineTagAttributes(
+			String fileName, String content)
+		throws Exception {
+
+		Matcher matcher = _multilineTagPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tag = matcher.group();
+
+			String singlelineTag = StringUtil.removeChar(
+				StringUtil.trim(tag), CharPool.TAB);
+
+			singlelineTag = StringUtil.replace(
+				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
+
+			String newTag = formatAttributes(
+				fileName, tag, singlelineTag,
+				getLineCount(content, matcher.start() + 1), false);
+
+			if (!tag.equals(newTag)) {
+				return StringUtil.replace(content, tag, newTag);
+			}
+		}
+
+		return content;
+	}
+
 	@Override
 	protected String formatTagAttributeType(
 			String line, String tagName, String attributeAndValue)
@@ -1245,6 +1189,42 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return line;
+	}
+
+	protected String formatTaglibVariable(String fileName, String content) {
+		Matcher matcher = _taglibVariablePattern.matcher(content);
+
+		while (matcher.find()) {
+			String taglibValue = matcher.group(3);
+
+			if (taglibValue.contains("\\\"") ||
+				(taglibValue.contains(StringPool.APOSTROPHE) &&
+				 taglibValue.contains(StringPool.QUOTE))) {
+
+				continue;
+			}
+
+			String taglibName = matcher.group(2);
+			String nextTag = matcher.group(4);
+
+			if (!nextTag.contains(taglibName)) {
+				processErrorMessage(
+					fileName,
+					"No need to specify taglib variable: " + fileName + " " +
+						getLineCount(content, matcher.start()));
+
+				continue;
+			}
+
+			content = StringUtil.replaceFirst(
+				content, taglibName, taglibValue, matcher.start(4));
+
+			return content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.BLANK,
+				matcher.start());
+		}
+
+		return content;
 	}
 
 	protected List<String> getJSPDuplicateImports(
@@ -1942,6 +1922,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _defineObjectsPattern = Pattern.compile(
 		"\n\t*(<.*:defineObjects />)\n");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
+	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
+		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
 		"\n(\t*)<[a-z-]*:.*[^/]>\n\n(\t*)<[a-z-]*:.*>\n");
 	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(
@@ -1955,6 +1937,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _importsPattern = Pattern.compile(
 		"page import=\"(.+)\"");
 	private Set<String> _includeFileNames = new HashSet<>();
+	private Pattern _incorrectClosingTagPattern = Pattern.compile(
+		"\n(\t*)\t((?!<\\w).)* />\n");
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
 			"([\\s\\S]*?)\n\\}\n");
@@ -1962,7 +1946,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*\\.(jsp[f]?|svg)");
 	private final Pattern _jspTaglibPattern = Pattern.compile(
-		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
+		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
@@ -1970,6 +1954,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _missingEmptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)</[a-z-]+:([a-z-]+)>\n(\t*)<[a-z-]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
+	private final Pattern _multilineTagPattern = Pattern.compile(
+		"[\n\t]<[-\\w]+:[-\\w]+\n.*?\n\t*/?>(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
@@ -1988,6 +1974,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
+	private final Pattern _taglibVariablePattern = Pattern.compile(
+		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

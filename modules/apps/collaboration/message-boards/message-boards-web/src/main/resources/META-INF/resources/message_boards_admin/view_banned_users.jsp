@@ -64,12 +64,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "unbanUser();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unban-user" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "unbanUser();" %>' icon="unlock" label="unban-user" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

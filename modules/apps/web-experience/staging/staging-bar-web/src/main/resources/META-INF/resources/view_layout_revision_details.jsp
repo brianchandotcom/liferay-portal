@@ -187,7 +187,7 @@ else {
 	request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRevision);
 	%>
 
-	<liferay-staging:menu cssClass="branching-enabled col-md-4" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
+	<liferay-staging:menu cssClass="branching-enabled col-md-4" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
 
 	<li class="control-menu-nav-item">
 		<div class="dropdown hidden-xs">

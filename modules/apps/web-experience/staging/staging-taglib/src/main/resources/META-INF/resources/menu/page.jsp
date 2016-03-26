@@ -18,10 +18,7 @@
 
 <%
 String cssClass = "staging-icon-menu " + GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:cssClass"));
-boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:extended"));
-String icon = GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:icon"));
 long layoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:layoutSetBranchId"));
-String message = GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:message"));
 boolean onlyActions = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:onlyActions"));
 long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:selPlid"));
 boolean showManageBranches = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:showManageBranches"));
@@ -29,10 +26,6 @@ boolean showManageBranches = GetterUtil.getBoolean((String)request.getAttribute(
 boolean branchingEnabled = GetterUtil.getBoolean((String)request.getAttribute(StagingProcessesWebKeys.BRANCHING_ENABLED));
 boolean hasWorkflowTask = GetterUtil.getBoolean((String)request.getAttribute("view_layout_revision_details.jsp-hasWorkflowTask"));
 LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view_layout_revision_details.jsp-layoutRevision");
-
-if (Validator.isNotNull(icon)) {
-	icon = themeDisplay.getPathThemeImages() + icon;
-}
 
 LayoutSetBranch layoutSetBranch = null;
 List<LayoutSetBranch> layoutSetBranches = null;
@@ -84,7 +77,7 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 			<aui:nav-bar>
 				<aui:nav cssClass="navbar-nav">
 					<aui:nav-item dropdown="<%= true %>" label="staging">
-						<aui:nav-item cssClass="<%= cssClass %>" label="<%= extended ? message : StringPool.BLANK %>">
+						<aui:nav-item cssClass="<%= cssClass %>">
 							<%@ include file="/menu/staging_actions.jspf" %>
 						</aui:nav-item>
 					</aui:nav-item>

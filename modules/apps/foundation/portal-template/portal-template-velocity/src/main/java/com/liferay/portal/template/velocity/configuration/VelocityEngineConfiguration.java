@@ -32,12 +32,6 @@ public interface VelocityEngineConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean directiveIfToStringNullCheck();
 
-	@Meta.AD(
-		deflt = "com.liferay.portal.template.velocity.VelocityBundleResourceParser|com.liferay.portal.template.velocity.VelocityServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
-		required = false
-	)
-	public String[] resourceParsers();
-
 	@Meta.AD(deflt = "60", required = false)
 	public int resourceModificationCheckInterval();
 

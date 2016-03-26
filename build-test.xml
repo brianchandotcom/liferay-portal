@@ -2379,6 +2379,8 @@ module.framework.base.dir=${liferay.home}/osgi]]></echo>
 
 			<setup-testable-tomcat-jmx />
 
+			<setup-testable-tomcat-jpda-address />
+
 			<setup-testable-tomcat-manager />
 
 			<setup-testable-tomcat-osgi-modules />
@@ -2414,6 +2416,23 @@ module.framework.base.dir=${liferay.home}/osgi]]></echo>
 							JMX_OPTS="${testable.tomcat.jmx.opts}"
 
 							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-jpda-address">
+		<sequential>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="JPDA_ADDRESS" />
+				</not>
+				<then>
+					<echo file="${app.server.tomcat.dir}/bin/setenv.sh" append="true">
+						<![CDATA[
+							JPDA_ADDRESS="8000"
 						]]>
 					</echo>
 				</then>

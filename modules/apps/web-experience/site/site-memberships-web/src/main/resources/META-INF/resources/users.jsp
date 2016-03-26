@@ -36,6 +36,8 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
 
+userSearch.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
+
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 userParams.put("inherit", Boolean.TRUE);

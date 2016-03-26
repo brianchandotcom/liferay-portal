@@ -36,6 +36,8 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
+organizationSearch.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
+
 long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();

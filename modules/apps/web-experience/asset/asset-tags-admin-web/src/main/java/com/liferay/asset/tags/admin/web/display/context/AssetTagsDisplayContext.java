@@ -180,7 +180,13 @@ public class AssetTagsDisplayContext {
 
 		String keywords = getKeywords();
 
-		tagsSearchContainer.setSearch(Validator.isNotNull(keywords));
+		if (Validator.isNull(keywords)) {
+			tagsSearchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			tagsSearchContainer.setSearch(true);
+		}
 
 		String orderByCol = getOrderByCol();
 

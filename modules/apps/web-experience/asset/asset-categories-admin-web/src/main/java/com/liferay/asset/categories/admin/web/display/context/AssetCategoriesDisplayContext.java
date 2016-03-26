@@ -164,7 +164,13 @@ public class AssetCategoriesDisplayContext {
 			"there-are-no-categories.-you-can-add-a-category-by-clicking-the" +
 				"-plus-button-on-the-bottom-right-corner");
 
-		categoriesSearchContainer.setSearch(Validator.isNotNull(getKeywords()));
+		if (Validator.isNull(getKeywords())) {
+			categoriesSearchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			categoriesSearchContainer.setSearch(true);
+		}
 
 		categoriesSearchContainer.setOrderByCol(getOrderByCol());
 
@@ -362,7 +368,13 @@ public class AssetCategoriesDisplayContext {
 
 		String keywords = getKeywords();
 
-		vocabulariesSearchContainer.setSearch(Validator.isNotNull(keywords));
+		if (Validator.isNull(keywords)) {
+			vocabulariesSearchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			vocabulariesSearchContainer.setSearch(true);
+		}
 
 		vocabulariesSearchContainer.setOrderByCol(getOrderByCol());
 

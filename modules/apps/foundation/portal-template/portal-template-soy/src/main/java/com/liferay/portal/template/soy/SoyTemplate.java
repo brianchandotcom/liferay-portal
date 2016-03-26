@@ -17,6 +17,7 @@ package com.liferay.portal.template.soy;
 import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.SoyFileSet.Builder;
+import com.google.template.soy.data.SanitizedContent;
 import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
@@ -156,7 +157,17 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			renderer.setData(getSoyMapData());
 
-			writer.write(renderer.render());
+			boolean renderStrict = GetterUtil.getBoolean(
+				get(TemplateConstants.RENDER_STRICT), true);
+
+			if (renderStrict) {
+				SanitizedContent sanitizedContent = renderer.renderStrict();
+
+				writer.write(sanitizedContent.stringValue());
+			}
+			else {
+				writer.write(renderer.render());
+			}
 		}
 		catch (PrivilegedActionException pae) {
 			throw pae.getException();

@@ -18,10 +18,15 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -46,6 +51,10 @@ public class PoshiRunnerExtension {
 
 	public File getPoshiPropertiesFile() {
 		return GradleUtil.toFile(project, _poshiPropertiesFile);
+	}
+
+	public List<String> getTestNames() {
+		return GradleUtil.toStringList(_testNames);
 	}
 
 	public String getVersion() {
@@ -78,8 +87,26 @@ public class PoshiRunnerExtension {
 		_poshiPropertiesFile = poshiPropertiesFile;
 	}
 
+	public void setTestNames(Iterable<Object> testNames) {
+		_testNames.clear();
+
+		testNames(testNames);
+	}
+
+	public void setTestNames(Object ... testNames) {
+		setTestNames(Arrays.asList(testNames));
+	}
+
 	public void setVersion(Object version) {
 		_version = version;
+	}
+
+	public void testNames(Iterable<Object> testNames) {
+		GUtil.addToCollection(_testNames, testNames);
+	}
+
+	public void testNames(Object ... testNames) {
+		testNames(Arrays.asList(testNames));
 	}
 
 	protected final Project project;
@@ -88,6 +115,7 @@ public class PoshiRunnerExtension {
 	private Object _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
 	private Object _poshiPropertiesFile = "poshi.properties";
+	private final Set<Object> _testNames = new LinkedHashSet<>();
 	private Object _version = "latest.release";
 
 }

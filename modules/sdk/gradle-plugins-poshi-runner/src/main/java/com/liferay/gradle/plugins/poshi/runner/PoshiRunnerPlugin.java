@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.poshi.runner;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -25,6 +26,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.Action;
@@ -43,6 +45,7 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -346,7 +349,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		configureTaskRunPoshiBinResultsDir(test);
 		configureTaskRunPoshiReports(test);
-		configureTaskRunPoshiSystemProperties(test, poshiRunnerExtension);
+		populateSystemProperties(
+			test.getSystemProperties(), poshiRunnerExtension);
 	}
 
 	protected void configureTaskRunPoshiBinResultsDir(Test test) {
@@ -374,21 +378,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		if (directoryReport.getDestination() == null) {
 			directoryReport.setDestination(project.file("test-results"));
-		}
-	}
-
-	protected void configureTaskRunPoshiSystemProperties(
-		Test test, PoshiRunnerExtension poshiRunnerExtension) {
-
-		Map<String, Object> systemProperties = test.getSystemProperties();
-
-		populateSystemProperties(systemProperties, poshiRunnerExtension);
-
-		Project project = test.getProject();
-
-		if (project.hasProperty("poshiTestName")) {
-			systemProperties.put(
-				"test.name", project.property("poshiTestName"));
 		}
 	}
 
@@ -430,6 +419,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			"test.base.dir.name",
 			poshiRunnerExtension.project.relativePath(
 				poshiRunnerExtension.getBaseDir()));
+
+		List<String> testNames = poshiRunnerExtension.getTestNames();
+
+		if (!testNames.isEmpty()) {
+			systemProperties.put(
+				"test.name", CollectionUtils.join(",", testNames));
+		}
+
+		String testName = GradleUtil.getProperty(
+			poshiRunnerExtension.project, "poshiTestName", (String)null);
+
+		if (Validator.isNotNull(testName)) {
+			systemProperties.put("test.name", testName);
+		}
 	}
 
 	private static final String _START_TESTABLE_TOMCAT_TASK_NAME =

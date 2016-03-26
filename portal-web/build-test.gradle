@@ -35,15 +35,7 @@ dependencies {
 
 poshiRunner {
 	if (project.hasProperty("poshiRunnerExtProperties")) {
-		File poshiRunnerExtProperties = new File(project.properties["poshiRunnerExtProperties"])
-
-		if (poshiRunnerExtProperties.exists()) {
-			project.ext.testProperties = new Properties()
-
-			testProperties.load(new FileInputStream(project.properties["poshiRunnerExtProperties"]))
-
-			setPoshiProperties testProperties
-		}
+		poshiPropertiesFile = new File(projectDir.parentFile, project.properties["poshiRunnerExtProperties"])
 	}
 
 	version = "1.0.38"
@@ -57,10 +49,6 @@ repositories {
 	maven {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
-}
-
-runPoshi {
-	jvmArgs "-Dfile.encoding=UTF-8"
 }
 
 updateGradleCache << {

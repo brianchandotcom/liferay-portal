@@ -604,7 +604,7 @@ public class HookHotDeployListener
 
 		Locale locale = null;
 
-		if ((x != -1) && (y != 1)) {
+		if ((x != -1) && (y != -1)) {
 			String localeKey = languagePropertiesLocation.substring(x + 1, y);
 
 			locale = LocaleUtil.fromLanguageId(localeKey, true, false);
@@ -1172,9 +1172,6 @@ public class HookHotDeployListener
 		List<Element> languagePropertiesElements = parentElement.elements(
 			"language-properties");
 
-		String baseLanguagePropertiesLocation = null;
-		URL baseLanguageURL = null;
-
 		for (Element languagePropertiesElement : languagePropertiesElements) {
 			String languagePropertiesLocation =
 				languagePropertiesElement.getText();
@@ -1191,6 +1188,9 @@ public class HookHotDeployListener
 					continue;
 				}
 			}
+			else {
+				locale = new Locale(StringPool.BLANK);
+			}
 
 			URL url = portletClassLoader.getResource(
 				languagePropertiesLocation);
@@ -1199,34 +1199,9 @@ public class HookHotDeployListener
 				continue;
 			}
 
-			if (locale != null) {
-				String languageId = LocaleUtil.toLanguageId(locale);
-
-				try (InputStream inputStream = url.openStream()) {
-					ResourceBundle resourceBundle = new LiferayResourceBundle(
-						inputStream, StringPool.UTF8);
-
-					Map<String, Object> properties = new HashMap<>();
-
-					properties.put("language.id", languageId);
-
-					registerService(
-						servletContextName, languagePropertiesLocation,
-						ResourceBundle.class, resourceBundle, properties);
-				}
-			}
-			else {
-				baseLanguagePropertiesLocation = languagePropertiesLocation;
-				baseLanguageURL = url;
-			}
-		}
-
-		if (baseLanguageURL != null) {
-			Locale locale = new Locale(StringPool.BLANK);
-
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			try (InputStream inputStream = baseLanguageURL.openStream()) {
+			try (InputStream inputStream = url.openStream()) {
 				ResourceBundle resourceBundle = new LiferayResourceBundle(
 					inputStream, StringPool.UTF8);
 
@@ -1235,7 +1210,7 @@ public class HookHotDeployListener
 				properties.put("language.id", languageId);
 
 				registerService(
-					servletContextName, baseLanguagePropertiesLocation,
+					servletContextName, languagePropertiesLocation,
 					ResourceBundle.class, resourceBundle, properties);
 			}
 		}

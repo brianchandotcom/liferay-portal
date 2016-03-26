@@ -22,6 +22,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.Iterator;
 import java.util.Map;
 
@@ -278,6 +280,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		test.include("com/liferay/poshi/runner/PoshiRunner.class");
 		test.setClasspath(getPoshiRunnerClasspath(project));
+		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.toString());
 		test.setDescription("Execute tests using Poshi Runner.");
 		test.setGroup("verification");
 		test.setScanForTestClasses(false);

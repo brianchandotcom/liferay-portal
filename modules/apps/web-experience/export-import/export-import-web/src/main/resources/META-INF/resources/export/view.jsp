@@ -91,7 +91,7 @@ String searchContainerId = "exportLayoutProcesses";
 			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
 			processesNode: '#exportProcessesSearchContainer',
-			processesResourceURL: '<%= exportProcessesURL.toString() %>'
+			processesResourceURL: '<%= HtmlUtil.escapeJS(exportProcessesURL.toString()) %>'
 		}
 	);
 </aui:script>

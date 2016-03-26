@@ -36,7 +36,7 @@ long backgroundTaskId = ParamUtil.getLong(request, "backgroundTaskId");
 			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
 			processesNode: '#exportImportProcessContainer',
-			processesResourceURL: '<%= exportImportProcessURL %>',
+			processesResourceURL: '<%= HtmlUtil.escapeJS(exportImportProcessURL) %>',
 			timeZone: '<%= timeZone.getID() %>'
 		}
 	);

@@ -104,7 +104,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
 			processesNode: '#importProcesses',
-			processesResourceURL: '<%= importProcessesURL.toString() %>',
+			processesResourceURL: '<%= HtmlUtil.escapeJS(importProcessesURL.toString()) %>',
 			timeZone: '<%= timeZone.getID() %>'
 		}
 	);

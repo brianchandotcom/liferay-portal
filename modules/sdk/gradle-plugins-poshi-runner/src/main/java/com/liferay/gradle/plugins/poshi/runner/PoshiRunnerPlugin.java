@@ -266,6 +266,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	@SuppressWarnings("rawtypes")
 	protected Test addTaskRunPoshi(Project project) {
 		final Test test = GradleUtil.addTask(
 			project, RUN_POSHI_TASK_NAME, Test.class);

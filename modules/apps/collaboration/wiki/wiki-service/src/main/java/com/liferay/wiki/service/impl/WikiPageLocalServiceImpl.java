@@ -75,6 +75,8 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -1541,6 +1543,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		if (!page.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		if (page.isInTrashExplicitly()) {
 			movePageFromTrash(userId, page, newNodeId, newParentTitle);
 		}
@@ -1592,6 +1599,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@Override
 	public WikiPage movePageToTrash(long userId, WikiPage page)
 		throws PortalException {
+
+		if (page.isInTrash()) {
+			throw new TrashEntryException();
+		}
 
 		// Page
 
@@ -1799,6 +1810,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@Override
 	public void restorePageFromTrash(long userId, WikiPage page)
 		throws PortalException {
+
+		if (!page.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
 
 		if (page.isInTrashExplicitly()) {
 			movePageFromTrash(

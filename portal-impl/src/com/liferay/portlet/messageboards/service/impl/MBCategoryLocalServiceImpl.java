@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
 
@@ -598,6 +600,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
+		if (!category.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		if (category.isInTrashExplicitly()) {
 			restoreCategoryFromTrash(userId, categoryId);
 		}
@@ -640,9 +647,16 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	public MBCategory moveCategoryToTrash(long userId, long categoryId)
 		throws PortalException {
 
+		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		if (category.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
 		// Category
 
-		MBCategory category = updateStatus(
+		category = updateStatus(
 			userId, categoryId, WorkflowConstants.STATUS_IN_TRASH);
 
 		// Trash
@@ -669,12 +683,20 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	public void restoreCategoryFromTrash(long userId, long categoryId)
 		throws PortalException {
 
+		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+			categoryId);
+
+		if (!category.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		// Category
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			MBCategory.class.getName(), categoryId);
 
-		MBCategory category = updateStatus(
+		category = updateStatus(
 			userId, categoryId, WorkflowConstants.STATUS_APPROVED);
 
 		// Categories and threads

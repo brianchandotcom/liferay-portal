@@ -91,6 +91,8 @@ import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.io.IOException;
@@ -856,6 +858,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
 		throws PortalException {
 
+		if (entry.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
 		// Entry
 
 		int oldStatus = entry.getStatus();
@@ -920,12 +926,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException {
 
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		if (!entry.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		// Entry
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			BlogsEntry.class.getName(), entryId);
 
-		BlogsEntry entry = updateStatus(
+		entry = updateStatus(
 			userId, entryId, trashEntry.getStatus(), new ServiceContext());
 
 		// Social

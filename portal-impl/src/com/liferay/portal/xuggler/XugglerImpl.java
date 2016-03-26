@@ -16,7 +16,6 @@ package com.liferay.portal.xuggler;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xuggler.Xuggler;
@@ -30,7 +29,6 @@ import com.xuggle.ferry.JNILibraryLoader;
 import com.xuggle.xuggler.IContainer;
 
 import java.net.URL;
-import java.net.URLClassLoader;
 
 /**
  * @author Alexander Chow
@@ -39,17 +37,10 @@ public class XugglerImpl implements Xuggler {
 
 	@Override
 	public void installNativeLibraries(String name) throws Exception {
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		if (!(classLoader instanceof URLClassLoader)) {
-			throw new XugglerInstallException.MustBeURLClassLoader();
-		}
-
 		try {
 			JarUtil.downloadAndInstallJar(
 				new URL(PropsValues.XUGGLER_JAR_URL + name),
-				PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
-				(URLClassLoader)classLoader);
+				PropsValues.LIFERAY_LIB_PORTAL_DIR, name);
 
 			_nativeLibraryCopied = true;
 		}

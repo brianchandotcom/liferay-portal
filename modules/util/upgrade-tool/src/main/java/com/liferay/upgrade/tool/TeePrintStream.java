@@ -1,4 +1,16 @@
-/* @generated */
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
 package com.liferay.upgrade.tool;
 
@@ -7,48 +19,61 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
- * @author Carlos Heuberger
+ * Inspired by code written by Carlos Heuberger at
+ * http://stackoverflow.com/questions/1994255/how-to-write-console-output-to-a-txt-file
+ *
+ * @author David Truong
+ *
  */
 public class TeePrintStream extends PrintStream {
-	private final PrintStream second;
 
-	public TeePrintStream(OutputStream main, PrintStream second) {
-		super(main);
-		this.second = second;
+	public TeePrintStream(OutputStream outputStream, PrintStream printStream) {
+		super(outputStream);
+
+		_printStream = printStream;
 	}
 
 	/**
 	 * Closes the main stream.
-	 * The second stream is just flushed but <b>not</b> closed.
+	 * The _printStream stream is just flushed but <b>not</b> closed.
+	 *
 	 * @see java.io.PrintStream#close()
 	 */
 	@Override
 	public void close() {
-		// just for documentation
 		super.close();
+
+		_printStream.flush();
 	}
 
 	@Override
 	public void flush() {
 		super.flush();
-		second.flush();
+
+		_printStream.flush();
 	}
 
 	@Override
-	public void write(byte[] buf, int off, int len) {
-		super.write(buf, off, len);
-		second.write(buf, off, len);
+	public void write(byte[] bytes) throws IOException {
+		super.write(bytes);
+
+		_printStream.write(bytes);
 	}
 
 	@Override
-	public void write(int b) {
-		super.write(b);
-		second.write(b);
+	public void write(byte[] bytes, int off, int len) {
+		super.write(bytes, off, len);
+
+		_printStream.write(bytes, off, len);
 	}
 
 	@Override
-	public void write(byte[] b) throws IOException {
-		super.write(b);
-		second.write(b);
+	public void write(int integer) {
+		super.write(integer);
+
+		_printStream.write(integer);
 	}
+
+	private final PrintStream _printStream;
+
 }

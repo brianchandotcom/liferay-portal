@@ -35,6 +35,7 @@ import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
@@ -1329,13 +1330,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		applyConfigScripts(project);
 
-		Configuration portalConfiguration = GradleUtil.getConfiguration(
-			project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
-		Configuration portalTestConfiguration = addConfigurationPortalTest(
-			project);
+		if (testProject || hasTests(project)) {
+			GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
+			GradleUtil.applyPlugin(project, WhipPlugin.class);
 
-		addDependenciesPortalTest(project);
-		addDependenciesTestCompile(project);
+			Configuration portalConfiguration = GradleUtil.getConfiguration(
+				project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+			Configuration portalTestConfiguration = addConfigurationPortalTest(
+				project);
+
+			addDependenciesPortalTest(project);
+			addDependenciesTestCompile(project);
+			configureEclipse(project, portalTestConfiguration);
+			configureIdea(project, portalTestConfiguration);
+			configureSourceSetTest(
+				project, portalConfiguration, portalTestConfiguration);
+			configureSourceSetTestIntegration(
+				project, portalConfiguration, portalTestConfiguration);
+		}
 
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
@@ -1373,16 +1385,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
-		configureEclipse(project, portalTestConfiguration);
-		configureIdea(project, portalTestConfiguration);
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
 		configureSourceSetMain(project);
-		configureSourceSetTest(
-			project, portalConfiguration, portalTestConfiguration);
-		configureSourceSetTestIntegration(
-			project, portalConfiguration, portalTestConfiguration);
 		configureTaskJar(project, testProject);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
@@ -2384,6 +2390,29 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		if ((version != null) &&
 			(version.compareTo(_LOWEST_BASELINE_VERSION) > 0)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasTests(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.TEST_SOURCE_SET_NAME);
+
+		SourceDirectorySet sourceDirectorySet = sourceSet.getAllSource();
+
+		if (!sourceDirectorySet.isEmpty()) {
+			return true;
+		}
+
+		sourceSet = GradleUtil.getSourceSet(
+			project,
+			TestIntegrationBasePlugin.TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		sourceDirectorySet = sourceSet.getAllSource();
+
+		if (!sourceDirectorySet.isEmpty()) {
 			return true;
 		}
 

@@ -21,6 +21,7 @@
 <%@ page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
 <%@ page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.InstancePool" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
@@ -70,10 +71,10 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
 <head>
 	<title></title>
-	<meta content="1; url=<%= redirect %>" http-equiv="refresh" />
+	<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
 </head>
 
-<body onload="javascript:location.replace('<%= redirect %>')">
+<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
 
 </body>
 

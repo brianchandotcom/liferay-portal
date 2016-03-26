@@ -12,29 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
-
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ListenerDefinition;
-
-import java.util.List;
+package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
 
 /**
  * @author Raymond Augé
  */
-public interface ModifiableServletContext {
-
-	public Bundle getBundle();
-
-	public List<ListenerDefinition> getListenerDefinitions();
+public interface JspServletContext {
 
 	public ServletContext getWrappedServletContext();
-
-	public void registerFilters();
-
-	public void registerServlets();
 
 }

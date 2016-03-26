@@ -33,11 +33,11 @@ public class PoshiRunnerExtension {
 	}
 
 	public File getBaseDir() {
-		return project.file(_baseDir);
+		return GradleUtil.toFile(project, _baseDir);
 	}
 
 	public String getOpenCVVersion() {
-		return _openCVVersion;
+		return GradleUtil.toString(_openCVVersion);
 	}
 
 	public Map<String, Object> getPoshiProperties() {
@@ -49,7 +49,11 @@ public class PoshiRunnerExtension {
 	}
 
 	public String getVersion() {
-		return _version;
+		return GradleUtil.toString(_version);
+	}
+
+	public void poshiProperties(Map<String, ?> poshiProperties) {
+		_poshiProperties.putAll(poshiProperties);
 	}
 
 	public void poshiProperty(String key, Object value) {
@@ -60,30 +64,30 @@ public class PoshiRunnerExtension {
 		_baseDir = baseDir;
 	}
 
-	public void setOpenCVVersion(String openCVVersion) {
+	public void setOpenCVVersion(Object openCVVersion) {
 		_openCVVersion = openCVVersion;
 	}
 
 	public void setPoshiProperties(Map<String, ?> poshiProperties) {
 		_poshiProperties.clear();
 
-		_poshiProperties.putAll(poshiProperties);
+		poshiProperties(poshiProperties);
 	}
 
 	public void setPoshiPropertiesFile(Object poshiPropertiesFile) {
 		_poshiPropertiesFile = poshiPropertiesFile;
 	}
 
-	public void setVersion(String version) {
+	public void setVersion(Object version) {
 		_version = version;
 	}
 
 	protected final Project project;
 
 	private Object _baseDir = "poshi-tests";
-	private String _openCVVersion = "2.4.9-0.9";
+	private Object _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
 	private Object _poshiPropertiesFile = "poshi.properties";
-	private String _version = "latest.release";
+	private Object _version = "latest.release";
 
 }

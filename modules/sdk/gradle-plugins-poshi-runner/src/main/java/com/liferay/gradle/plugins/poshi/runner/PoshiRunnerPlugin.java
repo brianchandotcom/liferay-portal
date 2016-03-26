@@ -415,10 +415,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		systemProperties.putAll(poshiRunnerExtension.getPoshiProperties());
 
-		systemProperties.put(
-			"test.base.dir.name",
-			poshiRunnerExtension.project.relativePath(
-				poshiRunnerExtension.getBaseDir()));
+		File baseDir = poshiRunnerExtension.getBaseDir();
+
+		if ((baseDir != null) && baseDir.exists()) {
+			systemProperties.put(
+				"test.base.dir.name",
+				poshiRunnerExtension.project.relativePath(baseDir));
+		}
 
 		List<String> testNames = poshiRunnerExtension.getTestNames();
 

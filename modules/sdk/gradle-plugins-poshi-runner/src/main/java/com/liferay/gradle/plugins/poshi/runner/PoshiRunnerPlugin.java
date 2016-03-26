@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -289,22 +288,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		TestLoggingContainer testLoggingContainer = test.getTestLogging();
 
 		testLoggingContainer.setShowStandardStreams(true);
-
-		test.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Map<String, Object> systemProperties =
-						test.getSystemProperties();
-
-					if (!systemProperties.containsKey("test.name")) {
-						throw new GradleException(
-							"Please set the property poshiTestName.");
-					}
-				}
-
-			});
 
 		PluginContainer pluginContainer = project.getPlugins();
 

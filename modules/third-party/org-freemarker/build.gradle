@@ -1,0 +1,28 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
+	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/freemarker/core/TextBlock.java"
+	fileNames "**/freemarker/ext/jsp/JspWriterAdapter.java"
+
+	originalLibModuleName = "freemarker"
+}

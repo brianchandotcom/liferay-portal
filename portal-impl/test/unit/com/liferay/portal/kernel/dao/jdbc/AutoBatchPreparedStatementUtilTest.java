@@ -22,12 +22,13 @@ import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtilAdvice;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -57,6 +58,7 @@ import org.junit.Test;
  * @author Shuyang Zhou
  * @author Preston Crary
  */
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class AutoBatchPreparedStatementUtilTest {
 
 	@ClassRule
@@ -65,9 +67,11 @@ public class AutoBatchPreparedStatementUtilTest {
 		new AggregateTestRule(
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
 
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
 	public void testCINITFailure() throws ClassNotFoundException {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+
 		final NoSuchMethodException nsme = new NoSuchMethodException();
 		final AtomicInteger counter = new AtomicInteger();
 
@@ -95,55 +99,83 @@ public class AutoBatchPreparedStatementUtilTest {
 	}
 
 	@AdviseWith(
-		adviceClasses = {CancelingPortalExecutorManagerUtilAdvice.class}
+		adviceClasses = {
+			CancelingPortalExecutorManagerUtilAdvice.class,
+			PropsUtilAdvice.class
+		}
 	)
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testConcurrentCancellationException() {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+
 		doTestConcurrentCancellationException(true);
 		doTestConcurrentCancellationException(false);
 	}
 
-	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@AdviseWith(
+		adviceClasses = {
+			PortalExecutorManagerUtilAdvice.class, PropsUtilAdvice.class
+		}
+	)
 	@Test
 	public void testConcurrentExecutionException() {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+
 		doTestConcurrentExecutionExceptions(true);
 		doTestConcurrentExecutionExceptions(false);
 	}
 
-	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@AdviseWith(
+		adviceClasses = {
+			PortalExecutorManagerUtilAdvice.class, PropsUtilAdvice.class
+		}
+	)
 	@Test
 	public void testConcurrentWaitingForFutures() throws SQLException {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+
 		doTestConcurrentWaitingForFutures(true);
 		doTestConcurrentWaitingForFutures(false);
 	}
 
+	@AdviseWith(adviceClasses = {PropsUtilAdvice.class}
+	)
 	@Test
 	public void testConstructor() throws ReflectiveOperationException {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+
 		Constructor<AutoBatchPreparedStatementUtil> constructor =
 			AutoBatchPreparedStatementUtil.class.getDeclaredConstructor();
 
-		Assert.assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+		Assert.assertTrue(Modifier.isPublic(constructor.getModifiers()));
 
 		constructor.setAccessible(true);
 
 		constructor.newInstance();
 	}
 
-	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@AdviseWith(
+		adviceClasses = {
+			PortalExecutorManagerUtilAdvice.class, PropsUtilAdvice.class
+		}
+	)
 	@Test
 	public void testNotSupportBatchUpdates() throws Exception {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+
 		doTestNotSupportBatchUpdates();
 		doTestNotSupportBatchUpdatesConcurrent();
 	}
 
-	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@AdviseWith(
+		adviceClasses = {
+			PortalExecutorManagerUtilAdvice.class, PropsUtilAdvice.class
+		}
+	)
 	@Test
 	public void testSupportBatchUpdates() throws Exception {
+		PropsUtilAdvice.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "2");
+
 		doTestSupportBaseUpdates();
 		doTestSupportBaseUpdatesConcurrent();
 	}
@@ -370,11 +402,6 @@ public class AutoBatchPreparedStatementUtilTest {
 
 		List<Method> methods = preparedStatementInvocationHandler.getMethods();
 
-		int hibernateJDBCBatchSize = PropsValues.HIBERNATE_JDBC_BATCH_SIZE;
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "HIBERNATE_JDBC_BATCH_SIZE", 2);
-
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					(PreparedStatement)ProxyUtil.newProxyInstance(
@@ -465,11 +492,6 @@ public class AutoBatchPreparedStatementUtilTest {
 				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
 		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "HIBERNATE_JDBC_BATCH_SIZE",
-				hibernateJDBCBatchSize);
-		}
 
 		Assert.assertEquals(methods.toString(), 1, methods.size());
 		Assert.assertEquals(
@@ -481,11 +503,6 @@ public class AutoBatchPreparedStatementUtilTest {
 			new PreparedStatementInvocationHandler(true);
 
 		List<Method> methods = preparedStatementInvocationHandler.getMethods();
-
-		int hibernateJDBCBatchSize = PropsValues.HIBERNATE_JDBC_BATCH_SIZE;
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "HIBERNATE_JDBC_BATCH_SIZE", 2);
 
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -582,11 +599,6 @@ public class AutoBatchPreparedStatementUtilTest {
 			Assert.assertEquals(
 				Integer.valueOf(0),
 				ReflectionTestUtil.getFieldValue(invocationHandler, "_count"));
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "HIBERNATE_JDBC_BATCH_SIZE",
-				hibernateJDBCBatchSize);
 		}
 
 		Assert.assertEquals(methods.toString(), 1, methods.size());

@@ -63,4 +63,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
 -liferay-includeresource:\
 	@javax.servlet.jsp.jstl-*.jar!/META-INF/*.tld,\
-	@freemarker-*.jar
+	@org.freemarker-*.jar

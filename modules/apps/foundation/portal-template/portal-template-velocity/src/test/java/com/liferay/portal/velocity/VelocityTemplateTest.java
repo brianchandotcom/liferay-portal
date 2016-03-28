@@ -17,15 +17,19 @@ package com.liferay.portal.velocity;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.template.ClassLoaderResourceParser;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.velocity.FastExtendedProperties;
 import com.liferay.portal.template.velocity.LiferayMethodExceptionEventHandler;
 import com.liferay.portal.template.velocity.LiferayResourceLoader;
@@ -85,13 +89,26 @@ public class VelocityTemplateTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceRegistration = registry.registerService(
-			TemplateResourceLoader.class, _templateResourceLoader);
+		_serviceRegistrations.add(
+			registry.registerService(
+				TemplateResourceLoader.class, _templateResourceLoader));
+
+		_serviceRegistrations.add(
+			registry.registerService(
+				TemplateResourceParser.class, new ClassLoaderResourceParser(),
+				Collections.<String, Object>singletonMap(
+					"lang.type", TemplateConstants.LANG_TYPE_VM)));
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_serviceRegistration.unregister();
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 	}
 
 	@Before
@@ -378,8 +395,8 @@ public class VelocityTemplateTest {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
-	private static ServiceRegistration<TemplateResourceLoader>
-		_serviceRegistration;
+	private static Set<ServiceRegistration<?>>
+		_serviceRegistrations = new ConcurrentHashSet<>();
 	private static MockTemplateResourceLoader _templateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;

@@ -64,11 +64,10 @@ public class UpgradeAssetVocabularyTest {
 	protected void testUpgrade(
 		String oldSettings, String expectedUpgradedSettings) {
 
-		UpgradeAssetVocabulary upgradeAssetVocabularies =
-			new UpgradeAssetVocabulary();
+		UpgradeAsset upgradeAsset = new UpgradeAsset();
 
-		String actualUpgradedSettings =
-			upgradeAssetVocabularies.upgradeVocabularySettings(oldSettings);
+		String actualUpgradedSettings = upgradeAsset.upgradeVocabularySettings(
+			oldSettings);
 
 		Assert.assertEquals(expectedUpgradedSettings, actualUpgradedSettings);
 	}

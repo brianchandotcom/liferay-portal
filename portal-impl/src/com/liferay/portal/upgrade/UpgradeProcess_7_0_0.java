@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetVocabulary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPortletId;
@@ -73,7 +72,6 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeAssetTagsResourcePermission.class);
 		upgrade(UpgradeCompanyId.class);
-		upgrade(UpgradeAssetVocabulary.class);
 		upgrade(UpgradeDocumentLibrary.class);
 		upgrade(UpgradeDocumentLibraryPortletId.class);
 		upgrade(UpgradeDocumentLibraryPreferences.class);

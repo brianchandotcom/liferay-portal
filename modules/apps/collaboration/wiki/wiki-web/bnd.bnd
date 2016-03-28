@@ -7,5 +7,4 @@ Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-web
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
+	@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class

@@ -175,8 +175,7 @@ public class TestAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long groupId,
-		long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		return null;
 	}

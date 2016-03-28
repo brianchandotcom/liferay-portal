@@ -579,14 +579,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String className, boolean asc, int start, int end) {
+		java.lang.String[] className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String[] className, boolean asc, int start, int end) {
+		java.lang.String className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
@@ -740,6 +740,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, showNonindexable, statuses,
 			andSearch);
+	}
+
+	@Override
+	public long searchCount(com.liferay.asset.kernel.model.AssetTag tag,
+		int[] statuses) {
+		return _assetEntryLocalService.searchCount(tag, statuses);
 	}
 
 	@Override

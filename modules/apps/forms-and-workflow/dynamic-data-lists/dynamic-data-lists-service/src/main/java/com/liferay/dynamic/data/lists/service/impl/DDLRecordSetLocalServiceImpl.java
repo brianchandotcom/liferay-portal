@@ -374,7 +374,7 @@ public class DDLRecordSetLocalServiceImpl
 	 * @param  recordSet the record set
 	 * @return the record set settings
 	 * @throws PortalException if a portal exception occurred
-	 * @see    {#getRecordSetSettingsDDMFormValues(DDLRecordSet)}
+	 * @see    #getRecordSetSettingsDDMFormValues(DDLRecordSet)
 	 */
 	@Override
 	public DDLRecordSetSettings getRecordSetSettingsModel(

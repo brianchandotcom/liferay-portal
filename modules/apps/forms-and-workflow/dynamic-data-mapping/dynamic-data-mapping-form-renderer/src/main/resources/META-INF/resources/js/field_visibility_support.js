@@ -89,7 +89,7 @@ AUI.add(
 
 				var container = instance.get('container');
 
-				container.one('.form-group').toggleClass('hide', !event.newVal);
+				container.toggleClass('hide', !event.newVal);
 			},
 
 			_valueVisible: function() {

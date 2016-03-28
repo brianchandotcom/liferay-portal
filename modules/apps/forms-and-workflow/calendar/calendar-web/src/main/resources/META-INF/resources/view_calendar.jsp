@@ -245,7 +245,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 				calendars: <%= userCalendarsJSONArray %>,
 				scheduler: <portlet:namespace />scheduler,
 				simpleMenu: window.<portlet:namespace />calendarsMenu,
-				visible: <%= themeDisplay.isSignedIn() %>
+				visible: <%= !displaySchedulerOnly && themeDisplay.isSignedIn() %>
 			}
 		).render();
 
@@ -305,7 +305,8 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 				calendars: <%= groupCalendarsJSONArray %>,
 				scheduler: <portlet:namespace />scheduler,
-				simpleMenu: window.<portlet:namespace />calendarsMenu
+				simpleMenu: window.<portlet:namespace />calendarsMenu,
+				visible: <%= !displaySchedulerOnly %>
 			}
 		).render();
 

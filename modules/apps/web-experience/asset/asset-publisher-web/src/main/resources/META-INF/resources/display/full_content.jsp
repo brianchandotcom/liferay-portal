@@ -177,6 +177,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<c:if test="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>">
 			<liferay-ui:asset-links
 				assetEntryId="<%= assetEntry.getEntryId() %>"
+				portletURL="<%= viewFullContentURL %>"
 			/>
 		</c:if>
 

@@ -249,10 +249,10 @@ if (!roles.isEmpty()) {
 	var form = A.one('#<portlet:namespace />fm');
 
 	var modified = function(panel) {
-		var modifiedNotice = panel.one('.panel-heading .panel-toggle .modified-notice');
+		var modifiedNotice = panel.one('.panel-heading .panel-title a .modified-notice');
 
 		if (modifiedNotice == null) {
-			var displayTitle = panel.one('.panel-heading .panel-toggle');
+			var displayTitle = panel.one('.panel-heading .panel-title a');
 
 			displayTitle.append('<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>');
 		}
@@ -263,9 +263,7 @@ if (!roles.isEmpty()) {
 	customizeAnnouncementsDisplayedCheckbox.on(
 		'change',
 		function() {
-			var announcementsdisplayedPanel = A.one('#announcementsDisplayedPanel');
-
-			modified(A.one('#announcementsDisplayedPanel'));
+			modified('#<portlet:namespace />announcementsDisplayedPanel');
 
 			var announcementsDisplayed = form.one('#<portlet:namespace />announcementsDisplayed');
 
@@ -293,7 +291,7 @@ if (!roles.isEmpty()) {
 			}
 
 			if (selectedHTML != currSelectedHTML) {
-				modified(A.one('#announcementsDisplayedPanel'));
+				modified(A.one('#<portlet:namespace />announcementsDisplayedPanel'));
 			}
 		}
 	);
@@ -303,7 +301,7 @@ if (!roles.isEmpty()) {
 	pageDeltaInput.on(
 		'change',
 		function(event) {
-			modified(A.one('#displaySettingsPanel'));
+			modified(A.one('#<portlet:namespace />displaySettingsPanel'));
 		}
 	);
 </aui:script>

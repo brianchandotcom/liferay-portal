@@ -81,6 +81,27 @@ public class SQLSubstrTest {
 		}
 	}
 
+	@Test
+	public void testSubstrStart() throws Exception {
+		String sql = _db.buildSQL(
+			"select substr(data,1,3) from TestSubStr where id = 1");
+
+		sql = SQLTransformer.transform(sql);
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement =
+				connection.prepareStatement(sql)) {
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			Assert.assertNotNull(resultSet.next());
+
+			String substring = resultSet.getString(1);
+
+			Assert.assertEquals("EXA", substring);
+		}
+	}
+
 	private static DB _db;
 
 }

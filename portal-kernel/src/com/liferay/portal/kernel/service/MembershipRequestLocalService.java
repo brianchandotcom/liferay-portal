@@ -240,6 +240,10 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MembershipRequest> search(long groupId, int status, int start,
+		int end, OrderByComparator obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, int status);
 
 	/**

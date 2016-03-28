@@ -297,6 +297,14 @@ public class MembershipRequestLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.MembershipRequest> search(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return _membershipRequestLocalService.search(groupId, status, start,
+			end, obc);
+	}
+
+	@Override
 	public int searchCount(long groupId, int status) {
 		return _membershipRequestLocalService.searchCount(groupId, status);
 	}

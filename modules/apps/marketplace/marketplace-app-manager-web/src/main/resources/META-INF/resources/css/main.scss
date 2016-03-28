@@ -1,3 +1,5 @@
+@import "bourbon";
+
 .marketplace-app-manager-portlet {
 	.additional-info {
 		font-size: 13px;
@@ -20,6 +22,11 @@
 		svg {
 			fill: #869DAD;
 		}
+	}
+
+	.tabular-list-group .list-group-item-content {
+		word-break: normal;
+		word-wrap: normal;
 	}
 }
 

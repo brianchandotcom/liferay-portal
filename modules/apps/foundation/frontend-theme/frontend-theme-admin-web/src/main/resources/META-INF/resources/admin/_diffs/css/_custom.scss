@@ -27,6 +27,10 @@ body {
 		min-height: 200px;
 	}
 
+	.card-footer {
+		min-height: 5em;
+	}
+
 	.sidenav-container {
 		.sidenav-content {
 			@include sm {

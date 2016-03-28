@@ -261,7 +261,8 @@ public class AssetUtil {
 		}
 
 		PortletURL addPortletURL = assetRendererFactory.getURLAdd(
-			liferayPortletRequest, liferayPortletResponse, classTypeId);
+			liferayPortletRequest, liferayPortletResponse, groupId,
+			classTypeId);
 
 		if (addPortletURL == null) {
 			return null;

@@ -162,6 +162,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Role1" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 

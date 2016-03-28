@@ -516,12 +516,12 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String className, boolean asc, int start, int end) {
+		java.lang.String[] className, boolean asc, int start, int end) {
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String[] className, boolean asc, int start, int end) {
+		java.lang.String className, boolean asc, int start, int end) {
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
 
@@ -660,6 +660,11 @@ public class AssetEntryLocalServiceUtil {
 				   .searchCount(companyId, groupIds, userId, className,
 			classTypeId, userName, title, description, assetCategoryIds,
 			assetTagNames, showNonindexable, statuses, andSearch);
+	}
+
+	public static long searchCount(
+		com.liferay.asset.kernel.model.AssetTag tag, int[] statuses) {
+		return getService().searchCount(tag, statuses);
 	}
 
 	public static void setAssetCategoryAssetEntries(long categoryId,

@@ -50,18 +50,6 @@ if (userNotificationEvent.isArchived()) {
 				</div>
 
 				<div class="timestamp">
-					<span class="portlet-icon">
-
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), userNotificationEvent.getType());
-						%>
-
-						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= PortalUtil.getPortletTitle(portlet, application, themeDisplay.getLocale()) %>')">
-							<img src="<%= portlet.getContextPath() + portlet.getIcon() %>" />
-							<span class="hide-accessible taglib-text"><%= PortalUtil.getPortletTitle(portlet, application, themeDisplay.getLocale()) %></span>
-						</span>
-					</span>
-
 					<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
 						<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
 					</span>

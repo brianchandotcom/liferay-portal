@@ -82,6 +82,41 @@ public class TrashDisplayContext {
 		return ParamUtil.getLong(_request, "classPK");
 	}
 
+	public String getContainerModelRedirectURL() throws PortalException {
+		if (Validator.isNotNull(_containerModelRedirectURL)) {
+			return _containerModelRedirectURL;
+		}
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			long trashEntryId = getTrashEntryId();
+
+			long classNameId = getClassNameId();
+			long classPK = getClassPK();
+
+			PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+
+			redirectURL.setParameter("mvcPath", "/view_content.jsp");
+
+			if (trashEntryId > 0) {
+				redirectURL.setParameter(
+					"trashEntryId", String.valueOf(trashEntryId));
+			}
+			else if ((classNameId > 0) && (classPK > 0)) {
+				redirectURL.setParameter(
+					"classNameId", String.valueOf(classNameId));
+				redirectURL.setParameter("classPK", String.valueOf(classPK));
+			}
+
+			redirect = redirectURL.toString();
+		}
+
+		_containerModelRedirectURL = redirect;
+
+		return redirect;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -116,7 +151,7 @@ public class TrashDisplayContext {
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		long trashEntryId = ParamUtil.getLong(_request, "trashEntryId");
+		long trashEntryId = getTrashEntryId();
 
 		if (trashEntryId > 0) {
 			portletURL.setParameter("mvcPath", "/view_content.jsp");
@@ -124,10 +159,10 @@ public class TrashDisplayContext {
 				"trashEntryId", String.valueOf(trashEntryId));
 		}
 
-		String displayStyle = ParamUtil.getString(_request, "displayStyle");
+		String displayStyle = getDisplayStyle();
 
 		if (Validator.isNotNull(displayStyle)) {
-			portletURL.setParameter("displayStyle", getDisplayStyle());
+			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
 		String keywords = ParamUtil.getString(_request, "keywords");
@@ -190,7 +225,7 @@ public class TrashDisplayContext {
 
 		long classPK = getClassPK();
 
-		if (classPK > 0) {
+		if ((classPK > 0) && (trashHandler != null)) {
 			_trashRenderer = trashHandler.getTrashRenderer(getClassPK());
 		}
 
@@ -229,6 +264,7 @@ public class TrashDisplayContext {
 		return redirect;
 	}
 
+	private String _containerModelRedirectURL;
 	private String _displayStyle;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;

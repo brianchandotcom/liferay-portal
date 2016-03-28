@@ -23,8 +23,11 @@ import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -112,7 +115,9 @@ public class FormNavigatorCategoryUtil {
 					registry.ungetService(serviceReference);
 				}
 
-			});
+			},
+			new PropertyServiceReferenceComparator(
+				"form.navigator.category.order"));
 	}
 
 	private static final FormNavigatorCategoryUtil _instance =
@@ -120,5 +125,58 @@ public class FormNavigatorCategoryUtil {
 
 	private final ServiceTrackerMap<String, List<FormNavigatorCategory>>
 		_formNavigatorCategories;
+
+	private class PropertyServiceReferenceComparator<T>
+		implements Comparator<ServiceReference<T>>, Serializable {
+
+		public PropertyServiceReferenceComparator(String propertyKey) {
+			_propertyKey = propertyKey;
+		}
+
+		@Override
+		public int compare(
+			ServiceReference<T> serviceReference1,
+			ServiceReference<T> serviceReference2) {
+
+			if (serviceReference1 == null) {
+				if (serviceReference2 == null) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else if (serviceReference2 == null) {
+				return -1;
+			}
+
+			Object propertyValue1 = serviceReference1.getProperty(_propertyKey);
+			Object propertyValue2 = serviceReference2.getProperty(_propertyKey);
+
+			if (propertyValue1 == null) {
+				if (propertyValue2 == null) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else if (propertyValue2 == null) {
+				return -1;
+			}
+
+			if (!(propertyValue2 instanceof Comparable)) {
+				return serviceReference2.compareTo(serviceReference1);
+			}
+
+			Comparable<Object> propertyValueComparable2 =
+				(Comparable<Object>)propertyValue2;
+
+			return propertyValueComparable2.compareTo(propertyValue1);
+		}
+
+		private final String _propertyKey;
+
+	}
 
 }

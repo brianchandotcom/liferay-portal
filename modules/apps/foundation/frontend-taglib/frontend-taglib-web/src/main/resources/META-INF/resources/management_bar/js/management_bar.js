@@ -198,7 +198,7 @@ AUI.add(
 
 					var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
 
-					if (totalSelectedItems > 0) {
+					if (secondaryBar && totalSelectedItems > 0) {
 						secondaryBar.addClass(STR_ON);
 					}
 
@@ -217,12 +217,14 @@ AUI.add(
 
 					var checkBoxes = searchContainerNode.all(params.checkBoxesSelector);
 
-					var selectAllCheckBoxesCheckBox = secondaryBar.one(params.selectAllCheckBoxesSelector);
+					if (secondaryBar) {
+						var selectAllCheckBoxesCheckBox = secondaryBar.one(params.selectAllCheckBoxesSelector);
 
-					selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
+						selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
 
-					if (onscreenSelectedItems !== checkBoxes.size()) {
-						selectAllCheckBoxesCheckBox.addClass(STR_SELECTED_PARTIAL);
+						if (onscreenSelectedItems !== checkBoxes.size()) {
+							selectAllCheckBoxesCheckBox.addClass(STR_SELECTED_PARTIAL);
+						}
 					}
 				},
 

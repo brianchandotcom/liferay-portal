@@ -18,7 +18,6 @@
 
 <%
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-links:assetEntryId"));
-
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links:portletURL");
 
 List<AssetLink> assetLinks = null;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -57,8 +58,8 @@ public class AssetLinksTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setPortletURL(PortletURL _portletURL) {
-		this._portletURL = _portletURL;
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
 	}
 
 	@Override
@@ -93,8 +94,7 @@ public class AssetLinksTag extends IncludeTag {
 			"liferay-ui:asset-links:assetEntryId",
 			String.valueOf(_assetEntryId));
 
-		request.setAttribute(
-				"liferay-ui:asset-links:portletURL", _portletURL);
+		request.setAttribute("liferay-ui:asset-links:portletURL", _portletURL);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/asset_links/page.jsp";
@@ -102,6 +102,6 @@ public class AssetLinksTag extends IncludeTag {
 	private long _assetEntryId;
 	private String _className = StringPool.BLANK;
 	private long _classPK;
-	private PortletURL _portletURL = null;
+	private PortletURL _portletURL;
 
 }

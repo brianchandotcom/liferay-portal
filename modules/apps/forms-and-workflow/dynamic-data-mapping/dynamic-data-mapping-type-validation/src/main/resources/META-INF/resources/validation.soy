@@ -23,12 +23,11 @@
  * @param typesOptions
  * @param validationsOptions
  * @param value
- * @param visible
  */
 {template .validation}
 	<link href="/o/dynamic-data-mapping-type-validation/validation.css" rel="stylesheet"></link>
 
-	<div class="form-group{$visible ? '' : ' hide'} lfr-ddm-form-field-validation" data-fieldname="{$name}">
+	<div class="form-group lfr-ddm-form-field-validation" data-fieldname="{$name}">
 		<div class="form-group">
 			<label class="control-label" for="{$name}EnableValidation">
 				<input class="enable-validation toggle-switch" {$enableValidationValue ? 'checked' : ''} id="{$name}EnableValidation" type="checkbox" value="true" />

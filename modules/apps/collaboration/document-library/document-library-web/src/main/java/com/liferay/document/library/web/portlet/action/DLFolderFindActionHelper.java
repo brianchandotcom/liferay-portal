@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -54,7 +55,7 @@ public class DLFolderFindActionHelper extends BaseDLFindActionHelper {
 	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		if (primaryKey > 0) {
+		if (primaryKey != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
 			primaryKey = folder.getFolderId();

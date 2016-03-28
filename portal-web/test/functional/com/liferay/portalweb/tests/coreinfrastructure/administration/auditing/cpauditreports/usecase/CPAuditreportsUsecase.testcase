@@ -124,6 +124,15 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#impersonateCP">
 			<var name="userScreenName" value="test1" />
 		</execute>

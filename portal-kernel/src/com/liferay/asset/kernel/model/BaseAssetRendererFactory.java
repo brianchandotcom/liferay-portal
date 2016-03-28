@@ -210,6 +210,11 @@ public abstract class BaseAssetRendererFactory<T>
 		return getTypeName(locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getURLAdd(LiferayPortletRequest, LiferayPortletResponse,
+	 *             long, long)}
+	 */
 	@Deprecated
 	@Override
 	public PortletURL getURLAdd(
@@ -224,6 +229,22 @@ public abstract class BaseAssetRendererFactory<T>
 		return getURLAdd(
 			liferayPortletRequest, liferayPortletResponse,
 			themeDisplay.getScopeGroupId(), 0);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getURLAdd(LiferayPortletRequest, LiferayPortletResponse,
+	 *             long, long)}
+	 */
+	@Deprecated
+	@Override
+	@SuppressWarnings("unused")
+	public PortletURL getURLAdd(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classTypeId)
+		throws PortalException {
+
+		return getURLAdd(liferayPortletRequest, liferayPortletResponse, 0, 0);
 	}
 
 	@Override

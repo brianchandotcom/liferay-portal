@@ -381,15 +381,14 @@ public class PortalInstances {
 
 			String principalName = null;
 
-			try {
-				User user = UserLocalServiceUtil.getUser(
-					PrincipalThreadLocal.getUserId());
+			long userId = PrincipalThreadLocal.getUserId();
 
-				if (user.getCompanyId() == companyId) {
+			if (userId > 0) {
+				User user = UserLocalServiceUtil.fetchUser(userId);
+
+				if ((user != null) && (user.getCompanyId() == companyId)) {
 					principalName = currentThreadPrincipalName;
 				}
-			}
-			catch (Exception e) {
 			}
 
 			PrincipalThreadLocal.setName(principalName);

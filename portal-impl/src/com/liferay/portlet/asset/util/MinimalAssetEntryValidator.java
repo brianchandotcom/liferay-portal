@@ -14,27 +14,11 @@
 
 package com.liferay.portlet.asset.util;
 
-import com.liferay.asset.kernel.exception.AssetTagException;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
-
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, see {@link
+ *             com.liferay.asset.tags.validator.AtLeastOneTagAssetEntryValidator}
  */
+@Deprecated
 public class MinimalAssetEntryValidator extends BaseAssetEntryValidator {
-
-	@Override
-	public void validate(
-			long groupId, String className, long classTypePK,
-			long[] categoryIds, String[] tagNames)
-		throws PortalException {
-
-		if (!className.equals(MBDiscussion.class.getName()) &&
-			ArrayUtil.isEmpty(tagNames)) {
-
-			throw new AssetTagException(AssetTagException.AT_LEAST_ONE_TAG);
-		}
-	}
-
 }

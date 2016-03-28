@@ -4059,3 +4059,32 @@ time to remove it completely. This frees up development and support resources to
 focus on supported features.
 
 ---------------------------------------
+
+### Removed `asset.entry.validator` property
+- **Date:** 2016-Mar-17
+- **JIRA Ticket:** LPS-64370
+
+#### What changed?
+
+The property `asset.entry.validator` was removed from `portal.properties`.
+
+#### Who is affected?
+
+Any installation with a customized asset validator.
+
+#### How should I update my code?
+
+You should create a new OSGi component that implements
+`AssetEntryValidator`, and define for which models it will be
+applicable by using the `model.class.name` OSGi property or an asterisk if it
+applies to any model.
+
+If you were using the MinimalAssetEntryValidator, this functionality can still
+be added deploying the module asset-tags-validator.
+
+#### Why was this change made?
+
+This change has been made as part of the modularization efforts to decouple the
+different parts of the portal.
+
+---------------------------------------

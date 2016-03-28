@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.kernel.util;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, see {@link
- *             com.liferay.asset.categories.validator.CardinalityAssetEntryValidator}
  */
-@Deprecated
-public class DefaultAssetEntryValidator extends BaseAssetEntryValidator {
+public interface AssetEntryValidator {
+
+	public void validate(
+			long groupId, String className, long classTypePK,
+			long[] categoryIds, String[] entryNames)
+		throws PortalException;
+
 }

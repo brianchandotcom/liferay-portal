@@ -18,7 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, see {@link
+ *             com.liferay.asset.kernel.util.AssetEntryValidator}
+ *
  */
+@Deprecated
 public interface AssetEntryValidator {
 
 	public void validate(

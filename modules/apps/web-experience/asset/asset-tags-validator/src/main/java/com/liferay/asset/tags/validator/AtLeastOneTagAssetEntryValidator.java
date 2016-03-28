@@ -12,34 +12,36 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.tags.validator;
 
-import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.util.AssetEntryValidator;
+import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, see {@link
- *             com.liferay.asset.kernel.util.AssetEntryValidator}
  */
-@Deprecated
-public class BaseAssetEntryValidator implements AssetEntryValidator {
+@Component(
+	immediate = true, property = {"model.class.name=*"},
+	service = AssetEntryValidator.class
+)
+public class AtLeastOneTagAssetEntryValidator implements AssetEntryValidator {
 
 	@Override
 	public void validate(
 			long groupId, String className, long classTypePK,
-			long[] categoryIds, String[] entryNames)
+			long[] categoryIds, String[] tagNames)
 		throws PortalException {
-	}
 
-	protected boolean isAssetCategorizable(long classNameId) {
-		return true;
-	}
+		if (!className.equals(MBDiscussion.class.getName()) &&
+			ArrayUtil.isEmpty(tagNames)) {
 
-	protected void validate(
-			long classNameId, long classTypePK, final long[] categoryIds,
-			AssetVocabulary vocabulary)
-		throws PortalException {
+			throw new AssetTagException(AssetTagException.AT_LEAST_ONE_TAG);
+		}
 	}
 
 }

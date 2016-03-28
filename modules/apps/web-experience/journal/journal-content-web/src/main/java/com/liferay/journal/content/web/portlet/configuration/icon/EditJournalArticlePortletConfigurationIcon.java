@@ -45,7 +45,7 @@ public class EditJournalArticlePortletConfigurationIcon
 
 	@Override
 	public String getJspPath() {
-		return "/edit_article.jsp";
+		return "/configuration/icon/edit_article.jsp";
 	}
 
 	@Override

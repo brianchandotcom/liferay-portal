@@ -17,15 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
+DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
+
 Map<String, Object> data = new HashMap<String, Object>();
 
-data.put("id", HtmlUtil.escape(PortalUtil.getPortletId(request)) + "_editAsset");
+data.put("destroyOnHide", true);
+data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+data.put("title", HtmlUtil.escape(ddmTemplate.getName(locale)));
 %>
 
 <liferay-ui:icon
 	data="<%= data %>"
-	id="editWebContentIcon"
-	message="edit-web-content"
-	url="<%= journalContentDisplayContext.getURLEdit() %>"
+	id="editTemplateIcon"
+	message="edit-template"
+	url="<%= journalContentDisplayContext.getURLEditTemplate() %>"
 	useDialog="<%= true %>"
 />

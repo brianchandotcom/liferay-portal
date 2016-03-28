@@ -98,7 +98,7 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		List<ServiceWrapper<DDMFormFieldType>> values = ListUtil.fromCollection(
 			_ddmFormFieldTypeServiceTrackerMap.values());
 
-		Collections.sort(values, _comparator);
+		Collections.sort(values, _ddmFormFieldTypeDisplayOrderComparator);
 
 		for (ServiceWrapper<DDMFormFieldType> ddmFormFieldTypeServiceWrapper :
 				values) {
@@ -167,59 +167,11 @@ public class DDMFormFieldTypeServicesTrackerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldTypeServicesTrackerImpl.class);
 
-	private final Comparator<ServiceWrapper<DDMFormFieldType>> _comparator =
-		new Comparator<ServiceWrapper<DDMFormFieldType>>() {
-
-			@Override
-			public int compare(
-				ServiceWrapper<DDMFormFieldType> serviceWrapper1,
-				ServiceWrapper<DDMFormFieldType> serviceWrapper2) {
-
-				if (serviceWrapper1 == null) {
-					if (serviceWrapper2 == null) {
-						return 0;
-					}
-					else {
-						return 1;
-					}
-				}
-				else if (serviceWrapper2 == null) {
-					return -1;
-				}
-
-				Map<String, Object> properties1 =
-					serviceWrapper1.getProperties();
-
-				Map<String, Object> properties2 =
-					serviceWrapper2.getProperties();
-
-				Object propertyValue1 = properties1.get(
-					"ddm.form.field.type.display.order");
-				Object propertyValue2 = properties2.get(
-					"ddm.form.field.type.display.order");
-
-				if (propertyValue1 == null) {
-					if (propertyValue2 == null) {
-						return 0;
-					}
-					else {
-						return 1;
-					}
-				}
-				else if (propertyValue2 == null) {
-					return -1;
-				}
-
-				Comparable<Object> propertyValueComparable1 =
-					(Comparable<Object>)propertyValue1;
-
-				return propertyValueComparable1.compareTo(propertyValue2);
-			}
-
-		};
-
 	private ServiceTrackerMap<String, DDMFormFieldRenderer>
 		_ddmFormFieldRendererServiceTrackerMap;
+	private final Comparator<ServiceWrapper<DDMFormFieldType>>
+		_ddmFormFieldTypeDisplayOrderComparator =
+			new DDMFormFieldTypeDisplayOrderComparator();
 	private ServiceTrackerMap<String, ServiceWrapper<DDMFormFieldType>>
 		_ddmFormFieldTypeServiceTrackerMap;
 	private ServiceTrackerMap<String, DDMFormFieldValueAccessor>

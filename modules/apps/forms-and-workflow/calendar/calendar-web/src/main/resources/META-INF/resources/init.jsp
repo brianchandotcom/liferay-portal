@@ -130,21 +130,6 @@ page import="java.util.TimeZone" %>
 <portlet:defineObjects />
 
 <%
-CalendarBooking calendarBooking = (CalendarBooking)request.getAttribute(CalendarWebKeys.CALENDAR_BOOKING);
-
-CalendarResource groupCalendarResource = CalendarResourceUtil.getScopeGroupCalendarResource(liferayPortletRequest, scopeGroupId);
-CalendarResource userCalendarResource = CalendarResourceUtil.getUserCalendarResource(liferayPortletRequest, themeDisplay.getUserId());
-
-Calendar userDefaultCalendar = null;
-
-if (userCalendarResource != null) {
-	long defaultCalendarId = userCalendarResource.getDefaultCalendarId();
-
-	if (defaultCalendarId > 0) {
-		userDefaultCalendar = CalendarServiceUtil.getCalendar(defaultCalendarId);
-	}
-}
-
 int defaultDuration = GetterUtil.getInteger(portletPreferences.getValue("defaultDuration", null), 60);
 String defaultView = portletPreferences.getValue("defaultView", "week");
 String timeFormat = GetterUtil.getString(portletPreferences.getValue("timeFormat", "locale"));
@@ -159,12 +144,82 @@ if (usePortalTimeZone) {
 }
 
 boolean displaySchedulerOnly = GetterUtil.getBoolean(portletPreferences.getValue("displaySchedulerOnly", null), false);
+boolean showUserEvents = GetterUtil.getBoolean(portletPreferences.getValue("showUserEvents", null), true);
 
 boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
 int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
 String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 long rssTimeInterval = GetterUtil.getLong(portletPreferences.getValue("rssTimeInterval", StringPool.BLANK), Time.WEEK);
+
+CalendarBooking calendarBooking = (CalendarBooking)request.getAttribute(CalendarWebKeys.CALENDAR_BOOKING);
+
+CalendarResource groupCalendarResource = CalendarResourceUtil.getScopeGroupCalendarResource(liferayPortletRequest, scopeGroupId);
+CalendarResource userCalendarResource = null;
+
+if (showUserEvents || !themeDisplay.isSignedIn()) {
+	userCalendarResource = CalendarResourceUtil.getUserCalendarResource(liferayPortletRequest, themeDisplay.getUserId());
+}
+
+Calendar userDefaultCalendar = null;
+
+if (userCalendarResource != null) {
+	long defaultCalendarId = userCalendarResource.getDefaultCalendarId();
+
+	if (defaultCalendarId > 0) {
+		userDefaultCalendar = CalendarServiceUtil.getCalendar(defaultCalendarId);
+	}
+}
+
+List<Calendar> groupCalendars = Collections.emptyList();
+
+boolean showSiteCalendars = false;
+
+if (groupCalendarResource != null) {
+	showSiteCalendars = (userCalendarResource == null) || (groupCalendarResource.getCalendarResourceId() != userCalendarResource.getCalendarResourceId());
+}
+
+if (showSiteCalendars) {
+	groupCalendars = CalendarServiceUtil.search(themeDisplay.getCompanyId(), null, new long[] {groupCalendarResource.getCalendarResourceId()}, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
+}
+
+List<Calendar> userCalendars = Collections.emptyList();
+
+if (userCalendarResource != null) {
+	userCalendars = CalendarServiceUtil.search(themeDisplay.getCompanyId(), null, new long[] {userCalendarResource.getCalendarResourceId()}, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
+}
+
+List<Calendar> otherCalendars = new ArrayList<Calendar>();
+
+long[] calendarIds = StringUtil.split(SessionClicks.get(request, "com.liferay.calendar.web_otherCalendars", StringPool.BLANK), 0L);
+
+Calendar defaultCalendar = null;
+
+for (long calendarId : calendarIds) {
+	Calendar calendar = CalendarServiceUtil.fetchCalendar(calendarId);
+
+	if (calendar != null) {
+		CalendarResource calendarResource = calendar.getCalendarResource();
+
+		if (calendarResource.isActive()) {
+			otherCalendars.add(calendar);
+		}
+	}
+}
+
+for (Calendar groupCalendar : groupCalendars) {
+	if (groupCalendar.isDefaultCalendar() && CalendarPermission.contains(themeDisplay.getPermissionChecker(), groupCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) {
+		defaultCalendar = groupCalendar;
+	}
+}
+
+if (defaultCalendar == null) {
+	for (Calendar userCalendar : userCalendars) {
+		if (userCalendar.isDefaultCalendar()) {
+			defaultCalendar = userCalendar;
+		}
+	}
+}
 
 TimeZone userTimeZone = CalendarUtil.getCalendarBookingDisplayTimeZone(calendarBooking, TimeZone.getTimeZone(timeZoneId));
 TimeZone utcTimeZone = TimeZone.getTimeZone(StringPool.UTC);

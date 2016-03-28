@@ -77,9 +77,13 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 
 		boolean displaySchedulerOnly = ParamUtil.getBoolean(
 			actionRequest, "displaySchedulerOnly");
+		boolean showUserEvents = ParamUtil.getBoolean(
+			actionRequest, "showUserEvents");
 
 		portletPreferences.setValue(
 			"displaySchedulerOnly", String.valueOf(displaySchedulerOnly));
+		portletPreferences.setValue(
+			"showUserEvents", String.valueOf(showUserEvents));
 
 		portletPreferences.store();
 	}

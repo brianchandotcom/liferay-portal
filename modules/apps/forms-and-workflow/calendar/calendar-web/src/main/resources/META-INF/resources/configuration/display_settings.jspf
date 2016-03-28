@@ -16,4 +16,6 @@
 
 <aui:fieldset>
 	<aui:input label="display-scheduler-only" name="displaySchedulerOnly" type="checkbox" value="<%= displaySchedulerOnly %>" />
+
+	<aui:input label="display-user-events" name="showUserEvents" type="checkbox" value="<%= showUserEvents %>" />
 </aui:fieldset>

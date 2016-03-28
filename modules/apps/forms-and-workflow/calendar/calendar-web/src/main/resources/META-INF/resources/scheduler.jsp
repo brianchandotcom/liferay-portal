@@ -106,14 +106,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		);
 	</c:if>
 
-	<c:if test="<%= !readOnly && (userDefaultCalendar != null) %>">
+	<c:if test="<%= !readOnly && (defaultCalendar != null) %>">
 		var width = Math.min(Liferay.Util.getWindowWidth(), 550);
 
 		window.<portlet:namespace />eventRecorder = new Liferay.SchedulerEventRecorder(
 			{
 				bodyTemplate: new A.Template(A.one('#<portlet:namespace />eventRecorderBodyTpl').html()),
-				calendarId: <%= userDefaultCalendar.getCalendarId() %>,
-				color: '<%= ColorUtil.toHexString(userDefaultCalendar.getColor()) %>',
+				calendarId: <%= defaultCalendar.getCalendarId() %>,
+				color: '<%= ColorUtil.toHexString(defaultCalendar.getColor()) %>',
 				duration: <%= defaultDuration %>,
 				editCalendarBookingURL: '<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
 				headerTemplate: new A.Template(A.one('#<portlet:namespace />eventRecorderHeaderTpl').html()),

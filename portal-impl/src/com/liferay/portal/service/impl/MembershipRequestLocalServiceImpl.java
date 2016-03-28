@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
@@ -138,6 +139,14 @@ public class MembershipRequestLocalServiceImpl
 
 		return membershipRequestPersistence.findByG_S(
 			groupId, status, start, end);
+	}
+
+	@Override
+	public List<MembershipRequest> search(
+		long groupId, int status, int start, int end, OrderByComparator obc) {
+
+		return membershipRequestPersistence.findByG_S(
+			groupId, status, start, end, obc);
 	}
 
 	@Override

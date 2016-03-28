@@ -114,57 +114,47 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 			<%
 			User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
 
-			long membershipRequestUserUserId = themeDisplay.getDefaultUserId();
-
-			if (membershipRequestUser != null) {
-				membershipRequestUserUserId = membershipRequestUser.getUserId();
-			}
-
 			row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<liferay-ui:user-portrait
-					imageCssClass="user-icon-lg"
-					userId="<%= membershipRequestUserUserId %>"
+			<liferay-ui:search-container-column-text
+				cssClass="content-column user-column title-column"
+				name="user"
+				truncate="<%= true %>"
+				value='<%= (membershipRequestUser != null) ? HtmlUtil.escape(membershipRequestUser.getFullName()) : LanguageUtil.get(request, "the-user-could-not-be-found") %>'
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="content-column user-comments-column"
+				name="user-comments"
+				truncate="<%= true %>"
+				value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
+			/>
+
+			<c:if test="<%= membershipRequestUser != null %>">
+				<liferay-ui:search-container-column-text
+					cssClass="content-column email-address-column"
+					name="email-address"
+					value="<%= membershipRequestUser.getEmailAddress() %>"
 				/>
-			</liferay-ui:search-container-column-text>
+			</c:if>
 
 			<liferay-ui:search-container-column-date
+				cssClass="date-column text-column"
 				name="date"
 				value="<%= membershipRequest.getCreateDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="user"
-			>
-				<c:choose>
-					<c:when test="<%= membershipRequestUser != null %>">
-						<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="the-user-could-not-be-found" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="user-comments"
-				value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
-			/>
-
 			<c:if test='<%= !tabs1.equals("pending") %>'>
-				<liferay-ui:search-container-column-date
-					name="reply-date"
-					value="<%= membershipRequest.getReplyDate() %>"
-				/>
 
 				<%
 				User membershipRequestReplierUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getReplierUserId());
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="content-column replier-comments"
 					name="replier"
+					truncate="<%= true %>"
 				>
 					<c:choose>
 						<c:when test="<%= membershipRequestReplierUser != null %>">
@@ -189,13 +179,21 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
+					cssClass="content-column reply-comments"
 					name="reply-comments"
+					truncate="<%= true %>"
 					value="<%= HtmlUtil.escape(membershipRequest.getReplyComments()) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					cssClass="reply-date-column text-column"
+					name="reply-date"
+					value="<%= membershipRequest.getReplyDate() %>"
 				/>
 			</c:if>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="entry-action-column"
 				path="/membership_request_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

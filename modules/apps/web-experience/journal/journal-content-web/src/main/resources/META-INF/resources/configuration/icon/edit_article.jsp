@@ -17,9 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+JournalArticle latestArticle = journalContentDisplayContext.getLatestArticle();
+
 Map<String, Object> data = new HashMap<String, Object>();
 
-data.put("id", HtmlUtil.escape(PortalUtil.getPortletId(request)) + "_editAsset");
+data.put("destroyOnHide", true);
+data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+data.put("title", HtmlUtil.escape(latestArticle.getTitle(locale)));
 %>
 
 <liferay-ui:icon

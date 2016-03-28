@@ -45,14 +45,10 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var radiosNodeList = container.all(instance.getInputSelector());
+						var inputNode = container.one('input[type="radio"]:checked');
 
-						var inputNode = radiosNodeList.item(0);
-
-						var checkedNodeList = radiosNodeList.filter(':checked');
-
-						if (checkedNodeList.size()) {
-							inputNode = checkedNodeList.item(0);
+						if (inputNode === null) {
+							inputNode = container.one('input[type="radio"]');
 						}
 
 						return inputNode;
@@ -90,16 +86,12 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var container = instance.get('container');
-
-						var radiosNodeList = container.all(instance.getInputSelector());
-
-						var checkedNodeList = radiosNodeList.filter(':checked');
+						var inputNode = instance.getInputNode();
 
 						var value = '';
 
-						if (checkedNodeList.size()) {
-							value = checkedNodeList.item(0).val();
+						if (inputNode.attr('checked')) {
+							value = inputNode.val();
 						}
 
 						return value;
@@ -110,25 +102,27 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var radiosNodeList = container.all(instance.getInputSelector());
+						var radiosNodeList = container.all('input[type="radio"]');
 
-						radiosNodeList.attr('checked', false);
+						radiosNodeList.removeAttribute('checked');
 
-						var radiosToCheck = radiosNodeList.filter(
+						var radioToCheck = radiosNodeList.filter(
 							function(node) {
 								return node.val() === value;
 							}
-						);
+						).item(0);
 
-						radiosToCheck.attr('checked', true);
+						if (radioToCheck) {
+							radioToCheck.attr('checked', true);
 
-						instance.fire(
-							'valueChanged',
-							{
-								field: instance,
-								value: value
-							}
-						);
+							instance.fire(
+								'valueChanged',
+								{
+									field: instance,
+									value: value
+								}
+							);
+						}
 					},
 
 					_renderErrorMessage: function() {

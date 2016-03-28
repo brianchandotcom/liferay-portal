@@ -82,8 +82,6 @@ AUI.add(
 
 								var columnNode = instance._createColumn(size);
 
-								fieldType.set('label', instance.get('strings').fieldTypes[fieldType.get('label')]);
-
 								columnNode.append(fieldType.get('node'));
 
 								rowNode.append(columnNode);

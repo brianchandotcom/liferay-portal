@@ -49,7 +49,12 @@ else {
 }
 
 entrySearch.setResults(trashEntries);
-entrySearch.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+EmptyOnClickRowChecker emptyOnClickRowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(/entry/)");
+
+entrySearch.setRowChecker(emptyOnClickRowChecker);
 
 if ((entrySearch.getTotal() == 0) && Validator.isNotNull(searchTerms.getKeywords())) {
 	entrySearch.setEmptyResultsMessage(LanguageUtil.format(request, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>", false));
@@ -147,7 +152,6 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 		<aui:form action="<%= deleteEntriesURL %>" name="fm">
 			<liferay-ui:search-container
 				id="trash"
-				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 				searchContainer="<%= entrySearch %>"
 			>
 				<liferay-ui:search-container-row

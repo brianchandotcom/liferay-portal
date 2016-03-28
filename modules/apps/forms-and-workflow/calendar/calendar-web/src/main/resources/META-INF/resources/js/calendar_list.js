@@ -362,22 +362,28 @@ AUI.add(
 					_setSimpleMenu: function(val) {
 						var instance = this;
 
-						return A.merge(
-							{
-								align: {
-									points: [A.WidgetPositionAlign.TL, A.WidgetPositionAlign.BL]
+						var result = val;
+
+						if (val) {
+							result = A.merge(
+								{
+									align: {
+										points: [A.WidgetPositionAlign.TL, A.WidgetPositionAlign.BL]
+									},
+									bubbleTargets: [instance],
+									constrain: true,
+									host: instance,
+									items: [],
+									plugins: [A.Plugin.OverlayAutohide],
+									visible: false,
+									width: 290,
+									zIndex: Liferay.zIndex.MENU
 								},
-								bubbleTargets: [instance],
-								constrain: true,
-								host: instance,
-								items: [],
-								plugins: [A.Plugin.OverlayAutohide],
-								visible: false,
-								width: 290,
-								zIndex: Liferay.zIndex.MENU
-							},
-							val || {}
-						);
+								val || {}
+							);
+						}
+
+						return result;
 					},
 
 					_uiSetCalendars: function(val) {
@@ -395,6 +401,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-template-deprecated', 'liferay-scheduler']
+		requires: ['aui-template-deprecated', 'liferay-calendar-simple-menu', 'liferay-scheduler']
 	}
 );

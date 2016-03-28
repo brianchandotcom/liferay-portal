@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -120,10 +121,12 @@ public class DDLRecordAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long groupId,
+		long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
@@ -179,8 +182,14 @@ public class DDLRecordAssetRendererFactory
 		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private GroupLocalService _groupLocalService;
 	private ServletContext _servletContext;
 
 }

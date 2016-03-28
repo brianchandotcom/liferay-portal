@@ -635,7 +635,13 @@ AUI.add(
 						instance._getEntries(
 							className,
 							function(entries) {
-								popup.entriesNode.empty();
+								var searchResults = instance._searchResultsNode;
+
+								if (searchResults) {
+									searchResults.removeClass('loading-animation');
+								}
+
+								popup.entriesNode.all('.tree-view, .loading-animation').remove(true);
 
 								entries.forEach(instance._vocabulariesIterator, instance);
 

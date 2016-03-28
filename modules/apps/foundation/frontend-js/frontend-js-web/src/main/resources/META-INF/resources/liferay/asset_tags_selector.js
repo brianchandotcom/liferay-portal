@@ -497,7 +497,9 @@ AUI.add(
 
 						var popup = instance._getPopup();
 
-						popup.entriesNode.html(TPL_LOADING);
+						popup.entriesNode.append(
+							A.Node.create(TPL_LOADING)
+						);
 
 						popup.show();
 					},

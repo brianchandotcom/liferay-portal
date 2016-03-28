@@ -142,6 +142,8 @@
 
 	<command name="saveViaDDLDisplayPG">
 		<execute macro="DDLList#clickSave" />
+
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="selectViaDDLDisplayPG">

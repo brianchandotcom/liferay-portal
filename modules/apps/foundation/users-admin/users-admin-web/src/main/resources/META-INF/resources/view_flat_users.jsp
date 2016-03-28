@@ -116,6 +116,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 	</c:if>
 
 	<liferay-ui:search-container
+		cssClass="users-search-container"
 		id="users"
 		searchContainer="<%= searchContainer %>"
 		var="userSearchContainer"

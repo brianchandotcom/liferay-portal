@@ -121,7 +121,7 @@ public interface AssetRendererFactory<T> {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getURLAdd(LiferayPortletRequest, LiferayPortletResponse,
-	 *             long)}
+	 *             long, long)}
 	 */
 	@Deprecated
 	public PortletURL getURLAdd(
@@ -131,7 +131,8 @@ public interface AssetRendererFactory<T> {
 
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, long classTypeId)
+			LiferayPortletResponse liferayPortletResponse, long groupId,
+			long classTypeId)
 		throws PortalException;
 
 	public PortletURL getURLView(

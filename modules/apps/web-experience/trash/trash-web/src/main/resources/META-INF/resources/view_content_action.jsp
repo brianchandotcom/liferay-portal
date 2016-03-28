@@ -19,6 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	redirect = trashDisplayContext.getContainerEntryRedirectURL();
+}
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 TrashRenderer trashRenderer = null;

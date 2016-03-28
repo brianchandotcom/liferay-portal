@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = {"service.ranking:Integer=60"},
+	property = {"form.navigator.entry.order:Integer=60"},
 	service = FormNavigatorEntry.class
 )
 public class LayoutCustomizationSettingsFormNavigatorEntry

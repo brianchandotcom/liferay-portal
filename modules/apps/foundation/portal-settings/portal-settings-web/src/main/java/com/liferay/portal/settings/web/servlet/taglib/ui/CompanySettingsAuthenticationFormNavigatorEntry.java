@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Tomas Polesovsky
  */
 @Component(
-	immediate = true, property = {"service.ranking:Integer=70"},
+	immediate = true, property = {"form.navigator.entry.order:Integer=70"},
 	service = FormNavigatorEntry.class
 )
 public class CompanySettingsAuthenticationFormNavigatorEntry

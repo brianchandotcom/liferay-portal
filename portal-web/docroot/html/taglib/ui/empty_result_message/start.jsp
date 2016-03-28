@@ -28,7 +28,7 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 		</p>
 	</c:when>
 	<c:otherwise>
-	   <div class="card-horizontal main-content-card taglib-empty-result-message">
+		<div class="card-horizontal main-content-card taglib-empty-result-message">
 			<div class="card-row card-row-padded">
 				<div class="<%= cssClass %>"></div>
 

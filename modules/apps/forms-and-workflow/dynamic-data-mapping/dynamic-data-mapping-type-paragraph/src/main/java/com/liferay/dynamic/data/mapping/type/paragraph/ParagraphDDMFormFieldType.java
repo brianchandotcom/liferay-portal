@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"ddm.form.field.type.display.order:Integer=1",
 		"ddm.form.field.type.icon=paragraph",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Paragraph",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-paragraph",

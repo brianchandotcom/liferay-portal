@@ -26,9 +26,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -93,8 +95,13 @@ public class DDMFormFieldTypeServicesTrackerImpl
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
 		List<DDMFormFieldType> ddmFormFieldTypes = new ArrayList<>();
 
+		List<ServiceWrapper<DDMFormFieldType>> values = ListUtil.fromCollection(
+			_ddmFormFieldTypeServiceTrackerMap.values());
+
+		Collections.sort(values, _ddmFormFieldTypeDisplayOrderComparator);
+
 		for (ServiceWrapper<DDMFormFieldType> ddmFormFieldTypeServiceWrapper :
-				_ddmFormFieldTypeServiceTrackerMap.values()) {
+				values) {
 
 			ddmFormFieldTypes.add(ddmFormFieldTypeServiceWrapper.getService());
 		}
@@ -162,6 +169,9 @@ public class DDMFormFieldTypeServicesTrackerImpl
 
 	private ServiceTrackerMap<String, DDMFormFieldRenderer>
 		_ddmFormFieldRendererServiceTrackerMap;
+	private final Comparator<ServiceWrapper<DDMFormFieldType>>
+		_ddmFormFieldTypeDisplayOrderComparator =
+			new DDMFormFieldTypeDisplayOrderComparator();
 	private ServiceTrackerMap<String, ServiceWrapper<DDMFormFieldType>>
 		_ddmFormFieldTypeServiceTrackerMap;
 	private ServiceTrackerMap<String, DDMFormFieldValueAccessor>

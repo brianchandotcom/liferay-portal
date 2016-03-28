@@ -403,8 +403,7 @@ public class AssetUtil {
 				assetRendererFactory.getClassTypeReader();
 
 			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
 				themeDisplay.getLocale());
 
 			if (classTypes.isEmpty()) {

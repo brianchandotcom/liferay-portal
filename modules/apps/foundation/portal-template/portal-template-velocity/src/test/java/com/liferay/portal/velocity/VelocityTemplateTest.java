@@ -395,8 +395,8 @@ public class VelocityTemplateTest {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
-	private static Set<ServiceRegistration<?>>
-		_serviceRegistrations = new ConcurrentHashSet<>();
+	private static final Set<ServiceRegistration<?>> _serviceRegistrations =
+		new ConcurrentHashSet<>();
 	private static MockTemplateResourceLoader _templateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;

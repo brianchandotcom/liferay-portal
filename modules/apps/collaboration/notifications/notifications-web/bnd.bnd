@@ -4,4 +4,3 @@ Bundle-Version: 1.0.3
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /notifications-web
--liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

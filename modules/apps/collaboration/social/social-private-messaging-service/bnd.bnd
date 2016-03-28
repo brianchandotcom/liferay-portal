@@ -14,6 +14,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social Private Messaging
 Liferay-Require-SchemaVersion: 1.0.1
 Liferay-Service: true
--liferay-includeresource:\
-@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
-@com.liferay.util.java-*.jar!/com/liferay/util/service/ServiceProps.class

@@ -88,6 +88,16 @@
 			modelVar="tag"
 		>
 
+			<%
+			int[] statuses = new int[] {
+				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_PENDING,
+				WorkflowConstants.STATUS_SCHEDULED
+			};
+
+			long usagesCount = AssetEntryLocalServiceUtil.searchCount(tag, statuses);
+			%>
+
 			<c:choose>
 				<c:when test='<%= Validator.equals(assetTagsDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
@@ -103,7 +113,7 @@
 						</h5>
 
 						<h6 class="text-default">
-							<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(tag.getAssetCount()) %></span>
+							<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(usagesCount) %></span>
 						</h6>
 					</liferay-ui:search-container-column-text>
 
@@ -127,7 +137,7 @@
 							title="<%= tag.getName() %>"
 						>
 							<liferay-frontend:vertical-card-footer>
-								<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(tag.getAssetCount()) %></span>
+								<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(usagesCount) %></span>
 							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
@@ -143,7 +153,7 @@
 					<liferay-ui:search-container-column-text
 						cssClass="usages-column"
 						name="usages"
-						value="<%= String.valueOf(tag.getAssetCount()) %>"
+						value="<%= String.valueOf(usagesCount) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

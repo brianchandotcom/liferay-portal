@@ -10,7 +10,9 @@
 
 		<action path="/polls/view" forward="/portlet/polls/view.jsp" />
 
-		<action path="/polls/view_chart" type="com.liferay.polls.web.polls.portlet.action.ViewChartAction" />
+		<action path="/polls/view_chart" type="com.liferay.polls.web.polls.portlet.action.ViewChartAction">
+			<forward name="/common/null.jsp" path="/common/null.jsp" />
+		</action>
 
 		<action path="/polls/view_question" type="com.liferay.polls.web.polls.portlet.action.ViewQuestionAction">
 			<forward name="portlet.polls.edit_question" path="/portlet/polls/view_question.jsp" />

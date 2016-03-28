@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.kernel.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

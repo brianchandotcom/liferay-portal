@@ -497,7 +497,7 @@ public class DDLRecordSetLocalServiceUtil {
 	* @param recordSet the record set
 	* @return the record set settings
 	* @throws PortalException if a portal exception occurred
-	* @see {@link #getRecordSetSettingsDDMFormValues(DDLRecordSet)}
+	* @see #getRecordSetSettingsDDMFormValues(DDLRecordSet)
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getRecordSetSettingsModel(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)

@@ -134,7 +134,7 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
-	<command name="saveCP">
+	<command name="save">
 		<execute macro="DDLList#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />

@@ -68,7 +68,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#saveCP" />
+		<execute macro="DDLList#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -200,7 +200,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		</execute>
 
-		<execute macro="DDLList#saveCP" />
+		<execute macro="DDLList#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -332,7 +332,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#saveCP" />
+		<execute macro="DDLList#save" />
 
 		<execute macro="Navigator#openURL" />
 

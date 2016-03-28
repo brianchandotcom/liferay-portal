@@ -190,7 +190,7 @@ public class TrashDisplayContext {
 
 		long classPK = getClassPK();
 
-		if (classPK > 0) {
+		if ((classPK > 0) && (trashHandler != null)) {
 			_trashRenderer = trashHandler.getTrashRenderer(getClassPK());
 		}
 

@@ -26,6 +26,7 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -115,8 +116,9 @@ public class CalendarBookingAssetRendererFactory
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, CalendarPortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest,
+			(Group)liferayPortletRequest.getAttribute(WebKeys.GROUP),
+			CalendarPortletKeys.CALENDAR, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 

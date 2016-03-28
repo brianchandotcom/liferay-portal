@@ -41,6 +41,10 @@
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 			</then>
 			<else>
+				<execute macro="Portlet#changeDisplayStyle">
+					<var name="displayStyle" value="Icon" />
+				</execute>
+
 				<var name="key_cardText" value="${userScreenName}" />
 
 				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
@@ -183,6 +187,10 @@
 
 	<command name="viewMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Icon" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />

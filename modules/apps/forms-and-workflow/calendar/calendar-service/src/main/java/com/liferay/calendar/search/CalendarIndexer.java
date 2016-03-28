@@ -166,11 +166,12 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	protected void reindexCalendarBookings(Calendar calendar)
 		throws SearchException {
 
+		Indexer<CalendarBooking> indexer = _indexerRegistry.nullSafeGetIndexer(
+			CalendarBooking.class);
+
 		List<CalendarBooking> calendarBookings =
 			_calendarBookingLocalService.getCalendarBookings(
 				calendar.getCalendarId());
-		Indexer<CalendarBooking> indexer = this._indexerRegistry.getIndexer(
-			CalendarBooking.class);
 
 		indexer.reindex(calendarBookings);
 	}

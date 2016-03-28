@@ -265,7 +265,8 @@ public class AssetUtil {
 		if (groupId > 0) {
 			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			liferayPortletRequest.setAttribute(WebKeys.GROUP, group);
+			liferayPortletRequest.setAttribute(
+				WebKeys.ASSET_RENDERER_GROUP, group);
 		}
 
 		PortletURL addPortletURL = assetRendererFactory.getURLAdd(

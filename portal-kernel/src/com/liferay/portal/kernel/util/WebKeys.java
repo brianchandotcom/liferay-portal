@@ -43,6 +43,8 @@ public interface WebKeys {
 
 	public static final String ASSET_RENDERER_FACTORY_CLASS_TYPE_ID = "ASSET_RENDERER_FACTORY_CLASS_TYPE_ID";
 
+	public static final String ASSET_RENDERER_GROUP = "ASSET_RENDERER_GROUP";
+
 	public static final String ASSET_TAG = "ASSET_TAG";
 
 	public static final String ASSET_VOCABULARIES = "ASSET_VOCABULARIES";

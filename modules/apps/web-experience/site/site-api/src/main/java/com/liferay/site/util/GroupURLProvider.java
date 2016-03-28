@@ -20,6 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,13 +87,13 @@ public class GroupURLProvider {
 		String groupDisplayURL = group.getDisplayURL(themeDisplay, false);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return groupDisplayURL;
+			return HttpUtil.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
 		groupDisplayURL = group.getDisplayURL(themeDisplay, true);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return groupDisplayURL;
+			return HttpUtil.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
 		return getGroupAdministrationURL(group, portletRequest);

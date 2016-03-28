@@ -30,11 +30,18 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.language.LanguageResources;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -93,7 +100,12 @@ public class InviteMembersUserNotificationHandler
 		if (memberRequest.getStatus() ==
 				MembershipRequestConstants.STATUS_PENDING) {
 
-			title = serviceContext.translate(
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					LocaleUtil.toLanguageId(serviceContext.getLocale()));
+
+			title = ResourceBundleUtil.getString(
+				resourceBundle, serviceContext.getLocale(),
 				"x-invited-you-to-join-x",
 				new Object[] {
 					getUserNameLink(memberRequest.getUserId(), serviceContext),
@@ -222,6 +234,17 @@ public class InviteMembersUserNotificationHandler
 		_memberRequestLocalService = memberRequestLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.invitation.invite.members.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -236,6 +259,7 @@ public class InviteMembersUserNotificationHandler
 
 	private GroupLocalService _groupLocalService;
 	private MemberRequestLocalService _memberRequestLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

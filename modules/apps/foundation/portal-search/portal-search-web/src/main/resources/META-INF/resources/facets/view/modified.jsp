@@ -220,7 +220,7 @@ if (fieldParamSelection.equals("0")) {
 
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
 		var A = AUI();
-		var Lang = A.Lang
+		var Lang = A.Lang;
 		var LString = Lang.String;
 
 		var form = AUI.$(document.<portlet:namespace />fm);

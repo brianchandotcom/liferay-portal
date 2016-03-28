@@ -17,16 +17,21 @@ package com.liferay.gradle.plugins.poshi.runner;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -34,12 +39,15 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.reporting.DirectoryReport;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
+import org.gradle.util.CollectionUtils;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -89,13 +97,29 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					Properties poshiProperties = null;
+
+					File poshiPropertiesFile =
+						poshiRunnerExtension.getPoshiPropertiesFile();
+
+					if ((poshiPropertiesFile != null) &&
+						poshiPropertiesFile.exists()) {
+
+						poshiProperties = GUtil.loadProperties(
+							poshiPropertiesFile);
+					}
+
 					configureTaskEvaluatePoshiConsole(
-						evaluatePoshiConsoleTask, poshiRunnerExtension);
-					configureTaskRunPoshi(runPoshiTask, poshiRunnerExtension);
+						evaluatePoshiConsoleTask, poshiProperties,
+						poshiRunnerExtension);
+					configureTaskRunPoshi(
+						runPoshiTask, poshiProperties, poshiRunnerExtension);
 					configureTaskValidatePoshi(
-						validatePoshiTask, poshiRunnerExtension);
+						validatePoshiTask, poshiProperties,
+						poshiRunnerExtension);
 					configureTaskWritePoshiProperties(
-						writePoshiPropertiesTask, poshiRunnerExtension);
+						writePoshiPropertiesTask, poshiProperties,
+						poshiRunnerExtension);
 				}
 
 			});
@@ -235,8 +259,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	@SuppressWarnings("rawtypes")
 	protected Test addTaskRunPoshi(Project project) {
-		Test test = GradleUtil.addTask(
+		final Test test = GradleUtil.addTask(
 			project, RUN_POSHI_TASK_NAME, Test.class);
 
 		test.dependsOn(
@@ -245,8 +270,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			EXPAND_POSHI_RUNNER_TASK_NAME);
 
 		test.include("com/liferay/poshi/runner/PoshiRunner.class");
-
 		test.setClasspath(getPoshiRunnerClasspath(project));
+		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.toString());
 		test.setDescription("Execute tests using Poshi Runner.");
 		test.setGroup("verification");
 		test.setScanForTestClasses(false);
@@ -256,20 +281,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		testLoggingContainer.setShowStandardStreams(true);
 
-		test.doFirst(
-			new Action<Task>() {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			"com.liferay.test.integration",
+			new Action<Plugin>() {
 
 				@Override
-				public void execute(Task task) {
-					Test test = (Test)task;
+				public void execute(Plugin plugin) {
+					test.dependsOn(_START_TESTABLE_TOMCAT_TASK_NAME);
 
-					Map<String, Object> systemProperties =
-						test.getSystemProperties();
+					Task task = GradleUtil.getTask(
+						test.getProject(), _STOP_TESTABLE_TOMCAT_TASK_NAME);
 
-					if (!systemProperties.containsKey("test.name")) {
-						throw new GradleException(
-							"Please set the property poshiTestName.");
-					}
+					task.mustRunAfter(test);
 				}
 
 			});
@@ -302,18 +327,22 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskEvaluatePoshiConsole(
-		JavaExec javaExec, PoshiRunnerExtension poshiRunnerExtension) {
+		JavaExec javaExec, Properties poshiProperties,
+		PoshiRunnerExtension poshiRunnerExtension) {
 
 		populateSystemProperties(
-			javaExec.getSystemProperties(), poshiRunnerExtension);
+			javaExec.getSystemProperties(), poshiProperties,
+			poshiRunnerExtension);
 	}
 
 	protected void configureTaskRunPoshi(
-		Test test, PoshiRunnerExtension poshiRunnerExtension) {
+		Test test, Properties poshiProperties,
+		PoshiRunnerExtension poshiRunnerExtension) {
 
 		configureTaskRunPoshiBinResultsDir(test);
 		configureTaskRunPoshiReports(test);
-		configureTaskRunPoshiSystemProperties(test, poshiRunnerExtension);
+		populateSystemProperties(
+			test.getSystemProperties(), poshiProperties, poshiRunnerExtension);
 	}
 
 	protected void configureTaskRunPoshiBinResultsDir(Test test) {
@@ -344,33 +373,22 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskRunPoshiSystemProperties(
-		Test test, PoshiRunnerExtension poshiRunnerExtension) {
-
-		Map<String, Object> systemProperties = test.getSystemProperties();
-
-		populateSystemProperties(systemProperties, poshiRunnerExtension);
-
-		Project project = test.getProject();
-
-		if (project.hasProperty("poshiTestName")) {
-			systemProperties.put(
-				"test.name", project.property("poshiTestName"));
-		}
-	}
-
 	protected void configureTaskValidatePoshi(
-		JavaExec javaExec, PoshiRunnerExtension poshiRunnerExtension) {
+		JavaExec javaExec, Properties poshiProperties,
+		PoshiRunnerExtension poshiRunnerExtension) {
 
 		populateSystemProperties(
-			javaExec.getSystemProperties(), poshiRunnerExtension);
+			javaExec.getSystemProperties(), poshiProperties,
+			poshiRunnerExtension);
 	}
 
 	protected void configureTaskWritePoshiProperties(
-		JavaExec javaExec, PoshiRunnerExtension poshiRunnerExtension) {
+		JavaExec javaExec, Properties poshiProperties,
+		PoshiRunnerExtension poshiRunnerExtension) {
 
 		populateSystemProperties(
-			javaExec.getSystemProperties(), poshiRunnerExtension);
+			javaExec.getSystemProperties(), poshiProperties,
+			poshiRunnerExtension);
 	}
 
 	protected File getExpandedPoshiRunnerDir(Project project) {
@@ -388,12 +406,50 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	protected void populateSystemProperties(
-		Map<String, Object> systemProperties,
+		Map<String, Object> systemProperties, Properties poshiProperties,
 		PoshiRunnerExtension poshiRunnerExtension) {
+
+		if (poshiProperties != null) {
+			Enumeration<String> enumeration =
+				(Enumeration<String>)poshiProperties.propertyNames();
+
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
+				String value = poshiProperties.getProperty(key);
+
+				systemProperties.put(key, value);
+			}
+		}
 
 		systemProperties.putAll(poshiRunnerExtension.getPoshiProperties());
 
-		systemProperties.put("test.basedir", poshiRunnerExtension.getBaseDir());
+		File baseDir = poshiRunnerExtension.getBaseDir();
+
+		if ((baseDir != null) && baseDir.exists()) {
+			systemProperties.put(
+				"test.base.dir.name",
+				poshiRunnerExtension.project.relativePath(baseDir));
+		}
+
+		List<String> testNames = poshiRunnerExtension.getTestNames();
+
+		if (!testNames.isEmpty()) {
+			systemProperties.put(
+				"test.name", CollectionUtils.join(",", testNames));
+		}
+
+		String testName = GradleUtil.getProperty(
+			poshiRunnerExtension.project, "poshiTestName", (String)null);
+
+		if (Validator.isNotNull(testName)) {
+			systemProperties.put("test.name", testName);
+		}
 	}
+
+	private static final String _START_TESTABLE_TOMCAT_TASK_NAME =
+		"startTestableTomcat";
+
+	private static final String _STOP_TESTABLE_TOMCAT_TASK_NAME =
+		"stopTestableTomcat";
 
 }

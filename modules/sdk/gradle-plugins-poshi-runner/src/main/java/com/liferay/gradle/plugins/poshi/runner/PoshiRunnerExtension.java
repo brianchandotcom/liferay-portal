@@ -14,12 +14,19 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -27,23 +34,35 @@ import org.gradle.api.Project;
 public class PoshiRunnerExtension {
 
 	public PoshiRunnerExtension(Project project) {
-		_project = project;
+		this.project = project;
 	}
 
 	public File getBaseDir() {
-		return _project.file(_baseDir);
+		return GradleUtil.toFile(project, _baseDir);
 	}
 
 	public String getOpenCVVersion() {
-		return _openCVVersion;
+		return GradleUtil.toString(_openCVVersion);
 	}
 
 	public Map<String, Object> getPoshiProperties() {
 		return _poshiProperties;
 	}
 
+	public File getPoshiPropertiesFile() {
+		return GradleUtil.toFile(project, _poshiPropertiesFile);
+	}
+
+	public List<String> getTestNames() {
+		return GradleUtil.toStringList(_testNames);
+	}
+
 	public String getVersion() {
-		return _version;
+		return GradleUtil.toString(_version);
+	}
+
+	public void poshiProperties(Map<String, ?> poshiProperties) {
+		_poshiProperties.putAll(poshiProperties);
 	}
 
 	public void poshiProperty(String key, Object value) {
@@ -54,24 +73,49 @@ public class PoshiRunnerExtension {
 		_baseDir = baseDir;
 	}
 
-	public void setOpenCVVersion(String openCVVersion) {
+	public void setOpenCVVersion(Object openCVVersion) {
 		_openCVVersion = openCVVersion;
 	}
 
 	public void setPoshiProperties(Map<String, ?> poshiProperties) {
 		_poshiProperties.clear();
 
-		_poshiProperties.putAll(poshiProperties);
+		poshiProperties(poshiProperties);
 	}
 
-	public void setVersion(String version) {
+	public void setPoshiPropertiesFile(Object poshiPropertiesFile) {
+		_poshiPropertiesFile = poshiPropertiesFile;
+	}
+
+	public void setTestNames(Iterable<Object> testNames) {
+		_testNames.clear();
+
+		testNames(testNames);
+	}
+
+	public void setTestNames(Object ... testNames) {
+		setTestNames(Arrays.asList(testNames));
+	}
+
+	public void setVersion(Object version) {
 		_version = version;
 	}
 
-	private Object _baseDir = "poshi-tests";
-	private String _openCVVersion = "2.4.9-0.9";
+	public void testNames(Iterable<Object> testNames) {
+		GUtil.addToCollection(_testNames, testNames);
+	}
+
+	public void testNames(Object ... testNames) {
+		testNames(Arrays.asList(testNames));
+	}
+
+	protected final Project project;
+
+	private Object _baseDir = "src/testFunctional";
+	private Object _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
-	private final Project _project;
-	private String _version = "latest.release";
+	private Object _poshiPropertiesFile = "poshi.properties";
+	private final Set<Object> _testNames = new LinkedHashSet<>();
+	private Object _version = "latest.release";
 
 }

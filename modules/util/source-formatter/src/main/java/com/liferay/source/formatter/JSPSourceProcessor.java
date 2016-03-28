@@ -449,6 +449,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName, "Do not use Registry in modules: " + fileName);
 		}
 
+		// LPS-64335
+
+		if (portalSource && isModulesFile(absolutePath) &&
+			newContent.contains("import=\"com.liferay.util.ContentUtil")) {
+
+			processErrorMessage(
+				fileName,
+				"Do not use com.liferay.util.ContentUtil in modules: " +
+					fileName);
+		}
+
 		// LPS-62786
 
 		checkPropertyUtils(fileName, newContent);

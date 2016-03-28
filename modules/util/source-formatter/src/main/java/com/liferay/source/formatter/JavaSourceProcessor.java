@@ -2648,6 +2648,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"modules: " + fileName);
 		}
 
+		// LPS-64335
+
+		if (content.contains("import com.liferay.util.ContentUtil")) {
+			processErrorMessage(
+				fileName,
+				"Do not use com.liferay.util.ContentUtil in modules:" +
+					fileName);
+		}
+
 		return content;
 	}
 

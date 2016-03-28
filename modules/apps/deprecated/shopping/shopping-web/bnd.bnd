@@ -22,6 +22,5 @@ Web-ContextPath: /shopping-web
 	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class,\
 	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/State.class,\
 	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/StateUtil.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
 -wab: docroot

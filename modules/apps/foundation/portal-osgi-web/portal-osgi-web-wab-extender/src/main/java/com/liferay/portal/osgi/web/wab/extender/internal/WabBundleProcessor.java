@@ -15,7 +15,6 @@
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
@@ -110,8 +109,6 @@ public class WabBundleProcessor {
 			destroyFilters();
 
 			destroyListeners();
-
-			_servletContextRegistration.unregister();
 
 			_bundleContext.ungetService(
 				_servletContextHelperRegistrationServiceReference);
@@ -460,15 +457,6 @@ public class WabBundleProcessor {
 		servletContext.setAttribute("jsp.taglib.mappings", jspTaglibMappings);
 		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
 		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("osgi.web.symbolicname", _bundle.getSymbolicName());
-		properties.put("osgi.web.version", _bundle.getVersion());
-		properties.put("osgi.web.contextpath", servletContext.getContextPath());
-
-		_servletContextRegistration = _bundleContext.registerService(
-			ServletContext.class, servletContext, properties);
 
 		return servletContextHelperRegistration;
 	}
@@ -828,7 +816,6 @@ public class WabBundleProcessor {
 	private final Logger _logger;
 	private ServiceReference<ServletContextHelperRegistration>
 		_servletContextHelperRegistrationServiceReference;
-	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final Set<ServiceRegistration<Servlet>> _servletRegistrations =
 		new ConcurrentSkipListSet<>();
 

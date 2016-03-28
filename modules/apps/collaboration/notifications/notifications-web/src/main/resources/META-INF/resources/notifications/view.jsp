@@ -17,17 +17,33 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true);
+boolean actionRequired = ParamUtil.getBoolean(request, "actionRequired");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, actionRequired);
 %>
 
 <aui:nav-bar markupView="lexicon">
+	<liferay-portlet:renderURL var="viewNotificationsURL">
+		<liferay-portlet:param name="actionRequired" value="<%= StringPool.FALSE %>" />
+	</liferay-portlet:renderURL>
+
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
-			href="<%= portletURL %>"
+			href="<%= viewNotificationsURL %>"
 			label="notifications-list"
-			selected="<%= Boolean.TRUE %>"
+			selected="<%= !actionRequired %>"
+		/>
+	</aui:nav>
+
+	<liferay-portlet:renderURL var="viewRequestsURL">
+		<liferay-portlet:param name="actionRequired" value="<%= StringPool.TRUE %>" />
+	</liferay-portlet:renderURL>
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item
+			href="<%= viewRequestsURL %>"
+			label="requests-list"
+			selected="<%= actionRequired %>"
 		/>
 	</aui:nav>
 </aui:nav-bar>
@@ -40,7 +56,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= portletURL %>"
+			portletURL="<%= currentURLObj %>"
 			selectedDisplayStyle="descriptive"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -51,16 +67,17 @@ PortletURL portletURL = renderResponse.createRenderURL();
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 main-content-body">
-	<aui:form action="<%= portletURL.toString() %>" cssClass="row" method="get" name="fm">
+	<aui:form action="<%= currentURL %>" cssClass="row" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container
+				emptyResultsMessage='<%= !actionRequired ? "you-do-not-have-any-notifications" : "you-do-not-have-any-request" %>'
 				id="userNotificationEvents"
+				iteratorURL="<%= currentURLObj %>"
 				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-				searchContainer='<%= new SearchContainer(renderRequest, null, null, "cur", SearchContainer.DEFAULT_DELTA, portletURL, null, "you-do-not-have-any-notifications") %>'
 				total="<%= userNotificationEventsCount %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEvents(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, searchContainer.getStart(), searchContainer.getEnd()) %>"
+					results="<%= UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEvents(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				/>
 
 				<liferay-ui:search-container-row

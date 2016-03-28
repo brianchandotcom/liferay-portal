@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -182,14 +183,11 @@ public class SiteBrowserDisplayContext {
 		boolean includeUserPersonalSite = ParamUtil.getBoolean(
 			_request, "includeUserPersonalSite");
 
-		String type = getType();
+		long[] classNameIds = _CLASS_NAME_IDS;
 
 		if (includeCompany) {
-			if (groupSearch.getStart() == 0) {
-				results.add(company.getGroup());
-			}
-
-			additionalSites++;
+			classNameIds = ArrayUtil.append(
+				classNameIds, PortalUtil.getClassNameId(Company.class));
 		}
 
 		if (includeUserPersonalSite) {
@@ -203,6 +201,8 @@ public class SiteBrowserDisplayContext {
 			additionalSites++;
 		}
 
+		String type = getType();
+
 		if (type.equals("layoutScopes")) {
 			total = GroupLocalServiceUtil.getGroupsCount(
 				themeDisplay.getCompanyId(), Layout.class.getName(),
@@ -212,7 +212,7 @@ public class SiteBrowserDisplayContext {
 		}
 		else {
 			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
+				themeDisplay.getCompanyId(), classNameIds,
 				groupSearchTerms.getKeywords(), getGroupParams());
 		}
 
@@ -256,7 +256,7 @@ public class SiteBrowserDisplayContext {
 		}
 		else {
 			groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), _CLASS_NAME_IDS,
+				company.getCompanyId(), classNameIds,
 				groupSearchTerms.getKeywords(), getGroupParams(), start, end,
 				groupSearch.getOrderByComparator());
 		}
@@ -405,7 +405,6 @@ public class SiteBrowserDisplayContext {
 	}
 
 	private static final long[] _CLASS_NAME_IDS = new long[] {
-		PortalUtil.getClassNameId(Company.class),
 		PortalUtil.getClassNameId(Group.class),
 		PortalUtil.getClassNameId(Organization.class)
 	};

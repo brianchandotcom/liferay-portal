@@ -1186,15 +1186,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<for list="${siteName},Site Name,Global" param="siteName">
 			<execute macro="AssetPublisherPortlet#viewAssetPG">
 				<var name="assetContent" value="${siteName} WC Content" />

@@ -440,7 +440,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	* @param recordSet the record set
 	* @return the record set settings
 	* @throws PortalException if a portal exception occurred
-	* @see {@link #getRecordSetSettingsDDMFormValues(DDLRecordSet)}
+	* @see #getRecordSetSettingsDDMFormValues(DDLRecordSet)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSetSettings getRecordSetSettingsModel(

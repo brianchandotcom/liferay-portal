@@ -3228,6 +3228,12 @@ create database lportal${database.index} character set utf8;</echo>
 									<then>
 										<property name="sql.file" value="create${database.create.suffix}-mysql.sql" />
 									</then>
+									<elseif>
+										<equals arg1="${database.type}" arg2="sqlserver" />
+										<then>
+											<property name="sql.file" value="create${database.create.suffix}-sql-server.sql" />
+										</then>
+									</elseif>
 									<else>
 										<property name="sql.file" value="create${database.create.suffix}-${database.type}.sql" />
 									</else>
@@ -6590,6 +6596,22 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<arg value="create.sql" />
 								<arg value="-U" />
 								<arg value="${database.username}" />
+							</exec>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${database.type}" arg2="sqlserver" />
+						<then>
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.username" />
+
+							<exec executable="${sqlserver.executable}" failonerror="true">
+								<arg value="-U" />
+								<arg value="${database.username}" />
+								<arg value="-P" />
+								<arg value="${database.password}" />
+								<arg value="i" />
+								<arg value="create.sql" />
 							</exec>
 						</then>
 					</elseif>

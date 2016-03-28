@@ -21,7 +21,7 @@ String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
 
 Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
-String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "list");
+String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 

@@ -32,10 +32,13 @@
 		</if>
 
 		<execute function="Click" locator1="Icon#ADVANCED_SEARCH" />
+
 		<execute function="Select" locator1="AuditReports#ADVANCED_SEARCH_MATCH_SELECT" value1="Any" />
-		<execute function="Type" locator1="CPAuditreports#ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
+
+		<execute function="Type" locator1="AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD" value1="${searchTerm}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
+
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_${reportFieldKey}_1" value1="${searchTerm}" />
 	</command>
 </definition>

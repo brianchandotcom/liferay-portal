@@ -28,6 +28,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class ThemeAutoDeployer extends ThemeDeployer implements AutoDeployer {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Themes for " + file.getPath() +
-						" modified successfully");
+							" modified successfully");
 				}
 
 				return AutoDeployer.CODE_DEFAULT;

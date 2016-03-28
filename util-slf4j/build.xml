@@ -3,7 +3,6 @@
 <project name="util-slf4j" basedir="." default="compile">
 	<import file="../build-common-java.xml" />
 
-	<property name="artifact.version" value="1.0.1" />
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util SLF4J" />

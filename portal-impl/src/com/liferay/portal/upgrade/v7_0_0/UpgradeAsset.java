@@ -90,10 +90,10 @@ public class UpgradeAsset extends UpgradeProcess {
 				ps1.setBoolean(1, false);
 
 				try (PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(
-								"update AssetEntry set listable = ? where " +
-									"classNameId = ? and classPK = ?"));
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"update AssetEntry set listable = ? where " +
+								"classNameId = ? and classPK = ?");
 					ResultSet rs = ps1.executeQuery()) {
 
 					while (rs.next()) {
@@ -114,20 +114,33 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	protected void updateAssetVocabularies() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
+			PreparedStatement ps1 = connection.prepareStatement(
 				"select vocabularyId, settings_ from AssetVocabulary");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update AssetVocabulary set settings_ = ? where " +
+						"vocabularyId = ?");
+			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
 				long vocabularyId = rs.getLong("vocabularyId");
 				String settings = rs.getString("settings_");
 
-				updateAssetVocabulary(
-					vocabularyId, upgradeVocabularySettings(settings));
+				ps2.setString(1, upgradeVocabularySettings(settings));
+				ps2.setLong(2, vocabularyId);
+
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateAssetVocabulary(long vocabularyId, String settings)
 		throws Exception {
 

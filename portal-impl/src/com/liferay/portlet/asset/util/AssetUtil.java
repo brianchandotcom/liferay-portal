@@ -261,7 +261,8 @@ public class AssetUtil {
 		}
 
 		PortletURL addPortletURL = assetRendererFactory.getURLAdd(
-			liferayPortletRequest, liferayPortletResponse, classTypeId);
+			liferayPortletRequest, liferayPortletResponse, groupId,
+			classTypeId);
 
 		if (addPortletURL == null) {
 			return null;
@@ -403,8 +404,7 @@ public class AssetUtil {
 				assetRendererFactory.getClassTypeReader();
 
 			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
 				themeDisplay.getLocale());
 
 			if (classTypes.isEmpty()) {

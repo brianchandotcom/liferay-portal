@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -209,6 +210,11 @@ public abstract class BaseAssetRendererFactory<T>
 		return getTypeName(locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getURLAdd(LiferayPortletRequest, LiferayPortletResponse,
+	 *             long, long)}
+	 */
 	@Deprecated
 	@Override
 	public PortletURL getURLAdd(
@@ -216,14 +222,37 @@ public abstract class BaseAssetRendererFactory<T>
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		return getURLAdd(liferayPortletRequest, liferayPortletResponse, 0);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return getURLAdd(
+			liferayPortletRequest, liferayPortletResponse,
+			themeDisplay.getScopeGroupId(), 0);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getURLAdd(LiferayPortletRequest, LiferayPortletResponse,
+	 *             long, long)}
+	 */
+	@Deprecated
+	@Override
+	@SuppressWarnings("unused")
+	public PortletURL getURLAdd(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classTypeId)
+		throws PortalException {
+
+		return getURLAdd(liferayPortletRequest, liferayPortletResponse, 0, 0);
 	}
 
 	@Override
 	@SuppressWarnings("unused")
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, long classTypeId)
+			LiferayPortletResponse liferayPortletResponse, long groupId,
+			long classTypeId)
 		throws PortalException {
 
 		return null;

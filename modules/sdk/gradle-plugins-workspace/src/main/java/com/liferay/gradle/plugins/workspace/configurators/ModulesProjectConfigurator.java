@@ -36,8 +36,10 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
@@ -98,8 +100,20 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			return null;
 		}
 
-		return GradleUtil.addMavenRepository(
-			project, LiferayDefaultsPlugin.DEFAULT_REPOSITORY_URL);
+		RepositoryHandler repositoryHandler = project.getRepositories();
+
+		return repositoryHandler.maven(
+			new Action<MavenArtifactRepository>() {
+
+				@Override
+				public void execute(
+					MavenArtifactRepository mavenArtifactRepository) {
+
+					mavenArtifactRepository.setUrl(
+						LiferayDefaultsPlugin.DEFAULT_REPOSITORY_URL);
+				}
+
+			});
 	}
 
 	protected void configureLiferay(

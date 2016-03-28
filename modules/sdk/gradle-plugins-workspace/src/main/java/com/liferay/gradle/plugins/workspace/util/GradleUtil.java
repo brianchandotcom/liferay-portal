@@ -19,10 +19,6 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
-import org.gradle.api.Action;
-import org.gradle.api.Project;
-import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.internal.DynamicObject;
 import org.gradle.api.internal.DynamicObjectUtil;
@@ -31,24 +27,6 @@ import org.gradle.api.internal.DynamicObjectUtil;
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
-
-	public static MavenArtifactRepository addMavenRepository(
-		Project project, final Object url) {
-
-		RepositoryHandler repositoryHandler = project.getRepositories();
-
-		return repositoryHandler.maven(
-			new Action<MavenArtifactRepository>() {
-
-				@Override
-				public void execute(
-					MavenArtifactRepository mavenArtifactRepository) {
-
-					mavenArtifactRepository.setUrl(url);
-				}
-
-			});
-	}
 
 	public static String getProjectPath(File projectDir, File rootDir) {
 		String projectPath = FileUtil.relativize(projectDir, rootDir);

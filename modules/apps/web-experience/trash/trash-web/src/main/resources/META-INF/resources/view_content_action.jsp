@@ -20,7 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
-	redirect = trashDisplayContext.getContainerEntryRedirectURL();
+	redirect = trashDisplayContext.getContainerModelRedirectURL();
 }
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

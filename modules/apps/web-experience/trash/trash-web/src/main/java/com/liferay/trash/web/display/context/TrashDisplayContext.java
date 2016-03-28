@@ -82,9 +82,9 @@ public class TrashDisplayContext {
 		return ParamUtil.getLong(_request, "classPK");
 	}
 
-	public String getContainerEntryRedirectURL() throws PortalException {
-		if (Validator.isNotNull(_containerEntryRedirectURL)) {
-			return _containerEntryRedirectURL;
+	public String getContainerModelRedirectURL() throws PortalException {
+		if (Validator.isNotNull(_containerModelRedirectURL)) {
+			return _containerModelRedirectURL;
 		}
 
 		String redirect = ParamUtil.getString(_request, "redirect");
@@ -112,7 +112,7 @@ public class TrashDisplayContext {
 			redirect = redirectURL.toString();
 		}
 
-		_containerEntryRedirectURL = redirect;
+		_containerModelRedirectURL = redirect;
 
 		return redirect;
 	}
@@ -264,7 +264,7 @@ public class TrashDisplayContext {
 		return redirect;
 	}
 
-	private String _containerEntryRedirectURL;
+	private String _containerModelRedirectURL;
 	private String _displayStyle;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;

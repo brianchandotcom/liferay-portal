@@ -70,7 +70,7 @@ public class SiteTeamsDisplayContext {
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
 		_displayStyle = portalPreferences.getValue(
-			SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "list");
+			SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
 
 		return _displayStyle;
 	}

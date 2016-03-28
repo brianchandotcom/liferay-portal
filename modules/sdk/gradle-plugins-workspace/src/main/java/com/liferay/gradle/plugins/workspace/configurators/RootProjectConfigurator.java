@@ -153,6 +153,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		download.dest(destinationDir);
 
+		download.onlyIfNewer(true);
 		download.setDescription("Downloads the Liferay bundle zip file.");
 
 		try {

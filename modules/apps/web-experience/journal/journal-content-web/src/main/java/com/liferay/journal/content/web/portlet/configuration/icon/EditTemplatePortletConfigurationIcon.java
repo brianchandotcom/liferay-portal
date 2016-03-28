@@ -41,7 +41,7 @@ public class EditTemplatePortletConfigurationIcon
 
 	@Override
 	public String getJspPath() {
-		return "/edit_template.jsp";
+		return "/configuration/icon/edit_template.jsp";
 	}
 
 	@Override

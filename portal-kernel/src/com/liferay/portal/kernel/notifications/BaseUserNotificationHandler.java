@@ -154,13 +154,14 @@ public abstract class BaseUserNotificationHandler
 
 	protected String getBodyTemplate() throws Exception {
 		if (isActionable()) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("<div class=\"title\">[$TITLE$]</div><div ");
-			sb.append("class=\"body\"><a class=\"btn btn-action ");
-			sb.append("btn-success\" href=\"[$CONFIRM_URL$]\">[$CONFIRM$]</a>");
-			sb.append("<a class=\"btn btn-action btn-warning\" href=\"");
-			sb.append("[$IGNORE_URL$]\">[$IGNORE$]</a></div>");
+			sb.append("class=\"body\"><div class=\"button-holder\">");
+			sb.append("<a class=\"btn btn-lg btn-primary\"");
+			sb.append("href=\"[$CONFIRM_URL$]\">[$CONFIRM$]</a>");
+			sb.append("<a class=\"btn btn-lg btn-default\" href=\"");
+			sb.append("[$IGNORE_URL$]\">[$IGNORE$]</a></div></div>");
 
 			return sb.toString();
 		}

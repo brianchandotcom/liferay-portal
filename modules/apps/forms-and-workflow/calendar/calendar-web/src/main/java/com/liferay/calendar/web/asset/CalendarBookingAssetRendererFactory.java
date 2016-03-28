@@ -26,11 +26,11 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -100,8 +100,7 @@ public class CalendarBookingAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse, long groupId,
-			long classTypeId)
+			LiferayPortletResponse liferayPortletResponse, long classTypeId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -117,7 +116,8 @@ public class CalendarBookingAssetRendererFactory
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			liferayPortletRequest,
+			(Group)liferayPortletRequest.getAttribute(WebKeys.GROUP),
 			CalendarPortletKeys.CALENDAR, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
@@ -187,13 +187,7 @@ public class CalendarBookingAssetRendererFactory
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private CalendarBookingLocalService _calendarBookingLocalService;
-	private GroupLocalService _groupLocalService;
 	private ServletContext _servletContext;
 
 }

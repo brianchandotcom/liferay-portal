@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.undercouch</groupId>
+  <artifactId>gradle-download-task</artifactId>
+  <version>2.1.0</version>
+  <name>gradle-download-task</name>
+  <description>Adds a download task to Gradle that displays progress information</description>
+  <url>https://github.com/michel-kraemer/gradle-download-task</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>michel-kraemer</id>
+      <name>Michel Kraemer</name>
+      <email>michel@undercouch.de</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/michel-kraemer/gradle-download-task.git</connection>
+    <developerConnection>scm:git:git://github.com/michel-kraemer/gradle-download-task.git</developerConnection>
+    <url>scm:git:git://github.com/michel-kraemer/gradle-download-task.git</url>
+  </scm>
+</project>

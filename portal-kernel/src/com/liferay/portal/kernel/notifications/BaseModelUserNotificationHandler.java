@@ -98,6 +98,21 @@ public abstract class BaseModelUserNotificationHandler
 		return jsonObject.getString("entryTitle");
 	}
 
+	protected String getFormattedMessage(
+		JSONObject jsonObject, ServiceContext serviceContext, String message,
+		String typeName) {
+
+		return LanguageUtil.format(
+			serviceContext.getLocale(), message,
+			new String[] {
+				HtmlUtil.escape(
+					PortalUtil.getUserName(
+						jsonObject.getLong("userId"), StringPool.BLANK)),
+				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
+			},
+			false);
+	}
+
 	@Override
 	protected String getLink(
 			UserNotificationEvent userNotificationEvent,
@@ -137,15 +152,8 @@ public abstract class BaseModelUserNotificationHandler
 			message = "x-updated-a-x";
 		}
 
-		return LanguageUtil.format(
-			serviceContext.getLocale(), message,
-			new String[] {
-				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						jsonObject.getLong("userId"), StringPool.BLANK)),
-				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-			},
-			false);
+		return getFormattedMessage(
+			jsonObject, serviceContext, message, typeName);
 	}
 
 }

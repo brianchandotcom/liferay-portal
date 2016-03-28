@@ -38,21 +38,20 @@ catch (Exception e) {
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-danger publish-error">
-			<h4 class="upload-error-message">
 
-				<%
-				boolean exported = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported");
-				boolean validated = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated");
-				%>
+			<%
+			boolean exported = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported");
+			boolean validated = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated");
+			%>
 
-				<c:choose>
-					<c:when test="<%= exported && !validated %>">
-						<liferay-ui:message key="the-publication-process-did-not-start-due-to-validation-errors" /></h4>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="an-unexpected-error-occurred-with-the-publication-process.-please-check-your-portal-and-publishing-configuration" /></h4>
-					</c:otherwise>
-				</c:choose>
+			<c:choose>
+				<c:when test="<%= exported && !validated %>">
+					<h4 class="upload-error-message"><liferay-ui:message key="the-publication-process-did-not-start-due-to-validation-errors" /></h4>
+				</c:when>
+				<c:otherwise>
+					<h4 class="upload-error-message"><liferay-ui:message key="an-unexpected-error-occurred-with-the-publication-process.-please-check-your-portal-and-publishing-configuration" /></h4>
+				</c:otherwise>
+			</c:choose>
 
 			<span class="error-message"><%= HtmlUtil.escape(jsonObject.getString("message")) %></span>
 

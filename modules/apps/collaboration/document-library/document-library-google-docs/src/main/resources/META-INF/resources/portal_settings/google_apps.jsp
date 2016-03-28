@@ -16,7 +16,7 @@
 
 <%@ include file="/portal_settings/init.jsp" %>
 
-<h3><liferay-ui:message key="google-apps" /><h3>
+<h3><liferay-ui:message key="google-apps" /></h3>
 
 <%
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());

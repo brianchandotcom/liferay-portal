@@ -261,6 +261,7 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 						</ul>
 					</div>
 				</c:if>
+			</div>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

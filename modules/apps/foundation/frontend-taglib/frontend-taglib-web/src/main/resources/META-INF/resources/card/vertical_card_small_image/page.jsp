@@ -17,5 +17,5 @@
 <%@ include file="/card/vertical_card_small_image/init.jsp" %>
 
 <div class="sticker sticker-bottom <%= cssClass %>">
-	<img alt="thumbnail" class="img-responsive" src="<%= src %>">
+	<img alt="thumbnail" class="img-responsive" src="<%= src %>" />
 </div>

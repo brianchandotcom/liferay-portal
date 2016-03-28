@@ -21,7 +21,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 
 <div class="lfr-permission-navigation-container" id="<portlet:namespace />permissionNavigationContainer">
 	<div class="search" id="<portlet:namespace />permissionNavigationSearchContainer">
-		<input class="field form-control search-query" id="<portlet:namespace />permissionNavigationSearch" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text">
+		<input class="field form-control search-query" id="<portlet:namespace />permissionNavigationSearch" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" />
 	</div>
 
 	<div class="lfr-permission-navigation" id="<portlet:namespace />permissionNavigationDataContainer">

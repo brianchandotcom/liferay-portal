@@ -317,8 +317,8 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 				<aui:button cssClass="btn-lg" type="submit" value="import" />
 			</aui:button-row>
 		</aui:fieldset-group>
-	</aui:form>
-</div>
+	</div>
+</aui:form>
 
 <aui:script use="liferay-export-import">
 	new Liferay.ExportImport(

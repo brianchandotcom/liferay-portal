@@ -137,7 +137,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 								}
 							%>
 
-								<a href="<%= rowURL %>" /><%= name %></a>
+								<a href="<%= rowURL %>"><%= name %></a>
 
 							<%
 							}

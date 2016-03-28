@@ -4066,7 +4066,7 @@ focus on supported features.
 
 #### What changed?
 
-- `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` have been removed with no replacement.
+- `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` was removed with no replacement.
 
 #### Who is affected?
 
@@ -4074,12 +4074,13 @@ focus on supported features.
 
 #### How should I update my code?
 
-If you are in an OSGi module, you can simply inject the DDMXML references.
+In an OSGi module, simply inject the DDMXML reference.
 
     @Reference
     private DDMXML _ddmXML;
  
-If you are in a legacy WAR or WAB, you will need a snippet like:
+In a legacy WAR or WAB, you need to get a DDMXML service reference from the
+bundle context.
 
     Bundle bundle = FrameworkUtil.getBundle(getClass());
 

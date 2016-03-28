@@ -45,6 +45,22 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.addDDLRecord(ddlRecord);
 	}
 
+	/**
+	* Adds a record referencing the record set.
+	*
+	* @param userId the primary key of the record's creator/owner
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is displayed
+	in the spreadsheet view
+	* @param ddmFormValues the record values. See <code>DDMFormValues</code>
+	in the <code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can set
+	the UUID, guest permissions, and group permissions for the
+	record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
@@ -55,6 +71,26 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			displayIndex, ddmFormValues, serviceContext);
 	}
 
+	/**
+	* Adds a record that's based on the fields object and that references the
+	* record set.
+	*
+	* @param userId the primary key of the record's creator/owner
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view.
+	* @param fields the record values. See the dynamic-data-mapping-api
+	module's Fields class for more information.
+	* @param serviceContext the service context to be applied. This can
+	set the UUID, guest permissions, and group permissions for
+	the record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
@@ -65,6 +101,26 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			displayIndex, fields, serviceContext);
 	}
 
+	/**
+	* Adds a record that's based on the fields map and that references the
+	* record set.
+	*
+	* @param userId the primary key of the record's creator/owner
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and their serializable values.
+	* @param serviceContext the service context to be applied. This can
+	set the UUID, guest permissions, and group permissions for
+	the record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
@@ -123,6 +179,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.deletePersistedModel(persistedModel);
 	}
 
+	/**
+	* Deletes the record and its resources.
+	*
+	* @param record the record to be deleted
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecord(
 		com.liferay.dynamic.data.lists.model.DDLRecord record)
@@ -130,12 +193,31 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.deleteRecord(record);
 	}
 
+	/**
+	* Deletes the record and its resources.
+	*
+	* @param recordId the primary key of the record to be deleted
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public void deleteRecord(long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddlRecordLocalService.deleteRecord(recordId);
 	}
 
+	/**
+	* Disassociates the locale from the record.
+	*
+	* @param recordId the primary key of the record
+	* @param locale the locale of the record values to be removed
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the affected record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
 		long recordId, java.util.Locale locale,
@@ -145,6 +227,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			serviceContext);
 	}
 
+	/**
+	* Deletes all the record set's records.
+	*
+	* @param recordSetId the primary key of the record set from which to
+	delete records
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public void deleteRecords(long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -255,6 +344,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			groupId);
 	}
 
+	/**
+	* Returns the record with the ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the record with the ID, or <code>null</code> if a matching record
+	could not be found
+	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord fetchRecord(
 		long recordId) {
@@ -266,6 +362,32 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* Returns an ordered range of all the records matching the company,
+	* workflow status, and scope.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param companyId the primary key of the record's company
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param scope the record's scope. For more information search the
+	dynamic-data-lists-api module's DDLRecordSetConstants class for
+	constants starting with the "SCOPE_" prefix.
+	* @param start the lower bound of the range of records to return
+	* @param end the upper bound of the range of records to return (not
+	inclusive)
+	* @param orderByComparator the comparator to order the records
+	* @return the range of matching records ordered by the comparator
+	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getCompanyRecords(
 		long companyId, int status, int scope, int start, int end,
@@ -274,6 +396,19 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			scope, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of records matching the company, workflow status, and
+	* scope.
+	*
+	* @param companyId the primary key of the record's company
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param scope the record's scope. For more information search the
+	dynamic-data-lists-api module's DDLRecordSetConstants class for
+	constants starting with the "SCOPE_" prefix.
+	* @return the number of matching records
+	*/
 	@Override
 	public int getCompanyRecordsCount(long companyId, int status, int scope) {
 		return _ddlRecordLocalService.getCompanyRecordsCount(companyId, status,
@@ -368,6 +503,15 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getDDLRecordsCount();
 	}
 
+	/**
+	* Returns the DDM form values object associated with the record storage ID
+	* See <code>DDLRecord#getDDMFormValues</code> in the
+	* <code>com.liferay.dynamic.data.lists.api</code> module.
+	*
+	* @param ddmStorageId the storage ID associated with the record
+	* @return the DDM form values
+	* @throws StorageException
+	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues(
 		long ddmStorageId)
@@ -388,8 +532,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getLatestRecordVersion(
-	long)}
+	DDLRecordVersionLocalService#getLatestRecordVersion(long)}
 	*/
 	@Deprecated
 	@Override
@@ -431,6 +574,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* Returns the record with the ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the record with the ID
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord getRecord(
 		long recordId)
@@ -489,12 +639,41 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getRecordVersionsCount(recordId);
 	}
 
+	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
 		long recordSetId) {
 		return _ddlRecordLocalService.getRecords(recordSetId);
 	}
 
+	/**
+	* Returns an ordered range of all the records matching the record set ID
+	* and workflow status.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param start the lower bound of the range of records to return
+	* @param end the upper bound of the range of records to return (not
+	inclusive)
+	* @param orderByComparator the comparator to order the records
+	* @return the range of matching records ordered by the comparator
+	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
 		long recordSetId, int status, int start, int end,
@@ -503,17 +682,44 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			end, orderByComparator);
 	}
 
+	/**
+	* Returns all the records matching the record set ID and user ID.
+	*
+	* @param recordSetId the record's record set ID
+	* @param userId the user ID the records belong to
+	* @return the list of matching records ordered by the comparator
+	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
 		long recordSetId, long userId) {
 		return _ddlRecordLocalService.getRecords(recordSetId, userId);
 	}
 
+	/**
+	* Returns the number of records matching the record set ID and workflow
+	* status.
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @return the number of matching records
+	*/
 	@Override
 	public int getRecordsCount(long recordSetId, int status) {
 		return _ddlRecordLocalService.getRecordsCount(recordSetId, status);
 	}
 
+	/**
+	* Reverts the record to the given version.
+	*
+	* @param userId the primary key of the user who is reverting the record
+	* @param recordId the primary key of the record
+	* @param version the version to revert to
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public void revertRecord(long userId, long recordId,
 		java.lang.String version,
@@ -537,18 +743,49 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			serviceContext);
 	}
 
+	/**
+	* Returns hits to all the records indexed by the search engine matching the
+	* search context.
+	*
+	* @param searchContext the search context to be applied for searching
+	records. For more information, see <code>SearchContext</code> in
+	the <code>portal-kernel</code> module.
+	* @return the hits of the records that matched the search criteria.
+	*/
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		return _ddlRecordLocalService.search(searchContext);
 	}
 
+	/**
+	* Searches for records documents indexed by the search engine.
+	*
+	* @param searchContext the search context to be applied for searching
+	documents. For more information, see <code>SearchContext</code>
+	in the <code>portal-kernel</code> module.
+	* @return BaseModelSearchResult containing the list of records that matched
+	the search criteria
+	*/
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.dynamic.data.lists.model.DDLRecord> searchDDLRecords(
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		return _ddlRecordLocalService.searchDDLRecords(searchContext);
 	}
 
+	/**
+	* Updates the record's asset with new asset categories, tag names, and link
+	* entries, removing and adding them as necessary.
+	*
+	* @param userId the primary key of the user updating the record's asset
+	* @param record the record
+	* @param recordVersion the record version
+	* @param assetCategoryIds the primary keys of the new asset categories
+	* @param assetTagNames the new asset tag names
+	* @param locale the locale to apply to the asset
+	* @param priority the new priority
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.dynamic.data.lists.model.DDLRecord record,
@@ -572,6 +809,25 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.updateDDLRecord(ddlRecord);
 	}
 
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param userId the primary key of the user updating the record
+	* @param recordId the primary key of the record
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, long,
+	boolean, int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long userId, long recordId, int displayIndex,
@@ -583,6 +839,22 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			displayIndex, fieldsMap, mergeFields, serviceContext);
 	}
 
+	/**
+	* Updates the record, replacing its display index and values.
+	*
+	* @param userId the primary key of the user updating the record
+	* @param recordId the primary key of the record
+	* @param majorVersion whether this update is a major change. A major
+	change increments the record's major version number.
+	* @param displayIndex the index position in which the record is displayed
+	in the spreadsheet view
+	* @param ddmFormValues the record values. See <code>DDMFormValues</code>
+	in the <code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long userId, long recordId, boolean majorVersion, int displayIndex,
@@ -593,6 +865,27 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			majorVersion, displayIndex, ddmFormValues, serviceContext);
 	}
 
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param userId the primary key of the user updating the record
+	* @param recordId the primary key of the record
+	* @param majorVersion whether this update is a major change. A major
+	change increments the record's major version number
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view.
+	* @param fields the record values. See <code>Fields</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, long,
+	boolean, int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long userId, long recordId, boolean majorVersion, int displayIndex,
@@ -604,6 +897,18 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			majorVersion, displayIndex, fields, mergeFields, serviceContext);
 	}
 
+	/**
+	* Updates the workflow status of the record version.
+	*
+	* @param userId the primary key of the user updating the record's workflow
+	status
+	* @param recordVersionId the primary key of the record version
+	* @param status
+	* @param serviceContext the service context to be applied. This can set
+	the modification date and status date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateStatus(
 		long userId, long recordVersionId, int status,

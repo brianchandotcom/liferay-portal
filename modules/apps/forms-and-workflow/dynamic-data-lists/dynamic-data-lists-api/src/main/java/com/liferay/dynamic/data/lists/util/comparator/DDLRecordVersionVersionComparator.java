@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Comparator;
 
 /**
+ * Used to order a list of record versions by version number. The order can be
+ * ascending or descending and is defined by the value specified in the class
+ * constructor.
+ *
  * @author Marcellus Tavares
  */
 public class DDLRecordVersionVersionComparator

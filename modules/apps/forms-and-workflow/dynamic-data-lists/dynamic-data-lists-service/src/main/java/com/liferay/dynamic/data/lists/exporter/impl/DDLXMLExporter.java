@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,7 +72,7 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	@Override
 	protected byte[] doExport(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator<DDLRecord> orderByComparator)
+			OrderByComparator<DDLRecord> orderByComparator, Locale locale)
 		throws Exception {
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
@@ -108,16 +109,15 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				if (fields.contains(name)) {
 					Field field = fields.get(name);
 
-					value = field.getRenderedValue(getLocale());
+					value = field.getRenderedValue(locale);
 				}
 
-				addFieldElement(
-					fieldsElement, label.getString(getLocale()), value);
+				addFieldElement(fieldsElement, label.getString(locale), value);
 			}
 
 			addFieldElement(
-				fieldsElement, LanguageUtil.get(getLocale(), "status"),
-				getStatusMessage(recordVersion.getStatus()));
+				fieldsElement, LanguageUtil.get(locale, "status"),
+				getStatusMessage(recordVersion.getStatus(), locale));
 		}
 
 		String xml = document.asXML();

@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * Thrown when the system is unable to find the required DDM Structure set for a
+ * Record Set.
+ *
  * @author Brian Wing Shun Chan
  */
 @ProviderType

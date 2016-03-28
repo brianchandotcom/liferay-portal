@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"service.ranking:Integer=30"},
+	property = {"form.navigator.category.order:Integer=30"},
 	service = FormNavigatorCategory.class
 )
 public class LayoutSEOFormNavigatorCategory implements FormNavigatorCategory {

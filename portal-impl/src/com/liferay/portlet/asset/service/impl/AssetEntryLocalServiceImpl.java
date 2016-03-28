@@ -536,6 +536,41 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public long searchCount(AssetTag tag, int[] statuses) {
+		try {
+			Indexer<?> indexer = AssetSearcher.getInstance();
+
+			AssetSearcher assetSearcher = (AssetSearcher)indexer;
+
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+			assetEntryQuery.setAnyTagIds(new long[] {tag.getTagId()});
+
+			assetEntryQuery.setClassNameIds(
+				getClassNameIds(tag.getCompanyId(), null));
+
+			SearchContext searchContext = buildSearchContext(
+				tag.getCompanyId(), null, tag.getUserId(), 0L, null, null, null,
+				null, tag.getName(), true, statuses, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			assetEntryQuery.setAttribute("includeHidden", true);
+
+			assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+			return assetSearcher.searchCount(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
 	public long searchCount(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, boolean showNonindexable,

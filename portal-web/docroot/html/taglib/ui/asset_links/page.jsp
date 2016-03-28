@@ -19,6 +19,8 @@
 <%
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-links:assetEntryId"));
 
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links:portletURL");
+
 List<AssetLink> assetLinks = null;
 
 if (assetEntryId > 0) {
@@ -72,23 +74,27 @@ if (assetEntryId > 0) {
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
-					PortletURL assetPublisherURL = PortletProviderUtil.getPortletURL(request, assetRenderer.getClassName(), PortletProvider.Action.VIEW);
+					if (portletURL == null) {
+						portletURL = PortletProviderUtil.getPortletURL(
+								request, assetRenderer.getClassName(),
+								PortletProvider.Action.VIEW);
 
-					assetPublisherURL.setParameter("redirect", currentURL);
-					assetPublisherURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
-					assetPublisherURL.setParameter("type", assetRendererFactory.getType());
+						portletURL.setWindowState(WindowState.MAXIMIZED);
+					}
+
+					portletURL.setParameter("redirect", currentURL);
+					portletURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
+					portletURL.setParameter("type", assetRendererFactory.getType());
 
 					if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 						if (assetRenderer.getGroupId() != themeDisplay.getSiteGroupId()) {
-							assetPublisherURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+							portletURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
 						}
 
-						assetPublisherURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+						portletURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
-
-					String viewFullContentURLString = assetPublisherURL.toString();
+					String viewFullContentURLString = portletURL.toString();
 
 					viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 

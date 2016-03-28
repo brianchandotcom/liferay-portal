@@ -14,6 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type;
 
+import java.util.Locale;
+
+import com.liferay.portal.kernel.language.LanguageUtil;
+
 /**
  * @author Marcellus Tavares
  */
@@ -24,6 +28,13 @@ public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return DefaultDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		String name = getName();
+
+		return LanguageUtil.get(locale, name.concat("-field-type-label"));
 	}
 
 }

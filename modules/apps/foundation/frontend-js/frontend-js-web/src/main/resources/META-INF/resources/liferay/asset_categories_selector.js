@@ -585,6 +585,8 @@ AUI.add(
 
 						var searchValue = event.currentTarget.val().trim();
 
+						instance._searchValue = searchValue;
+
 						if (searchValue) {
 							searchResults.empty();
 
@@ -636,9 +638,12 @@ AUI.add(
 							className,
 							function(entries) {
 								var searchResults = instance._searchResultsNode;
+								var searchValue = instance._searchValue;
 
 								if (searchResults) {
 									searchResults.removeClass('loading-animation');
+
+									searchResults.toggle(!!searchValue);
 								}
 
 								popup.entriesNode.all('.tree-view, .loading-animation').remove(true);
@@ -648,6 +653,8 @@ AUI.add(
 								A.each(
 									instance.TREEVIEWS,
 									function(item, index) {
+										item.toggle(!searchValue);
+
 										item.expandAll();
 									}
 								);

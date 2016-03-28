@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
@@ -151,11 +152,12 @@ public class DLFileEntryAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long groupId,
+		long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			DLPortletKeys.DOCUMENT_LIBRARY, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
@@ -235,7 +237,13 @@ public class DLFileEntryAssetRendererFactory
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

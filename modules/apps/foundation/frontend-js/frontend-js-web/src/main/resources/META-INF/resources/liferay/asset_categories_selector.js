@@ -378,7 +378,9 @@ AUI.add(
 						return match ? match[1] : null;
 					},
 
-					_initSearch: function() {
+					_initSearch: EMPTY_FN,
+
+					initSearchFocus: function() {
 						var instance = this;
 
 						var popup = instance._popup;
@@ -650,7 +652,7 @@ AUI.add(
 							instance._bindSearchHandle.detach();
 						}
 
-						instance._bindSearchHandle = popup.searchField.once('focus', instance._initSearch, instance);
+						instance._bindSearchHandle = popup.searchField.once('focus', instance.initSearchFocus, instance);
 					},
 
 					_vocabulariesIterator: function(item, index) {

@@ -147,7 +147,7 @@ public class WorkspaceExtension {
 	private static final String _BUNDLE_ARTIFACT_NAME = "portal-tomcat-bundle";
 
 	private static final String _BUNDLE_ARTIFACT_VERSION =
-		"7.0-ce-b2-20160105152151933";
+		"7.0-ce-rc1-20160325160942584";
 
 	private static final String _BUNDLE_MAVEN_URL =
 		"https://liferay-test-01.ci.cloudbees.com/job/" +

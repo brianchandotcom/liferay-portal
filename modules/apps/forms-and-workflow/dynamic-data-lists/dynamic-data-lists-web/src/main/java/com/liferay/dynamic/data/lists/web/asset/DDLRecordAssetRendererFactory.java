@@ -27,11 +27,12 @@ import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -121,11 +122,11 @@ public class DDLRecordAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long groupId,
-		long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			liferayPortletRequest,
+			(Group)liferayPortletRequest.getAttribute(WebKeys.GROUP),
 			DDLPortletKeys.DYNAMIC_DATA_LISTS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
@@ -182,14 +183,8 @@ public class DDLRecordAssetRendererFactory
 		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private GroupLocalService _groupLocalService;
 	private ServletContext _servletContext;
 
 }

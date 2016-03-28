@@ -28,6 +28,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -35,9 +36,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
@@ -152,11 +153,11 @@ public class DLFileEntryAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long groupId,
-		long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			liferayPortletRequest,
+			(Group)liferayPortletRequest.getAttribute(WebKeys.GROUP),
 			DLPortletKeys.DOCUMENT_LIBRARY, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
@@ -237,13 +238,7 @@ public class DLFileEntryAssetRendererFactory
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private GroupLocalService _groupLocalService;
 
 }

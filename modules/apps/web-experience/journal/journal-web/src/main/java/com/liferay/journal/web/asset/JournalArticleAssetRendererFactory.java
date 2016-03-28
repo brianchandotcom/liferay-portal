@@ -35,13 +35,14 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
@@ -173,11 +174,11 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long groupId,
-		long classTypeId) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, _groupLocalService.fetchGroup(groupId),
+			liferayPortletRequest,
+			(Group)liferayPortletRequest.getAttribute(WebKeys.GROUP),
 			JournalPortletKeys.JOURNAL, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
@@ -277,11 +278,6 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
@@ -315,7 +311,6 @@ public class JournalArticleAssetRendererFactory
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-	private GroupLocalService _groupLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;

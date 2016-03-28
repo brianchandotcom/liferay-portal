@@ -11,11 +11,11 @@ if (typeof ddm == 'undefined') { var ddm = {}; }
 
 ddm.radio = function(opt_data, opt_ignored) {
   var output = '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + ((opt_data.showLabel) ? '<label class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<span class="icon-asterisk text-warning"></span>' : '') + '</label>' + ((opt_data.tip) ? '<p class="liferay-ddm-form-field-tip">' + soy.$$escapeHtml(opt_data.tip) + '</p>' : '') : '') + '<div class="clearfix radio-options">';
-  var optionList51 = opt_data.options;
-  var optionListLen51 = optionList51.length;
-  for (var optionIndex51 = 0; optionIndex51 < optionListLen51; optionIndex51++) {
-    var optionData51 = optionList51[optionIndex51];
-    output += ((! opt_data.inline) ? '<div class="radio">' : '') + '<label class="radio-default' + soy.$$escapeHtmlAttribute(opt_data.inline ? ' radio-inline' : '') + ' radio-option-' + soy.$$escapeHtmlAttribute(optionData51.value) + '" for="' + soy.$$escapeHtmlAttribute(optionData51.value) + '"><input class="field" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' id="' + soy.$$escapeHtmlAttribute(optionData51.value) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" ' + soy.$$filterHtmlAttributes(optionData51.status) + ' type="radio" value="' + soy.$$escapeHtmlAttribute(optionData51.value) + '" /> ' + soy.$$escapeHtml(optionData51.label) + '</label>' + ((! opt_data.inline) ? '</div>' : '');
+  var optionList55 = opt_data.options;
+  var optionListLen55 = optionList55.length;
+  for (var optionIndex55 = 0; optionIndex55 < optionListLen55; optionIndex55++) {
+    var optionData55 = optionList55[optionIndex55];
+    output += ((! opt_data.inline) ? '<div class="radio">' : '') + '<label class="radio-default' + soy.$$escapeHtmlAttribute(opt_data.inline ? ' radio-inline' : '') + ' radio-option-' + soy.$$escapeHtmlAttribute(optionData55.value) + '" for="' + soy.$$escapeHtmlAttribute(opt_data.name) + '_' + soy.$$escapeHtmlAttribute(optionData55.value) + '"><input class="field" dir="' + soy.$$escapeHtmlAttribute(opt_data.dir) + '" ' + ((opt_data.readOnly) ? 'disabled' : '') + ' id="' + soy.$$escapeHtmlAttribute(opt_data.name) + '_' + soy.$$escapeHtmlAttribute(optionData55.value) + '" name="' + soy.$$escapeHtmlAttribute(opt_data.name) + '" ' + soy.$$filterHtmlAttributes(optionData55.status) + ' type="radio" value="' + soy.$$escapeHtmlAttribute(optionData55.value) + '" /> ' + soy.$$escapeHtml(optionData55.label) + '</label>' + ((! opt_data.inline) ? '</div>' : '');
   }
   output += '</div>' + ((opt_data.childElementsHTML) ? soy.$$filterNoAutoescape(opt_data.childElementsHTML) : '') + '</div>';
   return output;

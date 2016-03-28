@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<h3><liferay-ui:message key="mentions" /><h3>
+<h3><liferay-ui:message key="mentions" /></h3>
 
 <%
 boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.COMPANY_MENTIONS_ENABLED));

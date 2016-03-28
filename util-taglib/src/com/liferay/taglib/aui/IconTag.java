@@ -17,6 +17,8 @@ package com.liferay.taglib.aui;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseIconTag;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eduardo Lundgren
  * @author Bruno Basto
@@ -34,6 +36,21 @@ public class IconTag extends BaseIconTag {
 		}
 
 		return "/html/taglib/aui/icon/page.jsp";
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		if (getSrc() == null) {
+			String src = (String)request.getAttribute("aui:icon:src-ext");
+
+			if (Validator.isNotNull(src)) {
+				setSrc(src);
+			}
+
+			request.removeAttribute("aui:icon:src-ext");
+		}
+
+		super.setAttributes(request);
 	}
 
 }

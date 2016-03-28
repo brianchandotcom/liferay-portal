@@ -65,13 +65,13 @@ boolean ldapPasswordPolicyEnabled = ldapAuthConfiguration.passwordPolicyEnabled(
 			<table class="table table-bordered table-hover table-striped">
 			<thead class="table-columns">
 			<tr>
-				<td class="table-header">
+				<th class="table-header">
 					<liferay-ui:message key="ldap-server-id" />
 				</th>
-				<td class="table-header">
+				<th class="table-header">
 					<liferay-ui:message key="ldap-server-name" />
 				</th>
-				<td class="table-header"></th>
+				<th class="table-header"></th>
 			</tr>
 			</thead>
 

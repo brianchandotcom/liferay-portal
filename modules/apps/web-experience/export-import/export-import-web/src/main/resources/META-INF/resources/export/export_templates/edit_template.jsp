@@ -111,19 +111,18 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 					<liferay-staging:select-pages action="<%= Constants.EXPORT %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= liveGroupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
 				</c:if>
 
-					<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= Constants.EXPORT %>" />
+				<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= Constants.EXPORT %>" />
 
-					<liferay-staging:permissions action="<%= Constants.EXPORT %>" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
-				</aui:fieldset-group>
-			</div>
+				<liferay-staging:permissions action="<%= Constants.EXPORT %>" descriptionCSSClass="permissions-description" exportImportConfigurationId="<%= exportImportConfigurationId %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" />
+			</aui:fieldset-group>
+		</div>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="save" />
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" value="save" />
 
-				<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
-			</aui:button-row>
-		</aui:form>
-	</div>
+			<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
 </div>
 
 <aui:script use="liferay-export-import">

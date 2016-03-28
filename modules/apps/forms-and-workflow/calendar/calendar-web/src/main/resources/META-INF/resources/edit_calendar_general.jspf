@@ -49,7 +49,7 @@
 
 		<c:choose>
 			<c:when test="<%= (calendar != null) && calendar.isDefaultCalendar() %>">
-				<input name="<portlet:namespace />defaultCalendar" type="hidden" value="true">
+				<input name="<portlet:namespace />defaultCalendar" type="hidden" value="true" />
 
 				<aui:input disabled="<%= true %>" name="defaultCalendar" />
 			</c:when>

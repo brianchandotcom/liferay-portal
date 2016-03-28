@@ -35,18 +35,17 @@ public class ContactImpl extends ContactBaseImpl {
 
 	@Override
 	public boolean isUser() {
-		return hasClassName(User.class);
+		return getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID;
 	}
 
-	protected boolean hasClassName(Class<?> clazz) {
-		long classNameId = getClassNameId();
+	private static class ClassNameIds {
 
-		if (classNameId == PortalUtil.getClassNameId(clazz)) {
-			return true;
+		private ClassNameIds() {
 		}
-		else {
-			return false;
-		}
+
+		private static final long _USER_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(User.class);
+
 	}
 
 }

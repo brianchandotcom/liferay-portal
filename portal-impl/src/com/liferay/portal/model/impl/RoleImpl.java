@@ -86,20 +86,19 @@ public class RoleImpl extends RoleBaseImpl {
 
 	@Override
 	public boolean isTeam() {
-		return hasClassName(Team.class);
-	}
-
-	protected boolean hasClassName(Class<?> clazz) {
-		long classNameId = getClassNameId();
-
-		if (classNameId == PortalUtil.getClassNameId(clazz)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return getClassNameId() == ClassNameIds._TEAM_CLASS_NAME_ID;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RoleImpl.class);
+
+	private static class ClassNameIds {
+
+		private ClassNameIds() {
+		}
+
+		private static final long _TEAM_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(Team.class);
+
+	}
 
 }

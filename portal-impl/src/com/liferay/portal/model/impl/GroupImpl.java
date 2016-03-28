@@ -817,7 +817,13 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isCompany() {
-		return hasClassName(Company.class) || isCompanyStagingGroup();
+		if ((getClassNameId() == ClassNameIds._COMPANY_CLASS_NAME_ID) ||
+			isCompanyStagingGroup()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -868,17 +874,18 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isLayout() {
-		return hasClassName(Layout.class);
+		return getClassNameId() == ClassNameIds._LAYOUT_CLASS_NAME_ID;
 	}
 
 	@Override
 	public boolean isLayoutPrototype() {
-		return hasClassName(LayoutPrototype.class);
+		return getClassNameId() == ClassNameIds._LAYOUT_PROTOTYPE_CLASS_NAME_ID;
 	}
 
 	@Override
 	public boolean isLayoutSetPrototype() {
-		return hasClassName(LayoutSetPrototype.class);
+		return getClassNameId() ==
+			ClassNameIds._LAYOUT_SET_PROTOTYPE_CLASS_NAME_ID;
 	}
 
 	@Override
@@ -895,12 +902,12 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isOrganization() {
-		return hasClassName(Organization.class);
+		return getClassNameId() == ClassNameIds._ORGANIZATION_CLASS_NAME_ID;
 	}
 
 	@Override
 	public boolean isRegularSite() {
-		return hasClassName(Group.class);
+		return getClassNameId() == ClassNameIds._GROUP_CLASS_NAME_ID;
 	}
 
 	@Override
@@ -1070,17 +1077,18 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isUser() {
-		return hasClassName(User.class);
+		return getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID;
 	}
 
 	@Override
 	public boolean isUserGroup() {
-		return hasClassName(UserGroup.class);
+		return getClassNameId() == ClassNameIds._USER_GROUP_CLASS_NAME_ID;
 	}
 
 	@Override
 	public boolean isUserPersonalSite() {
-		return hasClassName(UserPersonalSite.class);
+		return getClassNameId() ==
+			ClassNameIds._USER_PERSONAL_SITE_CLASS_NAME_ID;
 	}
 
 	@Override
@@ -1118,21 +1126,44 @@ public class GroupImpl extends GroupBaseImpl {
 		return LayoutConstants.DEFAULT_PLID;
 	}
 
-	protected boolean hasClassName(Class<?> clazz) {
-		long classNameId = getClassNameId();
-
-		if (classNameId == PortalUtil.getClassNameId(clazz)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(GroupImpl.class);
 
 	private Group _liveGroup;
 	private Group _stagingGroup;
 	private UnicodeProperties _typeSettingsProperties;
+
+	private static class ClassNameIds {
+
+		private ClassNameIds() {
+		}
+
+		private static final long _COMPANY_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(Company.class);
+
+		private static final long _GROUP_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(Group.class);
+
+		private static final long _LAYOUT_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(Layout.class);
+
+		private static final long _LAYOUT_PROTOTYPE_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(LayoutPrototype.class);
+
+		private static final long _LAYOUT_SET_PROTOTYPE_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(LayoutSetPrototype.class);
+
+		private static final long _ORGANIZATION_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(Organization.class);
+
+		private static final long _USER_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(User.class);
+
+		private static final long _USER_GROUP_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(UserGroup.class);
+
+		private static final long _USER_PERSONAL_SITE_CLASS_NAME_ID =
+			PortalUtil.getClassNameId(UserPersonalSite.class);
+
+	}
 
 }

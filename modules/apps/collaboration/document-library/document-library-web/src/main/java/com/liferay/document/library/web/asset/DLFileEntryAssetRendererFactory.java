@@ -154,8 +154,8 @@ public class DLFileEntryAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, getGroup(liferayPortletRequest),
+			DLPortletKeys.DOCUMENT_LIBRARY, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");

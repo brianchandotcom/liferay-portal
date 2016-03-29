@@ -101,8 +101,8 @@ public class BookmarksEntryAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, getGroup(liferayPortletRequest),
+			BookmarksPortletKeys.BOOKMARKS, 0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/bookmarks/edit_entry");

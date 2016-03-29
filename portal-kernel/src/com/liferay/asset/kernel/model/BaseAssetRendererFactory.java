@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -330,6 +332,11 @@ public abstract class BaseAssetRendererFactory<T>
 		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+	}
+
+	protected Group getGroup(LiferayPortletRequest liferayPortletRequest) {
+		return (Group)liferayPortletRequest.getAttribute(
+			WebKeys.ASSET_RENDERER_GROUP);
 	}
 
 	protected void setCategorizable(boolean categorizable) {

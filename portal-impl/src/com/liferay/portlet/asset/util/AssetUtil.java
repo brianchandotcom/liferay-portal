@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -258,6 +260,13 @@ public class AssetUtil {
 				themeDisplay.getPermissionChecker(), groupId, classTypeId)) {
 
 			return null;
+		}
+
+		if (groupId > 0) {
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			liferayPortletRequest.setAttribute(
+				WebKeys.ASSET_RENDERER_GROUP, group);
 		}
 
 		PortletURL addPortletURL = assetRendererFactory.getURLAdd(

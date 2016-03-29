@@ -123,7 +123,8 @@ public class DDLRecordAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DDLPortletKeys.DYNAMIC_DATA_LISTS,
+			liferayPortletRequest, getGroup(liferayPortletRequest),
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");

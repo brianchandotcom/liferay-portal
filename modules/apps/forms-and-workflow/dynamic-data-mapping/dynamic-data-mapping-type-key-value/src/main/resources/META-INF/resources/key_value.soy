@@ -14,10 +14,9 @@
  * @param strings
  * @param tooltip
  * @param value
- * @param visible
  */
 {template .key_value}
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
+	<div class="form-group liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}

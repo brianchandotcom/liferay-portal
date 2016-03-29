@@ -275,7 +275,8 @@ public class DDMFormRendererHelper {
 			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
 				ddmFormField, ddmFormFieldRenderingContext);
 
-			return wrapDDMFormFieldHTML(ddmFormFieldHTML);
+			return wrapDDMFormFieldHTML(
+				ddmFormFieldHTML, ddmFormFieldRenderingContext.isVisible());
 		}
 		catch (PortalException pe) {
 			throw new DDMFormRenderingException(pe);
@@ -456,10 +457,18 @@ public class DDMFormRendererHelper {
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
-	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
-		StringBundler sb = new StringBundler(3);
+	protected String wrapDDMFormFieldHTML(
+		String ddmFormFieldHTML, boolean visible) {
 
-		sb.append("<div class=\"lfr-ddm-form-field-container\">");
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<div class=\"");
+
+		if (!visible) {
+			sb.append("hide ");
+		}
+
+		sb.append("lfr-ddm-form-field-container\">");
 		sb.append(ddmFormFieldHTML);
 		sb.append("</div>");
 

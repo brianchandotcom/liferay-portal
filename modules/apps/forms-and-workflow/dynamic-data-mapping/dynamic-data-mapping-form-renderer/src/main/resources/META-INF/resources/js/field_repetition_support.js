@@ -117,7 +117,8 @@ AUI.add(
 							portletNamespace: instance.get('portletNamespace'),
 							repeatedIndex: instance.getRepeatedSiblings().length,
 							repetitions: repetitions,
-							type: type
+							type: type,
+							visible: instance.get('visible')
 						}
 					)
 				).render();

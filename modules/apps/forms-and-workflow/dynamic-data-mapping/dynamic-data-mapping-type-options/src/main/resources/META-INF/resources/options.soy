@@ -7,10 +7,9 @@
  * @param name
  * @param required
  * @param showLabel
- * @param visible
  */
 {template .options}
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-options" data-fieldname="{$name}">
+	<div class="form-group liferay-ddm-form-field-options" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label">
 				{$label}

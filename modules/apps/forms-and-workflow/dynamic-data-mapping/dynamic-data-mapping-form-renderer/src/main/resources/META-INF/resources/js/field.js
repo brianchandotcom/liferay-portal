@@ -11,7 +11,7 @@ AUI.add(
 
 		var TPL_DIV = '<div></div>';
 
-		var TPL_FORM_FIELD_CONTAINER = '<div class="lfr-ddm-form-field-container"></div>';
+		var TPL_FORM_FIELD_CONTAINER = '<div class="{hide} lfr-ddm-form-field-container"></div>';
 
 		var Field = A.Component.create(
 			{
@@ -301,8 +301,7 @@ AUI.add(
 								name: instance.getQualifiedName(),
 								readOnly: instance.get('readOnly'),
 								tip: instance.getLocalizedValue(instance.get('tip')),
-								value: instance.getContextValue() || '',
-								visible: instance.get('visible')
+								value: instance.getContextValue() || ''
 							}
 						);
 					},
@@ -400,7 +399,16 @@ AUI.add(
 					_createContainer: function() {
 						var instance = this;
 
-						var container = A.Node.create(TPL_FORM_FIELD_CONTAINER);
+						var visible = instance.get('visible');
+
+						var container = A.Node.create(
+							Lang.sub(
+								TPL_FORM_FIELD_CONTAINER,
+								{
+									hide: visible ? '' : 'hide'
+								}
+							)
+						);
 
 						container.html(instance.getTemplate());
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.executor.groovy
+package com.liferay.portal.scripting.executor.groovy;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -32,8 +32,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 class GroovyLARUtil {
 
 	static Map<String, String[]> getParameterMap() {
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
@@ -50,8 +49,7 @@ class GroovyLARUtil {
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
 			Boolean.TRUE.toString());
-		parameterMap.put(
-			PortletDataHandlerKeys.LOGO, Boolean.TRUE.toString());
+		parameterMap.put(PortletDataHandlerKeys.LOGO, Boolean.TRUE.toString());
 		parameterMap.put(
 			PortletDataHandlerKeys.PERMISSIONS, Boolean.TRUE.toString());
 		parameterMap.put(
@@ -67,20 +65,15 @@ class GroovyLARUtil {
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
 			Boolean.TRUE.toString());
 		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			Boolean.TRUE.toString());
+			PortletDataHandlerKeys.PORTLET_DATA, Boolean.TRUE.toString());
 		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			Boolean.TRUE.toString());
+			PortletDataHandlerKeys.PORTLET_DATA_ALL, Boolean.TRUE.toString());
 		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP,
-			Boolean.TRUE.toString());
+			PortletDataHandlerKeys.PORTLET_SETUP, Boolean.TRUE.toString());
 		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			Boolean.TRUE.toString());
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL, Boolean.TRUE.toString());
 		parameterMap.put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			Boolean.TRUE.toString());
+			PortletDataHandlerKeys.THEME_REFERENCE, Boolean.TRUE.toString());
 		parameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
 			Boolean.FALSE.toString());
@@ -154,7 +147,6 @@ class GroovyLARUtil {
 				buildImportPortletSettingsMap(
 					groovyUser.user, layout.getPlid(), groupId, portletId,
 					getParameterMap());
-
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

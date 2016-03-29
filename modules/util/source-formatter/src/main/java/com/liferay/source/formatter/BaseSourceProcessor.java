@@ -40,9 +40,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -68,6 +70,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public final void format() throws Exception {
+		preFormat();
+
 		for (String fileName : getFileNames()) {
 			try {
 				format(fileName);
@@ -561,7 +565,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String fixCopyright(
-			String content, String absolutePath, String fileName)
+			String content, String absolutePath, String fileName,
+			String className)
 		throws IOException {
 
 		if (_copyright == null) {
@@ -2161,6 +2166,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected boolean isModulesFile(String absolutePath) {
 		return absolutePath.contains("/modules/");
+	}
+
+	protected void preFormat() throws Exception {
 	}
 
 	protected void postFormat() throws Exception {

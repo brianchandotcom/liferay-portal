@@ -1,3 +1,3 @@
-package com.liferay.portal.scripting.groovy.internal.dependencies
+package com.liferay.portal.scripting.groovy.internal.dependencies;
 
-throw new RuntimeException()
+throw new RuntimeException();

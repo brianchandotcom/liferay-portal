@@ -30,8 +30,8 @@ class GroovyDDLRecordSet {
 		String recordSetKey_, String name_, String description_) {
 
 		this(
-			groovySite_, groovyDDMStructure_, recordSetKey_,
-			name_, description_,DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+			groovySite_, groovyDDMStructure_, recordSetKey_, name_,
+			description_, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
 	}
 
 	GroovyDDLRecordSet(

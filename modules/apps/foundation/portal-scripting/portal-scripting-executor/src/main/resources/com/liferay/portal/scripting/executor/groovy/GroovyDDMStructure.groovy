@@ -14,13 +14,11 @@
 
 package com.liferay.portal.scripting.executor.groovy;
 
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 
 /**
  * @author Michael C. Han
@@ -37,7 +35,7 @@ class GroovyDDMStructure {
 		description = description_;
 		xsd = xsd_;
 	}
-		
+
 	void create(GroovyScriptingContext scriptingContext) {
 		ddmStructure = GroovyDDMStructure.fetchStructure(
 			scriptingContext, groovySite, structureKey);
@@ -50,13 +48,14 @@ class GroovyDDMStructure {
 			scriptingContext.getDefaultUserId(), groovySite.group.getGroupId(),
 			0, ClassNameLocalServiceUtil.getClassNameId(DDLRecordSet.class),
 			null, GroovyScriptingContext.getLocalizationMap(name),
-			GroovyScriptingContext.getLocalizationMap(description),
-			xsd, "xml", DDMStructureConstants.TYPE_DEFAULT,
+			GroovyScriptingContext.getLocalizationMap(description), xsd, "xml",
+			DDMStructureConstants.TYPE_DEFAULT,
 			scriptingContext.getServiceContext());
 	}
 
-	static DDMStructure fetchStructure(GroovyScriptingContext scriptingContext,
-		GroovySite groovySite_, String structureKey_) {
+	static DDMStructure fetchStructure(
+		GroovyScriptingContext scriptingContext, GroovySite groovySite_,
+		String structureKey_) {
 
 		long classnameId = ClassNameLocalServiceUtil.getClassNameId(
 			DDLRecordSet.class);

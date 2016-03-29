@@ -12,25 +12,24 @@
  * details.
  */
 
-import com.mulesoft.tcat.util.InstallBuilder
+import com.mulesoft.tcat.ServerProfileManager;
+import com.mulesoft.tcat.util.InstallBuilder;
+
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.mule.galaxy.Item;
 import org.mule.galaxy.NotFoundException;
 import org.mule.galaxy.Registry;
 import org.mule.galaxy.impl.jcr.JcrUtil;
 import org.mule.galaxy.script.Script;
-import org.mule.galaxy.script.ScriptManager
+import org.mule.galaxy.script.ScriptManager;
 import org.mule.galaxy.type.TypeManager;
 import org.mule.galaxy.util.IOUtils;
 
-import com.mulesoft.tcat.ServerProfileManager;
-
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-
 import org.springframework.context.ApplicationContext;
 
-import org.springmodules.jcr.JcrCallback
+import org.springmodules.jcr.JcrCallback;
 
 /**
  * This tcat-init.groovy script initializes the Tcat admin server by loading
@@ -66,36 +65,36 @@ import org.springmodules.jcr.JcrCallback
  */
 class InitializeLiferayDeployment implements JcrCallback {
 
-    public InitializeLiferayDeployment(ApplicationContext applicationContext) {
+	public InitializeLiferayDeployment(ApplicationContext applicationContext) {
 		_applicationContext = applicationContext;
 
 		_registry = (Registry)_applicationContext.getBean("registry");
 		_typeManager = (TypeManager)_applicationContext.getBean("typeManager");
-    }
+	}
 
-    public Object doInJcr(Session session)
+	public Object doInJcr(Session session)
 		throws IOException, RepositoryException {
 
-        InstallBuilder installBuilder = new InstallBuilder(_applicationContext);
+		InstallBuilder installBuilder = new InstallBuilder(_applicationContext);
 
-        // Register the local Tcat agent
+		// Register the local Tcat agent
 
 		//installBuilder.registerConsoleAgent("TcatServer")
 
-        // Import the Liferay server profile into the Tcat repository
+		// Import the Liferay server profile into the Tcat repository
 
 		_loadServerProfiles(installBuilder);
 
-        // Loop through all WAR files and add them to the Tcat repository
+		// Loop through all WAR files and add them to the Tcat repository
 
 		_loadWebapps(installBuilder);
 
-        // Loop through all scripts and add them to Tcat console
+		// Loop through all scripts and add them to Tcat console
 
 		_loadScripts(installBuilder);
 
-        return "Completed Initialization";
-    }
+		return "Completed Initialization";
+	}
 
 	public List<Script> getScripts() {
 		return _scripts;
@@ -249,9 +248,9 @@ class InitializeLiferayDeployment implements JcrCallback {
 		}
 	}
 
-    private ApplicationContext _applicationContext;
+	private ApplicationContext _applicationContext;
 	private Registry _registry;
-	private List<Script> _scripts = new ArrayList<Script>();
+	private List<Script> _scripts = new ArrayList<>();
 	private TypeManager _typeManager;
 
 }

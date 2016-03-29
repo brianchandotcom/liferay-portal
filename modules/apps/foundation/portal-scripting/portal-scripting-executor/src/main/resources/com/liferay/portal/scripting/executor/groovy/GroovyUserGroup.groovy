@@ -44,7 +44,7 @@ class GroovyUserGroup {
 			create(groovyScriptingContext);
 		}
 
-		List<User> users = new ArrayList<Long>(groovyUsers.length);
+		List<User> users = new ArrayList<>(groovyUsers.length);
 
 		for (GroovyUser groovyUser : groovyUsers) {
 			users.add(groovyUser.user);

@@ -47,10 +47,10 @@ class GroovyOrganization {
 		String comments_, String name_, String parentOrganizationName_,
 		String type_, String regionCode, String countryName, boolean site_) {
 
-		comments = comments_
+		comments = comments_;
 		name = name_;
 		parentOrganizationName = parentOrganizationName_;
-		type = type_
+		type = type_;
 		site = site_;
 
 		regionId = RegionServiceUtil.fetchRegion(countryId, regionCode);
@@ -81,8 +81,8 @@ class GroovyOrganization {
 		}
 
 		organization = OrganizationLocalServiceUtil.addOrganization(
-			groovyScriptingContext.defaultUserId, parentOrganizationId,
-			name, type, regionId, countryId,
+			groovyScriptingContext.defaultUserId, parentOrganizationId, name,
+			type, regionId, countryId,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, comments, site,
 			groovyScriptingContext.getServiceContext());
 	}

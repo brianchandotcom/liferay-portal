@@ -34,8 +34,8 @@ class GroovyUser {
 		GroovyScriptingContext groovyScriptingContext, String name) {
 
 		return UserLocalServiceUtil.fetchUserByScreenName(
-			 groovyScriptingContext.companyId, name);
-	 }
+			groovyScriptingContext.companyId, name);
+	}
 
 	GroovyUser(
 		String emailAddress_, String password_, String firstName_,
@@ -72,7 +72,7 @@ class GroovyUser {
 	void addRoles(
 		GroovyScriptingContext groovyScriptingContext, String... roleNames) {
 
-		List<Role> roles = new ArrayList<Role>(roleNames.length);
+		List<Role> roles = new ArrayList<>(roleNames.length);
 
 		for (String roleName : roleNames) {
 			Role role = RoleLocalServiceUtil.fetchRole(
@@ -132,7 +132,7 @@ class GroovyUser {
 
 		for (String organizationName : organizationNames) {
 			Organization organization = GroovyOrganization.fetchOrganization(
-					groovyScriptingContext, organizationName);
+				groovyScriptingContext, organizationName);
 
 			if (organization != null) {
 				UserLocalServiceUtil.addOrganizationUser(

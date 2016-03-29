@@ -38,6 +38,10 @@ AUI.add(
 				'<img src="' + themeDisplay.getPathThemeImages() + '/common/geolocation.png" title="' + A.Escape.html(Liferay.Language.get('geolocate')) + '" />' +
 			'<div>';
 
+		var TPL_JOURNAL_ARTICLE = '<div class="lfr-ddm-journal-article">' +
+				'<a href="javascript:;">' + Liferay.Language.get('journal-article') + '</a>' +
+			'</div>';
+
 		var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
 				'<a href="javascript:;">' + Liferay.Language.get('link') + '</a>' +
 			'</div>';
@@ -1411,6 +1415,47 @@ AUI.add(
 			}
 		);
 
+		var DDMJournalArticleField = A.Component.create(
+				{
+					ATTRS: {
+						dataType: {
+							value: 'journal-article'
+						},
+
+						fieldNamespace: {
+							value: 'ddm'
+						}
+					},
+
+					EXTENDS: A.FormBuilderField,
+
+					NAME: 'ddm-journal-article',
+
+					prototype: {
+						getHTML: function() {
+							return TPL_JOURNAL_ARTICLE;
+						},
+
+						getPropertyModel: function() {
+							var instance = this;
+
+							var model = DDMJournalArticleField.superclass.getPropertyModel.apply(instance, arguments);
+
+							model.push(
+								{
+									attributeName: 'style',
+									editor: new A.TextAreaCellEditor(),
+									name: Liferay.Language.get('style')
+								}
+							);
+
+							return model;
+						}
+					}
+				}
+			);
+
+
 		var DDMLinkToPageField = A.Component.create(
 			{
 				ATTRS: {
@@ -1442,6 +1487,7 @@ AUI.add(
 			DDMGeolocationField,
 			DDMImageField,
 			DDMIntegerField,
+			DDMJournalArticleField,
 			DDMLinkToPageField,
 			DDMNumberField,
 			DDMParagraphField,

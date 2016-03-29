@@ -478,6 +478,14 @@ public class JournalDisplayContext {
 		ArticleSearch articleSearchContainer = new ArticleSearch(
 			_liferayPortletRequest, getPortletURL());
 
+		if (!isSearch()) {
+			articleSearchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			articleSearchContainer.setSearch(true);
+		}
+
 		OrderByComparator<JournalArticle> orderByComparator =
 			JournalPortletUtil.getArticleOrderByComparator(
 				getOrderByCol(), getOrderByType());

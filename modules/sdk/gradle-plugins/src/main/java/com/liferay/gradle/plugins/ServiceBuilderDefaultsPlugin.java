@@ -16,11 +16,20 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.tasks.BuildDBTask;
+import com.liferay.gradle.plugins.util.GradleUtil;
+
+import java.io.File;
+
+import java.util.concurrent.Callable;
 
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -29,14 +38,62 @@ import org.gradle.api.tasks.TaskContainer;
 public class ServiceBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<ServiceBuilderPlugin> {
 
+	public static final String BUILD_DB_TASK_NAME = "buildDB";
+
 	public static final String PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";
+
+	protected BuildDBTask addTaskBuildDB(final Project project) {
+		BuildDBTask buildDBTask = GradleUtil.addTask(
+			project, BUILD_DB_TASK_NAME, BuildDBTask.class);
+
+		buildDBTask.setDatabaseName("lportal");
+		buildDBTask.setDatabaseTypes("hypersonic", "mysql", "postgresql");
+		buildDBTask.setDescription(
+			"Builds database SQL scripts from the generic SQL scripts.");
+		buildDBTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		buildDBTask.setSqlDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					BuildServiceTask buildServiceTask =
+						(BuildServiceTask)GradleUtil.getTask(
+							project,
+							ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+
+					return buildServiceTask.getSqlDir();
+				}
+
+			});
+
+		return buildDBTask;
+	}
 
 	@Override
 	protected void configureDefaults(
 		final Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
 
 		super.configureDefaults(project, serviceBuilderPlugin);
+
+		addTaskBuildDB(project);
+
+		withLiferayPlugin(
+			project,
+			new Action<LiferayPlugin>() {
+
+				@Override
+				public void execute(LiferayPlugin liferayPlugin) {
+					Configuration portalConfiguration =
+						GradleUtil.getConfiguration(
+							project,
+							LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+
+					configureTasksBuildDB(project, portalConfiguration);
+				}
+
+			});
 
 		withPlugin(
 			project, BundlePlugin.class,
@@ -50,10 +107,33 @@ public class ServiceBuilderDefaultsPlugin
 			});
 	}
 
+	protected void configureTaskBuildDBClasspath(
+		BuildDBTask buildDBTask, FileCollection fileCollection) {
+
+		buildDBTask.setClasspath(fileCollection);
+	}
+
 	protected void configureTaskBuildServiceForBundlePlugin(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setOsgiModule(true);
+	}
+
+	protected void configureTasksBuildDB(
+		Project project, final FileCollection classpath) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildDBTask.class,
+			new Action<BuildDBTask>() {
+
+				@Override
+				public void execute(BuildDBTask buildDBTask) {
+					configureTaskBuildDBClasspath(buildDBTask, classpath);
+				}
+
+			});
 	}
 
 	protected void configureTasksBuildServiceForBundlePlugin(Project project) {

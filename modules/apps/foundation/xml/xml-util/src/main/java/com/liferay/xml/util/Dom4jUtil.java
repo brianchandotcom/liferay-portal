@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.xml;
+package com.liferay.xml.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;

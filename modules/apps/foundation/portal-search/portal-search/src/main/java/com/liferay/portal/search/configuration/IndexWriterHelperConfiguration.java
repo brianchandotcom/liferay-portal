@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.configuration;
 
+import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -27,6 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "index.writer.helper.configuration.name"
 )
+@ProviderType
 public interface IndexWriterHelperConfiguration {
 
 	@Meta.AD(
@@ -35,7 +37,12 @@ public interface IndexWriterHelperConfiguration {
 	)
 	public boolean indexCommitImmediately();
 
-	@Meta.AD(deflt = "false", required = false)
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             IndexStatusManagerConfiguration#indexReadOnly()}
+	 */
+	@Deprecated
 	public boolean indexReadOnly();
 
 }

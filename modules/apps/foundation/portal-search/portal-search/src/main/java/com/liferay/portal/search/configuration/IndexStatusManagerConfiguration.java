@@ -24,20 +24,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.search.configuration.IndexerRegistryConfiguration",
+	id = "com.liferay.portal.search.configuration.IndexStatusManagerConfiguration",
 	localization = "content/Language",
-	name = "indexer.registry.configuration.name"
+	name = "index.status.manager.configuration.name"
 )
 @ProviderType
-public interface IndexerRegistryConfiguration {
+public interface IndexStatusManagerConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean buffered();
-
-	@Meta.AD(deflt = "DEFAULT", required = false)
-	public String bufferedExecutionMode();
-
-	@Meta.AD(deflt = "200", required = false)
-	public int maxBufferSize();
+	@Meta.AD(deflt = "false", required = false)
+	public boolean indexReadOnly();
 
 }

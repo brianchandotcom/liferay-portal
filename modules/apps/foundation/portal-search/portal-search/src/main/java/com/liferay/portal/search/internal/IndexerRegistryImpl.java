@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
+import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.internal.buffer.BufferedIndexerInvocationHandler;
 
 import java.util.HashSet;
@@ -154,7 +155,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 			BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler =
 				new BufferedIndexerInvocationHandler(
-					indexer, _indexerRegistryConfiguration);
+					indexer, _indexStatusManager,
+					_indexerRegistryConfiguration);
 
 			if (_indexerRequestBufferOverflowHandler == null) {
 				bufferedIndexerInvocationHandler.
@@ -233,6 +235,10 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		_indexerRequestBufferOverflowHandler;
 	private final Map<String, Indexer<? extends Object>> _indexers =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private IndexStatusManager _indexStatusManager;
+
 	private final Map<String, Indexer<? extends Object>> _proxiedIndexers =
 		new ConcurrentHashMap<>();
 

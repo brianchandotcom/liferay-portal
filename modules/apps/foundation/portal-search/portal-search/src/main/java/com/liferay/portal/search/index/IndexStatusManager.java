@@ -12,29 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.configuration;
+package com.liferay.portal.search.index;
 
 import aQute.bnd.annotation.ProviderType;
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "foundation")
-@Meta.OCD(
-	id = "com.liferay.portal.search.configuration.QueryPreProcessConfiguration",
-	localization = "content/Language",
-	name = "query.pre.process.configuration.name"
-)
 @ProviderType
-public interface QueryPreProcessConfiguration {
+public interface IndexStatusManager {
 
-	@Meta.AD(
-		deflt = "assetCategoryTitles?(_.+)?|assetTagNames|emailAddress|firstName|lastName|license|middleName|path|screenName|tag|treePath|userName",
-		required = false
-	)
-	public String[] fieldNamePatterns();
+	public boolean isIndexReadOnly();
+
+	public void setIndexReadOnly(boolean indexReadOnly);
 
 }

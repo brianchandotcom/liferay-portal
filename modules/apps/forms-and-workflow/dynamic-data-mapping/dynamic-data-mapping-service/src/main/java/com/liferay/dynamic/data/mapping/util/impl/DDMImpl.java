@@ -189,7 +189,7 @@ public class DDMImpl implements DDM {
 		DDMForm ddmForm = null;
 
 		if (ddmStructure != null) {
-			ddmForm = ddmStructure.getDDMForm();
+			ddmForm = ddmStructure.getFullHierarchyDDMForm();
 		}
 
 		return getDDMFormFieldsJSONArray(ddmForm, script);

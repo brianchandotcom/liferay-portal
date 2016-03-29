@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,6 +75,12 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 	public boolean isShow(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String tabs1 = ParamUtil.getString(portletRequest, "tabs1", "users");
+
+		if (!tabs1.equals("users")) {
+			return false;
+		}
 
 		Group group = themeDisplay.getScopeGroup();
 

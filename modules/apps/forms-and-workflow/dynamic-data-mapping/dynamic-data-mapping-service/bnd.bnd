@@ -19,6 +19,3 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
--liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

@@ -576,7 +576,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			assetEntryQuery.setClassNameIds(
 				getClassNameIds(companyId, className));
 
-			assetEntryQuery.setAttribute("includeHidden", showNonVisible);
+			assetEntryQuery.setAttribute("showNonVisible", showNonVisible);
 
 			String[] assetTagNamesArray = StringUtil.split(assetTagNames);
 

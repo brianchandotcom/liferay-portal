@@ -16,9 +16,9 @@ package com.liferay.portal.diff;
 
 import com.liferay.portal.kernel.diff.Diff;
 import com.liferay.portal.kernel.diff.DiffResult;
-import com.liferay.portal.kernel.diff.DiffUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.util.FileImpl;
 
 import java.io.Reader;
 
@@ -26,8 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,10 +34,12 @@ import org.junit.Test;
  */
 public class DiffImplTest {
 
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	@BeforeClass
+	public static void setUpClass() {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+	}
 
 	@Test
 	public void testEight() {
@@ -67,7 +68,7 @@ public class DiffImplTest {
 		changedLines.add(Diff.OPEN_INS + "aee" + Diff.CLOSE_INS);
 		expectedTarget.add(new DiffResult(2, changedLines));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -107,7 +108,7 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(2, Diff.CONTEXT_LINE));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -140,7 +141,7 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(1, changedLines));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -164,7 +165,7 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(0, Diff.CONTEXT_LINE));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -183,7 +184,7 @@ public class DiffImplTest {
 		expectedTarget.add(
 			new DiffResult(0, "abcd" + Diff.OPEN_INS + "ee" + Diff.CLOSE_INS));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -197,7 +198,7 @@ public class DiffImplTest {
 		List<DiffResult> expectedSource = new ArrayList<>();
 		List<DiffResult> expectedTarget = new ArrayList<>();
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -228,7 +229,7 @@ public class DiffImplTest {
 		changedLines.add("bb" + Diff.OPEN_INS + "b" + Diff.CLOSE_INS);
 		expectedTarget.add(new DiffResult(1, changedLines));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -261,7 +262,7 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(1, changedLines));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -285,7 +286,7 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(0, Diff.CONTEXT_LINE));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -309,7 +310,7 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(0, Diff.CONTEXT_LINE));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -336,7 +337,7 @@ public class DiffImplTest {
 		expectedTarget.add(
 			new DiffResult(1, Diff.OPEN_INS + "ccc" + Diff.CLOSE_INS));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
@@ -366,10 +367,12 @@ public class DiffImplTest {
 
 		expectedTarget.add(new DiffResult(0, changedLines));
 
-		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
+		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
 
 		Assert.assertEquals(expectedSource, actual[0]);
 		Assert.assertEquals(expectedTarget, actual[1]);
 	}
+
+	private final DiffImpl _diffImpl = new DiffImpl();
 
 }

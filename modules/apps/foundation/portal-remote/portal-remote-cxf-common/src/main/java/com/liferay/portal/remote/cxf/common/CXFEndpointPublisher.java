@@ -199,9 +199,9 @@ public class CXFEndpointPublisher {
 						(String)authVerifierPropertiesObject
 					};
 				}
-				else{
+				else {
 					authVerifierPropertiesArray =
-						(String[]) authVerifierPropertiesObject;
+						(String[])authVerifierPropertiesObject;
 				}
 
 				properties = new Hashtable<>();

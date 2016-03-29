@@ -20,10 +20,10 @@ dependencies {
 	provided group: "org.apache.felix", name: "org.apache.felix.fileinstall", transitive: false, version: "3.5.1-20150728.201454-4"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.1"
-	provided group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
-	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
-	provided group: "org.springframework", name: "spring-core", version: "3.2.15.RELEASE"
-	provided group: "org.springframework", name: "spring-web", version: "3.2.15.RELEASE"
+	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
+	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
+	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
+	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 }
 
 downloadDependencyVisitor {

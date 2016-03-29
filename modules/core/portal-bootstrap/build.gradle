@@ -64,9 +64,9 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	provided group: "org.springframework", name: "spring-beans", version: "3.2.15.RELEASE"
-	provided group: "org.springframework", name: "spring-context", version: "3.2.15.RELEASE"
-	provided group: "org.springframework", name: "spring-core", version: "3.2.15.RELEASE"
+	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
+	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
+	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided project(":core:jaxws-osgi-bridge")
 	provided project(":core:portal-app-license-api")
 	provided project(":core:registry-impl")

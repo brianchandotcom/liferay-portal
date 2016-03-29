@@ -72,7 +72,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<liferay-ui:user-portrait
-				imageCssClass="user-icon-lg"
+				cssClass="user-icon-lg"
 				userId="<%= membershipRequest.getUserId() %>"
 			/>
 

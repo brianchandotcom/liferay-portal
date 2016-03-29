@@ -35,7 +35,7 @@ long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -88,9 +88,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 	disabled="<%= membershipRequestCount <= 0 %>"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:actionURL>
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>

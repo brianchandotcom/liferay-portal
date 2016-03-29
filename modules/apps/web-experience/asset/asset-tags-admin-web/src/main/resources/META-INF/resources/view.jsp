@@ -95,7 +95,7 @@
 				WorkflowConstants.STATUS_SCHEDULED
 			};
 
-			long usagesCount = AssetEntryLocalServiceUtil.searchCount(tag, statuses);
+			long usagesCount = AssetEntryLocalServiceUtil.searchCount(tag.getCompanyId(), null, user.getUserId(), null, null, null, null, null, null, tag.getName(), true, true, statuses, false);
 			%>
 
 			<c:choose>

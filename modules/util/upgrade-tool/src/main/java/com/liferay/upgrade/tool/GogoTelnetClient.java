@@ -173,7 +173,9 @@ public class GogoTelnetClient implements AutoCloseable {
 		while (c != -1) {
 			sb.append((char)c);
 
-			if (sb.toString().endsWith("g! ")) {
+			String s = sb.toString();
+
+			if (s.endsWith("g! ")) {
 				break;
 			}
 

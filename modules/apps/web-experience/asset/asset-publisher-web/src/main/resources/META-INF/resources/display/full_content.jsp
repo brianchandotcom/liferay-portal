@@ -25,7 +25,9 @@ if (Validator.isNull(redirect)) {
 
 List results = (List)request.getAttribute("view.jsp-results");
 
-if (Validator.isNull(redirect) && results.isEmpty()) {
+boolean showBackURL = GetterUtil.getBoolean(request.getAttribute("view.jsp-showBackURL"));
+
+if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("mvcPath", "/view.jsp");
@@ -55,7 +57,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 <c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 	<liferay-ui:header
-		backURL="<%= print ? null : redirect %>"
+		backURL="<%= showBackURL ? redirect : null %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>
@@ -104,7 +106,10 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
 	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-	viewFullContentURL.setParameter("viewMode", print ? Constants.PRINT : Constants.VIEW);
+
+	if (print) {
+		viewFullContentURL.setParameter("viewMode", Constants.PRINT);
+	}
 
 	if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 		if (assetRenderer.getGroupId() != scopeGroupId) {
@@ -177,6 +182,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<c:if test="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>">
 			<liferay-ui:asset-links
 				assetEntryId="<%= assetEntry.getEntryId() %>"
+				portletURL="<%= viewFullContentURL %>"
 			/>
 		</c:if>
 

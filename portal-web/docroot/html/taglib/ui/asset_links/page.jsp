@@ -73,31 +73,38 @@ if (assetEntryId > 0) {
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
-					if (portletURL == null) {
-						portletURL = PortletProviderUtil.getPortletURL(request, assetRenderer.getClassName(), PortletProvider.Action.VIEW);
+					PortletURL viewAssetURL = null;
 
-						portletURL.setWindowState(WindowState.MAXIMIZED);
+					if (portletURL != null) {
+						viewAssetURL = PortletURLUtil.clone(portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+					}
+					else {
+						viewAssetURL = PortletProviderUtil.getPortletURL(request, assetRenderer.getClassName(), PortletProvider.Action.VIEW);
+
+						viewAssetURL.setWindowState(WindowState.MAXIMIZED);
+
+						viewAssetURL.setParameter("redirect", currentURL);
 					}
 
-					portletURL.setParameter("redirect", currentURL);
-					portletURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
-					portletURL.setParameter("type", assetRendererFactory.getType());
+					viewAssetURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
+					viewAssetURL.setParameter("type", assetRendererFactory.getType());
 
 					if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 						if (assetRenderer.getGroupId() != themeDisplay.getSiteGroupId()) {
-							portletURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+							viewAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
 						}
 
-						portletURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+						viewAssetURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					String viewFullContentURLString = portletURL.toString();
+					String noSuchEntryRedirect = viewAssetURL.toString();
 
-					viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, noSuchEntryRedirect);
 
-					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
-
-					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", true);
+					if (Validator.isNotNull(urlViewInContext) && !Validator.equals(urlViewInContext, noSuchEntryRedirect)) {
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", Boolean.TRUE);
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "redirect", currentURL);
+					}
 			%>
 
 					<li class="asset-links-list-item">

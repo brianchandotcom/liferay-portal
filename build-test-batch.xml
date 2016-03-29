@@ -771,10 +771,6 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
-	<target name="functional-tomcat8-postgresql94-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
-	</target>
-
 	<target name="functional-tomcat8-hypersonic20-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
@@ -789,6 +785,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="functional-tomcat8-mysql56-jdk7-quarantine">
 		<antcall target="functional-tomcat8-mysql56-jdk7" />
+	</target>
+
+	<target name="functional-tomcat8-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
 	<target name="functional-wildfly10-mariadb100-jdk8">

@@ -50,7 +50,8 @@ public class SoyPortletHelper {
 	}
 
 	public String getPortletJavaScript(
-		Template template, String path, String portletNamespace) {
+		Template template, String path, String portletNamespace,
+		Set<String> additionalRequiredModules) {
 
 		if (_moduleName == null) {
 			return StringPool.BLANK;
@@ -59,9 +60,12 @@ public class SoyPortletHelper {
 		JSONObject contextJSONObject = createContextJSONObject(
 			template, portletNamespace);
 
+		Set<String> requiredModules = getRequiredModules(
+			path, additionalRequiredModules);
+
 		return getPortletJavaScript(
-			contextJSONObject.toJSONString(), getRequiredModules(path),
-			portletNamespace);
+			contextJSONObject.toJSONString(), portletNamespace,
+			getRequiredModulesString(requiredModules));
 	}
 
 	public String getTemplateNamespace(String path) {
@@ -140,10 +144,7 @@ public class SoyPortletHelper {
 	}
 
 	protected String getPortletJavaScript(
-		String context, Set<String> requiredModules, String portletNamespace) {
-
-		String requiredModulesString = getRequiredModulesString(
-			requiredModules);
+		String context, String portletNamespace, String requiredModulesString) {
 
 		return StringUtil.replace(
 			_javaScriptTPL,
@@ -153,12 +154,15 @@ public class SoyPortletHelper {
 			new String[] {context, portletNamespace, requiredModulesString});
 	}
 
-	protected Set<String> getRequiredModules(String path) {
+	protected Set<String> getRequiredModules(
+		String path, Set<String> additionalRequiredModules) {
+
 		if (_moduleName == null) {
 			return Collections.emptySet();
 		}
 
-		Set<String> requiredModules = new LinkedHashSet<>();
+		Set<String> requiredModules = new LinkedHashSet<>(
+			additionalRequiredModules);
 
 		String controllerName = getControllerName(path);
 

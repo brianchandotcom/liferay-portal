@@ -45,19 +45,9 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 
-		_bundleArtifactGroup = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.group",
-			_BUNDLE_ARTIFACT_GROUP);
-		_bundleArtifactName = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.name",
-			_BUNDLE_ARTIFACT_NAME);
-		_bundleArtifactVersion = GradleUtil.getProperty(
-			settings,
-			WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.version",
-			_BUNDLE_ARTIFACT_VERSION);
-		_bundleMavenUrl = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.maven.url",
-			_BUNDLE_MAVEN_URL);
+		_bundleUrl = GradleUtil.getProperty(
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.url",
+			_BUNDLE_URL);
 		_configsDir = GradleUtil.getProperty(
 			settings, WorkspacePlugin.PROPERTY_PREFIX + "configs.dir",
 			_CONFIGS_DIR);
@@ -68,20 +58,8 @@ public class WorkspaceExtension {
 			settings, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", _HOME_DIR);
 	}
 
-	public String getBundleArtifactGroup() {
-		return GradleUtil.toString(_bundleArtifactGroup);
-	}
-
-	public String getBundleArtifactName() {
-		return GradleUtil.toString(_bundleArtifactName);
-	}
-
-	public String getBundleArtifactVersion() {
-		return GradleUtil.toString(_bundleArtifactVersion);
-	}
-
-	public String getBundleMavenUrl() {
-		return GradleUtil.toString(_bundleMavenUrl);
+	public String getBundleUrl() {
+		return GradleUtil.toString(_bundleUrl);
 	}
 
 	public File getConfigsDir() {
@@ -114,20 +92,8 @@ public class WorkspaceExtension {
 		throw new MissingPropertyException(name, ProjectConfigurator.class);
 	}
 
-	public void setBundleArtifactGroup(Object bundleArtifactGroup) {
-		_bundleArtifactGroup = bundleArtifactGroup;
-	}
-
-	public void setBundleArtifactName(Object bundleArtifactName) {
-		_bundleArtifactName = bundleArtifactName;
-	}
-
-	public void setBundleArtifactVersion(Object bundleArtifactVersion) {
-		_bundleArtifactVersion = bundleArtifactVersion;
-	}
-
-	public void setBundleMavenUrl(Object bundleMavenUrl) {
-		_bundleMavenUrl = bundleMavenUrl;
+	public void setBundleUrl(Object bundleUrl) {
+		_bundleUrl = bundleUrl;
 	}
 
 	public void setConfigsDir(Object configsDir) {
@@ -142,17 +108,9 @@ public class WorkspaceExtension {
 		_homeDir = homeDir;
 	}
 
-	private static final String _BUNDLE_ARTIFACT_GROUP = "com.liferay";
-
-	private static final String _BUNDLE_ARTIFACT_NAME = "portal-tomcat-bundle";
-
-	private static final String _BUNDLE_ARTIFACT_VERSION =
-		"7.0-ce-rc1-20160325160942584";
-
-	private static final String _BUNDLE_MAVEN_URL =
-		"https://liferay-test-01.ci.cloudbees.com/job/" +
-			"liferay-bundle-publishing/lastSuccessfulBuild/artifact/build/" +
-				"m2_repo/";
+	private static final String _BUNDLE_URL =
+		"https://sourceforge.net/projects/lportal/files/Liferay Portal/" +
+			"7.0.0 RC1/liferay-portal-tomcat-7.0-ce-rc1-20160325160942584.zip";
 
 	private static final String _CONFIGS_DIR = "configs";
 
@@ -160,10 +118,7 @@ public class WorkspaceExtension {
 
 	private static final String _HOME_DIR = "bundles";
 
-	private Object _bundleArtifactGroup;
-	private Object _bundleArtifactName;
-	private Object _bundleArtifactVersion;
-	private Object _bundleMavenUrl;
+	private Object _bundleUrl;
 	private Object _configsDir;
 	private Object _environment;
 	private final Gradle _gradle;

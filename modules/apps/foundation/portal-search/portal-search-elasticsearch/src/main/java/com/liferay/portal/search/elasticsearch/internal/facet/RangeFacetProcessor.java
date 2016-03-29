@@ -58,17 +58,21 @@ public class RangeFacetProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			String range = rangeJSONObject.getString("range");
-
-			range = range.replace(StringPool.OPEN_BRACKET, StringPool.BLANK);
-			range = range.replace(StringPool.CLOSE_BRACKET, StringPool.BLANK);
-
-			String[] rangeParts = range.split(StringPool.SPACE);
-
-			defaultRangeBuilder.addRange(rangeParts[0], rangeParts[2]);
+			addRange(defaultRangeBuilder, rangeJSONObject.getString("range"));
 		}
 
 		searchRequestBuilder.addAggregation(defaultRangeBuilder);
+	}
+
+	protected void addRange(
+		DefaultRangeBuilder defaultRangeBuilder, String range) {
+
+		range = range.replace(StringPool.OPEN_BRACKET, StringPool.BLANK);
+		range = range.replace(StringPool.CLOSE_BRACKET, StringPool.BLANK);
+
+		String[] rangeParts = range.split(StringPool.SPACE);
+
+		defaultRangeBuilder.addRange(rangeParts[0], rangeParts[2]);
 	}
 
 }

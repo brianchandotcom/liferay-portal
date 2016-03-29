@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -536,41 +537,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long searchCount(AssetTag tag, int[] statuses) {
-		try {
-			Indexer<?> indexer = AssetSearcher.getInstance();
-
-			AssetSearcher assetSearcher = (AssetSearcher)indexer;
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-			assetEntryQuery.setAnyTagIds(new long[] {tag.getTagId()});
-
-			assetEntryQuery.setClassNameIds(
-				getClassNameIds(tag.getCompanyId(), null));
-
-			SearchContext searchContext = buildSearchContext(
-				tag.getCompanyId(), null, tag.getUserId(), 0L, null, null, null,
-				null, tag.getName(), true, statuses, false, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			queryConfig.setHighlightEnabled(false);
-			queryConfig.setScoreEnabled(false);
-
-			assetEntryQuery.setAttribute("includeHidden", true);
-
-			assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-			return assetSearcher.searchCount(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Override
 	public long searchCount(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, boolean showNonindexable,
@@ -588,6 +554,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
 		int[] statuses, boolean andSearch) {
 
+		return searchCount(companyId, groupIds, userId, className, classTypeId,
+			userName, title, description, assetCategoryIds, assetTagNames,
+			showNonindexable, false, statuses, andSearch);
+	}
+
+	@Override
+	public long searchCount(
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
+		boolean showNonVisible, int[] statuses, boolean andSearch) {
+
 		try {
 			Indexer<?> indexer = AssetSearcher.getInstance();
 
@@ -597,6 +575,32 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			assetEntryQuery.setClassNameIds(
 				getClassNameIds(companyId, className));
+
+			assetEntryQuery.setAttribute("includeHidden", showNonVisible);
+
+			String[] assetTagNamesArray = StringUtil.split(assetTagNames);
+
+			if (andSearch) {
+				assetEntryQuery.setAnyCategoryIds(
+					StringUtil.split(assetCategoryIds, 0L));
+
+				for (String assetTagName : assetTagNamesArray) {
+					long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(
+						groupIds, assetTagName);
+
+					assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
+				}
+			}
+			else {
+				assetEntryQuery.setAllCategoryIds(
+					StringUtil.split(assetCategoryIds, 0L));
+
+				if (ArrayUtil.isNotEmpty(assetTagNamesArray)) {
+					assetEntryQuery.setAnyTagIds(
+						AssetTagLocalServiceUtil.getTagIds(
+							groupIds, assetTagNames));
+				}
+			}
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, groupIds, userId, classTypeId, userName, title,

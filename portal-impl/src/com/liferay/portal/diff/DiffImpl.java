@@ -553,12 +553,10 @@ public class DiffImpl implements com.liferay.portal.kernel.diff.Diff {
 	}
 
 	private static List<String> _toList(String line) {
-		String[] lineParts = line.split(StringPool.BLANK);
+		List<String> result = new ArrayList<>(line.length());
 
-		List<String> result = new ArrayList<>();
-
-		for (int i = 0; i < lineParts.length; i++) {
-			result.add(lineParts[i]);
+		for (int i = 0; i < line.length(); i++) {
+			result.add(line.substring(i, i + 1));
 		}
 
 		return result;

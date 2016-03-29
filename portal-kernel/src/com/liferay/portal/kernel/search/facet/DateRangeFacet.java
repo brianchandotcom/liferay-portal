@@ -17,8 +17,10 @@ package com.liferay.portal.kernel.search.facet;
 import com.liferay.portal.kernel.search.SearchContext;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.DateRangeFacet}
  */
+@Deprecated
 public class DateRangeFacet extends RangeFacet {
 
 	public DateRangeFacet(SearchContext searchContext) {

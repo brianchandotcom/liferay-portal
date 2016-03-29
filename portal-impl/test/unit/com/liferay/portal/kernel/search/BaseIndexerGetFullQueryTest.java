@@ -19,6 +19,9 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.facet.FacetBuilder;
+import com.liferay.portal.kernel.search.facet.FacetManager;
+import com.liferay.portal.kernel.search.facet.FacetManagerUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -49,16 +52,19 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareOnlyThisForTest({SearchEngineHelperUtil.class})
+@PrepareOnlyThisForTest({FacetManagerUtil.class, SearchEngineHelperUtil.class})
 @RunWith(PowerMockRunner.class)
 public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpJSONFactoryUtil();
 		setUpPropsUtil();
+
 		setUpRegistryUtil();
+
+		setUpFacetManagerUtil();
 		setUpIndexerRegistry();
+		setUpJSONFactoryUtil();
 		setUpSearchEngineHelperUtil();
 
 		_indexer = new TestIndexer();
@@ -135,6 +141,27 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		Assert.assertArrayEquals(
 			expectedEntryClassNames, actualEntryClassNames);
+	}
+
+	protected void setUpFacetManagerUtil() {
+		FacetManager facetManager = Mockito.mock(FacetManager.class);
+
+		Mockito.doReturn(
+			Mockito.mock(FacetBuilder.class)
+		).when(
+			facetManager
+		).createFacetBuilder(
+			Mockito.anyString(), Mockito.<SearchContext>any()
+		);
+
+		PowerMockito.mockStatic(
+			FacetManagerUtil.class, Mockito.CALLS_REAL_METHODS);
+
+		PowerMockito.stub(
+			PowerMockito.method(FacetManagerUtil.class, "getInstance")
+		).toReturn(
+			facetManager
+		);
 	}
 
 	protected void setUpIndexerRegistry() {

@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.RangeFacet}
  */
+@Deprecated
 public class RangeFacet extends BaseFacet {
 
 	public RangeFacet(SearchContext searchContext) {

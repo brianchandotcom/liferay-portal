@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.search.internal.facet.MultiValueFacet}
  */
+@Deprecated
 public class MultiValueFacet extends BaseFacet {
 
 	public MultiValueFacet(SearchContext searchContext) {

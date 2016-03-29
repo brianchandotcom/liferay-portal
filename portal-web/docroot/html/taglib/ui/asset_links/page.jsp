@@ -77,9 +77,10 @@ if (assetEntryId > 0) {
 						portletURL = PortletProviderUtil.getPortletURL(request, assetRenderer.getClassName(), PortletProvider.Action.VIEW);
 
 						portletURL.setWindowState(WindowState.MAXIMIZED);
+
+						portletURL.setParameter("redirect", currentURL);
 					}
 
-					portletURL.setParameter("redirect", currentURL);
 					portletURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
 					portletURL.setParameter("type", assetRendererFactory.getType());
 

@@ -79,10 +79,8 @@ public class AssetPublisherHelper {
 
 		String viewURL = null;
 
-		String currentURL = null;
-
 		if (viewInContext) {
-			currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
+			String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
 
 			viewFullContentURL.setParameter("redirect", currentURL);
 
@@ -104,14 +102,6 @@ public class AssetPublisherHelper {
 			}
 			catch (Exception e) {
 			}
-		}
-		else {
-			PortletURL currentURLObj = PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse);
-
-			currentURL = currentURLObj.toString();
-
-			viewFullContentURL.setParameter("redirect", currentURL);
 		}
 
 		if (Validator.isNull(viewURL)) {

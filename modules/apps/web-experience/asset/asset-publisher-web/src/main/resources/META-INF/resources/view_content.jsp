@@ -62,6 +62,7 @@ else {
 		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 		request.setAttribute("view.jsp-title", title);
 		request.setAttribute("view.jsp-print", Boolean.valueOf(print));
+		request.setAttribute("view.jsp-showBackURL", Boolean.valueOf(!print));
 
 		PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
 		%>

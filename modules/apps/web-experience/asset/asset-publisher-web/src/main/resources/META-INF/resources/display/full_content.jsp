@@ -25,7 +25,9 @@ if (Validator.isNull(redirect)) {
 
 List results = (List)request.getAttribute("view.jsp-results");
 
-if (Validator.isNull(redirect) && results.isEmpty()) {
+boolean showBackURL = GetterUtil.getBoolean(request.getAttribute("view.jsp-showBackURL"));
+
+if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("mvcPath", "/view.jsp");
@@ -55,7 +57,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 <c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 	<liferay-ui:header
-		backURL="<%= print ? null : redirect %>"
+		backURL="<%= showBackURL ? redirect : null  %>"
 		localizeTitle="<%= false %>"
 		title="<%= title %>"
 	/>

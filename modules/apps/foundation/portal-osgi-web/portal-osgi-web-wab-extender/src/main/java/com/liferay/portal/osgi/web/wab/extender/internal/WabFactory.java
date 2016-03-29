@@ -16,7 +16,6 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
@@ -24,9 +23,6 @@ import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.felix.utils.extender.AbstractExtender;
 import org.apache.felix.utils.extender.Extension;
@@ -40,9 +36,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
 
 /**
  * @author Miguel Pastor
@@ -62,24 +55,6 @@ public class WabFactory extends AbstractExtender {
 		_eventUtil = new EventUtil(_bundleContext);
 		_logger = new Logger(_bundleContext);
 
-		_saxParserFactory.setNamespaceAware(false);
-		_saxParserFactory.setValidating(false);
-		_saxParserFactory.setXIncludeAware(false);
-
-		try {
-			_saxParserFactory.setFeature(_FEATURES_DISALLOW_DOCTYPE_DECL, true);
-			_saxParserFactory.setFeature(
-				_FEATURES_EXTERNAL_GENERAL_ENTITIES, false);
-			_saxParserFactory.setFeature(
-				_FEATURES_EXTERNAL_PARAMETER_ENTITIES, false);
-			_saxParserFactory.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, false);
-		}
-		catch (ParserConfigurationException | SAXNotRecognizedException |
-			   SAXNotSupportedException e) {
-
-			ReflectionUtil.throwException(e);
-		}
-
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
@@ -88,8 +63,7 @@ public class WabFactory extends AbstractExtender {
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
-				_bundleContext, properties, _saxParserFactory, _eventUtil,
-				_logger);
+				_bundleContext, properties, _eventUtil, _logger);
 
 			super.start(_bundleContext);
 		}
@@ -135,32 +109,14 @@ public class WabFactory extends AbstractExtender {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setSAXParserFactory(SAXParserFactory saxParserFactory) {
-		_saxParserFactory = saxParserFactory;
-	}
-
 	@Override
 	protected void warn(Bundle bundle, String message, Throwable t) {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + message, t);
 	}
 
-	private static final String _FEATURES_DISALLOW_DOCTYPE_DECL =
-		"http://apache.org/xml/features/disallow-doctype-decl";
-
-	private static final String _FEATURES_EXTERNAL_GENERAL_ENTITIES =
-		"http://xml.org/sax/features/external-general-entities";
-
-	private static final String _FEATURES_EXTERNAL_PARAMETER_ENTITIES =
-		"http://xml.org/sax/features/external-parameter-entities";
-
-	private static final String _FEATURES_LOAD_EXTERNAL_DTD =
-		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
-
 	private BundleContext _bundleContext;
 	private EventUtil _eventUtil;
 	private Logger _logger;
-	private SAXParserFactory _saxParserFactory;
 
 	@Reference
 	private ServletContextHelperFactory _servletContextHelperFactory;

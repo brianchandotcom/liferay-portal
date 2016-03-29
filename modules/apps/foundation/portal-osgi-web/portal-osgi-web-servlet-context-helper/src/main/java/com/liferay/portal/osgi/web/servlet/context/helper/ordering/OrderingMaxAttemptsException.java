@@ -12,29 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
-
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
-
-import java.util.List;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
+package com.liferay.portal.osgi.web.servlet.context.helper.ordering;
 
 /**
- * @author Raymond Augé
+ * @author Vernon Singleton
+ * @author Juan Gonzalez
+ *
  */
-public interface ModifiableServletContext {
+public class OrderingMaxAttemptsException extends Exception {
 
-	public Bundle getBundle();
-
-	public List<ListenerDefinition> getListenerDefinitions();
-
-	public ServletContext getWrappedServletContext();
-
-	public void registerFilters();
-
-	public void registerServlets();
+	public OrderingMaxAttemptsException(int limit) {
+		super(
+			"Too many attempts needed to sort the faces-config files." +
+				"Exceeded the limit of " + limit + " passes.");
+	}
 
 }

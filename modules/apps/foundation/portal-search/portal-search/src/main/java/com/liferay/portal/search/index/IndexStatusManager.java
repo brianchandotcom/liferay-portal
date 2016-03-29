@@ -12,27 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.search.configuration;
+package com.liferay.portal.search.index;
 
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "foundation")
-@Meta.OCD(
-	id = "com.liferay.portal.search.configuration.IndexWriterHelperConfiguration",
-	localization = "content/Language",
-	name = "index.writer.helper.configuration.name"
-)
-public interface IndexWriterHelperConfiguration {
+@ProviderType
+public interface IndexStatusManager {
 
-	@Meta.AD(
-		deflt = "true", description = "index-commit-immediately-help",
-		required = false
-	)
-	public boolean indexCommitImmediately();
+	public boolean isIndexReadOnly();
+
+	public void setIndexReadOnly(boolean indexReadOnly);
 
 }

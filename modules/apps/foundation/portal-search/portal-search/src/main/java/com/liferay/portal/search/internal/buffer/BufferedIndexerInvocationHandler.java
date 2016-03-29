@@ -14,16 +14,20 @@
 
 package com.liferay.portal.search.internal.buffer;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
+import com.liferay.portal.search.index.IndexStatusManager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
@@ -38,10 +42,11 @@ import java.util.Collection;
 public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 	public BufferedIndexerInvocationHandler(
-		Indexer<?> indexer,
+		Indexer<?> indexer, IndexStatusManager indexStatusManager,
 		IndexerRegistryConfiguration indexerRegistryConfiguration) {
 
 		_indexer = indexer;
+		_indexStatusManager = indexStatusManager;
 		_indexerRegistryConfiguration = indexerRegistryConfiguration;
 	}
 
@@ -57,6 +62,20 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			(indexerRequestBuffer == null)) {
 
 			return method.invoke(_indexer, args);
+		}
+
+		if (_indexStatusManager.isIndexReadOnly() ||
+			CompanyThreadLocal.isDeleteInProcess()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Bypassing IndexerRequest buffer: indexReadOnly =" +
+						_indexStatusManager.isIndexReadOnly() +
+						", CompanyThreadLocal.isDeleteInProcess = " +
+						CompanyThreadLocal.isDeleteInProcess());
+			}
+
+			return null;
 		}
 
 		Class<?> args0Class = args[0].getClass();
@@ -167,9 +186,13 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BufferedIndexerInvocationHandler.class);
+
 	private final Indexer<?> _indexer;
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
 	private volatile IndexerRequestBufferOverflowHandler
 		_indexerRequestBufferOverflowHandler;
+	private final IndexStatusManager _indexStatusManager;
 
 }

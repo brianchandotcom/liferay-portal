@@ -17,7 +17,6 @@ package com.liferay.site.memberships.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,7 +30,6 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -64,12 +62,6 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 
 		portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
 
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException wse) {
-		}
-
 		return portletURL.toString();
 	}
 
@@ -89,11 +81,6 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 			return false;
 		}
 
-		return true;
-	}
-
-	@Override
-	public boolean isUseDialog() {
 		return true;
 	}
 

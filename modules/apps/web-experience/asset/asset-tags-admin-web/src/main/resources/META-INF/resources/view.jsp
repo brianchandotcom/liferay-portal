@@ -158,7 +158,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
+<c:if test="<%= assetTagsDisplayContext.showAddButton() %>">
 	<portlet:renderURL var="editTagURL">
 		<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 	</portlet:renderURL>

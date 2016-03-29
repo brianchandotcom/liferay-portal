@@ -42,6 +42,7 @@ import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
 
 import groovy.json.JsonSlurper;
 
@@ -101,6 +102,7 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.GradleInternal;
@@ -410,8 +412,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected Jar addTaskJarSources(Project project, boolean testProject) {
-		final Jar jar = GradleUtil.addTask(
-			project, JAR_SOURCES_TASK_NAME, Jar.class);
+		Jar jar = GradleUtil.addTask(project, JAR_SOURCES_TASK_NAME, Jar.class);
 
 		jar.setClassifier("sources");
 		jar.setGroup(BasePlugin.BUILD_GROUP);
@@ -443,35 +444,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				jar.from(sourceSet.getAllSource());
 			}
 		}
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			PatchTask.class,
-			new Action<PatchTask>() {
-
-				@Override
-				public void execute(final PatchTask patchTask) {
-					jar.from(
-						new Callable<File>() {
-
-							@Override
-							public File call() throws Exception {
-								return patchTask.getPatchesDir();
-							}
-
-						},
-						new Closure<Void>(null) {
-
-							@SuppressWarnings("unused")
-							public void doCall(CopySpec copySpec) {
-								copySpec.into("META-INF/patches");
-							}
-
-						});
-				}
-
-			});
 
 		return jar;
 	}
@@ -1464,6 +1436,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					configureArtifacts(
 						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
 					configureProjectVersion(project);
+					configureTaskJarSources(jarSourcesTask);
 					configureTaskUpdateFileVersions(
 						updateFileVersionsTask, portalRootDir);
 
@@ -1875,6 +1848,78 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 
 		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+	}
+
+	protected void configureTaskJarSources(final Jar jarSourcesTask) {
+		Project project = jarSourcesTask.getProject();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PatchTask.class,
+			new Action<PatchTask>() {
+
+				@Override
+				public void execute(final PatchTask patchTask) {
+					jarSourcesTask.from(
+						new Callable<FileCollection>() {
+
+							@Override
+							public FileCollection call() throws Exception {
+								Project project = patchTask.getProject();
+
+								return project.zipTree(
+									patchTask.getOriginalLibSrcFile());
+							}
+
+						},
+						new Closure<Void>(null) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								String originalLibSrcDirName =
+									patchTask.getOriginalLibSrcDirName();
+
+								if (originalLibSrcDirName.equals(".")) {
+									return;
+								}
+
+								Map<Object, Object> leadingPathReplacementsMap =
+									new HashMap<>();
+
+								leadingPathReplacementsMap.put(
+									originalLibSrcDirName, "");
+
+								copySpec.eachFile(
+									new ReplaceLeadingPathAction(
+										leadingPathReplacementsMap));
+
+								copySpec.include(originalLibSrcDirName + "/");
+								copySpec.setIncludeEmptyDirs(false);
+							}
+
+						});
+
+					jarSourcesTask.from(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return patchTask.getPatchesDir();
+							}
+
+						},
+						new Closure<Void>(null) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into("META-INF/patches");
+							}
+
+						});
+				}
+
+			});
 	}
 
 	protected void configureTaskJavaCompile(JavaCompile javaCompile) {

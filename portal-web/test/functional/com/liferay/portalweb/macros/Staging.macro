@@ -836,6 +836,8 @@
 			</else>
 		</if>
 
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 

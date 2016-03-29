@@ -1,9 +1,9 @@
 dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.document.library.service", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.document.library.web", version: "1.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.portal.search", version: "2.0.0"
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"

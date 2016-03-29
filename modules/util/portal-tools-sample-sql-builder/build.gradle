@@ -1,23 +1,23 @@
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.blogs.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.document.library.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.document.library.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.lists.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.lists.service", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.lists.web", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.journal.service", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.login.web", version: "1.0.0"
-	compile group: "com.liferay", name: "com.liferay.message.boards.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.message.boards.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.wiki.service", version: "1.0.0"
 	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile project(":apps:collaboration:blogs:blogs-api")
+	compile project(":apps:collaboration:document-library:document-library-api")
+	compile project(":apps:collaboration:message-boards:message-boards-api")
+	compile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 
 	provided group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-1"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

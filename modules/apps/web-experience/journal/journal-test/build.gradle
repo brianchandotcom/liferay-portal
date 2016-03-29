@@ -5,13 +5,12 @@ copyLibs {
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.portal.search", version: "2.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
@@ -21,4 +20,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 }

@@ -16,59 +16,86 @@
 
 <%
 User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
-%>
 
-<liferay-ui:search-container-column-text
-	cssClass="content-column user-column title-column"
-	name="user"
-	truncate="<%= true %>"
-	value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
-/>
-
-<liferay-ui:search-container-column-text
-	cssClass="content-column email-address-column"
-	name="email-address"
-	value="<%= membershipRequestUser.getEmailAddress() %>"
-/>
-
-<liferay-ui:search-container-column-date
-	cssClass="date-column text-column"
-	name="date"
-	value="<%= membershipRequest.getCreateDate() %>"
-/>
-
-<%
 User membershipRequestReplierUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getReplierUserId());
+
+String replier = StringPool.BLANK;
+
+if (membershipRequestReplierUser != null) {
+	if (membershipRequestReplierUser.isDefaultUser()) {
+		Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
+
+		replier = HtmlUtil.escape(membershipRequestReplierCompany.getName());
+	}
+	else {
+		replier = HtmlUtil.escape(membershipRequestReplierUser.getFullName());
+	}
+}
+else {
+	replier = LanguageUtil.get(request, "the-user-could-not-be-found");
+}
 %>
 
-<liferay-ui:search-container-column-text
-	cssClass="replier-comments text-column"
-	name="replier"
->
-	<c:choose>
-		<c:when test="<%= membershipRequestReplierUser != null %>">
-			<c:choose>
-				<c:when test="<%= membershipRequestReplierUser.isDefaultUser() %>">
+<c:choose>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= membershipRequest.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
-					<%
-					Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
-					%>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
 
-					<%= HtmlUtil.escape(membershipRequestReplierCompany.getName()) %>
-				</c:when>
-				<c:otherwise>
-					<%= HtmlUtil.escape(membershipRequestReplierUser.getFullName()) %>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message key="the-user-could-not-be-found" />
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:search-container-column-text>
+			<%
+			Date replyDate = membershipRequest.getReplyDate();
 
-<liferay-ui:search-container-column-date
-	cssClass="reply-date-column text-column"
-	name="reply-date"
-	value="<%= membershipRequest.getReplyDate() %>"
-/>
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - replyDate.getTime(), true);
+			%>
+
+			<h5 class="text-default">
+				<liferay-ui:message arguments="<%= new String[] {replier, modifiedDateDescription} %>" key="replied-by-x-x-ago" />
+			</h5>
+
+			<h5><%= HtmlUtil.escape(membershipRequestUser.getFullName()) %></h5>
+
+			<h6 class="text-default">
+				<span><%= membershipRequestUser.getEmailAddress() %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("list") %>'>
+		<liferay-ui:search-container-column-text
+			cssClass="content-column user-column title-column"
+			name="user"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="content-column email-address-column"
+			name="email-address"
+			value="<%= membershipRequestUser.getEmailAddress() %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="date-column text-column"
+			name="date"
+			value="<%= membershipRequest.getCreateDate() %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="replier-comments text-column"
+			name="replier"
+			value="<%= replier %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="reply-date-column text-column"
+			name="reply-date"
+			value="<%= membershipRequest.getReplyDate() %>"
+		/>
+	</c:when>
+</c:choose>

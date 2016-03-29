@@ -103,20 +103,28 @@ public class SiteTeamsDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer getSearchContainer() {
+	public SearchContainer getSearchContainer() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer searchContainer = new TeamSearch(
 			_renderRequest, getPortletURL());
 
-		searchContainer.setEmptyResultsMessage(
-			"there-are-no-site-teams.-you-can-add-a-site-team-by-clicking-" +
-				"the-plus-button-on-the-bottom-right-corner");
+		String emptyResultsMessage = "there-are-no-site-teams.";
+
+		if (showAddButton()) {
+			emptyResultsMessage =
+				"there-are-no-site-teams.-you-can-add-a-site-team-by-" +
+					"clicking-the-plus-button-on-the-bottom-right-corner";
+		}
+
+		searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 		if (Validator.isNull(getKeywords())) {
-			searchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
+			if (showAddButton()) {
+				searchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
 		}
 		else {
 			searchContainer.setSearch(true);

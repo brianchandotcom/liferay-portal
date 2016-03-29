@@ -34,6 +34,12 @@ if (membershipRequestReplierUser != null) {
 else {
 	replier = LanguageUtil.get(request, "the-user-could-not-be-found");
 }
+
+PortletURL previewURL = renderResponse.createRenderURL();
+
+previewURL.setParameter("mvcPath", "/preview_membership_request.jsp");
+previewURL.setParameter("redirect", currentURL);
+previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.getMembershipRequestId()));
 %>
 
 <c:choose>
@@ -59,7 +65,11 @@ else {
 				<liferay-ui:message arguments="<%= new String[] {replier, modifiedDateDescription} %>" key="replied-by-x-x-ago" />
 			</h5>
 
-			<h5><%= HtmlUtil.escape(membershipRequestUser.getFullName()) %></h5>
+			<h5>
+				<aui:a href="<%= previewURL.toString() %>">
+					<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>
+				</aui:a>
+			</h5>
 
 			<h6 class="text-default">
 				<span><%= membershipRequestUser.getEmailAddress() %></span>
@@ -97,8 +107,11 @@ else {
 			cssClass="content-column user-column title-column"
 			name="user"
 			truncate="<%= true %>"
-			value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
-		/>
+		>
+			<aui:a href="<%= previewURL.toString() %>">
+				<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>
+			</aui:a>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			cssClass="content-column email-address-column"

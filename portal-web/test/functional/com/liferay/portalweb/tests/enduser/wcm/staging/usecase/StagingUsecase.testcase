@@ -149,8 +149,6 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -363,8 +361,6 @@
 			<var name="sitePagesVariationMenulistName" value="Main Variation" />
 			<var name="sitePagesVariationName" value="Test Site Pages Variation" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />
@@ -1458,8 +1454,6 @@
 			<var name="sitePagesVariationMenulistName" value="Main Variation Edit" />
 			<var name="sitePagesVariationName" value="Christmas Variation" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />

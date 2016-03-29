@@ -108,8 +108,6 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="Refresh" />
-
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute macro="ProductMenu#gotoSitesPublishing">
@@ -478,8 +476,6 @@
 	</command>
 
 	<command name="enablePageInSitePagesVariation">
-		<execute function="Refresh" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_MENU_REVISION_DETAILS_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 
@@ -588,7 +584,6 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
-		<execute function="Refresh" />
 	</command>
 
 	<command name="publishToLive">
@@ -756,7 +751,6 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
-		<execute function="Refresh" />
 	</command>
 
 	<command name="setContentDateRange">
@@ -940,7 +934,5 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
-
-		<execute function="Refresh" />
 	</command>
 </definition>

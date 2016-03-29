@@ -622,10 +622,6 @@ $horizontal-spacing: 35px;
 		word-break: break-all;
 	}
 
-	.form-builder-field-list {
-		padding: 25px 0;
-	}
-
 	.form-builder-field-list-container {
 		hyphens: auto;
 		padding: 0;
@@ -664,7 +660,7 @@ $horizontal-spacing: 35px;
 		border-width: 0;
 		box-shadow: none;
 		margin: 0;
-		padding: 21px 0;
+		padding: 23px 0 31px 0;
 	}
 
 	.liferay-ddm-form-field-paragraph {
@@ -681,11 +677,6 @@ $horizontal-spacing: 35px;
 		font-size: 19px;
 		margin-bottom: 9px;
 		margin-top: 0;
-	}
-
-	.input-group-container,
-	.radio-options {
-		margin-top: 14px;
 	}
 
 	.multi-step-progress-bar .progress-bar-title {
@@ -765,10 +756,14 @@ $horizontal-spacing: 35px;
 		color: #4A90E2;
 	}
 
-	.form-builder-field-list-add-container,
 	.form-builder-field + .form-builder-field-list-add-container,
-	.form-builder-choose-col-move-target .form-builder-field-move-target {
-		margin-top: -7px;
+	.form-builder-field-move-target:last-child {
+		margin-top: -22px;
+	}
+
+	.form-builder-field-list-add-container.between-fields,
+	.form-builder-field-move-target.between-fields {
+		margin-top: -9px;
 	}
 
 	.form-builder-field-list-empty {
@@ -785,8 +780,9 @@ $horizontal-spacing: 35px;
 			padding-top: 0;
 		}
 
-		.form-builder-field-list-add-container {
-			margin-top: 0;
+		.form-builder-field-list-add-container,
+		.form-builder-field-move-target {
+			margin: 10px 0;
 		}
 
 		.form-builder-field-list-container {
@@ -794,9 +790,7 @@ $horizontal-spacing: 35px;
 		}
 
 		.form-builder-field-move-target {
-			margin-top: 0;
-			padding: 37px 0 36px 0;
-			position: static;
+			padding: 37px 0 37px 0;
 		}
 	}
 
@@ -839,8 +833,8 @@ $horizontal-spacing: 35px;
 
 					@include md {
 						.layout-col-content {
-							padding-left: 15px;
-							padding-right: 15px;
+							padding-left: 20px;
+							padding-right: 20px;
 						}
 
 						&:first-of-type .layout-col-content {

@@ -2957,6 +2957,21 @@ plugins.includes=</echo>
 					</then>
 				</if>
 
+				<if>
+					<available file="${zip.executable.dir}/../work" />
+					<then>
+						<zip
+							destfile="dist/${zip.executable.file}-${lp.version}.zip"
+							update="true"
+						>
+							<zipfileset
+								dir="${zip.executable.dir}/../work"
+								prefix="liferay-portal-${lp.version}/work"
+							/>
+						</zip>
+					</then>
+				</if>
+
 				<delete dir="${zip.executable.dir}/../patching-tool" />
 
 				<if>

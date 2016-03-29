@@ -75,47 +75,13 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${sitePage3Name}" />
 	</command>
 
-	<command name="CannotDeleteLastPrivatePage" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Private" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Page#assertCannotDeleteOnlyPage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Private Pages" />
-		</execute>
-	</command>
-
-	<command name="CannotDeleteLastPublicPage" priority="3">
+	<command name="CannotDeleteLastPublicPageOnLiferay" priority="3">
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Page#assertCannotDeleteOnlyPage">
 			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Site Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPublicPages" />
-
-		<execute macro="Page#deletePG">
-			<var name="pageName" value="Site Page Name" />
 		</execute>
 	</command>
 

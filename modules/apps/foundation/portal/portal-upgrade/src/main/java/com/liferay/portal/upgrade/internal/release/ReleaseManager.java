@@ -326,43 +326,36 @@ public class ReleaseManager {
 
 		@Override
 		public void run() {
-			boolean active = CacheRegistryUtil.isActive();
+			for (UpgradeInfo upgradeInfo : _upgradeInfos) {
+				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
-			try {
-				CacheRegistryUtil.setActive(false);
+				try {
+					upgradeStep.upgrade(
+						new DBProcessContext() {
 
-				for (UpgradeInfo upgradeInfo : _upgradeInfos) {
-					UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+							@Override
+							public DBContext getDBContext() {
+								return new DBContext();
+							}
 
-					try {
-						upgradeStep.upgrade(
-							new DBProcessContext() {
+							@Override
+							public OutputStream getOutputStream() {
+								return _outputStream;
+							}
 
-								@Override
-								public DBContext getDBContext() {
-									return new DBContext();
-								}
+						});
 
-								@Override
-								public OutputStream getOutputStream() {
-									return _outputStream;
-								}
-
-							});
-
-						_releaseLocalService.updateRelease(
-							_bundleSymbolicName,
-							upgradeInfo.getToSchemaVersionString(),
-							upgradeInfo.getFromSchemaVersionString());
-					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
-					}
+					_releaseLocalService.updateRelease(
+						_bundleSymbolicName,
+						upgradeInfo.getToSchemaVersionString(),
+						upgradeInfo.getFromSchemaVersionString());
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
 				}
 			}
-			finally {
-				CacheRegistryUtil.setActive(active);
-			}
+
+			CacheRegistryUtil.clear();
 		}
 
 		private final String _bundleSymbolicName;

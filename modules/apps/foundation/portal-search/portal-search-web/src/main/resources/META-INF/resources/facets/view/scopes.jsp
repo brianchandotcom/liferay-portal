@@ -20,10 +20,12 @@
 if (Validator.isNull(fieldParam)) {
 	fieldParam = String.valueOf(searchDisplayContext.getSearchScopeGroupId());
 }
+
+long groupId = GetterUtil.getInteger(fieldParam);
 %>
 
 <c:choose>
-	<c:when test="<%= termCollectors.isEmpty() %>">
+	<c:when test="<%= termCollectors.isEmpty() && (groupId == 0) %>">
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
 	</c:when>
 	<c:otherwise>
@@ -50,7 +52,21 @@ if (Validator.isNull(fieldParam)) {
 						</li>
 
 						<%
-						long groupId = GetterUtil.getInteger(fieldParam);
+						if (termCollectors.isEmpty()) {
+							Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+							if (group != null) {
+						%>
+
+								<li class="facet-value">
+									<a class="<%= "text-primary" %>" data-value="<%= groupId %>" href="javascript:;">
+										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+									</a>
+								</li>
+
+						<%
+							}
+						}
 
 						for (int i = 0; i < termCollectors.size(); i++) {
 							TermCollector termCollector = termCollectors.get(i);

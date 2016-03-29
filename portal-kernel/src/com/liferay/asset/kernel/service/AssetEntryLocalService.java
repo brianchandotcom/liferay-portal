@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -385,11 +384,11 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public AssetEntry getPreviousEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getTopViewedEntries(java.lang.String[] className,
+	public List<AssetEntry> getTopViewedEntries(java.lang.String className,
 		boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getTopViewedEntries(java.lang.String className,
+	public List<AssetEntry> getTopViewedEntries(java.lang.String[] className,
 		boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -478,10 +477,15 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String userName, java.lang.String title,
 		java.lang.String description, java.lang.String assetCategoryIds,
 		java.lang.String assetTagNames, boolean showNonindexable,
-		int[] statuses, boolean andSearch);
+		boolean showNonVisible, int[] statuses, boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long searchCount(AssetTag tag, int[] statuses);
+	public long searchCount(long companyId, long[] groupIds, long userId,
+		java.lang.String className, long classTypeId,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, boolean showNonindexable,
+		int[] statuses, boolean andSearch);
 
 	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds);
 

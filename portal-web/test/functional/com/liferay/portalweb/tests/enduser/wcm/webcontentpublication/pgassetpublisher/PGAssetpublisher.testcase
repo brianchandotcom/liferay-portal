@@ -687,7 +687,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP" >
-			<var name="assetTypeConfigured" value="true" />
 			<var name="webContentContent" value="WebContent Content 1" />
 			<var name="webContentTitle" value="WebContent Title 1" />
 		</execute>
@@ -697,7 +696,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP" >
-			<var name="assetTypeConfigured" value="true" />
 			<var name="webContentContent" value="WebContent Content 2" />
 			<var name="webContentTitle" value="WebContent Title 2" />
 		</execute>
@@ -707,7 +705,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP" >
-			<var name="assetTypeConfigured" value="true" />
 			<var name="webContentContent" value="WebContent Content 3" />
 			<var name="webContentTitle" value="WebContent Title 3" />
 		</execute>
@@ -763,7 +760,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP" >
-			<var name="assetTypeConfigured" value="true" />
 			<var name="webContentContent" value="WebContent Content 1" />
 			<var name="webContentTitle" value="WebContent Title 1" />
 		</execute>
@@ -775,7 +771,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP" >
-			<var name="assetTypeConfigured" value="true" />
 			<var name="webContentContent" value="WebContent Content 2" />
 			<var name="webContentTitle" value="WebContent Title 2" />
 		</execute>
@@ -787,7 +782,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaAP" >
-			<var name="assetTypeConfigured" value="true" />
 			<var name="webContentContent" value="WebContent Content 3" />
 			<var name="webContentTitle" value="WebContent Title 3" />
 		</execute>

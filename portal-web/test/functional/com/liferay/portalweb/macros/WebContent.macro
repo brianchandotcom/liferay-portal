@@ -2,15 +2,7 @@
 	<command name="_gotoAddPGViaAP">
 		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
-		<if>
-			<equals arg1="${assetTypeConfigured}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="AP#ADD_BASIC_WEB_CONTENT_LINK" value1="Add Basic Web Content" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
-			</else>
-		</if>
+		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -69,9 +61,7 @@
 	</command>
 
 	<command name="addDraftPGViaAP">
-		<execute macro="WebContent#_gotoAddPGViaAP">
-			<var name="assetTypeConfigured" value="${assetTypeConfigured}" />
-		</execute>
+		<execute macro="WebContent#_gotoAddPGViaAP" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -176,9 +166,7 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute macro="WebContent#_gotoAddPGViaAP">
-			<var name="assetTypeConfigured" value="${assetTypeConfigured}" />
-		</execute>
+		<execute macro="WebContent#_gotoAddPGViaAP" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />

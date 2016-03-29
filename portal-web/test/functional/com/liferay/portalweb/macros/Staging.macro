@@ -243,6 +243,7 @@
 			<isset var="checkPageName" />
 			<then>
 				<execute function="Click" locator1="StagingPublishtolivenow#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+
 				<execute function="Click" locator1="StagingPublishtolivenow#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
 				<for list="${checkPageName}" param="pageName">

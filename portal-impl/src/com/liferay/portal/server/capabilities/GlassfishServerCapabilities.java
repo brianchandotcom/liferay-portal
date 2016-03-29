@@ -16,6 +16,7 @@ package com.liferay.portal.server.capabilities;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.server.DeepNamedValueScanner;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
 
@@ -38,39 +39,45 @@ public class GlassfishServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		DeepNamedValueScanner deepNamedValueScanner = new DeepNamedValueScanner(
-			"masterView");
+		if (PropsValues.HOT_DEPLOY_CAPABILITIES_DETECTION_ENABLED) {
+			DeepNamedValueScanner deepNamedValueScanner =
+				new DeepNamedValueScanner("masterView");
 
-		deepNamedValueScanner.setExcludedClassNames("org.apache.felix.");
-		deepNamedValueScanner.setSkipFirstCount(4);
+			deepNamedValueScanner.setExcludedClassNames("org.apache.felix.");
+			deepNamedValueScanner.setSkipFirstCount(4);
 
-		deepNamedValueScanner.scan(servletContext);
+			deepNamedValueScanner.scan(servletContext);
 
-		if (deepNamedValueScanner.isScanning()) {
-			_supportsHotDeploy = false;
+			if (deepNamedValueScanner.isScanning()) {
+				_supportsHotDeploy = false;
 
-			return;
+				return;
+			}
+
+			Object masterViewObject = deepNamedValueScanner.getMatchedValue();
+
+			deepNamedValueScanner = new DeepNamedValueScanner(
+				"autodeploy-enabled");
+
+			deepNamedValueScanner.setExcludedClassNames(
+				"org.apache.felix.", "CountStatisticImpl");
+			deepNamedValueScanner.setSkipFirstCount(2);
+			deepNamedValueScanner.setVisitMaps(true);
+
+			deepNamedValueScanner.scan(masterViewObject);
+
+			boolean autoDeployEnabled = true;
+
+			if (!deepNamedValueScanner.isScanning()) {
+				autoDeployEnabled = GetterUtil.getBoolean(
+					deepNamedValueScanner.getMatchedValue());
+			}
+
+			_supportsHotDeploy = autoDeployEnabled;
 		}
-
-		Object masterViewObject = deepNamedValueScanner.getMatchedValue();
-
-		deepNamedValueScanner = new DeepNamedValueScanner("autodeploy-enabled");
-
-		deepNamedValueScanner.setExcludedClassNames(
-			"org.apache.felix.", "CountStatisticImpl");
-		deepNamedValueScanner.setSkipFirstCount(2);
-		deepNamedValueScanner.setVisitMaps(true);
-
-		deepNamedValueScanner.scan(masterViewObject);
-
-		boolean autoDeployEnabled = true;
-
-		if (!deepNamedValueScanner.isScanning()) {
-			autoDeployEnabled = GetterUtil.getBoolean(
-				deepNamedValueScanner.getMatchedValue());
+		else {
+			_supportsHotDeploy = PropsValues.HOT_DEPLOY_ENABLED;
 		}
-
-		_supportsHotDeploy = autoDeployEnabled;
 	}
 
 	private boolean _supportsHotDeploy;

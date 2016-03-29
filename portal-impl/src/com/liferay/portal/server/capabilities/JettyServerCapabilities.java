@@ -15,6 +15,7 @@
 package com.liferay.portal.server.capabilities;
 
 import com.liferay.portal.server.DeepNamedValueScanner;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
 
@@ -37,22 +38,28 @@ public class JettyServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		DeepNamedValueScanner deepNamedValueScanner = new DeepNamedValueScanner(
-			"_scanInterval");
+		if (PropsValues.HOT_DEPLOY_CAPABILITIES_DETECTION_ENABLED) {
+			DeepNamedValueScanner deepNamedValueScanner =
+				new DeepNamedValueScanner("_scanInterval");
 
-		deepNamedValueScanner.setExcludedClassNames("WebAppProvider");
-		deepNamedValueScanner.setIncludedClassNames("org.eclipse.jetty");
-		deepNamedValueScanner.setVisitLists(true);
+			deepNamedValueScanner.setExcludedClassNames("WebAppProvider");
+			deepNamedValueScanner.setIncludedClassNames("org.eclipse.jetty");
+			deepNamedValueScanner.setVisitLists(true);
 
-		deepNamedValueScanner.scan(servletContext);
+			deepNamedValueScanner.scan(servletContext);
 
-		Integer scanInterval = (Integer)deepNamedValueScanner.getMatchedValue();
+			Integer scanInterval =
+				(Integer)deepNamedValueScanner.getMatchedValue();
 
-		if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
-			_supportsHotDeploy = true;
+			if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
+				_supportsHotDeploy = true;
+			}
+			else {
+				_supportsHotDeploy = false;
+			}
 		}
 		else {
-			_supportsHotDeploy = false;
+			_supportsHotDeploy = PropsValues.HOT_DEPLOY_ENABLED;
 		}
 	}
 

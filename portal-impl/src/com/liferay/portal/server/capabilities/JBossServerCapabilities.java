@@ -15,6 +15,7 @@
 package com.liferay.portal.server.capabilities;
 
 import com.liferay.portal.server.DeepNamedValueScanner;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
 
@@ -36,28 +37,33 @@ public class JBossServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		DeepNamedValueScanner deepNamedValueScanner = new DeepNamedValueScanner(
-			"scanEnabled", true);
+		if (PropsValues.HOT_DEPLOY_CAPABILITIES_DETECTION_ENABLED) {
+			DeepNamedValueScanner deepNamedValueScanner =
+				new DeepNamedValueScanner("scanEnabled", true);
 
-		deepNamedValueScanner.setExcludedClassNames(
-			"ChainedInterceptorFactory", "TagAttributeInfo", ".jandex.",
-			".vfs.");
-		deepNamedValueScanner.setExcludedNames("serialversion");
-		deepNamedValueScanner.setIncludedClassNames(
-			"org.apache.", "org.jboss.");
-		deepNamedValueScanner.setVisitArrays(true);
-		deepNamedValueScanner.setVisitMaps(true);
+			deepNamedValueScanner.setExcludedClassNames(
+				"ChainedInterceptorFactory", "TagAttributeInfo", ".jandex.",
+				".vfs.");
+			deepNamedValueScanner.setExcludedNames("serialversion");
+			deepNamedValueScanner.setIncludedClassNames(
+				"org.apache.", "org.jboss.");
+			deepNamedValueScanner.setVisitArrays(true);
+			deepNamedValueScanner.setVisitMaps(true);
 
-		deepNamedValueScanner.scan(servletContext);
+			deepNamedValueScanner.scan(servletContext);
 
-		Boolean scanEnabledValue =
-			(Boolean)deepNamedValueScanner.getMatchedValue();
+			Boolean scanEnabledValue =
+				(Boolean)deepNamedValueScanner.getMatchedValue();
 
-		if (scanEnabledValue == null) {
-			_supportsHotDeploy = false;
+			if (scanEnabledValue == null) {
+				_supportsHotDeploy = false;
+			}
+			else {
+				_supportsHotDeploy = scanEnabledValue.booleanValue();
+			}
 		}
 		else {
-			_supportsHotDeploy = scanEnabledValue.booleanValue();
+			_supportsHotDeploy = PropsValues.HOT_DEPLOY_ENABLED;
 		}
 	}
 

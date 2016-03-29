@@ -15,6 +15,7 @@
 package com.liferay.asset.tags.admin.web.display.context;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.admin.web.constants.AssetTagsAdminPortletKeys;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.util.comparator.AssetTagAssetCountComparator;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
@@ -81,6 +83,21 @@ public class AssetTagsDisplayContext {
 			"list");
 
 		return _displayStyle;
+	}
+
+	public long getTagsFullCount(AssetTag tag) {
+		int[] statuses = new int[] {
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_PENDING,
+			WorkflowConstants.STATUS_SCHEDULED
+		};
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return AssetEntryLocalServiceUtil.searchCount(
+			tag.getCompanyId(), null, themeDisplay.getUserId(), null, 0,
+			null, null, null, null, tag.getName(), true, true, statuses, false);
+
 	}
 
 	public String getKeywords() {

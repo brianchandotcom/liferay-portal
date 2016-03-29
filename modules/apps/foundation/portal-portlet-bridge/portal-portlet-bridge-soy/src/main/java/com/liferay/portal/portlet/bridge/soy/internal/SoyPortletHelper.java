@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -86,11 +85,6 @@ public class SoyPortletHelper {
 			contextJSONObject.put(key, template.get(key));
 		}
 
-		contextJSONObject.put(
-			"element", getPortletContentElement(portletNamespace));
-		contextJSONObject.put(
-			"id", portletNamespace.concat("PortletComponent"));
-
 		return contextJSONObject;
 	}
 
@@ -143,16 +137,6 @@ public class SoyPortletHelper {
 		}
 
 		return moduleName;
-	}
-
-	protected String getPortletContentElement(String portletNamespace) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("#");
-		sb.append(HtmlUtil.escapeJS(portletNamespace));
-		sb.append("PortletComponent");
-
-		return sb.toString();
 	}
 
 	protected String getPortletJavaScript(

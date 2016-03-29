@@ -44,6 +44,13 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
 int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId);
+
+PortletURL backURL = renderResponse.createRenderURL();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL.toString());
+
+renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 %>
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />

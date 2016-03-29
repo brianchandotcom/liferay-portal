@@ -220,7 +220,7 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.web.proxy.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.web.proxy.web)(release.schema.version=1.0.2))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

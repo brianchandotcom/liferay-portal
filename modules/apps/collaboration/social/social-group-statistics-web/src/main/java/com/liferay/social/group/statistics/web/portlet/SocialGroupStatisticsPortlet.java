@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SocialGroupStatisticsPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.social.group.statistics.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.social.group.statistics.web)(release.schema.version=2.0.1))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

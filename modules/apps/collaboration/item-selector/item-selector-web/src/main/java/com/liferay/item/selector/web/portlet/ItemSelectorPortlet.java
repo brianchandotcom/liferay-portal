@@ -87,7 +87,7 @@ public class ItemSelectorPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.item.selector.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.item.selector.web)(release.schema.version=2.0.1))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

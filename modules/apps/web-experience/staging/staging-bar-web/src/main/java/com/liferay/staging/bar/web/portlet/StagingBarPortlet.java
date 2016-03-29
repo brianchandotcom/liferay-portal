@@ -255,7 +255,7 @@ public class StagingBarPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.staging.bar.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.staging.bar.web)(release.schema.version=1.0.3))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

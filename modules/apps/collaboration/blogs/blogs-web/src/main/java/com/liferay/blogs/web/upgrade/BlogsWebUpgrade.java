@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,10 +34,13 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.blogs.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
+			"com.liferay.blogs.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
+			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.blogs.web", "0.0.1", "1.0.0",
+			"com.liferay.blogs.web", "0.0.1",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new UpgradePortletPreferences(),
 			new UpgradePortletSettings(_settingsFactory));
 	}

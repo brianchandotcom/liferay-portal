@@ -17,6 +17,7 @@ package com.liferay.notifications.web.upgrade;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +31,8 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.notifications.web", "0.0.0", "2.0.0",
+			"com.liferay.notifications.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new DummyUpgradeStep());
 
 		registry.register(
@@ -40,7 +42,8 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 					_userNotificationEventLocalService));
 
 		registry.register(
-			"com.liferay.notifications.web", "1.0.0", "2.0.0",
+			"com.liferay.notifications.web", "1.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new com.liferay.notifications.web.upgrade.v2_0_0.
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService));

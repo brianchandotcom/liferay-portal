@@ -17,6 +17,7 @@ package com.liferay.directory.web.upgrade;
 import com.liferay.directory.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,11 +30,13 @@ public class DirectoryWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.directory.web", "0.0.0", "1.0.0",
+			"com.liferay.directory.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.directory.web", "0.0.1", "1.0.0",
+			"com.liferay.directory.web", "0.0.1",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new UpgradePortletId());
 	}
 

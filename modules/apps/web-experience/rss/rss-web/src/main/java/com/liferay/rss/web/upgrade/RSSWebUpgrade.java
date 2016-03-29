@@ -16,6 +16,7 @@ package com.liferay.rss.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.rss.web.constants.RSSPortletKeys;
 
@@ -30,10 +31,13 @@ public class RSSWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.rss.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
+			"com.liferay.rss.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
+			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.rss.web", "0.0.1", "1.0.0",
+			"com.liferay.rss.web", "0.0.1",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new UpgradePortletId() {
 
 				@Override

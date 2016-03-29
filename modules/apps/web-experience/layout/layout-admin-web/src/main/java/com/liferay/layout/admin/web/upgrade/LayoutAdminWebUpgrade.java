@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.upgrade;
 import com.liferay.layout.admin.web.upgrade.v_1_0_0.UpgradeLayout;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 
 import java.rmi.registry.Registry;
 
@@ -31,12 +32,13 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.layout.admin.web", "0.0.0", "1.0.0",
+			"com.liferay.layout.admin.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.layout.admin.web", "0.0.1", "1.0.0",
-			new UpgradeLayout());
+			"com.liferay.layout.admin.web", "0.0.1",
+			ReleaseBuilder.getReleaseVersion(getClass()), new UpgradeLayout());
 	}
 
 }

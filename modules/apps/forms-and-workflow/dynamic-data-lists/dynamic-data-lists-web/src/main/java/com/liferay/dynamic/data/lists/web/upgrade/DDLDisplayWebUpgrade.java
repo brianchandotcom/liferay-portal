@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,11 +34,13 @@ public class DDLDisplayWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.dynamic.data.lists.web", "0.0.0", "1.0.0",
+			"com.liferay.dynamic.data.lists.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.dynamic.data.lists.web", "0.0.1", "1.0.0",
+			"com.liferay.dynamic.data.lists.web", "0.0.1",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new UpgradeDDLDisplayPortletId(),
 			new UpgradeDDLFormPortletId(
 				_portletPreferencesLocalService,

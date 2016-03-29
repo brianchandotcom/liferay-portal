@@ -9,7 +9,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.search", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.1"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

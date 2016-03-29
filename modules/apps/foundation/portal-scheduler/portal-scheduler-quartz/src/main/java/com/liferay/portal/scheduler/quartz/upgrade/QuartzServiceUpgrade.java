@@ -17,6 +17,7 @@ package com.liferay.portal.scheduler.quartz.upgrade;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.scheduler.quartz.upgrade.v1_0_0.UpgradeQuartz;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,7 +30,8 @@ public class QuartzServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.scheduler.quartz", "0.0.0", "1.0.0",
+			"com.liferay.portal.scheduler.quartz", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new DummyUpgradeStep());
 
 		registry.register(

@@ -92,7 +92,7 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.hello.velocity.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.hello.velocity.web)(release.schema.version=2.0.2))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

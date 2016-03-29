@@ -252,7 +252,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.portlet.configuration.css.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.portlet.configuration.css.web)(release.schema.version=2.0.1))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

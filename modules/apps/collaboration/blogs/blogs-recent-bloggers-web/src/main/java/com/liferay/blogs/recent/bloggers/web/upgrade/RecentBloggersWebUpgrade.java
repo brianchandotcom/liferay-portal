@@ -17,6 +17,7 @@ package com.liferay.blogs.recent.bloggers.web.upgrade;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.ReleaseBuilder;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +31,8 @@ public class RecentBloggersWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.blogs.recent.bloggers.web", "0.0.0", "1.0.0",
+			"com.liferay.blogs.recent.bloggers.web", "0.0.0",
+			ReleaseBuilder.getReleaseVersion(getClass()),
 			new DummyUpgradeStep());
 
 		UpgradePortletId upgradePortletId = new UpgradePortletId() {
@@ -47,8 +49,8 @@ public class RecentBloggersWebUpgrade implements UpgradeStepRegistrator {
 		};
 
 		registry.register(
-			"com.liferay.blogs.recent.bloggers.web", "0.0.1", "1.0.0",
-			upgradePortletId);
+			"com.liferay.blogs.recent.bloggers.web", "0.0.1",
+			ReleaseBuilder.getReleaseVersion(getClass()), upgradePortletId);
 	}
 
 }

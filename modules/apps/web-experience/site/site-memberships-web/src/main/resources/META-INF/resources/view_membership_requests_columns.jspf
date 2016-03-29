@@ -87,6 +87,7 @@ previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.
 				resultRow="<%= row %>"
 				subtitle="<%= membershipRequestUser.getEmailAddress() %>"
 				title="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+				url="<%= previewURL.toString() %>"
 				userId="<%= membershipRequest.getUserId() %>"
 			>
 				<liferay-frontend:vertical-card-header>

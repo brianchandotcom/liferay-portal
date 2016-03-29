@@ -1,5 +1,14 @@
 @import "bourbon";
 
+.ddl-form-builder-app {
+	.lfr-ddm-form-page {
+		> .row {
+			margin-left: 18px;
+			margin-right: 18px;
+		}
+	}
+}
+
 .lfr-ddm-form-container {
 	.form-control-feedback {
 		margin-left: -20px;
@@ -115,7 +124,7 @@
 }
 
 .portal-popup {
-	$side-spacing: 34px;
+	$side-spacing: 32px;
 	padding: 0;
 
 	&.open {

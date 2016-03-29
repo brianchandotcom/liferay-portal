@@ -28,8 +28,10 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,51 +50,8 @@ public class SoyPortletHelper {
 		_javaScriptTPL = getJavaScriptTPL();
 	}
 
-	public String getControllerName(String path) {
-		String controllerName = _controllersMap.get(path);
-
-		if (controllerName != null) {
-			return controllerName;
-		}
-
-		URL url = _bundle.getEntry(
-			"/META-INF/resources/".concat(path).concat(".es.js"));
-
-		if (url != null) {
-			controllerName = path.concat(".es");
-		}
-		else {
-			controllerName = path.concat(".soy");
-		}
-
-		_controllersMap.put(path, controllerName);
-
-		return controllerName;
-	}
-
-	public String getModuleName() throws Exception {
-		URL url = _bundle.getEntry("package.json");
-
-		if (url == null) {
-			return null;
-		}
-
-		String json = StringUtil.read(url.openStream());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
-
-		String moduleName = jsonObject.getString("name");
-
-		if (Validator.isNull(moduleName)) {
-			return null;
-		}
-
-		return moduleName;
-	}
-
 	public String getPortletJavaScript(
-		Template template, Set<String> requiredModules,
-		String portletNamespace) {
+		Template template, String path, String portletNamespace) {
 
 		if (_moduleName == null) {
 			return StringPool.BLANK;
@@ -102,7 +61,7 @@ public class SoyPortletHelper {
 			template, portletNamespace);
 
 		return getPortletJavaScript(
-			contextJSONObject.toJSONString(), requiredModules,
+			contextJSONObject.toJSONString(), getRequiredModules(path),
 			portletNamespace);
 	}
 
@@ -135,6 +94,28 @@ public class SoyPortletHelper {
 		return contextJSONObject;
 	}
 
+	protected String getControllerName(String path) {
+		String controllerName = _controllersMap.get(path);
+
+		if (controllerName != null) {
+			return controllerName;
+		}
+
+		URL url = _bundle.getEntry(
+			"/META-INF/resources/".concat(path).concat(".es.js"));
+
+		if (url != null) {
+			controllerName = path.concat(".es");
+		}
+		else {
+			controllerName = path.concat(".soy");
+		}
+
+		_controllersMap.put(path, controllerName);
+
+		return controllerName;
+	}
+
 	protected String getJavaScriptTPL() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -142,6 +123,26 @@ public class SoyPortletHelper {
 			"dependencies/bootstrap.js.tpl");
 
 		return StringUtil.read(inputStream);
+	}
+
+	protected String getModuleName() throws Exception {
+		URL url = _bundle.getEntry("package.json");
+
+		if (url == null) {
+			return null;
+		}
+
+		String json = StringUtil.read(url.openStream());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		String moduleName = jsonObject.getString("name");
+
+		if (Validator.isNull(moduleName)) {
+			return null;
+		}
+
+		return moduleName;
 	}
 
 	protected String getPortletContentElement(String portletNamespace) {
@@ -157,7 +158,7 @@ public class SoyPortletHelper {
 	protected String getPortletJavaScript(
 		String context, Set<String> requiredModules, String portletNamespace) {
 
-		String requiredModulesString = _getRequiredModulesString(
+		String requiredModulesString = getRequiredModulesString(
 			requiredModules);
 
 		return StringUtil.replace(
@@ -168,7 +169,22 @@ public class SoyPortletHelper {
 			new String[] {context, portletNamespace, requiredModulesString});
 	}
 
-	private String _getRequiredModulesString(Set<String> requiredModules) {
+	protected Set<String> getRequiredModules(String path) {
+		if (_moduleName == null) {
+			return Collections.emptySet();
+		}
+
+		Set<String> requiredModules = new LinkedHashSet<>();
+
+		String controllerName = getControllerName(path);
+
+		requiredModules.add(
+			_moduleName.concat(StringPool.SLASH).concat(controllerName));
+
+		return requiredModules;
+	}
+
+	protected String getRequiredModulesString(Set<String> requiredModules) {
 		StringBundler sb = new StringBundler(requiredModules.size() * 4);
 
 		Iterator<String> it = requiredModules.iterator();

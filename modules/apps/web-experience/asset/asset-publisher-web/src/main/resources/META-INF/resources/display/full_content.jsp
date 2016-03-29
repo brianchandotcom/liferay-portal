@@ -106,7 +106,10 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
 	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-	viewFullContentURL.setParameter("viewMode", print ? Constants.PRINT : Constants.VIEW);
+
+	if (print) {
+		viewFullContentURL.setParameter("viewMode", Constants.PRINT);
+	}
 
 	if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 		if (assetRenderer.getGroupId() != scopeGroupId) {

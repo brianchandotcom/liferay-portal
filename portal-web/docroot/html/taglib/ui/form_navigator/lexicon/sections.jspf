@@ -97,11 +97,8 @@
 
 		<aui:script sandbox="<%= true %>">
 			var focusField;
-			var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
 
-			if (!sectionContent.hasClass('in')) {
-				sectionContent.collapse('show');
-			}
+			var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
 
 			<%
 			String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
@@ -117,12 +114,21 @@
 			</c:choose>
 
 			if (focusField.length) {
-				Liferay.on(
+				Liferay.once(
 					'<portlet:namespace />formReady',
 					function(event) {
-						focusField.focus();
+						$(sectionContent).one(
+							'shown.bs.collapse',
+							function() {
+								Liferay.Util.focusFormField(focusField);
+							}
+						);
 					}
 				);
+			}
+
+			if (!sectionContent.hasClass('in')) {
+				sectionContent.collapse('show');
 			}
 		</aui:script>
 

@@ -24,6 +24,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+	provided project(":apps:foundation:xml:xml-util")
 }
 
 downloadDependencyVisitor {

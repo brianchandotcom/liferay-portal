@@ -250,7 +250,6 @@
 	<classpathentry kind="lib" path="lib/portal/spring-jms.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-orm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-oxm.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-struts.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-tx.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-web.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-webmvc.jar"/>

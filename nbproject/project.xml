@@ -476,7 +476,6 @@
 				<classpath mode="compile">lib/portal/spring-jms.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-orm.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-oxm.jar</classpath>
-				<classpath mode="compile">lib/portal/spring-struts.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-tx.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-web.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-webmvc.jar</classpath>

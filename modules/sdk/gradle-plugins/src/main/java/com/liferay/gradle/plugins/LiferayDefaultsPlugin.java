@@ -1193,8 +1193,37 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			bundleDefaultInstructions);
 	}
 
+	protected void configureBundleExportPackage(
+		Project project, Map<String, String> bundleInstructions) {
+
+		String projectPath = project.getPath();
+
+		if (!projectPath.startsWith(":apps:") &&
+			!projectPath.startsWith(":ee:")) {
+
+			return;
+		}
+
+		String exportPackage = bundleInstructions.get(Constants.EXPORT_PACKAGE);
+
+		if (Validator.isNull(exportPackage)) {
+			return;
+		}
+
+		exportPackage = "!com.liferay.*.kernel.*," + exportPackage;
+
+		bundleInstructions.put(Constants.EXPORT_PACKAGE, exportPackage);
+	}
+
 	protected void configureBundleInstructions(Project project) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
+
+		configureBundleExportPackage(project, bundleInstructions);
+		configureBundleLiferayIncludeResource(project, bundleInstructions);
+	}
+
+	protected void configureBundleLiferayIncludeResource(
+		Project project, Map<String, String> bundleInstructions) {
 
 		String includeResource = bundleInstructions.get(
 			_LIFERAY_INCLUDERESOURCE);

@@ -40,7 +40,8 @@ public class UpgradeSchema extends UpgradeProcess {
 				"structureId", "DDMStructureKey VARCHAR(75) null"),
 			new AlterColumnName(
 				"templateId", "DDMTemplateKey VARCHAR(75) null"),
-			new AlterColumnType("description", "TEXT null"));
+			new AlterColumnType("description", "TEXT null"),
+			new AlterColumnType("title", "TEXT null"));
 
 		alter(
 			JournalFeedTable.class,

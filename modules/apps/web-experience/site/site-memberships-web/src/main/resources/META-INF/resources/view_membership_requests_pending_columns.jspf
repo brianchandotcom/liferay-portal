@@ -1,0 +1,103 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
+
+row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
+%>
+
+<c:choose>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= membershipRequest.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h6 class="text-default">
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+			</h6>
+
+			<h5><%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)</h5>
+
+			<h6 class="text-default">
+				<span><%= HtmlUtil.escape(membershipRequest.getComments()) %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/membership_request_action.jsp"
+		/>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				actionJsp="/membership_request_action.jsp"
+				actionJspServletContext="<%= application %>"
+				resultRow="<%= row %>"
+				subtitle="<%= membershipRequestUser.getEmailAddress() %>"
+				title="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+				userId="<%= membershipRequest.getUserId() %>"
+			>
+				<liferay-frontend:vertical-card-header>
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+				</liferay-frontend:vertical-card-header>
+			</liferay-frontend:user-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("list") %>'>
+		<liferay-ui:search-container-column-text
+			cssClass="content-column user-column title-column"
+			name="user"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="content-column user-comments-column"
+			name="user-comments"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="content-column email-address-column"
+			name="email-address"
+			value="<%= membershipRequestUser.getEmailAddress() %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="date-column text-column"
+			name="date"
+			value="<%= membershipRequest.getCreateDate() %>"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action-column"
+			path="/membership_request_action.jsp"
+		/>
+	</c:when>
+</c:choose>

@@ -16,10 +16,15 @@ package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
+
+import java.io.Serializable;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 
@@ -28,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  * @author Milen Dyankov
+ * @author Tibor Lipusz
  */
 @Component(
 	immediate = true,
@@ -46,7 +52,11 @@ public class RangeFacetProcessor
 
 		JSONArray jsonArray = jsonObject.getJSONArray("ranges");
 
-		if (jsonArray == null) {
+		SearchContext searchContext = facet.getSearchContext();
+
+		Serializable modified = searchContext.getAttribute("modified");
+
+		if ((jsonArray == null) && Validator.isNull(modified)) {
 			return;
 		}
 
@@ -59,6 +69,10 @@ public class RangeFacetProcessor
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
 			addRange(defaultRangeBuilder, rangeJSONObject.getString("range"));
+		}
+
+		if (Validator.isNotNull(modified)) {
+			addRange(defaultRangeBuilder, GetterUtil.getString(modified));
 		}
 
 		searchRequestBuilder.addAggregation(defaultRangeBuilder);

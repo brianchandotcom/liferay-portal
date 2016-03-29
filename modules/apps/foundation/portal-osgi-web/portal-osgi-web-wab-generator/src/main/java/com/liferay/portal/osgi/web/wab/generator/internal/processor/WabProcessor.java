@@ -61,7 +61,7 @@ import com.liferay.portal.osgi.web.wab.generator.internal.introspection.ClassLoa
 import com.liferay.portal.osgi.web.wab.generator.internal.introspection.Source;
 import com.liferay.portal.osgi.web.wab.generator.internal.util.AntUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.xml.XMLUtil;
+import com.liferay.xml.util.XMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.util.xml.XMLUtil;
+import com.liferay.xml.util.XMLUtil;
 
 import java.util.List;
 import java.util.Map;

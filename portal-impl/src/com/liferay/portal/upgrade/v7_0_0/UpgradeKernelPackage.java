@@ -43,6 +43,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
+			upgradeTable(
+				"UserNotificationEvent", "payload", getClassNames(),
+				WildcardMode.SURROUND);
 
 			upgradeTable(
 				"ResourceAction", "name", getResourceNames(),
@@ -52,6 +55,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				WildcardMode.LEADING);
 			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
+				WildcardMode.LEADING);
+			upgradeTable(
+				"UserNotificationEvent", "payload", getResourceNames(),
 				WildcardMode.LEADING);
 		}
 		catch (Exception e) {

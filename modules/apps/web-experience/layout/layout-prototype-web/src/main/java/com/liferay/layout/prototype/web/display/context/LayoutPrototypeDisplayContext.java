@@ -112,13 +112,23 @@ public class LayoutPrototypeDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String emptyResultsMessage = "there-are-no-page-templates.";
+
+		if (showAddButton()) {
+			emptyResultsMessage =
+				"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
+					"clicking-the-plus-button-on-the-bottom-right-corner";
+		}
+
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
-				"clicking-the-plus-button-on-the-bottom-right-corner");
+			emptyResultsMessage);
 
-		searchContainer.setEmptyResultsMessageCssClass(
-			"taglib-empty-result-message-header-has-plus-btn");
+		if (showAddButton()) {
+			searchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+
 		searchContainer.setId("layoutPrototype");
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

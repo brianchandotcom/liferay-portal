@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.WarArtifactUrlTransformer;
 import com.liferay.portal.osgi.web.wab.generator.internal.handler.WabURLStreamHandlerService;
+import com.liferay.portal.osgi.web.wab.generator.internal.processor.WabProcessor;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.util.Dictionary;
-
-import javax.servlet.ServletContext;
+import java.util.Map;
 
 import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
@@ -40,7 +43,20 @@ import org.osgi.service.url.URLStreamHandlerService;
  * @author Raymond Augé
  */
 @Component(immediate = true)
-public class WabGenerator {
+public class WabGenerator
+	implements com.liferay.portal.osgi.web.wab.generator.WabGenerator {
+
+	@Override
+	public File generate(
+			ClassLoader classLoader, File file,
+			Map<String, String[]> parameters)
+		throws IOException {
+
+		WabProcessor wabProcessor = new WabProcessor(
+			classLoader, file, parameters);
+
+		return wabProcessor.getProcessedFile();
+	}
 
 	@Activate
 	public void start(BundleContext bundleContext) throws Exception {
@@ -78,8 +94,7 @@ public class WabGenerator {
 
 		bundleContext.registerService(
 			URLStreamHandlerService.class.getName(),
-			new WabURLStreamHandlerService(bundleContext, classLoader),
-			properties);
+			new WabURLStreamHandlerService(classLoader, this), properties);
 	}
 
 	/**
@@ -93,11 +108,8 @@ public class WabGenerator {
 
 	protected void unsetModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-
-		_servletContext = null;
 	}
 
 	private ServiceRegistration<ArtifactUrlTransformer> _serviceRegistration;
-	private ServletContext _servletContext;
 
 }

@@ -21,29 +21,21 @@ if (Validator.isNull(backLabel)) {
 	backLabel = LanguageUtil.get(resourceBundle, "back");
 }
 
-if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);")) {
-	backURL = HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL));
-}
-
 String headerTitle = (localizeTitle) ? LanguageUtil.get(resourceBundle, title) : title;
 %>
 
 <div class="taglib-header <%= cssClass %>">
 	<c:if test="<%= showBackURL && Validator.isNotNull(backURL) %>">
-		<span class="header-back-to">
-			<a class="icon-circle-arrow-left previous-level" href="<%= backURL %>" id="<%= namespace %>TabsBack" title="<%= HtmlUtil.escapeAttribute(backLabel) %>">
-				<span class="helper-hidden-accessible">
-					<c:choose>
-						<c:when test="<%= escapeXml %>">
-							<%= HtmlUtil.escape(backLabel) %>
-						</c:when>
-						<c:otherwise>
-							<%= backLabel %>
-						</c:otherwise>
-					</c:choose>
-				</span>
-			</a>
-		</span>
+		<liferay-ui:icon
+			cssClass="header-back-to"
+			icon="angle-left"
+			id="TabsBack"
+			label="<%= false %>"
+			markupView="lexicon"
+			message="<%= escapeXml ? HtmlUtil.escape(backLabel) : backLabel %>"
+			method="get"
+			url="<%= backURL %>"
+		/>
 	</c:if>
 
 	<h3 class="header-title">

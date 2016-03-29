@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import javax.portlet.PortletURL;
 
@@ -85,15 +84,23 @@ public class AssetPublisherHelper {
 		if (viewInContext) {
 			currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
 
-			String viewFullContentURLString = viewFullContentURL.toString();
-
-			viewFullContentURLString = HttpUtil.setParameter(
-				viewFullContentURLString, "redirect", currentURL);
+			viewFullContentURL.setParameter("redirect", currentURL);
 
 			try {
+				String noSuchEntryRedirect = viewFullContentURL.toString();
+
 				viewURL = assetRenderer.getURLViewInContext(
 					liferayPortletRequest, liferayPortletResponse,
-					viewFullContentURLString);
+					noSuchEntryRedirect);
+
+				if (Validator.isNotNull(viewURL) &&
+					!Validator.equals(viewURL, noSuchEntryRedirect)) {
+
+					viewURL = HttpUtil.setParameter(
+						viewURL, "inheritRedirect", Boolean.TRUE);
+					viewURL = HttpUtil.setParameter(
+						viewURL, "redirect", currentURL);
+				}
 			}
 			catch (Exception e) {
 			}
@@ -103,14 +110,13 @@ public class AssetPublisherHelper {
 				liferayPortletRequest, liferayPortletResponse);
 
 			currentURL = currentURLObj.toString();
+
+			viewFullContentURL.setParameter("redirect", currentURL);
 		}
 
 		if (Validator.isNull(viewURL)) {
 			viewURL = viewFullContentURL.toString();
 		}
-
-		viewURL = AssetUtil.checkViewURL(
-			assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 
 		return viewURL;
 	}

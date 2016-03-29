@@ -91,13 +91,14 @@ if (assetEntryId > 0) {
 						portletURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					String viewFullContentURLString = portletURL.toString();
+					String noSuchEntryRedirect = portletURL.toString();
 
-					viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, noSuchEntryRedirect);
 
-					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
-
-					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", true);
+					if (Validator.isNotNull(urlViewInContext) && !Validator.equals(urlViewInContext, noSuchEntryRedirect)) {
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", Boolean.TRUE);
+						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "redirect", currentURL);
+					}
 			%>
 
 					<li class="asset-links-list-item">

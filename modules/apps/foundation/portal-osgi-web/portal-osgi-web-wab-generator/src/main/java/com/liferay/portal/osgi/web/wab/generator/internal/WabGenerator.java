@@ -22,6 +22,7 @@ import com.liferay.portal.osgi.web.wab.generator.internal.processor.WabProcessor
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.Dictionary;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ import org.osgi.service.url.URLStreamHandlerService;
  * @author Raymond Augé
  */
 @Component(immediate = true)
-public class WabGenerator 
+public class WabGenerator
 	implements com.liferay.portal.osgi.web.wab.generator.WabGenerator {
 
 	@Override
@@ -56,7 +57,7 @@ public class WabGenerator
 
 		return wabProcessor.getProcessedFile();
 	}
-	
+
 	@Activate
 	public void start(BundleContext bundleContext) throws Exception {
 		registerURLStreamHandlerService(bundleContext);
@@ -93,8 +94,7 @@ public class WabGenerator
 
 		bundleContext.registerService(
 			URLStreamHandlerService.class.getName(),
-			new WabURLStreamHandlerService(classLoader, this),
-			properties);
+			new WabURLStreamHandlerService(classLoader, this), properties);
 	}
 
 	/**

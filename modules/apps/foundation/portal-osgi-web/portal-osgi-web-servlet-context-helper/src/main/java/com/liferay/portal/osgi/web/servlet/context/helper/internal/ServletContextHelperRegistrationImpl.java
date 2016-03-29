@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -35,7 +36,6 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Stack;
 
 import javax.portlet.PortletRequest;
 
@@ -54,7 +54,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.felix.utils.log.Logger;
@@ -64,11 +63,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Raymond Augé
@@ -82,7 +76,6 @@ public class ServletContextHelperRegistrationImpl
 
 		_bundle = bundle;
 		_props = props;
-		_saxParserFactory = saxParserFactory;
 		_logger = logger;
 		_properties = properties;
 
@@ -94,9 +87,27 @@ public class ServletContextHelperRegistrationImpl
 
 		if (url != null) {
 			_wabShapedBundle = true;
+
+			WebXMLDefinitionLoader webXMLDefinitionLoader =
+				new WebXMLDefinitionLoader(_bundle, saxParserFactory, _logger);
+
+			WebXMLDefinition webXMLDefinition = null;
+
+			try {
+				webXMLDefinition = webXMLDefinitionLoader.loadWebXML();
+			}
+			catch (Exception e) {
+				webXMLDefinition = new WebXMLDefinition();
+
+				webXMLDefinition.setException(e);
+			}
+
+			_webXMLDefinition = webXMLDefinition;
 		}
 		else {
 			_wabShapedBundle = false;
+
+			_webXMLDefinition = new WebXMLDefinition();
 		}
 
 		_bundleContext = _bundle.getBundleContext();
@@ -148,13 +159,69 @@ public class ServletContextHelperRegistrationImpl
 		return _customServletContextHelper.getServletContext();
 	}
 
+	public WebXMLDefinition getWebXMLDefinition() {
+		return _webXMLDefinition;
+	}
+
 	@Override
 	public boolean isWabShapedBundle() {
 		return _wabShapedBundle;
 	}
 
+	@Deprecated
 	@Override
 	public void setProperties(Map<String, String> contextParameters) {
+	}
+
+	public static class JspServletWrapper extends HttpServlet {
+
+		public JspServletWrapper() {
+			this(null);
+		}
+
+		public JspServletWrapper(String jspFile) {
+			this.jspFile = jspFile;
+		}
+
+		@Override
+		public void destroy() {
+			_servlet.destroy();
+		}
+
+		@Override
+		public ServletConfig getServletConfig() {
+			return _servlet.getServletConfig();
+		}
+
+		@Override
+		public void init(ServletConfig servletConfig) throws ServletException {
+			_servlet.init(servletConfig);
+		}
+
+		@Override
+		public void service(
+				ServletRequest servletRequest, ServletResponse servletResponse)
+			throws IOException, ServletException {
+
+			String curJspFile = (String)servletRequest.getAttribute(
+				JspServlet.JSP_FILE);
+
+			if (jspFile != null) {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, jspFile);
+			}
+
+			try {
+				_servlet.service(servletRequest, servletResponse);
+			}
+			finally {
+				servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
+			}
+		}
+
+		protected String jspFile;
+
+		private final Servlet _servlet = new JspServlet();
+
 	}
 
 	protected String createContextSelectFilterString() {
@@ -290,7 +357,16 @@ public class ServletContextHelperRegistrationImpl
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
 		properties.put("rtl.required", Boolean.TRUE.toString());
 
-		collectContextInitParams(properties);
+		Map<String, String> contextParameters =
+			_webXMLDefinition.getContextParameters();
+
+		for (Map.Entry<String, String> entry : contextParameters.entrySet()) {
+			String key =
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + entry.getKey();
+
+			properties.put(key, entry.getValue());
+		}
 
 		return _bundleContext.registerService(
 			ServletContextHelper.class, _customServletContextHelper,
@@ -358,34 +434,6 @@ public class ServletContextHelperRegistrationImpl
 			ServletContext.class, servletContext, properties);
 	}
 
-	private void collectContextInitParams(
-		Dictionary<String, Object> properties) {
-
-		if (!_wabShapedBundle) {
-			return;
-		}
-
-		URL url = _bundle.getEntry("WEB-INF/web.xml");
-
-		if (url == null) {
-			return;
-		}
-
-		try (InputStream inputStream = url.openStream()) {
-			SAXParser saxParser = _saxParserFactory.newSAXParser();
-
-			XMLReader xmlReader = saxParser.getXMLReader();
-
-			xmlReader.setContentHandler(
-				new ContextInitParamHandler(properties));
-
-			xmlReader.parse(new InputSource(inputStream));
-		}
-		catch (Exception e) {
-			_logger.log(Logger.LOG_WARNING, "Unable to parse web.xml", e);
-		}
-	}
-
 	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
 		"jsp.servlet.init.param.";
 
@@ -404,7 +452,6 @@ public class ServletContextHelperRegistrationImpl
 		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
 	private final Props _props;
-	private final SAXParserFactory _saxParserFactory;
 	private final ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final ServiceRegistration<ServletContextListener>
@@ -412,89 +459,7 @@ public class ServletContextHelperRegistrationImpl
 	private final String _servletContextName;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final boolean _wabShapedBundle;
-
-	private static class ContextInitParamHandler extends DefaultHandler {
-
-		public ContextInitParamHandler(Dictionary<String, Object> properties) {
-			_properties = properties;
-		}
-
-		@Override
-		public void characters(char[] c, int start, int length) {
-			if (_stack.empty()) {
-				return;
-			}
-
-			StringBuilder stringBuilder = _stack.peek();
-
-			stringBuilder.append(c, start, length);
-		}
-
-		@Override
-		public void endElement(String uri, String localName, String qName) {
-			if (qName.equals("context-param")) {
-				_properties.put(
-					HttpWhiteboardConstants.
-						HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + _paramName,
-					_paramValue);
-
-				_paramName = null;
-				_paramValue = null;
-			}
-			else if (qName.equals("param-name")) {
-				_paramName = String.valueOf(_stack.pop());
-				_paramName = _paramName.trim();
-			}
-			else if (qName.equals("param-value")) {
-				_paramValue = String.valueOf(_stack.pop());
-				_paramValue = _paramValue.trim();
-			}
-		}
-
-		@Override
-		public void startElement(
-			String uri, String localName, String qName, Attributes attributes) {
-
-			if (qName.equals("param-name") || qName.equals("param-value")) {
-				_stack.push(new StringBuilder());
-			}
-		}
-
-		private String _paramName;
-		private String _paramValue;
-		private final Dictionary<String, Object> _properties;
-		private final Stack<StringBuilder> _stack = new Stack<>();
-
-	}
-
-	private static class JspServletWrapper extends HttpServlet {
-
-		@Override
-		public void destroy() {
-			_servlet.destroy();
-		}
-
-		@Override
-		public ServletConfig getServletConfig() {
-			return _servlet.getServletConfig();
-		}
-
-		@Override
-		public void init(ServletConfig servletConfig) throws ServletException {
-			_servlet.init(servletConfig);
-		}
-
-		@Override
-		public void service(
-				ServletRequest servletRequest, ServletResponse servletResponse)
-			throws IOException, ServletException {
-
-			_servlet.service(servletRequest, servletResponse);
-		}
-
-		private final Servlet _servlet = new JspServlet();
-
-	}
+	private final WebXMLDefinition _webXMLDefinition;
 
 	private static class PortletServletWrapper extends HttpServlet {
 

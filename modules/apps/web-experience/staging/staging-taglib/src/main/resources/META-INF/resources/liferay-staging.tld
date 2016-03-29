@@ -10,16 +10,19 @@
 	<short-name>liferay-staging</short-name>
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
+		<description>Renders the UI section for an <![CDATA[<code>exportImportConfiguration</code>]]> object's basic information.</description>
 		<name>configuration-header</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ConfigurationHeaderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The <![CDATA[<code>exportImportConfiguration</code>]]> UI to display.</description>
 			<name>exportImportConfiguration</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portlet.exportimport.model.ExportImportConfiguration</type>
+			<type>com.liferay.exportimport.kernel.model.ExportImportConfiguration</type>
 		</attribute>
 		<attribute>
+			<description>The label for the rendered fieldset.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -27,34 +30,40 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders the Export and Publish UI sections for a site's contents.</description>
 		<name>content</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ContentTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The command from the calling environment. Typical values for the command are <![CDATA[<code>export</code>]]> or <![CDATA[<code>publish</code>]]>.</description>
 			<name>cmd</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>Whether to disable all the rendered inputs on the screen.</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>Whether to render all the available portlets of the site in the content section; otherwise, only the portlets that currently have content in them are rendered.</description>
 			<name>showAllPortlets</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The type of staging to be used. The possible values for the staging type are <![CDATA[<code>publish_to_live</code>]]> or <![CDATA[<code>publish_to_remote</code>]]>.</description>
 			<name>type</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -62,11 +71,13 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Sets up basic staging environment information in the <![CDATA[<code>pageContext</code>]]> based on the current request, such as staging/live groups and their IDs.</description>
 		<name>defineObjects</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.DefineObjectsTag</tag-class>
 		<tei-class>com.liferay.staging.taglib.servlet.taglib.DefineObjectsTei</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The ID of the portlet which, when defined, is used to extend setup information with portlet specific information.</description>
 			<name>portletId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -74,22 +85,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders the Deletion section for the Export or Publish screen's UI.</description>
 		<name>deletions</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.DeletionsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The command from the calling environment. Typical values for the command are <![CDATA[<code>export</code>]]> or <![CDATA[<code>publish</code>]]>.</description>
 			<name>cmd</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>Whether to disable all rendered inputs on the screen.</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -97,34 +112,40 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a <![CDATA[<code>Navbar</code>]]> containing a staging menu with page versioning information, if available.</description>
 		<name>menu</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.MenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The CSS class to be applied to the rendered <![CDATA[<code>Navitem</code>]]> in the <![CDATA[<code>Navbar</code>]]>.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>The layout set branch ID to be used.</description>
 			<name>layoutSetBranchId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>Whether to render the staging actions section; otherwise, the <![CDATA[<code>Navbar</code>]]> is rendered.</description>
 			<name>onlyActions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The selected PLID coming from the caller environment.</description>
 			<name>selPlid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>Whether to render the manage layout set branches.</description>
 			<name>showManageBranches</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -132,40 +153,47 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders the Permissions section for the Export, Import, or Publish screen's UI.</description>
 		<name>permissions</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.PermissionsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The current action the tag is being used with. Possible examples for the action are <![CDATA[<code>export</code>]]>, <![CDATA[<code>import</code>]]>, or <![CDATA[<code>publish</code>]]>.</description>
 			<name>action</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>The CSS class used to format the Permissions section's description.</description>
 			<name>descriptionCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>Whether to disable all the rendered inputs on the screen.</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>Whether to display a global help message.</description>
 			<name>global</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The CSS class used to format the Permissions section's label.</description>
 			<name>labelCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -173,34 +201,40 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a portlet list section in the UI. This is meant to use in conjunction with the content tag.</description>
 		<name>portlet-list</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.PortletListTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether to disable all the rendered inputs on the screen</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>The list of portlets the tag uses to render the UI. The portlet list can be filtered under certain conditions.</description>
 			<name>portlets</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.List</type>
 		</attribute>
 		<attribute>
+			<description>Whether to render all available portlets in the portlet list; otherwise, only the portlets that currently have content in them are rendered.</description>
 			<name>showAllPortlets</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The type of staging to be used. The possible values for the staging type are <![CDATA[<code>publish_to_live</code>]]> or <![CDATA[<code>publish_to_remote</code>]]>.</description>
 			<name>type</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -208,40 +242,47 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a Select section in the UI for an Export or Publish screen.</description>
 		<name>select-pages</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.SelectPagesTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The current action the tag is being used with. Possible examples for the action are <![CDATA[<code>export</code>]]>, <![CDATA[<code>import</code>]]>, or <![CDATA[<code>publish</code>]]>.</description>
 			<name>action</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>Whether to disable all the rendered inputs on the screen.</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>The group ID to use for rendering the pages.</description>
 			<name>groupId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
+			<description>Whether to render the private pages; otherwise; the public pages are rendered.</description>
 			<name>privateLayout</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The tree ID from the caller environment.</description>
 			<name>treeId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -249,16 +290,19 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Displays a badge UI element on the screen with simple publication information, indicating whether a staged model has been published or not.</description>
 		<name>status</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.StatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The CSS class to be used for formatting the badge and tag displays.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<description>The staged model to be used to display the publishing information.</description>
 			<name>stagedModel</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

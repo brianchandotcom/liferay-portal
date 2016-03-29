@@ -47,6 +47,27 @@ row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
 			path="/membership_request_action.jsp"
 		/>
 	</c:when>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				actionJsp="/membership_request_action.jsp"
+				actionJspServletContext="<%= application %>"
+				resultRow="<%= row %>"
+				subtitle="<%= membershipRequestUser.getEmailAddress() %>"
+				title="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+				userId="<%= membershipRequest.getUserId() %>"
+			>
+				<liferay-frontend:vertical-card-header>
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+				</liferay-frontend:vertical-card-header>
+			</liferay-frontend:user-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<liferay-ui:search-container-column-text
 			cssClass="content-column user-column title-column"

@@ -66,6 +66,32 @@ else {
 			</h6>
 		</liferay-ui:search-container-column-text>
 	</c:when>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				resultRow="<%= row %>"
+				subtitle="<%= membershipRequestUser.getEmailAddress() %>"
+				title="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+				userId="<%= membershipRequest.getUserId() %>"
+			>
+				<liferay-frontend:vertical-card-header>
+
+					<%
+					Date replyDate = membershipRequest.getReplyDate();
+
+					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - replyDate.getTime(), true);
+					%>
+
+					<liferay-ui:message arguments="<%= new String[] {replier, modifiedDateDescription} %>" key="replied-by-x-x-ago" />
+				</liferay-frontend:vertical-card-header>
+			</liferay-frontend:user-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<liferay-ui:search-container-column-text
 			cssClass="content-column user-column title-column"

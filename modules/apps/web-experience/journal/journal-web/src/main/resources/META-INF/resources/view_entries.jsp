@@ -295,7 +295,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("folder-entry " + row.getCssClass());
+						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">

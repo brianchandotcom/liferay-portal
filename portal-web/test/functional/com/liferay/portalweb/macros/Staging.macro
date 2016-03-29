@@ -242,12 +242,8 @@
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" />
-					<then>
-						<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
-					</then>
-				</if>
+				<execute function="Click" locator1="StagingPublishtolivenow#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+				<execute function="Click" locator1="StagingPublishtolivenow#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
@@ -261,13 +257,6 @@
 						</then>
 					</if>
 				</for>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Button#OK" />
-					<then>
-						<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-					</then>
-				</if>
 			</then>
 		</if>
 

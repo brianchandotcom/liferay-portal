@@ -3977,6 +3977,43 @@ Product Menu.
 
 ---------------------------------------
 
+### Removed `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` Class
+- **Date:** 2016-Mar-03
+- **JIRA Ticket:** LPS-63928
+
+#### What changed?
+
+- `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` was removed with no replacement.
+
+#### Who is affected?
+
+- All code that uses `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` is affected.
+
+#### How should I update my code?
+
+In an OSGi module, simply inject the DDMXML reference.
+
+    @Reference
+    private DDMXML _ddmXML;
+ 
+In a legacy WAR or WAB, you need to get a DDMXML service reference from the
+bundle context.
+
+    Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+    BundleContext bundleContext = bundle.getBundleContext();
+
+    ServiceReference<UserImporter> serviceReference =
+        bundleContext.getServiceReference(DDMXML.class);
+
+    DDMXML ddmXML = bundleContext.getService(serviceReference);
+
+#### Why was this change made?
+
+The change was made to improve modularity of the dynamic data mapping subsystem.
+
+---------------------------------------
+
 ### FlagsEntryService.addEntry Method Throws PortalException
 - **Date:** 2016-Mar-04
 - **JIRA Ticket:** LPS-63109
@@ -4057,43 +4094,6 @@ You should modify your `portal-ext.properties` file to remove the property
 Since Liferay Frontend Editor BBCode Web has been deprecated since 6.1, it was
 time to remove it completely. This frees up development and support resources to
 focus on supported features.
-
----------------------------------------
-
-### Removed `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` Class
-- **Date:** 2016-Mar-03
-- **JIRA Ticket:** LPS-63928
-
-#### What changed?
-
-- `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` was removed with no replacement.
-
-#### Who is affected?
-
-- All code that uses `com.liferay.dynamic.data.mapping.util.DDMXMLUtil` is affected.
-
-#### How should I update my code?
-
-In an OSGi module, simply inject the DDMXML reference.
-
-    @Reference
-    private DDMXML _ddmXML;
- 
-In a legacy WAR or WAB, you need to get a DDMXML service reference from the
-bundle context.
-
-    Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-    BundleContext bundleContext = bundle.getBundleContext();
-
-    ServiceReference<UserImporter> serviceReference =
-        bundleContext.getServiceReference(DDMXML.class);
-
-    DDMXML ddmXML = bundleContext.getService(serviceReference);
-
-#### Why was this change made?
-
-The change was made to improve modularity of the dynamic data mapping subsystem.
 
 ---------------------------------------
 

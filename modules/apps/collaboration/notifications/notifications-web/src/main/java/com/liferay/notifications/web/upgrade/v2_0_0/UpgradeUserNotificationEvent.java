@@ -14,6 +14,9 @@
 
 package com.liferay.notifications.web.upgrade.v2_0_0;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -24,6 +27,7 @@ import java.sql.ResultSet;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
@@ -45,20 +49,32 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 	protected void updateUserNotificationEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
-				"select userNotificationEventId, actionRequired from " +
+				"select userNotificationEventId from " +
 					"Notifications_UserNotificationEvent");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long userNotificationEventId = rs.getLong(
 					"userNotificationEventId");
-				boolean actionRequired = rs.getBoolean("actionRequired");
 
 				UserNotificationEvent userNotificationEvent =
 					_userNotificationEventLocalService.getUserNotificationEvent(
 						userNotificationEventId);
 
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					userNotificationEvent.getPayload());
+
+				boolean actionRequired = jsonObject.getBoolean(
+					"actionRequired");
+
 				userNotificationEvent.setActionRequired(actionRequired);
+				userNotificationEvent.setDelivered(true);
+				userNotificationEvent.setDeliveryType(
+					UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+				jsonObject.remove("actionRequired");
+
+				userNotificationEvent.setPayload(jsonObject.toString());
 
 				_userNotificationEventLocalService.updateUserNotificationEvent(
 					userNotificationEvent);

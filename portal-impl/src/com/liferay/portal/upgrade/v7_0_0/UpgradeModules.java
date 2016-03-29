@@ -208,6 +208,10 @@ public class UpgradeModules extends UpgradeProcess {
 			"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo"
 		},
 		{
+			"notifications-portlet", "com.liferay.notifications.web",
+			"Notifications"
+		},
+		{
 			"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"
 		},
 		{

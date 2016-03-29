@@ -286,6 +286,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			baselineTask.dependsOn(jar);
 
+			baselineTask.doFirst(
+				new Action<Task>() {
+
+					@Override
+					public void execute(Task task) {
+						BaselineTask baselineTask = (BaselineTask)task;
+
+						File oldJarFile = baselineTask.getOldJarFile();
+
+						if (GradleUtil.isFromMavenLocal(project, oldJarFile)) {
+							throw new GradleException(
+								"Please delete " + oldJarFile.getParent() +
+									" and try again");
+						}
+					}
+
+				});
+
 			baselineTask.setNewJarFile(
 				new Callable<File>() {
 

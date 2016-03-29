@@ -47,7 +47,7 @@ public class LoginPostAction implements LifecycleAction {
 			String portletNamespace = _portal.getPortletNamespace(ppid);
 
 			String memberRequestKey = ParamUtil.getString(
-				lifecycleEvent.getRequest(), portletNamespace + "key");
+				lifecycleEvent.getRequest(), portletNamespace.concat("key"));
 
 			if (Validator.isNull(memberRequestKey)) {
 				return;

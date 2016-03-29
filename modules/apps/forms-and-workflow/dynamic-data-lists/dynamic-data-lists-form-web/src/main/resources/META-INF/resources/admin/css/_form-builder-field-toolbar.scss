@@ -30,6 +30,13 @@
 	opacity: 1;
 }
 
+.form-builder-field-toolbar-container {
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
 .form-builder-field-toolbar-items {
 	float: right;
 	z-index: 500;

@@ -19,13 +19,11 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import javax.portlet.PortletURL;
 
@@ -80,37 +78,31 @@ public class AssetPublisherHelper {
 
 		String viewURL = null;
 
-		String currentURL = null;
-
 		if (viewInContext) {
-			currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
-
-			String viewFullContentURLString = viewFullContentURL.toString();
-
-			viewFullContentURLString = HttpUtil.setParameter(
-				viewFullContentURLString, "redirect", currentURL);
-
 			try {
+				String noSuchEntryRedirect = viewFullContentURL.toString();
+
 				viewURL = assetRenderer.getURLViewInContext(
 					liferayPortletRequest, liferayPortletResponse,
-					viewFullContentURLString);
+					noSuchEntryRedirect);
+
+				if (Validator.isNotNull(viewURL) &&
+					!Validator.equals(viewURL, noSuchEntryRedirect)) {
+
+					viewURL = HttpUtil.setParameter(
+						viewURL, "inheritRedirect", Boolean.TRUE);
+					viewURL = HttpUtil.setParameter(
+						viewURL, "redirect",
+						PortalUtil.getCurrentURL(liferayPortletRequest));
+				}
 			}
 			catch (Exception e) {
 			}
-		}
-		else {
-			PortletURL currentURLObj = PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse);
-
-			currentURL = currentURLObj.toString();
 		}
 
 		if (Validator.isNull(viewURL)) {
 			viewURL = viewFullContentURL.toString();
 		}
-
-		viewURL = AssetUtil.checkViewURL(
-			assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 
 		return viewURL;
 	}

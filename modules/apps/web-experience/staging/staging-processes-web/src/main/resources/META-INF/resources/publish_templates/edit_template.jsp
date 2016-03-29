@@ -17,7 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD, Constants.ADD);
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
+if (Validator.isNull(cmd)) {
+	cmd = Constants.ADD;
+}
 
 long exportImportConfigurationId = 0;
 

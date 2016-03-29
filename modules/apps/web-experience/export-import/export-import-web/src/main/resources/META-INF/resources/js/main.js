@@ -744,10 +744,9 @@ AUI.add(
 						var instance = this;
 
 						var cmdNode = instance.byId('cmd');
+						var redirectNode = instance.byId('redirect');
 
 						if ((cmdNode.val() === 'add') || (cmdNode.val() === 'update')) {
-							var redirectNode = instance.byId('redirect');
-
 							var portletURL = Liferay.PortletURL.createURL(redirectNode.val());
 
 							portletURL.setParameter('cmd', cmdNode.val());
@@ -790,6 +789,10 @@ AUI.add(
 						}
 
 						if (cmdNode) {
+							var currentURL = instance.byId('currentURL');
+
+							redirectNode.val(currentURL);
+
 							cmdNode.val(STR_EMPTY);
 
 							submitForm(instance.get('form'));

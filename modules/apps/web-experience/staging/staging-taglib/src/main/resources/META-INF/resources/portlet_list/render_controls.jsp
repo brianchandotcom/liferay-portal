@@ -73,9 +73,10 @@ for (int i = 0; i < controls.length; i++) {
 
 				String controlName = Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : (control.getControlName() + StringPool.UNDERLINE + portletId);
 
+				boolean disabled = controls[i].isDisabled() || disableInputs;
 				String controlInputName = controlName;
 
-				if (controls[i].isDisabled() || disableInputs) {
+				if (disabled) {
 					controlInputName += "Display";
 				%>
 
@@ -85,7 +86,7 @@ for (int i = 0; i < controls.length; i++) {
 				}
 				%>
 
-				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() || disableInputs %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= controlInputName %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL) %>" />
+				<aui:input checked="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL) %>" data="<%= data %>" disabled="<%= disabled %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" ignoreRequestValue="<%= disabled %>" label="<%= controlLabel %>" name="<%= controlInputName %>" type="checkbox" />
 
 				<c:if test="<%= children != null %>">
 					<ul class="list-unstyled" id="<portlet:namespace /><%= controlName %>Controls">

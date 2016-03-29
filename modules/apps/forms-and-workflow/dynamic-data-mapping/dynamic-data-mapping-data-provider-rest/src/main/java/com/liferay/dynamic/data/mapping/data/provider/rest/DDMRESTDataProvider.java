@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -71,9 +72,12 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		HttpRequest httpRequest = HttpRequest.get(
 			ddmRESTDataProviderSettings.url());
 
-		httpRequest.basicAuthentication(
-			ddmRESTDataProviderSettings.username(),
-			ddmRESTDataProviderSettings.password());
+		if (Validator.isNotNull(ddmRESTDataProviderSettings.username())) {
+			httpRequest.basicAuthentication(
+				ddmRESTDataProviderSettings.username(),
+				ddmRESTDataProviderSettings.password());
+		}
+
 		httpRequest.query(ddmDataProviderContext.getParameters());
 
 		String cacheKey = getCacheKey(httpRequest);

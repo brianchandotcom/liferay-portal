@@ -79,6 +79,10 @@ public class MBSubscriptionSender
 			mailingList.getEmailAddress(), mailingList.getEmailAddress());
 	}
 
+	public void setAnonymous(boolean anonymous) {
+		_anonymous = anonymous;
+	}
+
 	public void setFullName(String fullName) {
 		_fullName = fullName;
 	}
@@ -94,6 +98,7 @@ public class MBSubscriptionSender
 	protected void populateNotificationEventJSONObject(
 		JSONObject notificationEventJSONObject) {
 
+		notificationEventJSONObject.put("anonymous", _anonymous);
 		notificationEventJSONObject.put("fullName", _fullName);
 
 		super.populateNotificationEventJSONObject(notificationEventJSONObject);
@@ -117,6 +122,7 @@ public class MBSubscriptionSender
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBSubscriptionSender.class);
 
+	private boolean _anonymous;
 	private boolean _calledAddMailingListSubscriber;
 	private String _fullName;
 

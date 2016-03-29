@@ -107,14 +107,14 @@
 	Liferay.provide(
 		ToolTip,
 		'show',
-		function(obj, text) {
+		function(obj, text, tooltipConfig) {
 			var instance = this;
 
 			var cached = instance._cached;
 			var hideTooltipTask = instance._hideTooltipTask;
 
 			if (!cached) {
-				cached = new A.Tooltip(
+				var config = A.merge(
 					{
 						cssClass: 'tooltip-help',
 						html: true,
@@ -122,8 +122,11 @@
 						stickDuration: 100,
 						visible: false,
 						zIndex: Liferay.zIndex.TOOLTIP
-					}
-				).render();
+					},
+					tooltipConfig
+				);
+
+				cached = new A.Tooltip(config).render();
 
 				cached.after(
 					'visibleChange',
@@ -135,6 +138,9 @@
 				instance._hideTooltipTask = hideTooltipTask;
 
 				instance._cached = cached;
+			}
+			else {
+				cached.setAttrs(tooltipConfig);
 			}
 
 			hideTooltipTask.cancel();

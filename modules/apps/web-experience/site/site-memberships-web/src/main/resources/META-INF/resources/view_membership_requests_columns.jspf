@@ -1,0 +1,141 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
+
+User membershipRequestReplierUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getReplierUserId());
+
+String replier = StringPool.BLANK;
+
+if (membershipRequestReplierUser != null) {
+	if (membershipRequestReplierUser.isDefaultUser()) {
+		Company membershipRequestReplierCompany = CompanyLocalServiceUtil.getCompanyById(membershipRequestReplierUser.getCompanyId());
+
+		replier = HtmlUtil.escape(membershipRequestReplierCompany.getName());
+	}
+	else {
+		replier = HtmlUtil.escape(membershipRequestReplierUser.getFullName());
+	}
+}
+else {
+	replier = LanguageUtil.get(request, "the-user-could-not-be-found");
+}
+
+PortletURL previewURL = renderResponse.createRenderURL();
+
+previewURL.setParameter("mvcPath", "/preview_membership_request.jsp");
+previewURL.setParameter("redirect", currentURL);
+previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.getMembershipRequestId()));
+%>
+
+<c:choose>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= membershipRequest.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+
+			<%
+			Date replyDate = membershipRequest.getReplyDate();
+
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - replyDate.getTime(), true);
+			%>
+
+			<h5 class="text-default">
+				<liferay-ui:message arguments="<%= new String[] {replier, modifiedDateDescription} %>" key="replied-by-x-x-ago" />
+			</h5>
+
+			<h5>
+				<aui:a href="<%= previewURL.toString() %>">
+					<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>
+				</aui:a>
+			</h5>
+
+			<h6 class="text-default">
+				<span><%= membershipRequestUser.getEmailAddress() %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				resultRow="<%= row %>"
+				subtitle="<%= membershipRequestUser.getEmailAddress() %>"
+				title="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+				url="<%= previewURL.toString() %>"
+				userId="<%= membershipRequest.getUserId() %>"
+			>
+				<liferay-frontend:vertical-card-header>
+
+					<%
+					Date replyDate = membershipRequest.getReplyDate();
+
+					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - replyDate.getTime(), true);
+					%>
+
+					<liferay-ui:message arguments="<%= new String[] {replier, modifiedDateDescription} %>" key="replied-by-x-x-ago" />
+				</liferay-frontend:vertical-card-header>
+			</liferay-frontend:user-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("list") %>'>
+		<liferay-ui:search-container-column-text
+			cssClass="content-column user-column title-column"
+			name="user"
+			truncate="<%= true %>"
+		>
+			<aui:a href="<%= previewURL.toString() %>">
+				<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>
+			</aui:a>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			cssClass="content-column email-address-column"
+			name="email-address"
+			value="<%= membershipRequestUser.getEmailAddress() %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="date-column text-column"
+			name="date"
+			value="<%= membershipRequest.getCreateDate() %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="replier-comments text-column"
+			name="replier"
+			value="<%= replier %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="reply-date-column text-column"
+			name="reply-date"
+			value="<%= membershipRequest.getReplyDate() %>"
+		/>
+	</c:when>
+</c:choose>

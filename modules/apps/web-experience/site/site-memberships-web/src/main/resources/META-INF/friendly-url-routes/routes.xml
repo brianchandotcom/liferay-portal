@@ -3,6 +3,11 @@
 
 <routes>
 	<route>
+		<pattern>/membership_request/preview/{membershipRequestId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/preview_membership_request.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/membership_request/{membershipRequestId:\d+}/reply/{p_u_i_d:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/reply_membership_request.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

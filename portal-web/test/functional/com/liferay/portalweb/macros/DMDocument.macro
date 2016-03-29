@@ -2332,7 +2332,7 @@
 
 		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
 		<execute function="AssertTextEquals" locator1="MenuItem#EDIT" value1="Edit" />
 		<execute function="AssertTextEquals" locator1="MenuItem#MOVE" value1="Move" />
@@ -2342,11 +2342,10 @@
 
 		<execute function="Check" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_CANCEL_CHECKOUT_ICON_BUTTON" />
 		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_LOCK_ICON_BUTTON" />
 		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_UNLOCK_ICON_BUTTON"  />
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_MOVE_ICON_BUTTON"  />
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
+		<execute function="AssertVisible" locator1="Button#MOVE"  />
+		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
@@ -2360,14 +2359,16 @@
 
 		<execute function="AssertElementNotPresent" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
+		<var name="key_dmDocumentTitle" value="Document_1.jpeg" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MenuItem#DOWNLOAD" value1="Download" />
 		<execute function="AssertTextEquals" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
-		<execute function="AssertVisible" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
+		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
 	</command>
 
 	<command name="viewWithWorkflowCP">

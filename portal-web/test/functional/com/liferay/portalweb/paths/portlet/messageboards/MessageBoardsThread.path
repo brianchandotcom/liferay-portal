@@ -296,7 +296,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_REPLY_1</td>
-	<td>xpath=(//span[.='Reply'])[1]</td>
+	<td>//a/span[contains(.,'Reply to Main Thread')]</td>
 	<td></td>
 </tr>
 <tr>

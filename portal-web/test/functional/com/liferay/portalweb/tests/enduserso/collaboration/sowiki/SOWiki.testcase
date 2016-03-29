@@ -281,107 +281,6 @@
 		</execute>
 	</command>
 
-	<command name="AddSOWikiPageFormatCreole" priority="4">
-		<var name="wikiPageContent1" value="Wiki Page Content# " />
-		<var name="wikiPageContent2" value=" Creole Formatting 1 Creole Formatting 2 Creole Formatting 3" />
-		<var name="wikiPageTitle" value="Wiki Page Title" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="Creole" />
-		</execute>
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent1}${wikiPageContent2}" />
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="${wikiPageContent1}${wikiPageContent2}" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageUsername" value="${adminName}" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPageContent1}${wikiPageContent2}" />
-			<var name="wikiPageContentGeneric" value="true" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-	</command>
-
-	<command name="AddSOWikiPageFormatMediawiki" priority="4">
-		<var name="wikiPageContent" value="1 Wiki Page Content Wiki Page Content # MediaWiki Formatting 1 * MediaWiki Formatting 2 MediaWiki Formatting 3" />
-		<var name="wikiPageMediaWikiContent">
-			<![CDATA[
-				== Wiki Page Content ==
-				# ''MediaWiki Formatting'' 1
-				* MediaWiki Formatting 2
-				<strike>MediaWiki Formatting 3</strike>
-			]]>
-		</var>
-		<var name="wikiPageTitle" value="Wiki Page Title" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="MediaWiki" />
-		</execute>
-
-		<execute macro="WikiEntry#confirmMediaWiki" />
-
-		<execute macro="WikiEntry#addMediaWikiDescription">
-			<var name="wikiPageContent" value="${wikiPageMediaWikiContent}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageRevision" value="1.0" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageUsername" value="${adminName}" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageContentGeneric" value="true" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-	</command>
-
 	<command name="CopySOWikiFrontPageChildPage" priority="4">
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
@@ -427,7 +326,7 @@
 			<var name="wikiPageContentCopy" value="${wikiPageContentCopy}" />
 			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
 			<var name="wikiPageTitleCopy" value="${wikiPageTitleCopy}" />
-</execute>
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
@@ -543,7 +442,7 @@
 			<var name="commentBody" value="${commentBody}" />
 			<var name="soPage" value="true" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="EditSOWikiFrontPageChildPageAsMember" priority="4">
@@ -846,8 +745,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		<var name="wikiPageTitle" value="${wikiPageTitle}" />
-</execute>
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
@@ -992,7 +891,7 @@
 			<var name="wikiPageRevision" value="1.1" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -1036,7 +935,7 @@
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiChildPageContent1}" />
@@ -1053,7 +952,7 @@
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiChildPageContent2}" />
@@ -1120,7 +1019,7 @@
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiChildPageContent1}" />
@@ -1132,7 +1031,7 @@
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiChildPageContent2}" />
@@ -1154,7 +1053,7 @@
 			<var name="wikiPageRevision" value="1.1" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -1198,7 +1097,7 @@
 			<var name="wikiPageRevision" value="1.0" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiChildPageContent1}" />
@@ -1250,7 +1149,7 @@
 			<var name="wikiPage2Title" value="${wikiPage2Title}" />
 			<var name="wikiPageContent" value="${wikiPage1Content}" />
 			<var name="wikiPageTitle" value="${wikiPage1Title}" />
-</execute>
+		</execute>
 
 		<execute macro="WikiNavigator#gotoPG">
 			<var name="wikiPageContent" value="${wikiChildPageContent1}" />
@@ -1596,8 +1495,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
-		<var name="wikiPageTitle" value="${wikiPageTitle}" />
-</execute>
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="siteName" value="${siteName}" />
@@ -2132,8 +2031,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
-		<var name="wikiPageContent" value="${wikiFrontPageContent}" />
-</execute>
+			<var name="wikiPageContent" value="${wikiFrontPageContent}" />
+		</execute>
 
 		<execute function="Pause" locator1="30000" />
 

@@ -20,6 +20,8 @@
 
 		<execute function="AssertElementPresent" locator1="WikiTable#NAVIGATION_ACTIVE_TAB" />
 
+		<execute function="AssertElementPresent" locator1="Portlet#H3_HEADER" value1="All Pages" />
+
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="All Pages" />
 	</command>
 

@@ -287,7 +287,7 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">
-			<var name="maxFileSize" value="1024" />
+			<var name="maxFileSize" value="2048" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -300,6 +300,7 @@
 			<var name="kbArticleAttachment" value="Document_1.png" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="maxFileSize" value="2048" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

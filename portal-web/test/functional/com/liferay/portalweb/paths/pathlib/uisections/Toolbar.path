@@ -40,31 +40,20 @@
 </tr>
 <!--MANAGEMENT_BAR-->
 <tr>
-	<td>MANAGEMENT_BAR_CANCEL_CHECKOUT_ICON_BUTTON</td>
-	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-remove')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGEMENT_BAR_LOCK_ICON_BUTTON</td>
-	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-lock')]</td>
+	<td>//a[contains(@data-qa-id,'lockButton')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGEMENT_BAR_UNLOCK_ICON_BUTTON</td>
-	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-unlock')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGEMENT_BAR_MOVE_ICON_BUTTON</td>
-	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-move')]</td>
+	<td>//a[contains(@data-qa-id,'unlockButton')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGEMENT_BAR_TRASH_ICON_BUTTON</td>
-	<td>//div[contains(@class,'management-bar-container')]//a/span[contains(@class,'icon-monospaced icon-trash')]</td>
+	<td>//a[contains(@data-qa-id,'removeButton')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

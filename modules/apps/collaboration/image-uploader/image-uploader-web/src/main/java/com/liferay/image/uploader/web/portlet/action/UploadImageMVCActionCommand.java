@@ -129,6 +129,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		long maxFileSize = ParamUtil.getLong(actionRequest, "maxFileSize");

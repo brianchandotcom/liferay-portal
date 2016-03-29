@@ -197,7 +197,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
+<c:if test="<%= assetCategoriesDisplayContext.showCategoriesAddButton() %>">
 	<portlet:renderURL var="addCategoryURL">
 		<portlet:param name="mvcPath" value="/edit_category.jsp" />
 

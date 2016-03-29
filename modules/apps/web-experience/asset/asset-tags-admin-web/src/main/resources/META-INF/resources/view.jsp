@@ -89,13 +89,7 @@
 		>
 
 			<%
-			int[] statuses = new int[] {
-				WorkflowConstants.STATUS_APPROVED,
-				WorkflowConstants.STATUS_PENDING,
-				WorkflowConstants.STATUS_SCHEDULED
-			};
-
-			long usagesCount = AssetEntryLocalServiceUtil.searchCount(tag.getCompanyId(), null, user.getUserId(), null, null, null, null, null, null, tag.getName(), true, true, statuses, false);
+			int usagesCount = assetTagsDisplayContext.getTagsFullCount(tag);
 			%>
 
 			<c:choose>

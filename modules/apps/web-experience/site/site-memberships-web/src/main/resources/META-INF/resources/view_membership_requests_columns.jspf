@@ -22,16 +22,14 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 	cssClass="content-column user-column title-column"
 	name="user"
 	truncate="<%= true %>"
-	value='<%= (membershipRequestUser != null) ? HtmlUtil.escape(membershipRequestUser.getFullName()) : LanguageUtil.get(request, "the-user-could-not-be-found") %>'
+	value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
 />
 
-<c:if test="<%= membershipRequestUser != null %>">
-	<liferay-ui:search-container-column-text
-		cssClass="content-column email-address-column"
-		name="email-address"
-		value="<%= membershipRequestUser.getEmailAddress() %>"
-	/>
-</c:if>
+<liferay-ui:search-container-column-text
+	cssClass="content-column email-address-column"
+	name="email-address"
+	value="<%= membershipRequestUser.getEmailAddress() %>"
+/>
 
 <liferay-ui:search-container-column-date
 	cssClass="date-column text-column"

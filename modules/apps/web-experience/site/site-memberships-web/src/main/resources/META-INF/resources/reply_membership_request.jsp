@@ -34,6 +34,13 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 long membershipRequestId = ParamUtil.getLong(request, "membershipRequestId");
 
 MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembershipRequest(membershipRequestId);
+
+String userName = PortalUtil.getUserName(membershipRequest.getUserId(), StringPool.BLANK);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-for-x", userName));
 %>
 
 <portlet:actionURL name="replyMembershipRequest" var="replyMembershipRequestURL">
@@ -69,7 +76,7 @@ MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembe
 				userId="<%= membershipRequest.getUserId() %>"
 			/>
 
-			<aui:input name="userName" type="resource" value="<%= PortalUtil.getUserName(membershipRequest.getUserId(), StringPool.BLANK) %>" />
+			<aui:input name="userName" type="resource" value="<%= userName %>" />
 
 			<aui:input name="userComments" readonly="<%= true %>" type="textarea" value="<%= membershipRequest.getComments() %>" />
 

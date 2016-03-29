@@ -94,7 +94,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.util.xml.DocUtil;
+import com.liferay.xml.util.DocUtil;
 
 import java.io.File;
 import java.io.IOException;

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.util.xml.XMLUtil;
+import com.liferay.xml.util.XMLUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

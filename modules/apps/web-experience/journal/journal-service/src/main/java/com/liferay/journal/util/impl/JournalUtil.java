@@ -95,7 +95,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.FiniteUniqueStack;
-import com.liferay.util.xml.XMLUtil;
+import com.liferay.xml.util.XMLUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

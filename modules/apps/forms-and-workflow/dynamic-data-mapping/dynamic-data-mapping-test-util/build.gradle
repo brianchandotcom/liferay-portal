@@ -1,5 +1,4 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
@@ -7,6 +6,7 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.test.internal", version: "default"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 }
 
 liferay {

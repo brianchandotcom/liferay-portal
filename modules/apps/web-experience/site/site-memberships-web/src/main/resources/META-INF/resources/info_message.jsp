@@ -34,7 +34,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		<c:if test="<%= pendingRequests > 0 %>">
 			<br />
 
-			<portlet:renderURL var="viewMembershipRequestsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:renderURL var="viewMembershipRequestsURL">
 				<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</portlet:renderURL>
@@ -44,7 +44,6 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				label="<%= true %>"
 				message='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
 				url="<%= viewMembershipRequestsURL %>"
-				useDialog="<%= true %>"
 			/>
 		</c:if>
 	</c:if>

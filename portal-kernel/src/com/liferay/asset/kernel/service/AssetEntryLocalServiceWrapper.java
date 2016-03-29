@@ -579,14 +579,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String[] className, boolean asc, int start, int end) {
+		java.lang.String className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String className, boolean asc, int start, int end) {
+		java.lang.String[] className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
@@ -735,17 +735,24 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		java.lang.String userName, java.lang.String title,
 		java.lang.String description, java.lang.String assetCategoryIds,
 		java.lang.String assetTagNames, boolean showNonindexable,
+		boolean showNonVisible, int[] statuses, boolean andSearch) {
+		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
+			className, classTypeId, userName, title, description,
+			assetCategoryIds, assetTagNames, showNonindexable, showNonVisible,
+			statuses, andSearch);
+	}
+
+	@Override
+	public long searchCount(long companyId, long[] groupIds, long userId,
+		java.lang.String className, long classTypeId,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, boolean showNonindexable,
 		int[] statuses, boolean andSearch) {
 		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,
 			assetCategoryIds, assetTagNames, showNonindexable, statuses,
 			andSearch);
-	}
-
-	@Override
-	public long searchCount(com.liferay.asset.kernel.model.AssetTag tag,
-		int[] statuses) {
-		return _assetEntryLocalService.searchCount(tag, statuses);
 	}
 
 	@Override

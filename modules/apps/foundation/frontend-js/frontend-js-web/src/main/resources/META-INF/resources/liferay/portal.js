@@ -114,7 +114,7 @@
 			var hideTooltipTask = instance._hideTooltipTask;
 
 			if (!cached) {
-				cached = new A.Tooltip(
+				var config = A.merge(
 					{
 						cssClass: 'tooltip-help',
 						html: true,
@@ -122,8 +122,11 @@
 						stickDuration: 100,
 						visible: false,
 						zIndex: Liferay.zIndex.TOOLTIP
-					}
-				).render();
+					},
+					tooltipConfig
+				);
+
+				cached = new A.Tooltip(config).render();
 
 				cached.after(
 					'visibleChange',
@@ -135,6 +138,9 @@
 				instance._hideTooltipTask = hideTooltipTask;
 
 				instance._cached = cached;
+			}
+			else {
+				cached.setAttrs(tooltipConfig);
 			}
 
 			hideTooltipTask.cancel();
@@ -151,10 +157,6 @@
 
 			cached.set(BODY_CONTENT, text);
 			cached.set(TRIGGER, obj);
-
-			for (var config in tooltipConfig) {
-				cached.set(config, tooltipConfig[config]);
-			}
 
 			var boundingBox = cached.get('boundingBox');
 

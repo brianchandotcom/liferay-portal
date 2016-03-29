@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = {"service.ranking:Integer=20"},
+	property = {"form.navigator.entry.order:Integer=20"},
 	service = FormNavigatorEntry.class
 )
 public class UserPersonalSiteFormNavigatorEntry

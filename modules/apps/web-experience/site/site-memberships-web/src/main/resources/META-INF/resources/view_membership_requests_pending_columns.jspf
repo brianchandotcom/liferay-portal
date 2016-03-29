@@ -1,0 +1,54 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
+
+row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
+%>
+
+<liferay-ui:search-container-column-text
+	cssClass="content-column user-column title-column"
+	name="user"
+	truncate="<%= true %>"
+	value='<%= (membershipRequestUser != null) ? HtmlUtil.escape(membershipRequestUser.getFullName()) : LanguageUtil.get(request, "the-user-could-not-be-found") %>'
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="content-column user-comments-column"
+	name="user-comments"
+	truncate="<%= true %>"
+	value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
+/>
+
+<c:if test="<%= membershipRequestUser != null %>">
+	<liferay-ui:search-container-column-text
+		cssClass="content-column email-address-column"
+		name="email-address"
+		value="<%= membershipRequestUser.getEmailAddress() %>"
+	/>
+</c:if>
+
+<liferay-ui:search-container-column-date
+	cssClass="date-column text-column"
+	name="date"
+	value="<%= membershipRequest.getCreateDate() %>"
+/>
+
+<liferay-ui:search-container-column-jsp
+	cssClass="entry-action-column"
+	path="/membership_request_action.jsp"
+/>

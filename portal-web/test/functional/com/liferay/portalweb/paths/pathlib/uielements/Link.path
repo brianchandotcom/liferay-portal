@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENTS</td>
-	<td>//h5[contains(.,'Attachments')]/../div//span/a</td>
+	<td>//div[@class='article-actions']//span/a[contains(.,'Attachments')]</td>
 	<td></td>
 </tr>
 <tr>

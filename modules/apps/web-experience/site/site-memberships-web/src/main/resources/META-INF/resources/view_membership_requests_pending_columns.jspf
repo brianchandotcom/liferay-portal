@@ -20,33 +20,63 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
 %>
 
-<liferay-ui:search-container-column-text
-	cssClass="content-column user-column title-column"
-	name="user"
-	truncate="<%= true %>"
-	value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
-/>
+<c:choose>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= membershipRequest.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-text
-	cssClass="content-column user-comments-column"
-	name="user-comments"
-	truncate="<%= true %>"
-	value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
-/>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h6 class="text-default">
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+			</h6>
 
-<liferay-ui:search-container-column-text
-	cssClass="content-column email-address-column"
-	name="email-address"
-	value="<%= membershipRequestUser.getEmailAddress() %>"
-/>
+			<h5><%= HtmlUtil.escape(membershipRequestUser.getFullName()) %> (<%= membershipRequestUser.getEmailAddress() %>)</h5>
 
-<liferay-ui:search-container-column-date
-	cssClass="date-column text-column"
-	name="date"
-	value="<%= membershipRequest.getCreateDate() %>"
-/>
+			<h6 class="text-default">
+				<span><%= HtmlUtil.escape(membershipRequest.getComments()) %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-jsp
-	cssClass="entry-action-column"
-	path="/membership_request_action.jsp"
-/>
+		<liferay-ui:search-container-column-jsp
+			path="/membership_request_action.jsp"
+		/>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("list") %>'>
+		<liferay-ui:search-container-column-text
+			cssClass="content-column user-column title-column"
+			name="user"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="content-column user-comments-column"
+			name="user-comments"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="content-column email-address-column"
+			name="email-address"
+			value="<%= membershipRequestUser.getEmailAddress() %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="date-column text-column"
+			name="date"
+			value="<%= membershipRequest.getCreateDate() %>"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action-column"
+			path="/membership_request_action.jsp"
+		/>
+	</c:when>
+</c:choose>

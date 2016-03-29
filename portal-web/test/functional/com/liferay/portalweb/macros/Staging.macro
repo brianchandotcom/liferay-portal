@@ -772,6 +772,8 @@
 
 		<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
 		<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+
+		<execute function="Click" locator1="StagingPublishToLive#REFRESH_COUNTS" />
 	</command>
 
 	<command name="setHistoryVersionPG">

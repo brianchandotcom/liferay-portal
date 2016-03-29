@@ -784,7 +784,7 @@
 		</execute>
 
 		<execute macro="DMRepository#viewCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
+			<var name="dmRepositoryName" value="SHAREPOINT REPOSITORY NAME" />
 		</execute>
 	</command>
 </definition>

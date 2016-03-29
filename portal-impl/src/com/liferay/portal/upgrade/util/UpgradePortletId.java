@@ -253,6 +253,10 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			updateResourcePermission(oldRootPortletId, newRootPortletId, true);
 
+			updateUserNotificationDelivery(oldRootPortletId, newRootPortletId);
+
+			updateUserNotificationEvent(oldRootPortletId, newRootPortletId);
+
 			updateInstanceablePortletPreferences(
 				oldRootPortletId, newRootPortletId);
 		}
@@ -350,6 +354,24 @@ public class UpgradePortletId extends UpgradeProcess {
 				_log.warn(sqle, sqle);
 			}
 		}
+	}
+
+	protected void updateUserNotificationDelivery(
+			String oldPortletId, String newPortletId)
+		throws Exception {
+
+		runSQL(
+			"update UserNotificationDelivery set portletId = '" + newPortletId +
+				"' where portletId = '" + oldPortletId +"'");
+	}
+
+	protected void updateUserNotificationEvent(
+			String oldPortletId, String newPortletId)
+		throws Exception {
+
+		runSQL(
+			"update UserNotificationEvent set type_ = '" + newPortletId +
+				"' where type_ = '" + oldPortletId + "'");
 	}
 
 	protected void upgradeInstanceablePortletIds() throws Exception {

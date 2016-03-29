@@ -43,7 +43,7 @@
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<for list="Tags Navigation,Search,Categories Navigation,Asset Publisher" param="portletName">
+		<for list="Tags Navigation,Categories Navigation,Asset Publisher" param="portletName">
 			<execute macro="Portlet#viewSpecificPG">
 				<var name="portletName" value="${portletName}" />
 			</execute>

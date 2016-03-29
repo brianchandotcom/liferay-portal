@@ -73,26 +73,31 @@ if (assetEntryId > 0) {
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
-					if (portletURL == null) {
-						portletURL = PortletProviderUtil.getPortletURL(request, assetRenderer.getClassName(), PortletProvider.Action.VIEW);
+					PortletURL viewAssetURL = null;
 
-						portletURL.setWindowState(WindowState.MAXIMIZED);
+					if (portletURL != null) {
+						viewAssetURL = PortletURLUtil.clone(portletURL, PortalUtil.getLiferayPortletResponse(portletResponse));
+					}
+					else {
+						viewAssetURL = PortletProviderUtil.getPortletURL(request, assetRenderer.getClassName(), PortletProvider.Action.VIEW);
 
-						portletURL.setParameter("redirect", currentURL);
+						viewAssetURL.setWindowState(WindowState.MAXIMIZED);
+
+						viewAssetURL.setParameter("redirect", currentURL);
 					}
 
-					portletURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
-					portletURL.setParameter("type", assetRendererFactory.getType());
+					viewAssetURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
+					viewAssetURL.setParameter("type", assetRendererFactory.getType());
 
 					if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 						if (assetRenderer.getGroupId() != themeDisplay.getSiteGroupId()) {
-							portletURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+							viewAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
 						}
 
-						portletURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+						viewAssetURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					String noSuchEntryRedirect = portletURL.toString();
+					String noSuchEntryRedirect = viewAssetURL.toString();
 
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, noSuchEntryRedirect);
 

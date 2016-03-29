@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -80,10 +79,6 @@ public class AssetPublisherHelper {
 		String viewURL = null;
 
 		if (viewInContext) {
-			String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
-
-			viewFullContentURL.setParameter("redirect", currentURL);
-
 			try {
 				String noSuchEntryRedirect = viewFullContentURL.toString();
 
@@ -97,7 +92,8 @@ public class AssetPublisherHelper {
 					viewURL = HttpUtil.setParameter(
 						viewURL, "inheritRedirect", Boolean.TRUE);
 					viewURL = HttpUtil.setParameter(
-						viewURL, "redirect", currentURL);
+						viewURL, "redirect",
+						PortalUtil.getCurrentURL(liferayPortletRequest));
 				}
 			}
 			catch (Exception e) {

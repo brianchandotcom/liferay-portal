@@ -48,10 +48,18 @@ public class OutputTag extends PositionTagSupport {
 			if (_output) {
 				String bodyContentString =
 					getBodyContentAsStringBundler().toString();
+				
+				bodyContentString = StringUtil.replace(
+					bodyContentString, "<link",
+					"<link data-senna-track=\"temporary\" ");
 
 				bodyContentString = StringUtil.replace(
 					bodyContentString, "<script",
 					"<script data-senna-track=\"permanent\" ");
+
+				bodyContentString = StringUtil.replace(
+					bodyContentString, "<style",
+					"<style data-senna-track=\"temporary\" ");
 
 				if (isPositionInLine()) {
 					JspWriter jspWriter = pageContext.getOut();

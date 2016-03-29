@@ -43,7 +43,33 @@ portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
+SearchContainer siteMembershipSearch = new SearchContainer(renderRequest, portletURL, null, "no-requests-were-found");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
+
+siteMembershipSearch.setOrderByCol(orderByCol);
+
+boolean orderByAsc = false;
+
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<MembershipRequest> orderByComparator = new MembershipRequestsCreateDateComparator(orderByAsc);
+
+siteMembershipSearch.setOrderByComparator(orderByComparator);
+
+siteMembershipSearch.setOrderByType(orderByType);
+
 int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId);
+
+siteMembershipSearch.setTotal(membershipRequestCount);
+
+List results = MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, siteMembershipSearch.getStart(), siteMembershipSearch.getEnd(), siteMembershipSearch.getOrderByComparator());
+
+siteMembershipSearch.setResults(results);
 %>
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
@@ -93,19 +119,20 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"date"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-requests-were-found"
-		iteratorURL="<%= portletURL %>"
-		total="<%= membershipRequestCount %>"
+		searchContainer="<%= siteMembershipSearch %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.MembershipRequest"
 			modelVar="membershipRequest"
@@ -198,6 +225,6 @@ int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

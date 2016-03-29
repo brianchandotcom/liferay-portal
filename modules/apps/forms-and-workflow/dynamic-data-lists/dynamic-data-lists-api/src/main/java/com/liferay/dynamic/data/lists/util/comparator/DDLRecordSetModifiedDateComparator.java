@@ -18,7 +18,13 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 
 /**
+ * Used to order record sets according to their modified date during search
+ * operations. The order can be ascending or descending and is defined by the
+ * value specified in the class constructor.
+ *
  * @author Rafael Praxedes
+ * @see    com.liferay.dynamic.data.lists.service.DDLRecordSetService#search(
+ *         long, long, String, int, int, int, OrderByComparator)
  */
 public class DDLRecordSetModifiedDateComparator
 	extends StagedModelModifiedDateComparator<DDLRecordSet> {

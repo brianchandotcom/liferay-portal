@@ -80,10 +80,9 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		DDLExporter exporter = _ddlExporterFactory.getDDLExporter(
 			fileExtension);
 
-		exporter.setLocale(themeDisplay.getLocale());
-
 		byte[] bytes = exporter.export(
-			recordSetId, WorkflowConstants.STATUS_APPROVED);
+			recordSetId, WorkflowConstants.STATUS_APPROVED,
+			themeDisplay.getLocale());
 
 		String contentType = MimeTypesUtil.getContentType(fileName);
 

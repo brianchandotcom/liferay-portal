@@ -32,13 +32,28 @@ import java.util.Map;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
- * dynamic data list (DDL) records. Its methods include permission checks.
+ * dynamic data lists (DDL) records. Its methods include permission checks.
  *
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
 public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
+	/**
+	 * Adds a record referencing the record set.
+	 *
+	 * @param  groupId the primary key of the record's group
+	 * @param  recordSetId the primary key of the record set
+	 * @param  displayIndex the index position in which the record is displayed
+	 *         in the spreadsheet view
+	 * @param  ddmFormValues the record values. See <code>DDMFormValues</code>
+	 *         in the <code>dynamic.data.mapping.api</code> module.
+	 * @param  serviceContext the service context to be applied. This can set
+	 *         the UUID, guest permissions, and group permissions for the
+	 *         record.
+	 * @return the record
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public DDLRecord addRecord(
 			long groupId, long recordSetId, int displayIndex,
@@ -53,6 +68,24 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			ddmFormValues, serviceContext);
 	}
 
+	/**
+	 * Adds a record referencing the record set.
+	 *
+	 * @param      groupId the primary key of the record's group
+	 * @param      recordSetId the primary key of the record set
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fields the record values. See <code>Fields</code> in the
+	 *             <code>dynamic.data.mapping.api</code> module.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the UUID, guest permissions, and group permissions for
+	 *             the record.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	 *             DDMFormValues, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecord addRecord(
 			long groupId, long recordSetId, int displayIndex, Fields fields,
@@ -67,6 +100,24 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * Adds a record referencing the record set.
+	 *
+	 * @param      groupId the primary key of the record's group
+	 * @param      recordSetId the primary key of the record set
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and its Serializable values.
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the UUID, guest permissions, and group permissions for
+	 *             the record.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	 *             DDMFormValues, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecord addRecord(
 			long groupId, long recordSetId, int displayIndex,
@@ -81,6 +132,12 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * Deletes the record and its resources.
+	 *
+	 * @param  recordId the primary key of the record to be deleted
+	 * @throws PortalException
+	 */
 	@Override
 	public void deleteRecord(long recordId) throws PortalException {
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
@@ -91,6 +148,19 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		ddlRecordLocalService.deleteRecord(record);
 	}
 
+	/**
+	 * Disassociates the locale from the record.
+	 *
+	 * @param      recordId the primary key of the record
+	 * @param      locale the locale of the record values to be removed
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @return     the affected record
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	 *             int, DDMFormValues, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecord deleteRecordLocale(
 			long recordId, Locale locale, ServiceContext serviceContext)
@@ -105,6 +175,13 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			recordId, locale, serviceContext);
 	}
 
+	/**
+	 * Returns the record with the ID.
+	 *
+	 * @param  recordId the primary key of the record
+	 * @return the record with the ID
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public DDLRecord getRecord(long recordId) throws PortalException {
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
@@ -115,6 +192,15 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		return record;
 	}
 
+	/**
+	 * Reverts the record to a given version.
+	 *
+	 * @param  recordId the primary key of the record
+	 * @param  version the version to be reverted
+	 * @param  serviceContext the service context to be applied. This can set
+	 *         the record modified date.
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public void revertRecord(
 			long recordId, String version, ServiceContext serviceContext)
@@ -142,6 +228,21 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		revertRecord(recordId, version, serviceContext);
 	}
 
+	/**
+	 * Updates a record, replacing its display index and values.
+	 *
+	 * @param  recordId the primary key of the record
+	 * @param  majorVersion whether this update is a major change. A major
+	 *         change increments the record's major version number.
+	 * @param  displayIndex the index position in which the record is displayed
+	 *         in the spreadsheet view
+	 * @param  ddmFormValues the record values. See <code>DDMFormValues</code>
+	 *         in the <code>dynamic.data.mapping.api</code> module.
+	 * @param  serviceContext the service context to be applied. This can set
+	 *         the record modified date.
+	 * @return the record
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public DDLRecord updateRecord(
 			long recordId, boolean majorVersion, int displayIndex,
@@ -158,6 +259,26 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * Updates a record, replacing its display index and values.
+	 *
+	 * @param      recordId the primary key of the record
+	 * @param      majorVersion whether this update is a major change. Major
+	 *             changes causes the increment of the major version number.
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fields the record values. See <code>Fields</code> in the
+	 *             <code>dynamic.data.mapping.api</code> module.
+	 * @param      mergeFields whether to merge the new fields with the existing
+	 *             ones; otherwise replace the existing fields
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	 *             int, DDMFormValues, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecord updateRecord(
 			long recordId, boolean majorVersion, int displayIndex,
@@ -174,6 +295,24 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			mergeFields, serviceContext);
 	}
 
+	/**
+	 * Updates a record, replacing its display index and values.
+	 *
+	 * @param      recordId the primary key of the record
+	 * @param      displayIndex the index position in which the record is
+	 *             displayed in the spreadsheet view
+	 * @param      fieldsMap the record values. The fieldsMap is a map of field
+	 *             names and its Serializable values.
+	 * @param      mergeFields whether to merge the new fields with the existing
+	 *             ones; otherwise replace the existing fields
+	 * @param      serviceContext the service context to be applied. This can
+	 *             set the record modified date.
+	 * @return     the record
+	 * @throws     PortalException if a portal exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	 *             int, DDMFormValues, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DDLRecord updateRecord(
 			long recordId, int displayIndex,

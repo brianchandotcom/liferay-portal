@@ -41,6 +41,22 @@ public class DDLRecordServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Adds a record referencing the record set.
+	*
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is displayed
+	in the spreadsheet view
+	* @param ddmFormValues the record values. See <code>DDMFormValues</code>
+	in the <code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can set
+	the UUID, guest permissions, and group permissions for the
+	record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
@@ -51,6 +67,24 @@ public class DDLRecordServiceUtil {
 			ddmFormValues, serviceContext);
 	}
 
+	/**
+	* Adds a record referencing the record set.
+	*
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fields the record values. See <code>Fields</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can
+	set the UUID, guest permissions, and group permissions for
+	the record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,
@@ -61,6 +95,24 @@ public class DDLRecordServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	* Adds a record referencing the record set.
+	*
+	* @param groupId the primary key of the record's group
+	* @param recordSetId the primary key of the record set
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param serviceContext the service context to be applied. This can
+	set the UUID, guest permissions, and group permissions for
+	the record.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
@@ -71,11 +123,30 @@ public class DDLRecordServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	* Deletes the record and its resources.
+	*
+	* @param recordId the primary key of the record to be deleted
+	* @throws PortalException
+	*/
 	public static void deleteRecord(long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRecord(recordId);
 	}
 
+	/**
+	* Disassociates the locale from the record.
+	*
+	* @param recordId the primary key of the record
+	* @param locale the locale of the record values to be removed
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the affected record
+	* @throws PortalException
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
 		long recordId, java.util.Locale locale,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -92,12 +163,28 @@ public class DDLRecordServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	* Returns the record with the ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the record with the ID
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecord getRecord(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecord(recordId);
 	}
 
+	/**
+	* Reverts the record to a given version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the version to be reverted
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static void revertRecord(long recordId, java.lang.String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -116,6 +203,24 @@ public class DDLRecordServiceUtil {
 		getService().revertRecordVersion(recordId, version, serviceContext);
 	}
 
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
@@ -127,6 +232,21 @@ public class DDLRecordServiceUtil {
 			mergeFields, serviceContext);
 	}
 
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param majorVersion whether this update is a major change. A major
+	change increments the record's major version number.
+	* @param displayIndex the index position in which the record is displayed
+	in the spreadsheet view
+	* @param ddmFormValues the record values. See <code>DDMFormValues</code>
+	in the <code>dynamic.data.mapping.api</code> module.
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
@@ -137,6 +257,26 @@ public class DDLRecordServiceUtil {
 			ddmFormValues, serviceContext);
 	}
 
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param majorVersion whether this update is a major change. Major
+	changes causes the increment of the major version number.
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fields the record values. See <code>Fields</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.dynamic.data.mapping.storage.Fields fields,

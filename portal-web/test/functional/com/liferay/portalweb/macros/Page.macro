@@ -275,8 +275,8 @@
 			<var name="page" value="${page}" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
-			<var name="tab" value="Advanced" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Logo" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHANGE_LOGO" value1="Change" />

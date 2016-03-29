@@ -103,7 +103,7 @@
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
 			<var name="bookmarkFolderName" value="Test Folder Name" />
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -176,7 +176,7 @@
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -444,7 +444,7 @@
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

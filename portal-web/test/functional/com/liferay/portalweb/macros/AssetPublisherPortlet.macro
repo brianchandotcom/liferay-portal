@@ -95,6 +95,8 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#selectTopFrame" />
 	</command>
 
 	<command name="configureAPSelectMoreThanOnePG">

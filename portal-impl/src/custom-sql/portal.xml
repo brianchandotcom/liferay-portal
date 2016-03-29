@@ -235,7 +235,7 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByL_TS_S_RSGC">
 		<![CDATA[
 			SELECT
-				DISTINCT {Group_.*}
+				{Group_.*}
 			FROM
 				Group_
 			WHERE

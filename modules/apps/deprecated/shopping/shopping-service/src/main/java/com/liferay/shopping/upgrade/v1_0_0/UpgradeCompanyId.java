@@ -48,7 +48,7 @@ public class UpgradeCompanyId
 
 			sb.append("update ShoppingOrderItem set companyId = (select ");
 			sb.append("max(ShoppingItem.companyId) from ShoppingItem where ");
-			sb.append("SUBSTR(ShoppingOrderItem.itemId, 0, INSTR('|', ");
+			sb.append("SUBSTR(ShoppingOrderItem.itemId, 1, INSTR('|', ");
 			sb.append("ShoppingOrderItem.itemId)) = ");
 			sb.append("CAST_TEXT(ShoppingItem.itemId)) where ");
 			sb.append("ShoppingOrderItem.itemId like '%|%' ");

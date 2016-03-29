@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Bookmarks Web
 Bundle-SymbolicName: com.liferay.bookmarks.web
 Bundle-Version: 1.0.4
-Import-Package:\
-	com.liferay.social.kernel.model,\
-	*
 Liferay-JS-Config: /META-INF/resources/bookmarks/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks

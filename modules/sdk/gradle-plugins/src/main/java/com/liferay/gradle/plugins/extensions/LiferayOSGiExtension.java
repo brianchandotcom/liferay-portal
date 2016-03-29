@@ -23,6 +23,7 @@ import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin;
 import com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin;
 import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
 import com.liferay.ant.bnd.service.ServiceAnalyzerPlugin;
+import com.liferay.ant.bnd.social.SocialAnalyzerPlugin;
 import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -152,7 +153,8 @@ public class LiferayOSGiExtension extends LiferayExtension {
 		JspAnalyzerPlugin.class.getName(), NpmAnalyzerPlugin.class.getName(),
 		ResourceBundleLoaderAnalyzerPlugin.class.getName(),
 		SassAnalyzerPlugin.class.getName(),
-		ServiceAnalyzerPlugin.class.getName(), SpringComponent.class.getName(),
+		ServiceAnalyzerPlugin.class.getName(),
+		SocialAnalyzerPlugin.class.getName(), SpringComponent.class.getName(),
 		SpringDependencyAnalyzerPlugin.class.getName()
 	};
 

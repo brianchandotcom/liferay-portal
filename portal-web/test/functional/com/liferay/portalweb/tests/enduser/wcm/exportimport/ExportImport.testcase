@@ -419,8 +419,6 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="DMPortlet#configureRootFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>

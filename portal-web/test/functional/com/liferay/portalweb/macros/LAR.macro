@@ -618,8 +618,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Export/Import" />
@@ -672,8 +670,6 @@
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Export/Import" />
@@ -719,8 +715,6 @@
 			<var name="i" value="${i}" />
 			<var name="portletName" value="User Segment Content List" />
 		</execute>
-
-		<execute function="Refresh" />
 	</command>
 
 	<command name="viewExportTemplateCP">

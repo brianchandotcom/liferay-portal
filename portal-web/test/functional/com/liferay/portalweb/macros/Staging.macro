@@ -108,8 +108,6 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="Refresh" />
-
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute macro="ProductMenu#gotoSitesPublishing">
@@ -242,12 +240,9 @@
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" />
-					<then>
-						<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
-					</then>
-				</if>
+				<execute function="Click" locator1="StagingPublishtolivenow#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+
+				<execute function="Click" locator1="StagingPublishtolivenow#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
@@ -261,13 +256,6 @@
 						</then>
 					</if>
 				</for>
-
-				<if>
-					<condition function="IsElementPresent" locator1="Button#OK" />
-					<then>
-						<execute function="AssertClick" locator1="Button#OK" value1="OK" />
-					</then>
-				</if>
 			</then>
 		</if>
 
@@ -488,8 +476,6 @@
 	</command>
 
 	<command name="enablePageInSitePagesVariation">
-		<execute function="Refresh" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_MENU_REVISION_DETAILS_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 
@@ -598,7 +584,6 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
-		<execute function="Refresh" />
 	</command>
 
 	<command name="publishToLive">
@@ -766,7 +751,6 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
-		<execute function="Refresh" />
 	</command>
 
 	<command name="setContentDateRange">
@@ -788,6 +772,8 @@
 
 		<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
 		<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+
+		<execute function="Click" locator1="StagingPublishToLive#REFRESH_COUNTS" />
 	</command>
 
 	<command name="setHistoryVersionPG">
@@ -845,6 +831,8 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</else>
 		</if>
+
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
@@ -948,7 +936,5 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute function="Pause" locator1="5000" />
-
-		<execute function="Refresh" />
 	</command>
 </definition>

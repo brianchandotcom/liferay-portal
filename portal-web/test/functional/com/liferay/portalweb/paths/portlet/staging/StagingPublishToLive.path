@@ -191,6 +191,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REFRESH_COUNTS</td>
+	<td>//a[contains(@id,'rangeLink')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -70,7 +70,7 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 	<aui:form action="<%= currentURL %>" cssClass="row" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container
-				emptyResultsMessage='<%= actionRequired ? "you-do-not-have-any-request" : "you-do-not-have-any-notifications" %>'
+				emptyResultsMessage='<%= actionRequired ? "you-do-not-have-any-requests" : "you-do-not-have-any-notifications" %>'
 				id="userNotificationEvents"
 				iteratorURL="<%= currentURLObj %>"
 				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"

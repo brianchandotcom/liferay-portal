@@ -85,21 +85,6 @@ public class AssetTagsDisplayContext {
 		return _displayStyle;
 	}
 
-	public long getTagsFullCount(AssetTag tag) {
-		int[] statuses = new int[] {
-			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_PENDING,
-			WorkflowConstants.STATUS_SCHEDULED
-		};
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return AssetEntryLocalServiceUtil.searchCount(
-			tag.getCompanyId(), null, themeDisplay.getUserId(), null, 0,
-			null, null, null, null, tag.getName(), true, true, statuses, false);
-
-	}
-
 	public String getKeywords() {
 		if (Validator.isNotNull(_keywords)) {
 			return _keywords;
@@ -185,6 +170,20 @@ public class AssetTagsDisplayContext {
 		_tagId = ParamUtil.getLong(_request, "tagId");
 
 		return _tagId;
+	}
+
+	public long getTagsFullCount(AssetTag tag) {
+		int[] statuses = new int[] {
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_PENDING,
+			WorkflowConstants.STATUS_SCHEDULED
+		};
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return AssetEntryLocalServiceUtil.searchCount(
+			tag.getCompanyId(), null, themeDisplay.getUserId(), null, 0, null,
+			null, null, null, tag.getName(), true, true, statuses, false);
 	}
 
 	public SearchContainer getTagsSearchContainer() {

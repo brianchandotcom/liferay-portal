@@ -1,5 +1,5 @@
 Bundle-Version: 1.0.0
-Export-Package: \
+Export-Package:\
 	_package_.exception,\
 	_package_.model,\
 	_package_.service,\

@@ -49,9 +49,17 @@ public class OutputTag extends PositionTagSupport {
 				String bodyContentString =
 					getBodyContentAsStringBundler().toString();
 
-				bodyContentString = StringUtil.replace(
-					bodyContentString, "<script",
-					"<script data-senna-track=\"permanent\" ");
+				bodyContentString = _addAtrributeIfAbsent(
+					bodyContentString, "link", "data-senna-track",
+					"\"temporary\"");
+
+				bodyContentString = _addAtrributeIfAbsent(
+					bodyContentString, "script", "data-senna-track",
+					"\"permanent\"");
+
+				bodyContentString = _addAtrributeIfAbsent(
+					bodyContentString, "style", "data-senna-track",
+					"\"temporary\"");
 
 				if (isPositionInLine()) {
 					JspWriter jspWriter = pageContext.getOut();
@@ -112,6 +120,37 @@ public class OutputTag extends PositionTagSupport {
 		}
 
 		return outputData;
+	}
+
+	private String _addAtrributeIfAbsent(
+		String content, String tag, String attribute, String attributeValue) {
+
+		int beginPos = 0;
+		int endPos = 0;
+
+		while (beginPos >= 0) {
+			beginPos = content.indexOf("<" + tag, endPos);
+
+			if (beginPos < 0) {
+				break;
+			}
+
+			endPos = content.indexOf(">", beginPos);
+
+			if (endPos < 0) {
+				break;
+			}
+
+			String subContent = content.substring(beginPos, endPos);
+
+			if (!subContent.contains(attribute)) {
+				content = StringUtil.insert(
+					content, " " + attribute + "=" + attributeValue,
+					beginPos + tag.length() + 1);
+			}
+		}
+
+		return content;
 	}
 
 	private boolean _output;

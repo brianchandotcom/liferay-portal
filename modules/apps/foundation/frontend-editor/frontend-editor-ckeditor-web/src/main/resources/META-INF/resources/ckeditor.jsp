@@ -81,7 +81,7 @@ if (editorOptions != null) {
 
 <c:if test="<%= !skipEditorLoading %>">
 	<liferay-util:html-top outputKey="js_editor_ckeditor_skip_editor_loading">
-		<style data-senna-track="temporary" type="text/css">
+		<style type="text/css">
 			table.cke_dialog {
 				position: absolute !important;
 			}

@@ -110,18 +110,13 @@ public class SiteTeamsDisplayContext {
 		SearchContainer searchContainer = new TeamSearch(
 			_renderRequest, getPortletURL());
 
-		String emptyResultsMessage = "there-are-no-site-teams.";
-
-		if (showAddButton()) {
-			emptyResultsMessage =
-				"there-are-no-site-teams.-you-can-add-a-site-team-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner";
-		}
-
-		searchContainer.setEmptyResultsMessage(emptyResultsMessage);
+		searchContainer.setEmptyResultsMessage("there-are-no-site-teams");
 
 		if (Validator.isNull(getKeywords())) {
 			if (showAddButton()) {
+				searchContainer.setEmptyResultsMessage(
+					"there-are-no-site-teams.-you-can-add-a-site-team-by-" +
+						"clicking-the-plus-button-on-the-bottom-right-corner");
 				searchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
 			}

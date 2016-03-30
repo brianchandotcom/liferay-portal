@@ -161,19 +161,14 @@ public class AssetCategoriesDisplayContext {
 			return _categoriesSearchContainer;
 		}
 
-		String emptyResultsMessage = "there-are-no-categories.";
-
-		if (showCategoriesAddButton()) {
-			emptyResultsMessage =
-				"there-are-no-categories.-you-can-add-a-category-by-clicking-" +
-					"the-plus-button-on-the-bottom-right-corner";
-		}
-
 		SearchContainer categoriesSearchContainer = new SearchContainer(
-			_renderRequest, getIteratorURL(), null, emptyResultsMessage);
+			_renderRequest, getIteratorURL(), null, "there-are-no-categories");
 
 		if (Validator.isNull(getKeywords())) {
 			if (showCategoriesAddButton()) {
+				categoriesSearchContainer.setEmptyResultsMessageCssClass(
+					"there-are-no-categories.-you-can-add-a-category-by-" +
+						"clicking-the-plus-button-on-the-bottom-right-corner");
 				categoriesSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
 			}
@@ -371,22 +366,17 @@ public class AssetCategoriesDisplayContext {
 			return _vocabulariesSearchContainer;
 		}
 
-		String emptyResultsMessage = "there-are-no-vocabularies.";
-
-		if (showVocabulariesAddButton()) {
-			emptyResultsMessage =
-				"there-are-no-vocabularies.-you-can-add-a-vocabulary-by" +
-					"-clicking-the-plus-button-on-the-bottom-right-corner";
-		}
-
 		SearchContainer vocabulariesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			emptyResultsMessage);
+			"there-are-no-vocabularies");
 
 		String keywords = getKeywords();
 
 		if (Validator.isNull(keywords)) {
 			if (showVocabulariesAddButton()) {
+				vocabulariesSearchContainer.setEmptyResultsMessage(
+					"there-are-no-vocabularies.-you-can-add-a-vocabulary-by" +
+						"-clicking-the-plus-button-on-the-bottom-right-corner");
 				vocabulariesSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
 			}

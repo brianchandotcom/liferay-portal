@@ -175,22 +175,17 @@ public class AssetTagsDisplayContext {
 			return _tagsSearchContainer;
 		}
 
-		String emptyResultsMessage = "there-are-no-tags.";
-
-		if (showAddButton()) {
-			emptyResultsMessage =
-				"there-are-no-tags.-you-can-add-a-tag-by-clicking-the-plus" +
-					"-button-on-the-bottom-right-corner";
-		}
-
 		SearchContainer tagsSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			emptyResultsMessage);
+			"there-are-no-tags");
 
 		String keywords = getKeywords();
 
 		if (Validator.isNull(keywords)) {
 			if (showAddButton()) {
+				tagsSearchContainer.setEmptyResultsMessage(
+					"there-are-no-tags.-you-can-add-a-tag-by-clicking-the-" +
+						"plus-button-on-the-bottom-right-corner");
 				tagsSearchContainer.setEmptyResultsMessageCssClass(
 					"taglib-empty-result-message-header-has-plus-btn");
 			}

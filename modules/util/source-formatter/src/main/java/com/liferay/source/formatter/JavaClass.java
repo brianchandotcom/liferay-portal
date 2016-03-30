@@ -426,7 +426,9 @@ public class JavaClass {
 			Set<String> immutableFieldTypes)
 		throws Exception {
 
-		if (!_javaSourceProcessor.portalSource || !javaTerm.isVariable()) {
+		if (!_javaSourceProcessor.portalSource ||
+			(!javaTerm.isVariable() && !javaTerm.isMethod())) {
+
 			return;
 		}
 
@@ -459,6 +461,10 @@ public class JavaClass {
 					"Only private var should start with underscore: " +
 						_fileName + " " + javaTerm.getLineCount());
 			}
+		}
+
+		if (!javaTerm.isVariable()) {
+			return;
 		}
 
 		String modifierDefinition = StringUtil.trim(

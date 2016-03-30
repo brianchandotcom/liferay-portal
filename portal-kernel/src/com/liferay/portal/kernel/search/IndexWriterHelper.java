@@ -103,7 +103,7 @@ public interface IndexWriterHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.search.index.IndexStatusManager.
+	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             isIndexReadOnly()}
 	 */
 	@Deprecated
@@ -131,7 +131,7 @@ public interface IndexWriterHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.search.index.IndexStatusManager.
+	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             setIndexReadOnly(boolean)}
 	 */
 	@Deprecated

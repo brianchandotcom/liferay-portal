@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -434,6 +435,13 @@ public class AssetSearcher extends BaseSearcher {
 			BooleanQuery fullQuery, SearchContext searchContext)
 		throws Exception {
 
+		boolean showNonVisible = GetterUtil.getBoolean(
+			_assetEntryQuery.getAttribute("showNonVisible"), false);
+
+		if (showNonVisible) {
+			return;
+		}
+
 		BooleanFilter booleanFilter = fullQuery.getPreBooleanFilter();
 
 		if (booleanFilter == null) {
@@ -442,7 +450,7 @@ public class AssetSearcher extends BaseSearcher {
 
 		booleanFilter.addRequiredTerm("visible", true);
 
-		if (booleanFilter.hasClauses()) {
+		if (booleanFilter.hasClauses() && !showNonVisible) {
 			fullQuery.setPreBooleanFilter(booleanFilter);
 		}
 	}

@@ -165,7 +165,7 @@ public class AssetCategoriesDisplayContext {
 			_renderRequest, getIteratorURL(), null, "there-are-no-categories");
 
 		if (Validator.isNull(getKeywords())) {
-			if (showCategoriesAddButton()) {
+			if (isShowCategoriesAddButton()) {
 				categoriesSearchContainer.setEmptyResultsMessageCssClass(
 					"there-are-no-categories.-you-can-add-a-category-by-" +
 						"clicking-the-plus-button-on-the-bottom-right-corner");
@@ -373,7 +373,7 @@ public class AssetCategoriesDisplayContext {
 		String keywords = getKeywords();
 
 		if (Validator.isNull(keywords)) {
-			if (showVocabulariesAddButton()) {
+			if (isShowVocabulariesAddButton()) {
 				vocabulariesSearchContainer.setEmptyResultsMessage(
 					"there-are-no-vocabularies.-you-can-add-a-vocabulary-by" +
 						"-clicking-the-plus-button-on-the-bottom-right-corner");
@@ -517,6 +517,20 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
+	public boolean isShowCategoriesAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (AssetPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowCategoriesSearch() throws PortalException {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -532,6 +546,20 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
+	public boolean isShowVocabulariesAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (AssetPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowVocabulariesSearch() throws PortalException {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -541,34 +569,6 @@ public class AssetCategoriesDisplayContext {
 			getVocabulariesSearchContainer();
 
 		if (vocabulariesSearchContainer.getTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean showCategoriesAddButton() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (AssetPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean showVocabulariesAddButton() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (AssetPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY)) {
-
 			return true;
 		}
 

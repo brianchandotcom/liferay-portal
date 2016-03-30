@@ -158,7 +158,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= assetTagsDisplayContext.showAddButton() %>">
+<c:if test="<%= assetTagsDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="editTagURL">
 		<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 	</portlet:renderURL>

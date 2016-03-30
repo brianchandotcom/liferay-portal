@@ -214,7 +214,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= layoutPrototypeDisplayContext.showAddButton() %>">
+<c:if test="<%= layoutPrototypeDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addLayoutPrototypeURL">
 		<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
 	</portlet:renderURL>

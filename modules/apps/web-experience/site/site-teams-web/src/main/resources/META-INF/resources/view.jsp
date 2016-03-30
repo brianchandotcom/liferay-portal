@@ -169,7 +169,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= siteTeamsDisplayContext.showAddButton() %>">
+<c:if test="<%= siteTeamsDisplayContext.isShowAddButton() %>">
 
 	<%
 	PortletURL addTeamURL = renderResponse.createRenderURL();

@@ -113,7 +113,7 @@ public class SiteTeamsDisplayContext {
 		searchContainer.setEmptyResultsMessage("there-are-no-site-teams");
 
 		if (Validator.isNull(getKeywords())) {
-			if (showAddButton()) {
+			if (isShowAddButton()) {
 				searchContainer.setEmptyResultsMessage(
 					"there-are-no-site-teams.-you-can-add-a-site-team-by-" +
 						"clicking-the-plus-button-on-the-bottom-right-corner");
@@ -189,7 +189,7 @@ public class SiteTeamsDisplayContext {
 		return false;
 	}
 
-	public boolean showAddButton() throws PortalException {
+	public boolean isShowAddButton() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

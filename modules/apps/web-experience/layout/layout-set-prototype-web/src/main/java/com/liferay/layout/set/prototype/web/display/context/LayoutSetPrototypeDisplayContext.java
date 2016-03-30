@@ -120,7 +120,7 @@ public class LayoutSetPrototypeDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-site-templates");
 
-		if (showAddButton()) {
+		if (isShowAddButton()) {
 			searchContainer.setEmptyResultsMessage(
 				"there-are-no-site-templates.-you-can-add-a-site-template-by-" +
 					"clicking-the-plus-button-on-the-bottom-right-corner");
@@ -189,7 +189,7 @@ public class LayoutSetPrototypeDisplayContext {
 		return false;
 	}
 
-	public boolean showAddButton() {
+	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

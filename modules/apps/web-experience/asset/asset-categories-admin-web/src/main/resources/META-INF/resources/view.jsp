@@ -209,7 +209,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= assetCategoriesDisplayContext.showVocabulariesAddButton() %>">
+<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() %>">
 	<portlet:renderURL var="addVocabularyURL">
 		<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
 	</portlet:renderURL>

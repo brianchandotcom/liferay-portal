@@ -197,7 +197,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= assetCategoriesDisplayContext.showCategoriesAddButton() %>">
+<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() %>">
 	<portlet:renderURL var="addCategoryURL">
 		<portlet:param name="mvcPath" value="/edit_category.jsp" />
 

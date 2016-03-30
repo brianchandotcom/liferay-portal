@@ -182,7 +182,7 @@ public class AssetTagsDisplayContext {
 		String keywords = getKeywords();
 
 		if (Validator.isNull(keywords)) {
-			if (showAddButton()) {
+			if (isShowAddButton()) {
 				tagsSearchContainer.setEmptyResultsMessage(
 					"there-are-no-tags.-you-can-add-a-tag-by-clicking-the-" +
 						"plus-button-on-the-bottom-right-corner");
@@ -254,6 +254,20 @@ public class AssetTagsDisplayContext {
 		return false;
 	}
 
+	public boolean isShowAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (AssetPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowTagsSearch() throws PortalException {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -262,20 +276,6 @@ public class AssetTagsDisplayContext {
 		SearchContainer tagsSearchContainer = getTagsSearchContainer();
 
 		if (tagsSearchContainer.getTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean showAddButton() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (AssetPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG)) {
-
 			return true;
 		}
 

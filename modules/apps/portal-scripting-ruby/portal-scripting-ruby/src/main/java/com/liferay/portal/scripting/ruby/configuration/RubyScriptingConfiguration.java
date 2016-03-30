@@ -39,11 +39,9 @@ public interface RubyScriptingConfiguration {
 	public int compileThreshold();
 
 	@Meta.AD(
-		deflt =
-			"classpath:/META-INF/jruby.home/lib/ruby/2.0," +
-				"classpath:/META-INF/jruby.home/lib/ruby/shared,",
+		deflt = "classpath:/META-INF/jruby.home/lib/ruby/2.0|classpath:/META-INF/jruby.home/lib/ruby/shared",
 		required = false
 	)
-	public String loadPaths();
+	public String[] loadPaths();
 
 }

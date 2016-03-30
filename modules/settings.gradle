@@ -1,6 +1,7 @@
 FileTree fileTree = fileTree(rootDir) {
 	exclude "**/bin/"
 	exclude "sdk/*/samples/"
+	exclude "sdk/module-templates/classes/"
 	exclude "sdk/module-templates/src/"
 
 	if (Boolean.getBoolean("portal.build")) {

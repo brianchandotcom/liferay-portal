@@ -1053,7 +1053,10 @@ public class JournalConverterImpl implements JournalConverter {
 
 				removeAttribute(element, "index-type");
 
-				element.addAttribute("name", "option" + StringUtil.randomId());
+				element.addAttribute(
+					"name", "option" + parentElement.attributeValue("name") + 
+					StringUtil.randomString(8));
+				
 				element.addAttribute("type", "option");
 				element.addAttribute("value", decodeURL(type));
 

@@ -32,8 +32,6 @@ Import-Package:\
 	\
 	!org.relaxng.datatype.*,\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Solr
 -liferay-includeresource:\
 	lib/commons-io.jar=commons-io-*.jar,\
 	lib/httpclient.jar=httpclient-*.jar,\

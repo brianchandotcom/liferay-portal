@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
-
-import java.util.List;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
- * @author Raymond Augé
+ * @author Miguel Pastor
  */
-public interface ModifiableServletContext {
+public class MockFilter implements Filter {
 
-	public Bundle getBundle();
+	@Override
+	public void destroy() {
+	}
 
-	public List<ListenerDefinition> getListenerDefinitions();
+	@Override
+	public void doFilter(
+		ServletRequest servletRequest, ServletResponse servletResponse,
+		FilterChain filterChain) {
+	}
 
-	public ServletContext getWrappedServletContext();
-
-	public void registerFilters();
-
-	public void registerServlets();
+	@Override
+	public void init(FilterConfig filterConfig) {
+	}
 
 }

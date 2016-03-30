@@ -12,29 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
-
-import java.util.List;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
- * @author Raymond Augé
+ * @author Miguel Pastor
  */
-public interface ModifiableServletContext {
+public class MockServletContextListener implements ServletContextListener {
 
-	public Bundle getBundle();
+	@Override
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+	}
 
-	public List<ListenerDefinition> getListenerDefinitions();
-
-	public ServletContext getWrappedServletContext();
-
-	public void registerFilters();
-
-	public void registerServlets();
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+	}
 
 }

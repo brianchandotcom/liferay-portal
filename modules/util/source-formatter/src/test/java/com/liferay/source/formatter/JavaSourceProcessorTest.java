@@ -180,8 +180,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectVariableNames1.testjava",
 			new String[] {
-				"Only private var should start with underscore:",
-				"Only private var should start with underscore:"
+				"Only private method or variable should start with underscore:",
+				"Only private method or variable should start with underscore:"
 			},
 			new Integer[] {22, 28});
 		test("IncorrectVariableNames2.testjava");

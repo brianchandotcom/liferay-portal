@@ -22,6 +22,12 @@
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -1625,6 +1631,11 @@
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="page" value="Staging Test Page" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -4597,6 +4608,10 @@
 			<var name="portletName" value="Calendar" />
 		</execute>
 
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -5170,6 +5185,11 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="CalendarNavigator#gotoAddResource" />
 
 		<execute macro="CalendarResource#editResourceName">
@@ -5472,6 +5492,11 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Calendar#viewCurrentSiteCalendarName">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -5612,6 +5637,11 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Calendar" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="usersn@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="UserBar#gotoDashboard" />

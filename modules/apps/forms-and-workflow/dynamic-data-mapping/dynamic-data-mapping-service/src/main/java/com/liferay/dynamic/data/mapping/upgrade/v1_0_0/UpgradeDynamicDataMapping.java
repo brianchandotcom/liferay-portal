@@ -342,7 +342,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return ddmFormValuesXSDDeserializer.deserialize(ddmForm, xml);
 	}
 
-	protected Map<Long, String> getDDMTemplateIdsToScriptMap(long structureId)
+	protected Map<Long, String> getDDMTemplateScriptMap(long structureId)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -634,36 +634,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"storageType = 'xml'");
 	}
 
-	protected void updateTemplateDateFields(DDMForm ddmForm, long structureId)
-		throws Exception {
-
-		List<String> ddmDateFieldNames = getDDMDateFieldNames(ddmForm);
-
-		if (ListUtil.isEmpty(ddmDateFieldNames)) {
-			return;
-		}
-
-		Map<Long, String> ddmTemplateIdsToScriptMap =
-			getDDMTemplateIdsToScriptMap(structureId);
-
-		for (Long ddmTemplateId : ddmTemplateIdsToScriptMap.keySet()) {
-			String script = ddmTemplateIdsToScriptMap.get(ddmTemplateId);
-
-			for (String ddmDateFieldName : ddmDateFieldNames) {
-				script = updateTemplateScriptDateAssignStatement(
-					script, ddmDateFieldName);
-
-				script = updateTemplateScriptDateIfStatement(
-					script, ddmDateFieldName);
-
-				script = updateTemplateScriptDateParseStatement(
-					script, ddmDateFieldName);
-			}
-
-			updateTemplateScript(ddmTemplateId, script);
-		}
-	}
-
 	protected void updateTemplateScript(long templateId, String script)
 		throws Exception {
 
@@ -685,7 +655,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String updateTemplateScriptDateAssignStatement(
-		String script, String dateFieldName) {
+		String dateFieldName, String script) {
 
 		StringBundler oldTemplateScript = new StringBundler(5);
 		StringBundler newTemplateScript = new StringBundler(5);
@@ -706,8 +676,39 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			script, oldTemplateScript.toString(), newTemplateScript.toString());
 	}
 
+	protected void updateTemplateScriptDateFields(
+			long structureId, DDMForm ddmForm)
+		throws Exception {
+
+		List<String> ddmDateFieldNames = getDDMDateFieldNames(ddmForm);
+
+		if (ListUtil.isEmpty(ddmDateFieldNames)) {
+			return;
+		}
+
+		Map<Long, String> ddmTemplateScriptMap = getDDMTemplateScriptMap(
+			structureId);
+
+		for (Long ddmTemplateId : ddmTemplateScriptMap.keySet()) {
+			String script = ddmTemplateScriptMap.get(ddmTemplateId);
+
+			for (String ddmDateFieldName : ddmDateFieldNames) {
+				script = updateTemplateScriptDateAssignStatement(
+					ddmDateFieldName, script);
+
+				script = updateTemplateScriptDateIfStatement(
+					ddmDateFieldName, script);
+
+				script = updateTemplateScriptDateParseStatement(
+					ddmDateFieldName, script);
+			}
+
+			updateTemplateScript(ddmTemplateId, script);
+		}
+	}
+
 	protected String updateTemplateScriptDateIfStatement(
-		String script, String dateFieldName) {
+		String dateFieldName, String script) {
 
 		String oldTemplateScript = "<#if (" + dateFieldName + "_Data > 0)>";
 
@@ -718,7 +719,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String updateTemplateScriptDateParseStatement(
-		String script, String dateFieldName) {
+		String dateFieldName, String script) {
 
 		StringBundler oldTemplateScript = new StringBundler(5);
 		StringBundler newTemplateScript = new StringBundler(5);
@@ -1028,7 +1029,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				ps2.addBatch();
 
-				updateTemplateDateFields(ddmForm, structureId);
+				updateTemplateScriptDateFields(structureId, ddmForm);
 
 				// Structure version
 

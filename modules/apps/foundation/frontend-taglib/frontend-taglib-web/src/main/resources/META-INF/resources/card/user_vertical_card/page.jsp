@@ -20,11 +20,11 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(portraitURL) %>">
-		<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= portraitURL %>')">
-			<aui:a href="<%= url %>">
+		<aui:a href="<%= url %>">
+			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= portraitURL %>')">
 				<img alt="" class="sr-only" src="<%= portraitURL %>" />
-			</aui:a>
-		</div>
+			</div>
+		</aui:a>
 	</c:when>
 	<c:otherwise>
 		<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= colorCssClass %>">

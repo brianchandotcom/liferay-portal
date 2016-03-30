@@ -27,7 +27,7 @@
 >
 
 	<%
-	PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user.getUserId());
+	PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user2.getUserId());
 	%>
 
 	<liferay-util:buffer var="name">
@@ -89,14 +89,18 @@
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
 				name="name"
+				truncate="<%= true %>"
 				value="<%= name %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
 				name="screen-name"
 				orderable="<%= true %>"
 				property="screenName"
+				truncate="<%= true %>"
 			/>
 		</c:otherwise>
 	</c:choose>

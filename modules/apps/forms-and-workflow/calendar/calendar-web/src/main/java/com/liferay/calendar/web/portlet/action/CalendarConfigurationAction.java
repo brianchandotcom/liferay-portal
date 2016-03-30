@@ -80,10 +80,27 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 		boolean showUserEvents = ParamUtil.getBoolean(
 			actionRequest, "showUserEvents");
 
+		boolean showAgendaView = ParamUtil.getBoolean(
+			actionRequest, "showAgendaView");
+		boolean showDayView = ParamUtil.getBoolean(
+			actionRequest, "showDayView");
+		boolean showWeekView = ParamUtil.getBoolean(
+			actionRequest, "showWeekView");
+		boolean showMonthView = ParamUtil.getBoolean(
+			actionRequest, "showMonthView");
+
 		portletPreferences.setValue(
 			"displaySchedulerOnly", String.valueOf(displaySchedulerOnly));
 		portletPreferences.setValue(
 			"showUserEvents", String.valueOf(showUserEvents));
+
+		portletPreferences.setValue(
+			"showAgendaView", String.valueOf(showAgendaView));
+		portletPreferences.setValue("showDayView", String.valueOf(showDayView));
+		portletPreferences.setValue(
+			"showWeekView", String.valueOf(showWeekView));
+		portletPreferences.setValue(
+			"showMonthView", String.valueOf(showMonthView));
 
 		portletPreferences.store();
 	}

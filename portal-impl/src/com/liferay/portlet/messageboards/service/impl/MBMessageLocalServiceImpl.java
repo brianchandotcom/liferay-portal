@@ -2045,6 +2045,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBSubscriptionSender subscriptionSender = new MBSubscriptionSender(
 			MBPermission.RESOURCE_NAME);
 
+		subscriptionSender.setAnonymous(message.isAnonymous());
 		subscriptionSender.setBulk(PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
 		subscriptionSender.setClassName(message.getModelClassName());
 		subscriptionSender.setClassPK(message.getMessageId());

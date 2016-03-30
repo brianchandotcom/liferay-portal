@@ -19,6 +19,8 @@ UserNotificationFeedEntry userNotificationFeedEntry = UserNotificationManagerUti
 
 JSONObject jsonObject = JSONFactoryUtil.createJSONObject(userNotificationEvent.getPayload());
 
+boolean anonymous = jsonObject.getBoolean("anonymous");
+
 long userNotificationEventUserId = jsonObject.getLong("userId");
 
 if (userNotificationEvent.isArchived()) {
@@ -26,10 +28,19 @@ if (userNotificationEvent.isArchived()) {
 }
 %>
 
-<liferay-ui:search-container-column-user
-	showDetails="<%= false %>"
-	userId="<%= userNotificationEventUserId %>"
-/>
+<c:choose>
+	<c:when test="<%= !anonymous %>">
+		<liferay-ui:search-container-column-user
+			showDetails="<%= false %>"
+			userId="<%= userNotificationEventUserId %>"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait userId="<%= 0 %>" />
+		</liferay-ui:search-container-column-text>
+	</c:otherwise>
+</c:choose>
 
 <c:choose>
 	<c:when test="<%= userNotificationFeedEntry == null %>">

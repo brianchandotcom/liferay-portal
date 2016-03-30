@@ -189,7 +189,7 @@ public class DDMImpl implements DDM {
 		DDMForm ddmForm = null;
 
 		if (ddmStructure != null) {
-			ddmForm = ddmStructure.getDDMForm();
+			ddmForm = ddmStructure.getFullHierarchyDDMForm();
 		}
 
 		return getDDMFormFieldsJSONArray(ddmForm, script);
@@ -737,34 +737,31 @@ public class DDMImpl implements DDM {
 	protected JSONArray getDDMFormFieldsJSONArray(
 		DDMForm ddmForm, String script) {
 
-		if (Validator.isNull(script)) {
-			return null;
-		}
-
-		JSONArray defaultDDMFormFieldsJSONArray = null;
+		JSONArray ddmFormFieldsJSONArray = null;
 
 		if (ddmForm != null) {
-			defaultDDMFormFieldsJSONArray = getDDMFormFieldsJSONArray(
+			ddmFormFieldsJSONArray = getDDMFormFieldsJSONArray(
 				ddmForm.getDDMFormFields(), ddmForm.getAvailableLocales(),
 				ddmForm.getDefaultLocale());
 		}
+		else if (Validator.isNotNull(script)) {
+			try {
+				DDMForm scriptDDMForm = _ddmFormJSONDeserializer.deserialize(
+					script);
 
-		try {
-			DDMForm scriptDDMForm = _ddmFormJSONDeserializer.deserialize(
-				script);
-
-			return getDDMFormFieldsJSONArray(
-				scriptDDMForm.getDDMFormFields(),
-				scriptDDMForm.getAvailableLocales(),
-				scriptDDMForm.getDefaultLocale());
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to deserialize script", pe);
+				ddmFormFieldsJSONArray = getDDMFormFieldsJSONArray(
+					scriptDDMForm.getDDMFormFields(),
+					scriptDDMForm.getAvailableLocales(),
+					scriptDDMForm.getDefaultLocale());
 			}
-
-			return defaultDDMFormFieldsJSONArray;
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to deserialize script", pe);
+				}
+			}
 		}
+
+		return ddmFormFieldsJSONArray;
 	}
 
 	protected JSONArray getDDMFormFieldsJSONArray(

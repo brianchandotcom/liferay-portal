@@ -50,8 +50,8 @@ public class FieldsToDDMFormValuesConverterImpl
 		throws PortalException {
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			ddmStructure.getDDMForm(), fields.getAvailableLocales(),
-			fields.getDefaultLocale());
+			ddmStructure.getFullHierarchyDDMForm(),
+			fields.getAvailableLocales(), fields.getDefaultLocale());
 
 		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 

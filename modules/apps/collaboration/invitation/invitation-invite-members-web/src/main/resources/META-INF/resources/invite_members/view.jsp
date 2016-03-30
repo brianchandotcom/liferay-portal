@@ -47,8 +47,8 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 							dialogIframe: {
 								bodyCssClass: 'dialog-with-footer'
 							},
-							uri: '<%= HtmlUtil.escapeJS(inviteURL) %>',
-							title: '<%= portletDisplay.getTitle() %>'
+							title: '<%= portletDisplay.getTitle() %>',
+							uri: '<%= HtmlUtil.escapeJS(inviteURL) %>'
 						}
 					);
 				}

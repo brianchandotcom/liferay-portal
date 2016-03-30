@@ -160,7 +160,7 @@ public class DefaultLicenseManagerImpl
 	public void registerLicense(JSONObject jsonObject) throws Exception {
 		String serverId = jsonObject.getString("serverId");
 
-		if (serverId.length() <= 2) {
+		if (Validator.isNotNull(serverId) && (serverId.length() <= 2)) {
 			return;
 		}
 

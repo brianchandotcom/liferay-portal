@@ -126,6 +126,12 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
 
+			<%@ include file="/error/error_auth_exception.jspf" %>
+
+			<%@ include file="/error/error_remote_export_exception.jspf" %>
+
+			<%@ include file="/error/error_remote_options_exception.jspf" %>
+
 			<div id="<portlet:namespace />publishOptions">
 				<div class="export-dialog-tree">
 					<aui:fieldset-group markupView="lexicon">

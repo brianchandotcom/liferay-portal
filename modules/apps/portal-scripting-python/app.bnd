@@ -1,7 +1,7 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title:
+Liferay-Releng-App-Description: The Liferay Python Scripting app lets you execute portal scripts written in Python. Once you install the app, you can run Python scripts that invoke Liferay’s API in bulk, perform repetitive user maintenance tasks, perform system level operations, and more.
+Liferay-Releng-App-Title: Liferay Python Scripting${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category:
+Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true

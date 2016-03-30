@@ -1,7 +1,7 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title:
+Liferay-Releng-App-Description: The IP Geocoder app locates your geological position, often in conjunction with other apps, such as the Google Maps app.<br /><br />This app utilizes Max Mind's GeoIP City Database. IP geolocation can be performed by associating a geographic location with the Internet Protocol (IP) address of the user with a physical address. Geolocation usually works by automatically looking up an IP address on a WHOIS service and retrieving the registrant's physical address.
+Liferay-Releng-App-Title: IP Geocoder${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category:
+Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true

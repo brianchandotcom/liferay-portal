@@ -1,7 +1,7 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title:
+Liferay-Releng-App-Description: The Liferay Google Docs App lets your users create Google Docs in their Liferay Documents and Media repositories. Once deployed, you can configure this app from the Control Panel.
+Liferay-Releng-App-Title: Liferay Google Docs${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category:
+Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true

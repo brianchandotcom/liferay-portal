@@ -31,6 +31,25 @@ import java.util.Locale;
 public interface DDLExporter {
 
 	/**
+	 * Exports the record set's records as a byte array.
+	 *
+	 * @param  recordSetId the record set ID
+	 * @return the byte values of the exported records
+	 * @throws Exception if an unexpected exception occurred
+	 */
+	public byte[] export(long recordSetId) throws Exception;
+
+	/**
+	 * Exports the record set's records of the workflow status as a byte array.
+	 *
+	 * @param  recordSetId the record set ID
+	 * @param  status the workflow status of the records to export
+	 * @return the byte values of the exported records
+	 * @throws Exception if an unexpected exception occurred
+	 */
+	public byte[] export(long recordSetId, int status) throws Exception;
+
+	/**
 	 * Exports a range of the record set's records as a byte array.
 	 *
 	 * @param  recordSetId the record set ID
@@ -38,13 +57,10 @@ public interface DDLExporter {
 	 * @param  start the lower bound of the range of records to export
 	 * @param  end the upper bound of the range of records to export (not
 	 *         inclusive)
-	 * @param  locale the locale used to retrieve the localized values of the
-	 *         record
 	 * @return the byte values of the exported records
 	 * @throws Exception if an unexpected exception occurred
 	 */
-	public byte[] export(
-			long recordSetId, int status, int start, int end, Locale locale)
+	public byte[] export(long recordSetId, int status, int start, int end)
 		throws Exception;
 
 	/**
@@ -57,39 +73,13 @@ public interface DDLExporter {
 	 *         inclusive)
 	 * @param  orderByComparator a comparator to order the records (optionally
 	 *         <code>null</code>)
-	 * @param  locale the locale used to retrieve the localized values of the
-	 *         record
 	 * @return the byte values of the exported records
 	 * @throws Exception if an unexpected exception occurred
 	 */
 	public byte[] export(
 			long recordSetId, int status, int start, int end,
-			OrderByComparator<DDLRecord> orderByComparator, Locale locale)
+			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception;
-
-	/**
-	 * Exports the record set's records of the workflow status as a byte array.
-	 *
-	 * @param  recordSetId the record set ID
-	 * @param  status the workflow status of the records to export
-	 * @param  locale the locale used to retrieve the localized values of the
-	 *         record
-	 * @return the byte values of the exported records
-	 * @throws Exception if an unexpected exception occurred
-	 */
-	public byte[] export(long recordSetId, int status, Locale locale)
-		throws Exception;
-
-	/**
-	 * Exports the record set's records as a byte array.
-	 *
-	 * @param  recordSetId the record set ID
-	 * @param  locale the locale used to retrieve the localized values of the
-	 *         record
-	 * @return the byte values of the exported records
-	 * @throws Exception if an unexpected exception occurred
-	 */
-	public byte[] export(long recordSetId, Locale locale) throws Exception;
 
 	/**
 	 * Returns the export format of the current DDL Exporter service instance.
@@ -97,5 +87,20 @@ public interface DDLExporter {
 	 * @return the format value of the current service instance
 	 */
 	public String getFormat();
+
+	/**
+	 * Returns the locale of the current DDL Exporter service instance.
+	 *
+	 * @return the locale of the current service instance
+	 */
+	public Locale getLocale();
+
+	/**
+	 * Returns the locale of the current DDL Exporter service instance.
+	 *
+	 * @param  locale the locale used to retrieve the localized values of the
+	 *         record
+	 */
+	public void setLocale(Locale locale);
 
 }

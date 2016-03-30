@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.portal.security.sso.facebook.connect", version: "2.0.0"
+	provided project(":apps:foundation:portal-security-sso:portal-security-sso-facebook-connect")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

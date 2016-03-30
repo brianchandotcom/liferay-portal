@@ -65,6 +65,15 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="searchCP">
+		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
+		<execute function="AssertElementPresent" locator1="NavBar#SEARCH_BUTTON" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
+
+		<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
+	</command>
+
 	<command name="searchNoPG">
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${searchTerm}" />
 

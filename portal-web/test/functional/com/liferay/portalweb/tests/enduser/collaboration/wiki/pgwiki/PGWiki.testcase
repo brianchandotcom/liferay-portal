@@ -730,6 +730,8 @@
 	</command>
 
 	<command name="AddWikiPageFormatMediaWiki" priority="5">
+		<property name="osgi.modules.includes" value="wiki-engine-mediawiki" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

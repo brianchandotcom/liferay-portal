@@ -651,7 +651,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="Test Bookmark" />
 		</execute>
 
@@ -713,7 +713,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="Test Bookmark" />
 		</execute>
 
@@ -727,7 +727,7 @@
 			<var name="portlet" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="Test Bookmark 2" />
 		</execute>
 

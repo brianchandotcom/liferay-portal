@@ -501,7 +501,9 @@
 	</command>
 
 	<command name="gotoSALocalizedCP">
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
 
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 

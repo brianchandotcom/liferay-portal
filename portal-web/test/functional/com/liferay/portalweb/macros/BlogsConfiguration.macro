@@ -1,6 +1,6 @@
 <definition>
 	<command name="checkSocialBookmarks">
-		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
+		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 	</command>
 
 	<command name="configureScopePG">
@@ -92,11 +92,11 @@
 	</command>
 
 	<command name="uncheckRSSSubscriptionCheckbox">
-		<execute function="Uncheck" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
 	</command>
 
 	<command name="uncheckSocialBookmarks">
-		<execute function="Uncheck" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 	</command>
 
 	<command name="viewAsSiteMemberPG">
@@ -115,7 +115,7 @@
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RATINGS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENTS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
-		<execute function="AssertChecked" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
+		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="menu" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="bottom" />
 		<execute function="AssertChecked" locator1="Checkbox#TWITTER" />
@@ -124,7 +124,7 @@
 	</command>
 
 	<command name="viewDefaultConfigurationRSS">
-		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
+		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_RSS_DISPLAY_STYLE_SELECT" value1="full-content" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_RSS_FORMAT_SELECT" value1="atom_1.0" />

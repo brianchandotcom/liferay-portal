@@ -391,7 +391,7 @@
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_DISPLAY_SETTINGS" value1="Display Settings" />
 
-		<execute function="Check" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
+		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 
 		<if>
 			<isset var="enableSocialBookmarkSites" />

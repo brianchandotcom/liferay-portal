@@ -96,11 +96,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
-	<td>//input[contains(@id,'enableSocialBookmarks')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_SETTINGS_CONTENT_ROOT_PREFIX_FIELD</td>
 	<td>//input[contains(@id,'RootPrefix')]</td>
 	<td></td>

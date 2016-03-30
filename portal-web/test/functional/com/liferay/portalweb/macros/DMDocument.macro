@@ -1585,7 +1585,7 @@
 				<execute function="AssertElementPresent" locator1="SODocuments#DOCUMENT_BREADCRUMBS" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Button#BACK" value1="Back" />
+				<execute function="AssertElementPresent" locator1="Icon#ANGLE_LEFT_BACK" />
 			</else>
 		</if>
 

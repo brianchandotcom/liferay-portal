@@ -510,7 +510,7 @@
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
-		<execute macro="SitesDirectory#configureCustomTitleViaLookandfeelPG">
+		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 

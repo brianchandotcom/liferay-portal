@@ -110,6 +110,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 			searchContainer="<%= searchContainer %>"
 			var="passwordPolicySearchContainer"
 		>
+
 			<%
 			PasswordPolicyDisplayTerms searchTerms = (PasswordPolicyDisplayTerms)passwordPolicySearchContainer.getSearchTerms();
 

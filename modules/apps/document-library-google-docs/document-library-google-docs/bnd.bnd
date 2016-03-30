@@ -17,7 +17,5 @@ Import-Package:\
 	\
 	!org.zeroturnaround.javarebel,\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library
 Web-ContextPath: /document-library-google-docs
 -liferay-includeresource: @org.freemarker-*.jar

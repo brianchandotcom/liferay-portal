@@ -9,7 +9,5 @@ Import-Package:\
 	\
 	!org.incava.util.diff.*,\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-mediawiki
 -liferay-includeresource: @org.jamwiki-*.jar

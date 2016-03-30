@@ -19,8 +19,6 @@ Import-Package:\
 	\
 	!org.jgroups.*,\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-jspwiki
 -includeresource:\
 	@../../../../../lib/portal/ecs.jar,\

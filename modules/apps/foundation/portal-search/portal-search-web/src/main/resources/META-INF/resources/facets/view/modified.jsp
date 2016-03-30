@@ -51,8 +51,8 @@ if (fieldParamSelection.equals("0")) {
 
 	<div class="panel-body">
 		<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-			<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
-			<aui:input name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
+			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+			<aui:input autocomplete="off" name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
 
 			<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>">
 				<ul class="list-unstyled modified">
@@ -220,7 +220,7 @@ if (fieldParamSelection.equals("0")) {
 
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
 		var A = AUI();
-		var Lang = A.Lang
+		var Lang = A.Lang;
 		var LString = Lang.String;
 
 		var form = AUI.$(document.<portlet:namespace />fm);

@@ -51,15 +51,19 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="content-column name-column title-column"
 			name="name"
 			orderable="<%= true %>"
 			property="name"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="content-column description-column"
 			name="description"
 			orderable="<%= true %>"
 			property="description"
+			truncate="<%= true %>"
 		/>
 	</c:otherwise>
 </c:choose>

@@ -201,7 +201,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					ps2.setString(1, uniqueFileName);
 
 					if (Validator.isNotNull(uniqueTitle)) {
-						ps2.setString(1, uniqueTitle);
+						ps2.setString(2, uniqueTitle);
 					}
 					else {
 						ps2.setString(2, title);

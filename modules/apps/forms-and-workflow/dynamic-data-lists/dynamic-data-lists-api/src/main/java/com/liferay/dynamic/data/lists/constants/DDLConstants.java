@@ -64,4 +64,10 @@ public class DDLConstants {
 	public static final String RESERVED_RECORD_SET_NAME =
 		"reserved_record_set_name";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public static final String SERVICE_NAME = "com.liferay.dynamic.data.lists";
+
 }

@@ -1,4 +1,2 @@
 Bundle-SymbolicName: _name_
 Bundle-Version: 1.0.0
--jsp: *.jsp,*.jspf
--plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin

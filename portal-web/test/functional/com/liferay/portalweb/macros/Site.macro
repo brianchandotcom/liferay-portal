@@ -400,58 +400,35 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
-		<var name="key_userGroupName" value="${userGroupName}" />
-
+	<command name="assignSiteRolesUserGroupsCP">
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="User Groups" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Assign Site Roles" />
+			<var name="rowEntry" value="${userGroupName}" />
+		</execute>
 
-		<execute function="Click" locator1="Button#SUBMIT" />
-
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
-
-		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Assign Site Roles" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Check" locator1="Checkbox#SITE_OWNER" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
-		<execute function="Click" locator1="Button#ADD" />
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
+			<var name="rowEntry" value="roleName" />
+		</execute>
+
+		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-	</command>
 
-	<command name="assignSiteRolesUserGroupsCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USER_GROUPS" value1="Add Site Roles to User Groups" />
-
-		<var name="key_roleName" value="${roleName}" />
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleName}" />
-		<execute function="Click" locator1="NavBar#BASIC_SEARCH_BUTTON" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-		<execute function="Click" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-
-		<var name="key_userGroupName" value="${userGroupName}" />
-
-		<execute function="Click" locator1="SiteMembershipsUserGroups#AVAILABLE" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_USER_NAME" value1="${userGroupName}" />
-		<execute function="Check" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_CHECKBOX" />
-		<execute function="Click" locator1="Button#UPDATE_ASSOCIATIONS" />
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="Click" locator1="SiteMembershipsUserGroups#CURRENT" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_USER_NAME" value1="${userGroupName}" />
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT_2" value1="${roleName}">
+			<var name="key_cardText" value="${userGroupName}" />
+		</execute>
 	</command>
 
 	<command name="assignUserSitesCP">

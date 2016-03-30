@@ -48,6 +48,11 @@
 	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text-small']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SPECIFIC_SMALL_TEXT_2</td>
+	<td>xpath=(//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text-small'])[2]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

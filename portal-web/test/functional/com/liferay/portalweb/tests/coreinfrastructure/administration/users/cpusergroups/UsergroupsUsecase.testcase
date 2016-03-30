@@ -278,8 +278,8 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignSiteRolesSiteOwnerUserGroupsCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="Site#assignSiteRolesUserGroupsCP">
+			<var name="roleName" value="Site Owner" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 

@@ -525,10 +525,11 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignSiteRolesUserGroupsCP">
-			<var name="roleName" value="Roles Siterole Name" />
-			<var name="userGroupName" value="UG UserGroup Name" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
 		</execute>
+
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

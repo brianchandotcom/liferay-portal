@@ -46,21 +46,23 @@ renderResponse.setTitle(userName);
 				<liferay-ui:message arguments="<%= userName %>" key="requested-by-x" />
 			</h4>
 
-			<div class="list-group-item-field">
-				<liferay-ui:user-portrait
-					cssClass="user-icon-lg"
-					userId="<%= membershipRequest.getUserId() %>"
-				/>
-			</div>
+			<div class="nameplate">
+				<div class="nameplate-field">
+					<liferay-ui:user-portrait
+						cssClass="user-icon-xl"
+						userId="<%= membershipRequest.getUserId() %>"
+					/>
+				</div>
 
-			<div class="list-group-item-content">
-				<small class="text-default">
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-				</small>
+				<div class="nameplate-content">
+					<small class="text-default">
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</small>
 
-				<p>
-					<%= membershipRequest.getComments() %>
-				</p>
+					<p>
+						<%= membershipRequest.getComments() %>
+					</p>
+				</div>
 			</div>
 
 			<%
@@ -87,23 +89,25 @@ renderResponse.setTitle(userName);
 				<liferay-ui:message arguments="<%= replier %>" key="replied-by-x" />
 			</h4>
 
-			<c:if test="<%= membershipRequestReplierUser != null %>">
-				<div class="list-group-item-field">
-					<liferay-ui:user-portrait
-						cssClass="user-icon-lg"
-						userId="<%= membershipRequestReplierUser.getUserId() %>"
-					/>
+			<div class="nameplate">
+				<c:if test="<%= membershipRequestReplierUser != null %>">
+					<div class="nameplate-field">
+						<liferay-ui:user-portrait
+							cssClass="user-icon-xl"
+							userId="<%= membershipRequestReplierUser.getUserId() %>"
+						/>
+					</div>
+				</c:if>
+
+				<div class="nameplate-content">
+					<small class="text-default">
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getReplyDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</small>
+
+					<p>
+						<%= membershipRequest.getReplyComments() %>
+					</p>
 				</div>
-			</c:if>
-
-			<div class="list-group-item-content">
-				<small class="text-default">
-					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - membershipRequest.getReplyDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-				</small>
-
-				<p>
-					<%= membershipRequest.getReplyComments() %>
-				</p>
 			</div>
 
 			<h4 class="text-default">

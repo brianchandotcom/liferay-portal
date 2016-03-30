@@ -451,9 +451,11 @@ public class JavaClass {
 			(javaTermName.charAt(0) == CharPool.UNDERLINE)) {
 
 			if (javaTerm.isPrivate()) {
-				_classContent = _classContent.replaceAll(
-					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
-					StringPool.UNDERLINE.concat(javaTermName));
+				if (!javaTermContent.contains("@Reference")) {
+					_classContent = _classContent.replaceAll(
+						"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
+						StringPool.UNDERLINE.concat(javaTermName));
+				}
 			}
 			else {
 				_javaSourceProcessor.processErrorMessage(

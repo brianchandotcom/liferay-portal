@@ -977,8 +977,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					String projectPath = project.getPath();
 
-					if ((gitRepoDir == null) &&
-						!projectPath.startsWith(":core:")) {
+					if (!projectPath.startsWith(":apps:") &&
+						!projectPath.startsWith(":core:") &&
+						!projectPath.startsWith(":ee:")) {
 
 						return true;
 					}

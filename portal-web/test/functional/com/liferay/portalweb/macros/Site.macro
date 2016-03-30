@@ -306,9 +306,11 @@
 
 		<execute function="Click" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
 
 		<execute function="Click" locator1="SiteMembershipsViewMembershipRequests#REPLY" />
@@ -318,12 +320,13 @@
 		<execute macro="Button#clickSave" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
 
-		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Approved" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#REPLIER_NAME" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS" value1="You may join the Restricted Site." />
 	</command>
 
 	<command name="assertMemberListNotVisibleCP">
@@ -350,6 +353,10 @@
 
 		<execute function="AssertClick" locator1="SiteSettingsDefaultUserAssociations#TEAMS_SELECT" value1="Select" />
 		<execute function="SelectFrame" locator1="SiteSettingsDefaultUserAssociations#TEAMS_SELECT_IFRAME" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
 		<var name="key_rowEntry" value="${teamName}" />
 

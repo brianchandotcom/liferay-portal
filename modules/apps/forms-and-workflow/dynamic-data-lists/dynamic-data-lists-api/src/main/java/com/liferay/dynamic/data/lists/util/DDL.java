@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Represents a utility class used by DDL applications.
  *
@@ -145,6 +149,22 @@ public interface DDL {
 		throws Exception;
 
 	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public boolean isEditable(
+			HttpServletRequest request, String portletId, long groupId)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public boolean isEditable(
+			PortletPreferences preferences, String portletId, long groupId)
+		throws Exception;
+
+	/**
 	 * Updates the record according to the form parameters passed in the
 	 * request. The request parameters are wrapped in the service context
 	 * parameter. If a record matching the record ID doesn't exist, a new record
@@ -164,6 +184,30 @@ public interface DDL {
 	public DDLRecord updateRecord(
 			long recordId, long recordSetId, boolean mergeFields,
 			boolean checkPermission, ServiceContext serviceContext)
+		throws Exception;
+
+	/**
+	 * Updates the record according to the form parameters passed in the
+	 * request. The request parameters are wrapped in the service context
+	 * parameter. If a record matching the record ID doesn't exist, a new record
+	 * is added. Otherwise, the existing record is updated. This operation
+	 * always check user credentials.
+	 *
+	 * @param  recordId the record ID to update
+	 * @param  recordSetId the record set ID of the record
+	 * @param  mergeFields whether to perform the merge operation for the
+	 *         existing record. If <code>true</code>, all missing localized
+	 *         record values are updated for the existing record.
+	 * @param  serviceContext the service context to be applied
+	 * @return the record
+	 * @throws Exception if an unexpected exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #updateRecord(long,long,boolean,boolean,ServiceContext)}
+	 */
+	@Deprecated
+	public DDLRecord updateRecord(
+			long recordId, long recordSetId, boolean mergeFields,
+			ServiceContext serviceContext)
 		throws Exception;
 
 }

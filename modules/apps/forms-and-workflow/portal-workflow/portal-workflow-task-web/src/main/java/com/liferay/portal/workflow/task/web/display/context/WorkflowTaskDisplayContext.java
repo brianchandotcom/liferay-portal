@@ -485,6 +485,8 @@ public class WorkflowTaskDisplayContext {
 
 		editPortletURL.setParameter(
 			"refererPlid", String.valueOf(themeDisplay.getPlid()));
+		editPortletURL.setParameter(
+			"workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
 
 		editPortletURL.setPortletMode(PortletMode.VIEW);
 		editPortletURL.setWindowState(LiferayWindowState.POP_UP);

@@ -117,13 +117,20 @@
 	<target name="get-app-change-log">
 		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
 			<filterchain>
-				<sortfilter />
-
 				<tokenfilter>
-					<replaceregex flags="g" pattern="([^ ]|^) +([^ ]|$)" replace="\1 \2" />
+				<filetokenizer />
+					<replacestring from=" " to="${line.separator}" />
 				</tokenfilter>
 
+				<sortfilter />
+
 				<uniqfilter />
+
+				<tokenfilter>
+					<filetokenizer />
+					<replacestring from="${line.separator}" to=" " />
+					<replaceregex pattern="^ | $" replace="" />
+				</tokenfilter>
 			</filterchain>
 		</loadfile>
 

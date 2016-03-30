@@ -14,6 +14,10 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +33,41 @@ public class WebXMLDefinition {
 		_listenerDefinitions.add(listenerDefinition);
 	}
 
+	@Override
+	public Object clone() {
+		WebXMLDefinition clonedDefinition = new WebXMLDefinition();
+
+		clonedDefinition.setAbsoluteOrderNames(_absoluteOrderNames);
+		clonedDefinition.setContextParameters(_contextParameters);
+		clonedDefinition.setFilterDefinitions(_filterDefinitions);
+		clonedDefinition.setFragmentName(_fragmentName);
+		clonedDefinition.setJspTaglibMappings(_jspTaglibMappings);
+		clonedDefinition.setListenerDefinitions(_listenerDefinitions);
+		clonedDefinition.setMetadataComplete(_metadataComplete);
+		clonedDefinition.setOrdering(_ordering);
+		clonedDefinition.setServletDefinitions(_servletDefinitions);
+
+		return clonedDefinition;
+	}
+
+	public List<String> getAbsoluteOrderNames() {
+		return _absoluteOrderNames;
+	}
+
 	public Map<String, String> getContextParameters() {
 		return _contextParameters;
 	}
 
+	public Exception getException() {
+		return _exception;
+	}
+
 	public Map<String, FilterDefinition> getFilterDefinitions() {
 		return _filterDefinitions;
+	}
+
+	public String getFragmentName() {
+		return _fragmentName;
 	}
 
 	public Map<String, String> getJspTaglibMappings() {
@@ -45,8 +78,20 @@ public class WebXMLDefinition {
 		return _listenerDefinitions;
 	}
 
+	public Order getOrdering() {
+		return _ordering;
+	}
+
 	public Map<String, ServletDefinition> getServletDefinitions() {
 		return _servletDefinitions;
+	}
+
+	public boolean isMetadataComplete() {
+		return _metadataComplete;
+	}
+
+	public void setAbsoluteOrderNames(List<String> absoluteOrderNames) {
+		_absoluteOrderNames = absoluteOrderNames;
 	}
 
 	public void setContextParameter(String name, String value) {
@@ -55,6 +100,10 @@ public class WebXMLDefinition {
 
 	public void setContextParameters(Map<String, String> contextParameters) {
 		_contextParameters = contextParameters;
+	}
+
+	public void setException(Exception exception) {
+		_exception = exception;
 	}
 
 	public void setFilterDefinition(
@@ -67,6 +116,10 @@ public class WebXMLDefinition {
 		Map<String, FilterDefinition> filterDefinitions) {
 
 		_filterDefinitions = filterDefinitions;
+	}
+
+	public void setFragmentName(String fragmentName) {
+		_fragmentName = fragmentName;
 	}
 
 	public void setJspTaglibMappings(Map<String, String> jspTaglibMappings) {
@@ -83,6 +136,14 @@ public class WebXMLDefinition {
 		_listenerDefinitions = listenerDefinitions;
 	}
 
+	public void setMetadataComplete(boolean metadataComplete) {
+		_metadataComplete = metadataComplete;
+	}
+
+	public void setOrdering(Order ordering) {
+		_ordering = ordering;
+	}
+
 	public void setServletDefinition(
 		String name, ServletDefinition servletDefinition) {
 
@@ -95,10 +156,15 @@ public class WebXMLDefinition {
 		_servletDefinitions = servletDefinitions;
 	}
 
+	private List<String> _absoluteOrderNames = new ArrayList<>();
 	private Map<String, String> _contextParameters = new HashMap<>();
+	private Exception _exception;
 	private Map<String, FilterDefinition> _filterDefinitions = new HashMap<>();
+	private String _fragmentName = StringPool.BLANK;
 	private final Map<String, String> _jspTaglibMappings = new HashMap<>();
 	private List<ListenerDefinition> _listenerDefinitions = new ArrayList<>();
+	private boolean _metadataComplete;
+	private Order _ordering = new OrderImpl();
 	private Map<String, ServletDefinition> _servletDefinitions =
 		new HashMap<>();
 

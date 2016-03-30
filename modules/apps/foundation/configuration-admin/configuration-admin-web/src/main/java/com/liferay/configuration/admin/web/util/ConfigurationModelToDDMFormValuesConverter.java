@@ -23,7 +23,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -77,7 +79,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		Configuration configuration = _configurationModel.getConfiguration();
 
-		if (configuration != null) {
+		if (hasConfigurationAttribute(configuration, attributeDefinition)) {
 			values = AttributeDefinitionUtil.getProperty(
 				attributeDefinition, configuration);
 		}
@@ -124,6 +126,21 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		DDMFormField ddmFormField = _ddmFormFieldsMap.get(ddmFormFieldName);
 
 		return ddmFormField.getType();
+	}
+
+	protected boolean hasConfigurationAttribute(
+		Configuration configuration, AttributeDefinition attributeDefinition) {
+
+		if (configuration == null) {
+			return false;
+		}
+
+		Dictionary<String, Object> configurationProperties =
+			configuration.getProperties();
+
+		String attributeId = attributeDefinition.getID();
+
+		return Validator.isNotNull(configurationProperties.get(attributeId));
 	}
 
 	protected void setDDMFormFieldValueLocalizedValue(

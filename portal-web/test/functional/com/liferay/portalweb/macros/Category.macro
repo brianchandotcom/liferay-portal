@@ -147,7 +147,7 @@
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories. You can add a category by clicking the plus button on the bottom right corner." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
 

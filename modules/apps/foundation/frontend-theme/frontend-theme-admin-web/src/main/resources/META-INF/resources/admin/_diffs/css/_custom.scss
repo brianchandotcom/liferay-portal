@@ -29,7 +29,9 @@ body {
 
 	.sidenav-container {
 		.sidenav-content {
-			margin-right: -15px;
+			@include sm {
+				margin-right: -15px;
+			}
 		}
 
 		&.closed .sidenav-content {

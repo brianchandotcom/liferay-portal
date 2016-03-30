@@ -68,7 +68,9 @@ public class PortalSocketPermission {
 
 	}
 
-	private static void checkConnect(String domain, int port, String protocol) {
+	protected static void checkConnect(
+		String domain, int port, String protocol) {
+
 		if (Validator.isNull(domain) ||
 			(!protocol.startsWith(Http.HTTPS) &&
 			 !protocol.startsWith(Http.HTTP))) {

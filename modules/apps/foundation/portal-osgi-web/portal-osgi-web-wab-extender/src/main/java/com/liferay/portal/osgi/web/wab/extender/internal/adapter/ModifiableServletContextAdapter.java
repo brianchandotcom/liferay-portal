@@ -445,7 +445,7 @@ public class ModifiableServletContextAdapter
 				Servlet servlet = null;
 
 				if (Validator.isNotNull(jspFile)) {
-					servlet = new WabBundleProcessor.JspServletWrapper(jspFile);
+					servlet = new JspServletWrapper(jspFile);
 				}
 				else {
 					Class<?> clazz = _bundle.loadClass(servletClassName);

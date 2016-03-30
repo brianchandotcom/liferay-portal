@@ -22,7 +22,9 @@ import java.util.Locale;
  * @author Marcellus Tavares
  * @author Bruno Basto
  * @author Leonardo Barros
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class JournalConverterManagerUtil {
 
 	public static String getDDMXSD(String journalXSD, Locale defaultLocale)

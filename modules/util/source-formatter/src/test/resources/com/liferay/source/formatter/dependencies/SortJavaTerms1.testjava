@@ -106,7 +106,7 @@ public class SortJavaTerms1 {
 
 	}
 
-	private static void method6() {
+	private static void _method6() {
 	}
 
 	private final String _var10 = "hello";

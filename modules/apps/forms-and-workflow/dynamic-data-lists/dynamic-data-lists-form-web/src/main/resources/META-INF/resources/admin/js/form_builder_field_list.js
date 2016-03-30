@@ -13,6 +13,8 @@ AUI.add(
 
 		var CSS_FIELD_LIST_ADD_CONTAINER = A.getClassName('form', 'builder', 'field', 'list', 'add', 'container');
 
+		var CSS_FIELD_MOVE_TARGET = A.getClassName('form', 'builder', 'field', 'move', 'target');
+
 		var FormBuilderFieldList = A.Component.create(
 			{
 				EXTENDS: A.FormBuilderFieldList,
@@ -27,7 +29,19 @@ AUI.add(
 								'</span>' +
 								'<label class="' + CSS_FIELD_LIST_ADD_BUTTON_LABEL + '"> {addField} </label>' +
 							'</button>' +
-						'</div>'
+						'</div>',
+
+						_uiSetField: function(container, field, index) {
+							var instance = this;
+
+							FormBuilderFieldList.superclass._uiSetField.apply(instance, arguments);
+
+							if (index && index < this.get('fields').length) {
+								field.get('content').previous('.' + CSS_FIELD_MOVE_TARGET).addClass('between-fields');
+								field.get('content').previous('.' + CSS_FIELD_LIST_ADD_CONTAINER).addClass('between-fields');
+							}
+
+						}
 				}
 			}
 		);

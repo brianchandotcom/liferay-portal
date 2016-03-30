@@ -30,6 +30,12 @@ RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, Por
 
 RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)ruleGroupSearch.getSearchTerms();
 
+boolean isShowAddButton = MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP);
+
+if (!searchTerms.isSearch() && isShowAddButton) {
+	ruleGroupSearch.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
+}
+
 ruleGroupSearch.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
 
 LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
@@ -208,7 +214,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+<c:if test="<%= isShowAddButton %>">
 	<portlet:renderURL var="viewRulesURL">
 		<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

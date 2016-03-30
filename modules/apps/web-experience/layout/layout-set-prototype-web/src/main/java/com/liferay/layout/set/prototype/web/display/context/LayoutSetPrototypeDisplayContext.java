@@ -118,11 +118,16 @@ public class LayoutSetPrototypeDisplayContext {
 
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-site-templates.-you-can-add-a-site-template-by-" +
-				"clicking-the-plus-button-on-the-bottom-right-corner");
+			"there-are-no-site-templates");
 
-		searchContainer.setEmptyResultsMessageCssClass(
-			"taglib-empty-result-message-header-has-plus-btn");
+		if (isShowAddButton()) {
+			searchContainer.setEmptyResultsMessage(
+				"there-are-no-site-templates.-you-can-add-a-site-template-by-" +
+					"clicking-the-plus-button-on-the-bottom-right-corner");
+			searchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+
 		searchContainer.setId("layoutSetPrototype");
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -184,7 +189,7 @@ public class LayoutSetPrototypeDisplayContext {
 		return false;
 	}
 
-	public boolean showAddButton() {
+	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

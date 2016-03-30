@@ -126,7 +126,7 @@ public class AssetBrowserDisplayContext {
 			addPortletURL.toString(), "refererPlid", themeDisplay.getPlid());
 	}
 
-	public AssetBrowserSearch getAssetBrowserSearch() {
+	public AssetBrowserSearch getAssetBrowserSearch() throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -134,8 +134,10 @@ public class AssetBrowserDisplayContext {
 			_renderRequest, getPortletURL());
 
 		if (Validator.isNull(getKeywords())) {
-			assetBrowserSearch.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
+			if (Validator.isNotNull(getAddButtonURL())) {
+				assetBrowserSearch.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
 		}
 		else {
 			assetBrowserSearch.setSearch(true);

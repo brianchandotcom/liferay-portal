@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
@@ -160,13 +162,16 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		SearchContainer categoriesSearchContainer = new SearchContainer(
-			_renderRequest, getIteratorURL(), null,
-			"there-are-no-categories.-you-can-add-a-category-by-clicking-the" +
-				"-plus-button-on-the-bottom-right-corner");
+			_renderRequest, getIteratorURL(), null, "there-are-no-categories");
 
 		if (Validator.isNull(getKeywords())) {
-			categoriesSearchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
+			if (isShowCategoriesAddButton()) {
+				categoriesSearchContainer.setEmptyResultsMessageCssClass(
+					"there-are-no-categories.-you-can-add-a-category-by-" +
+						"clicking-the-plus-button-on-the-bottom-right-corner");
+				categoriesSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
 		}
 		else {
 			categoriesSearchContainer.setSearch(true);
@@ -363,14 +368,18 @@ public class AssetCategoriesDisplayContext {
 
 		SearchContainer vocabulariesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking" +
-				"-the-plus-button-on-the-bottom-right-corner");
+			"there-are-no-vocabularies");
 
 		String keywords = getKeywords();
 
 		if (Validator.isNull(keywords)) {
-			vocabulariesSearchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
+			if (isShowVocabulariesAddButton()) {
+				vocabulariesSearchContainer.setEmptyResultsMessage(
+					"there-are-no-vocabularies.-you-can-add-a-vocabulary-by" +
+						"-clicking-the-plus-button-on-the-bottom-right-corner");
+				vocabulariesSearchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
 		}
 		else {
 			vocabulariesSearchContainer.setSearch(true);
@@ -508,6 +517,20 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
+	public boolean isShowCategoriesAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (AssetPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowCategoriesSearch() throws PortalException {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -517,6 +540,20 @@ public class AssetCategoriesDisplayContext {
 			getCategoriesSearchContainer();
 
 		if (categoriesSearchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowVocabulariesAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (AssetPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY)) {
+
 			return true;
 		}
 

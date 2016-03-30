@@ -13,7 +13,6 @@
 
 	<#assign selectedAssetTitle = getterUtil.getString(fieldJournalJSONObject.get("assettitle"))>
 
-
 </#if>
 
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data required=required>
@@ -44,7 +43,7 @@
 			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
-				value=languageUtil.get(locale, "select-web-content")
+				value="select-web-content"
 			/>
 
 			<@liferay_aui.button

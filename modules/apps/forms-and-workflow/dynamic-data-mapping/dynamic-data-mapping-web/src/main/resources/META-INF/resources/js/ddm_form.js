@@ -1130,173 +1130,154 @@ AUI.add(
 		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
 
 		var JournalArticleField = A.Component.create(
-				{
-					ATTRS: {
+			{
+				EXTENDS: Field,
+
+				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.delegate('click', instance._handleButtonsClick, '.btn', instance);
 					},
 
-					EXTENDS: Field,
+					syncUI: function() {
+						var instance = this;
 
-					prototype: {
-						initializer: function() {
-							var instance = this;
+						var parsedValue = instance.getParsedValue(instance.getValue());
 
-							var container = instance.get('container');
+						var titleNode = A.one('#' + instance.getInputName() + 'Title');
 
-							container.delegate('click', instance._handleButtonsClick, '.btn', instance);
-						},
+						titleNode.val(parsedValue.assettitle || '');
 
-						syncUI: function() {
-							var instance = this;
+						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 
-							var parsedValue = instance.getParsedValue(instance.getValue());
+						clearButtonNode.toggle(!!parsedValue.assetclasspk);
+					},
 
-							var titleNode = A.one('#' + instance.getInputName() + 'Title');
-
-							titleNode.val(parsedValue.assettitle || '');
-
-							var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
-
-							clearButtonNode.toggle(!!parsedValue.assetclasspk);
-						},
-
-						getParsedValue: function(value) {
-							var instance = this;
-
-							if (Lang.isString(value)) {
-								if (value !== '') {
-									value = JSON.parse(value);
-								}
-								else {
-									value = {};
-								}
-							}
-
-							return value;
-						},
-
-						getWebContentSelectorURL: function() {
-							var instance = this;
-
-							var url = Liferay.PortletURL.createRenderURL()
-
-							url.setPortletId("com_liferay_asset_browser_web_portlet_AssetBrowserPortlet");
-
-							url.setWindowState('pop_up');
-
-							url.setParameter('groupId', themeDisplay.getScopeGroupId());
-
-							url.setParameter('selectedGroupIds', themeDisplay.getScopeGroupId());
-
-							url.setParameter('typeSelection','com.liferay.journal.model.JournalArticle');
-
-							url.setParameter('showNonindexable','true');
-
-							url.setParameter('showScheduled','true');
-
-							url.setParameter('eventName','selectContent');
-
-							return url;
-
-						},
-
-						setValue: function(value) {
-							var instance = this;
-
-							var parsedValue = instance.getParsedValue(value);
-
-							if (!parsedValue.assetclasspk && !parsedValue.assetentryid) {
-								value = '';
+					getParsedValue: function(value) {
+						if (Lang.isString(value)) {
+							if (value !== '') {
+								value = JSON.parse(value);
 							}
 							else {
-								value = JSON.stringify(parsedValue);
+								value = {};
 							}
-
-							JournalArticleField.superclass.setValue.call(instance, value);
-
-							instance.syncUI();
-						},
-
-						showNotice: function(message) {
-							var instance = this;
-
-							if (!instance.notice) {
-								instance.notice = new Liferay.Notice(
-									{
-										toggleText: false,
-										type: 'warning'
-									}
-								).hide();
-							}
-
-							instance.notice.html(message);
-							instance.notice.show();
-						},
-
-						syncReadOnlyUI: function() {
-							var instance = this;
-
-							var container = instance.get('container');
-
-							var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
-
-							selectButtonNode.attr('disabled', instance.get('readOnly'));
-						},
-
-						_handleButtonsClick: function(event) {
-							var instance = this;
-
-							if (!instance.get('readOnly')) {
-								var currentTarget = event.currentTarget;
-
-								if (currentTarget.test('.select-button')) {
-									instance._handleSelectButtonClick(event);
-								}
-								else if (currentTarget.test('.clear-button')) {
-									instance._handleClearButtonClick(event);
-								}
-							}
-						},
-
-						_handleClearButtonClick: function(event) {
-							var instance = this;
-
-							instance.setValue('');
-
-						},
-
-						_handleSelectButtonClick: function(event) {
-							var instance = this;
-
-							var portletNamespace = instance.get('portletNamespace');
-
-
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										constrain: true,
-										destroyOnHide: true,
-										modal: true
-									},
-									eventName: 'selectContent',
-									id: 'selectContent',
-									title:  Liferay.Language.get('select-web-content'),
-									uri: instance.getWebContentSelectorURL()
-								},
-								function(event) {
-
-									if (event.details.length > 0) {
-										var webContentSelected = event.details[0];
-										instance.setValue(webContentSelected);
-									}
-
-								});
 						}
+
+						return value;
+					},
+
+					getWebContentSelectorURL: function() {
+						var url = Liferay.PortletURL.createRenderURL();
+
+						url.setParameter('eventName', 'selectContent');
+						url.setParameter('groupId', themeDisplay.getScopeGroupId());
+						url.setParameter('selectedGroupIds', themeDisplay.getScopeGroupId());
+						url.setParameter('showNonindexable', true);
+						url.setParameter('showScheduled', true);
+						url.setParameter('typeSelection', 'com.liferay.journal.model.JournalArticle');
+						url.setPortletId('com_liferay_asset_browser_web_portlet_AssetBrowserPortlet');
+						url.setWindowState('pop_up');
+
+						return url;
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(value);
+
+						if (!parsedValue.assetclasspk && !parsedValue.assetentryid) {
+							value = '';
+						}
+						else {
+							value = JSON.stringify(parsedValue);
+						}
+
+						JournalArticleField.superclass.setValue.call(instance, value);
+
+						instance.syncUI();
+					},
+
+					showNotice: function(message) {
+						var instance = this;
+
+						if (!instance.notice) {
+							instance.notice = new Liferay.Notice(
+								{
+									toggleText: false,
+									type: 'warning'
+								}
+							).hide();
+						}
+
+						instance.notice.html(message);
+						instance.notice.show();
+					},
+
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
+
+						selectButtonNode.attr('disabled', instance.get('readOnly'));
+					},
+
+					_handleButtonsClick: function(event) {
+						var instance = this;
+
+						if (!instance.get('readOnly')) {
+							var currentTarget = event.currentTarget;
+
+							if (currentTarget.test('.select-button')) {
+								instance._handleSelectButtonClick(event);
+							}
+							else if (currentTarget.test('.clear-button')) {
+								instance._handleClearButtonClick(event);
+							}
+						}
+					},
+
+					_handleClearButtonClick: function(event) {
+						var instance = this;
+
+						instance.setValue('');
+
+					},
+
+					_handleSelectButtonClick: function(event) {
+						var instance = this;
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: 'selectContent',
+								id: 'selectContent',
+								title: Liferay.Language.get('select-web-content'),
+								uri: instance.getWebContentSelectorURL()
+							},
+							function(event) {
+								if (event.details.length > 0) {
+									var webContentSelected = event.details[0];
+
+									instance.setValue(webContentSelected);
+								}
+							}
+						);
 					}
 				}
-			);
+			}
+		);
 
-			FieldTypes['ddm-journal-article'] = JournalArticleField;
-
+		FieldTypes['ddm-journal-article'] = JournalArticleField;
 
 		var LinkToPageField = A.Component.create(
 			{

@@ -330,6 +330,34 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			liferayPortletRequest, "showLayoutTabs", true);
 	}
 
+	public boolean isShowPrivateLayoutOptions() throws PortalException {
+		if (!isPrivateLayout()) {
+			return false;
+		}
+
+		if (isShowAddRootLayoutButton()) {
+			return true;
+		}
+
+		if (isShowAddBothRootLayoutButtons()) {
+			return true;
+		}
+
+		if (isShowEditLayoutSetButton()) {
+			return true;
+		}
+
+		if (isShowExpandLayoutSetButton(false)) {
+			return true;
+		}
+
+		if (isShowAddBothRootLayoutButtons()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowPrivateLayoutsTree() {
 		Group selGroup = getSelGroup();
 
@@ -338,6 +366,34 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isShowPublicLayoutOptions() throws PortalException {
+		if (isPrivateLayout()) {
+			return false;
+		}
+
+		if (isShowAddRootLayoutButton()) {
+			return true;
+		}
+
+		if (isShowAddBothRootLayoutButtons()) {
+			return true;
+		}
+
+		if (isShowEditLayoutSetButton()) {
+			return true;
+		}
+
+		if (isShowExpandLayoutSetButton(false)) {
+			return true;
+		}
+
+		if (isShowAddBothRootLayoutButtons()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowPublicLayoutsTree() {

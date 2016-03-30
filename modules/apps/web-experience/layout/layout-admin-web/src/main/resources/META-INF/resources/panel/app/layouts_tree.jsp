@@ -32,13 +32,13 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 				<div class="layout-set-tab selected-layout-set">
 					<aui:a cssClass="layout-set-link" href="<%= null %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
-					<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
-						<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pagesOptions" data-toggle="dropdown" href="javascript:;">
-							<aui:icon image="ellipsis-v" markupView="lexicon" />
-						</a>
+					<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
+						<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
+							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="pagesOptions" data-toggle="dropdown" href="javascript:;">
+								<aui:icon image="ellipsis-v" markupView="lexicon" />
+							</a>
 
-						<ul class="dropdown-menu dropdown-menu-left-side">
-							<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
+							<ul class="dropdown-menu dropdown-menu-left-side">
 
 								<%
 								PortletURL addLayoutURL = layoutsTreeDisplayContext.getAddLayoutURL(LayoutConstants.DEFAULT_PLID, false);
@@ -55,9 +55,9 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								<li>
 									<a data-navigation="true" data-qa-id="addPrivatePage" href="<%= addLayoutURL.toString() %>"><liferay-ui:message key="add-private-page" /></a>
 								</li>
-							</c:if>
-						</ul>
-					</div>
+							</ul>
+						</div>
+					</c:if>
 				</div>
 			</c:if>
 
@@ -70,7 +70,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 					<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
-					<c:if test="<%= !layoutsTreeDisplayContext.isPrivateLayout() %>">
+					<c:if test="<%= layoutsTreeDisplayContext.isShowPublicLayoutOptions() %>">
 						<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
 							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="publicPagesOptions" data-toggle="dropdown" href="javascript:;">
 								<aui:icon image="ellipsis-v" markupView="lexicon" />
@@ -143,7 +143,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 					<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(true) %>" />
 
-					<c:if test="<%= layoutsTreeDisplayContext.isPrivateLayout() %>">
+					<c:if test="<%= layoutsTreeDisplayContext.isShowPrivateLayoutOptions() %>">
 						<div class="dropdown dropdown-menu-no-arrow layout-tree-options">
 							<a aria-expanded="false" class="dropdown-toggle icon-monospaced" data-qa-id="privatePagesOptions" data-toggle="dropdown" href="javascript:;">
 								<aui:icon image="ellipsis-v" markupView="lexicon" />

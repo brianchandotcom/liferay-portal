@@ -40,7 +40,7 @@ public interface IndexWriterHelperConfiguration {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexStatusManagerConfiguration#indexReadOnly()}
+	 *             IndexStatusManagerConfiguration#indexReadOnly}
 	 */
 	@Deprecated
 	public boolean indexReadOnly();

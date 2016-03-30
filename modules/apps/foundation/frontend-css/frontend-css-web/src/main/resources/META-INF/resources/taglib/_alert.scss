@@ -16,5 +16,10 @@
 	.lfr-alert-wrapper {
 		margin-bottom: 5px;
 		overflow: hidden;
+
+		&.container-fluid-1280 {
+			max-width: 1250px;
+			padding: 0;
+		}
 	}
 }

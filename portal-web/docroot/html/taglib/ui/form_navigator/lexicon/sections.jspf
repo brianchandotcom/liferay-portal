@@ -117,7 +117,7 @@
 				Liferay.once(
 					'<portlet:namespace />formReady',
 					function(event) {
-						$(sectionContent).one(
+						sectionContent.one(
 							'shown.bs.collapse',
 							function() {
 								Liferay.Util.focusFormField(focusField);

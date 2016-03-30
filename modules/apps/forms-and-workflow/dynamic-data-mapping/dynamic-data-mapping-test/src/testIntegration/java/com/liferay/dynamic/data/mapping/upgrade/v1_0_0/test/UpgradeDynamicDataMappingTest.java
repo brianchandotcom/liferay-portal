@@ -842,7 +842,7 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	@Test
-	public void testUpgradeTemplateDateFields() throws Exception {
+	public void testUpgradeTemplateScriptDateFields() throws Exception {
 		addStructure(
 			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			DDMStructureConstants.VERSION_DEFAULT,

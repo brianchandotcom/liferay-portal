@@ -2,6 +2,14 @@
 	width: 350px;
 
 	.custom-devices {
+		background-color: #3A4D5A;
+		margin: 25px;
+		padding: 5px;
+
+		label {
+			font-size: 12px;
+		}
+
 		.form-control {
 			padding: 8px 6px;
 		}
@@ -18,8 +26,12 @@
 	.lfr-device-item {
 		cursor: pointer;
 
-		&.selected .icon {
-			background-color: #3A4D5A;
+		&.selected {
+			color: #FFF;
+
+			.icon {
+				background-color: #3A4D5A;
+			}
 		}
 	}
 
@@ -27,12 +39,6 @@
 		.simulation-app-panel-body {
 			padding-top: 20px;
 		}
-	}
-
-	.preview-info-message {
-		background-color: #1B2228;
-		margin: 20px;
-		padding: 5px 20px;
 	}
 }
 

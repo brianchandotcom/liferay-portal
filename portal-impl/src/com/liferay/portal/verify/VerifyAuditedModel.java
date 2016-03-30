@@ -282,7 +282,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 				ResultSet rs = ps1.executeQuery();
 				PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						createPreparedStatement(
+						_createPreparedStatement(
 							con, verifiableAuditedModel.getTableName(),
 							verifiableAuditedModel.
 								getPrimaryKeyColumnName(),
@@ -328,7 +328,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	private PreparedStatement createPreparedStatement(
+	private PreparedStatement _createPreparedStatement(
 			Connection con, String tableName, String primaryKeyColumnName,
 			boolean updateDates)
 		throws SQLException {

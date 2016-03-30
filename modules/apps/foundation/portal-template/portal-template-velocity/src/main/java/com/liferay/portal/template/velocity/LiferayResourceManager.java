@@ -103,7 +103,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			}
 		}
 
-		return doGetResource(resourceName, resourceType, encoding);
+		return _doGetResource(resourceName, resourceType, encoding);
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private Resource doGetResource(
+	private Resource _doGetResource(
 			final String resourceName, final int resourceType,
 			final String encoding)
 		throws Exception, ParseErrorException, ResourceNotFoundException {
@@ -235,7 +235,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 		@Override
 		public Resource run() throws Exception {
-			return doGetResource(_resourceName, _resourceType, _encoding);
+			return _doGetResource(_resourceName, _resourceType, _encoding);
 		}
 
 		private final String _encoding;

@@ -154,7 +154,7 @@ public class UserInfoFactory {
 					}
 				}
 				else {
-					customUserAttributes = newInstance(
+					customUserAttributes = _newInstance(
 						customUserAttributesClassName);
 				}
 
@@ -177,7 +177,7 @@ public class UserInfoFactory {
 		return userInfo;
 	}
 
-	private static CustomUserAttributes newInstance(String className) {
+	private static CustomUserAttributes _newInstance(String className) {
 		try {
 			return (CustomUserAttributes)InstanceFactory.newInstance(className);
 		}

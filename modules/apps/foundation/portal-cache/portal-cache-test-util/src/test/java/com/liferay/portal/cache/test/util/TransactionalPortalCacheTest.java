@@ -146,7 +146,7 @@ public class TransactionalPortalCacheTest {
 
 	@Test
 	public void testNoneTransactionalCache1() {
-		setEnableTransactionalCache(false);
+		_setEnableTransactionalCache(false);
 
 		Assert.assertFalse(TransactionalPortalCacheHelper.isEnabled());
 
@@ -155,21 +155,21 @@ public class TransactionalPortalCacheTest {
 
 	@Test
 	public void testNoneTransactionalCache2() {
-		setEnableTransactionalCache(true);
+		_setEnableTransactionalCache(true);
 
 		doTestNoneTransactionalCache();
 	}
 
 	@Test
 	public void testTransactionalCacheWithoutTTL() {
-		setEnableTransactionalCache(true);
+		_setEnableTransactionalCache(true);
 
 		doTestTransactionalCache(false);
 	}
 
 	@Test
 	public void testTransactionalCacheWithParameterValidation() {
-		setEnableTransactionalCache(true);
+		_setEnableTransactionalCache(true);
 
 		TransactionalPortalCacheHelper.begin();
 
@@ -252,7 +252,7 @@ public class TransactionalPortalCacheTest {
 
 	@Test
 	public void testTransactionLifecycleListenerDisabled() {
-		setEnableTransactionalCache(false);
+		_setEnableTransactionalCache(false);
 
 		TransactionLifecycleListener transactionLifecycleListener =
 			TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER;
@@ -275,7 +275,7 @@ public class TransactionalPortalCacheTest {
 
 	@Test
 	public void testTransactionLifecycleListenerEnabledWithExistTransaction() {
-		setEnableTransactionalCache(true);
+		_setEnableTransactionalCache(true);
 
 		Assert.assertEquals(0, getTransactionStackSize());
 
@@ -892,7 +892,7 @@ public class TransactionalPortalCacheTest {
 	protected void doTestTransactionLifecycleListenerEnabledWithBarrier(
 		Propagation propagation) {
 
-		setEnableTransactionalCache(true);
+		_setEnableTransactionalCache(true);
 
 		Assert.assertEquals(0, getTransactionStackSize());
 
@@ -997,7 +997,7 @@ public class TransactionalPortalCacheTest {
 	protected void doTestTransactionLifecycleListenerEnabledWithoutBarrier(
 		Propagation propagation) {
 
-		setEnableTransactionalCache(true);
+		_setEnableTransactionalCache(true);
 
 		Assert.assertEquals(0, getTransactionStackSize());
 
@@ -1088,7 +1088,7 @@ public class TransactionalPortalCacheTest {
 		return portalCacheMaps.size();
 	}
 
-	private void setEnableTransactionalCache(boolean enabled) {
+	private void _setEnableTransactionalCache(boolean enabled) {
 		TestProps testProps = new TestProps();
 
 		testProps.setProperty(

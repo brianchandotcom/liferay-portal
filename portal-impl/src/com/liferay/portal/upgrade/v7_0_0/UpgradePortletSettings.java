@@ -81,7 +81,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 			while (rs.next()) {
 				PortletPreferencesRow portletPreferencesRow =
-					getPortletPreferencesRow(rs);
+					_getPortletPreferencesRow(rs);
 
 				portletPreferencesRow.setPortletPreferencesId(increment());
 				portletPreferencesRow.setOwnerType(
@@ -161,7 +161,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 			while (rs.next()) {
 				PortletPreferencesRow portletPreferencesRow =
-					getPortletPreferencesRow(rs);
+					_getPortletPreferencesRow(rs);
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.fromDefaultXML(
@@ -279,7 +279,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		}
 	}
 
-	private PortletPreferencesRow getPortletPreferencesRow(ResultSet rs)
+	private PortletPreferencesRow _getPortletPreferencesRow(ResultSet rs)
 		throws Exception {
 
 		return new PortletPreferencesRow(

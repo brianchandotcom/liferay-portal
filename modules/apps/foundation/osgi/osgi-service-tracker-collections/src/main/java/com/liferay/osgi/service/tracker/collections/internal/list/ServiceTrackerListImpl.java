@@ -119,7 +119,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 
 		@Override
 		public T addingService(ServiceReference<S> serviceReference) {
-			return update(
+			return _update(
 				serviceReference, getService(serviceReference), false);
 		}
 
@@ -132,7 +132,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 					serviceReference, service);
 			}
 
-			update(serviceReference, service, false);
+			_update(serviceReference, service, false);
 		}
 
 		@Override
@@ -144,7 +144,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 					serviceReference, service);
 			}
 
-			update(serviceReference, service, true);
+			_update(serviceReference, service, true);
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -153,7 +153,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 			return _serviceTrackerCustomizer.addingService(serviceReference);
 		}
 
-		private T update(
+		private T _update(
 			ServiceReference<S> serviceReference, T service, boolean remove) {
 
 			if (service == null) {

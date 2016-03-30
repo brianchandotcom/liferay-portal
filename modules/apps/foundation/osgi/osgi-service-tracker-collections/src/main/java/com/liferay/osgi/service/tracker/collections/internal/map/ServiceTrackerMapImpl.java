@@ -112,7 +112,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		return services;
 	}
 
-	private void removeKeys(
+	private void _removeKeys(
 		KeyedServiceReferenceServiceTuple<SR, TS, K>
 			keyedServiceReferenceServiceTuple) {
 
@@ -151,7 +151,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		emittedKeys.clear();
 	}
 
-	private void storeKey(
+	private void _storeKey(
 		K key,
 		KeyedServiceReferenceServiceTuple<SR, TS, K>
 			keyedServiceReferenceServiceTuple) {
@@ -213,7 +213,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 						_serviceReference, service);
 			}
 
-			storeKey(key, _keyedServiceReferenceServiceTuple);
+			_storeKey(key, _keyedServiceReferenceServiceTuple);
 
 			if (_serviceTrackerMapListener != null) {
 				try {
@@ -272,7 +272,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			final KeyedServiceReferenceServiceTuple<SR, TS, K>
 				keyedServiceReferenceServiceTuple) {
 
-			removeKeys(keyedServiceReferenceServiceTuple);
+			_removeKeys(keyedServiceReferenceServiceTuple);
 
 			_serviceTrackerCustomizer.modifiedService(
 				serviceReference,
@@ -284,7 +284,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 					@Override
 					public void emit(K key) {
-						storeKey(key, keyedServiceReferenceServiceTuple);
+						_storeKey(key, keyedServiceReferenceServiceTuple);
 					}
 
 				});
@@ -296,7 +296,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			final KeyedServiceReferenceServiceTuple<SR, TS, K>
 				keyedServiceReferenceServiceTuple) {
 
-			removeKeys(keyedServiceReferenceServiceTuple);
+			_removeKeys(keyedServiceReferenceServiceTuple);
 
 			_serviceTrackerCustomizer.removedService(
 				serviceReference,

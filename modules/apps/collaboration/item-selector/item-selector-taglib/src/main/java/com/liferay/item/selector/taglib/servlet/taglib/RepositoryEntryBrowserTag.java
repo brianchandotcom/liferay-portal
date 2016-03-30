@@ -165,7 +165,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"emptyResultsMessage",
-			getEmptyResultsMessage(request));
+			_getEmptyResultsMessage(request));
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"existingFileEntryReturnType",
@@ -203,7 +203,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 			_uploadURL);
 	}
 
-	private String getEmptyResultsMessage(HttpServletRequest request) {
+	private String _getEmptyResultsMessage(HttpServletRequest request) {
 		if (Validator.isNotNull(_emptyResultsMessage)) {
 			return _emptyResultsMessage;
 		}

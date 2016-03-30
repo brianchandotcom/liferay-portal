@@ -64,7 +64,7 @@ public class FinalizeManagerTest {
 
 				@Override
 				public void doFinalize(Reference<?> reference) {
-					Assert.assertNotNull(getReferent(reference));
+					Assert.assertNotNull(_getReferent(reference));
 
 					throw runtimeException;
 				}
@@ -72,7 +72,7 @@ public class FinalizeManagerTest {
 			},
 			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 
-		Assert.assertNotNull(getReferent(reference));
+		Assert.assertNotNull(_getReferent(reference));
 
 		reference.enqueue();
 
@@ -86,7 +86,7 @@ public class FinalizeManagerTest {
 			Assert.assertSame(runtimeException, e);
 		}
 
-		Assert.assertNull(getReferent(reference));
+		Assert.assertNull(_getReferent(reference));
 	}
 
 	@NewEnv(type = NewEnv.Type.NONE)
@@ -268,7 +268,7 @@ public class FinalizeManagerTest {
 		}
 
 		if (threadEnabled) {
-			waitUntilMarked(markFinalizeAction);
+			_waitUntilMarked(markFinalizeAction);
 		}
 		else {
 			ReflectionTestUtil.invoke(
@@ -284,14 +284,14 @@ public class FinalizeManagerTest {
 			Assert.assertNull(markFinalizeAction.getId());
 		}
 
-		Assert.assertNull(getReferent(reference));
+		Assert.assertNull(_getReferent(reference));
 
 		if (threadEnabled) {
-			checkThreadState();
+			_checkThreadState();
 		}
 	}
 
-	private void checkThreadState() {
+	private void _checkThreadState() {
 		Thread finalizeThread = null;
 
 		for (Thread thread : ThreadUtil.getThreads()) {
@@ -329,11 +329,11 @@ public class FinalizeManagerTest {
 		}
 	}
 
-	private <T> T getReferent(Reference<T> reference) {
+	private <T> T _getReferent(Reference<T> reference) {
 		return ReflectionTestUtil.getFieldValue(reference, "referent");
 	}
 
-	private void waitUntilMarked(MarkFinalizeAction markFinalizeAction)
+	private void _waitUntilMarked(MarkFinalizeAction markFinalizeAction)
 		throws InterruptedException {
 
 		long startTime = System.currentTimeMillis();
@@ -378,7 +378,7 @@ public class FinalizeManagerTest {
 
 		@Override
 		public void doFinalize(Reference<?> reference) {
-			Object referent = getReferent(reference);
+			Object referent = _getReferent(reference);
 
 			if (referent instanceof FinalizeRecorder) {
 				FinalizeRecorder finalizeRecorder = (FinalizeRecorder)referent;

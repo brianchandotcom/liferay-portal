@@ -71,7 +71,7 @@ public class EditRolePortletConfigurationIcon
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(portletRequest));
 			portletURL.setParameter(
-				"roleId", String.valueOf(getRoleId(portletRequest)));
+				"roleId", String.valueOf(_getRoleId(portletRequest)));
 
 			return portletURL.toString();
 		}
@@ -94,7 +94,7 @@ public class EditRolePortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			return RolePermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), getRoleId(portletRequest),
+				themeDisplay.getPermissionChecker(), _getRoleId(portletRequest),
 				ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
@@ -103,7 +103,7 @@ public class EditRolePortletConfigurationIcon
 		return false;
 	}
 
-	private long getRoleId(PortletRequest portletRequest) {
+	private long _getRoleId(PortletRequest portletRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 

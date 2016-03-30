@@ -55,7 +55,7 @@ public class WikiSocialActivityHelper {
 
 		long fileEntryId = extraDataJSONObject.getLong("fileEntryId");
 
-		FileEntry fileEntry = fetchFileEntry(fileEntryId);
+		FileEntry fileEntry = _fetchFileEntry(fileEntryId);
 
 		if (((type == SocialActivityConstants.TYPE_ADD_ATTACHMENT) ||
 			 (type == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) ||
@@ -247,7 +247,7 @@ public class WikiSocialActivityHelper {
 	}
 
 	protected String getDownloadURL(long fileEntryId) throws PortalException {
-		FileEntry fileEntry = fetchFileEntry(fileEntryId);
+		FileEntry fileEntry = _fetchFileEntry(fileEntryId);
 
 		if (fileEntry != null) {
 			return PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(
@@ -313,7 +313,7 @@ public class WikiSocialActivityHelper {
 		return portletURL.toString();
 	}
 
-	private FileEntry fetchFileEntry(long fileEntryId) throws PortalException {
+	private FileEntry _fetchFileEntry(long fileEntryId) throws PortalException {
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 		}

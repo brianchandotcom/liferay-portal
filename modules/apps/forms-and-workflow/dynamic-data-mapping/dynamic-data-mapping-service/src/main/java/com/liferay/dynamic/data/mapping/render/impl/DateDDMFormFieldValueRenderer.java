@@ -56,13 +56,13 @@ public class DateDDMFormFieldValueRenderer
 					return StringPool.BLANK;
 				}
 
-				return format(valueString, locale);
+				return _format(valueString, locale);
 			}
 
 		};
 	}
 
-	private String format(Serializable value, Locale locale) {
+	private String _format(Serializable value, Locale locale) {
 		try {
 			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
 		}

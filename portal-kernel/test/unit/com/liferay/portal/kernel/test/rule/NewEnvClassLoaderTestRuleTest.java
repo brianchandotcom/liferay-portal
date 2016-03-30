@@ -48,14 +48,14 @@ public class NewEnvClassLoaderTestRuleTest {
 	public void tearDown() {
 		Assert.assertEquals(2, _counter.getAndIncrement());
 
-		assertClassLoader();
+		_assertClassLoader();
 	}
 
 	@Test
 	public void testClassInitialization1() {
 		Assert.assertEquals(1, _counter.getAndIncrement());
 
-		assertClassLoader();
+		_assertClassLoader();
 
 		String value1 = "value1";
 
@@ -68,7 +68,7 @@ public class NewEnvClassLoaderTestRuleTest {
 	public void testClassInitialization2() {
 		Assert.assertEquals(1, _counter.getAndIncrement());
 
-		assertClassLoader();
+		_assertClassLoader();
 
 		String value2 = "value2";
 
@@ -80,7 +80,7 @@ public class NewEnvClassLoaderTestRuleTest {
 	@Rule
 	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
-	private void assertClassLoader() {
+	private void _assertClassLoader() {
 		Assert.assertNotNull(_classLoader);
 
 		Class<?> clazz = getClass();

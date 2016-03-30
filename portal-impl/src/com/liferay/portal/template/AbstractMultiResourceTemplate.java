@@ -81,7 +81,7 @@ public abstract class AbstractMultiResourceTemplate extends AbstractTemplate {
 			}
 		}
 
-		_write(writer);
+		write(writer);
 	}
 
 	protected abstract void processTemplates(

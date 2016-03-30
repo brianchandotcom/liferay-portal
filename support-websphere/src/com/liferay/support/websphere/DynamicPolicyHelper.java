@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class DynamicPolicyHelper {
 
-	protected void _start() {
+	protected void start() {
 		_originalDynamicPolicy = DynamicPolicyFactory.getInstance();
 
 		final DynamicPolicy originalDynamicPolicy = _originalDynamicPolicy;
@@ -90,7 +90,7 @@ public class DynamicPolicyHelper {
 		new DynamicPolicyHelper();
 
 	static {
-		_instance._start();
+		_instance.start();
 	}
 
 	private DynamicPolicy _originalDynamicPolicy;

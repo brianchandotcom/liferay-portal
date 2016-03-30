@@ -170,14 +170,9 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 	<portlet:param name="mvcRenderCommandName" value="processesList" />
 </portlet:renderURL>
 
-<portlet:actionURL name="editPublishConfiguration" var="updatePublishConfigurationURL">
-	<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-	<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
-	<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
-</portlet:actionURL>
-
 <aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+	<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
 	<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
 	<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="redirect" type="hidden" value="<%= basePortletURL %>" />

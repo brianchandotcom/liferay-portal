@@ -149,7 +149,7 @@ AUI.add(
 								checkBox.on(
 									STR_CLICK,
 									function() {
-										if (checkBox.is(":checked")) {
+										if (checkBox.is(':checked')) {
 											var id = checkBox.prop('id');
 
 											var controlCheckboxes = $('[data-root-control-id=' + id + ']');
@@ -182,7 +182,7 @@ AUI.add(
 								checkBox.on(
 									STR_CLICK,
 									function() {
-										if (checkBox.is(":checked")) {
+										if (checkBox.is(':checked')) {
 											var id = checkBox.prop('id');
 
 											var controlCheckboxes = $('[data-root-control-id=' + id + ']');

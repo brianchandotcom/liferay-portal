@@ -20,6 +20,8 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Document;
 
+import java.util.Locale;
+
 /**
  * @author Marcellus Tavares
  * @author Bruno Basto
@@ -36,6 +38,14 @@ public interface JournalConverter {
 		throws PortalException;
 
 	public DDMFormValues getDDMFormValues(
-		DDMStructure ddmStructure, Fields fields)throws PortalException;
+			DDMStructure ddmStructure, Fields fields)
+		throws PortalException;
+
+	public String getDDMXSD(String journalXSD) throws Exception;
+
+	public String getDDMXSD(String journalXSD, Locale defaultLocale)
+		throws Exception;
+
+	public String getJournalXSD(String ddmXSD) throws Exception;
 
 }

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security SSO OpenID
 Bundle-SymbolicName: com.liferay.portal.security.sso.openid
-Bundle-Version: 2.0.1
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.openid,\
 	com.liferay.portal.security.sso.openid.configuration,\

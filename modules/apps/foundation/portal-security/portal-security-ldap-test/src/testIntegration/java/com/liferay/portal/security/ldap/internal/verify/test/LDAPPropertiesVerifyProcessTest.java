@@ -281,14 +281,14 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 				getConfigurationProperties(
 					company, 0L, LDAPServerConfiguration.class);
 
-			validateLDAPServerProperties(
+			_validateLDAPServerProperties(
 				company.getCompanyId(), 0L, ldapServerProperties0);
 
 			Dictionary<String, Object> ldapServerProperties1 =
 				getConfigurationProperties(
 					company, 1L, LDAPServerConfiguration.class);
 
-			validateLDAPServerProperties(
+			_validateLDAPServerProperties(
 				company.getCompanyId(), 1L, ldapServerProperties1);
 
 			Dictionary<String, Object> systemLdapProperties =
@@ -405,7 +405,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		}
 	}
 
-	private void validateLDAPServerProperties(
+	private void _validateLDAPServerProperties(
 		long companyId, long ldapServerId,
 		Dictionary<String, Object> properties) {
 

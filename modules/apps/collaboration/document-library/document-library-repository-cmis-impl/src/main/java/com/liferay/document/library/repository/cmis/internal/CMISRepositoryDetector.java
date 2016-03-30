@@ -34,7 +34,7 @@ public class CMISRepositoryDetector {
 	 * @param repositoryInfo the repository description
 	 */
 	public CMISRepositoryDetector(RepositoryInfo repositoryInfo) {
-		detectVendor(repositoryInfo);
+		_detectVendor(repositoryInfo);
 	}
 
 	public boolean isNuxeo() {
@@ -91,7 +91,7 @@ public class CMISRepositoryDetector {
 	 *
 	 * @param repositoryInfo the repository description
 	 */
-	private void detectVendor(RepositoryInfo repositoryInfo) {
+	private void _detectVendor(RepositoryInfo repositoryInfo) {
 		String productName = repositoryInfo.getProductName();
 
 		if (productName.contains(_NUXEO_ID)) {

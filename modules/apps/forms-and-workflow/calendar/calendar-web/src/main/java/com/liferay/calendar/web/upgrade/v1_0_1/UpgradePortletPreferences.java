@@ -56,13 +56,13 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		replaceClassNameId(portletPreferences, "anyAssetType");
-		replaceClassNameId(portletPreferences, "classNameIds");
+		_replaceClassNameId(portletPreferences, "anyAssetType");
+		_replaceClassNameId(portletPreferences, "classNameIds");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	private void replaceClassNameId(
+	private void _replaceClassNameId(
 			PortletPreferences portletPreferences, String name)
 		throws Exception {
 

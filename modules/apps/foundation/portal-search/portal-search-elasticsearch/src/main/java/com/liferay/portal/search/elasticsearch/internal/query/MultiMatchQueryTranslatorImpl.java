@@ -134,7 +134,7 @@ public class MultiMatchQueryTranslatorImpl
 		return multiMatchQueryBuilder;
 	}
 
-	private MultiMatchQueryBuilder.Type translate(
+	protected MultiMatchQueryBuilder.Type translate(
 		MultiMatchQuery.Type multiMatchQueryType) {
 
 		if (multiMatchQueryType == MultiMatchQuery.Type.BEST_FIELDS) {

@@ -56,7 +56,7 @@ public class PanelAppContentHelper {
 	}
 
 	public void writeContent(Writer writer) throws Exception {
-		ThemeDisplay themeDisplay = getThemeDisplay();
+		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		String layoutTemplateId = "max";
 
@@ -91,7 +91,7 @@ public class PanelAppContentHelper {
 
 	protected long getCompanyId() {
 		if (_companyId == null) {
-			ThemeDisplay themeDisplay = getThemeDisplay();
+			ThemeDisplay themeDisplay = _getThemeDisplay();
 
 			_companyId = themeDisplay.getCompanyId();
 		}
@@ -137,7 +137,7 @@ public class PanelAppContentHelper {
 		return _portletId;
 	}
 
-	private ThemeDisplay getThemeDisplay() {
+	private ThemeDisplay _getThemeDisplay() {
 		return (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 

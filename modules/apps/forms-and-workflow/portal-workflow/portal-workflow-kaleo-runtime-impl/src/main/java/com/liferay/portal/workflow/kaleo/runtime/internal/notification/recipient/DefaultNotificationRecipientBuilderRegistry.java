@@ -63,7 +63,7 @@ public class DefaultNotificationRecipientBuilderRegistry
 		NotificationRecipientBuilder notificationRecipientBuilder,
 		Map<String, Object> properties) {
 
-		RecipientType recipientType = getRecipientType(
+		RecipientType recipientType = _getRecipientType(
 			notificationRecipientBuilder, properties);
 
 		_notificationRecipientBuilders.put(
@@ -74,13 +74,13 @@ public class DefaultNotificationRecipientBuilderRegistry
 		NotificationRecipientBuilder notificationRecipientBuilder,
 		Map<String, Object> properties) {
 
-		RecipientType recipientType = getRecipientType(
+		RecipientType recipientType = _getRecipientType(
 			notificationRecipientBuilder, properties);
 
 		_notificationRecipientBuilders.remove(recipientType);
 	}
 
-	private RecipientType getRecipientType(
+	private RecipientType _getRecipientType(
 		NotificationRecipientBuilder notificationRecipientBuilder,
 		Map<String, Object> properties) {
 

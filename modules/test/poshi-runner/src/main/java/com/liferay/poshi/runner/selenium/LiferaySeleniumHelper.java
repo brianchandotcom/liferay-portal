@@ -1894,7 +1894,7 @@ public class LiferaySeleniumHelper {
 		return bufferedReader;
 	}
 
-	private static List<ScreenRegion> getScreenRegions(
+	private static List<ScreenRegion> _getScreenRegions(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 

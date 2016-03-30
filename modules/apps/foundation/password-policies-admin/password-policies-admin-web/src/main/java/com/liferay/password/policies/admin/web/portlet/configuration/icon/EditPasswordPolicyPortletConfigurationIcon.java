@@ -73,7 +73,7 @@ public class EditPasswordPolicyPortletConfigurationIcon
 				"redirect", PortalUtil.getCurrentURL(portletRequest));
 			portletURL.setParameter(
 				"passwordPolicyId",
-				String.valueOf(getPasswordPolicyId(portletRequest)));
+				String.valueOf(_getPasswordPolicyId(portletRequest)));
 
 			return portletURL.toString();
 		}
@@ -97,7 +97,7 @@ public class EditPasswordPolicyPortletConfigurationIcon
 
 			if (PasswordPolicyPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),
-					getPasswordPolicyId(portletRequest), ActionKeys.UPDATE)) {
+					_getPasswordPolicyId(portletRequest), ActionKeys.UPDATE)) {
 
 				return true;
 			}
@@ -108,7 +108,7 @@ public class EditPasswordPolicyPortletConfigurationIcon
 		return false;
 	}
 
-	private long getPasswordPolicyId(PortletRequest portletRequest) {
+	private long _getPasswordPolicyId(PortletRequest portletRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 

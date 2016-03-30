@@ -130,7 +130,7 @@ public class CharPipe {
 
 				char result = buffer[readIndex];
 
-				increaseReadIndex(1);
+				_increaseReadIndex(1);
 
 				return result;
 			}
@@ -188,7 +188,7 @@ public class CharPipe {
 						buffer, 0, chars, offset + tailLength, headLength);
 				}
 
-				increaseReadIndex(read);
+				_increaseReadIndex(read);
 
 				return read;
 			}
@@ -300,7 +300,7 @@ public class CharPipe {
 			}
 		}
 
-		private void increaseReadIndex(int consumed) {
+		private void _increaseReadIndex(int consumed) {
 			readIndex += consumed;
 
 			if (readIndex >= buffer.length) {
@@ -436,7 +436,7 @@ public class CharPipe {
 							headLength);
 					}
 
-					increaseWriteIndex(write);
+					_increaseWriteIndex(write);
 
 					remaining -= write;
 				}
@@ -459,7 +459,7 @@ public class CharPipe {
 
 				buffer[writeIndex] = (char)c;
 
-				increaseWriteIndex(1);
+				_increaseWriteIndex(1);
 			}
 			finally {
 				bufferLock.unlock();
@@ -522,7 +522,7 @@ public class CharPipe {
 							sourceBegin + tailLength + headLength, buffer, 0);
 					}
 
-					increaseWriteIndex(write);
+					_increaseWriteIndex(write);
 
 					remaining -= write;
 				}
@@ -542,7 +542,7 @@ public class CharPipe {
 			}
 		}
 
-		private void increaseWriteIndex(int produced) {
+		private void _increaseWriteIndex(int produced) {
 			writeIndex += produced;
 
 			if (writeIndex >= buffer.length) {

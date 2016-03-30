@@ -31,7 +31,7 @@ public class UpgradeNamespace extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		renameTable(
-			getOldTableName(), MemberRequestTable.TABLE_NAME,
+			_getOldTableName(), MemberRequestTable.TABLE_NAME,
 			MemberRequestTable.TABLE_COLUMNS,
 			MemberRequestTable.TABLE_SQL_CREATE,
 			MemberRequestTable.TABLE_SQL_DROP);
@@ -74,7 +74,7 @@ public class UpgradeNamespace extends UpgradeProcess {
 		}
 	}
 
-	private String getOldTableName() {
+	private String _getOldTableName() {
 		if (MemberRequestTable.TABLE_NAME.startsWith(_NEW_NAMESPACE)) {
 			return StringUtil.replaceFirst(
 				MemberRequestTable.TABLE_NAME, _NEW_NAMESPACE, _OLD_NAMESPACE);

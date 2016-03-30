@@ -132,7 +132,8 @@ public class JavaClass {
 					checkJavaFieldTypesExcludes, _absolutePath)) {
 
 				checkJavaFieldType(
-					javaTerm, annotationsExclusions, immutableFieldTypes);
+					javaTerms, javaTerm, annotationsExclusions,
+					immutableFieldTypes);
 			}
 
 			if (!originalContent.equals(_classContent)) {
@@ -422,15 +423,23 @@ public class JavaClass {
 	}
 
 	protected void checkJavaFieldType(
-			JavaTerm javaTerm, Set<String> annotationsExclusions,
-			Set<String> immutableFieldTypes)
+			Set<JavaTerm> javaTerms, JavaTerm javaTerm,
+			Set<String> annotationsExclusions, Set<String> immutableFieldTypes)
 		throws Exception {
 
-		if (!_javaSourceProcessor.portalSource || !javaTerm.isVariable()) {
+		if (!_javaSourceProcessor.portalSource ||
+			(!javaTerm.isVariable() && !javaTerm.isMethod())) {
+
 			return;
 		}
 
 		String javaTermName = javaTerm.getName();
+
+		if (javaTerm.isMethod() &&
+			_underscoreNotAllowedMethodNames.contains(javaTermName)) {
+
+			return;
+		}
 
 		Pattern pattern = Pattern.compile(
 			"\t(private |protected |public )" +
@@ -449,16 +458,32 @@ public class JavaClass {
 			(javaTermName.charAt(0) == CharPool.UNDERLINE)) {
 
 			if (javaTerm.isPrivate()) {
-				_classContent = _classContent.replaceAll(
-					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
-					StringPool.UNDERLINE.concat(javaTermName));
+				if (!javaTermContent.contains("@Reference")) {
+					if (getJavaTermCount(javaTerms, javaTermName) > 1) {
+						_javaSourceProcessor.processErrorMessage(
+							_fileName,
+							"Private method or variable should start with " +
+								"underscore: " + _fileName + " " +
+									javaTerm.getLineCount());
+					}
+					else {
+						_classContent = _classContent.replaceAll(
+							"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
+							StringPool.UNDERLINE.concat(javaTermName));
+					}
+				}
 			}
 			else {
 				_javaSourceProcessor.processErrorMessage(
 					_fileName,
-					"Only private var should start with underscore: " +
-						_fileName + " " + javaTerm.getLineCount());
+					"Only private method or variable should start with " +
+						"underscore: " + _fileName + " " +
+							javaTerm.getLineCount());
 			}
+		}
+
+		if (!javaTerm.isVariable()) {
+			return;
 		}
 
 		String modifierDefinition = StringUtil.trim(
@@ -982,6 +1007,22 @@ public class JavaClass {
 		return javaTerm;
 	}
 
+	protected int getJavaTermCount(
+		Set<JavaTerm> javaTerms, String javaTermName) {
+
+		int count = 0;
+
+		for (JavaTerm javaTerm : javaTerms) {
+			String curJavaTermName = javaTerm.getName();
+
+			if (curJavaTermName.equals(javaTermName)) {
+				count += 1;
+			}
+		}
+
+		return count;
+	}
+
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
 		if (_javaTerms != null) {
 			return _javaTerms;
@@ -1441,6 +1482,9 @@ public class JavaClass {
 		_ACCESS_MODIFIER_PRIVATE, _ACCESS_MODIFIER_PROTECTED,
 		_ACCESS_MODIFIER_PUBLIC
 	};
+
+	private static final List<String> _underscoreNotAllowedMethodNames =
+		ListUtil.fromArray(new String[] {"readObject", "writeObject"});
 
 	private final String _absolutePath;
 	private final Pattern _camelCasePattern = Pattern.compile(

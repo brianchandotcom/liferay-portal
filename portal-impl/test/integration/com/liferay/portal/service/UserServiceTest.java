@@ -900,12 +900,12 @@ public class UserServiceTest {
 
 			GroupLocalServiceUtil.addUserGroups(user.getUserId(), groups);
 
-			user = updateUser(user);
+			user = _updateUser(user);
 
 			Assert.assertEquals(groups, user.getGroups());
 		}
 
-		private User updateUser(User user) throws Exception {
+		private User _updateUser(User user) throws Exception {
 			Contact contact = user.getContact();
 
 			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();

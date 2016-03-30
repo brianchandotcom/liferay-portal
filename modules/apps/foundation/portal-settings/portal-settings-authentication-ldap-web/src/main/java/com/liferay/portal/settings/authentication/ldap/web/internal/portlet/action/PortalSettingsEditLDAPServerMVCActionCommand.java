@@ -218,15 +218,15 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 			dictionary.put(entry.getKey(), entry.getValue());
 		}
 
-		splitStringArrays(dictionary, LDAPConstants.CONTACT_CUSTOM_MAPPINGS);
-		splitStringArrays(dictionary, LDAPConstants.CONTACT_MAPPINGS);
-		splitStringArrays(
+		_splitStringArrays(dictionary, LDAPConstants.CONTACT_CUSTOM_MAPPINGS);
+		_splitStringArrays(dictionary, LDAPConstants.CONTACT_MAPPINGS);
+		_splitStringArrays(
 			dictionary, LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES);
-		splitStringArrays(dictionary, LDAPConstants.GROUP_MAPPINGS);
-		splitStringArrays(dictionary, LDAPConstants.USER_CUSTOM_MAPPINGS);
-		splitStringArrays(
+		_splitStringArrays(dictionary, LDAPConstants.GROUP_MAPPINGS);
+		_splitStringArrays(dictionary, LDAPConstants.USER_CUSTOM_MAPPINGS);
+		_splitStringArrays(
 			dictionary, LDAPConstants.USER_DEFAULT_OBJECT_CLASSES);
-		splitStringArrays(dictionary, LDAPConstants.USER_MAPPINGS);
+		_splitStringArrays(dictionary, LDAPConstants.USER_MAPPINGS);
 
 		_ldapServerConfigurationProvider.updateProperties(
 			themeDisplay.getCompanyId(), ldapServerId, dictionary);
@@ -272,7 +272,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		LDAPUtil.validateFilter(groupFilter, "importGroupSearchFilter");
 	}
 
-	private void splitStringArrays(
+	private void _splitStringArrays(
 		Dictionary<String, Object> dictionary, String property) {
 
 		Object propertyValue = dictionary.get(property);

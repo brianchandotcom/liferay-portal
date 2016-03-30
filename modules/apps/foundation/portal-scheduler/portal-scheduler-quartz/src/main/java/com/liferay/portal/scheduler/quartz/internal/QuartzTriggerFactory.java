@@ -95,7 +95,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 			CronScheduleBuilder.cronSchedule(cronExpression));
 	}
 
-	private Trigger createTrigger(
+	protected Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
 		ScheduleBuilder<?> scheduleBuilder) {
 

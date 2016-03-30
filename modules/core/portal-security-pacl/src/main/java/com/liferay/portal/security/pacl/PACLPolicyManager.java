@@ -154,7 +154,7 @@ public class PACLPolicyManager {
 
 		_classLoaderPACLPolicies.put(classLoader, paclPolicy);
 
-		refresh();
+		_refresh();
 	}
 
 	public static void unregister(ClassLoader classLoader) {
@@ -164,10 +164,10 @@ public class PACLPolicyManager {
 			_urlPACLPolicies.remove(url);
 		}
 
-		refresh();
+		_refresh();
 	}
 
-	private static void refresh() {
+	private static void _refresh() {
 		PortalSecurityManager portalSecurityManager =
 			SecurityManagerUtil.getPortalSecurityManager();
 
@@ -223,7 +223,7 @@ public class PACLPolicyManager {
 
 		@Override
 		public PACLPolicy run() {
-			PACLPolicy paclPolicy = getFromClassLoader();
+			PACLPolicy paclPolicy = _getFromClassLoader();
 
 			if ((paclPolicy != null) || (_classLoader != null) ||
 				(_locationURL == null)) {
@@ -234,7 +234,7 @@ public class PACLPolicyManager {
 			return _urlPACLPolicies.get(new URLWrapper(_locationURL));
 		}
 
-		private PACLPolicy getFromClassLoader() {
+		private PACLPolicy _getFromClassLoader() {
 			if (_classLoader == null) {
 				return null;
 			}

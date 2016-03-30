@@ -124,7 +124,7 @@ public class PermissionCheckerTest {
 			Assert.assertFalse(hasPermission);
 		}
 		finally {
-			destroyRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
+			_destroyRemotePortlet(_user.getCompanyId(), _PORTLET_RESOURCE_NAME);
 		}
 	}
 
@@ -181,7 +181,7 @@ public class PermissionCheckerTest {
 			}
 		}
 		finally {
-			destroyRemotePortlet(
+			_destroyRemotePortlet(
 				_user.getCompanyId(), _NONSITE_PORTLET_RESOURCE_NAME);
 		}
 	}
@@ -878,15 +878,7 @@ public class PermissionCheckerTest {
 		PortletLocalServiceUtil.deployRemotePortlet(portlet, "category.hidden");
 	}
 
-	private PermissionChecker _getPermissionChecker(User user)
-		throws Exception {
-
-		PermissionCacheUtil.clearCache(user.getUserId());
-
-		return PermissionCheckerFactoryUtil.create(user);
-	}
-
-	private void destroyRemotePortlet(long companyId, String portletName)
+	private void _destroyRemotePortlet(long companyId, String portletName)
 		throws PortalException {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -906,6 +898,14 @@ public class PermissionCheckerTest {
 			ResourceConstants.SCOPE_INDIVIDUAL, portletName);
 
 		PortletLocalServiceUtil.destroyRemotePortlet(portlet);
+	}
+
+	private PermissionChecker _getPermissionChecker(User user)
+		throws Exception {
+
+		PermissionCacheUtil.clearCache(user.getUserId());
+
+		return PermissionCheckerFactoryUtil.create(user);
 	}
 
 	private static final String _ADD_SITE_TEST_ACTION = "ADD_SITE_TEST";

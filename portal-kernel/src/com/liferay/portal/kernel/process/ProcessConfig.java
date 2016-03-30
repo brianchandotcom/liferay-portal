@@ -108,15 +108,16 @@ public class ProcessConfig implements Serializable {
 	private ProcessConfig(Builder builder) {
 		_arguments = builder._arguments;
 
-		_bootstrapClassPathHolders = toPathHolders(builder._bootstrapClassPath);
+		_bootstrapClassPathHolders = _toPathHolders(
+			builder._bootstrapClassPath);
 
 		_javaExecutable = builder._javaExecutable;
 		_reactClassLoader = builder._reactClassLoader;
 
-		_runtimeClassPathHolders = toPathHolders(builder._runtimeClassPath);
+		_runtimeClassPathHolders = _toPathHolders(builder._runtimeClassPath);
 	}
 
-	private PathHolder[] toPathHolders(String classPath) {
+	private PathHolder[] _toPathHolders(String classPath) {
 		String[] classPathElements = StringUtil.split(
 			classPath, File.pathSeparatorChar);
 

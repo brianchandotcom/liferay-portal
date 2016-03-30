@@ -348,7 +348,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 				service = registry.getService(serviceReference);
 			}
 
-			update(serviceReference, service, false);
+			_update(serviceReference, service, false);
 
 			return service;
 		}
@@ -362,7 +362,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 					serviceReference, service);
 			}
 
-			update(serviceReference, service, false);
+			_update(serviceReference, service, false);
 		}
 
 		@Override
@@ -374,14 +374,14 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 					serviceReference, service);
 			}
 
-			update(serviceReference, service, true);
+			_update(serviceReference, service, true);
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 		}
 
-		private void update(
+		private void _update(
 			ServiceReference<S> serviceReference, S service, boolean remove) {
 
 			if (service == null) {

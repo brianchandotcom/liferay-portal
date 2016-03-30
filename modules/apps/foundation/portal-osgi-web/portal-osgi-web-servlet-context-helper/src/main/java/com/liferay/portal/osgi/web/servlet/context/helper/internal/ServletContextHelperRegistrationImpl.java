@@ -290,7 +290,7 @@ public class ServletContextHelperRegistrationImpl
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
 		properties.put("rtl.required", Boolean.TRUE.toString());
 
-		collectContextInitParams(properties);
+		_collectContextInitParams(properties);
 
 		return _bundleContext.registerService(
 			ServletContextHelper.class, _customServletContextHelper,
@@ -358,7 +358,7 @@ public class ServletContextHelperRegistrationImpl
 			ServletContext.class, servletContext, properties);
 	}
 
-	private void collectContextInitParams(
+	private void _collectContextInitParams(
 		Dictionary<String, Object> properties) {
 
 		if (!_wabShapedBundle) {

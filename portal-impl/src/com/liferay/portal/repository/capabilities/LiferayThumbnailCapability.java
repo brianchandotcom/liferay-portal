@@ -128,12 +128,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 		return _repositoryEntryConverter.getDLFileEntry(fileEntry);
 	}
 
-	protected FileEntry updateDLFileEntry(DLFileEntry dlFileEntry) {
-		return new LiferayFileEntry(
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry));
-	}
-
-	private DLFileEntry getDLFileEntry(long fileEntryId)
+	protected DLFileEntry getDLFileEntry(long fileEntryId)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
@@ -142,6 +137,11 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 		_repositoryEntryChecker.checkDLFileEntry(dlFileEntry);
 
 		return dlFileEntry;
+	}
+
+	protected FileEntry updateDLFileEntry(DLFileEntry dlFileEntry) {
+		return new LiferayFileEntry(
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry));
 	}
 
 	private final RepositoryEntryChecker _repositoryEntryChecker;

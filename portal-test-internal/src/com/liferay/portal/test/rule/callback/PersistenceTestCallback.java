@@ -53,7 +53,7 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 	public Object beforeMethod(Description description, Object target)
 		throws Exception {
 
-		initialize();
+		_initialize();
 
 		Object instance = ReflectionTestUtil.getFieldValue(
 			ModelListenerRegistrationUtil.class, "_instance");
@@ -72,7 +72,7 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 		return modelListeners;
 	}
 
-	private static void initialize() {
+	private static void _initialize() {
 		if (_initialized) {
 			return;
 		}

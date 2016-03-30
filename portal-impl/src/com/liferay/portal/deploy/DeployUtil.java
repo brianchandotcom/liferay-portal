@@ -112,7 +112,7 @@ public class DeployUtil {
 	}
 
 	public static void redeployJetty(String context) throws Exception {
-		String contextsDirName = getJettyHome() + "/contexts";
+		String contextsDirName = _getJettyHome() + "/contexts";
 
 		if (_isPortalContext(context)) {
 			throw new UnsupportedOperationException(
@@ -206,7 +206,7 @@ public class DeployUtil {
 
 		if (appServerType.equals(ServerDetector.JETTY_ID)) {
 			FileUtil.delete(
-				getJettyHome() + "/contexts/" + deployDir.getName() + ".xml");
+				_getJettyHome() + "/contexts/" + deployDir.getName() + ".xml");
 		}
 
 		if (appServerType.equals(ServerDetector.JBOSS_ID) ||
@@ -232,6 +232,16 @@ public class DeployUtil {
 		}
 	}
 
+	private static String _getJettyHome() {
+		String jettyHome = System.getProperty("jetty.home");
+
+		if (jettyHome == null) {
+			jettyHome = PortalUtil.getGlobalLibDir() + "../../..";
+		}
+
+		return jettyHome;
+	}
+
 	private static boolean _isPortalContext(String context) {
 		if (Validator.isNull(context) || context.equals(StringPool.SLASH) ||
 			context.equals(
@@ -241,16 +251,6 @@ public class DeployUtil {
 		}
 
 		return false;
-	}
-
-	private static String getJettyHome() {
-		String jettyHome = System.getProperty("jetty.home");
-
-		if (jettyHome == null) {
-			jettyHome = PortalUtil.getGlobalLibDir() + "../../..";
-		}
-
-		return jettyHome;
 	}
 
 	private DeployUtil() {

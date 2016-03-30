@@ -276,7 +276,7 @@ public class CustomSQL {
 		}
 
 		if (_CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED) {
-			keywords = escapeWildCards(keywords);
+			keywords = _escapeWildCards(keywords);
 		}
 
 		if (lowerCase) {
@@ -851,7 +851,7 @@ public class CustomSQL {
 		return sb.toString();
 	}
 
-	private String escapeWildCards(String keywords) {
+	private String _escapeWildCards(String keywords) {
 		if (!isVendorMySQL() && !isVendorOracle()) {
 			return keywords;
 		}

@@ -129,7 +129,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 		long commentId = ParamUtil.getLong(request, "commentId");
 
-		DiscussionPermission discussionPermission = getDiscussionPermission(
+		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
 		discussionPermission.checkDeletePermission(commentId);
@@ -173,7 +173,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		Function<String, ServiceContext> serviceContextFunction =
 			new ServiceContextFunction(request);
 
-		DiscussionPermission discussionPermission = getDiscussionPermission(
+		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
 		if (commentId <= 0) {
@@ -267,7 +267,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		response.flushBuffer();
 	}
 
-	private DiscussionPermission getDiscussionPermission(
+	private DiscussionPermission _getDiscussionPermission(
 			ThemeDisplay themeDisplay)
 		throws PrincipalException {
 

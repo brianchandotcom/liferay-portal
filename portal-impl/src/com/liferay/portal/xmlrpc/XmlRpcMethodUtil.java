@@ -33,10 +33,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class XmlRpcMethodUtil {
 
 	public static Method getMethod(String token, String methodName) {
-		return _instance._getMethod(token, methodName);
+		return _instance.doGetMethod(token, methodName);
 	}
 
-	protected Method _getMethod(String token, String methodName) {
+	protected Method doGetMethod(String token, String methodName) {
 		Method method = null;
 
 		Map<String, Method> methods = _methodRegistry.get(token);

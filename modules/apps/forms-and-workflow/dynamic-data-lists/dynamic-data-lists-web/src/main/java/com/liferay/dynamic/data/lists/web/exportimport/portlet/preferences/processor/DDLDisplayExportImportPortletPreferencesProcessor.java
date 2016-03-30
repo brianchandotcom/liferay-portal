@@ -107,13 +107,13 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 		long displayDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("displayDDMTemplateId", null));
 
-		exportReferenceDDMTemplate(
+		_exportReferenceDDMTemplate(
 			portletDataContext, portletId, displayDDMTemplateId);
 
 		long formDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("formDDMTemplateId", null));
 
-		exportReferenceDDMTemplate(
+		_exportReferenceDDMTemplate(
 			portletDataContext, portletId, formDDMTemplateId);
 
 		return portletPreferences;
@@ -200,7 +200,7 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			referencedStagedModelImporterCapability;
 	}
 
-	private void exportReferenceDDMTemplate(
+	private void _exportReferenceDDMTemplate(
 			PortletDataContext portletDataContext, String portletId,
 			long ddmTemplateId)
 		throws PortletDataException {

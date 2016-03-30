@@ -69,7 +69,7 @@ public class QuartzSchemaManager {
 		try {
 			con = DataAccess.getConnection();
 
-			populateSchema(con);
+			_populateSchema(con);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -84,7 +84,7 @@ public class QuartzSchemaManager {
 		InfrastructureUtil infrastructureUtil) {
 	}
 
-	private void populateSchema(Connection con) throws Exception {
+	private void _populateSchema(Connection con) throws Exception {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();

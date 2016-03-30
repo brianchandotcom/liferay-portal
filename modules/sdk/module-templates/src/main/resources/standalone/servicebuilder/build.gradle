@@ -21,7 +21,7 @@ subprojects {
 
 	apply plugin: "com.liferay.plugin"
 
-	repositories {		
+	repositories {
 		maven {
 			url "https://repository.liferay.com/nexus/content/groups/public/"
 		}

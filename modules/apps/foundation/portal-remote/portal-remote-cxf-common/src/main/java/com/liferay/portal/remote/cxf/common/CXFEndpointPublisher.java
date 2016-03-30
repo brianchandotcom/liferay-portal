@@ -192,8 +192,17 @@ public class CXFEndpointPublisher {
 				"authVerifierProperties");
 
 			if (authVerifierPropertiesObject != null) {
-				String[] authVerifierPropertiesArray =
-					(String[])authVerifierPropertiesObject;
+				String[] authVerifierPropertiesArray = null;
+
+				if (authVerifierPropertiesObject instanceof String) {
+					authVerifierPropertiesArray = new String[] {
+						(String)authVerifierPropertiesObject
+					};
+				}
+				else {
+					authVerifierPropertiesArray =
+						(String[])authVerifierPropertiesObject;
+				}
 
 				properties = new Hashtable<>();
 

@@ -136,7 +136,7 @@ teamSearch.setTotal(teamsCount);
 						</h5>
 
 						<h6 class="text-default">
-							<span><%= curTeam.getDescription() %></span>
+							<span><%= HtmlUtil.escape(curTeam.getDescription()) %></span>
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>

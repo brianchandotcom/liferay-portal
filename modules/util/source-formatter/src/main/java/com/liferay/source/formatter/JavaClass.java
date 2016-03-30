@@ -132,7 +132,8 @@ public class JavaClass {
 					checkJavaFieldTypesExcludes, _absolutePath)) {
 
 				checkJavaFieldType(
-					javaTerm, annotationsExclusions, immutableFieldTypes);
+					javaTerms, javaTerm, annotationsExclusions,
+					immutableFieldTypes);
 			}
 
 			if (!originalContent.equals(_classContent)) {
@@ -422,8 +423,8 @@ public class JavaClass {
 	}
 
 	protected void checkJavaFieldType(
-			JavaTerm javaTerm, Set<String> annotationsExclusions,
-			Set<String> immutableFieldTypes)
+			Set<JavaTerm> javaTerms, JavaTerm javaTerm,
+			Set<String> annotationsExclusions, Set<String> immutableFieldTypes)
 		throws Exception {
 
 		if (!_javaSourceProcessor.portalSource ||
@@ -439,7 +440,6 @@ public class JavaClass {
 
 			return;
 		}
-
 
 		Pattern pattern = Pattern.compile(
 			"\t(private |protected |public )" +
@@ -459,16 +459,26 @@ public class JavaClass {
 
 			if (javaTerm.isPrivate()) {
 				if (!javaTermContent.contains("@Reference")) {
-					_classContent = _classContent.replaceAll(
-						"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
-						StringPool.UNDERLINE.concat(javaTermName));
+					if (getJavaTermCount(javaTerms, javaTermName) > 1) {
+						_javaSourceProcessor.processErrorMessage(
+							_fileName,
+							"Private method or variable should start with " +
+								"underscore: " + _fileName + " " +
+									javaTerm.getLineCount());
+					}
+					else {
+						_classContent = _classContent.replaceAll(
+							"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
+							StringPool.UNDERLINE.concat(javaTermName));
+					}
 				}
 			}
 			else {
 				_javaSourceProcessor.processErrorMessage(
 					_fileName,
-					"Only private var should start with underscore: " +
-						_fileName + " " + javaTerm.getLineCount());
+					"Only private method or variable should start with " +
+						"underscore: " + _fileName + " " +
+							javaTerm.getLineCount());
 			}
 		}
 
@@ -995,6 +1005,22 @@ public class JavaClass {
 		_innerClasses.add(innerClass);
 
 		return javaTerm;
+	}
+
+	protected int getJavaTermCount(
+		Set<JavaTerm> javaTerms, String javaTermName) {
+
+		int count = 0;
+
+		for (JavaTerm javaTerm : javaTerms) {
+			String curJavaTermName = javaTerm.getName();
+
+			if (curJavaTermName.equals(javaTermName)) {
+				count += 1;
+			}
+		}
+
+		return count;
 	}
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {

@@ -40,8 +40,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Michael Young
@@ -163,6 +165,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 							"fileEntryId = " + "? and version = ?");
 				ResultSet rs = ps1.executeQuery()) {
 
+				Set<String> generatedUniqueFileNames = new HashSet<>();
+				Set<String> generatedUniqueTitles = new HashSet<>();
+
 				while (rs.next()) {
 					long fileEntryId = rs.getLong("fileEntryId");
 					long groupId = rs.getLong("groupId");
@@ -185,13 +190,20 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 					String uniqueTitle = title;
 
+					boolean foundNameClash = false;
+
 					for (int i = 1;; i++) {
-						if (!hasFileEntry(
+						if (!generatedUniqueFileNames.contains(
+								uniqueFileName) &&
+							!generatedUniqueTitles.contains(uniqueTitle) &&
+							!hasFileEntry(
 								groupId, folderId, fileEntryId, uniqueTitle,
 								uniqueFileName)) {
 
 							break;
 						}
+
+						foundNameClash = true;
 
 						uniqueTitle =
 							titleWithoutExtension + StringPool.UNDERLINE +
@@ -204,6 +216,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 						uniqueFileName = DLUtil.getSanitizedFileName(
 							uniqueTitle, extension);
+					}
+
+					if (foundNameClash) {
+						generatedUniqueFileNames.add(uniqueFileName);
+						generatedUniqueTitles.add(uniqueTitle);
 					}
 
 					ps2.setString(1, uniqueFileName);

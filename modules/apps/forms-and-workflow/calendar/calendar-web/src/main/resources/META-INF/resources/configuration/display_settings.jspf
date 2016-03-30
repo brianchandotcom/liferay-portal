@@ -18,4 +18,14 @@
 	<aui:input label="display-scheduler-only" name="displaySchedulerOnly" type="checkbox" value="<%= displaySchedulerOnly %>" />
 
 	<aui:input label="display-user-events" name="showUserEvents" type="checkbox" value="<%= showUserEvents %>" />
+
+	<aui:fieldset collapsible="<%= true %>" label="enabled-views">
+		<aui:input label="day" name="showDayView" type="checkbox" value="<%= showDayView %>" />
+
+		<aui:input label="week" name="showWeekView" type="checkbox" value="<%= showWeekView %>" />
+
+		<aui:input label="month" name="showMonthView" type="checkbox" value="<%= showMonthView %>" />
+
+		<aui:input label="agenda" name="showAgendaView" type="checkbox" value="<%= showAgendaView %>" />
+	</aui:fieldset>
 </aui:fieldset>

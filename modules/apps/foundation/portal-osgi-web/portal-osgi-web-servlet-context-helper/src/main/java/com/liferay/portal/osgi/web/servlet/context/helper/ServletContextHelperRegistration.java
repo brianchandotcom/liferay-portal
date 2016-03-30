@@ -14,6 +14,10 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -21,14 +25,18 @@ import javax.servlet.ServletContext;
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface ServletContextHelperRegistration {
 
 	public void close();
 
 	public ServletContext getServletContext();
 
+	public WebXMLDefinition getWebXMLDefinition();
+
 	public boolean isWabShapedBundle();
 
+	@Deprecated
 	public void setProperties(Map<String, String> contextParameters);
 
 }

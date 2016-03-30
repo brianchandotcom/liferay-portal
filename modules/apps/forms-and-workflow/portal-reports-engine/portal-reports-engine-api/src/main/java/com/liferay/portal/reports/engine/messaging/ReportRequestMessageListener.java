@@ -30,6 +30,9 @@ import com.liferay.portal.reports.engine.ReportResultContainer;
  */
 public class ReportRequestMessageListener extends BaseMessageListener {
 
+	public ReportRequestMessageListener() {
+	}
+
 	public ReportRequestMessageListener(
 		ReportEngine reportEngine,
 		ReportResultContainer reportResultContainer) {

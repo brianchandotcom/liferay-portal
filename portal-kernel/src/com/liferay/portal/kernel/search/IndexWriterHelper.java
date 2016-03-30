@@ -104,7 +104,7 @@ public interface IndexWriterHelper {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
-	 *             isIndexReadOnly()}
+	 *             isIndexReadOnly}
 	 */
 	@Deprecated
 	public boolean isIndexReadOnly();

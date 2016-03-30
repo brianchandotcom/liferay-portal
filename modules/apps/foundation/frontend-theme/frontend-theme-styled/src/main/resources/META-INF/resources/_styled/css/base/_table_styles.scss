@@ -67,3 +67,18 @@
 		}
 	}
 }
+
+.table-responsive > .table .site-roles-and-teams-column {
+	@media screen and (max-width: 767px) {
+		white-space: normal;
+	}
+}
+
+.site-roles-and-teams-column {
+	max-width: 250px;
+	word-wrap: break-word;
+
+	@include sm {
+		max-width: 400px;
+	}
+}

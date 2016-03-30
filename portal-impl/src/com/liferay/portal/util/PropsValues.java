@@ -1586,6 +1586,18 @@ public class PropsValues {
 
 	public static final boolean WEB_SERVER_DISPLAY_NODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_DISPLAY_NODE));
 
+	public static final boolean WEB_SERVER_FORWARDED_HOST_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_HOST_ENABLED));
+	
+	public static final String WEB_SERVER_FORWARDED_HOST_HEADER = PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_HOST_HEADER);
+	
+	public static final boolean WEB_SERVER_FORWARDED_PORT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_PORT_ENABLED));
+	
+	public static final String WEB_SERVER_FORWARDED_PORT_HEADER = PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_PORT_HEADER);
+	
+	public static final boolean WEB_SERVER_FORWARDED_PROTO_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_PROTO_ENABLED));
+	
+	public static final String WEB_SERVER_FORWARDED_PROTO_HEADER = PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_PROTO_HEADER);
+	
 	public static final String WEB_SERVER_HOST = PropsUtil.get(PropsKeys.WEB_SERVER_HOST);
 
 	public static final int WEB_SERVER_HTTP_PORT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.WEB_SERVER_HTTP_PORT), -1);

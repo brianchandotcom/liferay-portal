@@ -742,14 +742,20 @@ public class ServicePreAction extends Action {
 		// Set attributes first that other methods (getCDNBaseURL and
 		// setLookAndFeel) depend on
 
+		boolean secure = PortalUtil.isForwardedSecure(request);
+
+		String serverName = PortalUtil.getForwardedHost(request);
+
+		int serverPort = PortalUtil.getForwardedPort(request);
+
 		themeDisplay.setCDNHost(cdnHost);
 		themeDisplay.setCDNDynamicResourcesHost(dynamicResourcesCDNHost);
 		themeDisplay.setFacebookCanvasPageURL(facebookCanvasPageURL);
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setRefererPlid(refererPlid);
-		themeDisplay.setSecure(request.isSecure());
-		themeDisplay.setServerName(request.getServerName());
-		themeDisplay.setServerPort(request.getServerPort());
+		themeDisplay.setSecure(secure);
+		themeDisplay.setServerName(serverName);
+		themeDisplay.setServerPort(serverPort);
 		themeDisplay.setWidget(widget);
 
 		themeDisplay.setCompany(company);
@@ -1026,11 +1032,7 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLPortal(portalURL.concat(contextPath));
 
-		boolean secure = false;
-
-		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS ||
-			request.isSecure()) {
-
+		if (!secure && PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS) {
 			secure = true;
 		}
 

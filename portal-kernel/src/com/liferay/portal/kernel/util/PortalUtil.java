@@ -912,6 +912,14 @@ public class PortalUtil {
 		return getPortal().getFirstPageLayoutTypes(request);
 	}
 
+	public static String getForwardedHost(HttpServletRequest request) {
+		return getPortal().getForwardedHost(request);
+	}
+
+	public static int getForwardedPort(HttpServletRequest request) {
+		return getPortal().getForwardedPort(request);
+	}
+
 	public static String getFullName(
 		String firstName, String middleName, String lastName) {
 
@@ -2003,6 +2011,10 @@ public class PortalUtil {
 		String portletId, ThemeDisplay themeDisplay) {
 
 		return getPortal().isControlPanelPortlet(portletId, themeDisplay);
+	}
+
+	public static boolean isForwardedSecure(HttpServletRequest request) {
+		return getPortal().isForwardedSecure(request);
 	}
 
 	public static boolean isGroupAdmin(User user, long groupId)

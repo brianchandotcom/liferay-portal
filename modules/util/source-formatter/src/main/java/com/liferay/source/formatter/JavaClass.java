@@ -434,6 +434,13 @@ public class JavaClass {
 
 		String javaTermName = javaTerm.getName();
 
+		if (javaTerm.isMethod() &&
+			_underscoreNotAllowedMethodNames.contains(javaTermName)) {
+
+			return;
+		}
+
+
 		Pattern pattern = Pattern.compile(
 			"\t(private |protected |public )" +
 				"(((final|static|transient)( |\n))*)([\\s\\S]*?)" +
@@ -1449,6 +1456,9 @@ public class JavaClass {
 		_ACCESS_MODIFIER_PRIVATE, _ACCESS_MODIFIER_PROTECTED,
 		_ACCESS_MODIFIER_PUBLIC
 	};
+
+	private static final List<String> _underscoreNotAllowedMethodNames =
+		ListUtil.fromArray(new String[] {"readObject", "writeObject"});
 
 	private final String _absolutePath;
 	private final Pattern _camelCasePattern = Pattern.compile(

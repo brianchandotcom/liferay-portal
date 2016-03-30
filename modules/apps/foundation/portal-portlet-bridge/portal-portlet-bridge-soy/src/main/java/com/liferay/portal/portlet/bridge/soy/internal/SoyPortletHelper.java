@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,8 +27,12 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 
@@ -47,7 +50,8 @@ public class SoyPortletHelper {
 	}
 
 	public String getPortletJavaScript(
-		Template template, String path, String portletNamespace) {
+		Template template, String path, String portletNamespace,
+		Set<String> additionalRequiredModules) {
 
 		if (_moduleName == null) {
 			return StringPool.BLANK;
@@ -56,10 +60,12 @@ public class SoyPortletHelper {
 		JSONObject contextJSONObject = createContextJSONObject(
 			template, portletNamespace);
 
-		String controllerName = getControllerName(path);
+		Set<String> requiredModules = getRequiredModules(
+			path, additionalRequiredModules);
 
 		return getPortletJavaScript(
-			contextJSONObject.toJSONString(), controllerName, portletNamespace);
+			contextJSONObject.toJSONString(), portletNamespace,
+			getRequiredModulesString(requiredModules));
 	}
 
 	public String getTemplateNamespace(String path) {
@@ -82,9 +88,6 @@ public class SoyPortletHelper {
 
 			contextJSONObject.put(key, template.get(key));
 		}
-
-		contextJSONObject.put(
-			"element", getPortletContentElement(portletNamespace));
 
 		return contextJSONObject;
 	}
@@ -140,28 +143,51 @@ public class SoyPortletHelper {
 		return moduleName;
 	}
 
-	protected String getPortletContentElement(String portletNamespace) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("#p_p_id");
-		sb.append(HtmlUtil.escapeJS(portletNamespace));
-		sb.append(" .portlet-content-container");
-
-		return sb.toString();
-	}
-
 	protected String getPortletJavaScript(
-		String context, String controllerName, String portletNamespace) {
+		String context, String portletNamespace, String requiredModulesString) {
 
 		return StringUtil.replace(
 			_javaScriptTPL,
 			new String[] {
-				"$CONTEXT", "$CONTROLLER_NAME", "$MODULE_NAME",
-				"$PORTLET_NAMESPACE"
+				"$CONTEXT", "$PORTLET_NAMESPACE", "$REQUIRED_MODULES"
 			},
-			new String[] {
-				context, controllerName, _moduleName, portletNamespace
-			});
+			new String[] {context, portletNamespace, requiredModulesString});
+	}
+
+	protected Set<String> getRequiredModules(
+		String path, Set<String> additionalRequiredModules) {
+
+		if (_moduleName == null) {
+			return Collections.emptySet();
+		}
+
+		Set<String> requiredModules = new LinkedHashSet<>(
+			additionalRequiredModules);
+
+		String controllerName = getControllerName(path);
+
+		requiredModules.add(
+			_moduleName.concat(StringPool.SLASH).concat(controllerName));
+
+		return requiredModules;
+	}
+
+	protected String getRequiredModulesString(Set<String> requiredModules) {
+		StringBundler sb = new StringBundler(requiredModules.size() * 4);
+
+		Iterator<String> it = requiredModules.iterator();
+
+		while (it.hasNext()) {
+			sb.append(StringPool.QUOTE);
+			sb.append(it.next());
+			sb.append(StringPool.QUOTE);
+
+			if (it.hasNext()) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private final Bundle _bundle;

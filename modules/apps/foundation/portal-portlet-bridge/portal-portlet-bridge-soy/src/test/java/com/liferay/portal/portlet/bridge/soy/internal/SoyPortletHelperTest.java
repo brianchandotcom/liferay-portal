@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -63,7 +64,8 @@ public class SoyPortletHelperTest {
 		Template template = mock(Template.class);
 
 		String portletJavaScript = soyPortletHelper.getPortletJavaScript(
-			template, "View", StringUtil.randomString());
+			template, "View", StringUtil.randomString(),
+			Collections.<String>emptySet());
 
 		Assert.assertEquals(StringPool.BLANK, portletJavaScript);
 	}
@@ -90,24 +92,28 @@ public class SoyPortletHelperTest {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"element",
-			"#p_p_id" + portletNamespace + " .portlet-content-container");
+		String portletComponentId = portletNamespace.concat("PortletComponent");
+
+		jsonObject.put("element", StringPool.POUND.concat(portletComponentId));
+		jsonObject.put("id", portletComponentId);
 		jsonObject.put("key 1", "value 1");
 
 		String expectedPortletJavaScript =
 			soyPortletHelper.getPortletJavaScript(
-				jsonObject.toJSONString(), "View.soy", portletNamespace);
+				jsonObject.toJSONString(), portletNamespace,
+				"\"SampleModuleName/View.soy\"");
 
 		// Actual
 
 		Template template = createMockedTemplate();
 
 		template.put(TemplateConstants.NAMESPACE, StringUtil.randomString());
+		template.put("element", StringPool.POUND.concat(portletComponentId));
+		template.put("id", portletComponentId);
 		template.put("key 1", "value 1");
 
 		String actualPortletJavaScript = soyPortletHelper.getPortletJavaScript(
-			template, "View", portletNamespace);
+			template, "View", portletNamespace, Collections.<String>emptySet());
 
 		Assert.assertEquals(expectedPortletJavaScript, actualPortletJavaScript);
 	}

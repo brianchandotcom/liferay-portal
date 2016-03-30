@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -30,7 +31,9 @@ import com.liferay.portal.portlet.bridge.soy.internal.SoyTemplateResourcesCollec
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
@@ -77,6 +80,10 @@ public class SoyPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	protected Set<String> getJavaScriptRequiredModules(String path) {
+		return Collections.emptySet();
+	}
+
 	@Override
 	protected void include(
 			String namespace, PortletRequest portletRequest,
@@ -109,10 +116,14 @@ public class SoyPortlet extends MVCPortlet {
 				writer = new UnsyncStringWriter();
 			}
 
+			populateJavaScriptTemplateContext(
+				template, portletResponse.getNamespace());
+
 			template.processTemplate(writer);
 
 			String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
-				template, path, portletResponse.getNamespace());
+				template, path, portletResponse.getNamespace(),
+				getJavaScriptRequiredModules(path));
 
 			writer.write(portletJavaScript);
 		}
@@ -125,6 +136,15 @@ public class SoyPortlet extends MVCPortlet {
 				portletResponse.setProperty("clear-request-parameters", "true");
 			}
 		}
+	}
+
+	protected void populateJavaScriptTemplateContext(
+		Template template, String portletNamespace) {
+
+		String portletComponentId = portletNamespace.concat("PortletComponent");
+
+		template.put("element", StringPool.POUND.concat(portletComponentId));
+		template.put("id", portletComponentId);
 	}
 
 	protected void propagateRequestParameters(PortletRequest portletRequest) {
@@ -142,7 +162,6 @@ public class SoyPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String moduleName;
 	protected boolean propagateRequestParameters;
 	protected Template template;
 

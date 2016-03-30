@@ -28,7 +28,5 @@ Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.l
 -liferay-includeresource:\
 	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteUniqueStack.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/FiniteStack.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSThreadLocal.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/xml/XMLUtil.class

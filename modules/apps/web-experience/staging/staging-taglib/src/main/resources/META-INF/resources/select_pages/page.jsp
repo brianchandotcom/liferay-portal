@@ -81,21 +81,33 @@
 				long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 				%>
 
-				<div class="pages-selector">
-					<liferay-layout:layouts-tree
-						defaultStateChecked="<%= true %>"
-						draggableTree="<%= false %>"
-						groupId="<%= groupId %>"
-						incomplete="<%= false %>"
-						portletURL="<%= renderResponse.createRenderURL() %>"
-						privateLayout="<%= privateLayout %>"
-						rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
-						selectableTree="<%= true %>"
-						selectedLayoutIds="<%= selectedLayoutIds %>"
-						selPlid="<%= selPlid %>"
-						treeId="<%= treeId %>"
-					/>
-				</div>
+				<c:choose>
+					<c:when test="<%= disableInputs %>">
+
+						<%
+						int groupLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
+						%>
+
+						<liferay-ui:message arguments="<%= new String[] {String.valueOf(selectedLayoutIdsArray.length), String.valueOf(groupLayoutsCount)} %>" key="x-selected-out-of-x" />
+					</c:when>
+					<c:otherwise>
+						<div class="pages-selector">
+							<liferay-layout:layouts-tree
+								defaultStateChecked="<%= true %>"
+								draggableTree="<%= false %>"
+								groupId="<%= groupId %>"
+								incomplete="<%= false %>"
+								portletURL="<%= renderResponse.createRenderURL() %>"
+								privateLayout="<%= privateLayout %>"
+								rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+								selectableTree="<%= true %>"
+								selectedLayoutIds="<%= selectedLayoutIds %>"
+								selPlid="<%= selPlid %>"
+								treeId="<%= treeId %>"
+							/>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</aui:fieldset>
 		</li>
 

@@ -12,10 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.wab.extender.internal.WabBundleProcessor;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 
 import java.io.InputStream;
 

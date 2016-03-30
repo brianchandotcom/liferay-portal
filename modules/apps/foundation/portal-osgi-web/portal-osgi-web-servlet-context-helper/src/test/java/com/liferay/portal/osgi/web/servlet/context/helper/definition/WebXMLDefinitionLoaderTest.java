@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
 import java.net.URL;
 
 import java.util.EventListener;

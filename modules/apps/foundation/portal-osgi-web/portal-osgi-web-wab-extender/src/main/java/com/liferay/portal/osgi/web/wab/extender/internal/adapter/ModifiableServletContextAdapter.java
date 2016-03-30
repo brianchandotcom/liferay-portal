@@ -15,11 +15,10 @@
 package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.osgi.web.wab.extender.internal.WabBundleProcessor;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.FilterDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ListenerDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.ServletDefinition;
-import com.liferay.portal.osgi.web.wab.extender.internal.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.FilterRegistrationImpl;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 

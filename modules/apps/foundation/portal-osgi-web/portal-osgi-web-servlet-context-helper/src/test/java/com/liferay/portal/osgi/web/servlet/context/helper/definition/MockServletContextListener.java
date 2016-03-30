@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

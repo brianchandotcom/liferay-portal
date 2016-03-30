@@ -66,9 +66,9 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>portal-test-internal\src</label>
+					<label>portal-test-integration\src</label>
 					<type>java</type>
-					<location>portal-test-internal/src</location>
+					<location>portal-test-integration/src</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>

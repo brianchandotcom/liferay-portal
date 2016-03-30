@@ -244,7 +244,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			"com.liferay.portal.test", "default");
 		GradleUtil.addDependency(
 			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
-			"com.liferay.portal.test.internal", "default");
+			"com.liferay.portal.test.integration", "default");
 	}
 
 	protected void addDependenciesTestCompile(Project project) {

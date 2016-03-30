@@ -1454,7 +1454,7 @@ rerun your task.
 				</sequential>
 			</for>
 
-			<for list="portal-impl,portal-kernel,portal-test,portal-test-internal,util-bridges,util-java,util-taglib" param="artifact.name">
+			<for list="portal-impl,portal-kernel,portal-test,portal-test-integration,util-bridges,util-java,util-taglib" param="artifact.name">
 				<sequential>
 					<propertyregex
 						global="true"

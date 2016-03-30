@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.EventListener;
 
 /**
@@ -21,8 +23,38 @@ import java.util.EventListener;
  */
 public class ListenerDefinition {
 
+	public boolean equals(Object obj) {
+		if (!(obj instanceof ListenerDefinition)) {
+			return false;
+		}
+
+		ListenerDefinition listenerDefinition = (ListenerDefinition)obj;
+
+		EventListener eventListener = listenerDefinition.getEventListener();
+
+		Class<?> listenerClass = _eventListener.getClass();
+
+		Class<?> objectListenerClass = eventListener.getClass();
+
+		if (Validator.equals(listenerClass, objectListenerClass)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public EventListener getEventListener() {
 		return _eventListener;
+	}
+
+	public int hashCode() {
+		if (_eventListener == null) {
+			return super.hashCode();
+		}
+
+		Class<?> listenerClass = _eventListener.getClass();
+
+		return listenerClass.hashCode();
 	}
 
 	public void setEventListener(EventListener eventListener) {

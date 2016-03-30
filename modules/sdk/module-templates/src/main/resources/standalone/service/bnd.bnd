@@ -1,8 +1,2 @@
 Bundle-SymbolicName: _name_
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.portal.service;version="7.0.0",\
-	\
-	org.osgi.framework;version="[1.7,2)",\
-	*
-Private-Package: _package_

@@ -15,6 +15,4 @@ dependencies {
 
 buildService {
 	apiDir = "../_api_/src/main/java"
-	osgiModule = true
-	propsUtil = "_package_.service.util.PropsUtil"
 }

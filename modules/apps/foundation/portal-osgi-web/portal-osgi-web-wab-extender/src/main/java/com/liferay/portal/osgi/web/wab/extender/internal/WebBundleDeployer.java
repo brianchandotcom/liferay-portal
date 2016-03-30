@@ -20,8 +20,6 @@ import java.util.Dictionary;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.xml.parsers.SAXParserFactory;
-
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
@@ -36,13 +34,11 @@ public class WebBundleDeployer {
 
 	public WebBundleDeployer(
 			BundleContext bundleContext, Dictionary<String, Object> properties,
-			SAXParserFactory saxParserFactory, EventUtil eventUtil,
-			Logger logger)
+			EventUtil eventUtil, Logger logger)
 		throws Exception {
 
 		_bundleContext = bundleContext;
 		_properties = properties;
-		_saxParserFactory = saxParserFactory;
 		_eventUtil = eventUtil;
 		_logger = logger;
 	}
@@ -83,7 +79,7 @@ public class WebBundleDeployer {
 				return;
 			}
 
-			newWabBundleProcessor.init(_saxParserFactory, _properties);
+			newWabBundleProcessor.init(_properties);
 		}
 		catch (Exception e) {
 			_eventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
@@ -148,7 +144,6 @@ public class WebBundleDeployer {
 	private final EventUtil _eventUtil;
 	private final Logger _logger;
 	private final Dictionary<String, Object> _properties;
-	private final SAXParserFactory _saxParserFactory;
 	private final ConcurrentMap<Bundle, WabBundleProcessor>
 		_wabBundleProcessors = new ConcurrentHashMap<>();
 

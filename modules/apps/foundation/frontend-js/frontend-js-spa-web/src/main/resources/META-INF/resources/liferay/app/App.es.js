@@ -25,11 +25,15 @@ class LiferayApp extends App {
 
 		Liferay.on('io:complete', this.onLiferayIOComplete, this);
 
-		document.body.id = 'senna_surface' + core.getUid();
+		var body = document.body;
 
-		this.addSurfaces(new LiferaySurface(document.body.id));
+		if (!body.id) {
+			body.id = 'senna_surface' + core.getUid();
+		}
 
-		dom.append(document.body, '<div class="lfr-spa-loading-bar"></div>');
+		this.addSurfaces(new LiferaySurface(body.id));
+
+		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
 	}
 
 	getValidStatusCodes() {

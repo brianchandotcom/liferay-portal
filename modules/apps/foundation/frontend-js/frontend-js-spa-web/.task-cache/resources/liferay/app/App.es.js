@@ -74,11 +74,15 @@ define("frontend-js-spa-web@1.0.5/liferay/app/App.es", ['exports', 'senna/src/ap
 
 			Liferay.on('io:complete', _this.onLiferayIOComplete, _this);
 
-			document.body.id = 'senna_surface' + _core2.default.getUid();
+			var body = document.body;
 
-			_this.addSurfaces(new _Surface2.default(document.body.id));
+			if (!body.id) {
+				body.id = 'senna_surface' + _core2.default.getUid();
+			}
 
-			_dom2.default.append(document.body, '<div class="lfr-spa-loading-bar"></div>');
+			_this.addSurfaces(new _Surface2.default(body.id));
+
+			_dom2.default.append(body, '<div class="lfr-spa-loading-bar"></div>');
 			return _this;
 		}
 

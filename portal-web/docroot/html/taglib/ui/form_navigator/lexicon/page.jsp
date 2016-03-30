@@ -42,6 +42,8 @@ for (String categoryKey : categoryKeys) {
 			<%
 			for (String categoryKey : filterCategoryKeys) {
 				List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, categoryKey, user, formModelBean);
+
+				request.setAttribute("currentTab", categoryKey);
 			%>
 
 				<liferay-ui:section>
@@ -49,6 +51,12 @@ for (String categoryKey : categoryKeys) {
 				</liferay-ui:section>
 
 			<%
+			}
+
+			String errorTab = (String)request.getAttribute("errorTab");
+
+			if (Validator.isNotNull(errorTab)) {
+				request.setAttribute(WebKeys.ERROR_SECTION, errorTab);
 			}
 			%>
 

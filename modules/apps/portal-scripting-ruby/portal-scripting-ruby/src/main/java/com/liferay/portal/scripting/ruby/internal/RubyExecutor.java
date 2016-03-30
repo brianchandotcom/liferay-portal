@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.scripting.BaseScriptingExecutor;
 import com.liferay.portal.scripting.ruby.configuration.RubyScriptingConfiguration;
 
@@ -263,10 +262,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			_rubyScriptingConfiguration.compileThreshold());
 		rubyInstanceConfig.setLoader(getClassLoader());
 
-		String[] loadPaths = StringUtil.split(
-			_rubyScriptingConfiguration.loadPaths());
-
-		_loadPaths = new ArrayList<>(Arrays.asList(loadPaths));
+		_loadPaths = new ArrayList<>(Arrays.asList(
+			_rubyScriptingConfiguration.loadPaths()));
 
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 

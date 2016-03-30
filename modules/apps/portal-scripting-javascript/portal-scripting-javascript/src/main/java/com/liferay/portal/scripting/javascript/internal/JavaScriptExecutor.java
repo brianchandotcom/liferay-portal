@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.scripting.BaseScriptingExecutor;
 import com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration;
 
@@ -137,12 +135,9 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			ConfigurableUtil.createConfigurable(
 				JavaScriptExecutorConfiguration.class, properties);
 
-		String[] forbiddenClassNames = StringUtil.split(
-			javaScriptExecutorConfiguration.forbiddenClassNames(),
-			StringPool.COMMA);
-
 		_forbiddenClassNames = new HashSet<>(
-			Arrays.asList(forbiddenClassNames));
+			Arrays.asList(
+				javaScriptExecutorConfiguration.forbiddenClassNames()));
 	}
 
 	protected Script getCompiledScript(String script)

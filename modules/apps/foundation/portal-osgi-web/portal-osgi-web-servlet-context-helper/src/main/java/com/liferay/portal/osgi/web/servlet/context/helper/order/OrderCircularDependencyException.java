@@ -45,8 +45,7 @@ public class OrderCircularDependencyException extends Exception {
 		for (WebXMLDefinition webXMLDefinition : webXMLDefinitions) {
 			Order someOrdering = webXMLDefinition.getOrdering();
 
-			EnumMap<Order.Path, String[]> someRoutes =
-				someOrdering.getRoutes();
+			EnumMap<Order.Path, String[]> someRoutes = someOrdering.getRoutes();
 
 			String[] someNames = someRoutes.get(path);
 

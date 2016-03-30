@@ -424,8 +424,7 @@ public class OrderUtil {
 					path);
 
 				if (Arrays.binarySearch(otherRoutePathNames, configName) >= 0) {
-					throw new OrderCircularDependencyException(
-						path, webXMLs);
+					throw new OrderCircularDependencyException(path, webXMLs);
 				}
 
 				// If I am before them, they should be informed
@@ -584,7 +583,8 @@ public class OrderUtil {
 
 		namedMap = descendingByValue(namedMap);
 
-		Map<String, WebXMLDefinition> configMap = getWebXMLDefinitionMap(configs);
+		Map<String, WebXMLDefinition> configMap = getWebXMLDefinitionMap(
+			configs);
 
 		// add named configs to the list in the correct preSorted order
 

@@ -14,12 +14,19 @@
 
 package com.liferay.portal.search.elasticsearch.internal.facet;
 
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
+
+import java.io.Serializable;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
+ * @author Tibor Lipusz
  */
 @Component(
 	immediate = true,
@@ -29,4 +36,22 @@ import org.osgi.service.component.annotations.Component;
 	service = FacetProcessor.class
 )
 public class ModifiedFacetProcessor extends RangeFacetProcessor {
+
+	@Override
+	protected void doProcessFacet(
+		DefaultRangeBuilder defaultRangeBuilder, Facet facet) {
+
+		super.doProcessFacet(defaultRangeBuilder, facet);
+
+		SearchContext searchContext = facet.getSearchContext();
+
+		Serializable modified = searchContext.getAttribute(_MODIFIED);
+
+		if (Validator.isNotNull(modified)) {
+			addRange(defaultRangeBuilder, GetterUtil.getString(modified));
+		}
+	}
+
+	private static final String _MODIFIED = "modified";
+
 }

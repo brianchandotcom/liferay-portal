@@ -48,18 +48,18 @@ public class OutputTag extends PositionTagSupport {
 			if (_output) {
 				String bodyContentString =
 					getBodyContentAsStringBundler().toString();
-				
-				bodyContentString = StringUtil.replace(
-					bodyContentString, "<link",
-					"<link data-senna-track=\"temporary\" ");
 
-				bodyContentString = StringUtil.replace(
-					bodyContentString, "<script",
-					"<script data-senna-track=\"permanent\" ");
+				bodyContentString = addAtrributeIfNotExist(
+					bodyContentString, "link", "data-senna-track",
+					"\"temporary\"");
 
-				bodyContentString = StringUtil.replace(
-					bodyContentString, "<style",
-					"<style data-senna-track=\"temporary\" ");
+				bodyContentString = addAtrributeIfNotExist(
+					bodyContentString, "script", "data-senna-track",
+					"\"permanent\"");
+
+				bodyContentString = addAtrributeIfNotExist(
+					bodyContentString, "style", "data-senna-track",
+					"\"temporary\"");
 
 				if (isPositionInLine()) {
 					JspWriter jspWriter = pageContext.getOut();
@@ -120,6 +120,37 @@ public class OutputTag extends PositionTagSupport {
 		}
 
 		return outputData;
+	}
+
+	private String addAtrributeIfNotExist(
+		String content, String tag, String attribute, String attributeValue) {
+
+		int startIndex = 0;
+		int endIndex = 0;
+
+		while (startIndex >= 0) {
+			startIndex = content.indexOf("<" + tag, endIndex);
+
+			if (startIndex < 0) {
+				break;
+			}
+
+			endIndex = content.indexOf(">", startIndex);
+
+			if (endIndex < 0) {
+				break;
+			}
+
+			String subContent = content.substring(startIndex, endIndex);
+
+			if (!subContent.contains(attribute)) {
+				content = StringUtil.insert(
+					content, " " + attribute + "=" + attributeValue,
+					startIndex + tag.length() + 1);
+			}
+		}
+
+		return content;
 	}
 
 	private boolean _output;

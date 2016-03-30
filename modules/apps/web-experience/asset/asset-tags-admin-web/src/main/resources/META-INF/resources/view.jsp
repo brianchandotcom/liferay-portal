@@ -89,7 +89,7 @@
 		>
 
 			<%
-			int usagesCount = assetTagsDisplayContext.getTagsFullCount(tag);
+			long usagesCount = assetTagsDisplayContext.getTagsFullCount(tag);
 			%>
 
 			<c:choose>

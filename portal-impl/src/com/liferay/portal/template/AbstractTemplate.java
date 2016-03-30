@@ -150,7 +150,7 @@ public abstract class AbstractTemplate implements Template {
 		return context.values();
 	}
 
-	protected void _write(Writer writer) throws TemplateException {
+	protected void write(Writer writer) throws TemplateException {
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
 
 		try {

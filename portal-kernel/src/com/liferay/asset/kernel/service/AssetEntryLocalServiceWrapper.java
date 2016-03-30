@@ -735,6 +735,19 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		java.lang.String userName, java.lang.String title,
 		java.lang.String description, java.lang.String assetCategoryIds,
 		java.lang.String assetTagNames, boolean showNonindexable,
+		boolean showNonVisible, int[] statuses, boolean andSearch) {
+		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
+			className, classTypeId, userName, title, description,
+			assetCategoryIds, assetTagNames, showNonindexable, showNonVisible,
+			statuses, andSearch);
+	}
+
+	@Override
+	public long searchCount(long companyId, long[] groupIds, long userId,
+		java.lang.String className, long classTypeId,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, boolean showNonindexable,
 		int[] statuses, boolean andSearch) {
 		return _assetEntryLocalService.searchCount(companyId, groupIds, userId,
 			className, classTypeId, userName, title, description,

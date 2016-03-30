@@ -28,5 +28,4 @@
 
 		<aui:input label="agenda" name="showAgendaView" type="checkbox" value="<%= showAgendaView %>" />
 	</aui:fieldset>
-
 </aui:fieldset>

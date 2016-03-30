@@ -1416,45 +1416,44 @@ AUI.add(
 		);
 
 		var DDMJournalArticleField = A.Component.create(
-				{
-					ATTRS: {
-						dataType: {
-							value: 'journal-article'
-						},
-
-						fieldNamespace: {
-							value: 'ddm'
-						}
+			{
+				ATTRS: {
+					dataType: {
+						value: 'journal-article'
 					},
 
-					EXTENDS: A.FormBuilderField,
+					fieldNamespace: {
+						value: 'ddm'
+					}
+				},
 
-					NAME: 'ddm-journal-article',
+				EXTENDS: A.FormBuilderField,
 
-					prototype: {
-						getHTML: function() {
-							return TPL_JOURNAL_ARTICLE;
-						},
+				NAME: 'ddm-journal-article',
 
-						getPropertyModel: function() {
-							var instance = this;
+				prototype: {
+					getHTML: function() {
+						return TPL_JOURNAL_ARTICLE;
+					},
 
-							var model = DDMJournalArticleField.superclass.getPropertyModel.apply(instance, arguments);
+					getPropertyModel: function() {
+						var instance = this;
 
-							model.push(
-								{
-									attributeName: 'style',
-									editor: new A.TextAreaCellEditor(),
-									name: Liferay.Language.get('style')
-								}
-							);
+						var model = DDMJournalArticleField.superclass.getPropertyModel.apply(instance, arguments);
 
-							return model;
-						}
+						model.push(
+							{
+								attributeName: 'style',
+								editor: new A.TextAreaCellEditor(),
+								name: Liferay.Language.get('style')
+							}
+						);
+
+						return model;
 					}
 				}
-			);
-
+			}
+		);
 
 		var DDMLinkToPageField = A.Component.create(
 			{

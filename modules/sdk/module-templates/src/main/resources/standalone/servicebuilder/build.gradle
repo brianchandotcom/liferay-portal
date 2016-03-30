@@ -11,14 +11,6 @@ buildscript {
 }
 
 subprojects {
-	buildscript {
-		repositories {
-			maven {
-				url "https://repository.liferay.com/nexus/content/groups/public/"
-			}
-		}
-	}
-
 	apply plugin: "com.liferay.plugin"
 
 	repositories {

@@ -467,35 +467,6 @@ public class ServletContextHelperRegistrationImpl
 
 	}
 
-	private static class JspServletWrapper extends HttpServlet {
-
-		@Override
-		public void destroy() {
-			_servlet.destroy();
-		}
-
-		@Override
-		public ServletConfig getServletConfig() {
-			return _servlet.getServletConfig();
-		}
-
-		@Override
-		public void init(ServletConfig servletConfig) throws ServletException {
-			_servlet.init(servletConfig);
-		}
-
-		@Override
-		public void service(
-				ServletRequest servletRequest, ServletResponse servletResponse)
-			throws IOException, ServletException {
-
-			_servlet.service(servletRequest, servletResponse);
-		}
-
-		private final Servlet _servlet = new JspServlet();
-
-	}
-
 	private static class PortletServletWrapper extends HttpServlet {
 
 		@Override

@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-export-import',
 	function(A) {
+		var $ = AUI.$;
+
 		var Lang = A.Lang;
 
 		var ADate = A.Date;

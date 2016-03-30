@@ -13,6 +13,8 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.values.query", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.validator", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"

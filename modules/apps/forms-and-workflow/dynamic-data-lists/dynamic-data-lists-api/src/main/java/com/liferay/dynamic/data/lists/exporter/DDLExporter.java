@@ -98,8 +98,8 @@ public interface DDLExporter {
 	/**
 	 * Returns the locale of the current DDL Exporter service instance.
 	 *
-	 * @param  locale the locale used to retrieve the localized values of the
-	 *         record
+	 * @param locale the locale used to retrieve the localized values of the
+	 *        record
 	 */
 	public void setLocale(Locale locale);
 

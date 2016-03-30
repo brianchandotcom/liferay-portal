@@ -193,14 +193,14 @@ public interface DDL {
 	 * is added. Otherwise, the existing record is updated. This operation
 	 * always check user credentials.
 	 *
-	 * @param  recordId the record ID to update
-	 * @param  recordSetId the record set ID of the record
-	 * @param  mergeFields whether to perform the merge operation for the
-	 *         existing record. If <code>true</code>, all missing localized
-	 *         record values are updated for the existing record.
-	 * @param  serviceContext the service context to be applied
-	 * @return the record
-	 * @throws Exception if an unexpected exception occurred
+	 * @param      recordId the record ID to update
+	 * @param      recordSetId the record set ID of the record
+	 * @param      mergeFields whether to perform the merge operation for the
+	 *             existing record. If <code>true</code>, all missing localized
+	 *             record values are updated for the existing record.
+	 * @param      serviceContext the service context to be applied
+	 * @return     the record
+	 * @throws     Exception if an unexpected exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #updateRecord(long,long,boolean,boolean,ServiceContext)}
 	 */

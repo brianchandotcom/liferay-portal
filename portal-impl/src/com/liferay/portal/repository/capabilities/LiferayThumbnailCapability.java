@@ -133,7 +133,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry));
 	}
 
-	private DLFileEntry getDLFileEntry(long fileEntryId)
+	protected DLFileEntry getDLFileEntry(long fileEntryId)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(

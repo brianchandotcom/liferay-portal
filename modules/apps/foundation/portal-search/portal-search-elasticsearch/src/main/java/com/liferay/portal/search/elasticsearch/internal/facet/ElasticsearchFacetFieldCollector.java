@@ -95,7 +95,7 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		}
 	}
 
-	private void initialize(MultiBucketsAggregation multiBucketsAggregation) {
+	protected void initialize(MultiBucketsAggregation multiBucketsAggregation) {
 		_aggregation = multiBucketsAggregation;
 
 		for (MultiBucketsAggregation.Bucket bucket :

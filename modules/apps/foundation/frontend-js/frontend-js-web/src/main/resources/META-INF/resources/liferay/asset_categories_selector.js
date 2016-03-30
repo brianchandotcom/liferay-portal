@@ -9,6 +9,8 @@ AUI.add(
 
 		var BOUNDING_BOX = 'boundingBox';
 
+		var CSS_LOADING_ANIMATION = 'loading-animation';
+
 		var CSS_TAGS_LIST = 'lfr-categories-selector-list';
 
 		var EMPTY_FN = Lang.emptyFn;
@@ -380,7 +382,7 @@ AUI.add(
 
 					_initSearch: EMPTY_FN,
 
-					initSearchFocus: function() {
+					_initSearchFocus: function() {
 						var instance = this;
 
 						var popup = instance._popup;
@@ -551,7 +553,7 @@ AUI.add(
 							buffer.push(message);
 						}
 
-						searchResults.removeClass('loading-animation');
+						searchResults.removeClass(CSS_LOADING_ANIMATION);
 
 						searchResults.html(buffer.join(''));
 					},
@@ -590,7 +592,7 @@ AUI.add(
 						if (searchValue) {
 							searchResults.empty();
 
-							searchResults.addClass('loading-animation');
+							searchResults.addClass(CSS_LOADING_ANIMATION);
 
 							Liferay.Service(
 								{
@@ -641,7 +643,7 @@ AUI.add(
 								var searchValue = instance._searchValue;
 
 								if (searchResults) {
-									searchResults.removeClass('loading-animation');
+									searchResults.removeClass(CSS_LOADING_ANIMATION);
 
 									searchResults.toggle(!!searchValue);
 								}
@@ -665,7 +667,7 @@ AUI.add(
 							instance._bindSearchHandle.detach();
 						}
 
-						instance._bindSearchHandle = popup.searchField.once('focus', instance.initSearchFocus, instance);
+						instance._bindSearchHandle = popup.searchField.once('focus', instance._initSearchFocus, instance);
 					},
 
 					_vocabulariesIterator: function(item, index) {

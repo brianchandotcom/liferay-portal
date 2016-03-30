@@ -208,6 +208,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public String getDDMXSD(String journalXSD) throws Exception {
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
@@ -215,6 +216,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public String getDDMXSD(String journalXSD, Locale defaultLocale)
 		throws Exception {
 
@@ -237,6 +239,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public String getJournalXSD(String ddmXSD) throws Exception {
 		Document document = SAXReaderUtil.read(ddmXSD);
 

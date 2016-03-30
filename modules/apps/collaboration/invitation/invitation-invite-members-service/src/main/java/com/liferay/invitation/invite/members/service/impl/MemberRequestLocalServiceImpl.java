@@ -433,7 +433,6 @@ public class MemberRequestLocalServiceImpl
 			JSONObject notificationEventJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			notificationEventJSONObject.put("actionRequired", true);
 			notificationEventJSONObject.put(
 				"classPK", memberRequest.getMemberRequestId());
 			notificationEventJSONObject.put(
@@ -445,9 +444,11 @@ public class MemberRequestLocalServiceImpl
 					notificationEventJSONObject);
 
 			notificationEvent.setDeliveryRequired(0);
+			notificationEvent.setDeliveryType(
+				UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
 			userNotificationEventLocalService.addUserNotificationEvent(
-				memberRequest.getReceiverUserId(), notificationEvent);
+				memberRequest.getReceiverUserId(), true, notificationEvent);
 		}
 	}
 

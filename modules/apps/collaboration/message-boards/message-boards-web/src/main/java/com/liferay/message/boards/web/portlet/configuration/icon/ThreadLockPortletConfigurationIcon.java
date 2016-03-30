@@ -14,11 +14,10 @@
 
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -52,25 +51,23 @@ public class ThreadLockPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		MBMessageDisplay messageDisplay = null;
-
 		try {
-			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+			MBMessage message = ActionUtil.getMessage(portletRequest);
+
+			MBThread thread = message.getThread();
+
+			String key = "lock";
+
+			if (thread.isLocked()) {
+				key = "unlock";
+			}
+
+			return LanguageUtil.get(
+				getResourceBundle(getLocale(portletRequest)), key);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			return null;
 		}
-
-		String key = "lock";
-
-		MBThread thread = messageDisplay.getThread();
-
-		if (thread.isLocked()) {
-			key = "unlock";
-		}
-
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override
@@ -84,28 +81,26 @@ public class ThreadLockPortletConfigurationIcon
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/message_boards/edit_message");
 
-		MBMessageDisplay messageDisplay = null;
-
 		try {
-			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+			MBMessage message = ActionUtil.getMessage(portletRequest);
+
+			MBThread thread = message.getThread();
+
+			if (thread.isLocked()) {
+				portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
+			}
+			else {
+				portletURL.setParameter(Constants.CMD, Constants.LOCK);
+			}
+
+			portletURL.setParameter(
+				"redirect", PortalUtil.getCurrentURL(portletRequest));
+			portletURL.setParameter(
+				"threadId", String.valueOf(thread.getThreadId()));
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			return null;
 		}
-
-		MBThread thread = messageDisplay.getThread();
-
-		if (thread.isLocked()) {
-			portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
-		}
-		else {
-			portletURL.setParameter(Constants.CMD, Constants.LOCK);
-		}
-
-		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-		portletURL.setParameter(
-			"threadId", String.valueOf(thread.getThreadId()));
 
 		return portletURL.toString();
 	}
@@ -121,17 +116,14 @@ public class ThreadLockPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBThread thread = messageDisplay.getThread();
+			MBMessage message = ActionUtil.getMessage(portletRequest);
 
 			return MBCategoryPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), thread.getCategoryId(),
+				themeDisplay.getScopeGroupId(), message.getCategoryId(),
 				ActionKeys.LOCK_THREAD);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;

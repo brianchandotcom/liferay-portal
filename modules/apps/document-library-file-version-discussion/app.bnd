@@ -1,7 +1,7 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title:
+Liferay-Releng-App-Description: The Liferay Document Version Collaboration app lets your users comment on specific versions of documents in a Documents and Media library. This helps users collaborate on document revisions as they’re produced. The discussion also leaves a convenient record of the revision process.
+Liferay-Releng-App-Title: Liferay Document Version Collaboration${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category:
+Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true

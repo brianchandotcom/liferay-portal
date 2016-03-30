@@ -1,7 +1,7 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title:
+Liferay-Releng-App-Description: MediaWiki is a free software open source wiki package written in PHP, originally created for use on Wikipedia. This plugin allows for the use of the Mediawiki format directly in Liferay. Manage your Liferay content with the familiarity and flexibility of this popular format.
+Liferay-Releng-App-Title: Liferay MediaWiki${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category:
+Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true

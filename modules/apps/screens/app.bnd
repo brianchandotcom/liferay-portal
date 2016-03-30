@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: This plugin is a portlet that exposes additional classes and methods that are not present in Liferay's out-of-the-box API. These additional classes and methods allow Liferay Screens to do certain operations that are needed for the screenlets to work correctly.<br /><br />Please report issues with the Liferay Screens Compatibility Plugin by creating a ticket in https://issues.liferay.com/browse/LMW.
+Liferay-Releng-App-Description: This app exposes additional classes and methods that aren't present in Liferay's out-of-the-box API. These additional classes and methods are required for the Screenlets to work correctly.<br /><br />Please report issues with the Liferay Screens Compatibility Plugin by creating a ticket in https://issues.liferay.com/browse/LMW.
 Liferay-Releng-App-Title: Liferay Screens Compatibility${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility

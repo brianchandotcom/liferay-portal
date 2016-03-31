@@ -14,11 +14,7 @@
  */
 --%>
 
-<span class="selected-labels" id="<portlet:namespace />selectedRemote"></span>
-
-<aui:a cssClass="modify-link" href="javascript:;" id="remoteLink" label="change" method="get" />
-
-<div class="hide" id="<portlet:namespace />remote">
+<div id="<portlet:namespace />remote">
 	<div class="alert alert-info">
 		<liferay-ui:message key="export-the-selected-data-to-the-site-of-a-remote-portal-or-to-another-site-in-the-same-portal" />
 	</div>

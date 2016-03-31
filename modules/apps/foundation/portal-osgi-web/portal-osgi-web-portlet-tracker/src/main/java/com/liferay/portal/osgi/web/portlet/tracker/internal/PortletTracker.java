@@ -1041,8 +1041,8 @@ public class PortletTracker
 
 			return servletContextHelperRegistration;
 		}
-		catch (InterruptedException e) {
-			return ReflectionUtil.throwException(e);
+		catch (InterruptedException ie) {
+			return ReflectionUtil.throwException(ie);
 		}
 	}
 

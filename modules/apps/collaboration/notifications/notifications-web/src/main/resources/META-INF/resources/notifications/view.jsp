@@ -77,7 +77,7 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 				total="<%= userNotificationEventsCount %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEvents(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, actionRequired, searchContainer.getStart(), searchContainer.getEnd()) %>"
+					results="<%= UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEvents(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, actionRequired, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				/>
 
 				<liferay-ui:search-container-row

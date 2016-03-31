@@ -20,12 +20,16 @@
 	</command>
 
 	<command name="submit">
+		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
+
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="submitWithValidationError">
+		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
+
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />

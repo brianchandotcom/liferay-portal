@@ -56,7 +56,7 @@ import java.util.regex.Pattern;
 public class XugglerAutoInstallHelper {
 
 	public static void installNativeLibraries() throws ProcessException {
-		if (isNativeLibraryInstalled()) {
+		if (_isNativeLibraryInstalled()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Xuggler is already installed");
 			}
@@ -64,7 +64,7 @@ public class XugglerAutoInstallHelper {
 			return;
 		}
 
-		String xugglerJarFile = getXugglerJarFileName();
+		String xugglerJarFile = _getXugglerJarFileName();
 
 		if (xugglerJarFile == null) {
 			_log.error(
@@ -158,7 +158,7 @@ public class XugglerAutoInstallHelper {
 
 	}
 
-	private static String getXugglerJarFileName() {
+	private static String _getXugglerJarFileName() {
 		String bitmode = OSDetector.getBitmode();
 
 		if (Validator.isNull(bitmode) ||
@@ -185,13 +185,13 @@ public class XugglerAutoInstallHelper {
 		return null;
 	}
 
-	private static boolean isNativeLibraryInstalled() {
+	private static boolean _isNativeLibraryInstalled() {
 		Properties properties = PropsUtil.getProperties(
 			PropsKeys.XUGGLER_JAR_FILE, false);
 
 		Set<Object> jarFiles = SetUtil.fromCollection(properties.values());
 
-		jarFiles.remove(getXugglerJarFileName());
+		jarFiles.remove(_getXugglerJarFileName());
 
 		Thread currentThread = Thread.currentThread();
 

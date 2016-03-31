@@ -42,7 +42,7 @@ public class NestableAutoFlushEventListener
 
 		EventSource eventSource = autoFlushEvent.getSession();
 
-		if (!isFlushable(eventSource)) {
+		if (!_isFlushable(eventSource)) {
 			return;
 		}
 
@@ -55,7 +55,7 @@ public class NestableAutoFlushEventListener
 		PersistenceContext persistenceContext =
 			eventSource.getPersistenceContext();
 
-		if (isFlushReallyNeeded(autoFlushEvent, eventSource)) {
+		if (_isFlushReallyNeeded(autoFlushEvent, eventSource)) {
 			persistenceContext.setFlushing(true);
 
 			try {
@@ -84,10 +84,10 @@ public class NestableAutoFlushEventListener
 		}
 
 		autoFlushEvent.setFlushRequired(
-			isFlushReallyNeeded(autoFlushEvent, eventSource));
+			_isFlushReallyNeeded(autoFlushEvent, eventSource));
 	}
 
-	private boolean isFlushable(EventSource eventSource) {
+	private boolean _isFlushable(EventSource eventSource) {
 		FlushMode flushMode = eventSource.getFlushMode();
 
 		if (flushMode.lessThan(FlushMode.AUTO)) {
@@ -116,7 +116,7 @@ public class NestableAutoFlushEventListener
 		return false;
 	}
 
-	private boolean isFlushReallyNeeded(
+	private boolean _isFlushReallyNeeded(
 		AutoFlushEvent autoFlushEvent, EventSource eventSource) {
 
 		if (eventSource.getFlushMode() == FlushMode.ALWAYS) {

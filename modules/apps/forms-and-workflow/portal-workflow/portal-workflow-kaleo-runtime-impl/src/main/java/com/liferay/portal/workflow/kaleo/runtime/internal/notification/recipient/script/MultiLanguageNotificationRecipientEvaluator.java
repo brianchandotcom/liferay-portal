@@ -72,7 +72,7 @@ public class MultiLanguageNotificationRecipientEvaluator
 		NotificationRecipientEvaluator notificationRecipientEvaluator,
 		Map<String, Object> properties) {
 
-		String[] scriptingLanguages = getScriptingLanguages(
+		String[] scriptingLanguages = _getScriptingLanguages(
 			notificationRecipientEvaluator, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
@@ -88,7 +88,7 @@ public class MultiLanguageNotificationRecipientEvaluator
 		NotificationRecipientEvaluator notificationRecipientEvaluator,
 		Map<String, Object> properties) {
 
-		String[] scriptingLanguages = getScriptingLanguages(
+		String[] scriptingLanguages = _getScriptingLanguages(
 			notificationRecipientEvaluator, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
@@ -99,7 +99,7 @@ public class MultiLanguageNotificationRecipientEvaluator
 		}
 	}
 
-	private String[] getScriptingLanguages(
+	private String[] _getScriptingLanguages(
 		NotificationRecipientEvaluator notificationRecipientEvaluator,
 		Map<String, Object> properties) {
 

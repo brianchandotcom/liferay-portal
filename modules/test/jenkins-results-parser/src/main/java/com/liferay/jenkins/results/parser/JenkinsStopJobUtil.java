@@ -33,9 +33,9 @@ public class JenkinsStopJobUtil {
 			String jobURL, String username, String password)
 		throws Exception {
 
-		stopJob(jobURL, username, password);
+		_stopJob(jobURL, username, password);
 
-		stopDownstreamJobs(jobURL, username, password);
+		_stopDownstreamJobs(jobURL, username, password);
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -46,7 +46,7 @@ public class JenkinsStopJobUtil {
 		return new String(Base64.encodeBase64(authorizationString.getBytes()));
 	}
 
-	private static List<String> getDownstreamURLs(String jobURL)
+	private static List<String> _getDownstreamURLs(String jobURL)
 		throws Exception {
 
 		List<String> downstreamURLs = new ArrayList<>();
@@ -71,18 +71,19 @@ public class JenkinsStopJobUtil {
 		return downstreamURLs;
 	}
 
-	private static void stopDownstreamJobs(
+	private static void _stopDownstreamJobs(
 			String jobURL, String username, String password)
 		throws Exception {
 
-		List<String> downstreamURLs = getDownstreamURLs(jobURL);
+		List<String> downstreamURLs = _getDownstreamURLs(jobURL);
 
 		for (String downstreamURL : downstreamURLs) {
-			stopJob(downstreamURL, username, password);
+			_stopJob(downstreamURL, username, password);
 		}
 	}
 
-	private static void stopJob(String jobURL, String username, String password)
+	private static void _stopJob(
+			String jobURL, String username, String password)
 		throws Exception {
 
 		URL urlObject = new URL(

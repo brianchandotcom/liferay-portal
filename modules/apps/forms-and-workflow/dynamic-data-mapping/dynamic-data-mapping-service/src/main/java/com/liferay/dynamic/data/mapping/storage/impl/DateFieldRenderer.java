@@ -45,7 +45,7 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 				continue;
 			}
 
-			values.add(format(value, locale));
+			values.add(_format(value, locale));
 		}
 
 		return StringUtil.merge(values, StringPool.COMMA_AND_SPACE);
@@ -59,10 +59,10 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 			return StringPool.BLANK;
 		}
 
-		return format(value, locale);
+		return _format(value, locale);
 	}
 
-	private String format(Serializable value, Locale locale) {
+	private String _format(Serializable value, Locale locale) {
 		try {
 			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
 		}

@@ -72,7 +72,7 @@ public class StoreFactoryTest {
 		Store store = storeFactory.getStore("test");
 
 		Assert.assertTrue(
-			isAssignableFrom(store, DelegatorStore.class.getName()));
+			_isAssignableFrom(store, DelegatorStore.class.getName()));
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class StoreFactoryTest {
 		Store store = storeFactory.getStore("test");
 
 		Assert.assertTrue(
-			isAssignableFrom(
+			_isAssignableFrom(
 				store, FirstStoreWrapper.FirstDelegatorStore.class.getName()));
 	}
 
@@ -102,7 +102,7 @@ public class StoreFactoryTest {
 		}
 	}
 
-	private boolean isAssignableFrom(Store store, String className)
+	private boolean _isAssignableFrom(Store store, String className)
 		throws ClassNotFoundException {
 
 		Class<? extends Store> storeClass = store.getClass();

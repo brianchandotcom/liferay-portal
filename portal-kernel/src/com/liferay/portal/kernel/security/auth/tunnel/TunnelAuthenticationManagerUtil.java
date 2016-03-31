@@ -31,17 +31,17 @@ public class TunnelAuthenticationManagerUtil {
 	public static long getUserId(HttpServletRequest httpServletRequest)
 		throws AuthException {
 
-		return getTunnelManagerUtil().getUserId(httpServletRequest);
+		return _getTunnelManagerUtil().getUserId(httpServletRequest);
 	}
 
 	public static void setCredentials(
 			String login, HttpURLConnection httpURLConnection)
 		throws Exception {
 
-		getTunnelManagerUtil().setCredentials(login, httpURLConnection);
+		_getTunnelManagerUtil().setCredentials(login, httpURLConnection);
 	}
 
-	private static TunnelAuthenticationManager getTunnelManagerUtil() {
+	private static TunnelAuthenticationManager _getTunnelManagerUtil() {
 		return _instance._serviceTracker.getService();
 	}
 

@@ -571,13 +571,13 @@ public class JspServlet extends HttpServlet {
 				return _jspBundleClassloader;
 			}
 			else if (method.getName().equals("getResource")) {
-				return getResource((String)args[0]);
+				return _getResource((String)args[0]);
 			}
 			else if (method.getName().equals("getResourceAsStream")) {
-				return getResourceAsStream((String)args[0]);
+				return _getResourceAsStream((String)args[0]);
 			}
 			else if (method.getName().equals("getResourcePaths")) {
-				return getResourcePaths((String)args[0]);
+				return _getResourcePaths((String)args[0]);
 			}
 
 			Method adapterMethod = _contextAdapterMethods.get(method);
@@ -589,7 +589,7 @@ public class JspServlet extends HttpServlet {
 			return method.invoke(_servletContext, args);
 		}
 
-		private URL getExtension(String path) {
+		private URL _getExtension(String path) {
 			Matcher matcher = _originalJspPattern.matcher(path);
 
 			if (matcher.matches()) {
@@ -610,7 +610,7 @@ public class JspServlet extends HttpServlet {
 			return urls.get(urls.size() - 1);
 		}
 
-		private URL getResource(String path) {
+		private URL _getResource(String path) {
 			try {
 				if ((path == null) || path.equals(StringPool.BLANK)) {
 					return null;
@@ -620,7 +620,7 @@ public class JspServlet extends HttpServlet {
 					path = '/' + path;
 				}
 
-				URL url = getExtension(path);
+				URL url = _getExtension(path);
 
 				if (url != null) {
 					return url;
@@ -663,8 +663,8 @@ public class JspServlet extends HttpServlet {
 			return null;
 		}
 
-		private InputStream getResourceAsStream(String path) {
-			URL url = getResource(path);
+		private InputStream _getResourceAsStream(String path) {
+			URL url = _getResource(path);
 
 			if (url == null) {
 				return null;
@@ -678,7 +678,7 @@ public class JspServlet extends HttpServlet {
 			}
 		}
 
-		private Set<String> getResourcePaths(String path) {
+		private Set<String> _getResourcePaths(String path) {
 			Set<String> paths = _servletContext.getResourcePaths(path);
 
 			Enumeration<URL> enumeration = _jspBundle.findEntries(

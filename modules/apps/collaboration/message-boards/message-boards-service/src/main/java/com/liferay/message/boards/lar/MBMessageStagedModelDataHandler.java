@@ -340,7 +340,7 @@ public class MBMessageStagedModelDataHandler
 				}
 			}
 
-			importedMessage = updateAnswer(message, importedMessage);
+			importedMessage = _updateAnswer(message, importedMessage);
 
 			if (importedMessage.isRoot() && !importedMessage.isDiscussion()) {
 				_mbThreadLocalService.updateQuestion(
@@ -512,7 +512,8 @@ public class MBMessageStagedModelDataHandler
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
-	private MBMessage updateAnswer(MBMessage message, MBMessage importedMessage)
+	private MBMessage _updateAnswer(
+			MBMessage message, MBMessage importedMessage)
 		throws PortalException {
 
 		if (importedMessage.isAnswer() == message.isAnswer()) {

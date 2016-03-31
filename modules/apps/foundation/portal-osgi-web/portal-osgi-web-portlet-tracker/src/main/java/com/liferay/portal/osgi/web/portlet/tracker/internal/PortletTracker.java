@@ -236,7 +236,7 @@ public class PortletTracker
 		ServiceReference<Portlet> serviceReference, Portlet portlet,
 		String portletName, String portletId) {
 
-		warnPorletProperties(portletName, serviceReference);
+		_warnPorletProperties(portletName, serviceReference);
 
 		Bundle bundle = serviceReference.getBundle();
 
@@ -1092,7 +1092,7 @@ public class PortletTracker
 		return SetUtil.fromArray(array);
 	}
 
-	private void warnPorletProperties(
+	private void _warnPorletProperties(
 		String portletName, ServiceReference<Portlet> serviceReference) {
 
 		if (!_log.isWarnEnabled()) {

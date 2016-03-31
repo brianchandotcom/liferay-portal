@@ -56,7 +56,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			(status == BackgroundTaskConstants.STATUS_FAILED) ||
 			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
 
-			executeQueuedBackgroundTasks(taskExecutorClassName);
+			_executeQueuedBackgroundTasks(taskExecutorClassName);
 		}
 		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
 			long backgroundTaskId = (Long)message.get(
@@ -68,12 +68,12 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			if (!BackgroundTaskLockHelperUtil.isLockedBackgroundTask(
 					backgroundTask)) {
 
-				executeQueuedBackgroundTasks(taskExecutorClassName);
+				_executeQueuedBackgroundTasks(taskExecutorClassName);
 			}
 		}
 	}
 
-	private void executeQueuedBackgroundTasks(String taskExecutorClassName) {
+	private void _executeQueuedBackgroundTasks(String taskExecutorClassName) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Acquiring next queued background task for " +

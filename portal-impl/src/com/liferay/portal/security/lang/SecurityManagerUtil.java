@@ -67,7 +67,7 @@ public class SecurityManagerUtil {
 				return;
 			}
 
-			loadPortalSecurityManager();
+			_loadPortalSecurityManager();
 
 			if (_portalSecurityManager == null) {
 				_portalSecurityManagerStrategy =
@@ -115,7 +115,7 @@ public class SecurityManagerUtil {
 		return false;
 	}
 
-	private static void loadPortalSecurityManager() {
+	private static void _loadPortalSecurityManager() {
 		try {
 			List<PortalSecurityManager> portalSecurityManagers =
 				ServiceLoader.load(

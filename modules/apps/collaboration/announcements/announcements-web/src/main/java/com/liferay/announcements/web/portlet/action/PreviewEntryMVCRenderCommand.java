@@ -55,7 +55,7 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY,
-			getAnnouncementsEntry(renderRequest));
+			_getAnnouncementsEntry(renderRequest));
 		renderRequest.setAttribute(
 			AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
 			AnnouncementsFlagConstants.NOT_HIDDEN);
@@ -63,7 +63,7 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 		return "/view_entry.jsp";
 	}
 
-	private AnnouncementsEntry getAnnouncementsEntry(
+	private AnnouncementsEntry _getAnnouncementsEntry(
 		PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

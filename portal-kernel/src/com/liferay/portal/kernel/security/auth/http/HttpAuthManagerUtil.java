@@ -32,20 +32,20 @@ public class HttpAuthManagerUtil {
 		HttpServletResponse httpServletResponse,
 		HttpAuthorizationHeader httpAuthorizationHeader) {
 
-		getHttpAuthManager().generateChallenge(
+		_getHttpAuthManager().generateChallenge(
 			httpServletRequest, httpServletResponse, httpAuthorizationHeader);
 	}
 
 	public static long getBasicUserId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return getHttpAuthManager().getBasicUserId(httpServletRequest);
+		return _getHttpAuthManager().getBasicUserId(httpServletRequest);
 	}
 
 	public static long getDigestUserId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return getHttpAuthManager().getDigestUserId(httpServletRequest);
+		return _getHttpAuthManager().getDigestUserId(httpServletRequest);
 	}
 
 	public static long getUserId(
@@ -53,17 +53,17 @@ public class HttpAuthManagerUtil {
 			HttpAuthorizationHeader httpAuthorizationHeader)
 		throws PortalException {
 
-		return getHttpAuthManager().getUserId(
+		return _getHttpAuthManager().getUserId(
 			httpServletRequest, httpAuthorizationHeader);
 	}
 
 	public static HttpAuthorizationHeader parse(
 		HttpServletRequest httpServletRequest) {
 
-		return getHttpAuthManager().parse(httpServletRequest);
+		return _getHttpAuthManager().parse(httpServletRequest);
 	}
 
-	private static HttpAuthManager getHttpAuthManager() {
+	private static HttpAuthManager _getHttpAuthManager() {
 		return _instance._serviceTracker.getService();
 	}
 

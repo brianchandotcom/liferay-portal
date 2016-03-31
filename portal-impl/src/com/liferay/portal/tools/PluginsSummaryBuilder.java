@@ -42,7 +42,7 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class PluginsSummaryBuilder {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ToolDependencies.wireBasic();
 
 		File pluginsDir = new File(System.getProperty("plugins.dir"));
@@ -50,19 +50,14 @@ public class PluginsSummaryBuilder {
 		new PluginsSummaryBuilder(pluginsDir);
 	}
 
-	public PluginsSummaryBuilder(File pluginsDir) {
+	public PluginsSummaryBuilder(File pluginsDir) throws Exception {
 		_pluginsDir = pluginsDir;
 
 		String latestHASH = null;
 
-		try {
-			latestHASH = _getLatestHASH(pluginsDir);
+		latestHASH = _getLatestHASH(pluginsDir);
 
-			_createPluginsSummary();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		_createPluginsSummary();
 
 		_latestHASH = latestHASH;
 	}

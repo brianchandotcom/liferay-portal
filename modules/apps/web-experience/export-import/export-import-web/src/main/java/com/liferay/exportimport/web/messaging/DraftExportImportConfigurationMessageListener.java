@@ -20,9 +20,11 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.web.configuration.ExportImportWebConfigurationValues;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
@@ -73,22 +76,7 @@ public class DraftExportImportConfigurationMessageListener
 			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
-	}
-
-	@Override
-	protected void doReceive(Message message) throws PortalException {
-		if (ExportImportWebConfigurationValues.
-				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT == -1) {
-
-			return;
-		}
-
-		DynamicQuery dynamicQuery =
-			_exportImportConfigurationLocalService.dynamicQuery();
-
+	protected void addCommonCriterions(DynamicQuery dynamicQuery) {
 		Property typeProperty = PropertyFactoryUtil.forName("type");
 
 		dynamicQuery.add(
@@ -103,44 +91,110 @@ public class DraftExportImportConfigurationMessageListener
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 
 		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
+	}
 
-		Order order = OrderFactoryUtil.asc("createDate");
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
 
-		dynamicQuery.addOrder(order);
+	@Override
+	protected void doReceive(Message message) throws PortalException {
+		if (ExportImportWebConfigurationValues.
+				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT == -1) {
 
-		dynamicQuery.setLimit(
-			QueryUtil.ALL_POS,
-			ExportImportWebConfigurationValues.
-				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT);
+			return;
+		}
 
-		List<ExportImportConfiguration> exportImportConfigurations =
-			_exportImportConfigurationLocalService.dynamicQuery(dynamicQuery);
+		final Date lastCreateDate;
 
-		for (ExportImportConfiguration exportImportConfiguration :
-				exportImportConfigurations) {
+		if (ExportImportWebConfigurationValues.
+				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT == 0) {
 
-			List<BackgroundTask> backgroundTasks = getParentBackgroundTasks(
-				exportImportConfiguration);
+			lastCreateDate = new Date();
+		}
+		else {
+			DynamicQuery dynamicQuery =
+				_exportImportConfigurationLocalService.dynamicQuery();
 
-			if (ListUtil.isEmpty(backgroundTasks)) {
-				_exportImportConfigurationLocalService.
-					deleteExportImportConfiguration(exportImportConfiguration);
+			addCommonCriterions(dynamicQuery);
 
-				continue;
+			Order order = OrderFactoryUtil.desc("createDate");
+
+			dynamicQuery.addOrder(order);
+
+			dynamicQuery.setLimit(
+				QueryUtil.ALL_POS,
+				ExportImportWebConfigurationValues.
+					DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT);
+
+			dynamicQuery.setProjection(
+				ProjectionFactoryUtil.property("createDate"));
+
+			List<Date> createDates =
+				_exportImportConfigurationLocalService.dynamicQuery(
+					dynamicQuery);
+
+			if (ListUtil.isEmpty(createDates)) {
+				return;
 			}
 
-			// BackgroundTaskModelListener deletes the linked configuration
-			// automatically
+			lastCreateDate = createDates.get(createDates.size() - 1);
+		}
 
-			for (BackgroundTask backgroundTask : backgroundTasks) {
-				if (isLiveGroup(backgroundTask.getGroupId())) {
-					continue;
+		ActionableDynamicQuery actionableDynamicQuery =
+			_exportImportConfigurationLocalService.getActionableDynamicQuery();
+
+		final Property createDate = PropertyFactoryUtil.forName("createDate");
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					addCommonCriterions(dynamicQuery);
+
+					dynamicQuery.add(createDate.lt(lastCreateDate));
 				}
 
-				_backgroundTaskLocalService.deleteBackgroundTask(
-					backgroundTask.getBackgroundTaskId());
-			}
-		}
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<ExportImportConfiguration>() {
+
+				@Override
+				public void performAction(
+						ExportImportConfiguration exportImportConfiguration)
+					throws PortalException {
+
+					List<BackgroundTask> backgroundTasks =
+						getParentBackgroundTasks(exportImportConfiguration);
+
+					if (ListUtil.isEmpty(backgroundTasks)) {
+						_exportImportConfigurationLocalService.
+							deleteExportImportConfiguration(
+								exportImportConfiguration);
+
+						return;
+					}
+
+					// BackgroundTaskModelListener deletes the linked
+					// configuration automatically
+
+					for (BackgroundTask backgroundTask : backgroundTasks) {
+						if (isLiveGroup(backgroundTask.getGroupId())) {
+							continue;
+						}
+
+						_backgroundTaskLocalService.deleteBackgroundTask(
+							backgroundTask.getBackgroundTaskId());
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected List<BackgroundTask> getParentBackgroundTasks(

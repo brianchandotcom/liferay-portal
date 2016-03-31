@@ -133,7 +133,8 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 				{
 					position: 'right',
 					trigger: '.lfr-portal-tooltip',
-					visible: false
+					visible: false,
+					zIndex: Liferay.zIndex.TOOLTIP
 				}
 			);
 

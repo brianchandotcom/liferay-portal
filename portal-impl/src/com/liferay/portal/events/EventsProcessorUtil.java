@@ -57,7 +57,8 @@ public class EventsProcessorUtil {
 			HttpServletResponse response)
 		throws ActionException {
 
-		_instance.doProcess(key, classes, new LifecycleEvent(request, response));
+		_instance.doProcess(
+			key, classes, new LifecycleEvent(request, response));
 	}
 
 	public static void process(
@@ -96,17 +97,6 @@ public class EventsProcessorUtil {
 	}
 
 	protected EventsProcessorUtil() {
-	}
-
-	protected Collection<LifecycleAction> getLifecycleActions(String key) {
-		List<LifecycleAction> lifecycleActions = _lifecycleActions.getService(
-			key);
-
-		if (lifecycleActions == null) {
-			lifecycleActions = Collections.emptyList();
-		}
-
-		return lifecycleActions;
 	}
 
 	protected void doProcess(
@@ -186,6 +176,17 @@ public class EventsProcessorUtil {
 
 			_serviceRegistrationMaps.remove(key, Collections.emptyList());
 		}
+	}
+
+	protected Collection<LifecycleAction> getLifecycleActions(String key) {
+		List<LifecycleAction> lifecycleActions = _lifecycleActions.getService(
+			key);
+
+		if (lifecycleActions == null) {
+			lifecycleActions = Collections.emptyList();
+		}
+
+		return lifecycleActions;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

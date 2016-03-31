@@ -1,8 +1,8 @@
 FileTree fileTree = fileTree(rootDir) {
 	exclude "**/bin/"
 	exclude "sdk/*/samples/"
-	exclude "sdk/module-templates/classes/"
-	exclude "sdk/module-templates/src/"
+	exclude "sdk/gradle-templates/classes/"
+	exclude "sdk/gradle-templates/src/"
 
 	if (Boolean.getBoolean("portal.build")) {
 		String excludesString = System.properties["portal.build.modules.excludes"]

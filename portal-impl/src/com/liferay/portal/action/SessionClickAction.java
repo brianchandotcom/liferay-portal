@@ -61,7 +61,7 @@ public class SessionClickAction extends Action {
 			while (enu.hasMoreElements()) {
 				String name = enu.nextElement();
 
-				if (!name.equals("doAsUserId")) {
+				if (!name.equals("doAsUserId") && !name.equals("p_auth")) {
 					String value = ParamUtil.getString(request, name);
 
 					if (useHttpSession) {

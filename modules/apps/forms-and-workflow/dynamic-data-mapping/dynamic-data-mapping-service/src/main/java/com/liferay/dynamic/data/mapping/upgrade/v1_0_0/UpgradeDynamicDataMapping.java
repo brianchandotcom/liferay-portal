@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -248,11 +247,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected List<String> getDDMDateFieldNames(DDMForm ddmForm)
 		throws Exception {
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
 		List<String> ddmFormDateFieldNames = new ArrayList<>();
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			String dataType = ddmFormField.getType();
 
 			if (dataType.equals("ddm-date")) {
@@ -683,7 +680,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		List<String> ddmDateFieldNames = getDDMDateFieldNames(ddmForm);
 
-		if (ListUtil.isEmpty(ddmDateFieldNames)) {
+		if (ddmDateFieldNames.isEmpty()) {
 			return;
 		}
 

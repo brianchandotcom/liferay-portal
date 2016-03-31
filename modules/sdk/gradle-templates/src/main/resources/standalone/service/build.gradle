@@ -1,0 +1,25 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
+		}
+	}
+}
+
+apply plugin: "com.liferay.plugin"
+
+dependencies {
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+}
+
+repositories {
+	maven {
+		url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
+	}
+}

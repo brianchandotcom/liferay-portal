@@ -3154,6 +3154,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 						String linePart = trimmedLine.substring(0, x + 1);
 
+						if (getLevel(linePart, "{", "}") > 0) {
+							return null;
+						}
+
 						if (linePart.startsWith(StringPool.OPEN_PARENTHESIS) &&
 							!linePart.contains(
 								StringPool.CLOSE_PARENTHESIS)) {

@@ -413,7 +413,7 @@ public class IncludeTag extends AttributesTagSupport {
 
 		if (isPortalPage(page)) {
 			if (contextPath.equals(StringPool.SLASH)) {
-				sb = null;
+				return;
 			}
 			else {
 				sb.append(" You must not use a taglib from a module and set ");
@@ -436,9 +436,7 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 		}
 
-		if (sb != null) {
-			_log.warn(sb.toString());
-		}
+		_log.warn(sb.toString());
 	}
 
 	protected int processEndTag() throws Exception {

@@ -255,16 +255,16 @@ public class SourceFormatterHelper {
 				public FileVisitResult visitFile(
 					Path filePath, BasicFileAttributes basicFileAttributes) {
 
-					filePath = getCanonicalPath(filePath);
+					Path canonicalPath = getCanonicalPath(filePath);
 
 					for (PathMatcher pathMatcher : excludeFilePathMatchers) {
-						if (pathMatcher.matches(filePath)) {
+						if (pathMatcher.matches(canonicalPath)) {
 							return FileVisitResult.CONTINUE;
 						}
 					}
 
 					for (PathMatcher pathMatcher : includeFilePathMatchers) {
-						if (!pathMatcher.matches(filePath)) {
+						if (!pathMatcher.matches(canonicalPath)) {
 							continue;
 						}
 

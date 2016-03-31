@@ -63,7 +63,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 					<aui:button name="emailButton" value="add-email-address" />
 				</div>
 
-				<label><liferay-ui:message key="emails-to-invite" /></label>
+				<label><liferay-ui:message key="email-addresses-to-send-invite" /></label>
 
 				<div class="email-invited" id="<portlet:namespace />invitedEmailList"></div>
 
@@ -124,7 +124,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 </div>
 
 <aui:script use="liferay-portlet-invite-members">
-	new Liferay.Portlet.InviteMembers(
+	var portletInviteMembers = new Liferay.Portlet.InviteMembers(
 		{
 			availableUsersURL: '<portlet:resourceURL id="getAvailableUsers" />',
 			form: {
@@ -135,4 +135,14 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 			rootNode: '#<portlet:namespace/>inviteMembersContainer'
 		}
 	);
+
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			portletInviteMembers.destroy();
+
+			Liferay.detach('destroyPortlet', destroyInstance);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

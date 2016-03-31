@@ -113,23 +113,27 @@
 				</c:otherwise>
 			</c:choose>
 
-			if (focusField.length) {
-				Liferay.once(
-					'<portlet:namespace />formReady',
-					function(event) {
-						sectionContent.one(
-							'shown.bs.collapse',
-							function() {
-								Liferay.Util.focusFormField(focusField);
-							}
-						);
-					}
-				);
-			}
+			Liferay.once(
+				'<portlet:namespace />formReady',
+				function(event) {
+					if (!sectionContent.hasClass('in')) {
+						if (focusField.length) {
+							sectionContent.one(
+								'shown.bs.collapse',
+								function() {
+									Liferay.Util.focusFormField(focusField);
+								}
+							);
+						}
 
-			if (!sectionContent.hasClass('in')) {
-				sectionContent.collapse('show');
-			}
+						sectionContent.collapse('show');
+					}
+					else if (focusField.length) {
+						Liferay.Util.focusFormField(focusField);
+					}
+				}
+			);
+
 		</aui:script>
 
 	<%

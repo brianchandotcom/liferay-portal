@@ -59,6 +59,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  * @author Raymond Augé
+ * @see com.liferay.util.dao.orm.CustomSQL
  */
 public class CustomSQL {
 

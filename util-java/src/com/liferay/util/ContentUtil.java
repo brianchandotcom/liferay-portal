@@ -26,6 +26,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @see com.liferay.content.util.ContentUtil
  */
 public class ContentUtil {
 

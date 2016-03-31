@@ -128,7 +128,7 @@
 				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					row.setCssClass("entry-card lfr-asset-item");
 
 					AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 					%>

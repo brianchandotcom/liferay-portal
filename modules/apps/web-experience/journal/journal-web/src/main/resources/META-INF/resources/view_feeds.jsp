@@ -144,7 +144,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -195,7 +195,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 <aui:script>
 	function <portlet:namespace />deleteFeeds() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
-			submitForm(form);
+			submitForm(document.<portlet:namespace />fm);
 		}
 	}
 </aui:script>

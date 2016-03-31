@@ -124,7 +124,7 @@
 				<c:when test="<%= layoutPrototypeDisplayContext.isIconView() %>">
 
 					<%
-					row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>

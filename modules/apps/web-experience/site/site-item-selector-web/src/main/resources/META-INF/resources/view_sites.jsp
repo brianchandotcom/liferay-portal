@@ -117,7 +117,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
-					row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 
 					Map<String, Object> linkData = new HashMap<String, Object>();
 

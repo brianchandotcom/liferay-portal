@@ -304,7 +304,7 @@ if (Validator.isNotNull(keywords)) {
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 
 								<%
-								row.setCssClass("col-md-3 folder-entry");
+								row.setCssClass("entry-card lfr-asset-folder");
 
 								if (folder != null) {
 									PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
@@ -330,8 +330,6 @@ if (Validator.isNotNull(keywords)) {
 								}
 
 								if (fileEntry != null) {
-									row.setCssClass("col-lg-3 col-md-3 col-sm-4 col-xs-6");
-
 									FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
 									String title = DLUtil.getTitleWithExtension(fileEntry);

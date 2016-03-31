@@ -53,13 +53,13 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 		>
 
 			<%
-			row.setCssClass("col-md-3");
-
 			long refererGroupId = (themeDisplay.getRefererGroupId() != 0) ? themeDisplay.getRefererGroupId() : themeDisplay.getScopeGroupId();
 
 			PortletURL viewGroupURL = itemSelector.getItemSelectorURL(requestBackedPortletURLFactory, curGroup, refererGroupId, itemSelectedEventName, itemSelectorCriteria.toArray(new ItemSelectorCriterion[itemSelectorCriteria.size()]));
 
 			viewGroupURL.setParameter("selectedTab", ParamUtil.getString(request, "selectedTab"));
+
+			row.setCssClass("entry-card lfr-asset-item");
 			%>
 
 			<liferay-ui:search-container-column-text colspan="<%= 3 %>">

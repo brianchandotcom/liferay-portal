@@ -114,10 +114,46 @@
 	}
 }
 
-.article-entry {
-	min-width: 150px;
+.display-style-icon {
+	.lfr-asset-folder, .lfr-asset-item {
+		float: left;
+		padding-left: 15px;
+		padding-right: 15px;
+
+		@include md {
+			width: 33.33333%;
+		}
+	}
+
+	.lfr-asset-folder {
+		width: 100%;
+
+		@include xs {
+			width: 50%;
+		}
+
+		@include lg {
+			width: 25%;
+		}
+	}
+
+	.lfr-asset-item {
+		width: 50%;
+
+		@include sm {
+			width: 25%;
+		}
+
+		@include lg {
+			width: 20%;
+		}
+	}
 }
 
-.folder-entry {
-	min-width: 250px;
+.lfr-asset-item {
+	min-width: 145px;
+}
+
+.lfr-asset-folder {
+	min-width: 215px;
 }

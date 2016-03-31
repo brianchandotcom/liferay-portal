@@ -137,13 +137,13 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
-					row.setCssClass("col-md-2 col-sm-3 col-xs-6");
-
 					String author = StringPool.NBSP;
 
 					if ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) {
 						author = LanguageUtil.format(request, "by-x", selPluginPackage.getAuthor());
 					}
+
+					row.setCssClass("entry-card lfr-asset-item");
 					%>
 
 					<liferay-ui:search-container-column-text>

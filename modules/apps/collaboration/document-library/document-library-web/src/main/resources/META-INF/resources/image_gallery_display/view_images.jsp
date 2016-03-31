@@ -83,8 +83,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						}
 					}
 				}
-
-				row.setClassName("col-md-4 col-sm-4 col-xs-6");
 				%>
 
 				<liferay-ui:search-container-column-text>
@@ -120,10 +118,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>
-
-				<%
-				row.setCssClass("col-md-4 col-sm-4 col-xs-6");
-				%>
 
 				<liferay-ui:search-container-column-text>
 					<liferay-frontend:horizontal-card

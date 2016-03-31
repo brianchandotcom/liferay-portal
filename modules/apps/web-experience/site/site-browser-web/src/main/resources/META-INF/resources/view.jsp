@@ -145,7 +145,7 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
-					row.setCssClass("article-entry col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 					%>
 
 					<liferay-ui:search-container-column-text>

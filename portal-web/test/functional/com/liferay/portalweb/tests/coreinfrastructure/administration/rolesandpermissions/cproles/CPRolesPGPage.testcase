@@ -21,6 +21,10 @@
 	<command name="RemoveNoGuestInlineView" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Welcome" />
 		</execute>

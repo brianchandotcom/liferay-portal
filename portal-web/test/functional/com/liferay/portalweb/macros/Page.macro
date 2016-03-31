@@ -463,43 +463,6 @@
 		<execute function="AssertClick" locator1="Panel#MENU_ITEM" value1="${portletName}" />
 	</command>
 
-	<command name="gotoPG" summary="Navigate to the page named '${pageName}'">
-		<if>
-			<isset var="nodePort" />
-			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
-			</then>
-			<elseif>
-				<not>
-					<and>
-						<isset var="defaultURL" />
-						<equals arg1="${defaultURL}" arg2="false" />
-					</and>
-				</not>
-				<then>
-					<execute macro="Page#openURL">
-						<var name="friendlyURL" value="${friendlyURL}" />
-						<var name="pageAccess" value="${pageAccess}" />
-						<var name="pageStaging" value="${pageStaging}" />
-						<var name="siteName" value="${siteName}" />
-						<var name="siteNameURL" value="${siteNameURL}" />
-						<var name="siteURL" value="${siteURL}" />
-						<var name="specificURL" value="${specificURL}" />
-						<var name="virtualHostsURL" value="${virtualHostsURL}" />
-					</execute>
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}">
-			<var name="key_pageName" value="${pageName}" />
-		</execute>
-
-		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
-			<var name="key_pageName" value="${pageName}" />
-		</execute>
-	</command>
-
 	<command name="gotoSALocalizedCP">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
@@ -516,72 +479,6 @@
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portletName}" />
 		</execute>
-	</command>
-
-	<command name="openURL">
-		<if>
-			<and>
-				<isset var="pageAccess" />
-				<equals arg1="${pageAccess}" arg2="Private" />
-			</and>
-			<then>
-				<var name="pageAccessURL" value="/group" />
-			</then>
-			<else>
-				<var name="pageAccessURL" value="/web" />
-			</else>
-		</if>
-
-		<if>
-			<and>
-				<isset var="siteName" />
-				<equals arg1="${siteURL}" arg2="true" />
-			</and>
-			<then>
-				<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
-				<var method="StringUtil#lowerCase('/${siteNameURL}')" name="siteNameURL" />
-			</then>
-			<elseif>
-				<isset var="friendlyURL" />
-				<then>
-					<var name="siteNameURL" value="/${friendlyURL}" />
-				</then>
-			</elseif>
-			<else>
-				<var name="siteNameURL" value="/guest" />
-			</else>
-		</if>
-
-		<if>
-			<and>
-				<isset var="pageStaging" />
-				<equals arg1="${pageStaging}" arg2="true" />
-			</and>
-			<then>
-				<var name="pageStagingURL" value="-staging" />
-			</then>
-			<else>
-				<var name="pageStagingURL" value="" />
-			</else>
-		</if>
-
-		<if>
-			<isset var="virtualHostsURL" />
-			<then>
-				<var name="siteNameURL" value="${virtualHostsURL}" />
-
-				<execute function="Open" locator1="${siteNameURL}" />
-			</then>
-			<elseif>
-				<isset var="specificURL" />
-				<then>
-					<execute function="Open" locator1="${specificURL}" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
-			</else>
-		</if>
 	</command>
 
 	<command name="openURLLocale">

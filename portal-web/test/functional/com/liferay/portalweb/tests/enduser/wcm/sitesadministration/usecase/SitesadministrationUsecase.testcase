@@ -1457,9 +1457,13 @@
 			<var name="pageTemplateName" value="Blog" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoPagePG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog Page Template" />
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoPagePG">
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1467,9 +1471,13 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoPagePG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog Page Template" />
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoPagePG">
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
 		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount" >
@@ -1480,9 +1488,13 @@
 			</execute>
 		</for>
 
-		<execute macro="PermissionsInline#gotoPagePG">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog Page Template" />
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoPagePG">
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
 		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionsInLineCheckListsCount" >

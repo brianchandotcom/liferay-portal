@@ -1406,9 +1406,11 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="entryTitle" value="${entryTitle}" />

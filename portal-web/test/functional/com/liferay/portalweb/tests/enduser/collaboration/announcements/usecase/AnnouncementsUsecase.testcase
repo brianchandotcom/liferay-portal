@@ -28,6 +28,10 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+
 				<execute macro="AnnouncementsEntry#tearDownPG" />
 
 				<execute macro="Page#tearDownPG" />

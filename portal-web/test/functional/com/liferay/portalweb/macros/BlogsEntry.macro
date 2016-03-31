@@ -136,15 +136,13 @@
 		<if>
 			<equals arg1="${virtualHosts}" arg2="true" />
 			<then>
-				<execute macro="Page#gotoPG">
+				<execute macro="Navigator#gotoSpecificURLPage">
 					<var name="pageName" value="Blogs Page" />
-					<var name="siteName" value="${siteName}" />
-					<var name="siteURL" value="true" />
-					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+					<var name="url" value="${virtualHostsURL}" />
 				</execute>
 			</then>
 			<else>
-				<execute macro="Page#gotoPG">
+				<execute macro="Navigator#gotoPage">
 					<var name="pageName" value="Blogs Page" />
 				</execute>
 			</else>

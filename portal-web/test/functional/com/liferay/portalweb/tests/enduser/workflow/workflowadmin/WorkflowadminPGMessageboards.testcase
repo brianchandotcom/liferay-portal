@@ -43,9 +43,11 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="MessageboardsThread#tearDownPG">
-					<var name="pageName" value="${pageName}" />
-				</execute>
+				<execute macro="MessageboardsCategory#tearDownCP" />
+
+				<execute macro="MessageboardsThread#tearDownCP" />
+
+				<execute macro="MessageboardsPortlet#tearDownConfigurationGeneralCP" />
 
 				<execute macro="Page#tearDownPG" />
 

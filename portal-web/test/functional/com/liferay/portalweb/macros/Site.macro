@@ -1251,19 +1251,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSiteTemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
 	</command>
 
-	<command name="viewSitePG">
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${childSiteName}" />
-		<execute function="AssertLocation" value1="${sitePageURL}" />
-	</command>
-
 	<command name="viewVirtualHostsURLPG">
 		<var name="key_pageName" value="${pageName}" />
 

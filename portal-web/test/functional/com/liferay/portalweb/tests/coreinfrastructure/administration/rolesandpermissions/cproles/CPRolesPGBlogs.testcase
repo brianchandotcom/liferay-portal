@@ -763,11 +763,13 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -806,11 +808,13 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -873,9 +877,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -901,9 +908,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -1038,9 +1048,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -1071,9 +1084,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1231,11 +1247,13 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -1269,11 +1287,13 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1341,11 +1361,13 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Team#definePermissionPG">
@@ -1379,11 +1401,13 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Team#removePermissionPG">
@@ -1446,9 +1470,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1475,9 +1502,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -1751,9 +1781,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1779,9 +1812,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoBlogsEntryPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

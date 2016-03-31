@@ -254,16 +254,20 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
-		</execute>
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<execute macro="Navigator#gotoStagedSitePage">
+					<var name="pageName" value="${pageName}" />
+					<var name="siteName" value="${siteName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</else>
+		</if>
 
 		<var name="key_endDate" value="${endDate}" />
 		<var name="key_endDateTime" value="${endDateTime}" />
@@ -405,16 +409,20 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
-		</execute>
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<execute macro="Navigator#gotoStagedSitePage">
+					<var name="pageName" value="${pageName}" />
+					<var name="siteName" value="${siteName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
 			<var name="endDate" value="${endDate}" />
@@ -483,16 +491,20 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
-		</execute>
+		<if>
+			<equals arg1="${pageStaging}" arg2="true" />
+			<then>
+				<execute macro="Navigator#gotoStagedSitePage">
+					<var name="pageName" value="${pageName}" />
+					<var name="siteName" value="${siteName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</else>
+		</if>
 
 		<var name="key_endDate" value="${endDate}" />
 		<var name="key_endDateTime" value="${endDateTime}" />
@@ -579,12 +591,8 @@
 
 				<execute macro="CalendarEvent#publish" />
 
-				<execute macro="Page#gotoPG">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
+				<execute macro="Navigator#gotoPage">
 					<var name="pageName" value="${pageName}" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
 				</execute>
 
 				<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
@@ -627,12 +635,8 @@
 
 					<execute function="SelectFrame" value1="relative=top" />
 
-					<execute macro="Page#gotoPG">
-						<var name="defaultURL" value="${defaultURL}" />
-						<var name="nodePort" value="${nodePort}" />
+					<execute macro="Navigator#gotoPage">
 						<var name="pageName" value="${pageName}" />
-						<var name="soDashboard" value="${soDashboard}" />
-						<var name="soPage" value="${soPage}" />
 					</execute>
 
 					<var name="key_endDate" value="${endDate}" />
@@ -1041,15 +1045,8 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<var name="key_eventTitle" value="${eventTitleEdit}" />
@@ -1146,12 +1143,8 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
@@ -1480,12 +1473,8 @@
 					<var name="portletName" value="Calendar" />
 				</execute>
 
-				<execute macro="Page#gotoPG">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
+				<execute macro="Navigator#gotoPage">
 					<var name="pageName" value="Marketplace Calendar Testing" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
 				</execute>
 			</then>
 		</if>

@@ -273,7 +273,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected Jar addTaskBuildWSDDJar(final BuildWSDDTask buildWSDDTask) {
 		Project project = buildWSDDTask.getProject();
 
-		final Jar jar = GradleUtil.addTask(
+		Jar jar = GradleUtil.addTask(
 			project, buildWSDDTask.getName() + "Jar", Jar.class);
 
 		jar.dependsOn(buildWSDDTask);

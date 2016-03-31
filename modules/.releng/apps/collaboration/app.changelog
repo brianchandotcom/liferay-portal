@@ -187,3 +187,94 @@ app.artifacts-1.1=\
 app.change.log-1.1= LPS-61420 LPS-61420 LPS-61420 LPS-64335 LPS-61420 LPS-64335 LPS-64335 LPS-64526 LPS-64526 
 
 app.git.id-1.1=b0fb870af3ec95454d6d62a4b602d1a53a9d2e6d
+
+#
+# Liferay App Version 1.2
+#
+
+app.artifacts-1.2=\
+	com.liferay.announcements.web-1.0.2.jar,\
+	com.liferay.blogs.api-3.0.0.jar,\
+	com.liferay.blogs.editor.config-2.0.0.jar,\
+	com.liferay.blogs.item.selector-2.0.0.jar,\
+	com.liferay.blogs.item.selector.web-1.0.1.jar,\
+	com.liferay.blogs.layout.prototype-2.0.1.jar,\
+	com.liferay.blogs.recent.bloggers.web-1.0.1.jar,\
+	com.liferay.blogs.service-1.0.1.jar,\
+	com.liferay.blogs.web-1.0.5.jar,\
+	com.liferay.bookmarks.api-2.0.0.jar,\
+	com.liferay.bookmarks.service-1.0.2.jar,\
+	com.liferay.bookmarks.web-1.0.4.jar,\
+	com.liferay.comment.api-2.0.0.jar,\
+	com.liferay.comment.editor.config-2.0.0.jar,\
+	com.liferay.comment.page.comments.web-1.0.1.jar,\
+	com.liferay.comment.ratings.definition-2.0.0.jar,\
+	com.liferay.comment.sanitizer-2.0.0.jar,\
+	com.liferay.comment.web-1.0.2.jar,\
+	com.liferay.directory.web-1.0.1.jar,\
+	com.liferay.document.library.api-3.0.0.jar,\
+	com.liferay.document.library.item.selector.web-1.0.1.jar,\
+	com.liferay.document.library.layout.set.prototype-2.0.1.jar,\
+	com.liferay.document.library.repository.cmis-2.0.1.jar,\
+	com.liferay.document.library.repository.cmis.impl-2.0.0.jar,\
+	com.liferay.document.library.repository.search-2.0.0.jar,\
+	com.liferay.document.library.service-1.0.2.jar,\
+	com.liferay.document.library.web-1.0.5.jar,\
+	com.liferay.flags.api-2.0.0.jar,\
+	com.liferay.flags.service-2.0.1.jar,\
+	com.liferay.flags.taglib-2.0.1.jar,\
+	com.liferay.flags.taglib.freemarker.contributor-2.0.0.jar,\
+	com.liferay.flags.web-2.0.0.jar,\
+	com.liferay.image.uploader.web-1.0.2.jar,\
+	com.liferay.invitation.invite.members.api-2.0.0.jar,\
+	com.liferay.invitation.invite.members.service-2.0.1.jar,\
+	com.liferay.invitation.invite.members.web-1.0.4.jar,\
+	com.liferay.item.selector.api-2.0.0.jar,\
+	com.liferay.item.selector.criteria.api-2.0.0.jar,\
+	com.liferay.item.selector.editor.configuration-2.0.0.jar,\
+	com.liferay.item.selector.taglib-1.0.3.jar,\
+	com.liferay.item.selector.taglib.freemarker.contributor-2.0.0.jar,\
+	com.liferay.item.selector.upload.web-2.0.0.jar,\
+	com.liferay.item.selector.url.web-2.0.0.jar,\
+	com.liferay.item.selector.web-2.0.0.jar,\
+	com.liferay.mentions.api-2.0.0.jar,\
+	com.liferay.mentions.service-2.0.0.jar,\
+	com.liferay.mentions.web-1.0.2.jar,\
+	com.liferay.message.boards.api-3.0.0.jar,\
+	com.liferay.message.boards.comment-2.0.1.jar,\
+	com.liferay.message.boards.layout.set.prototype-1.0.2.jar,\
+	com.liferay.message.boards.parser.bbcode-2.0.0.jar,\
+	com.liferay.message.boards.service-1.0.1.jar,\
+	com.liferay.message.boards.web-1.0.4.jar,\
+	com.liferay.microblogs.api-2.0.0.jar,\
+	com.liferay.microblogs.service-2.0.1.jar,\
+	com.liferay.microblogs.web-2.0.1.jar,\
+	com.liferay.notifications.web-1.0.3.jar,\
+	com.liferay.quick.note.web-2.0.0.jar,\
+	com.liferay.ratings.api-2.0.0.jar,\
+	com.liferay.ratings.page.ratings.web-2.0.1.jar,\
+	com.liferay.ratings.service-1.0.1.jar,\
+	com.liferay.recent.documents.web-2.0.0.jar,\
+	com.liferay.social.activities.web-1.0.2.jar,\
+	com.liferay.social.activity-2.0.0.jar,\
+	com.liferay.social.activity.web-2.0.0.jar,\
+	com.liferay.social.group.statistics.web-2.0.0.jar,\
+	com.liferay.social.privatemessaging.api-2.0.0.jar,\
+	com.liferay.social.privatemessaging.service-1.0.4.jar,\
+	com.liferay.social.privatemessaging.web-1.0.3.jar,\
+	com.liferay.social.requests.web-1.0.1.jar,\
+	com.liferay.social.user.statistics.web-2.0.1.jar,\
+	com.liferay.wiki.api-2.0.0.jar,\
+	com.liferay.wiki.editor.config-2.0.0.jar,\
+	com.liferay.wiki.engine.creole-2.0.0.jar,\
+	com.liferay.wiki.engine.html-2.0.0.jar,\
+	com.liferay.wiki.engine.input.editor.common-2.0.0.jar,\
+	com.liferay.wiki.engine.text-2.0.0.jar,\
+	com.liferay.wiki.layout.prototype-1.0.2.jar,\
+	com.liferay.wiki.navigation.web-2.0.0.jar,\
+	com.liferay.wiki.service-1.0.3.jar,\
+	com.liferay.wiki.web-1.0.3.jar
+
+app.change.log-1.2=LPS-57200 LPS-61420 LPS-62982 LPS-63118 LPS-64334 LPS-64353 LPS-64359 LPS-64370 LPS-64383 LPS-64408 LPS-64409 LPS-64418 LPS-64427 LPS-64430 LPS-64531 LPS-64546 LPS-64661 LPS-64668 LPS-64672 LPS-64674 LPS-64691 LPS-64704 LPS-64707 LPS-64718 LPS-64742 
+
+app.git.id-1.2=d8c067857c1a42861a216d1696038555a3a785ee

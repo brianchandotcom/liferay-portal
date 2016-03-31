@@ -179,7 +179,7 @@
 				<if>
 					<isset var="customMaxAgeMsg" />
 					<then>
-						<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="${customMaxAgeMsg}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_INFO" value1="${customMaxAgeMsg}" />
 					</then>
 					<else>
 						<execute function="AssertTextEquals" locator1="Message#RECYCLE_BIN_INFO" value1="The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted.Entries that have been in the Recycle Bin for more than 1 month are automatically deleted." />

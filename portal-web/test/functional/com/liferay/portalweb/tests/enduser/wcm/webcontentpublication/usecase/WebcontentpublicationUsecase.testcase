@@ -213,7 +213,11 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute function="Click#makeVisibleClickAt" locator1="Icon#EDIT" />
+		<var name="key_assetTitle" value="WC WebContent Title" />
+
+		<execute function="MouseOver" locator1="AP#BODY" />
+
+		<execute function="Click#mouseOverClick" locator1="Icon#EDIT" />
 
 		<execute function="AssertElementNotPresent" locator1="PGSignin#PORTLET_TITLE" value1="Sign" />
 

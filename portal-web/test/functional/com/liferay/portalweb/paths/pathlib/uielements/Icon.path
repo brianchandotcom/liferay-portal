@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//span/*[name()='svg'][contains(@class,'icon-pencil')]</td>
+	<td>//span[contains(.,'${key_assetTitle}')]//*[name()='svg'][contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>

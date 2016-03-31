@@ -4002,13 +4002,15 @@ go]]></replacevalue>
 					<sequential>
 						<var name="osgi.module.dir" unset="true" />
 
-						<path id="osgi.module.dir">
-							<dirset dir="${project.dir}/modules">
-								<include name="**/@{osgi.module}" />
-							</dirset>
+						<path id="osgi.module.bnd.file">
+							<fileset dir="${project.dir}/modules">
+								<include name="**/@{osgi.module}/bnd.bnd" />
+							</fileset>
 						</path>
 
-						<property name="osgi.module.dir" refid="osgi.module.dir" />
+						<property name="osgi.module.bnd.file" refid="osgi.module.bnd.file" />
+
+						<dirname property="osgi.module.dir" file="${osgi.module.bnd.file}" />
 
 						<gradle-execute dir="${osgi.module.dir}" task="deploy" />
 					</sequential>

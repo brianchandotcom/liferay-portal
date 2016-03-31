@@ -57,9 +57,9 @@ public class PluginsSummaryBuilder {
 
 		latestHASH = _getLatestHASH(pluginsDir);
 
-		_createPluginsSummary();
-
 		_latestHASH = latestHASH;
+
+		_createPluginsSummary();
 	}
 
 	private void _createPluginsSummary() throws Exception {

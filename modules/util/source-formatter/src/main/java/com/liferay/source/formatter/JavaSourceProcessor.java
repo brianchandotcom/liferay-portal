@@ -999,7 +999,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern2);
 
-		newContent = formatArray(fileName, newContent);
+		newContent = formatArray(newContent);
 
 		newContent = formatClassLine(newContent);
 
@@ -1412,7 +1412,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatArray(String fileName, String content) {
+	protected String formatArray(String content) {
 		Matcher matcher = _arrayPattern.matcher(content);
 
 		while (matcher.find()) {

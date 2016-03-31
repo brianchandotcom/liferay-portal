@@ -295,19 +295,38 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 					JarBuilder jarBuilder = jarBuilderFactory.create();
 
-					jarBuilder.withBase(BundleUtils.getBase(project));
+					Map<String, String> properties = _getProperties(project);
 
+					jarBuilder.withBase(BundleUtils.getBase(project));
+					jarBuilder.withClasspath(_getClasspath(project));
+					jarBuilder.withName(
+						properties.get(Constants.BUNDLE_SYMBOLICNAME));
+					jarBuilder.withProperties(properties);
+					jarBuilder.withResources(new File[0]);
+					jarBuilder.withSourcepath(BundleUtils.getSources(project));
+					jarBuilder.withTrace(bundleExtension.isTrace());
+					jarBuilder.withVersion(BundleUtils.getVersion(project));
+
+					TaskOutputs taskOutputs = task.getOutputs();
+
+					FileCollection fileCollection = taskOutputs.getFiles();
+
+					jarBuilder.writeJarTo(fileCollection.getSingleFile());
+				}
+
+				private File[] _getClasspath(Project project) {
 					SourceSet sourceSet = GradleUtil.getSourceSet(
 						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-					jarBuilder.withClasspath(
-						new File[] {
-							sourceSetOutput.getClassesDir(),
-							sourceSetOutput.getResourcesDir()
-						});
+					return new File[] {
+						sourceSetOutput.getClassesDir(),
+						sourceSetOutput.getResourcesDir()
+					};
+				}
 
+				private Map<String, String> _getProperties(Project project) {
 					LiferayOSGiExtension liferayOSGiExtension =
 						GradleUtil.getExtension(
 							project, LiferayOSGiExtension.class);
@@ -347,20 +366,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 					properties.put(Constants.INCLUDE_RESOURCE, sb.toString());
 
-					jarBuilder.withProperties(properties);
-
-					jarBuilder.withName(
-						properties.get(Constants.BUNDLE_SYMBOLICNAME));
-					jarBuilder.withResources(new File[0]);
-					jarBuilder.withSourcepath(BundleUtils.getSources(project));
-					jarBuilder.withTrace(bundleExtension.isTrace());
-					jarBuilder.withVersion(BundleUtils.getVersion(project));
-
-					TaskOutputs taskOutputs = task.getOutputs();
-
-					FileCollection fileCollection = taskOutputs.getFiles();
-
-					jarBuilder.writeJarTo(fileCollection.getSingleFile());
+					return properties;
 				}
 
 			});

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.log4j;
+package com.liferay.log4j.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;

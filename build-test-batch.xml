@@ -1036,15 +1036,15 @@ ${output.content}</echo>
 	</target>
 
 	<target name="semantic-versioning-jdk7">
+		<fileset dir="${project.dir}" id="log.files">
+			<include name="baseline-reports/*.log" />
+			<include name="modules/**/baseline.log" />
+		</fileset>
+
+		<pathconvert pathsep="," property="log.files" refid="log.files" />
+
 		<run-batch-test>
 			<test-action>
-				<fileset dir="${project.dir}" id="log.files">
-					<include name="baseline-reports/*.log" />
-					<include name="modules/**/baseline.log" />
-				</fileset>
-
-				<pathconvert pathsep="," property="log.files" refid="log.files" />
-
 				<for list="${log.files}" param="log.file">
 					<sequential>
 						<print-file file.name="@{log.file}" />
@@ -1062,6 +1062,12 @@ ${output.content}</echo>
 			</test-action>
 
 			<test-set-up>
+				<for list="${log.files}" param="log.file">
+					<sequential>
+						<delete file="@{log.file}" />
+					</sequential>
+				</for>
+
 				<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
 
 				<prepare-test-build />

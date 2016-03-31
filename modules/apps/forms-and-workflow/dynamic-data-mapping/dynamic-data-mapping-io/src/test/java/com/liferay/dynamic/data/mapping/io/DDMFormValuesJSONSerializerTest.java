@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONObjectUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -163,7 +164,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		jsonObject.put("alt", "This is a image description. " + index);
 		jsonObject.put("data", "base64Value" + index);
 
-		return new UnlocalizedValue(jsonObject.toString());
+		return new UnlocalizedValue(
+			JSONObjectUtil.toOrderedJSONString(jsonObject));
 	}
 
 	protected DDMFormFieldValue createSeparatorDDMFormFieldValue(

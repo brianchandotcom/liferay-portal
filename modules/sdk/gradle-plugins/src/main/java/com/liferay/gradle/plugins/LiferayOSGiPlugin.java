@@ -337,9 +337,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 					String bundleName = getBundleInstruction(
 						project, Constants.BUNDLE_NAME);
 
-					properties.put(
-						Constants.BUNDLE_NAME,
-						bundleName + " WSDD descriptors");
+					if (Validator.isNotNull(bundleName)) {
+						properties.put(
+							Constants.BUNDLE_NAME,
+							bundleName + " WSDD descriptors");
+					}
 
 					String bundleSymbolicName = getBundleInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);

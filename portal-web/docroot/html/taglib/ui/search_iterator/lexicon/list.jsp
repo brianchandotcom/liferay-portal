@@ -117,7 +117,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							headerNameValue = headerName;
 						}
 
-						if (headerNameValue.equals("null")) {
+						if (Validator.isNull(headerNameValue)) {
 							headerNameValue = StringPool.NBSP;
 						}
 						%>

@@ -52,7 +52,7 @@ public class MentionsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		sb.append("<link href=\"");
 		sb.append(themeDisplay.getPortalURL());
-		sb.append(PortalUtil.getPathContext());
+		sb.append(PortalUtil.getPathProxy());
 		sb.append(_servletContext.getContextPath());
 		sb.append("/css/mentions.css\" rel=\"stylesheet\" type = ");
 		sb.append("\"text/css\" />");

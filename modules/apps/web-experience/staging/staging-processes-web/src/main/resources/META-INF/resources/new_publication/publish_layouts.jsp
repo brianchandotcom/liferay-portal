@@ -128,8 +128,6 @@ else {
 	}
 }
 
-UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
-
 if (group.isStaged() && group.isStagedRemotely()) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
 }
@@ -296,7 +294,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 				<c:if test="<%= !localPublishing %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
-						<%@ include file="/new_publication/publish_layouts_remote_options.jspf" %>
+						<liferay-staging:remote_options exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 					</aui:fieldset>
 				</c:if>
 			</aui:fieldset-group>

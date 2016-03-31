@@ -87,8 +87,6 @@ if (configuredPublish) {
 
 treeId = treeId + privateLayout + layoutSetBranchId;
 
-UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
-
 PortletURL portletURL = renderResponse.createActionURL();
 
 if (group.isStaged() && group.isStagedRemotely()) {
@@ -253,7 +251,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 					<c:if test="<%= !localPublishing %>">
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
-							<%@ include file="/publish/publish_layouts_remote_options.jspf" %>
+							<liferay-staging:remote_options exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 						</aui:fieldset>
 					</c:if>
 				</aui:fieldset-group>

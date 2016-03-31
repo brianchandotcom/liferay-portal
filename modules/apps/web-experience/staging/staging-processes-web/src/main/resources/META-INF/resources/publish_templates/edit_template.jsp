@@ -149,12 +149,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 						<c:if test="<%= stagingGroup.isStagedRemotely() %>">
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
-
-								<%
-								UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
-								%>
-
-								<%@ include file="/new_publication/publish_layouts_remote_options.jspf" %>
+								<liferay-staging:remote_options exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 							</aui:fieldset>
 						</c:if>
 					</aui:fieldset-group>

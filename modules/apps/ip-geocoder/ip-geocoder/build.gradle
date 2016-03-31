@@ -1,3 +1,5 @@
+task deployDependencies(type: Copy)
+
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
@@ -11,11 +13,23 @@ dependencies {
 }
 
 deploy {
-	from(configurations.provided) {
-		include "geoip-api-*.jar"
-		include "xz-*.jar"
+	finalizedBy deployDependencies
+}
 
-		rename(/geoip-api-.+\.jar/, "com.maxmind.geoip.api.jar")
-		rename(/xz-.+\.jar/, "org.tukaani.xz.jar")
+deployDependencies {
+	ext {
+		autoClean = false
 	}
+
+	from configurations.provided
+
+	include "geoip-api-*.jar"
+	include "xz-*.jar"
+
+	into {
+		liferay.deployDir
+	}
+
+	rename(/geoip-api-.+\.jar/, "com.maxmind.geoip.api.jar")
+	rename(/xz-.+\.jar/, "org.tukaani.xz.jar")
 }

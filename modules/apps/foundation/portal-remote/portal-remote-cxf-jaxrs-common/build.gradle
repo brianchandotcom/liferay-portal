@@ -1,5 +1,7 @@
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
+task deployDependencies(type: Copy)
+
 dependencies {
 	provided group: "javax.annotation", name: "javax.annotation-api", version: "1.2"
 	provided group: "javax.json", name: "javax.json-api", version: "1.0"
@@ -16,10 +18,22 @@ dependencies {
 }
 
 deploy {
-	from(configurations.provided) {
-		include "org.apache.felix.dependencymanager-*.jar"
-		include "org.apache.felix.dependencymanager.shell-*.jar"
+	finalizedBy deployDependencies
+}
 
-		rename new RenameDependencyClosure(project, configurations.provided.name)
+deployDependencies {
+	ext {
+		autoClean = false
 	}
+
+	from configurations.provided
+
+	include "org.apache.felix.dependencymanager-*.jar"
+	include "org.apache.felix.dependencymanager.shell-*.jar"
+
+	into {
+		liferay.deployDir
+	}
+
+	rename new RenameDependencyClosure(project, configurations.provided.name)
 }

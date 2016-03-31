@@ -1,3 +1,5 @@
+task deployDependencies(type: Copy)
+
 dependencies {
 	provided files("lib-patch/org.eclipse.equinox.http.servlet.jar")
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
@@ -21,6 +23,14 @@ dependencies {
 }
 
 deploy {
+	finalizedBy deployDependencies
+}
+
+deployDependencies {
+	ext {
+		autoClean = false
+	}
+
 	from(configurations.provided) {
 		include "commons-fileupload-*.jar"
 		include "commons-io-*.jar"
@@ -31,5 +41,9 @@ deploy {
 
 	from("lib-patch") {
 		include "org.eclipse.equinox.http.servlet.jar"
+	}
+
+	into {
+		liferay.deployDir
 	}
 }

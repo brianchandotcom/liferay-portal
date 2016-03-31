@@ -1,3 +1,5 @@
+task deployDependencies(type: Copy)
+
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 dependencies {
@@ -7,12 +9,24 @@ dependencies {
 }
 
 deploy {
-	from(configurations.provided) {
-		include "com.liferay.osgi.service.tracker.collections-*.jar"
-		include "org.eclipse.osgi-*.jar"
+	finalizedBy deployDependencies
+}
 
-		rename new RenameDependencyClosure(project, configurations.provided.name)
+deployDependencies {
+	ext {
+		autoClean = false
 	}
+
+	from configurations.provided
+
+	include "com.liferay.osgi.service.tracker.collections-*.jar"
+	include "org.eclipse.osgi-*.jar"
+
+	into {
+		liferay.deployDir
+	}
+
+	rename new RenameDependencyClosure(project, configurations.provided.name)
 }
 
 liferay {

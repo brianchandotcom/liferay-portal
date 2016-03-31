@@ -16,6 +16,20 @@
 	.toolbar {
 		position: static;
 	}
+
+	.textboxlistentry-holder li {
+		margin: 0 5px 0 0;
+	}
+
+	.textboxlist-input-container {
+		input {
+			margin: 0;
+		}
+
+		.textboxlist-content .field-input-text {
+			padding: 0;
+		}
+	}
 }
 
 .lfr-tag-selector-popup {

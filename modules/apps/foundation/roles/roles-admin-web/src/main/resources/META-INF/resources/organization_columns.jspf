@@ -61,33 +61,41 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="content-column name-column title-column"
 			name="name"
 			orderable="<%= true %>"
 			property="name"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="content-column parent-organization-column"
 			name="parent-organization"
+			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="text-column type-column"
 			name="type"
 			orderable="<%= true %>"
 			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="city-column text-column"
 			name="city"
 			value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="region-column text-column"
 			name="region"
 			value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="country-column text-column"
 			name="country"
 			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 		/>

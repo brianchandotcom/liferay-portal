@@ -94,6 +94,38 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="assigneesSearch"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
+			navigationParam="tabs2"
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="unsetRoleAssignments" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
 </portlet:actionURL>
@@ -108,38 +140,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	<aui:input name="removeUserIds" type="hidden" />
 	<aui:input name="addGroupIds" type="hidden" />
 	<aui:input name="removeGroupIds" type="hidden" />
-
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="assigneesSearch"
-	>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
-				navigationParam="tabs2"
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"name"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="unsetRoleAssignments" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
 
 	<%
 	String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);

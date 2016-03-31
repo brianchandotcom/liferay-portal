@@ -1675,7 +1675,7 @@ public class FileSystemImporter extends BaseImporter {
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
-		ddmStructureLocalService = ddmStructureLocalService;
+		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	@Reference(unbind = "-")

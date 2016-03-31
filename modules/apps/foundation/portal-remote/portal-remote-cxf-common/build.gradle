@@ -1,3 +1,5 @@
+task deployDependencies(type: Copy)
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -24,15 +26,27 @@ dependencies {
 }
 
 deploy {
-	from(configurations.provided) {
-		include "org.apache.felix.dependencymanager-*.jar"
-		include "org.apache.felix.dependencymanager.shell-*.jar"
-		include "stax2-api-*.jar"
-		include "woodstox-core-asl-*.jar"
+	finalizedBy deployDependencies
+}
 
-		rename(/org\.apache\.felix\.dependencymanager-.+\.jar/, "org.apache.felix.dependencymanager.jar")
-		rename(/org\.apache\.felix\.dependencymanager\.shell-.+\.jar/, "org.apache.felix.dependencymanager.shell.jar")
-		rename(/stax2-api-.+\.jar/, "org.codehaus.stax2.jar")
-		rename(/woodstox-core-asl-.+\.jar/, "com.ctc.wstx.jar")
+deployDependencies {
+	ext {
+		autoClean = false
 	}
+
+	from configurations.provided
+
+	include "org.apache.felix.dependencymanager-*.jar"
+	include "org.apache.felix.dependencymanager.shell-*.jar"
+	include "stax2-api-*.jar"
+	include "woodstox-core-asl-*.jar"
+
+	into {
+		liferay.deployDir
+	}
+
+	rename(/org\.apache\.felix\.dependencymanager-.+\.jar/, "org.apache.felix.dependencymanager.jar")
+	rename(/org\.apache\.felix\.dependencymanager\.shell-.+\.jar/, "org.apache.felix.dependencymanager.shell.jar")
+	rename(/stax2-api-.+\.jar/, "org.codehaus.stax2.jar")
+	rename(/woodstox-core-asl-.+\.jar/, "com.ctc.wstx.jar")
 }

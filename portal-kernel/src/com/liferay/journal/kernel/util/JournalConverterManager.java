@@ -17,7 +17,7 @@ package com.liferay.journal.kernel.util;
 import java.util.Locale;
 
 /**
- * @author Leonardo Barros
+ * @author     Leonardo Barros
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

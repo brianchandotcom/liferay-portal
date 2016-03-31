@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import java.util.Locale;
 
 /**
- * @author Marcellus Tavares
- * @author Bruno Basto
- * @author Leonardo Barros
+ * @author     Marcellus Tavares
+ * @author     Bruno Basto
+ * @author     Leonardo Barros
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

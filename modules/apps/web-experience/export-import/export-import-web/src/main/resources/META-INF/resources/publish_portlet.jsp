@@ -21,8 +21,6 @@
 <%
 String tabs3 = ParamUtil.getString(request, "tabs3", "new-publication-process");
 
-Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
-
 String errorMessageKey = StringPool.BLANK;
 
 Layout targetLayout = null;
@@ -37,7 +35,7 @@ if (!layout.isTypeControlPanel()) {
 				targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
 			}
 			else {
-				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(exportableLayout.getUuid(), liveGroup.getGroupId(), exportableLayout.isPrivateLayout());
+				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 			}
 		}
 		catch (NoSuchLayoutException nsle) {
@@ -80,12 +78,10 @@ portletURL.setParameter("tabs3", "current-and-previous");
 	<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
 
 	<c:choose>
-		<c:when test="<%= (themeDisplay.getURLPublishToLive() == null) && !layout.isTypeControlPanel() %>">
-		</c:when>
 		<c:when test="<%= Validator.isNotNull(errorMessageKey) %>">
 			<liferay-ui:message key="<%= errorMessageKey %>" />
 		</c:when>
-		<c:otherwise>
+		<c:when test="<%= (themeDisplay.getURLPublishToLive() != null) || layout.isTypeControlPanel() %>">
 			<aui:nav-bar markupView="lexicon">
 				<aui:nav cssClass="navbar-nav">
 
@@ -137,7 +133,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishToLive();" %>'>
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.PUBLISH_TO_LIVE %>" />
 						<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-						<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
+						<aui:input name="plid" type="hidden" value="<%= plid %>" />
 						<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 						<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
@@ -147,7 +143,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								<%
 								PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 
-								PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
+								PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, plid, false);
 								%>
 
 								<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
@@ -212,7 +208,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								<c:if test="<%= !portletDataHandler.isDisplayPortlet() %>">
 
 									<%
-									DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, themeDisplay.getScopeGroupId(), false, exportableLayout.getPlid(), selPortlet.getPortletId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
+									DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, themeDisplay.getScopeGroupId(), false, plid, selPortlet.getPortletId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 									Date startDate = dateRange.getStartDate();
 									Date endDate = dateRange.getEndDate();
@@ -551,6 +547,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 				Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', ['<portlet:namespace />startEndDate', '<portlet:namespace />rangeLastInputs']);
 				Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '<portlet:namespace />rangeLastInputs', ['<portlet:namespace />startEndDate']);
 			</aui:script>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
 </div>

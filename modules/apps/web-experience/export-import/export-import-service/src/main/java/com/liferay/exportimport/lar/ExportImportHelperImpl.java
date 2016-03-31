@@ -229,31 +229,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			defaultRange);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Layout getExportableLayout(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypeControlPanel()) {
-			return layout;
-		}
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (scopeGroup.isLayout()) {
-			layout = _layoutLocalService.getLayout(scopeGroup.getClassPK());
-		}
-		else if (!scopeGroup.isCompany()) {
-			long defaultPlid = _layoutLocalService.getDefaultPlid(
-				themeDisplay.getSiteGroupId());
-
-			if (defaultPlid > 0) {
-				layout = _layoutLocalService.getLayout(defaultPlid);
-			}
-		}
-
-		return layout;
+		return themeDisplay.getLayout();
 	}
 
 	@Override

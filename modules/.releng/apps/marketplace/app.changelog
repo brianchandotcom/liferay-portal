@@ -27,3 +27,18 @@ app.artifacts-1.1=\
 app.change.log-1.1= LPS-63753 
 
 app.git.id-1.1=b0fb870af3ec95454d6d62a4b602d1a53a9d2e6d
+
+#
+# Liferay App Version 1.2
+#
+
+app.artifacts-1.2=\
+	com.liferay.marketplace.api-2.0.0.jar,\
+	com.liferay.marketplace.app.manager.web-1.0.3.jar,\
+	com.liferay.marketplace.deployer-2.0.1.jar,\
+	com.liferay.marketplace.service-2.0.0.jar,\
+	com.liferay.marketplace.store.web-2.0.0.jar
+
+app.change.log-1.2=LPS-64636 LPS-64662 
+
+app.git.id-1.2=d8c067857c1a42861a216d1696038555a3a785ee

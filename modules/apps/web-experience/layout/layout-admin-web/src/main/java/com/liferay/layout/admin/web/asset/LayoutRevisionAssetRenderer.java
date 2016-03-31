@@ -103,21 +103,20 @@ public class LayoutRevisionAssetRenderer
 
 		StringBundler sb = new StringBundler(16);
 
-		sb.append("<strong>");
 		sb.append(LanguageUtil.get(locale, "page"));
-		sb.append(":</strong> ");
+		sb.append(": ");
 		sb.append(_layoutRevision.getHTMLTitle(locale));
-		sb.append("<br /><strong>");
+		sb.append("; ");
 		sb.append(LanguageUtil.get(locale, "site-pages-variation"));
-		sb.append(":</strong> ");
+		sb.append(": ");
 		sb.append(LanguageUtil.get(locale, _layoutSetBranch.getName()));
-		sb.append("<br /><strong>");
+		sb.append("; ");
 		sb.append(LanguageUtil.get(locale, "page-variation"));
-		sb.append(":</strong> ");
+		sb.append(": ");
 		sb.append(LanguageUtil.get(locale, _layoutBranch.getName()));
-		sb.append("<br /><strong>");
+		sb.append("; ");
 		sb.append(LanguageUtil.get(locale, "revision-id"));
-		sb.append(":</strong> ");
+		sb.append(": ");
 		sb.append(_layoutRevision.getLayoutRevisionId());
 
 		return sb.toString();

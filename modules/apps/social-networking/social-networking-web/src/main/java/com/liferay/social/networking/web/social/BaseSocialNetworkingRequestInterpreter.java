@@ -141,9 +141,8 @@ public abstract class BaseSocialNetworkingRequestInterpreter
 
 	protected abstract UserLocalService getUserLocalService();
 
-	private static final String[] _CLASS_NAMES = new String[] {
-		User.class.getName()
-	};
+	private static final String[] _CLASS_NAMES =
+		new String[] {User.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSocialNetworkingRequestInterpreter.class.getName());

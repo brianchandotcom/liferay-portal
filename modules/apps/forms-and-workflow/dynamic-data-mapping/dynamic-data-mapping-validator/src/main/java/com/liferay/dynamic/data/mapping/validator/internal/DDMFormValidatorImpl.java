@@ -283,9 +283,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	}
 
 	private DDMExpressionFactory _ddmExpressionFactory;
-	private final String[] _ddmFormFieldIndexTypes = new String[] {
-		StringPool.BLANK, "keyword", "text"
-	};
+	private final String[] _ddmFormFieldIndexTypes =
+		new String[] {StringPool.BLANK, "keyword", "text"};
 	private final Pattern _ddmFormFieldNamePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|_)+");
 	private final Pattern _ddmFormFieldTypePattern = Pattern.compile(

@@ -334,9 +334,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		layout1 = LayoutLocalServiceUtil.updateLayout(layout1);
 		layout3 = LayoutLocalServiceUtil.updateLayout(layout3);
 
-		long[] layoutIds = new long[] {
-			layout1.getLayoutId(), layout2.getLayoutId()
-		};
+		long[] layoutIds =
+			new long[] {layout1.getLayoutId(), layout2.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 

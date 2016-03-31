@@ -96,9 +96,8 @@ public class ContactsCenterRequestInterpreter
 		return true;
 	}
 
-	private static final String[] _CLASS_NAMES = new String[] {
-		User.class.getName()
-	};
+	private static final String[] _CLASS_NAMES =
+		new String[] {User.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContactsCenterRequestInterpreter.class);

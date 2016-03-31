@@ -120,9 +120,8 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 				boolean privateLayout = rs.getBoolean("privateLayout");
 				long layoutId = rs.getLong("layoutId");
 
-				layout = new Object[] {
-					groupId, companyId, privateLayout, layoutId
-				};
+				layout =
+					new Object[] {groupId, companyId, privateLayout, layoutId};
 			}
 		}
 		finally {

@@ -471,9 +471,8 @@ public class ExportImportHelperUtilTest {
 		Layout childLayout = LayoutTestUtil.addLayout(
 			_stagingGroup, layout.getPlid());
 
-		long[] selectedLayoutIds = new long[] {
-			layout.getLayoutId(), childLayout.getLayoutId()
-		};
+		long[] selectedLayoutIds =
+			new long[] {layout.getLayoutId(), childLayout.getLayoutId()};
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(

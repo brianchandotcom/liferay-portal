@@ -139,6 +139,19 @@ public class SourceFormatterHelper {
 		System.out.println(message);
 	}
 
+	protected Path getCanonicalPath(Path path) {
+		try {
+			File file = path.toFile();
+
+			File canonicalFile = file.getCanonicalFile();
+
+			return canonicalFile.toPath();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	protected List<String> getFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			List<PathMatcher> excludeDirPathMatchers,
@@ -154,7 +167,9 @@ public class SourceFormatterHelper {
 
 			File file = new File(fileName);
 
-			Path filePath = file.toPath();
+			File canonicalFile = file.getCanonicalFile();
+
+			Path filePath = canonicalFile.toPath();
 
 			for (PathMatcher pathMatcher : excludeFilePathMatchers) {
 				if (pathMatcher.matches(filePath)) {
@@ -165,7 +180,9 @@ public class SourceFormatterHelper {
 			File dir = file.getParentFile();
 
 			while (true) {
-				Path dirPath = dir.toPath();
+				File canonicalDir = dir.getCanonicalFile();
+
+				Path dirPath = canonicalDir.toPath();
 
 				for (PathMatcher pathMatcher : excludeDirPathMatchers) {
 					if (pathMatcher.matches(dirPath)) {
@@ -223,6 +240,8 @@ public class SourceFormatterHelper {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					dirPath = getCanonicalPath(dirPath);
+
 					for (PathMatcher pathMatcher : excludeDirPathMatchers) {
 						if (pathMatcher.matches(dirPath)) {
 							return FileVisitResult.SKIP_SUBTREE;
@@ -236,14 +255,16 @@ public class SourceFormatterHelper {
 				public FileVisitResult visitFile(
 					Path filePath, BasicFileAttributes basicFileAttributes) {
 
+					Path canonicalPath = getCanonicalPath(filePath);
+
 					for (PathMatcher pathMatcher : excludeFilePathMatchers) {
-						if (pathMatcher.matches(filePath)) {
+						if (pathMatcher.matches(canonicalPath)) {
 							return FileVisitResult.CONTINUE;
 						}
 					}
 
 					for (PathMatcher pathMatcher : includeFilePathMatchers) {
-						if (!pathMatcher.matches(filePath)) {
+						if (!pathMatcher.matches(canonicalPath)) {
 							continue;
 						}
 

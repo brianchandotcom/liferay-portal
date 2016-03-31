@@ -31,6 +31,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +71,13 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		setUpDDMFormValuesFactoryServiceTrackerMap();
 		setUpDDMFormValuesJSONSerializer();
 		setUpJSONFactoryUtil();
+		setUpLocaleThreadLocale();
 		setUpLocaleUtil();
+	}
+
+	@After
+	public void tearDown() {
+		LocaleThreadLocal.setThemeDisplayLocale(_originalThemeDisplayLocale);
 	}
 
 	@Test
@@ -835,6 +843,12 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
+	protected void setUpLocaleThreadLocale() {
+		_originalThemeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+	}
+
 	protected void setUpLocaleUtil() {
 		mockStatic(LocaleUtil.class);
 
@@ -873,6 +887,7 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		new DDMFormValuesFactoryImpl();
 	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
 		new DDMFormValuesJSONSerializerImpl();
+	private Locale _originalThemeDisplayLocale;
 
 	@Mock
 	private ServiceTrackerMap

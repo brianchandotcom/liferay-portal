@@ -19,7 +19,13 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
+ * Used to order records according to their created date during listing
+ * operations. The order can be ascending or descending and is defined by the
+ * value specified in the class constructor.
+ *
  * @author Rafael Praxedes
+ * @see    com.liferay.dynamic.data.lists.service.DDLRecordLocalService#getRecords(
+ *         long, int, int, int, OrderByComparator)
  */
 public class DDLRecordCreateDateComparator
 	extends OrderByComparator<DDLRecord> {

@@ -208,6 +208,13 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	/**
+	* Returns the record's latest record version.
+	*
+	* @param recordId the primary key of the record
+	* @return the latest record version for the given record
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getLatestRecordVersion(long recordId)
 		throws PortalException;
@@ -224,18 +231,59 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	* Returns the record version matching the record and version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the record version
+	* @return the record version matching the record primary key and version
+	* @throws PortalException if a matching record set could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getRecordVersion(long recordId,
 		java.lang.String version) throws PortalException;
 
+	/**
+	* Returns the record version by its ID.
+	*
+	* @param recordVersionId the primary key of the record version
+	* @return the record version with the ID
+	* @throws PortalException if a matching record set could not be found
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
 		throws PortalException;
 
+	/**
+	* Returns an ordered range of record versions matching the record's ID.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordId the primary key of the record
+	* @param start the lower bound of the range of record versions to return
+	* @param end the upper bound of the range of record versions to return
+	(not inclusive)
+	* @param orderByComparator the comparator used to order the record
+	versions
+	* @return the range of matching record versions ordered by the comparator
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordVersion> getRecordVersions(long recordId, int start,
 		int end, OrderByComparator<DDLRecordVersion> orderByComparator);
 
+	/**
+	* Returns the number of record versions matching the record ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
 

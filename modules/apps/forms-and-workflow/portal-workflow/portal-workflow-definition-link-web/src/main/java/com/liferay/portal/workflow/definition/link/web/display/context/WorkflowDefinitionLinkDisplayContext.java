@@ -127,7 +127,18 @@ public class WorkflowDefinitionLinkDisplayContext {
 				searchTerms.getKeywords(), false);
 		}
 
-		searchContainer.setTotal(workflowDefinitionLinkSearchEntries.size());
+		int total = workflowDefinitionLinkSearchEntries.size();
+		searchContainer.setTotal(total);
+
+		int end = searchContainer.getEnd();
+
+		if (end > total) {
+			end = total;
+		}
+
+		workflowDefinitionLinkSearchEntries =
+			workflowDefinitionLinkSearchEntries.subList(
+				searchContainer.getStart(), end);
 
 		Comparator<WorkflowDefinitionLinkSearchEntry> orderByComparator =
 			getWorkflowDefinitionLinkOrderByComparator();

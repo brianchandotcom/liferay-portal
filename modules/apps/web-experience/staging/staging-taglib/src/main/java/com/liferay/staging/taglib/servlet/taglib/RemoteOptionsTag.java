@@ -51,7 +51,7 @@ public class RemoteOptionsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-staging:remote_options:exportImportConfigurationId",
+			"liferay-staging:remote-options:exportImportConfigurationId",
 			_exportImportConfigurationId);
 	}
 

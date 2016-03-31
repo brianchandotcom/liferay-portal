@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:remote_options:exportImportConfigurationId"));
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:remote-options:exportImportConfigurationId"));
 
 Map<String, Serializable> settingsMap = Collections.emptyMap();
 

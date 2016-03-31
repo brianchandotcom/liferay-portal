@@ -294,7 +294,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 				<c:if test="<%= !localPublishing %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
-						<liferay-staging:remote_options exportImportConfigurationId="<%= exportImportConfigurationId %>" />
+						<liferay-staging:remote-options exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 					</aui:fieldset>
 				</c:if>
 			</aui:fieldset-group>

@@ -243,7 +243,7 @@
 	</tag>
 	<tag>
 		<description>Renders the remote site options.</description>
-		<name>remote_options</name>
+		<name>remote-options</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.RemoteOptionsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

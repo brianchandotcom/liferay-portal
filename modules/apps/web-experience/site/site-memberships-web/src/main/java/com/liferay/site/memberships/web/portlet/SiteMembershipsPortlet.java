@@ -105,7 +105,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] addOrganizationIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
@@ -118,7 +118,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] addUserGroupIds = ParamUtil.getLongValues(
 			actionRequest, "rowIds");
@@ -131,7 +131,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long groupId = group.getGroupId();
 
@@ -167,7 +167,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] removeOrganizationIds = null;
 
@@ -190,7 +190,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] removeUserGroupIds = null;
 
@@ -213,7 +213,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long groupId = group.getGroupId();
 
@@ -242,7 +242,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long userGroupId = ParamUtil.getLong(actionRequest, "userGroupId");
 
@@ -280,7 +280,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			return;
 		}
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
@@ -308,7 +308,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] userGroupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
@@ -324,7 +324,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long[] userIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
@@ -340,7 +340,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = getGroup(actionRequest, actionResponse);
+		Group group = _getGroup(actionRequest, actionResponse);
 
 		long membershipRequestId = ParamUtil.getLong(
 			actionRequest, "membershipRequestId");
@@ -491,7 +491,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private Group getGroup(
+	private Group _getGroup(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 

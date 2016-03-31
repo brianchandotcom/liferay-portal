@@ -1246,7 +1246,7 @@ public class WabProcessor {
 
 		processRequiredDeploymentContexts(analyzer);
 
-		processExcludedJSPs(analyzer);
+		_processExcludedJSPs(analyzer);
 
 		analyzer.setProperties(pluginPackageProperties);
 
@@ -1360,7 +1360,7 @@ public class WabProcessor {
 		}
 	}
 
-	private void processExcludedJSPs(Analyzer analyzer) throws IOException {
+	private void _processExcludedJSPs(Analyzer analyzer) throws IOException {
 		File file = new File(_pluginDir, "/WEB-INF/liferay-hook.xml");
 
 		if (!file.exists()) {

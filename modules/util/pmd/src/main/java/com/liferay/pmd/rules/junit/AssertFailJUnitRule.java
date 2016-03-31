@@ -48,7 +48,7 @@ public class AssertFailJUnitRule extends AbstractJUnitRule {
 	public Object visit(
 		ASTStatementExpression astStatementExpression, Object data) {
 
-		if (!isAssertFailStatement(astStatementExpression)) {
+		if (!_isAssertFailStatement(astStatementExpression)) {
 			return data;
 		}
 
@@ -88,7 +88,7 @@ public class AssertFailJUnitRule extends AbstractJUnitRule {
 		return data;
 	}
 
-	private boolean isAssertFailStatement(
+	private boolean _isAssertFailStatement(
 		ASTStatementExpression astStatementExpression) {
 
 		if ((astStatementExpression == null) ||

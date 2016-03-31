@@ -37,14 +37,14 @@ import com.liferay.registry.ServiceTracker;
 public class OmniadminUtil {
 
 	public static boolean isOmniadmin(long userId) {
-		return getInstance().isOmniadmin(userId);
+		return _getInstance().isOmniadmin(userId);
 	}
 
 	public static boolean isOmniadmin(User user) {
-		return getInstance().isOmniadmin(user);
+		return _getInstance().isOmniadmin(user);
 	}
 
-	private static Omniadmin getInstance() {
+	private static Omniadmin _getInstance() {
 		return _instance._serviceTracker.getService();
 	}
 

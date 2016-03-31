@@ -158,7 +158,7 @@ public class PanelCategoryHelper {
 		return containsPortlet(portletId, PanelCategoryKeys.ROOT);
 	}
 
-	private boolean hasPortlet(String portletId, String panelCategoryKey) {
+	protected boolean hasPortlet(String portletId, String panelCategoryKey) {
 		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			panelCategoryKey);
 
@@ -171,7 +171,7 @@ public class PanelCategoryHelper {
 		return false;
 	}
 
-	private boolean hasPortlet(
+	protected boolean hasPortlet(
 		String portletId, String panelCategoryKey,
 		PermissionChecker permissionChecker, Group group) {
 

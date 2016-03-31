@@ -87,7 +87,7 @@ public abstract class AbstractSingleResourceTemplate extends AbstractTemplate {
 			}
 		}
 
-		_write(writer);
+		write(writer);
 	}
 
 	protected void cacheTemplateResource(String templateManagerName) {

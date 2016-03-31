@@ -70,7 +70,7 @@ public class PermissionsPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			long roleId = getRoleId(portletRequest);
+			long roleId = _getRoleId(portletRequest);
 
 			Role role = _roleService.fetchRole(roleId);
 
@@ -84,7 +84,7 @@ public class PermissionsPortletConfigurationIcon
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, Role.class.getName(),
 				themeDisplay.getScopeGroupName(), null,
-				String.valueOf(getRoleId(portletRequest)),
+				String.valueOf(_getRoleId(portletRequest)),
 				LiferayWindowState.POP_UP.toString(), roleTypes,
 				themeDisplay.getRequest());
 		}
@@ -106,7 +106,7 @@ public class PermissionsPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			long roleId = getRoleId(portletRequest);
+			long roleId = _getRoleId(portletRequest);
 
 			Role role = _roleService.fetchRole(roleId);
 
@@ -138,7 +138,7 @@ public class PermissionsPortletConfigurationIcon
 		_roleService = roleService;
 	}
 
-	private long getRoleId(PortletRequest portletRequest) {
+	private long _getRoleId(PortletRequest portletRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 

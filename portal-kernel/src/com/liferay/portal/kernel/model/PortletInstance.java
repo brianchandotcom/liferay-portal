@@ -61,7 +61,7 @@ public class PortletInstance {
 	}
 
 	public PortletInstance(String portletName, long userId, String instanceId) {
-		validatePortletName(portletName);
+		_validatePortletName(portletName);
 
 		_portletName = portletName;
 		_userId = userId;
@@ -225,7 +225,7 @@ public class PortletInstance {
 			portletInstanceKey.substring(x + _USER_SEPARATOR.length()));
 	}
 
-	private void validatePortletName(String portletName) {
+	private void _validatePortletName(String portletName) {
 		for (String keyword : _PORTLET_NAME_KEYWORDS) {
 			if (!portletName.contains(keyword)) {
 				continue;

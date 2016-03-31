@@ -58,7 +58,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 		try {
 			MBCategory category = ActionUtil.getCategory(portletRequest);
 
-			if (isSubscribed(portletRequest, category)) {
+			if (_isSubscribed(portletRequest, category)) {
 				key = "unsubscribe";
 			}
 		}
@@ -89,7 +89,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 			return null;
 		}
 
-		if (isSubscribed(portletRequest, category)) {
+		if (_isSubscribed(portletRequest, category)) {
 			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 		}
 		else {
@@ -144,7 +144,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private boolean isSubscribed(
+	private boolean _isSubscribed(
 		PortletRequest portletRequest, MBCategory category) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

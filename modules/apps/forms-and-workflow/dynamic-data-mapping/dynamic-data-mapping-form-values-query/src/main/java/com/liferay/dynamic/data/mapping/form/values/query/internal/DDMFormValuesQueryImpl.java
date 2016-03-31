@@ -49,7 +49,7 @@ public class DDMFormValuesQueryImpl implements DDMFormValuesQuery {
 				_ddmFormFieldValueFilters.get(i);
 
 			List<DDMFormFieldValue> nestedDDMFormFieldValues =
-				getNestedDDMFormFieldValues(ddmFormFieldValues);
+				_getNestedDDMFormFieldValues(ddmFormFieldValues);
 
 			ddmFormFieldValues = currentDDMFormValuesFilter.filter(
 				nestedDDMFormFieldValues);
@@ -69,7 +69,7 @@ public class DDMFormValuesQueryImpl implements DDMFormValuesQuery {
 		return ddmFormFieldValues.get(0);
 	}
 
-	private List<DDMFormFieldValue> getNestedDDMFormFieldValues(
+	private List<DDMFormFieldValue> _getNestedDDMFormFieldValues(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
 		List<DDMFormFieldValue> nestedDDMFormFieldValues = new ArrayList<>();

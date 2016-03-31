@@ -99,10 +99,10 @@ public class LiferayTemplateCache extends TemplateCache {
 			}
 		}
 
-		return doGetTemplate(templateId, locale, encoding);
+		return _doGetTemplate(templateId, locale, encoding);
 	}
 
-	private MaybeMissingTemplate doGetTemplate(
+	private MaybeMissingTemplate _doGetTemplate(
 			String templateId, Locale locale, String encoding)
 		throws IOException {
 
@@ -187,7 +187,7 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		@Override
 		public MaybeMissingTemplate run() throws Exception {
-			return doGetTemplate(_templateId, _locale, _encoding);
+			return _doGetTemplate(_templateId, _locale, _encoding);
 		}
 
 		private final String _encoding;

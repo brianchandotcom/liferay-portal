@@ -81,6 +81,16 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		return _termCollectors;
 	}
 
+	protected void initialize(MultiBucketsAggregation multiBucketsAggregation) {
+		_aggregation = multiBucketsAggregation;
+
+		for (MultiBucketsAggregation.Bucket bucket :
+				multiBucketsAggregation.getBuckets()) {
+
+			_counts.put(bucket.getKeyAsString(), (int)bucket.getDocCount());
+		}
+	}
+
 	protected void initialize(Range range) {
 		_aggregation = range;
 
@@ -92,16 +102,6 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 				StringPool.CLOSE_BRACKET);
 
 			_counts.put(key, (int)bucket.getDocCount());
-		}
-	}
-
-	private void initialize(MultiBucketsAggregation multiBucketsAggregation) {
-		_aggregation = multiBucketsAggregation;
-
-		for (MultiBucketsAggregation.Bucket bucket :
-				multiBucketsAggregation.getBuckets()) {
-
-			_counts.put(bucket.getKeyAsString(), (int)bucket.getDocCount());
 		}
 	}
 

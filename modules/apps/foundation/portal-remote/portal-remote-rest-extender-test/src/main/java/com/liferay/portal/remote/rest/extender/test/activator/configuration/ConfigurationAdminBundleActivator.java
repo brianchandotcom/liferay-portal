@@ -117,7 +117,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			}
 
 			if (servers.isEmpty()) {
-				cleanUp(bundleContext);
+				_cleanUp(bundleContext);
 
 				throw new IllegalStateException(
 					"Endpoint was not registered within 10 seconds");
@@ -130,10 +130,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		cleanUp(bundleContext);
+		_cleanUp(bundleContext);
 	}
 
-	private void cleanUp(BundleContext bundleContext) throws Exception {
+	private void _cleanUp(BundleContext bundleContext) throws Exception {
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		ServiceTracker<ServletContextHelper, ServletContextHelper>

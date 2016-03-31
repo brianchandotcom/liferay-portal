@@ -419,19 +419,19 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				return _classLoader;
 			}
 			else if (methodName.equals("getResource")) {
-				return getResource((String)args[0]);
+				return _getResource((String)args[0]);
 			}
 			else if (methodName.equals("getResourceAsStream")) {
-				return getResourceAsStream((String)args[0]);
+				return _getResourceAsStream((String)args[0]);
 			}
 			else if (methodName.equals("getResourcePaths")) {
-				return getResourcePaths((String)args[0]);
+				return _getResourcePaths((String)args[0]);
 			}
 
 			return method.invoke(_servletContext, args);
 		}
 
-		private URL getExtension(String path) {
+		private URL _getExtension(String path) {
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				"META-INF/resources", path.substring(1), false);
 
@@ -444,12 +444,12 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			return urls.get(urls.size() - 1);
 		}
 
-		private URL getResource(String path) {
+		private URL _getResource(String path) {
 			if (path.charAt(0) != '/') {
 				path = '/' + path;
 			}
 
-			URL url = getExtension(path);
+			URL url = _getExtension(path);
 
 			if (url != null) {
 				return url;
@@ -465,7 +465,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				String adaptedPath =
 					"/META-INF/" + path.substring("/WEB-INF/tld/".length());
 
-				url = getExtension(adaptedPath);
+				url = _getExtension(adaptedPath);
 
 				if (url == null) {
 					url = _bundle.getResource(adaptedPath);
@@ -485,8 +485,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			return url;
 		}
 
-		private InputStream getResourceAsStream(String path) {
-			URL url = getResource(path);
+		private InputStream _getResourceAsStream(String path) {
+			URL url = _getResource(path);
 
 			if (url == null) {
 				return null;
@@ -500,7 +500,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			}
 		}
 
-		private Set<String> getResourcePaths(String path) {
+		private Set<String> _getResourcePaths(String path) {
 			Enumeration<URL> entries = _bundle.findEntries(path, null, true);
 
 			if (entries == null) {

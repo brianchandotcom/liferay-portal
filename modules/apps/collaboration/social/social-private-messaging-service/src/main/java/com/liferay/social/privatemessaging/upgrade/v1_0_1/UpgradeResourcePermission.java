@@ -63,12 +63,13 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			Group group = _groupLocalService.getCompanyGroup(
 				company.getCompanyId());
 
-			upgradeDLFolderResourcePermission(company, group);
-			upgradeDLResourcePermission(company, group);
+			_upgradeDLFolderResourcePermission(company, group);
+			_upgradeDLResourcePermission(company, group);
 		}
 	}
 
-	private void upgradeDLFolderResourcePermission(Company company, Group group)
+	private void _upgradeDLFolderResourcePermission(
+			Company company, Group group)
 		throws PortalException {
 
 		Repository repository = _repositoryLocalService.fetchRepository(
@@ -96,7 +97,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			DLFolder.class.getName(), folderId, false, true, true);
 	}
 
-	private void upgradeDLResourcePermission(Company company, Group group)
+	private void _upgradeDLResourcePermission(Company company, Group group)
 		throws PortalException {
 
 		int count = _resourcePermissionLocalService.getResourcePermissionsCount(

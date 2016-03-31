@@ -82,10 +82,10 @@ public class RSSTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:rss:message", _message);
-		request.setAttribute("liferay-ui:rss:url", getURL());
+		request.setAttribute("liferay-ui:rss:url", _getURL());
 	}
 
-	private String getURL() {
+	private String _getURL() {
 		if (_resourceURL != null) {
 			if ((_delta > 0) && (_delta != SearchContainer.DEFAULT_DELTA)) {
 				_resourceURL.setParameter("max", String.valueOf(_delta));

@@ -145,7 +145,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 			String includeDirNames =
 				includeDirName + File.pathSeparator + inputFile.getParent();
 
-			String outputFileName = getOutputFileName(inputFileName);
+			String outputFileName = _getOutputFileName(inputFileName);
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
 				sourceMapFileName = outputFileName + ".map";
@@ -162,7 +162,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			if (generateSourceMap) {
 				try {
-					write(new File(sourceMapFileName), results[1]);
+					_write(new File(sourceMapFileName), results[1]);
 				}
 				catch (Exception e) {
 					System.out.println("Unable to create source map");
@@ -222,7 +222,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 			String path = inputFileName.substring(0, index);
 			String fileName = inputFileName.substring(index);
 
-			String outputFileName = getOutputFileName(fileName);
+			String outputFileName = _getOutputFileName(fileName);
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
 				sourceMapFileName = path + outputFileName + ".map";
@@ -232,7 +232,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			tempFile.deleteOnExit();
 
-			write(tempFile, input);
+			_write(tempFile, input);
 
 			String output = compileFile(
 				tempFile.getCanonicalPath(), includeDirName, generateSourceMap,
@@ -249,7 +249,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 				sourceMapContent = sourceMapContent.replaceAll(
 					"tmp\\.css", outputFileName);
 
-				write(sourceMapFile, sourceMapContent);
+				_write(sourceMapFile, sourceMapContent);
 			}
 
 			return output;
@@ -259,11 +259,11 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 		}
 	}
 
-	private String getOutputFileName(String fileName) {
+	private String _getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
 	}
 
-	private void write(File file, String string) throws IOException {
+	private void _write(File file, String string) throws IOException {
 		if (!file.exists()) {
 			File parentFile = file.getParentFile();
 

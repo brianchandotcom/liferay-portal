@@ -70,7 +70,7 @@ public class PermissionsPortletConfigurationIcon
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, PasswordPolicy.class.getName(),
 				themeDisplay.getScopeGroupName(), null,
-				String.valueOf(getPasswordPolicyId(portletRequest)),
+				String.valueOf(_getPasswordPolicyId(portletRequest)),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
@@ -94,7 +94,7 @@ public class PermissionsPortletConfigurationIcon
 
 			if (PasswordPolicyPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),
-					getPasswordPolicyId(portletRequest),
+					_getPasswordPolicyId(portletRequest),
 					ActionKeys.PERMISSIONS)) {
 
 				return true;
@@ -111,7 +111,7 @@ public class PermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	private long getPasswordPolicyId(PortletRequest portletRequest) {
+	private long _getPasswordPolicyId(PortletRequest portletRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 

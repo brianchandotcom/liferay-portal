@@ -79,7 +79,7 @@ public class SortJavaTerms1 {
 
 	}
 
-	private static void method6() {
+	private static void _method6() {
 	}
 
 	private SortJavaTerms1(String testArgument1, String testArgument2) {

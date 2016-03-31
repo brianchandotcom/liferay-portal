@@ -64,7 +64,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 
 			MBMessage message = messageDisplay.getMessage();
 
-			if (isSubscribed(portletRequest, message)) {
+			if (_isSubscribed(portletRequest, message)) {
 				key = "unsubscribe";
 			}
 		}
@@ -98,7 +98,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 			return null;
 		}
 
-		if (isSubscribed(portletRequest, message)) {
+		if (_isSubscribed(portletRequest, message)) {
 			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 		}
 		else {
@@ -156,7 +156,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private boolean isSubscribed(
+	private boolean _isSubscribed(
 		PortletRequest portletRequest, MBMessage message) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(

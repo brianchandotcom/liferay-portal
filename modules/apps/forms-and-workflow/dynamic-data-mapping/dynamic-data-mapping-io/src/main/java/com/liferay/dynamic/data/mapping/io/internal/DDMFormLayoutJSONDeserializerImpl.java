@@ -54,7 +54,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 			jsonObject.getString("defaultLanguageId"), ddmFormLayout);
 		setDDMFormLayoutPages(jsonObject.getJSONArray("pages"), ddmFormLayout);
 		setDDMFormLayoutPageTitlesDefaultLocale(ddmFormLayout);
-		setDDMFormLayoutPaginationMode(
+		_setDDMFormLayoutPaginationMode(
 			jsonObject.getString("paginationMode"), ddmFormLayout);
 
 		return ddmFormLayout;
@@ -189,7 +189,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 	protected void setDDMFormLayoutPageDescription(
 		JSONObject jsonObject, DDMFormLayoutPage ddmFormLayoutPage) {
 
-		LocalizedValue description = getDescription(jsonObject);
+		LocalizedValue description = _getDescription(jsonObject);
 
 		if (description == null) {
 			return;
@@ -254,7 +254,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 		_jsonFactory = jsonFactory;
 	}
 
-	private LocalizedValue getDescription(JSONObject jsonObject) {
+	private LocalizedValue _getDescription(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return null;
 		}
@@ -274,7 +274,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 		return description;
 	}
 
-	private void setDDMFormLayoutPaginationMode(
+	private void _setDDMFormLayoutPaginationMode(
 		String paginationMode, DDMFormLayout ddmFormLayout) {
 
 		ddmFormLayout.setPaginationMode(paginationMode);

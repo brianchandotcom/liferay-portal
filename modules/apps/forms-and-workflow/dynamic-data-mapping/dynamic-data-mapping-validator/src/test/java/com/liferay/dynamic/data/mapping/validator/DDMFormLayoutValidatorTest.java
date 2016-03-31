@@ -37,23 +37,23 @@ public class DDMFormLayoutValidatorTest {
 
 	@Test(expected = MustNotDuplicateFieldName.class)
 	public void testDuplicateFieldNames() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
+		DDMFormLayoutColumn ddmFormLayoutColumn1 = _createDDMFormLayoutColumn(
 			6, "field1", "field2", "field3");
 
-		DDMFormLayoutColumn ddmFormLayoutColumn2 = createDDMFormLayoutColumn(
+		DDMFormLayoutColumn ddmFormLayoutColumn2 = _createDDMFormLayoutColumn(
 			6, "field1", "field3");
 
-		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
+		DDMFormLayoutRow ddmFormLayoutRow = _createDDMFormLayoutRow(
 			ddmFormLayoutColumn1);
 
 		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
 
-		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
+		LocalizedValue title = _createLocalizedValue("Page1", LocaleUtil.US);
 
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+		DDMFormLayoutPage ddmFormLayoutPage = _createDDMFormLayoutPage(
 			ddmFormLayoutRow, title);
 
-		DDMFormLayout ddmFormLayout = createDDMFormLayout(
+		DDMFormLayout ddmFormLayout = _createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.US);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
@@ -61,23 +61,23 @@ public class DDMFormLayoutValidatorTest {
 
 	@Test(expected = InvalidRowSize.class)
 	public void testInvalidRowSize() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
+		DDMFormLayoutColumn ddmFormLayoutColumn1 = _createDDMFormLayoutColumn(
 			6, "field1");
 
-		DDMFormLayoutColumn ddmFormLayoutColumn2 = createDDMFormLayoutColumn(
+		DDMFormLayoutColumn ddmFormLayoutColumn2 = _createDDMFormLayoutColumn(
 			7, "field2");
 
-		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
+		DDMFormLayoutRow ddmFormLayoutRow = _createDDMFormLayoutRow(
 			ddmFormLayoutColumn1);
 
 		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
 
-		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
+		LocalizedValue title = _createLocalizedValue("Page1", LocaleUtil.US);
 
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+		DDMFormLayoutPage ddmFormLayoutPage = _createDDMFormLayoutPage(
 			ddmFormLayoutRow, title);
 
-		DDMFormLayout ddmFormLayout = createDDMFormLayout(
+		DDMFormLayout ddmFormLayout = _createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.US);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
@@ -94,18 +94,18 @@ public class DDMFormLayoutValidatorTest {
 
 	@Test
 	public void testValidDDMFormLayout() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
+		DDMFormLayoutColumn ddmFormLayoutColumn = _createDDMFormLayoutColumn(
 			12, "field");
 
-		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
+		DDMFormLayoutRow ddmFormLayoutRow = _createDDMFormLayoutRow(
 			ddmFormLayoutColumn);
 
-		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
+		LocalizedValue title = _createLocalizedValue("Page1", LocaleUtil.US);
 
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+		DDMFormLayoutPage ddmFormLayoutPage = _createDDMFormLayoutPage(
 			ddmFormLayoutRow, title);
 
-		DDMFormLayout ddmFormLayout = createDDMFormLayout(
+		DDMFormLayout ddmFormLayout = _createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.US);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
@@ -113,24 +113,24 @@ public class DDMFormLayoutValidatorTest {
 
 	@Test(expected = MustSetEqualLocaleForLayoutAndTitle.class)
 	public void testWrongDefaultLocaleSetForPageTitle() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
+		DDMFormLayoutColumn ddmFormLayoutColumn = _createDDMFormLayoutColumn(
 			12, "field");
 
-		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
+		DDMFormLayoutRow ddmFormLayoutRow = _createDDMFormLayoutRow(
 			ddmFormLayoutColumn);
 
-		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
+		LocalizedValue title = _createLocalizedValue("Page1", LocaleUtil.US);
 
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+		DDMFormLayoutPage ddmFormLayoutPage = _createDDMFormLayoutPage(
 			ddmFormLayoutRow, title);
 
-		DDMFormLayout ddmFormLayout = createDDMFormLayout(
+		DDMFormLayout ddmFormLayout = _createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.BRAZIL);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	private DDMFormLayout createDDMFormLayout(
+	private DDMFormLayout _createDDMFormLayout(
 		DDMFormLayoutPage ddmFormLayoutPage, Locale defaultLocale) {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
@@ -142,7 +142,7 @@ public class DDMFormLayoutValidatorTest {
 		return ddmFormLayout;
 	}
 
-	private DDMFormLayoutColumn createDDMFormLayoutColumn(
+	private DDMFormLayoutColumn _createDDMFormLayoutColumn(
 		int size, String... fieldNames) {
 
 		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
@@ -151,7 +151,7 @@ public class DDMFormLayoutValidatorTest {
 		return ddmFormLayoutColumn;
 	}
 
-	private DDMFormLayoutPage createDDMFormLayoutPage(
+	private DDMFormLayoutPage _createDDMFormLayoutPage(
 		DDMFormLayoutRow ddmFormLayoutRow, LocalizedValue title) {
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
@@ -163,7 +163,7 @@ public class DDMFormLayoutValidatorTest {
 		return ddmFormLayoutPage;
 	}
 
-	private DDMFormLayoutRow createDDMFormLayoutRow(
+	private DDMFormLayoutRow _createDDMFormLayoutRow(
 		DDMFormLayoutColumn ddmFormLayoutColumn) {
 
 		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
@@ -173,7 +173,7 @@ public class DDMFormLayoutValidatorTest {
 		return ddmFormLayoutRow;
 	}
 
-	private LocalizedValue createLocalizedValue(
+	private LocalizedValue _createLocalizedValue(
 		String value, Locale defaultLocale) {
 
 		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);

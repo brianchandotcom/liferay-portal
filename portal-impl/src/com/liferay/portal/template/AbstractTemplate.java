@@ -150,7 +150,17 @@ public abstract class AbstractTemplate implements Template {
 		return context.values();
 	}
 
-	protected void _write(Writer writer) throws TemplateException {
+	protected String getTemplateResourceUUID(
+		TemplateResource templateResource) {
+
+		return TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
+			StringPool.POUND).concat(templateResource.getTemplateId());
+	}
+
+	protected abstract void handleException(Exception exception, Writer writer)
+		throws TemplateException;
+
+	protected void write(Writer writer) throws TemplateException {
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
 
 		try {
@@ -165,16 +175,6 @@ public abstract class AbstractTemplate implements Template {
 			put(TemplateConstants.WRITER, oldWriter);
 		}
 	}
-
-	protected String getTemplateResourceUUID(
-		TemplateResource templateResource) {
-
-		return TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
-			StringPool.POUND).concat(templateResource.getTemplateId());
-	}
-
-	protected abstract void handleException(Exception exception, Writer writer)
-		throws TemplateException;
 
 	protected Map<String, Object> context;
 	protected TemplateResource errorTemplateResource;

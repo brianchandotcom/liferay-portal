@@ -368,7 +368,7 @@ public class ConcurrentMapperHashMapTest {
 
 	@Test
 	public void testPutAll() {
-		Map<Key, Value> map = _createDataMap();
+		Map<Key, Value> map = createDataMap();
 
 		_concurrentMap.putAll(map);
 
@@ -671,7 +671,7 @@ public class ConcurrentMapperHashMapTest {
 
 	@Test
 	public void testSerialization() throws Exception {
-		Map<Key, Value> map = _createDataMap();
+		Map<Key, Value> map = createDataMap();
 
 		_concurrentMap.putAll(map);
 
@@ -888,7 +888,7 @@ public class ConcurrentMapperHashMapTest {
 
 	}
 
-	protected Map<Key, Value> _createDataMap() {
+	protected Map<Key, Value> createDataMap() {
 		Map<Key, Value> map = new HashMap<>();
 
 		map.put(_testKey, _testValue);

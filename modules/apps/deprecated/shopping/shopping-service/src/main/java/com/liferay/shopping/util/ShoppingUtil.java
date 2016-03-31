@@ -139,7 +139,7 @@ public class ShoppingUtil {
 				ShoppingCategory category = item.getCategory();
 
 				shoppingGroupServiceOverriddenConfiguration =
-					getShoppingGroupServiceOverriddenConfiguration(
+					_getShoppingGroupServiceOverriddenConfiguration(
 						category.getGroupId());
 
 				break;
@@ -340,7 +340,7 @@ public class ShoppingUtil {
 				ShoppingCategory category = item.getCategory();
 
 				shoppingGroupServiceOverriddenConfiguration =
-					getShoppingGroupServiceOverriddenConfiguration(
+					_getShoppingGroupServiceOverriddenConfiguration(
 						category.getGroupId());
 			}
 
@@ -419,7 +419,7 @@ public class ShoppingUtil {
 				ShoppingCategory category = item.getCategory();
 
 				shoppingGroupServiceOverriddenConfiguration =
-					getShoppingGroupServiceOverriddenConfiguration(
+					_getShoppingGroupServiceOverriddenConfiguration(
 						category.getGroupId());
 			}
 
@@ -510,7 +510,7 @@ public class ShoppingUtil {
 				ShoppingCategory category = item.getCategory();
 
 				shoppingGroupServiceOverriddenConfiguration =
-					getShoppingGroupServiceOverriddenConfiguration(
+					_getShoppingGroupServiceOverriddenConfiguration(
 						category.getGroupId());
 
 				break;
@@ -1168,7 +1168,7 @@ public class ShoppingUtil {
 	}
 
 	private static ShoppingGroupServiceOverriddenConfiguration
-			getShoppingGroupServiceOverriddenConfiguration(long groupId)
+			_getShoppingGroupServiceOverriddenConfiguration(long groupId)
 		throws ConfigurationException {
 
 		return ConfigurationProviderUtil.getConfiguration(

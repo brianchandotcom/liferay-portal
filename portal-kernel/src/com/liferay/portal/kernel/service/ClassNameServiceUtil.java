@@ -40,6 +40,11 @@ public class ClassNameServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ClassNameServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
+		long classNameId) {
+		return getService().fetchByClassNameId(classNameId);
+	}
+
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
 		java.lang.String value) {
 		return getService().fetchClassName(value);

@@ -25,6 +25,11 @@ import com.liferay.portal.service.base.ClassNameServiceBaseImpl;
 public class ClassNameServiceImpl extends ClassNameServiceBaseImpl {
 
 	@Override
+	public ClassName fetchByClassNameId(long classNameId) {
+		return classNameLocalService.fetchByClassNameId(classNameId);
+	}
+
+	@Override
 	public ClassName fetchClassName(String value) {
 		return classNameLocalService.fetchClassName(value);
 	}

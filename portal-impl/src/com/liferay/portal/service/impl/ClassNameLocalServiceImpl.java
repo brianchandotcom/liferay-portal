@@ -68,6 +68,11 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
+	public ClassName fetchByClassNameId(long classNameId) {
+		return classNamePersistence.fetchByPrimaryKey(classNameId);
+	}
+
+	@Override
 	public ClassName fetchClassName(String value) {
 		if (Validator.isNull(value)) {
 			return _nullClassName;

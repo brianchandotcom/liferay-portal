@@ -80,8 +80,38 @@ public class ClassNameServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
+		HttpPrincipal httpPrincipal, long classNameId) {
+		try {
+			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
+					"fetchByClassNameId", _fetchByClassNameIdParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					classNameId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.model.ClassName)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ClassNameServiceHttp.class);
 	private static final Class<?>[] _fetchClassNameParameterTypes0 = new Class[] {
 			java.lang.String.class
+		};
+	private static final Class<?>[] _fetchByClassNameIdParameterTypes1 = new Class[] {
+			long.class
 		};
 }

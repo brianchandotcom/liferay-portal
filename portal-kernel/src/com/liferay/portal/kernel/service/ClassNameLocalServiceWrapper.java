@@ -187,6 +187,12 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
+		long classNameId) {
+		return _classNameLocalService.fetchByClassNameId(classNameId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchClassName(
 		long classNameId) {
 		return _classNameLocalService.fetchClassName(classNameId);

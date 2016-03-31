@@ -168,6 +168,9 @@ public interface ClassNameLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClassName fetchByClassNameId(long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClassName fetchClassName(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

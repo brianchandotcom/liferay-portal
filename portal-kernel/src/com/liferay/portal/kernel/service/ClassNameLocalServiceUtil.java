@@ -183,6 +183,11 @@ public class ClassNameLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portal.kernel.model.ClassName fetchByClassNameId(
+		long classNameId) {
+		return getService().fetchByClassNameId(classNameId);
+	}
+
 	public static com.liferay.portal.kernel.model.ClassName fetchClassName(
 		long classNameId) {
 		return getService().fetchClassName(classNameId);

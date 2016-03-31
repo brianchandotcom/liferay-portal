@@ -78,5 +78,19 @@ public class ClassNameServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.ClassNameSoap fetchByClassNameId(
+		long classNameId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.ClassName returnValue = ClassNameServiceUtil.fetchByClassNameId(classNameId);
+
+			return com.liferay.portal.kernel.model.ClassNameSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ClassNameServiceSoap.class);
 }

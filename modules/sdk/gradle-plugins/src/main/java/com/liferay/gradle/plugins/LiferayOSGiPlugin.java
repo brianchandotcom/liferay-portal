@@ -334,6 +334,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 					Map<String, String> properties =
 						liferayOSGiExtension.getBundleDefaultInstructions();
 
+					properties.remove(Constants.DONOTCOPY);
+
 					String bundleName = getBundleInstruction(
 						project, Constants.BUNDLE_NAME);
 

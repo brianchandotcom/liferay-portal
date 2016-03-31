@@ -999,6 +999,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern2);
 
+		newContent = formatArray(fileName, newContent);
+
 		newContent = formatClassLine(newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
@@ -1404,6 +1406,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				annotation += line + "\n";
+			}
+		}
+
+		return content;
+	}
+
+	protected String formatArray(String fileName, String content) {
+		Matcher matcher = _arrayPattern.matcher(content);
+
+		while (matcher.find()) {
+			String newLine =
+				matcher.group(3) + matcher.group(2) + matcher.group(4) +
+					matcher.group(5);
+
+			if (getLineLength(newLine) <= _MAX_LINE_LENGTH) {
+				return StringUtil.replace(
+					content, matcher.group(),
+					matcher.group(1) + "\n" + newLine + "\n");
 			}
 		}
 
@@ -4200,6 +4220,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationMetaTypePattern = Pattern.compile(
 		"\\s(name|description) = \"%");
+	private Pattern _arrayPattern = Pattern.compile(
+		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
 	private Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();

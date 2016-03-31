@@ -226,7 +226,7 @@ AUI.add(
 						ratings = Liferay.Ratings.ThumbRating;
 					}
 
-					var ratingsInstance = null;
+					var ratingInstance = null;
 
 					if (ratings && document.getElementById(config.containerId)) {
 						ratingInstance = new ratings(config);

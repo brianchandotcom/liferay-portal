@@ -564,7 +564,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			}
 		}
 
-		if (Validator.isNotNull(modelResource)) {
+		if (Validator.isNull(modelResource)) {
 
 			// Force update of layout modified date. See LPS-59246.
 

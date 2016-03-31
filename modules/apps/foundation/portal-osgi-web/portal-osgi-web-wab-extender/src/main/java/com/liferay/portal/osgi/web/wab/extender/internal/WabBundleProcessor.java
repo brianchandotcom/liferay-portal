@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
@@ -79,6 +80,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Raymond Augé
@@ -439,26 +441,36 @@ public class WabBundleProcessor {
 		Map<String, String> contextParameters,
 		Map<String, String> jspTaglibMappings) {
 
-		_servletContextHelperRegistrationServiceReference =
-			_bundleContext.getServiceReference(
-				ServletContextHelperRegistration.class);
+		ServiceTracker
+			<ServletContextHelperRegistration, ServletContextHelperRegistration>
+				serviceTracker = new ServiceTracker<>(
+					_bundleContext, ServletContextHelperRegistration.class,
+					null);
 
-		ServletContextHelperRegistration servletContextHelperRegistration =
-			_bundleContext.getService(
-				_servletContextHelperRegistrationServiceReference);
+		serviceTracker.open();
 
-		servletContextHelperRegistration.setProperties(contextParameters);
+		try {
+			ServletContextHelperRegistration servletContextHelperRegistration =
+				serviceTracker.waitForService(2000);
 
-		ServletContext servletContext =
-			servletContextHelperRegistration.getServletContext();
+			_servletContextHelperRegistrationServiceReference =
+				serviceTracker.getServiceReference();
 
-		_contextName = servletContext.getServletContextName();
+			ServletContext servletContext =
+				servletContextHelperRegistration.getServletContext();
 
-		servletContext.setAttribute("jsp.taglib.mappings", jspTaglibMappings);
-		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
-		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
+			_contextName = servletContext.getServletContextName();
 
-		return servletContextHelperRegistration;
+			servletContext.setAttribute(
+				"jsp.taglib.mappings", jspTaglibMappings);
+			servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
+			servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
+
+			return servletContextHelperRegistration;
+		}
+		catch (InterruptedException e) {
+			return ReflectionUtil.throwException(e);
+		}
 	}
 
 	protected void initFilters(Map<String, FilterDefinition> filterDefinitions)

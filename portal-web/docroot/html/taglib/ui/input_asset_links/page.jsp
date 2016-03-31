@@ -103,7 +103,7 @@
 <aui:input name="assetLinkEntryIds" type="hidden" />
 
 <aui:script use="aui-base,escape,liferay-search-container">
-	A.getBody().delegate(
+	var assetSelectorEvent = A.getBody().delegate(
 		'click',
 		function(event) {
 			event.preventDefault();
@@ -143,6 +143,13 @@
 			);
 		},
 		'.asset-selector a'
+	);
+
+	Liferay.once(
+		'destroyPortlet',
+		function() {
+			assetSelectorEvent.detach();
+		}
 	);
 </aui:script>
 

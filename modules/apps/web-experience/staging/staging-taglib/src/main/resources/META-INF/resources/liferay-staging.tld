@@ -242,6 +242,19 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders the remote site options.</description>
+		<name>remote_options</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.RemoteOptionsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<name>exportImportConfigurationId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders a Select section in the UI for an Export or Publish screen.</description>
 		<name>select-pages</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.SelectPagesTag</tag-class>

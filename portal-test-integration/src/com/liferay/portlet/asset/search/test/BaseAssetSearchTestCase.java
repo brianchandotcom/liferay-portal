@@ -137,9 +137,8 @@ public abstract class BaseAssetSearchTestCase {
 
 		_group2 = GroupTestUtil.addGroup();
 
-		long[] groupIds = new long[] {
-			_group1.getGroupId(), _group2.getGroupId()
-		};
+		long[] groupIds =
+			new long[] {_group1.getGroupId(), _group2.getGroupId()};
 
 		for (long groupId : groupIds) {
 			serviceContext = ServiceContextTestUtil.getServiceContext(groupId);

@@ -586,9 +586,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					String[] arguments;
 
 					if (excludeUpdateFileVersions) {
-						arguments = new String[] {
-							"-x", UPDATE_FILE_VERSIONS_TASK_NAME
-						};
+						arguments =
+							new String[] {"-x", UPDATE_FILE_VERSIONS_TASK_NAME};
 					}
 					else {
 						arguments = new String[0];

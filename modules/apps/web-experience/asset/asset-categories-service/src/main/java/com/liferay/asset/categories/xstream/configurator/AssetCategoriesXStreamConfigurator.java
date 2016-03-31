@@ -56,9 +56,8 @@ public class AssetCategoriesXStreamConfigurator implements XStreamConfigurator {
 			new XStreamAlias(AssetVocabularyImpl.class, "AssetVocabulary")
 		};
 
-		_xStreamTypes = new XStreamType[] {
-			new XStreamType(AssetLinkImpl.class)
-		};
+		_xStreamTypes =
+			new XStreamType[] {new XStreamType(AssetLinkImpl.class)};
 	}
 
 	private XStreamAlias[] _xStreamAliases;

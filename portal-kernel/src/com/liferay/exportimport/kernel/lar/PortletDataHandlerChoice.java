@@ -61,9 +61,8 @@ public class PortletDataHandlerChoice extends PortletDataHandlerControl {
 		}
 	}
 
-	private static final String[] _DEFAULT_CHOICES = new String[] {
-		"false", "true"
-	};
+	private static final String[] _DEFAULT_CHOICES =
+		new String[] {"false", "true"};
 
 	private String[] _choices;
 	private final int _defaultChoice;

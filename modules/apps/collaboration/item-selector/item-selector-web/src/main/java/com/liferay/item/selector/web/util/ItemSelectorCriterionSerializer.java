@@ -116,9 +116,8 @@ public class ItemSelectorCriterionSerializer {
 		_serviceTracker.close();
 	}
 
-	private static final String[] _EXCLUDED_FIELD_NAMES = new String[] {
-		"availableItemSelectorReturnTypes", "class"
-	};
+	private static final String[] _EXCLUDED_FIELD_NAMES =
+		new String[] {"availableItemSelectorReturnTypes", "class"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ItemSelectorCriterionSerializer.class);

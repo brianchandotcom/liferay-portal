@@ -179,9 +179,8 @@ public class FriendlyURLServletTest {
 		Object[] expectedRedirectArray = null;
 
 		if (!Validator.equals(i18nPath, expectedI18nPath)) {
-			expectedRedirectArray = new Object[] {
-				expectedI18nPath + requestURI, true
-			};
+			expectedRedirectArray =
+				new Object[] {expectedI18nPath + requestURI, true};
 		}
 		else {
 			expectedRedirectArray = new Object[] {getURL(_layout), false};

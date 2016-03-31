@@ -196,9 +196,8 @@ public class GitHubMessageUtil {
 	}
 
 	protected static boolean isHighPriorityJobFailure(String content) {
-		String[] contentFlags = new String[] {
-			"compileJSP", "Unable to compile JSPs"
-		};
+		String[] contentFlags =
+			new String[] {"compileJSP", "Unable to compile JSPs"};
 
 		for (String contentFlag : contentFlags) {
 			if (content.contains(contentFlag)) {

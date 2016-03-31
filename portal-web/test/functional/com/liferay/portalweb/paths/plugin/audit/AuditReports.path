@@ -67,57 +67,57 @@
 <!--ADVANCED_SEARCH -->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
-	<td>//select[@id='_1_WAR_auditportlet_andOperator']</td>
+	<td>//select[contains(@id,'AuditPortlet_andOperator')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_USER_ID_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_userId']</td>
+	<td>//input[contains(@id,'_com_liferay_portal_security_audit_web_portlet_AuditPortlet_userId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_USER_NAME_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_userName']</td>
+	<td>//input[contains(@id,'AuditPortlet_userName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_RESOURCE_ID_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_classPK']</td>
+	<td>//input[contains(@id,'AuditPortlet_classPK')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_RESOURCE_NAME_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_className']</td>
+	<td>//input[contains(@id,'AuditPortlet_className')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_RESOURCE_ACTION_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_eventType']</td>
+	<td>//input[contains(@id,'AuditPortlet_eventType')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SESSION_ID_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_sessionID']</td>
+	<td>//input[contains(@id,'AuditPortlet_sessionID')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_CLIENT_IP_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_clientIP']</td>
+	<td>//input[contains(@id,'AuditPortlet_clientIP')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_CLIENT_HOST_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_clientHost']</td>
+	<td>//input[contains(@id,'AuditPortlet_clientHost')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SERVER_NAME_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_serverName']</td>
+	<td>//input[contains(@id,'AuditPortlet_serverName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SERVER_PORT_FIELD</td>
-	<td>//input[@id='_1_WAR_auditportlet_serverPort']</td>
+	<td>//input[contains(@id,'AuditPortlet_serverPort')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -1,6 +1,4 @@
 <definition component-name="portal-core-infrastructure-portal-services">
-	<property name="hook.plugins.includes" value="audit-hook" />
-	<property name="portlet.plugins.includes" value="audit-portlet" />
 	<property name="testray.main.component.name" value="Auditing" />
 	<property name="testray.testcase.product.edition" value="EE" />
 
@@ -29,65 +27,53 @@
 	<command name="ViewResourceActionsCP" priority="4">
 		<property name="custom.properties" value="audit.message.com.liferay.portal.model.Layout.VIEW=true${line.separator}com.liferay.portal.servlet.filters.audit.AuditFilter=true" />
 
-		<var name="resourceAction1" value="Login" />
-		<var name="resourceAction2" value="Login Failure" />
-		<var name="resourceAction3" value="Impersonate" />
-		<var name="resourceAction4" value="Add" />
-		<var name="resourceAction5" value="Assign" />
-		<var name="resourceName1" value="Role" />
-		<var name="resourceName2" value="User" />
-		<var name="resourceName3" value="User Group" />
-		<var name="roleName" value="Role1" />
-		<var name="userName" value="Test Test" />
-		<var name="userScreenName" value="test1" />
-
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="searchTerm" value="10201" />
-			<var name="userId" value="10201" />
-			<var name="userName" value="${userName}" />
+			<var name="searchTerm" value="20250" />
+			<var name="userId" value="20250" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
-		</execute>
-
-		<execute macro="Audit#searchCP">
-			<var name="searchTerm" value="${userName}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="resourceId" value="10201" />
-			<var name="searchTerm" value="10201" />
-			<var name="userName" value="${userName}" />
+			<var name="searchTerm" value="Test Test" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
-		</execute>
-
-		<execute macro="Audit#searchCP">
-			<var name="resourceName" value="${resourceName2}" />
-			<var name="searchTerm" value="${resourceName2}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="resourceAction" value="${resourceAction1}" />
-			<var name="searchTerm" value="${resourceAction1}" />
-			<var name="userName" value="${userName}" />
+			<var name="resourceId" value="20250" />
+			<var name="searchTerm" value="20250" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
+		</execute>
+
+		<execute macro="Audit#searchCP">
+			<var name="resourceName" value="User" />
+			<var name="searchTerm" value="User" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
+		</execute>
+
+		<execute macro="Audit#searchCP">
+			<var name="resourceAction" value="Login" />
+			<var name="searchTerm" value="Login" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -102,14 +88,14 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
 		</execute>
 
-		<var name="key_resourceAction" value="${resourceAction2}" />
-		<var name="key_resourceName" value="${resourceName2}" />
+		<var name="key_resourceAction" value="Login Failure" />
+		<var name="key_resourceName" value="User" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction2}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Login Failure" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -126,28 +112,37 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#impersonateCP">
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute function="Close" locator1="title=Welcome - Liferay" />
+		<execute function="Close#closeWindow" locator1="title=Welcome - Liferay" />
 		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
 		</execute>
 
-		<var name="key_resourceAction" value="${resourceAction3}" />
-		<var name="key_resourceName" value="${resourceName2}" />
+		<var name="key_resourceAction" value="Impersonate" />
+		<var name="key_resourceName" value="User" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction3}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Impersonate" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Role1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -155,6 +150,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Role1" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 
@@ -171,41 +167,41 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
-			<var name="portlet" value="Audit Reports" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Audit" />
 		</execute>
 
-		<var name="key_resourceAction" value="${resourceAction4}" />
-		<var name="key_resourceName" value="${resourceName1}" />
+		<var name="key_resourceAction" value="Add" />
+		<var name="key_resourceName" value="Role" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName1}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="Role" />
 
-		<var name="key_resourceAction" value="${resourceAction4}" />
-		<var name="key_resourceName" value="${resourceName1}" />
+		<var name="key_resourceAction" value="Add" />
+		<var name="key_resourceName" value="Role" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Add" />
 
-		<var name="key_resourceAction" value="${resourceAction5}" />
-		<var name="key_resourceName" value="${resourceName2}" />
+		<var name="key_resourceAction" value="Assign" />
+		<var name="key_resourceName" value="User" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName2}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="User" />
 
-		<var name="key_resourceAction" value="${resourceAction5}" />
-		<var name="key_resourceName" value="${resourceName2}" />
+		<var name="key_resourceAction" value="Assign" />
+		<var name="key_resourceName" value="User" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction5}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Assign" />
 
-		<var name="key_resourceAction" value="${resourceAction4}" />
-		<var name="key_resourceName" value="${resourceName3}" />
+		<var name="key_resourceAction" value="Add" />
+		<var name="key_resourceName" value="User Group" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName3}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="User Group" />
 
-		<var name="key_resourceAction" value="${resourceAction4}" />
-		<var name="key_resourceName" value="${resourceName3}" />
+		<var name="key_resourceAction" value="Add" />
+		<var name="key_resourceName" value="User Group" />
 
-		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="Add" />
 
-		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[4])[2]" value1="${resourceName2}" />
-		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[5])[2]" value1="${resourceAction5}" />
+		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'Assign') and contains(.,'User')]/td[4])[2]" value1="User" />
+		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'Assign') and contains(.,'User')]/td[5])[2]" value1="Assign" />
 	</command>
 </definition>

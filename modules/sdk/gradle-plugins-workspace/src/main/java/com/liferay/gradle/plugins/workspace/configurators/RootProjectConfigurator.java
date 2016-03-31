@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import de.undercouch.gradle.tasks.download.Download;
@@ -130,6 +131,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					if (Validator.isNotNull(task.getDescription())) {
+						return;
+					}
+
 					task.setDescription(
 						"Assembles the Liferay bundle and zips it up into '" +
 							project.relativePath(task.getArchivePath()) + "'.");
@@ -143,7 +148,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	protected Download addTaskDownloadBundle(
 		Project project, final WorkspaceExtension workspaceExtension) {
 
-		Download download = GradleUtil.addTask(
+		final Download download = GradleUtil.addTask(
 			project, DOWNLOAD_BUNDLE_TASK_NAME, Download.class);
 
 		File destinationDir = new File(
@@ -156,20 +161,35 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		download.onlyIfNewer(true);
 		download.setDescription("Downloads the Liferay bundle zip file.");
 
-		try {
-			download.src(
-				new Closure<String>(null) {
+		project.afterEvaluate(
+			new Action<Project>() {
 
-					@SuppressWarnings("unused")
-					public String doCall() {
-						return workspaceExtension.getBundleUrl();
+				@Override
+				public void execute(Project project) {
+					Object src = download.getSrc();
+
+					if (src != null) {
+						if (src instanceof List<?>) {
+							List<?> srcList = (List<?>)src;
+
+							if (!srcList.isEmpty()) {
+								return;
+							}
+						}
+						else {
+							return;
+						}
 					}
 
-				});
-		}
-		catch (MalformedURLException murle) {
-			throw new GradleException(murle.getMessage(), murle);
-		}
+					try {
+						download.src(workspaceExtension.getBundleUrl());
+					}
+					catch (MalformedURLException murle) {
+						throw new GradleException(murle.getMessage(), murle);
+					}
+				}
+
+			});
 
 		return download;
 	}
@@ -215,6 +235,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					if (Validator.isNotNull(copy.getDescription())) {
+						return;
+					}
+
 					copy.setDescription(
 						"Downloads and unzips the bundle into '" +
 							project.relativePath(copy.getDestinationDir()) +

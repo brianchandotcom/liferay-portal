@@ -15,12 +15,10 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -69,10 +67,7 @@ public class ThreadPermissionsPortletConfigurationIcon
 		try {
 			MBMessage rootMessage = null;
 
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBMessage message = messageDisplay.getMessage();
+			MBMessage message = ActionUtil.getMessage(portletRequest);
 
 			if (message.isRoot()) {
 				rootMessage = message;
@@ -84,10 +79,7 @@ public class ThreadPermissionsPortletConfigurationIcon
 
 			String modelResource = MBMessage.class.getName();
 			String modelResourceDescription = rootMessage.getSubject();
-
-			MBThread thread = messageDisplay.getThread();
-
-			String resourcePrimKey = String.valueOf(thread.getRootMessageId());
+			String resourcePrimKey = String.valueOf(rootMessage.getMessageId());
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
@@ -124,23 +116,21 @@ public class ThreadPermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
+			MBMessage message = ActionUtil.getMessage(portletRequest);
 
-			MBThread thread = messageDisplay.getThread();
+			MBThread thread = message.getThread();
 
 			if (thread.isLocked()) {
 				return false;
 			}
 
 			if (!MBMessagePermission.contains(
-					permissionChecker, messageDisplay.getMessage(),
-					ActionKeys.PERMISSIONS)) {
+					permissionChecker, message, ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			return false;
 		}
 

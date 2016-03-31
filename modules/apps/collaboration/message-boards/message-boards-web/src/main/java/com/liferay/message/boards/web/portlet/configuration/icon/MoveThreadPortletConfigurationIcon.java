@@ -16,11 +16,9 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -69,24 +67,20 @@ public class MoveThreadPortletConfigurationIcon
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		MBMessageDisplay messageDisplay = null;
-
 		try {
-			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
+			portletURL.setParameter(
+				"mbCategoryId", String.valueOf(getCategoryId(category)));
+
+			MBMessage message = ActionUtil.getMessage(portletRequest);
+
+			portletURL.setParameter(
+				"threadId", String.valueOf(message.getThreadId()));
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			return null;
 		}
-
-		MBCategory category = messageDisplay.getCategory();
-
-		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(getCategoryId(category)));
-
-		MBThread thread = messageDisplay.getThread();
-
-		portletURL.setParameter(
-			"threadId", String.valueOf(thread.getThreadId()));
 
 		return portletURL.toString();
 	}
@@ -99,10 +93,7 @@ public class MoveThreadPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBCategory category = messageDisplay.getCategory();
+			MBCategory category = ActionUtil.getCategory(portletRequest);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
@@ -116,7 +107,7 @@ public class MoveThreadPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;

@@ -15,11 +15,9 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -59,12 +57,9 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		String key = "subscribe";
 
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
+			MBMessage message = ActionUtil.getMessage(portletRequest);
 
-			MBMessage message = messageDisplay.getMessage();
-
-			if (isSubscribed(portletRequest, message)) {
+			if (_isSubscribed(portletRequest, message.getThreadId())) {
 				key = "unsubscribe";
 			}
 		}
@@ -89,16 +84,13 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		MBMessage message = null;
 
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			message = messageDisplay.getMessage();
+			message = ActionUtil.getMessage(portletRequest);
 		}
 		catch (Exception e) {
 			return null;
 		}
 
-		if (isSubscribed(portletRequest, message)) {
+		if (_isSubscribed(portletRequest, message.getThreadId())) {
 			portletURL.setParameter(Constants.CMD, Constants.UNSUBSCRIBE);
 		}
 		else {
@@ -134,16 +126,13 @@ public class ThreadSubscriptionPortletConfigurationIcon
 				return false;
 			}
 
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBMessage message = messageDisplay.getMessage();
+			MBMessage message = ActionUtil.getMessage(portletRequest);
 
 			return MBMessagePermission.contains(
 				themeDisplay.getPermissionChecker(), message,
 				ActionKeys.SUBSCRIBE);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;
@@ -156,15 +145,15 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private boolean isSubscribed(
-		PortletRequest portletRequest, MBMessage message) {
+	private boolean _isSubscribed(
+		PortletRequest portletRequest, long threadId) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return _subscriptionLocalService.isSubscribed(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			MBThread.class.getName(), message.getThreadId());
+			MBThread.class.getName(), threadId);
 	}
 
 	private SubscriptionLocalService _subscriptionLocalService;

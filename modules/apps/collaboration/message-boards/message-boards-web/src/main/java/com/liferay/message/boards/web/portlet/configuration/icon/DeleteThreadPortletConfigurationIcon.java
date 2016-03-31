@@ -17,11 +17,9 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -92,40 +90,36 @@ public class DeleteThreadPortletConfigurationIcon
 
 		deleteURL.setParameter(Constants.CMD, cmd);
 
-		MBMessageDisplay messageDisplay = null;
-
 		try {
-			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+			MBCategory category = ActionUtil.getCategory(portletRequest);
+
+			PortletURL parentCategoryURL = PortletURLFactoryUtil.create(
+				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+			long categoryId = getCategoryId(category);
+
+			if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+				parentCategoryURL.setParameter(
+					"mvcRenderCommandName", "/message_boards/view");
+			}
+			else {
+				parentCategoryURL.setParameter(
+					"mvcRenderCommandName", "/message_boards/view_category");
+				parentCategoryURL.setParameter(
+					"mbCategoryId", String.valueOf(categoryId));
+			}
+
+			deleteURL.setParameter("redirect", parentCategoryURL.toString());
+
+			MBMessage message = ActionUtil.getMessage(portletRequest);
+
+			deleteURL.setParameter(
+				"threadId", String.valueOf(message.getThreadId()));
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			return null;
 		}
-
-		MBCategory category = messageDisplay.getCategory();
-
-		PortletURL parentCategoryURL = PortletURLFactoryUtil.create(
-			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		long categoryId = getCategoryId(category);
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			parentCategoryURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view");
-		}
-		else {
-			parentCategoryURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view_category");
-			parentCategoryURL.setParameter(
-				"mbCategoryId", String.valueOf(categoryId));
-		}
-
-		deleteURL.setParameter("redirect", parentCategoryURL.toString());
-
-		MBThread thread = messageDisplay.getThread();
-
-		deleteURL.setParameter(
-			"threadId", String.valueOf(thread.getThreadId()));
 
 		return deleteURL.toString();
 	}
@@ -138,11 +132,9 @@ public class DeleteThreadPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
+			MBMessage message = ActionUtil.getMessage(portletRequest);
 
-			MBMessage message = messageDisplay.getMessage();
-			MBThread thread = messageDisplay.getThread();
+			MBThread thread = message.getThread();
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
@@ -156,7 +148,7 @@ public class DeleteThreadPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return false;

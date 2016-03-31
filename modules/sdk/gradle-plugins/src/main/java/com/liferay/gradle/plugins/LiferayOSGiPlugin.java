@@ -278,15 +278,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		jar.dependsOn(buildWSDDTask);
 
-		String taskName = buildWSDDTask.getName();
-
-		if (taskName.equals(WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
-			jar.setAppendix("wsdd");
-		}
-		else {
-			jar.setAppendix("wsdd-" + taskName);
-		}
-
 		jar.deleteAllActions();
 
 		jar.doLast(
@@ -373,6 +364,15 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				}
 
 			});
+
+		String taskName = buildWSDDTask.getName();
+
+		if (taskName.equals(WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
+			jar.setAppendix("wsdd");
+		}
+		else {
+			jar.setAppendix("wsdd-" + taskName);
+		}
 
 		buildWSDDTask.finalizedBy(jar);
 

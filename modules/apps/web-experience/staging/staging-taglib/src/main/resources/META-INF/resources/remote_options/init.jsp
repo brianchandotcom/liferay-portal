@@ -15,3 +15,17 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:remote_options:exportImportConfigurationId"));
+
+Map<String, Serializable> settingsMap = Collections.emptyMap();
+
+ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.fetchExportImportConfiguration(exportImportConfigurationId);
+
+if (exportImportConfiguration != null) {
+	settingsMap = exportImportConfiguration.getSettingsMap();
+}
+
+UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+%>

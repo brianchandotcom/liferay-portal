@@ -18,7 +18,7 @@
 String backURL = PortalUtil.getCurrentURL(request);
 %>
 
-<aui:script use="liferay-calendar-simple-menu,liferay-calendar-simple-color-picker">
+<aui:script use="aui-toggler,calendar,liferay-calendar-simple-menu,liferay-calendar-simple-color-picker,liferay-store">
 	window.<portlet:namespace />calendarListsMenu = new Liferay.SimpleMenu(
 		{
 			align: {

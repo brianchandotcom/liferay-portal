@@ -1036,15 +1036,19 @@ ${output.content}</echo>
 	</target>
 
 	<target name="semantic-versioning-jdk7">
-		<fileset dir="${project.dir}" id="log.files">
-			<include name="baseline-reports/*.log" />
-			<include name="modules/**/baseline.log" />
-		</fileset>
-
-		<pathconvert pathsep="," property="log.files" refid="log.files" />
-
 		<run-batch-test>
 			<test-action>
+				<echo>Checking for baseline log files.</echo>
+
+				<var name="log.files" unset="true" />
+
+				<fileset dir="${project.dir}" id="log.files">
+					<include name="baseline-reports/*.log" />
+					<include name="modules/**/baseline.log" />
+				</fileset>
+
+				<pathconvert pathsep="," property="log.files" refid="log.files" />
+
 				<for list="${log.files}" param="log.file">
 					<sequential>
 						<print-file file.name="@{log.file}" />
@@ -1059,10 +1063,18 @@ ${output.content}</echo>
 						<fail message="Semantic versioning is incorrect." />
 					</then>
 				</if>
+
+				<echo>Check for baseline log files completed.</echo>
 			</test-action>
 
 			<test-set-up>
-				<for list="${log.files}" param="log.file">
+				<echo>Deleting stale baseline log files.</echo>
+
+				<for param="log.file">
+					<fileset dir="${project.dir}">
+						<include name="baseline-reports/*.log" />
+						<include name="modules/**/baseline.log" />
+					</fileset>
 					<sequential>
 						<delete file="@{log.file}" />
 					</sequential>

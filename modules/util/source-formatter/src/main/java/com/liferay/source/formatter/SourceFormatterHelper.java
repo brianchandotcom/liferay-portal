@@ -154,7 +154,7 @@ public class SourceFormatterHelper {
 
 			File file = new File(fileName);
 
-			Path filePath = file.toPath();
+			Path filePath = getRealPath(file.toPath());
 
 			for (PathMatcher pathMatcher : excludeFilePathMatchers) {
 				if (pathMatcher.matches(filePath)) {
@@ -165,7 +165,7 @@ public class SourceFormatterHelper {
 			File dir = file.getParentFile();
 
 			while (true) {
-				Path dirPath = dir.toPath();
+				Path dirPath = getRealPath(dir.toPath());
 
 				for (PathMatcher pathMatcher : excludeDirPathMatchers) {
 					if (pathMatcher.matches(dirPath)) {
@@ -201,6 +201,15 @@ public class SourceFormatterHelper {
 		return fileNames;
 	}
 
+	protected Path getRealPath(Path path) {
+		try {
+			return path.toRealPath();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	protected List<String> scanForFiles(
 			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
 			final List<PathMatcher> excludeFilePathMatchers,
@@ -223,6 +232,8 @@ public class SourceFormatterHelper {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					dirPath = getRealPath(dirPath);
+
 					for (PathMatcher pathMatcher : excludeDirPathMatchers) {
 						if (pathMatcher.matches(dirPath)) {
 							return FileVisitResult.SKIP_SUBTREE;
@@ -235,6 +246,8 @@ public class SourceFormatterHelper {
 				@Override
 				public FileVisitResult visitFile(
 					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					filePath = getRealPath(filePath);
 
 					for (PathMatcher pathMatcher : excludeFilePathMatchers) {
 						if (pathMatcher.matches(filePath)) {

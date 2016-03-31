@@ -82,7 +82,7 @@ public class IncorrectWhitespace {
 		for(int i = 1;i < 10 ; i++) {
 			String [] stringArray1 = new String[]{"test1"};
 			String [] stringArray2 = new String[]{
-				"test1", "test2", "test3", "test4"
+				"test1", "test2", "test3", "test4", "test5", "test6"
 			};
 		}
 

@@ -116,8 +116,10 @@
 			Liferay.once(
 				'<portlet:namespace />formReady',
 				function(event) {
+					var hasFocusField = focusField.length;
+
 					if (!sectionContent.hasClass('in')) {
-						if (focusField.length) {
+						if (hasFocusField) {
 							sectionContent.one(
 								'shown.bs.collapse',
 								function() {
@@ -128,12 +130,11 @@
 
 						sectionContent.collapse('show');
 					}
-					else if (focusField.length) {
+					else if (hasFocusField) {
 						Liferay.Util.focusFormField(focusField);
 					}
 				}
 			);
-
 		</aui:script>
 
 	<%

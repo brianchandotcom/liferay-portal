@@ -3,10 +3,6 @@ import org.gradle.execution.ProjectConfigurer
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
 
-configurations.provided.dependencies.withType(ProjectDependency) {
-	configurations.default.exclude module: it.name
-}
-
 List<String> taskNames = gradle.startParameter.taskNames
 
 if (("eclipse" in taskNames) || ("idea" in taskNames)) {

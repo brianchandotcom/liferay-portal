@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -128,8 +129,13 @@ public class LanguageExtension implements Extension {
 
 		Dictionary<String, Object> properties = new Hashtable<>(attributes);
 
-		properties.put("bundle.symbolic.name", _bundle.getSymbolicName());
-		properties.put("service.ranking", Integer.MIN_VALUE);
+		if (Validator.isNull(properties.get("bundle.symbolic.name"))) {
+			properties.put("bundle.symbolic.name", _bundle.getSymbolicName());
+		}
+
+		if (Validator.isNull(properties.get("service.ranking"))) {
+			properties.put("service.ranking", Integer.MIN_VALUE);
+		}
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(

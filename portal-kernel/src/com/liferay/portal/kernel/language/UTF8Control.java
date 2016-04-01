@@ -40,6 +40,11 @@ public class UTF8Control extends Control {
 	public static final UTF8Control INSTANCE = new UTF8Control();
 
 	@Override
+	public Locale getFallbackLocale(String baseName, Locale locale) {
+		return null;
+	}
+
+	@Override
 	public ResourceBundle newBundle(
 			String baseName, Locale locale, String format,
 			ClassLoader classLoader, boolean reload)

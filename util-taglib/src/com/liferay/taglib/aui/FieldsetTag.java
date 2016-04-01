@@ -71,20 +71,16 @@ public class FieldsetTag extends BaseFieldsetTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		if (Validator.isNull(getId()) &&
+			Validator.isNotNull(getLabel()) &&
+			getCollapsible()) {
+
+			setId(
+				PortalUtil.getUniqueElementId(
+					request, _getNamespace(), AUIUtil.normalizeId(getLabel())));
+		}
+
 		super.setAttributes(request);
-
-		if (Validator.isNotNull(getId())) {
-			return;
-		}
-
-		if (Validator.isNull(getLabel()) || !getCollapsible()) {
-			return;
-		}
-
-		String id = PortalUtil.getUniqueElementId(
-			request, _getNamespace(), AUIUtil.normalizeId(getLabel()));
-
-		setNamespacedAttribute(request, "id", id);
 	}
 
 	private String _getNamespace() {

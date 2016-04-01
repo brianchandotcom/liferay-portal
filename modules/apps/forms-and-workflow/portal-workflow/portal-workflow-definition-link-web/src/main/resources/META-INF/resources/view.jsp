@@ -17,12 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view.jsp");
-portletURL.setParameter("tabs1", "default-configuration");
-
-WorkflowDefinitionLinkSearch workflowDefinitionLinkSearch = new WorkflowDefinitionLinkSearch(renderRequest, portletURL);
+WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDefinitionLinkDisplayContext.getSearchContainer();
 %>
 
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
@@ -36,12 +31,8 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearch = new WorkflowDefiniti
 <div class="container-fluid-1280 workflow-definition-link-container" id="<portlet:namespace />Container">
 	<liferay-ui:search-container
 		id="searchContainer"
-		searchContainer="<%= workflowDefinitionLinkSearch %>"
+		searchContainer="<%= workflowDefinitionLinkSearchContainer %>"
 	>
-
-		<liferay-ui:search-container-results
-			results="<%= workflowDefinitionLinkDisplayContext.getSearchContainerResults(searchContainer) %>"
-		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry"

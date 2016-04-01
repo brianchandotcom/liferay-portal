@@ -39,20 +39,41 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getBoolean(companyId, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getBoolean(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean getBoolean(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getBoolean(preferences, companyId, name);
+		return getBoolean(preferences, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getBoolean(PortletPreferences, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public boolean getBoolean(
 		PortletPreferences preferences, long companyId, String name,
 		boolean defaultValue) {
 
-		return PrefsPropsUtil.getBoolean(
-			preferences, companyId, name, defaultValue);
+		return getBoolean(preferences, name, defaultValue);
+	}
+
+	@Override
+	public boolean getBoolean(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getBoolean(preferences, name);
+	}
+
+	@Override
+	public boolean getBoolean(
+		PortletPreferences preferences, String name, boolean defaultValue) {
+
+		return PrefsPropsUtil.getBoolean(preferences, name, defaultValue);
 	}
 
 	@Override
@@ -70,11 +91,21 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getContent(companyId, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getContent(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public String getContent(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getContent(preferences, companyId, name);
+		return getContent(preferences, name);
+	}
+
+	@Override
+	public String getContent(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getContent(preferences, name);
 	}
 
 	@Override
@@ -92,20 +123,41 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getDouble(companyId, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getDouble(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public double getDouble(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getDouble(preferences, companyId, name);
+		return getDouble(preferences, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getDouble(PortletPreferences, String, double)}
+	 */
+	@Deprecated
 	@Override
 	public double getDouble(
 		PortletPreferences preferences, long companyId, String name,
 		double defaultValue) {
 
-		return PrefsPropsUtil.getDouble(
-			preferences, companyId, name, defaultValue);
+		return getDouble(preferences, name, defaultValue);
+	}
+
+	@Override
+	public double getDouble(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getDouble(preferences, name);
+	}
+
+	@Override
+	public double getDouble(
+		PortletPreferences preferences, String name, double defaultValue) {
+
+		return PrefsPropsUtil.getDouble(preferences, name, defaultValue);
 	}
 
 	@Override
@@ -128,20 +180,41 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getInteger(companyId, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getInteger(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public int getInteger(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getInteger(preferences, companyId, name);
+		return getInteger(preferences, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getInteger(PortletPreferences, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public int getInteger(
 		PortletPreferences preferences, long companyId, String name,
 		int defaultValue) {
 
-		return PrefsPropsUtil.getInteger(
-			preferences, companyId, name, defaultValue);
+		return getInteger(preferences, name, defaultValue);
+	}
+
+	@Override
+	public int getInteger(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getInteger(preferences, name);
+	}
+
+	@Override
+	public int getInteger(
+		PortletPreferences preferences, String name, int defaultValue) {
+
+		return PrefsPropsUtil.getInteger(preferences, name, defaultValue);
 	}
 
 	@Override
@@ -164,20 +237,41 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getLong(companyId, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getLong(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public long getLong(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getLong(preferences, companyId, name);
+		return getLong(preferences, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getLong(PortletPreferences, String, long)}
+	 */
+	@Deprecated
 	@Override
 	public long getLong(
 		PortletPreferences preferences, long companyId, String name,
 		long defaultValue) {
 
-		return PrefsPropsUtil.getLong(
-			preferences, companyId, name, defaultValue);
+		return getLong(preferences, name, defaultValue);
+	}
+
+	@Override
+	public long getLong(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getLong(preferences, name);
+	}
+
+	@Override
+	public long getLong(
+		PortletPreferences preferences, String name, long defaultValue) {
+
+		return PrefsPropsUtil.getLong(preferences, name, defaultValue);
 	}
 
 	@Override
@@ -210,13 +304,24 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getPreferences(companyId, readOnly);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getProperties(PortletPreferences, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public Properties getProperties(
 		PortletPreferences preferences, long companyId, String prefix,
 		boolean removePrefix) {
 
-		return PrefsPropsUtil.getProperties(
-			preferences, companyId, prefix, removePrefix);
+		return getProperties(preferences, prefix, removePrefix);
+	}
+
+	@Override
+	public Properties getProperties(
+		PortletPreferences preferences, String prefix, boolean removePrefix) {
+
+		return PrefsPropsUtil.getProperties(preferences, prefix, removePrefix);
 	}
 
 	@Override
@@ -234,20 +339,41 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getShort(companyId, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getShort(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public short getShort(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getShort(preferences, companyId, name);
+		return getShort(preferences, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getShort(PortletPreferences, String, short)}
+	 */
+	@Deprecated
 	@Override
 	public short getShort(
 		PortletPreferences preferences, long companyId, String name,
 		short defaultValue) {
 
-		return PrefsPropsUtil.getShort(
-			preferences, companyId, name, defaultValue);
+		return getShort(preferences, name, defaultValue);
+	}
+
+	@Override
+	public short getShort(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getShort(preferences, name);
+	}
+
+	@Override
+	public short getShort(
+		PortletPreferences preferences, String name, short defaultValue) {
+
+		return PrefsPropsUtil.getShort(preferences, name, defaultValue);
 	}
 
 	@Override
@@ -270,65 +396,141 @@ public class PrefsPropsImpl implements PrefsProps {
 		return PrefsPropsUtil.getString(companyId, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name) {
 
-		return PrefsPropsUtil.getString(preferences, companyId, name);
+		return getString(preferences, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name,
 		boolean defaultValue) {
 
-		return PrefsPropsUtil.getString(
-			preferences, companyId, name, defaultValue);
+		return getString(preferences, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String, double)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name,
 		double defaultValue) {
 
-		return PrefsPropsUtil.getString(
-			preferences, companyId, name, defaultValue);
+		return getString(preferences, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String, int)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name,
 		int defaultValue) {
 
-		return PrefsPropsUtil.getString(
-			preferences, companyId, name, defaultValue);
+		return getString(preferences, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String, long)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name,
 		long defaultValue) {
 
-		return PrefsPropsUtil.getString(
-			preferences, companyId, name, defaultValue);
+		return getString(preferences, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String, short)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name,
 		short defaultValue) {
 
-		return PrefsPropsUtil.getString(
-			preferences, companyId, name, defaultValue);
+		return getString(preferences, name, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getString(PortletPreferences, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public String getString(
 		PortletPreferences preferences, long companyId, String name,
 		String defaultValue) {
 
-		return PrefsPropsUtil.getString(
-			preferences, companyId, name, defaultValue);
+		return getString(preferences, name, defaultValue);
+	}
+
+	@Override
+	public String getString(PortletPreferences preferences, String name) {
+		return PrefsPropsUtil.getString(preferences, name);
+	}
+
+	@Override
+	public String getString(
+		PortletPreferences preferences, String name, boolean defaultValue) {
+
+		return PrefsPropsUtil.getString(preferences, name, defaultValue);
+	}
+
+	@Override
+	public String getString(
+		PortletPreferences preferences, String name, double defaultValue) {
+
+		return PrefsPropsUtil.getString(preferences, name, defaultValue);
+	}
+
+	@Override
+	public String getString(
+		PortletPreferences preferences, String name, int defaultValue) {
+
+		return PrefsPropsUtil.getString(preferences, name, defaultValue);
+	}
+
+	@Override
+	public String getString(
+		PortletPreferences preferences, String name, long defaultValue) {
+
+		return PrefsPropsUtil.getString(preferences, name, defaultValue);
+	}
+
+	@Override
+	public String getString(
+		PortletPreferences preferences, String name, short defaultValue) {
+
+		return PrefsPropsUtil.getString(preferences, name, defaultValue);
+	}
+
+	@Override
+	public String getString(
+		PortletPreferences preferences, String name, String defaultValue) {
+
+		return PrefsPropsUtil.getString(preferences, name, defaultValue);
 	}
 
 	@Override
@@ -356,22 +558,47 @@ public class PrefsPropsImpl implements PrefsProps {
 			companyId, name, delimiter, defaultValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getStringArray(PortletPreferences, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public String[] getStringArray(
 		PortletPreferences preferences, long companyId, String name,
 		String delimiter) {
 
-		return PrefsPropsUtil.getStringArray(
-			preferences, companyId, name, delimiter);
+		return getStringArray(preferences, name, delimiter);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getStringArray(PortletPreferences, String, String,
+	 *             String[])}
+	 */
+	@Deprecated
 	@Override
 	public String[] getStringArray(
 		PortletPreferences preferences, long companyId, String name,
 		String delimiter, String[] defaultValue) {
 
+		return getStringArray(preferences, name, delimiter, defaultValue);
+	}
+
+	@Override
+	public String[] getStringArray(
+		PortletPreferences preferences, String name, String delimiter) {
+
+		return PrefsPropsUtil.getStringArray(preferences, name, delimiter);
+	}
+
+	@Override
+	public String[] getStringArray(
+		PortletPreferences preferences, String name, String delimiter,
+		String[] defaultValue) {
+
 		return PrefsPropsUtil.getStringArray(
-			preferences, companyId, name, delimiter, defaultValue);
+			preferences, name, delimiter, defaultValue);
 	}
 
 	@Override

@@ -12,29 +12,36 @@
  * details.
  */
 
-package com.liferay.util.mail;
+package com.liferay.mail.util;
 
-import org.apache.commons.lang.exception.NestableException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 
 /**
- * @author Alexander Chow
- * @see com.liferay.mail.util.MailServerException
+ * @author Jorge Ferrer
+ * @see com.liferay.util.mail.LiferayMimeMessage
  */
-public class MailServerException extends NestableException {
+public class LiferayMimeMessage extends MimeMessage {
 
-	public MailServerException() {
+	public LiferayMimeMessage(Session session) {
+		super(session);
 	}
 
-	public MailServerException(String msg) {
-		super(msg);
-	}
+	@Override
+	protected void updateMessageID() throws MessagingException {
+		String[] messageIds = getHeader("Message-ID");
 
-	public MailServerException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+		if (ArrayUtil.isNotEmpty(messageIds)) {
 
-	public MailServerException(Throwable cause) {
-		super(cause);
+			// Keep current value
+
+			return;
+		}
+
+		super.updateMessageID();
 	}
 
 }

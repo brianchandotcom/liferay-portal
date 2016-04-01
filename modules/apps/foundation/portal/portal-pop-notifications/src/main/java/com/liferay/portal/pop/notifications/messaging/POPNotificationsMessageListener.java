@@ -15,6 +15,7 @@
 package com.liferay.portal.pop.notifications.messaging;
 
 import com.liferay.mail.kernel.model.Account;
+import com.liferay.mail.util.MailEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.notifications.MessageListenerWrapper;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.mail.MailEngine;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

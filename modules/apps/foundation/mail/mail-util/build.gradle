@@ -1,0 +1,6 @@
+dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "commons-lang", name: "commons-lang", version: "2.6"
+	provided group: "commons-validator", name: "commons-validator", version: "1.5.0"
+	provided group: "javax.mail", name: "mail", version: "1.4"
+}

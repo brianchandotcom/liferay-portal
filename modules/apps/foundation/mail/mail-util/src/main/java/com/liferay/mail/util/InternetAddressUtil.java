@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.mail;
+package com.liferay.mail.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -31,7 +31,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 /**
  * @author Alexander Chow
- * @see com.liferay.mail.util.InternetAddressUtil
+ * @see com.liferay.util.mail.InternetAddressUtil
  */
 public class InternetAddressUtil {
 

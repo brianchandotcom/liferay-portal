@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.util.mail;
+package com.liferay.mail.util;
 
 import org.apache.commons.lang.exception.NestableException;
 
 /**
  * @author Alexander Chow
- * @see com.liferay.mail.util.MailServerException
+ * @see com.liferay.util.mail.MailServerException
  */
 public class MailServerException extends NestableException {
 

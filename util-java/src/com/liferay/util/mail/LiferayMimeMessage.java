@@ -22,6 +22,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * @author Jorge Ferrer
+ * @see com.liferay.mail.util.LiferayMimeMessage
  */
 public class LiferayMimeMessage extends MimeMessage {
 

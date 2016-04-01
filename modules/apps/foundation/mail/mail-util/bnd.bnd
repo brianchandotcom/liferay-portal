@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Mail Utilities
+Bundle-SymbolicName: com.liferay.mail.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.mail.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

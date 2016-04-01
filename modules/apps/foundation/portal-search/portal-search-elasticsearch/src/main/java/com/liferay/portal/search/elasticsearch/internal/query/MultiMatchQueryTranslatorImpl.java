@@ -108,7 +108,7 @@ public class MultiMatchQueryTranslatorImpl
 		}
 
 		if (multiMatchQuery.getType() != null) {
-			MultiMatchQueryBuilder.Type multiMatchQueryBuilderType = translate(
+			MultiMatchQueryBuilder.Type multiMatchQueryBuilderType = _translate(
 				multiMatchQuery.getType());
 
 			multiMatchQueryBuilder.type(multiMatchQueryBuilderType);
@@ -134,7 +134,7 @@ public class MultiMatchQueryTranslatorImpl
 		return multiMatchQueryBuilder;
 	}
 
-	protected MultiMatchQueryBuilder.Type translate(
+	private MultiMatchQueryBuilder.Type _translate(
 		MultiMatchQuery.Type multiMatchQueryType) {
 
 		if (multiMatchQueryType == MultiMatchQuery.Type.BEST_FIELDS) {

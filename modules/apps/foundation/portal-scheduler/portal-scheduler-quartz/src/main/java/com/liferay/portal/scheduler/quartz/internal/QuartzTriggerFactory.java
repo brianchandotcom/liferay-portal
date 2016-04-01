@@ -58,7 +58,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 		}
 
 		if (interval <= 0) {
-			return createTrigger(
+			return _createTrigger(
 				jobName, groupName, startDate, endDate, (ScheduleBuilder)null);
 		}
 
@@ -70,7 +70,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 			simpleScheduleBuilder.withRepeatCount(
 				SimpleTrigger.REPEAT_INDEFINITELY);
 
-			return createTrigger(
+			return _createTrigger(
 				jobName, groupName, startDate, endDate, simpleScheduleBuilder);
 		}
 
@@ -80,7 +80,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 		calendarIntervalScheduleBuilder.withInterval(
 			interval, IntervalUnit.valueOf(timeUnit.name()));
 
-		return createTrigger(
+		return _createTrigger(
 			jobName, groupName, startDate, endDate,
 			calendarIntervalScheduleBuilder);
 	}
@@ -90,12 +90,12 @@ public class QuartzTriggerFactory implements TriggerFactory {
 		String jobName, String groupName, Date startDate, Date endDate,
 		String cronExpression) {
 
-		return createTrigger(
+		return _createTrigger(
 			jobName, groupName, startDate, endDate,
 			CronScheduleBuilder.cronSchedule(cronExpression));
 	}
 
-	protected Trigger createTrigger(
+	private Trigger _createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
 		ScheduleBuilder<?> scheduleBuilder) {
 

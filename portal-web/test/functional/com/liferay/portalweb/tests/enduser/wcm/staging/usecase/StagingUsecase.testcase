@@ -2299,6 +2299,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<var name="key_portletName" value="Web Content Display" />
+
 		<execute function="AssertTextNotEquals" locator1="BasePortlet#TITLE" value1="Web Content Display" />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -2418,7 +2420,7 @@
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_2.png" />
-			<var name="page" value="Staging Test Page" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">

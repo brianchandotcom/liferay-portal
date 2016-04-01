@@ -794,6 +794,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Staging')] | //a[@role='menuitem' and contains(.,'Staging')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_CONFIGURATION</td>
 	<td>//a[contains(@id,'staging-configuration')]</td>
 	<td></td>

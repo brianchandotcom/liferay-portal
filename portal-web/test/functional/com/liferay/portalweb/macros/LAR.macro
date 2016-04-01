@@ -209,6 +209,8 @@
 	</command>
 
 	<command name="_importSite">
+		<execute function="Pause" locator1="5000" />
+
 		<if>
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>

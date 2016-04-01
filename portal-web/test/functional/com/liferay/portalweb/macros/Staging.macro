@@ -108,6 +108,10 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute macro="ProductMenu#gotoSitesPublishing">
@@ -629,6 +633,8 @@
 
 		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<var name="key_siteName" value="${siteName}" />
@@ -866,9 +872,9 @@
 
 	<command name="viewPublishContentCountViaPortletStagingCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EXPORT_IMPORT" />
+		<execute function="Click" locator1="MenuItem#STAGING" />
 
-		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_CONTENT_COUNT" value1="${contentCount}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortletStaging#STAGING_CONTENT_INFO" value1="${contentInformation}" />

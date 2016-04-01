@@ -44,6 +44,10 @@ if (tabs3.equals("available")) {
 	<%
 	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
 
+	if (!searchTerms.isSearch()) {
+		organizationSearchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
+	}
+
 	long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();

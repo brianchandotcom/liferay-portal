@@ -94,7 +94,7 @@ public class JavaTerm {
 
 	public List<String> getParameterNames() {
 		if (_parameterNames == null) {
-			readParameterNamesAndTypes();
+			_readReturnTypeAndParameters();
 		}
 
 		return _parameterNames;
@@ -102,7 +102,7 @@ public class JavaTerm {
 
 	public List<String> getParameterTypes() {
 		if (_parameterTypes == null) {
-			readParameterNamesAndTypes();
+			_readReturnTypeAndParameters();
 		}
 
 		return _parameterTypes;
@@ -110,7 +110,7 @@ public class JavaTerm {
 
 	public String getReturnType() {
 		if (_returnType == null) {
-			readParameterNamesAndTypes();
+			_readReturnTypeAndParameters();
 		}
 
 		return _returnType;
@@ -271,7 +271,7 @@ public class JavaTerm {
 		_type = type;
 	}
 
-	protected void readParameterNamesAndTypes() {
+	private void _readReturnTypeAndParameters() {
 		_parameterNames = new ArrayList<>();
 		_parameterTypes = new ArrayList<>();
 		_returnType = StringPool.BLANK;
@@ -350,7 +350,7 @@ public class JavaTerm {
 			parameters = StringUtil.trim(parameters);
 
 			if (parameters.startsWith(StringPool.AT)) {
-				parameters = stripAnnotation(parameters);
+				parameters = _stripAnnotation(parameters);
 			}
 
 			if (parameters.startsWith("final ")) {
@@ -387,7 +387,7 @@ public class JavaTerm {
 		}
 	}
 
-	protected String stripAnnotation(String parameters) {
+	private String _stripAnnotation(String parameters) {
 		int pos = -1;
 
 		while (true) {

@@ -148,7 +148,11 @@ public class TaskQueue<E> {
 			_putLock.unlock();
 		}
 
-		return count >= 0;
+		if (count >= 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public E poll() {

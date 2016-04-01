@@ -52,7 +52,11 @@ public class ResourceBundleEnumeration implements Enumeration<String> {
 			}
 		}
 
-		return _nextElement != null;
+		if (_nextElement != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

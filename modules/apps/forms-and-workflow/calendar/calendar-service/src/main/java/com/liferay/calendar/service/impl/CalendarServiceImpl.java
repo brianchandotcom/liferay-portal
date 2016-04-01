@@ -150,7 +150,11 @@ public class CalendarServiceImpl extends CalendarServiceBaseImpl {
 		}
 
 		if (calendarLocalService.isStagingCalendar(calendar)) {
-			return calendar.getGroupId() == groupId;
+			if (calendar.getGroupId() == groupId) {
+				return true;
+			}
+
+			return false;
 		}
 
 		return true;

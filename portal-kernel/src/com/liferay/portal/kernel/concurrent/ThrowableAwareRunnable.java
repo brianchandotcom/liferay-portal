@@ -28,7 +28,11 @@ public abstract class ThrowableAwareRunnable implements Runnable {
 	}
 
 	public boolean hasException() {
-		return (_throwable != null);
+		if ((_throwable != null)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

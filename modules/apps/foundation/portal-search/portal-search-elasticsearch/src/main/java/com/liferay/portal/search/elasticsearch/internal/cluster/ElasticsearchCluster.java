@@ -117,7 +117,11 @@ public class ElasticsearchCluster {
 			OperationMode operationMode =
 				elasticsearchConnection.getOperationMode();
 
-			return (operationMode == OperationMode.EMBEDDED);
+			if ((operationMode == OperationMode.EMBEDDED)) {
+				return true;
+			}
+
+			return false;
 		}
 
 		@Override

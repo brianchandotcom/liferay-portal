@@ -169,7 +169,11 @@ public class MailboxUtil {
 		public boolean equals(Object obj) {
 			ReceiptStub receiptStub = (ReceiptStub)obj;
 
-			return _receipt == receiptStub._receipt;
+			if (_receipt == receiptStub._receipt) {
+				return true;
+			}
+
+			return false;
 		}
 
 		@Override

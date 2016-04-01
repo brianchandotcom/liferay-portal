@@ -22,7 +22,11 @@ package com.liferay.portal.kernel.io;
 public class BigEndianCodec {
 
 	public static boolean getBoolean(byte[] bytes, int index) {
-		return bytes[index] != 0;
+		if (bytes[index] != 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static char getChar(byte[] bytes, int index) {

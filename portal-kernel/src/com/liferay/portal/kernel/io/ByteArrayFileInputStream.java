@@ -85,7 +85,11 @@ public class ByteArrayFileInputStream extends InputStream {
 
 	@Override
 	public boolean markSupported() {
-		return fileSize < threshold;
+		if (fileSize < threshold) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

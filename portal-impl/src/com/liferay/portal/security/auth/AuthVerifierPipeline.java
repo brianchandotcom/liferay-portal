@@ -150,7 +150,11 @@ public class AuthVerifierPipeline {
 			return false;
 		}
 
-		return Wildcard.matchOne(requestURI, urlsIncludes) > -1;
+		if (Wildcard.matchOne(requestURI, urlsIncludes) > -1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private AuthVerifierConfiguration _mergeAuthVerifierConfiguration(

@@ -1098,7 +1098,11 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isUser() {
-		return getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID;
+		if (getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

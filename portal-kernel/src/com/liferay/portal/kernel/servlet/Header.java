@@ -110,10 +110,18 @@ public class Header implements Externalizable {
 			return _equals(_cookieValue, header._cookieValue);
 		}
 		else if (_type == Type.DATE) {
-			return _dateValue == header._dateValue;
+			if (_dateValue == header._dateValue) {
+				return true;
+			}
+
+			return false;
 		}
 		else if (_type == Type.INTEGER) {
-			return _intValue == header._intValue;
+			if (_intValue == header._intValue) {
+				return true;
+			}
+
+			return false;
 		}
 		else if (_type == Type.STRING) {
 			return _stringValue.equals(header._stringValue);

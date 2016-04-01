@@ -99,6 +99,10 @@
 				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
+				<execute macro="Portlet#changeDisplayStyle">
+					<var name="displayStyle" value="Icon" />
+				</execute>
+
 				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
 
 				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />

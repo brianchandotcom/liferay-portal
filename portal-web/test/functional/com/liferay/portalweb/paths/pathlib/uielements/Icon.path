@@ -209,6 +209,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INHERIT_CHANGES_TOOLTIP</td>
+	<td>//label[contains(.,'Inherit Changes')]//span/*[name()='svg'][contains(@class,'icon-question')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITTER</td>
 	<td>//i[contains(@class,'icon-twitter')]</td>
 	<td></td>

@@ -70,7 +70,11 @@
 				<if>
 					<equals arg1="${pageTemplateAutoApplyChanges}" arg2="true" />
 					<then>
-						<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+						<var name="key_pageType" value="${pageType}" />
+
+						<execute function="MouseOver" locator1="Icon#INHERIT_CHANGES_TOOLTIP" />
+
+						<execute function="AssertTextEquals" locator1="Message#TOOLTIP"  value1="Automatically apply changes done to the page template." />
 						<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" value1="${pageType}" />
 					</then>
 				</if>

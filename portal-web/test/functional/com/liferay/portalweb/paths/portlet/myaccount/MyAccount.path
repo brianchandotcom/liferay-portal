@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ALERT_SUCCESS_MESSAGE</td>
-	<td>//fieldset[contains(@class,'fieldset')]//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_NAME</td>
 	<td>//span[@class='user-name']</td>
 	<td></td>

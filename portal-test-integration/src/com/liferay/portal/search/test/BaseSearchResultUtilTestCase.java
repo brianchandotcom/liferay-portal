@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -34,9 +33,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
 
@@ -64,7 +60,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpIndexerRegistry();
 		setUpPortalUtil();
 		setUpPropsUtil();
-		setUpServiceTrackerMap();
 		setUpSearchResultTranslator();
 	}
 
@@ -147,22 +142,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		searchResultTranslator = createSearchResultTranslator();
 	}
 
-	protected void setUpServiceTrackerMap() {
-		stub(
-			method(
-				ServiceTrackerCollections.class, "singleValueMap", Class.class,
-				String.class, ServiceReferenceMapper.class)
-		).toReturn(
-			_serviceTrackerMap
-		);
-
-		when(
-			_serviceTrackerMap.getService(Mockito.anyString())
-		).thenReturn(
-			null
-		);
-	}
-
 	@Mock
 	@SuppressWarnings("rawtypes")
 	protected AssetRenderer assetRenderer;
@@ -171,8 +150,5 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	protected AssetRendererFactory<?> assetRendererFactory;
 
 	protected SearchResultTranslator searchResultTranslator;
-
-	@Mock
-	private ServiceTrackerMap<String, SearchResultManager> _serviceTrackerMap;
 
 }

@@ -131,10 +131,10 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		<aui:script use="aui-tooltip">
 			var tooltip = new A.TooltipDelegate(
 				{
-					position: 'bottom',
+					position: 'right',
 					trigger: '.lfr-portal-tooltip',
 					visible: false,
-					zIndex: 10001
+					zIndex: Liferay.zIndex.TOOLTIP
 				}
 			);
 

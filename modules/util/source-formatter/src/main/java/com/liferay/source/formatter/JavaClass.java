@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaMethod;
@@ -1503,16 +1504,31 @@ public class JavaClass {
 
 		String javaTermContent = javaTerm.getContent();
 
-		Matcher matcher = _returnPattern.matcher(javaTermContent);
+		Matcher matcher1 = _returnPattern1.matcher(javaTermContent);
 
-		while (matcher.find()) {
-			String returnStatement = matcher.group();
+		while (matcher1.find()) {
+			String returnStatement = matcher1.group();
 
-			if (!returnStatement.contains(" {\n") &&
-				(returnStatement.contains("|\n") ||
-				 returnStatement.contains("&\n"))) {
+			if (returnStatement.contains("\t//") ||
+				returnStatement.contains(" {\n")) {
 
-				_formatReturnStatement(javaTermContent, matcher);
+				continue;
+			}
+
+			if (returnStatement.contains("|\n") ||
+				returnStatement.contains("&\n")) {
+
+				_formatReturnStatement(javaTermContent, matcher1);
+
+				return;
+			}
+
+			Matcher matcher2 = _returnPattern2.matcher(returnStatement);
+
+			if (matcher2.find() &&
+				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
+
+				_formatReturnStatement(javaTermContent, matcher1);
 
 				return;
 			}
@@ -1563,7 +1579,9 @@ public class JavaClass {
 	private final String _name;
 	private final JavaClass _outerClass;
 	private String _packagePath;
-	private Pattern _returnPattern = Pattern.compile(
+	private Pattern _returnPattern1 = Pattern.compile(
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
+	private Pattern _returnPattern2 = Pattern.compile(
+		".* (==|!=|<|>|>=|<=)[ \n].*");
 
 }

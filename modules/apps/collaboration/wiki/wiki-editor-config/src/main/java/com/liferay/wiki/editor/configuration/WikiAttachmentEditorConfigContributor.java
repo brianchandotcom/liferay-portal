@@ -178,10 +178,17 @@ public class WikiAttachmentEditorConfigContributor
 		Iterator iterator = buttonsJSONArray.iterator();
 
 		while (iterator.hasNext()) {
-			String button = (String)iterator.next();
+			Object buttonObject = iterator.next();
 
-			if (!button.equals("image")) {
-				newButtonsJSONArray.put(button);
+			if (buttonObject instanceof String) {
+				String buttonString = (String)buttonObject;
+
+				if (!buttonString.equals("image")) {
+					newButtonsJSONArray.put(buttonString);
+				}
+			}
+			else {
+				newButtonsJSONArray.put(buttonObject);
 			}
 		}
 

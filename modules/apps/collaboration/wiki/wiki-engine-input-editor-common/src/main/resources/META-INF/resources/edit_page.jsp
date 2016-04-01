@@ -25,7 +25,7 @@ WikiPage wikiPage = BaseInputEditorWikiEngine.getWikiPage(request);
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 %>
 
-<div>
+<div class="wiki-page-editor">
 	<%@ include file="/editor_config.jspf" %>
 
 	<liferay-ui:input-editor

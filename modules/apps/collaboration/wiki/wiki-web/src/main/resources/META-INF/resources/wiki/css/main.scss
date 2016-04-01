@@ -23,6 +23,17 @@
 		}
 	}
 
+	.wiki-body, .wiki-page-editor {
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		table, th, td {
+			border: 1px solid;
+		}
+	}
+
 	a.createpage {
 		color: #F00;
 	}

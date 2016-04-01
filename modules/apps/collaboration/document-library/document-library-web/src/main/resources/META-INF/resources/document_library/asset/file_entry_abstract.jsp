@@ -62,7 +62,6 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 				</p>
 			</c:when>
 			<c:otherwise>
-
 				<p class="asset-description">
 					<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
 				</p>

@@ -48,7 +48,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 		<liferay-ui:section>
-
 			<div class="alert alert-info">
 				<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message key="please-select-a-list-entry-from-the-list-below" />

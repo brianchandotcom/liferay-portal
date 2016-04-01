@@ -20,7 +20,6 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 %>
 
 <div class="main-content-body table-responsive">
-
 	<table class="table table-bordered table-hover table-striped">
 		<thead class="table-columns">
 			<tr>
@@ -94,7 +93,6 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 </div>
 
 <c:if test="<%= PollsPortletKeys.POLLS.equals(portletDisplay.getId()) %>">
-
 	<div class="main-content-body">
 		<strong><liferay-ui:message key="charts" />:</strong>
 

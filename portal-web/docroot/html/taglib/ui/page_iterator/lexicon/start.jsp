@@ -177,7 +177,6 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					</li>
 				</c:when>
 				<c:otherwise>
-
 					<li>
 						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>">1</a>
 					</li>

@@ -21,7 +21,6 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getRootNodeName());
 %>
 
 <div class="container-fluid-1280 text-center">
-
 	<liferay-ui:empty-result-message message='<%= layoutsAdminDisplayContext.isPrivateLayout() ? "there-are-no-private-pages" : "there-are-no-public-pages" %>'>
 		<p class="text-center text-muted">
 			<liferay-ui:message key='<%= layoutsAdminDisplayContext.isPrivateLayout() ? "private-pages-help" : "public-pages-help" %>' />

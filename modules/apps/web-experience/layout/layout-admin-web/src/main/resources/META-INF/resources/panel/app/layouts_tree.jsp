@@ -117,7 +117,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								</c:if>
 
 								<c:if test="<%= layoutsTreeDisplayContext.isShowAddBothRootLayoutButtons() %>">
-
 									<li class="divider"></li>
 
 									<%
@@ -190,7 +189,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								</c:if>
 
 								<c:if test="<%= layoutsTreeDisplayContext.isShowAddBothRootLayoutButtons() %>">
-
 									<li class="divider"></li>
 
 									<%

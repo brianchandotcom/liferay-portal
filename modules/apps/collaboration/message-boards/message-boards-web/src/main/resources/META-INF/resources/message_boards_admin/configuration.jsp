@@ -157,7 +157,6 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-the-name,-image,-and-priority-level-in-descending-order" />
 			</div>

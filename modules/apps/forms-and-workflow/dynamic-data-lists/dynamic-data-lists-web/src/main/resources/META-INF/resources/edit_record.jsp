@@ -102,14 +102,12 @@ else {
 </portlet:actionURL>
 
 <div class="container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />recordPanel">
-
 	<c:if test="<%= recordVersion != null %>">
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-default sidenav-menu">
 				<liferay-ui:tabs names="details,versions" refresh="<%= false %>" type="dropdown">
 					<liferay-ui:section>
 						<div class="sidebar-body">
-
 							<h3 class="version">
 								<liferay-ui:message key="version" /> <%= HtmlUtil.escape(recordVersion.getVersion()) %>
 							</h3>

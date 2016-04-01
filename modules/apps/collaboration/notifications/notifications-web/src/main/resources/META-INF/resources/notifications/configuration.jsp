@@ -48,7 +48,6 @@
 				%>
 
 					<aui:fieldset collapsed="<%= !first %>" collapsible="<%= true %>" label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>">
-
 						<table class="table table-condensed table-list">
 							<tbody>
 

@@ -204,7 +204,6 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							%>
 
 							<aui:button cssClass="save-server-button" data-blocking='<%= ParamUtil.getBoolean(request, "blocking") %>' data-cmd="reindex" data-timeout="<%= (timeout == 0) ? StringPool.BLANK : timeout %>" value="execute" />
-
 						</c:when>
 						<c:otherwise>
 							<%= backgroundTaskDisplay.renderDisplayTemplate() %>

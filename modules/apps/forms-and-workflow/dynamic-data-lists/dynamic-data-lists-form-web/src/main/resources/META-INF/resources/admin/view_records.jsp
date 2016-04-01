@@ -120,7 +120,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" />
-
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

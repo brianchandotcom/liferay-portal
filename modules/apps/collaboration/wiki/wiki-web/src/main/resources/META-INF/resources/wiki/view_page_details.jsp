@@ -173,7 +173,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			</th>
 			<td>
 				<table class="lfr-table subscription-info">
-
 					<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) %>">
 						<tr>
 							<c:choose>

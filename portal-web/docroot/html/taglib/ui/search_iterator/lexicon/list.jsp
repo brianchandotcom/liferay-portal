@@ -241,7 +241,6 @@ if (!resultRowSplitterEntries.isEmpty()) {
 						%>
 
 							<td class="<%= columnClassName %> <%= entry.isTruncate() ? "clamp-horizontal table-cell-content" : "table-cell-field" %>" colspan="<%= entry.getColspan() %>">
-
 								<c:choose>
 									<c:when test="<%= entry.isTruncate() %>">
 										<div class="clamp-container">

@@ -34,7 +34,6 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 %>
 
 <html dir="<liferay-ui:message key="lang.dir" />">
-
 	<head>
 		<meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
 		<meta content="no-cache" http-equiv="Cache-Control" />
@@ -45,9 +44,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 	</head>
 
 	<body onLoad="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
-
 		<center>
-
 			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
 				<tr>
 					<td align="center" valign="middle">

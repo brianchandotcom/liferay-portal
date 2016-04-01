@@ -46,7 +46,6 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(jUserName) && Validator.isNotNull(jPassword) %>">
 		<html dir="<liferay-ui:message key="lang.dir" />">
-
 			<head>
 				<meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
 				<meta content="no-cache" http-equiv="Cache-Control" />
@@ -56,9 +55,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 			</head>
 
 			<body onLoad="setTimeout('document.fm.submit()', 100);">
-
 				<center>
-
 					<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
 						<tr>
 							<td align="center" valign="middle">
@@ -113,7 +110,6 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 		%>
 
 		<html dir="<liferay-ui:message key="lang.dir" />">
-
 			<head>
 				<title></title>
 				<meta content="0; url=<%= themeDisplay.getPathMain() %>" http-equiv="refresh" />

@@ -44,7 +44,6 @@ backURL.setParameter("structureId", String.valueOf(structureVersion.getStructure
 %>
 
 <div class="container-fluid-1280">
-
 	<c:choose>
 		<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 

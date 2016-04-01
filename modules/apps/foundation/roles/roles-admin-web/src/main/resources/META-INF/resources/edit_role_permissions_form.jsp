@@ -203,7 +203,6 @@ if (Validator.isNotNull(portletResource)) {
 			<aui:input name="relatedPortletResources" type="hidden" value="<%= StringUtil.merge(relatedPortletResources) %>" />
 
 			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-
 		</div>
 	</c:if>
 

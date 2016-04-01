@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <html dir="<liferay-ui:message key="lang.dir" />">
-
 	<head>
 		<meta content="no-cache" http-equiv="Cache-Control" />
 		<meta content="no-cache" http-equiv="Pragma" />
@@ -25,7 +24,6 @@
 	</head>
 
 	<body onLoad="setTimeout('document.fm.submit()', 100);">
-
 		<form action="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.src()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
 
 			<%
@@ -41,7 +39,6 @@
 			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.userNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserName()) %>" />
 
 			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.passwordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
-
 		</form>
 
 	</body>

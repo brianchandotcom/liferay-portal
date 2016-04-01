@@ -26,15 +26,12 @@ if (session.getId().equals(MaintenanceUtil.getSessionId())) {
 %>
 
 <html>
-
 	<head>
 		<meta content="30; url=<%= PortalUtil.getPortalURL(request) %>" http-equiv="refresh" />
 	</head>
 
 	<body>
-
 		<center>
-
 			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="700">
 				<tr>
 					<td align="center" valign="middle">

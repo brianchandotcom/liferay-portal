@@ -103,7 +103,6 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<liferay-util:include page="/message_boards/view_thread_shortcut.jsp" servletContext="<%= application %>" />
-
 			</table>
 
 			<br />

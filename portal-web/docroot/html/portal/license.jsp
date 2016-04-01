@@ -103,7 +103,6 @@ dateFormatDateTime.setTimeZone(timeZone);
 </h3>
 
 <form class="license-form" method="post" name="license_fm" <%= (clusterNodes.size() > 1) ? "onsubmit=\"return validateForm();\"" : "" %>>
-
 	<c:if test="<%= Validator.isNotNull(errorMessage) %>">
 		<div class="alert alert-danger">
 			<%= errorMessage %>

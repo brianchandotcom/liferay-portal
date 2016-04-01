@@ -26,7 +26,6 @@ String movie = ParamUtil.getString(request, "movie");
 %>
 
 <html>
-
 	<head>
 		<title><%= HtmlUtil.escape(title) %></title>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -35,9 +34,7 @@ String movie = ParamUtil.getString(request, "movie");
 	</head>
 
 	<body leftmargin="0" marginheight="0" marginwidth="0" rightmargin="0" topmargin="0">
-
 		<center>
-
 			<c:if test="<%= Validator.isNotNull(movie) %>">
 				<div id="flashMovie"></div>
 

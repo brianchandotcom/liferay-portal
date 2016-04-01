@@ -1472,6 +1472,28 @@ public class JavaClass {
 		}
 	}
 
+	private void _formatReturnStatement(
+		String javaTermContent, Matcher matcher) {
+
+		String tabs = matcher.group(1);
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append(javaTermContent.substring(0, matcher.end(1)));
+		sb.append("if (");
+		sb.append(matcher.group(2));
+		sb.append(") {\n\n");
+		sb.append(tabs);
+		sb.append("\treturn true;\n");
+		sb.append(tabs);
+		sb.append("}\n\n");
+		sb.append(tabs);
+		sb.append("return false;\n");
+		sb.append(javaTermContent.substring(matcher.end()));
+
+		_classContent = _classContent.replace(javaTermContent, sb.toString());
+	}
+
 	private void _formatReturnStatements(JavaTerm javaTerm) {
 		String returnType = javaTerm.getReturnType();
 
@@ -1486,35 +1508,14 @@ public class JavaClass {
 		while (matcher.find()) {
 			String returnStatement = matcher.group();
 
-			if (returnStatement.contains(" {\n") ||
-				(!returnStatement.contains("|\n") &&
-				 !returnStatement.contains("&\n"))) {
+			if (!returnStatement.contains(" {\n") &&
+				(returnStatement.contains("|\n") ||
+				 returnStatement.contains("&\n"))) {
 
-				continue;
+				_formatReturnStatement(javaTermContent, matcher);
+
+				return;
 			}
-
-			String tabs = matcher.group(1);
-
-			StringBundler sb = new StringBundler(11);
-
-			sb.append(javaTermContent.substring(0, matcher.end(1)));
-			sb.append("if (");
-			sb.append(matcher.group(2));
-			sb.append(") {\n\n");
-			sb.append(tabs);
-			sb.append("\treturn true;\n");
-			sb.append(tabs);
-			sb.append("}\n\n");
-			sb.append(tabs);
-			sb.append("return false;\n");
-			sb.append(javaTermContent.substring(matcher.end()));
-
-			String newJavaTermContent = sb.toString();
-
-			_classContent = _classContent.replace(
-				javaTermContent, newJavaTermContent);
-
-			return;
 		}
 	}
 

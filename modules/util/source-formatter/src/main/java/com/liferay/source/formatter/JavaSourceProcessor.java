@@ -990,7 +990,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatAssertEquals(fileName, newContent);
 
-		newContent = formatReturnStatements(fileName, newContent);
+		newContent = formatReturnStatements(newContent);
 
 		newContent = fixMissingEmptyLineAfterSettingVariable(newContent);
 
@@ -2773,7 +2773,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileName, content, className, packagePath);
 	}
 
-	protected String formatReturnStatements(String fileName, String content) {
+	protected String formatReturnStatements(String content) {
 		Matcher matcher = _returnPattern.matcher(content);
 
 		while (matcher.find()) {

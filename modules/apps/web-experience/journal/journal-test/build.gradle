@@ -8,8 +8,8 @@ dependencies {
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.portal.search", version: "3.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile project(":apps:foundation:portal-search:portal-search")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"

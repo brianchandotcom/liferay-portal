@@ -173,12 +173,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_VERSION</td>
-	<td>//h3[contains(@class,'version') and not(contains(@class,'icon-lock'))]</td>
+	<td>//div[contains(@class,'sidebar-body')]//span[contains(.,'Version')]/../../..//dd[contains(.,'${key_dmDocumentVersionNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_VERSION_LOCKED</td>
-	<td>//h3[contains(@class,'version') and contains(@class,'icon-lock')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//span[contains(@class,'version icon-lock')]</td>
 	<td></td>
 </tr>
 <tr>

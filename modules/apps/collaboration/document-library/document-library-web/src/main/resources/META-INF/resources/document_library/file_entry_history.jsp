@@ -31,28 +31,34 @@ for (FileVersion fileVersion : fileVersions) {
 	request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
 %>
 
-	<div>
-		<ul class="list-inline list-unstyled sidebar-header-actions">
-			<li>
-				<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
-			</li>
-		</ul>
+	<aui:row>
+		<aui:col width="<%= 100 %>">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+					<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
 
-		<h4><liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" /></h4>
+			<dl>
+				<dt class="h5">
+					<liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" />
+				</dt>
 
-		<p>
-			<c:choose>
-				<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
-					<small class="text-muted">
-						<liferay-ui:message key="no-change-log" />
-					</small>
-				</c:when>
-				<c:otherwise>
-					<%= fileVersion.getChangeLog() %>
-				</c:otherwise>
-			</c:choose>
-		</p>
-	</div>
+				<dd>
+					<c:choose>
+						<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
+							<small class="text-muted">
+								<liferay-ui:message key="no-change-log" />
+							</small>
+						</c:when>
+						<c:otherwise>
+							<%= fileVersion.getChangeLog() %>
+						</c:otherwise>
+					</c:choose>
+				</dd>
+			</dl>
+		</aui:col>
+	</aui:row>
 
 <%
 }

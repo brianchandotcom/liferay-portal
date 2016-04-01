@@ -12,29 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
+package com.liferay.portal.osgi.web.servlet.context.helper.order;
 
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
-
-import java.util.List;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
+import java.util.EnumMap;
 
 /**
- * @author Raymond Augé
+ * @author Vernon Singleton
+ * @author Juan Gonzalez
+ *
  */
-public interface ModifiableServletContext {
+public interface Order {
 
-	public Bundle getBundle();
+	public static final String OTHERS = Order.class.getName() + "#OTHERS";
 
-	public List<ListenerDefinition> getListenerDefinitions();
+	public EnumMap<Path, String[]> getRoutes();
 
-	public ServletContext getWrappedServletContext();
+	public boolean isAfter(String name);
 
-	public void registerFilters();
+	public boolean isAfterOthers();
 
-	public void registerServlets();
+	public boolean isBefore(String name);
+
+	public boolean isBeforeOthers();
+
+	public boolean isOrdered();
+
+	public void setRoutes(EnumMap<Path, String[]> routes);
+
+	public enum Path {
+
+		BEFORE, AFTER
+
+	}
 
 }

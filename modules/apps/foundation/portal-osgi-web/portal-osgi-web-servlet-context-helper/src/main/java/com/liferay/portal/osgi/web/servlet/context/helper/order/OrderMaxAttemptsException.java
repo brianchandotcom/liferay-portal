@@ -12,29 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
-
-import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
-
-import java.util.List;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
+package com.liferay.portal.osgi.web.servlet.context.helper.order;
 
 /**
- * @author Raymond Augé
+ * @author Vernon Singleton
+ * @author Juan Gonzalez
+ *
  */
-public interface ModifiableServletContext {
+public class OrderMaxAttemptsException extends Exception {
 
-	public Bundle getBundle();
-
-	public List<ListenerDefinition> getListenerDefinitions();
-
-	public ServletContext getWrappedServletContext();
-
-	public void registerFilters();
-
-	public void registerServlets();
+	public OrderMaxAttemptsException(int limit) {
+		super("Exceeded the limit of " + limit + " maximum attempts");
+	}
 
 }

@@ -401,7 +401,11 @@ public class MVCCPortalCacheTest {
 
 			MockMVCCModel mockMVCCModel = (MockMVCCModel)object;
 
-			return _version == mockMVCCModel._version;
+			if (_version == mockMVCCModel._version) {
+				return true;
+			}
+
+			return false;
 		}
 
 		@Override

@@ -105,7 +105,11 @@ public class DDLFormDisplayContext {
 			return isFormPublished() && isFormShared();
 		}
 
-		return getRecordSet() != null;
+		if (getRecordSet() != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {

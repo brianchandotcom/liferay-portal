@@ -238,7 +238,11 @@ public class UnsyncBufferedReader extends Reader {
 			throw new IOException("Reader is null");
 		}
 
-		return (index < firstInvalidIndex) || reader.ready();
+		if ((index < firstInvalidIndex) || reader.ready()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

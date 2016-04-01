@@ -229,7 +229,11 @@ public class CharPipe {
 			bufferLock.lock();
 
 			try {
-				return count > 0;
+				if (count > 0) {
+					return true;
+				}
+
+				return false;
 			}
 			finally {
 				bufferLock.unlock();

@@ -1602,8 +1602,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public boolean hasLayouts(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
-		return layoutPersistence.countByG_P_P(
-			groupId, privateLayout, parentLayoutId) > 0;
+		if (layoutPersistence.countByG_P_P(
+				groupId, privateLayout, parentLayoutId) > 0) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

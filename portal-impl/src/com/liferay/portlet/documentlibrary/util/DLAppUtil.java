@@ -79,7 +79,11 @@ public class DLAppUtil {
 		long previousVersion = GetterUtil.getLong(
 			previousFileVersion.getVersion());
 
-		return (currentVersion - previousVersion) >= 1;
+		if ((currentVersion - previousVersion) >= 1) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -163,7 +163,11 @@ public class DefaultSocialActivitiesDisplayContext
 	public boolean isSeeMoreControlVisible() {
 		List<SocialActivitySet> socialActivitySets = getSocialActivitySets();
 
-		return socialActivitySets.size() == getMax();
+		if (socialActivitySets.size() == getMax()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

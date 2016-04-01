@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaMethod;
@@ -112,6 +113,8 @@ public class JavaClass {
 			}
 
 			checkUnusedParameters(javaTerm);
+
+			_formatReturnStatements(javaTerm);
 
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkChaining(javaTerm);
@@ -1470,6 +1473,68 @@ public class JavaClass {
 		}
 	}
 
+	private void _formatReturnStatement(
+		String javaTermContent, Matcher matcher) {
+
+		String tabs = matcher.group(1);
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append(javaTermContent.substring(0, matcher.end(1)));
+		sb.append("if (");
+		sb.append(matcher.group(2));
+		sb.append(") {\n\n");
+		sb.append(tabs);
+		sb.append("\treturn true;\n");
+		sb.append(tabs);
+		sb.append("}\n\n");
+		sb.append(tabs);
+		sb.append("return false;\n");
+		sb.append(javaTermContent.substring(matcher.end()));
+
+		_classContent = _classContent.replace(javaTermContent, sb.toString());
+	}
+
+	private void _formatReturnStatements(JavaTerm javaTerm) {
+		String returnType = javaTerm.getReturnType();
+
+		if (!returnType.equals("boolean")) {
+			return;
+		}
+
+		String javaTermContent = javaTerm.getContent();
+
+		Matcher matcher1 = _returnPattern1.matcher(javaTermContent);
+
+		while (matcher1.find()) {
+			String returnStatement = matcher1.group();
+
+			if (returnStatement.contains("\t//") ||
+				returnStatement.contains(" {\n")) {
+
+				continue;
+			}
+
+			if (returnStatement.contains("|\n") ||
+				returnStatement.contains("&\n")) {
+
+				_formatReturnStatement(javaTermContent, matcher1);
+
+				return;
+			}
+
+			Matcher matcher2 = _returnPattern2.matcher(returnStatement);
+
+			if (matcher2.find() &&
+				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
+
+				_formatReturnStatement(javaTermContent, matcher1);
+
+				return;
+			}
+		}
+	}
+
 	private static final String _ACCESS_MODIFIER_PRIVATE = "private";
 
 	private static final String _ACCESS_MODIFIER_PROTECTED = "protected";
@@ -1514,5 +1579,9 @@ public class JavaClass {
 	private final String _name;
 	private final JavaClass _outerClass;
 	private String _packagePath;
+	private Pattern _returnPattern1 = Pattern.compile(
+		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
+	private Pattern _returnPattern2 = Pattern.compile(
+		".* (==|!=|<|>|>=|<=)[ \n].*");
 
 }

@@ -105,7 +105,11 @@ public class DistributedRegistry {
 			if (direction == null) {
 				direction = _postfixDirections.remove(name);
 
-				return direction != null;
+				if (direction != null) {
+					return true;
+				}
+
+				return false;
 			}
 
 			return _postfixDirections.remove(name, direction);
@@ -114,7 +118,11 @@ public class DistributedRegistry {
 			if (direction == null) {
 				direction = _prefixDirections.remove(name);
 
-				return direction != null;
+				if (direction != null) {
+					return true;
+				}
+
+				return false;
 			}
 
 			return _prefixDirections.remove(name, direction);
@@ -123,7 +131,11 @@ public class DistributedRegistry {
 			if (direction == null) {
 				direction = _exactDirections.remove(name);
 
-				return direction != null;
+				if (direction != null) {
+					return true;
+				}
+
+				return false;
 			}
 
 			return _exactDirections.remove(name, direction);

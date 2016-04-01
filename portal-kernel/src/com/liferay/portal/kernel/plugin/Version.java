@@ -333,7 +333,11 @@ public class Version implements Comparable<Version>, Serializable {
 					containerNumberString);
 				int number = GetterUtil.getInteger(numberString);
 
-				return containerNumber <= number;
+				if (containerNumber <= number) {
+					return true;
+				}
+
+				return false;
 			}
 			catch (NumberFormatException nfe) {
 				return false;

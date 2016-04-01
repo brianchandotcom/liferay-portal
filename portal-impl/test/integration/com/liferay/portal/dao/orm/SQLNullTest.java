@@ -1028,7 +1028,11 @@ public class SQLNullTest {
 	protected boolean isDBType(DBType dbType) {
 		DB db = DBManagerUtil.getDB();
 
-		return dbType == db.getDBType();
+		if (dbType == db.getDBType()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isHypersonic() {

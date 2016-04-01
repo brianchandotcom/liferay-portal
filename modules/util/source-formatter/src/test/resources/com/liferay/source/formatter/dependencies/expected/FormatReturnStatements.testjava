@@ -24,6 +24,19 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FormatReturnStatements {
 
+	public boolean compare(
+		int integerThatHasARidiculouslyLongName1,
+		int integerThatHasARidiculouslyLongName2) {
+
+		if (integerThatHasARidiculouslyLongName1 >
+				integerThatHasARidiculouslyLongName2) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hasPermission(
 		ThemeDisplay themeDisplay, long roleId, boolean checkPermission) {
 
@@ -45,6 +58,14 @@ public class FormatReturnStatements {
 			StringUtil.endsWith(
 				stringThatHasARidiculouslyLongName, "Hello World")) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNull(String s) {
+		if (s == null) {
 			return true;
 		}
 

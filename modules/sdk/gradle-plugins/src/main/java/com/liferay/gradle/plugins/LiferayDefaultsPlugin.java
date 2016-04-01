@@ -1312,6 +1312,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	protected void configureConfigurations(Project project) {
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":core:") ||
+			projectPath.startsWith(":ee:")) {
+
+			configureConfigurationTransitive(
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);
+		}
+
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
@@ -1324,6 +1334,15 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+	}
+
+	protected void configureConfigurationTransitive(
+		Project project, String name, boolean transitive) {
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, name);
+
+		configuration.setTransitive(transitive);
 	}
 
 	@Override

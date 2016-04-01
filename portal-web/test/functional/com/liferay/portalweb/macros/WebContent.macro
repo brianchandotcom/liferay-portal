@@ -216,6 +216,8 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="SelectFrameTop" />
+
+		<execute function="AssertVisible" locator1="WCD#WEB_CONTENT_CONTENT" />
 	</command>
 
 	<command name="addPGViaWCD">

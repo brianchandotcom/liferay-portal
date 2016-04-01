@@ -71,6 +71,8 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.Servlet;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -297,6 +299,14 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 			ddmDataProviderInstanceLocalService;
 	}
 
+	@Reference(
+		target = "(osgi.http.whiteboard.servlet.name=DDMFormEvaluatorServlet)",
+		unbind = "-"
+	)
+	protected void setDDMFormEvaluatorServlet(Servlet ddmFormEvaluatorServlet) {
+		_ddmFormEvaluatorServlet = ddmFormEvaluatorServlet;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
@@ -392,7 +402,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				renderRequest, renderResponse,
 				_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration(),
 				_ddlRecordLocalService, _ddlRecordSetService,
-				_ddmDataProviderInstanceLocalService,
+				_ddmDataProviderInstanceLocalService, _ddmFormEvaluatorServlet,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer,
 				_ddmFormLayoutJSONSerializer, _ddmFormRenderer,
@@ -431,6 +441,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDLRecordSetService _ddlRecordSetService;
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
+	private Servlet _ddmFormEvaluatorServlet;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;

@@ -21,6 +21,9 @@ AUI.add(
 				value: null
 			},
 
+			evaluatorURL: {
+			},
+
 			content: {
 				getter: function() {
 					var instance = this;
@@ -162,6 +165,7 @@ AUI.add(
 					{
 						dataProviders: instance.get('dataProviders'),
 						definition: fieldType.get('settings'),
+						evaluatorURL: instance.get('evaluatorURL'),
 						field: instance,
 						layout: fieldType.get('settingsLayout'),
 						portletNamespace: instance.get('portletNamespace'),

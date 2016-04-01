@@ -34,9 +34,9 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 				for (QuickAccessEntry quickAccessEntry : quickAccessEntries) {
 			%>
 
-				<li>
-					<a href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>"><%= quickAccessEntry.getContent() %></a>
-				</li>
+					<li>
+						<a href="<%= quickAccessEntry.getURL() %>" id="<%= randomNamespace + quickAccessEntry.getId() %>"><%= quickAccessEntry.getContent() %></a>
+					</li>
 
 			<%
 				}

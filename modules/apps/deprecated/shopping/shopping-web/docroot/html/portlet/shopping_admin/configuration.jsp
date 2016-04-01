@@ -150,17 +150,17 @@ shoppingGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfi
 						double shippingRangeB = ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE[shippingRange++];
 					%>
 
-					<%= currencyFormat.format(shippingRangeA) %>
+						<%= currencyFormat.format(shippingRangeA) %>
 
-					<c:if test="<%= !Double.isInfinite(shippingRangeB) %>">
-						- <%= currencyFormat.format(shippingRangeB) %>
-					</c:if>
+						<c:if test="<%= !Double.isInfinite(shippingRangeB) %>">
+							- <%= currencyFormat.format(shippingRangeB) %>
+						</c:if>
 
-					<c:if test="<%= Double.isInfinite(shippingRangeB) %>">
-						and over
-					</c:if>
+						<c:if test="<%= Double.isInfinite(shippingRangeB) %>">
+							and over
+						</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" title="shipping" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceOverriddenConfiguration.getShipping()[i]) %>" />
+						<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" title="shipping" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceOverriddenConfiguration.getShipping()[i]) %>" />
 
 					<%
 					}
@@ -191,17 +191,17 @@ shoppingGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfi
 						double insuranceRangeB = ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE[insuranceRange++];
 					%>
 
-					<%= currencyFormat.format(insuranceRangeA) %>
+						<%= currencyFormat.format(insuranceRangeA) %>
 
-					<c:if test="<%= !Double.isInfinite(insuranceRangeB) %>">
-						- <%= currencyFormat.format(insuranceRangeB) %>
-					</c:if>
+						<c:if test="<%= !Double.isInfinite(insuranceRangeB) %>">
+							- <%= currencyFormat.format(insuranceRangeB) %>
+						</c:if>
 
-					<c:if test="<%= Double.isInfinite(insuranceRangeB) %>">
-						and over
-					</c:if>
+						<c:if test="<%= Double.isInfinite(insuranceRangeB) %>">
+							and over
+						</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" title="insurance" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceOverriddenConfiguration.getInsurance()[i]) %>" />
+						<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" title="insurance" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceOverriddenConfiguration.getInsurance()[i]) %>" />
 
 					<%
 					}

@@ -207,18 +207,18 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 										<aui:select label="letter-spacing" name="lfr-font-tracking" showEmptyOption="<%= true %>">
 
 											<%
-												for (int i = -10; i <= 50; i++) {
-													String value = i + "px";
+											for (int i = -10; i <= 50; i++) {
+												String value = i + "px";
 
-													if (i == 0) {
-														value = "0";
-													}
-												%>
-
-													<aui:option label="<%= value %>" />
-
-												<%
+												if (i == 0) {
+													value = "0";
 												}
+											%>
+
+												<aui:option label="<%= value %>" />
+
+											<%
+											}
 											%>
 
 										</aui:select>

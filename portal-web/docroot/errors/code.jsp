@@ -56,65 +56,65 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 
 <html>
 
-<c:choose>
-	<c:when test="<%= !StringUtil.equalsIgnoreCase(HttpHeaders.XML_HTTP_REQUEST, xRequestWith) %>">
+	<c:choose>
+		<c:when test="<%= !StringUtil.equalsIgnoreCase(HttpHeaders.XML_HTTP_REQUEST, xRequestWith) %>">
 
-		<%
-		String redirect = null;
+			<%
+			String redirect = null;
 
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET);
+			LayoutSet layoutSet = (LayoutSet)request.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
-		if (layoutSet != null) {
-			redirect = PortalUtil.getPathMain();
-		}
-		else {
-			String validPortalDomain = PortalUtil.getValidPortalDomain(PortalUtil.getDefaultCompanyId(), request.getServerName());
+			if (layoutSet != null) {
+				redirect = PortalUtil.getPathMain();
+			}
+			else {
+				String validPortalDomain = PortalUtil.getValidPortalDomain(PortalUtil.getDefaultCompanyId(), request.getServerName());
 
-			redirect = PortalUtil.getPortalURL(validPortalDomain, request.getServerPort(), request.isSecure()) + PortalUtil.getPathContext() + PortalUtil.getRelativeHomeURL(request);
-		}
+				redirect = PortalUtil.getPortalURL(validPortalDomain, request.getServerPort(), request.isSecure()) + PortalUtil.getPathContext() + PortalUtil.getRelativeHomeURL(request);
+			}
 
-		if (!request.isRequestedSessionIdFromCookie()) {
-			redirect = PortalUtil.getURLWithSessionId(redirect, session.getId());
-		}
-		%>
+			if (!request.isRequestedSessionIdFromCookie()) {
+				redirect = PortalUtil.getURLWithSessionId(redirect, session.getId());
+			}
+			%>
 
-		<head>
-			<title></title>
-			<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
-		</head>
+			<head>
+				<title></title>
+				<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
+			</head>
 
-		<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
+			<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
 
-		<!--
-		The numbers below are used to fill up space so that this works properly in IE.
-		See http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807 for more
-		information on why this is necessary.
+				<!--
+			The numbers below are used to fill up space so that this works properly in IE.
+			See http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807 for more
+			information on why this is necessary.
 
-		12345678901234567890123456789012345678901234567890123456789012345678901234567890
-		12345678901234567890123456789012345678901234567890123456789012345678901234567890
-		12345678901234567890123456789012345678901234567890123456789012345678901234567890
-		-->
+			12345678901234567890123456789012345678901234567890123456789012345678901234567890
+			12345678901234567890123456789012345678901234567890123456789012345678901234567890
+			12345678901234567890123456789012345678901234567890123456789012345678901234567890
+			-->
 
-		</body>
-	</c:when>
-	<c:otherwise>
-		<head>
-			<title>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></title>
-		</head>
+			</body>
+		</c:when>
+		<c:otherwise>
+			<head>
+				<title>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></title>
+			</head>
 
-		<body>
-			<h1>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></h1>
+			<body>
+				<h1>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></h1>
 
-			<p>
-				<liferay-ui:message key="message" />: <%= HtmlUtil.escape(msg) %>
-			</p>
+				<p>
+					<liferay-ui:message key="message" />: <%= HtmlUtil.escape(msg) %>
+				</p>
 
-			<p>
-				<liferay-ui:message key="resource" />: <%= HtmlUtil.escape(uri) %>
-			</p>
-		</body>
-	</c:otherwise>
-</c:choose>
+				<p>
+					<liferay-ui:message key="resource" />: <%= HtmlUtil.escape(uri) %>
+				</p>
+			</body>
+		</c:otherwise>
+	</c:choose>
 
 </html>
 

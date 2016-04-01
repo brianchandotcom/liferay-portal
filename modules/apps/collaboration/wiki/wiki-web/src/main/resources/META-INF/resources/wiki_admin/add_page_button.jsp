@@ -36,7 +36,7 @@ List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(renderRequ
 		}
 	%>
 
-	<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" />
+		<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" />
 
 	<%
 	}

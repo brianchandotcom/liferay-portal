@@ -27,29 +27,29 @@ List<DLFileRank> fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, us
 	<c:otherwise>
 		<ul class="recent-documents">
 
-		<%
-		for (DLFileRank fileRank : fileRanks) {
-			try {
-				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileRank.getFileEntryId());
+			<%
+			for (DLFileRank fileRank : fileRanks) {
+				try {
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileRank.getFileEntryId());
 
-				fileEntry = fileEntry.toEscapedModel();
-		%>
+					fileEntry = fileEntry.toEscapedModel();
+			%>
 
-				<li>
-					<liferay-ui:icon
-						iconCssClass="<%= fileEntry.getIconCssClass() %>"
-						label="<%= true %>"
-						message="<%= fileEntry.getTitle() %>"
-						url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
-					/>
-				</li>
+					<li>
+						<liferay-ui:icon
+							iconCssClass="<%= fileEntry.getIconCssClass() %>"
+							label="<%= true %>"
+							message="<%= fileEntry.getTitle() %>"
+							url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
+						/>
+					</li>
 
-		<%
+			<%
+				}
+				catch (Exception e) {
+				}
 			}
-			catch (Exception e) {
-			}
-		}
-		%>
+			%>
 
 		</ul>
 	</c:otherwise>

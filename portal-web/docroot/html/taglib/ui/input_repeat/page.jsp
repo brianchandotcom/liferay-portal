@@ -154,15 +154,15 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, recurrence);
 
 				<aui:select cssClass="input-container" inlineField="<%= true %>" inlineLabel="left" label="" name="yearlyMonth0" title="first-month-of-year">
 
-				<%
-				for (int i = 0; i < 12; i++) {
-				%>
+					<%
+					for (int i = 0; i < 12; i++) {
+					%>
 
-					<aui:option label="<%= months[i] %>" selected="<%= monthIds[i] == yearlyMonth0 %>" value="<%= monthIds[i] %>" />
+						<aui:option label="<%= months[i] %>" selected="<%= monthIds[i] == yearlyMonth0 %>" value="<%= monthIds[i] %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
 				</aui:select>
 

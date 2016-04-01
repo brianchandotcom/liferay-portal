@@ -45,38 +45,38 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 			<table>
 
-			<%
-			for (int i = 0; i < activityCounters.size(); i++) {
-				SocialActivityCounter activityCounter = activityCounters.get(i);
-			%>
+				<%
+				for (int i = 0; i < activityCounters.size(); i++) {
+					SocialActivityCounter activityCounter = activityCounters.get(i);
+				%>
 
-				<tr>
-					<td>
-						<div class="group-statistics-color-marker" style="background-color: <%= _BACKGROUND_COLORS[i % _BACKGROUND_COLORS.length] %>"></div>
-					</td>
-					<td>
-						<%= ResourceActionsUtil.getModelResource(locale, activityCounter.getClassName()) %>
-					</td>
-					<td>
-						:
-					</td>
-					<td align="right">
+					<tr>
+						<td>
+							<div class="group-statistics-color-marker" style="background-color: <%= _BACKGROUND_COLORS[i % _BACKGROUND_COLORS.length] %>"></div>
+						</td>
+						<td>
+							<%= ResourceActionsUtil.getModelResource(locale, activityCounter.getClassName()) %>
+						</td>
+						<td>
+							:
+						</td>
+						<td align="right">
 
-						<%
-						double percentage = 0;
+							<%
+							double percentage = 0;
 
-						if (totalValue > 0) {
-							percentage = (double)activityCounter.getCurrentValue() / (double)totalValue;
-						}
-						%>
+							if (totalValue > 0) {
+								percentage = (double)activityCounter.getCurrentValue() / (double)totalValue;
+							}
+							%>
 
-						<%= decimalFormat.format(percentage) %>
-					</td>
-				</tr>
+							<%= decimalFormat.format(percentage) %>
+						</td>
+					</tr>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
 			</table>
 		</div>

@@ -123,8 +123,8 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-			<liferay-ui:error key="emailPasswordResetSubject" message="please-enter-a-valid-subject" />
-			<liferay-ui:error key="emailPasswordResetBody" message="please-enter-a-valid-body" />
+		<liferay-ui:error key="emailPasswordResetSubject" message="please-enter-a-valid-subject" />
+		<liferay-ui:error key="emailPasswordResetBody" message="please-enter-a-valid-body" />
 
 		<liferay-frontend:email-notification-settings
 			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailPasswordResetBody", "settings", ContentUtil.get(ClassLoaderUtil.getPortalClassLoader(), PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY)) %>'

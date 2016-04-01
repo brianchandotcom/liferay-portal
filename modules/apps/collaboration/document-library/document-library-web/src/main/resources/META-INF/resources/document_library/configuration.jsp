@@ -73,17 +73,17 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		</aui:fieldset>
 
 		<aui:fieldset collapsible="<%= true %>" id="documentLibraryItemsListingPanel" label="folders-listing">
-				<div class="form-group">
-					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+			<div class="form-group">
+				<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
-					<aui:button name="selectFolderButton" value="select" />
+				<aui:button name="selectFolderButton" value="select" />
 
-					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
-					%>
+				<%
+				String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
+				%>
 
-					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-				</div>
+				<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+			</div>
 		</aui:fieldset>
 
 		<aui:fieldset collapsible="<%= true %>" id="documentLibraryEntriesListingPanel" label="entries-listing-for-list-display-style">

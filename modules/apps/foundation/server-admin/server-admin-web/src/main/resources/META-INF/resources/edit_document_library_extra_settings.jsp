@@ -57,9 +57,9 @@ if (!dlFileEntries.isEmpty()) {
 
 <c:choose>
 	<c:when test="<%= dlFileEntry == null %>">
-			<div class="alert alert-success">
-				<liferay-ui:message key="there-are-no-longer-any-documents-and-media-files-with-extra-settings" />
-			</div>
+		<div class="alert alert-success">
+			<liferay-ui:message key="there-are-no-longer-any-documents-and-media-files-with-extra-settings" />
+		</div>
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= (expandoBridgeAttributeNames != null) && !expandoBridgeAttributeNames.isEmpty() %>">

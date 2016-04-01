@@ -59,121 +59,121 @@ else if (tabs1.equals("my-meetups")) {
 
 <table class="table" width="100%">
 
-<%
-for (int i = 0; i < meetupsEntries.size(); i++) {
-	MeetupsEntry meetupsEntry = meetupsEntries.get(i);
+	<%
+	for (int i = 0; i < meetupsEntries.size(); i++) {
+		MeetupsEntry meetupsEntry = meetupsEntries.get(i);
 
-	int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(meetupsEntry.getMeetupsEntryId(), MeetupsConstants.STATUS_YES);
-%>
+		int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(meetupsEntry.getMeetupsEntryId(), MeetupsConstants.STATUS_YES);
+	%>
 
-	<tr>
-		<td align="center" width="20%">
+		<tr>
+			<td align="center" width="20%">
 
-			<%
-			PortletURL viewMeetupsEntryURL = renderResponse.createRenderURL();
+				<%
+				PortletURL viewMeetupsEntryURL = renderResponse.createRenderURL();
 
-			viewMeetupsEntryURL.setWindowState(WindowState.MAXIMIZED);
+				viewMeetupsEntryURL.setWindowState(WindowState.MAXIMIZED);
 
-			viewMeetupsEntryURL.setParameter("mvcPath", "/meetups/view_entry.jsp");
-			viewMeetupsEntryURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntry.getMeetupsEntryId()));
+				viewMeetupsEntryURL.setParameter("mvcPath", "/meetups/view_entry.jsp");
+				viewMeetupsEntryURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntry.getMeetupsEntryId()));
 
-			String thumbnailURL = null;
+				String thumbnailURL = null;
 
-			if (meetupsEntry.getThumbnailId() == 0) {
-				thumbnailURL = PortalUtil.getPathContext(request) + "/meetups/images/calendar.png";
-			}
-			else {
-				thumbnailURL = themeDisplay.getPathImage() + "/meetups?img_id=" + meetupsEntry.getThumbnailId() + "&t=" + WebServerServletTokenUtil.getToken(meetupsEntry.getThumbnailId());
-			}
-			%>
+				if (meetupsEntry.getThumbnailId() == 0) {
+					thumbnailURL = PortalUtil.getPathContext(request) + "/meetups/images/calendar.png";
+				}
+				else {
+					thumbnailURL = themeDisplay.getPathImage() + "/meetups?img_id=" + meetupsEntry.getThumbnailId() + "&t=" + WebServerServletTokenUtil.getToken(meetupsEntry.getThumbnailId());
+				}
+				%>
 
-			<a href="<%= viewMeetupsEntryURL %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="view-meetup" />" src="<%= thumbnailURL %>" /></a>
-		</td>
-		<td valign="top" width="80%">
-			<div>
-				<%= meetupsEntry.getTitle() %>
-			</div>
-
-			<br />
-
-			<div>
-				<%= meetupsEntry.getDescription() %>
-			</div>
-
-			<br />
-
-			<div>
-				<%= dateFormatDateTime.format(meetupsEntry.getStartDate()) %> &#150; <%= dateFormatDateTime.format(meetupsEntry.getEndDate()) %>
-			</div>
-
-			<br />
-
-			<c:if test="<%= yesTotal > 1 %>">
+				<a href="<%= viewMeetupsEntryURL %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="view-meetup" />" src="<%= thumbnailURL %>" /></a>
+			</td>
+			<td valign="top" width="80%">
 				<div>
-					<liferay-ui:message arguments="<%= String.valueOf(yesTotal) %>" key="x-people-are-planning-to-attend-this-meetup" translateArguments="<%= false %>" />
+					<%= meetupsEntry.getTitle() %>
 				</div>
 
 				<br />
-			</c:if>
 
-			<liferay-ui:icon-list>
-				<c:if test="<%= permissionChecker.isCompanyAdmin(company.getCompanyId()) %>">
+				<div>
+					<%= meetupsEntry.getDescription() %>
+				</div>
 
-					<%
-					PortletURL editMeetupsEntryURL = renderResponse.createRenderURL();
+				<br />
 
-					editMeetupsEntryURL.setWindowState(WindowState.MAXIMIZED);
+				<div>
+					<%= dateFormatDateTime.format(meetupsEntry.getStartDate()) %> &#150; <%= dateFormatDateTime.format(meetupsEntry.getEndDate()) %>
+				</div>
 
-					editMeetupsEntryURL.setParameter("mvcPath", "/meetups/edit_entry.jsp");
-					editMeetupsEntryURL.setParameter("redirect", currentURL);
-					editMeetupsEntryURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntry.getMeetupsEntryId()));
-					%>
+				<br />
+
+				<c:if test="<%= yesTotal > 1 %>">
+					<div>
+						<liferay-ui:message arguments="<%= String.valueOf(yesTotal) %>" key="x-people-are-planning-to-attend-this-meetup" translateArguments="<%= false %>" />
+					</div>
+
+					<br />
+				</c:if>
+
+				<liferay-ui:icon-list>
+					<c:if test="<%= permissionChecker.isCompanyAdmin(company.getCompanyId()) %>">
+
+						<%
+						PortletURL editMeetupsEntryURL = renderResponse.createRenderURL();
+
+						editMeetupsEntryURL.setWindowState(WindowState.MAXIMIZED);
+
+						editMeetupsEntryURL.setParameter("mvcPath", "/meetups/edit_entry.jsp");
+						editMeetupsEntryURL.setParameter("redirect", currentURL);
+						editMeetupsEntryURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntry.getMeetupsEntryId()));
+						%>
+
+						<liferay-ui:icon
+							iconCssClass="icon-edit"
+							message="edit"
+							method="get"
+							url="<%= editMeetupsEntryURL.toString() %>"
+						/>
+					</c:if>
 
 					<liferay-ui:icon
-						iconCssClass="icon-edit"
-						message="edit"
+						iconCssClass="icon-group"
+						message="register"
 						method="get"
-						url="<%= editMeetupsEntryURL.toString() %>"
+						url="<%= viewMeetupsEntryURL.toString() %>"
 					/>
-				</c:if>
 
-				<liferay-ui:icon
-					iconCssClass="icon-group"
-					message="register"
-					method="get"
-					url="<%= viewMeetupsEntryURL.toString() %>"
-				/>
+					<c:if test="<%= permissionChecker.isCompanyAdmin(company.getCompanyId()) %>">
 
-				<c:if test="<%= permissionChecker.isCompanyAdmin(company.getCompanyId()) %>">
+						<%
+						PortletURL deleteMeetupsEntryURL = renderResponse.createActionURL();
 
-					<%
-					PortletURL deleteMeetupsEntryURL = renderResponse.createActionURL();
+						deleteMeetupsEntryURL.setWindowState(WindowState.MAXIMIZED);
 
-					deleteMeetupsEntryURL.setWindowState(WindowState.MAXIMIZED);
+						deleteMeetupsEntryURL.setParameter(ActionRequest.ACTION_NAME, "deleteMeetupsEntry");
+						deleteMeetupsEntryURL.setParameter("redirect", currentURL);
+						deleteMeetupsEntryURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntry.getMeetupsEntryId()));
+						%>
 
-					deleteMeetupsEntryURL.setParameter(ActionRequest.ACTION_NAME, "deleteMeetupsEntry");
-					deleteMeetupsEntryURL.setParameter("redirect", currentURL);
-					deleteMeetupsEntryURL.setParameter("meetupsEntryId", String.valueOf(meetupsEntry.getMeetupsEntryId()));
-					%>
-
-					<liferay-ui:icon-delete
-						url="<%= deleteMeetupsEntryURL.toString() %>"
-					/>
-				</c:if>
-			</liferay-ui:icon-list>
-		</td>
-	</tr>
-
-	<c:if test="<%= (i + 1) < meetupsEntries.size() %>">
-		<tr>
-			<td colspan="2">
-				<div class="separator"><!-- --></div>
+						<liferay-ui:icon-delete
+							url="<%= deleteMeetupsEntryURL.toString() %>"
+						/>
+					</c:if>
+				</liferay-ui:icon-list>
 			</td>
 		</tr>
-	</c:if>
 
-<%
-}
-%>
+		<c:if test="<%= (i + 1) < meetupsEntries.size() %>">
+			<tr>
+				<td colspan="2">
+					<div class="separator"><!-- --></div>
+				</td>
+			</tr>
+		</c:if>
+
+	<%
+	}
+	%>
 
 </table>

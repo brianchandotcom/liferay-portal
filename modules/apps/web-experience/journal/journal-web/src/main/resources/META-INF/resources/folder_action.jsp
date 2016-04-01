@@ -64,36 +64,36 @@ else {
 					<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
 				</portlet:renderURL>
 
-			<liferay-ui:icon
-				message="edit"
-				url="<%= editURL %>"
-			/>
+				<liferay-ui:icon
+					message="edit"
+					url="<%= editURL %>"
+				/>
 
-			<portlet:renderURL var="moveURL">
-				<portlet:param name="mvcPath" value="/move_entries.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="rowIdsJournalFolder" value="<%= String.valueOf(folder.getFolderId()) %>" />
-			</portlet:renderURL>
+				<portlet:renderURL var="moveURL">
+					<portlet:param name="mvcPath" value="/move_entries.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="rowIdsJournalFolder" value="<%= String.valueOf(folder.getFolderId()) %>" />
+				</portlet:renderURL>
 
-			<liferay-ui:icon
-				message="move"
-				url="<%= moveURL %>"
-			/>
-		</c:if>
+				<liferay-ui:icon
+					message="move"
+					url="<%= moveURL %>"
+				/>
+			</c:if>
 
-		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">
-			<portlet:renderURL var="addFolderURL">
-				<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
-				<portlet:param name="parentFolderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-			</portlet:renderURL>
+			<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">
+				<portlet:renderURL var="addFolderURL">
+					<portlet:param name="mvcPath" value="/edit_folder.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
+					<portlet:param name="parentFolderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+				</portlet:renderURL>
 
-			<liferay-ui:icon
-				message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
-				url="<%= addFolderURL %>"
-			/>
-		</c:if>
+				<liferay-ui:icon
+					message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
+					url="<%= addFolderURL %>"
+				/>
+			</c:if>
 		</c:when>
 		<c:otherwise>
 

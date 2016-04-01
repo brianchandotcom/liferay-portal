@@ -109,9 +109,9 @@ contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSet
 		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	%>
 
-	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
 
-	<div class="separator"><!-- --></div>
+		<div class="separator"><!-- --></div>
 
 	<%
 	}

@@ -156,7 +156,7 @@ if (portletTitleBasedNavigation) {
 				String className = repositoryClassDefinition.getClassName();
 
 				String unqualifiedClassName = HtmlUtil.escapeAttribute(className.substring(className.lastIndexOf(StringPool.PERIOD) + 1));
-			%>
+		%>
 
 				<div class="settings-parameters" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-configuration">
 

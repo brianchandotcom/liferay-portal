@@ -87,92 +87,92 @@ PortalLDAPUtil.getGroups(themeDisplay.getCompanyId(), ldapContext, new byte[0], 
 
 <table class="lfr-table" width="100%">
 
-<%
-boolean showMissingAttributeMessage = false;
+	<%
+	boolean showMissingAttributeMessage = false;
 
-int counter = 0;
+	int counter = 0;
 
-for (SearchResult searchResult : searchResults) {
-	Attributes attributes = searchResult.getAttributes();
+	for (SearchResult searchResult : searchResults) {
+		Attributes attributes = searchResult.getAttributes();
 
-	String name = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("groupName")));
-	String description = LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("description"));
-	Attribute attribute = attributes.get(groupMappings.getProperty("user"));
+		String name = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("groupName")));
+		String description = LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("description"));
+		Attribute attribute = attributes.get(groupMappings.getProperty("user"));
 
-	if (Validator.isNull(name)) {
-		showMissingAttributeMessage = true;
-	}
+		if (Validator.isNull(name)) {
+			showMissingAttributeMessage = true;
+		}
 
-	if (attribute != null) {
-		StringBundler sb = new StringBundler(7);
+		if (attribute != null) {
+			StringBundler sb = new StringBundler(7);
 
-		sb.append("(&");
-		sb.append(groupFilter);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(groupMappings.getProperty("groupName"));
-		sb.append("=");
-		sb.append(name);
-		sb.append("))");
+			sb.append("(&");
+			sb.append(groupFilter);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(groupMappings.getProperty("groupName"));
+			sb.append("=");
+			sb.append(name);
+			sb.append("))");
 
-		String filter = sb.toString();
+			String filter = sb.toString();
 
-		attribute = PortalLDAPUtil.getMultivaluedAttribute(themeDisplay.getCompanyId(), ldapContext, baseDN, filter, attribute);
+			attribute = PortalLDAPUtil.getMultivaluedAttribute(themeDisplay.getCompanyId(), ldapContext, baseDN, filter, attribute);
+		}
+
+		if (counter == 0) {
+	%>
+
+			<tr>
+				<th>
+					#
+				</th>
+				<th>
+					<liferay-ui:message key="name" />
+				</th>
+				<th>
+					<liferay-ui:message key="description" />
+				</th>
+				<th>
+					<liferay-ui:message key="members" />
+				</th>
+			</tr>
+
+		<%
+		}
+
+		counter++;
+		%>
+
+		<tr>
+			<td>
+				<%= counter %>
+			</td>
+			<td>
+				<%= HtmlUtil.escape(name) %>
+			</td>
+			<td>
+				<%= HtmlUtil.escape(description) %>
+			</td>
+			<td>
+				<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>
+			</td>
+		</tr>
+
+	<%
 	}
 
 	if (counter == 0) {
-%>
+	%>
 
 		<tr>
-			<th>
-				#
-			</th>
-			<th>
-				<liferay-ui:message key="name" />
-			</th>
-			<th>
-				<liferay-ui:message key="description" />
-			</th>
-			<th>
-				<liferay-ui:message key="members" />
-			</th>
+			<td colspan="4">
+				<liferay-ui:message key="no-groups-were-found" />
+			</td>
 		</tr>
 
-<%
+	<%
 	}
-
-	counter++;
-%>
-
-	<tr>
-		<td>
-			<%= counter %>
-		</td>
-		<td>
-			<%= HtmlUtil.escape(name) %>
-		</td>
-		<td>
-			<%= HtmlUtil.escape(description) %>
-		</td>
-		<td>
-			<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>
-		</td>
-	</tr>
-
-<%
-}
-
-if (counter == 0) {
-%>
-
-	<tr>
-		<td colspan="4">
-			<liferay-ui:message key="no-groups-were-found" />
-		</td>
-	</tr>
-
-<%
-}
-%>
+	%>
 
 </table>
 

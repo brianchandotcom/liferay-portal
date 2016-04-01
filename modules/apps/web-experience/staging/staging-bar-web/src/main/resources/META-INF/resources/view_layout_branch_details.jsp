@@ -47,18 +47,18 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 				boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
 			%>
 
-			<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">
-				<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
-				<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
-				<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
-			</portlet:actionURL>
+				<portlet:actionURL name="selectLayoutBranch" var="curLayoutBranchURL">
+					<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
+					<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
+					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
+				</portlet:actionURL>
 
-			<li>
-				<a class="<%= selected ? "disabled" : StringPool.BLANK %>" href="<%= selected ? "javascript:;" : curLayoutBranchURL %>">
-					<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
-				</a>
-			</li>
+				<li>
+					<a class="<%= selected ? "disabled" : StringPool.BLANK %>" href="<%= selected ? "javascript:;" : curLayoutBranchURL %>">
+						<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
+					</a>
+				</li>
 
 			<%
 			}

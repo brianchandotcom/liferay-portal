@@ -28,35 +28,35 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
 <html dir="<liferay-ui:message key="lang.dir" />">
 
-<head>
-	<meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
-	<meta content="no-cache" http-equiv="Cache-Control" />
-	<meta content="no-cache" http-equiv="Pragma" />
-	<meta content="0" http-equiv="Expires" />
-	<meta content="1; url=<%= redirect %>" http-equiv="refresh" />
-	<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/xp_progress.js" type="text/javascript"></script>
-</head>
+	<head>
+		<meta content="<%= ContentTypes.TEXT_HTML_UTF8 %>" http-equiv="content-type" />
+		<meta content="no-cache" http-equiv="Cache-Control" />
+		<meta content="no-cache" http-equiv="Pragma" />
+		<meta content="0" http-equiv="Expires" />
+		<meta content="1; url=<%= redirect %>" http-equiv="refresh" />
+		<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/xp_progress.js" type="text/javascript"></script>
+	</head>
 
-<body onLoad="javascript:location.replace('<%= redirect %>')">
+	<body onLoad="javascript:location.replace('<%= redirect %>')">
 
-<center>
+		<center>
 
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
-<tr>
-	<td align="center" valign="middle">
-		<strong><liferay-ui:message key="processing-login" /></strong>
+			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="600">
+				<tr>
+					<td align="center" valign="middle">
+						<strong><liferay-ui:message key="processing-login" /></strong>
 
-		<br /><br />
+						<br /><br />
 
-		<script type="text/javascript">
-			var progressBar = createBar(300, 15, '#FFFFFF', 1, '#000000', '', 85, 7, 3, '');
-		</script>
-	</td>
-</tr>
-</table>
+						<script type="text/javascript">
+							var progressBar = createBar(300, 15, '#FFFFFF', 1, '#000000', '', 85, 7, 3, '');
+						</script>
+					</td>
+				</tr>
+			</table>
 
-</center>
+		</center>
 
-</body>
+	</body>
 
 </html>

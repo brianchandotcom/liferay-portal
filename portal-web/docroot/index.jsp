@@ -69,13 +69,13 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
 <html>
 
-<head>
-	<title></title>
-	<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
-</head>
+	<head>
+		<title></title>
+		<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
+	</head>
 
-<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
+	<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
 
-</body>
+	</body>
 
 </html>

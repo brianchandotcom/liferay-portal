@@ -178,11 +178,11 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 				// Columns
 
 				for (DDMFormField ddmFormField : ddmFormfields) {
-				%>
+			%>
 
 					<%@ include file="/record_row_value.jspf" %>
 
-				<%
+			<%
 				}
 
 				if (hasUpdatePermission) {

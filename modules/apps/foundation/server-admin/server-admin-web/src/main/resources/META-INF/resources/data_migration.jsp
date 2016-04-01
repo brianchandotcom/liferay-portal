@@ -58,21 +58,21 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 											String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
 									%>
 
-										<aui:select label="<%= parameterPair[0] %>" name="<%= clazz.getName() + StringPool.PERIOD + parameterPair[0] %>">
+											<aui:select label="<%= parameterPair[0] %>" name="<%= clazz.getName() + StringPool.PERIOD + parameterPair[0] %>">
 
-											<%
-											for (String parameterSelectEntry : parameterSelectEntries) {
-											%>
+												<%
+												for (String parameterSelectEntry : parameterSelectEntries) {
+												%>
 
-												<aui:option label="<%= parameterSelectEntry %>" />
+													<aui:option label="<%= parameterSelectEntry %>" />
 
-											<%
-											}
-											%>
+												<%
+												}
+												%>
 
-										</aui:select>
+											</aui:select>
 
-									<%
+										<%
 										}
 										else {
 											String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
@@ -87,7 +87,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 											else {
 												currentParameterName = parameterName;
 											}
-									%>
+										%>
 
 											<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= clazz.getName() + StringPool.PERIOD + currentParameterName %>" type='<%= currentParameterType != null ? currentParameterType : "" %>' />
 

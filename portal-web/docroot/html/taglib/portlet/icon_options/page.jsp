@@ -33,7 +33,7 @@
 		boolean include = portletConfigurationIcon.include(request, new PipingServletResponse(pageContext));
 
 		if (!include) {
-		%>
+	%>
 
 			<liferay-ui:icon
 				alt="<%= portletConfigurationIcon.getAlt() %>"
@@ -59,7 +59,7 @@
 				useDialog="<%= portletConfigurationIcon.isUseDialog() %>"
 			/>
 
-		<%
+	<%
 		}
 	}
 	%>

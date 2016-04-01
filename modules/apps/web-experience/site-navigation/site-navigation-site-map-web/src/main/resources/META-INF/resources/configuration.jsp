@@ -40,7 +40,7 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 					if (layoutDescriptionLayout != null) {
 				%>
 
-					<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+						<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
 				<%
 					}

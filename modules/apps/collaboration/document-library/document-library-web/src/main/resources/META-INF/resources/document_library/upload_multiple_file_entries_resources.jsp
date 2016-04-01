@@ -166,15 +166,15 @@ else {
 								}
 					%>
 
-									<div class="document-type-fields">
-										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-											classPK="<%= ddmStructure.getPrimaryKey() %>"
-											ddmFormValues="<%= ddmFormValues %>"
-											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-											requestedLocale="<%= locale %>"
-										/>
-									</div>
+								<div class="document-type-fields">
+									<liferay-ddm:html
+										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+										classPK="<%= ddmStructure.getPrimaryKey() %>"
+										ddmFormValues="<%= ddmFormValues %>"
+										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+										requestedLocale="<%= locale %>"
+									/>
+								</div>
 
 					<%
 							}

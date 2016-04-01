@@ -173,16 +173,16 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 								<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
 									<%
-										for (Locale curLocale : locales) {
-											if (curLocale.equals(defaultLocale)) {
-												continue;
-											}
+									for (Locale curLocale : locales) {
+										if (curLocale.equals(defaultLocale)) {
+											continue;
+										}
 									%>
 
-									<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+										<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 									<%
-										}
+									}
 									%>
 
 								</aui:select>

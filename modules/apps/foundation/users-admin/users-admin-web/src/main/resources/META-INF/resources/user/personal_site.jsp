@@ -197,7 +197,7 @@ if (selUser != null) {
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:message key="this-user-does-not-have-any-private-pages" />
-								</c:otherwise>
+							</c:otherwise>
 						</c:choose>
 
 						<c:if test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED %>">

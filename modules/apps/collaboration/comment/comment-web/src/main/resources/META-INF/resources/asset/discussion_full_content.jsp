@@ -31,41 +31,41 @@ if (comment instanceof WorkflowableComment) {
 %>
 
 <table class="lfr-grid lfr-table">
-<tr>
-	<td colspan="2" id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
-		<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>
-	</td>
-</tr>
-<tr>
-	<td class="lfr-center lfr-top">
-		<liferay-ui:user-display
-			displayStyle="2"
-			userId="<%= comment.getUserId() %>"
-			userName="<%= HtmlUtil.escape(comment.getUserName()) %>"
-		/>
-	</td>
-	<td class="lfr-top stretch">
-		<c:if test="<%= (workflowableComment != null) && (workflowableComment.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
-			<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
+	<tr>
+		<td colspan="2" id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
+			<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>
+		</td>
+	</tr>
+	<tr>
+		<td class="lfr-center lfr-top">
+			<liferay-ui:user-display
+				displayStyle="2"
+				userId="<%= comment.getUserId() %>"
+				userName="<%= HtmlUtil.escape(comment.getUserName()) %>"
+			/>
+		</td>
+		<td class="lfr-top stretch">
+			<c:if test="<%= (workflowableComment != null) && (workflowableComment.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
+				<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
+
+				<div>
+					<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
+				</div>
+			</c:if>
 
 			<div>
-				<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
+				<%= comment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
 			</div>
-		</c:if>
 
-		<div>
-			<%= comment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
-		</div>
+			<br />
 
-		<br />
-
-		<div>
-			<c:if test="<%= (parentComment != null) && parentComment.isRoot() %>">
-				<liferay-ui:message arguments="<%= dateFormatDateTime.format(comment.getModifiedDate()) %>" key="posted-on-x" translateArguments="<%= false %>" />
-			</c:if>
-		</div>
-	</td>
-</tr>
+			<div>
+				<c:if test="<%= (parentComment != null) && parentComment.isRoot() %>">
+					<liferay-ui:message arguments="<%= dateFormatDateTime.format(comment.getModifiedDate()) %>" key="posted-on-x" translateArguments="<%= false %>" />
+				</c:if>
+			</div>
+		</td>
+	</tr>
 </table>
 
 <c:if test="<%= (parentComment != null) && !parentComment.isRoot() %>">

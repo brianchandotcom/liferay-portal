@@ -103,51 +103,51 @@ else {
 
 <div class="container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />recordPanel">
 
-<c:if test="<%= recordVersion != null %>">
-	<div class="sidenav-menu-slider">
-		<div class="sidebar sidebar-default sidenav-menu">
-			<liferay-ui:tabs names="details,versions" refresh="<%= false %>" type="dropdown">
-				<liferay-ui:section>
-					<div class="sidebar-body">
+	<c:if test="<%= recordVersion != null %>">
+		<div class="sidenav-menu-slider">
+			<div class="sidebar sidebar-default sidenav-menu">
+				<liferay-ui:tabs names="details,versions" refresh="<%= false %>" type="dropdown">
+					<liferay-ui:section>
+						<div class="sidebar-body">
 
-						<h3 class="version">
-							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(recordVersion.getVersion()) %>
-						</h3>
+							<h3 class="version">
+								<liferay-ui:message key="version" /> <%= HtmlUtil.escape(recordVersion.getVersion()) %>
+							</h3>
 
-						<div>
-							<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
+							<div>
+								<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
-							<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" />
+								<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" />
+							</div>
+
+							<div>
+								<h5><strong><liferay-ui:message key="created" /></strong></h5>
+
+								<p>
+
+									<%
+									Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+									%>
+
+									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(recordVersion.getUserName()), dateFormatDateTime.format(recordVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
+								</p>
+							</div>
+
 						</div>
+					</liferay-ui:section>
 
-						<div>
-							<h5><strong><liferay-ui:message key="created" /></strong></h5>
-
-							<p>
-
-								<%
-								Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-								%>
-
-								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(recordVersion.getUserName()), dateFormatDateTime.format(recordVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
-							</p>
+					<liferay-ui:section>
+						<div class="sidebar-body">
+							<liferay-util:include page="/view_record_history.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="redirect" value="<%= redirect %>" />
+							</liferay-util:include>
 						</div>
+					</liferay-ui:section>
+				</liferay-ui:tabs>
+			</div>
 
-					</div>
-				</liferay-ui:section>
-
-				<liferay-ui:section>
-					<div class="sidebar-body">
-						<liferay-util:include page="/view_record_history.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="redirect" value="<%= redirect %>" />
-						</liferay-util:include>
-					</div>
-				</liferay-ui:section>
-			</liferay-ui:tabs>
 		</div>
-
-	</div>
-</c:if>
+	</c:if>
 
 	<div class="sidenav-content">
 		<aui:form action="<%= (record == null) ? addRecordURL : updateRecordURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">

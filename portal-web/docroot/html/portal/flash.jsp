@@ -27,29 +27,29 @@ String movie = ParamUtil.getString(request, "movie");
 
 <html>
 
-<head>
-	<title><%= HtmlUtil.escape(title) %></title>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<head>
+		<title><%= HtmlUtil.escape(title) %></title>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-	<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>
-</head>
+		<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>
+	</head>
 
-<body leftmargin="0" marginheight="0" marginwidth="0" rightmargin="0" topmargin="0">
+	<body leftmargin="0" marginheight="0" marginwidth="0" rightmargin="0" topmargin="0">
 
-<center>
+		<center>
 
-<c:if test="<%= Validator.isNotNull(movie) %>">
-	<div id="flashMovie"></div>
+			<c:if test="<%= Validator.isNotNull(movie) %>">
+				<div id="flashMovie"></div>
 
-	<script type="text/javascript">
-		var so = new SWFObject('<%= HtmlUtil.escapeJS(movie) %>', 'flashMovie', '<%= HtmlUtil.escapeJS(width) %>', '<%= HtmlUtil.escapeJS(height) %>', '6', '#FFFFFF');
+				<script type="text/javascript">
+					var so = new SWFObject('<%= HtmlUtil.escapeJS(movie) %>', 'flashMovie', '<%= HtmlUtil.escapeJS(width) %>', '<%= HtmlUtil.escapeJS(height) %>', '6', '#FFFFFF');
 
-		so.write('flashMovie');
-	</script>
-</c:if>
+					so.write('flashMovie');
+				</script>
+			</c:if>
 
-</center>
+		</center>
 
-</body>
+	</body>
 
 </html>

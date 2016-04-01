@@ -123,12 +123,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 								UserTrackerPath userTrackerPath = paths.get(i);
 							%>
 
-							<dt class="h4">
-								<%= StringUtil.replace(userTrackerPath.getPath(), '&', "& ") %>
-							</dt>
-							<dd>
-								<%= dateFormatDateTime.format(userTrackerPath.getPathDate()) %>
-							</dd>
+								<dt class="h4">
+									<%= StringUtil.replace(userTrackerPath.getPath(), '&', "& ") %>
+								</dt>
+								<dd>
+									<%= dateFormatDateTime.format(userTrackerPath.getPathDate()) %>
+								</dd>
 
 							<%
 							}

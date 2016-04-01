@@ -36,10 +36,10 @@ else {
 
 		<liferay-theme:include page="portal_pop_up.jsp" />
 
-<%
+	<%
 	}
 	else {
-%>
+	%>
 
 		<liferay-theme:include page="portal_normal.jsp" />
 

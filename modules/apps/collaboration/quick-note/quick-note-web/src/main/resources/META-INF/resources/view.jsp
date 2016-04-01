@@ -19,26 +19,26 @@
 <div id="<portlet:namespace />pad" style="background: <%= HtmlUtil.escapeAttribute(color) %>;">
 	<c:if test="<%= portletDisplay.isShowConfigurationIcon() %>">
 		<table width="100%">
-		<tr>
-			<td width="60%">
-				<div class="portlet-title-default">&nbsp;</div>
-			</td>
-			<td>
-				<c:if test="<%= portletDisplay.isShowCloseIcon() %>">
-					<liferay-ui:icon
-						cssClass="close-note"
-						iconCssClass="icon-remove"
-						message="close"
-						url="<%= portletDisplay.getURLClose() %>"
-					/>
-				</c:if>
+			<tr>
+				<td width="60%">
+					<div class="portlet-title-default">&nbsp;</div>
+				</td>
+				<td>
+					<c:if test="<%= portletDisplay.isShowCloseIcon() %>">
+						<liferay-ui:icon
+							cssClass="close-note"
+							iconCssClass="icon-remove"
+							message="close"
+							url="<%= portletDisplay.getURLClose() %>"
+						/>
+					</c:if>
 
-				<span class="note-color yellow"></span>
-				<span class="green note-color"></span>
-				<span class="blue note-color"></span>
-				<span class="note-color red"></span>
-			</td>
-		</tr>
+					<span class="note-color yellow"></span>
+					<span class="green note-color"></span>
+					<span class="blue note-color"></span>
+					<span class="note-color red"></span>
+				</td>
+			</tr>
 		</table>
 	</c:if>
 

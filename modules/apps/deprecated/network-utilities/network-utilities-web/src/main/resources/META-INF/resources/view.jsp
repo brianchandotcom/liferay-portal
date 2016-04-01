@@ -58,9 +58,9 @@ portletURL.setParameter("tabs1", tabs1);
 
 			<c:if test="<%= dnsLookup != null %>">
 				<liferay-ui:panel collapsible="<%= false %>" title="<%= HtmlUtil.escape(domain) %>">
-<pre>
+					<pre>
 <%= dnsLookup.getResults() %>
-</pre>
+					</pre>
 				</liferay-ui:panel>
 			</c:if>
 		</c:when>
@@ -86,9 +86,9 @@ portletURL.setParameter("tabs1", tabs1);
 
 			<c:if test="<%= whois != null %>">
 				<liferay-ui:panel collapsible="<%= false %>" title="<%= HtmlUtil.escape(domain) %>">
-<pre>
+					<pre>
 <%= whois.getResults() %>
-</pre>
+					</pre>
 				</liferay-ui:panel>
 			</c:if>
 		</c:when>

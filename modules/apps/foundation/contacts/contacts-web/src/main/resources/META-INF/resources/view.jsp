@@ -165,125 +165,125 @@ portletURL.setWindowState(WindowState.NORMAL);
 						for (BaseModel<?> curContact : contacts) {
 						%>
 
-						<c:choose>
-							<c:when test="<%= curContact instanceof User %>">
-
-								<%
-								User user2 = (User)curContact;
-
-								String lastName = user2.getLastName();
-
-								String curLastNameAnchor = LanguageUtil.get(request, "no-last-name");
-
-								if (Validator.isNotNull(lastName)) {
-									curLastNameAnchor = StringUtil.upperCase(lastName.substring(0, 1));
-								}
-								%>
-
-								<c:if test="<%= !curLastNameAnchor.equals(lastNameAnchor) %>">
+							<c:choose>
+								<c:when test="<%= curContact instanceof User %>">
 
 									<%
-									lastNameAnchor = curLastNameAnchor;
+									User user2 = (User)curContact;
+
+									String lastName = user2.getLastName();
+
+									String curLastNameAnchor = LanguageUtil.get(request, "no-last-name");
+
+									if (Validator.isNotNull(lastName)) {
+										curLastNameAnchor = StringUtil.upperCase(lastName.substring(0, 1));
+									}
 									%>
 
-									<div class="last-name-anchor">
-										<a><liferay-ui:message key="<%= lastNameAnchor %>" /></a>
-									</div>
-								</c:if>
+									<c:if test="<%= !curLastNameAnchor.equals(lastNameAnchor) %>">
 
-								<div class="lfr-contact">
-									<div class="lfr-contact-checkbox">
-										<input class="contact-ids" <%= themeDisplay.getUserId() == user2.getUserId() ? "disabled=\"true\"" : StringPool.BLANK %> name="contact-ids-<%= user2.getUserId() %>" type="checkbox" value="<%= user2.getUserId() %>" />
-									</div>
+										<%
+										lastNameAnchor = curLastNameAnchor;
+										%>
 
-									<liferay-portlet:renderURL var="viewUserSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-										<portlet:param name="mvcPath" value="/view_resources.jsp" />
-										<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
-										<portlet:param name="portalUser" value="<%= Boolean.TRUE.toString() %>" />
-									</liferay-portlet:renderURL>
+										<div class="last-name-anchor">
+											<a><liferay-ui:message key="<%= lastNameAnchor %>" /></a>
+										</div>
+									</c:if>
 
-									<div class="lfr-contact-grid-item" data-userId="<%= user2.getUserId() %>" data-viewSummaryURL="<%= viewUserSummaryURL %>">
-										<div class="lfr-contact-thumb">
-											<img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" />
+									<div class="lfr-contact">
+										<div class="lfr-contact-checkbox">
+											<input class="contact-ids" <%= themeDisplay.getUserId() == user2.getUserId() ? "disabled=\"true\"" : StringPool.BLANK %> name="contact-ids-<%= user2.getUserId() %>" type="checkbox" value="<%= user2.getUserId() %>" />
 										</div>
 
-										<div class="lfr-contact-info">
-											<div class="lfr-contact-name">
-												<a>
-													<c:if test="<%= Validator.isNotNull(user2.getLastName()) %>">
-														<%= HtmlUtil.escape(user2.getLastName()) %>,
-													</c:if>
+										<liferay-portlet:renderURL var="viewUserSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+											<portlet:param name="mvcPath" value="/view_resources.jsp" />
+											<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
+											<portlet:param name="portalUser" value="<%= Boolean.TRUE.toString() %>" />
+										</liferay-portlet:renderURL>
 
-													<%= HtmlUtil.escape(user2.getFirstName()) %>
-												</a>
+										<div class="lfr-contact-grid-item" data-userId="<%= user2.getUserId() %>" data-viewSummaryURL="<%= viewUserSummaryURL %>">
+											<div class="lfr-contact-thumb">
+												<img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" />
 											</div>
 
-											<div class="lfr-contact-extra">
-												<%= HtmlUtil.escape(user2.getEmailAddress()) %>
+											<div class="lfr-contact-info">
+												<div class="lfr-contact-name">
+													<a>
+														<c:if test="<%= Validator.isNotNull(user2.getLastName()) %>">
+															<%= HtmlUtil.escape(user2.getLastName()) %>,
+														</c:if>
+
+														<%= HtmlUtil.escape(user2.getFirstName()) %>
+													</a>
+												</div>
+
+												<div class="lfr-contact-extra">
+													<%= HtmlUtil.escape(user2.getEmailAddress()) %>
+												</div>
 											</div>
+
+											<div class="clear"><!-- --></div>
 										</div>
-
-										<div class="clear"><!-- --></div>
 									</div>
-								</div>
-							</c:when>
-							<c:otherwise>
-
-								<%
-								Entry entry = (Entry)curContact;
-
-								String fullName = entry.getFullName();
-
-								String curLastNameAnchor = LanguageUtil.get(request, "no-last-name");
-
-								if (Validator.isNotNull(fullName)) {
-									curLastNameAnchor = StringUtil.upperCase(fullName.substring(0, 1));
-								}
-								%>
-
-								<c:if test="<%= !curLastNameAnchor.equals(lastNameAnchor) %>">
+								</c:when>
+								<c:otherwise>
 
 									<%
-									lastNameAnchor = curLastNameAnchor;
+									Entry entry = (Entry)curContact;
+
+									String fullName = entry.getFullName();
+
+									String curLastNameAnchor = LanguageUtil.get(request, "no-last-name");
+
+									if (Validator.isNotNull(fullName)) {
+										curLastNameAnchor = StringUtil.upperCase(fullName.substring(0, 1));
+									}
 									%>
 
-									<div class="last-name-anchor">
-										<a><liferay-ui:message key="<%= lastNameAnchor %>" /></a>
-									</div>
-								</c:if>
+									<c:if test="<%= !curLastNameAnchor.equals(lastNameAnchor) %>">
 
-								<div class="lfr-contact">
-									<div class="lfr-contact-checkbox">
-										<input class="contact-ids" disabled="true" label="" name="contact-ids-<%= entry.getEntryId() %>" type="checkbox" value="<%= entry.getEntryId() %>" />
-									</div>
+										<%
+										lastNameAnchor = curLastNameAnchor;
+										%>
 
-									<liferay-portlet:renderURL var="viewContactSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-										<portlet:param name="mvcPath" value="/view_resources.jsp" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-										<portlet:param name="portalUser" value="<%= Boolean.FALSE.toString() %>" />
-									</liferay-portlet:renderURL>
+										<div class="last-name-anchor">
+											<a><liferay-ui:message key="<%= lastNameAnchor %>" /></a>
+										</div>
+									</c:if>
 
-									<div class="lfr-contact-grid-item" data-userId="" data-viewSummaryURL="<%= viewContactSummaryURL %>">
-										<div class="lfr-contact-thumb">
-											<img alt="<%= HtmlUtil.escapeAttribute(fullName) %>" src="<%= themeDisplay.getPathImage() + "/user_male_portrait?img_id=0&t=" %>" />
+									<div class="lfr-contact">
+										<div class="lfr-contact-checkbox">
+											<input class="contact-ids" disabled="true" label="" name="contact-ids-<%= entry.getEntryId() %>" type="checkbox" value="<%= entry.getEntryId() %>" />
 										</div>
 
-										<div class="lfr-contact-info">
-											<div class="lfr-contact-name">
-												<a><%= HtmlUtil.escape(fullName) %></a>
+										<liferay-portlet:renderURL var="viewContactSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+											<portlet:param name="mvcPath" value="/view_resources.jsp" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+											<portlet:param name="portalUser" value="<%= Boolean.FALSE.toString() %>" />
+										</liferay-portlet:renderURL>
+
+										<div class="lfr-contact-grid-item" data-userId="" data-viewSummaryURL="<%= viewContactSummaryURL %>">
+											<div class="lfr-contact-thumb">
+												<img alt="<%= HtmlUtil.escapeAttribute(fullName) %>" src="<%= themeDisplay.getPathImage() + "/user_male_portrait?img_id=0&t=" %>" />
 											</div>
 
-											<div class="lfr-contact-extra">
-												<%= HtmlUtil.escape(entry.getEmailAddress()) %>
+											<div class="lfr-contact-info">
+												<div class="lfr-contact-name">
+													<a><%= HtmlUtil.escape(fullName) %></a>
+												</div>
+
+												<div class="lfr-contact-extra">
+													<%= HtmlUtil.escape(entry.getEmailAddress()) %>
+												</div>
 											</div>
+
+											<div class="clear"><!-- --></div>
 										</div>
-
-										<div class="clear"><!-- --></div>
 									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
+								</c:otherwise>
+							</c:choose>
 
 						<%
 						}

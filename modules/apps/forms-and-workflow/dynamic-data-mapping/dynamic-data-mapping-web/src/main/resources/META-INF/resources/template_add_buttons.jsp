@@ -80,56 +80,56 @@ String message = "add";
 		</c:when>
 		<c:otherwise>
 
+			<%
+			List<TemplateHandler> templateHandlers = new ArrayList<TemplateHandler>();
+
+			if (classNameId > 0) {
+				TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+				if (PortletPermissionUtil.contains(permissionChecker, layout, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+					templateHandlers.add(templateHandler);
+				}
+			}
+			else {
+				templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+
+				Iterator<TemplateHandler> itr = templateHandlers.iterator();
+
+				while (itr.hasNext()) {
+					TemplateHandler templateHandler = itr.next();
+
+					if (!PortletPermissionUtil.contains(permissionChecker, layout, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+						itr.remove();
+					}
+				}
+			}
+
+			if (!templateHandlers.isEmpty()) {
+				ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
+			%>
+
+				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="addPortletDisplayTemplateURL">
+					<portlet:param name="mvcPath" value="/edit_template.jsp" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
+				</liferay-portlet:renderURL>
+
 				<%
-				List<TemplateHandler> templateHandlers = new ArrayList<TemplateHandler>();
-
-				if (classNameId > 0) {
-					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-					if (PortletPermissionUtil.contains(permissionChecker, layout, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-						templateHandlers.add(templateHandler);
-					}
-				}
-				else {
-					templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
-
-					Iterator<TemplateHandler> itr = templateHandlers.iterator();
-
-					while (itr.hasNext()) {
-						TemplateHandler templateHandler = itr.next();
-
-						if (!PortletPermissionUtil.contains(permissionChecker, layout, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-							itr.remove();
-						}
-					}
-				}
-
-				if (!templateHandlers.isEmpty()) {
-					ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
+				for (TemplateHandler templateHandler : templateHandlers) {
+					addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
+					addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
+					addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
 				%>
 
-					<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="addPortletDisplayTemplateURL">
-						<portlet:param name="mvcPath" value="/edit_template.jsp" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
-					</liferay-portlet:renderURL>
+					<liferay-frontend:add-menu-item
+						title="<%= templateHandler.getName(locale) %>"
+						url="<%= addPortletDisplayTemplateURL.toString() %>"
+					/>
 
-					<%
-					for (TemplateHandler templateHandler : templateHandlers) {
-						addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
-						addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
-						addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
-					%>
-
-						<liferay-frontend:add-menu-item
-							title="<%= templateHandler.getName(locale) %>"
-							url="<%= addPortletDisplayTemplateURL.toString() %>"
-						/>
-
-					<%
-					}
+			<%
 				}
-				%>
+			}
+			%>
 
 		</c:otherwise>
 	</c:choose>

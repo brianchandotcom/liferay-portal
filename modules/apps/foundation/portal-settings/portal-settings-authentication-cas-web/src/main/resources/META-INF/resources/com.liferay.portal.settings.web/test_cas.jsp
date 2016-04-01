@@ -24,68 +24,68 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 %>
 
 <table class="lfr-table lfr-table-grid">
-<tr>
-	<td class="lfr-label">
-		<liferay-ui:message key="login-url" />:
-	</td>
-	<td>
-
-		<%
-		String casLoginURLResult = _testURL(casLoginURL);
-		String casLoginURLCssClass = _getCssClass(casLoginURLResult);
-		%>
-
-		<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
-	</td>
-</tr>
-<tr>
-	<td class="lfr-label">
-		<liferay-ui:message key="logout-url" />:
-	</td>
-	<td>
-
-		<%
-		String casLogoutURLResult = _testURL(casLogoutURL);
-		String casLogoutURLCssClass = _getCssClass(casLogoutURLResult);
-		%>
-
-		<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
-	</td>
-</tr>
-
-<c:if test="<%= Validator.isNotNull(casServerURL) %>">
 	<tr>
 		<td class="lfr-label">
-			<liferay-ui:message key="server-url" />:
+			<liferay-ui:message key="login-url" />:
 		</td>
 		<td>
 
 			<%
-			String casServerURLResult = _testURL(casServerURL);
-			String casServerURLCssClass = _getCssClass(casServerURLResult);
+			String casLoginURLResult = _testURL(casLoginURL);
+			String casLoginURLCssClass = _getCssClass(casLoginURLResult);
 			%>
 
-			<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
+			<span class="<%= casLoginURLCssClass %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
 		</td>
 	</tr>
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(casServiceURL) %>">
 	<tr>
 		<td class="lfr-label">
-			<liferay-ui:message key="service-url" />:
+			<liferay-ui:message key="logout-url" />:
 		</td>
 		<td>
 
 			<%
-			String casServiceURLResult = _testURL(casServiceURL);
-			String casServiceURLCssClass = _getCssClass(casServiceURLResult);
+			String casLogoutURLResult = _testURL(casLogoutURL);
+			String casLogoutURLCssClass = _getCssClass(casLogoutURLResult);
 			%>
 
-			<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
+			<span class="<%= casLogoutURLCssClass %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
 		</td>
 	</tr>
-</c:if>
+
+	<c:if test="<%= Validator.isNotNull(casServerURL) %>">
+		<tr>
+			<td class="lfr-label">
+				<liferay-ui:message key="server-url" />:
+			</td>
+			<td>
+
+				<%
+				String casServerURLResult = _testURL(casServerURL);
+				String casServerURLCssClass = _getCssClass(casServerURLResult);
+				%>
+
+				<span class="<%= casServerURLCssClass %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
+			</td>
+		</tr>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(casServiceURL) %>">
+		<tr>
+			<td class="lfr-label">
+				<liferay-ui:message key="service-url" />:
+			</td>
+			<td>
+
+				<%
+				String casServiceURLResult = _testURL(casServiceURL);
+				String casServiceURLCssClass = _getCssClass(casServiceURLResult);
+				%>
+
+				<span class="<%= casServiceURLCssClass %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
+			</td>
+		</tr>
+	</c:if>
 
 </table>
 

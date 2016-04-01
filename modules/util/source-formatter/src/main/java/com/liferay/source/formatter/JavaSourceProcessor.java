@@ -2875,7 +2875,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			combinedLine += trimmedLine;
 
-			String nextLine = getNextLine(content, lineCount);
+			String nextLine = getLine(content, lineCount + 1);
 
 			if (nextLine == null) {
 				return null;
@@ -3059,7 +3059,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
 					for (int i = 0;; i++) {
-						String nextLine = getNextLine(content, lineCount + i);
+						String nextLine = getLine(content, lineCount + i + 1);
 
 						if (Validator.isNull(nextLine) ||
 							nextLine.endsWith(") {")) {
@@ -3089,7 +3089,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
 				for (int i = 0;; i++) {
-					String nextLine = getNextLine(content, lineCount + i);
+					String nextLine = getLine(content, lineCount + i + 1);
 
 					if (nextLine.endsWith(StringPool.SEMICOLON)) {
 						return getCombinedLinesContent(
@@ -3237,7 +3237,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			(previousLineTabCount == lineTabCount) &&
 			!trimmedPreviousLine.equals("},")) {
 
-			String nextLine = getNextLine(content, lineCount);
+			String nextLine = getLine(content, lineCount + 1);
 
 			int nextLineTabCount = getLeadingTabCount(nextLine);
 
@@ -3317,7 +3317,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						_MAX_LINE_LENGTH)) {
 
 				for (int i = 0;; i++) {
-					String nextLine = getNextLine(content, lineCount + i);
+					String nextLine = getLine(content, lineCount + i + 1);
 
 					if (nextLine.endsWith(StringPool.SEMICOLON)) {
 						return getCombinedLinesContent(
@@ -3873,7 +3873,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, "\n" + line + "\n",
 						"\n" + firstLine + "\n" + secondLine + "\n");
 				}
-				else if (Validator.isNotNull(getNextLine(content, lineCount))) {
+				else if (Validator.isNotNull(getLine(content, lineCount + 1))) {
 					return StringUtil.replace(
 						content, "\n" + line + "\n",
 						"\n" + firstLine + "\n" + secondLine + "\n" +

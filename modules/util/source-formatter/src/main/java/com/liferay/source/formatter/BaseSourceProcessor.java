@@ -1982,8 +1982,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected String getNextLine(String content, int lineCount) {
-		int nextLineStartPos = getLineStartPos(content, lineCount + 1);
+	protected String getLine(String content, int lineCount) {
+		int nextLineStartPos = getLineStartPos(content, lineCount);
 
 		if (nextLineStartPos == -1) {
 			return null;

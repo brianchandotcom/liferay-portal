@@ -552,7 +552,6 @@ app.server.type=@{app.server.type}]]></echo>
 				<test-set-up>
 					<if>
 						<and>
-							<matches pattern="http" string="@{test.license.xml.url}" />
 							<matches pattern="http" string="@{test.portal.bundle.zip.url}" />
 							<matches pattern="http" string="@{test.sql.zip.url}" />
 						</and>
@@ -567,9 +566,14 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
 							</antcall>
 
-							<antcall target="deploy-license-xml">
-								<param name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
-							</antcall>
+							<if>
+								<matches pattern="http" string="@{test.license.xml.url}" />
+								<then>
+									<antcall target="deploy-license-xml">
+										<param name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
+									</antcall>
+								</then>
+							</if>
 
 							<antcall target="deploy-sql-zip">
 								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />

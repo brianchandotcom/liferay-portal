@@ -117,7 +117,7 @@ public class ElasticsearchCluster {
 			OperationMode operationMode =
 				elasticsearchConnection.getOperationMode();
 
-			if ((operationMode == OperationMode.EMBEDDED)) {
+			if (operationMode == OperationMode.EMBEDDED) {
 				return true;
 			}
 

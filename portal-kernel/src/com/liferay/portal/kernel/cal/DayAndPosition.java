@@ -96,7 +96,7 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isValidDayPosition(int p) {
-		if (((p >= -53) && (p <= 53))) {
+		if ((p >= -53) && (p <= 53)) {
 			return true;
 		}
 

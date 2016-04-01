@@ -1050,7 +1050,7 @@ public class Recurrence implements Serializable {
 		if (position > 0) {
 			int candidatePosition = ((candidate.get(field) - 1) / 7) + 1;
 
-			if ((position == candidatePosition)) {
+			if (position == candidatePosition) {
 				return true;
 			}
 
@@ -1064,7 +1064,7 @@ public class Recurrence implements Serializable {
 				((candidate.getActualMaximum(field) - candidate.get(field)) /
 					7) + 1;
 
-			if ((-position == negativeCandidatePosition)) {
+			if (-position == negativeCandidatePosition) {
 				return true;
 			}
 

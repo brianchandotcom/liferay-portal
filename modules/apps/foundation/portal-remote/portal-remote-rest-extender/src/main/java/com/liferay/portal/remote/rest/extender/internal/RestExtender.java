@@ -15,6 +15,7 @@
 package com.liferay.portal.remote.rest.extender.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration;
 
@@ -83,11 +84,13 @@ public class RestExtender {
 		}
 
 		for (String contextPath : contextPaths) {
-			addTCCLServiceDependency(
-				true, Bus.class,
-				"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
-					"=" + contextPath + ")",
-				"addBus", "removeBus");
+			if (Validator.isNotNull(contextPath)) {
+				addTCCLServiceDependency(
+					true, Bus.class,
+					"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+						"=" + contextPath + ")",
+					"addBus", "removeBus");
+			}
 		}
 	}
 
@@ -105,9 +108,11 @@ public class RestExtender {
 		for (String jaxRsApplicationFilterString :
 				jaxRsApplicationFilterStrings) {
 
-			addTCCLServiceDependency(
-				false, Application.class, jaxRsApplicationFilterString,
-				"addApplication", "removeApplication");
+			if (Validator.isNotNull(jaxRsApplicationFilterString)) {
+				addTCCLServiceDependency(
+					false, Application.class, jaxRsApplicationFilterString,
+					"addApplication", "removeApplication");
+			}
 		}
 	}
 
@@ -123,9 +128,11 @@ public class RestExtender {
 		}
 
 		for (String jaxRsProviderFilterString : jaxRsProviderFilterStrings) {
-			addTCCLServiceDependency(
-				false, null, jaxRsProviderFilterString, "addProvider",
-				"removeProvider");
+			if (Validator.isNotNull(jaxRsProviderFilterString)) {
+				addTCCLServiceDependency(
+					false, null, jaxRsProviderFilterString, "addProvider",
+					"removeProvider");
+			}
 		}
 	}
 
@@ -141,9 +148,11 @@ public class RestExtender {
 		}
 
 		for (String jaxRsServiceFilterString : jaxRsServiceFilterStrings) {
-			addTCCLServiceDependency(
-				false, null, jaxRsServiceFilterString, "addService",
-				"removeService");
+			if (Validator.isNotNull(jaxRsServiceFilterString)) {
+				addTCCLServiceDependency(
+					false, null, jaxRsServiceFilterString, "addService",
+					"removeService");
+			}
 		}
 	}
 

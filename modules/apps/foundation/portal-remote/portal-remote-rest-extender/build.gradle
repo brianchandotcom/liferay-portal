@@ -3,6 +3,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.remote.cxf.jaxrs.common", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.remote.dependency.manager.tccl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
 	provided group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
 	provided group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.0.3"

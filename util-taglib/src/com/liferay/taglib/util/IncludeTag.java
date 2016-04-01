@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.servlet.taglib.TagDynamicIncludeUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -411,9 +412,17 @@ public class IncludeTag extends AttributesTagSupport {
 		sb.append(contextPath);
 		sb.append(".");
 
+		String portalContext = PortalUtil.getPathContext();
+
+		boolean isPortalContextPath = true;
+
+		if (!Validator.equals(portalContext, contextPath)) {
+			isPortalContextPath = false;
+		}
+
 		if (isPortalPage(page)) {
-			if (contextPath.equals(StringPool.SLASH)) {
-				sb = null;
+			if (isPortalContextPath) {
+				return;
 			}
 			else {
 				sb.append(" You must not use a taglib from a module and set ");
@@ -421,7 +430,7 @@ public class IncludeTag extends AttributesTagSupport {
 				sb.append("content directly where the taglib is invoked.");
 			}
 		}
-		else if (contextPath.equals(StringPool.SLASH)) {
+		else if (isPortalContextPath) {
 			Class<?> clazz = getClass();
 
 			if (clazz.equals(IncludeTag.class)) {
@@ -436,9 +445,7 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 		}
 
-		if (sb != null) {
-			_log.warn(sb.toString());
-		}
+		_log.warn(sb.toString());
 	}
 
 	protected int processEndTag() throws Exception {

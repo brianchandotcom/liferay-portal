@@ -15,10 +15,6 @@ configurations {
 	}
 }
 
-copyLibs {
-	enabled = false
-}
-
 configurations.provided.dependencies.withType(ProjectDependency) {
 	configurations.default.exclude module: it.name
 }

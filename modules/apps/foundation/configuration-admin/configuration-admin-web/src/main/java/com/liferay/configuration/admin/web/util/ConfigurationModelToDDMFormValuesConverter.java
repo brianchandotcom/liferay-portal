@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -151,23 +150,9 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		LocalizedValue localizedValue = new LocalizedValue(_locale);
 
-		localizedValue.addString(_locale, translate(value));
+		localizedValue.addString(_locale, value);
 
 		ddmFormFieldValue.setValue(localizedValue);
-	}
-
-	protected String translate(String key) {
-		if ((_resourceBundle == null) || (key == null)) {
-			return key;
-		}
-
-		String value = ResourceBundleUtil.getString(_resourceBundle, key);
-
-		if (value == null) {
-			return key;
-		}
-
-		return value;
 	}
 
 	private final ConfigurationModel _configurationModel;

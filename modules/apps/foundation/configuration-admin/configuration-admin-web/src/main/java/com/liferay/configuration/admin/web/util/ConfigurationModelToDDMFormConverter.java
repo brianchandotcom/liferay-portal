@@ -260,7 +260,7 @@ public class ConfigurationModelToDDMFormConverter {
 
 		LocalizedValue predefinedValue = new LocalizedValue(_locale);
 
-		predefinedValue.addString(_locale, translate(predefinedValueString));
+		predefinedValue.addString(_locale, predefinedValueString);
 
 		ddmFormField.setPredefinedValue(predefinedValue);
 	}

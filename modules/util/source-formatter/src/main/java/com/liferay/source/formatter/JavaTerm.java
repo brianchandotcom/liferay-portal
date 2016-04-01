@@ -108,6 +108,14 @@ public class JavaTerm {
 		return _parameterTypes;
 	}
 
+	public String getReturnType() {
+		if (_returnType == null) {
+			readParameterNamesAndTypes();
+		}
+
+		return _returnType;
+	}
+
 	public int getType() {
 		return _type;
 	}
@@ -266,6 +274,7 @@ public class JavaTerm {
 	protected void readParameterNamesAndTypes() {
 		_parameterNames = new ArrayList<>();
 		_parameterTypes = new ArrayList<>();
+		_returnType = StringPool.BLANK;
 
 		if (!isConstructor() && !isMethod()) {
 			return;
@@ -287,9 +296,35 @@ public class JavaTerm {
 			return;
 		}
 
-		x = _content.indexOf(CharPool.OPEN_PARENTHESIS, x);
+		int y = _content.indexOf(CharPool.OPEN_PARENTHESIS, x);
 
-		int y = x;
+		if (isMethod()) {
+			String linePart = _content.substring(x, y);
+
+			linePart = StringUtil.removeChar(linePart, CharPool.TAB);
+			linePart = StringUtil.replace(
+				linePart, CharPool.NEW_LINE, StringPool.SPACE);
+
+			int z = linePart.lastIndexOf(CharPool.SPACE);
+
+			linePart = linePart.substring(0, z);
+
+			while (true) {
+				z = linePart.lastIndexOf(CharPool.SPACE, z - 1);
+
+				_returnType = linePart.substring(z + 1);
+
+				if (_javaSourceProcessor.getLevel(_returnType, "<", ">") == 0) {
+					break;
+				}
+			}
+
+			if (_returnType.equals("void")) {
+				_returnType = StringPool.BLANK;
+			}
+		}
+
+		x = y;
 
 		String parameters = StringPool.BLANK;
 
@@ -380,6 +415,7 @@ public class JavaTerm {
 	private String _name;
 	private List<String> _parameterNames;
 	private List<String> _parameterTypes;
+	private String _returnType;
 	private int _type;
 
 }

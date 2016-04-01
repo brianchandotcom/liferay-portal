@@ -14,8 +14,8 @@ AUI.add(
 						valueFn: '_valueContainer'
 					},
 
-					evaluation: {
-						value: null
+					dataProviderURL: {
+						value: ''
 					},
 
 					portletNamespace: {

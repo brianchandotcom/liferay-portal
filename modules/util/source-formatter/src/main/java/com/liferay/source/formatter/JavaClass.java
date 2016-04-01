@@ -113,6 +113,8 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
+			_formatReturnStatements(javaTerm);
+
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
@@ -1470,6 +1472,46 @@ public class JavaClass {
 		}
 	}
 
+	private void _formatReturnStatements(JavaTerm javaTerm) {
+		String javaTermContent = javaTerm.getContent();
+
+		Matcher matcher = _returnPattern.matcher(javaTermContent);
+
+		while (matcher.find()) {
+			String returnStatement = matcher.group();
+
+			if (returnStatement.contains(" {\n") ||
+				(!returnStatement.contains("|\n") &&
+				 !returnStatement.contains("&\n"))) {
+
+				continue;
+			}
+
+			String tabs = matcher.group(1);
+
+			StringBundler sb = new StringBundler(11);
+
+			sb.append(javaTermContent.substring(0, matcher.end(1)));
+			sb.append("if (");
+			sb.append(matcher.group(2));
+			sb.append(") {\n\n");
+			sb.append(tabs);
+			sb.append("\treturn true;\n");
+			sb.append(tabs);
+			sb.append("}\n\n");
+			sb.append(tabs);
+			sb.append("return false;\n");
+			sb.append(javaTermContent.substring(matcher.end()));
+
+			String newJavaTermContent = sb.toString();
+
+			_classContent = _classContent.replace(
+				javaTermContent, newJavaTermContent);
+
+			return;
+		}
+	}
+
 	private static final String _ACCESS_MODIFIER_PRIVATE = "private";
 
 	private static final String _ACCESS_MODIFIER_PROTECTED = "protected";
@@ -1514,5 +1556,7 @@ public class JavaClass {
 	private final String _name;
 	private final JavaClass _outerClass;
 	private String _packagePath;
+	private Pattern _returnPattern = Pattern.compile(
+		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 
 }

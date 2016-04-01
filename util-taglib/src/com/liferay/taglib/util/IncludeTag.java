@@ -378,18 +378,6 @@ public class IncludeTag extends AttributesTagSupport {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
-	protected boolean isPortalContextPath(String contextPath) {
-		String portalContext = PortalUtil.getPathContext();
-
-		if (contextPath.equals(StringPool.SLASH) ||
-			Validator.equals(portalContext, contextPath)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isPortalPage(String page) {
 		if (page.startsWith("/html/taglib/") &&
 			(page.endsWith("/end.jsp") || page.endsWith("/page.jsp") ||
@@ -424,8 +412,16 @@ public class IncludeTag extends AttributesTagSupport {
 		sb.append(contextPath);
 		sb.append(".");
 
+		String portalContext = PortalUtil.getPathContext();
+
+		boolean isPortalContextPath = true;
+
+		if (!Validator.equals(portalContext, contextPath)) {
+			isPortalContextPath = false;
+		}
+
 		if (isPortalPage(page)) {
-			if (isPortalContextPath(contextPath)) {
+			if (isPortalContextPath) {
 				return;
 			}
 			else {
@@ -434,7 +430,7 @@ public class IncludeTag extends AttributesTagSupport {
 				sb.append("content directly where the taglib is invoked.");
 			}
 		}
-		else if (isPortalContextPath(contextPath)) {
+		else if (isPortalContextPath) {
 			Class<?> clazz = getClass();
 
 			if (clazz.equals(IncludeTag.class)) {

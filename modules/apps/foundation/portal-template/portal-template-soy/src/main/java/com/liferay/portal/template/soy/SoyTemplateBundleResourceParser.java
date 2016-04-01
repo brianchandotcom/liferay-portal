@@ -41,7 +41,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(
 	immediate = true,
-	property = {"lange.type=" + TemplateConstants.LANG_TYPE_SOY},
+	property = {"lang.type=" + TemplateConstants.LANG_TYPE_SOY},
 	service = TemplateResourceParser.class
 )
 public class SoyTemplateBundleResourceParser extends URLResourceParser {

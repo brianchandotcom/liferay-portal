@@ -1311,7 +1311,32 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 	}
 
+	protected void configureConfigurationDefault(Project project) {
+		final Configuration defaultConfiguration = GradleUtil.getConfiguration(
+			project, Dependency.DEFAULT_CONFIGURATION);
+
+		Configuration providedConfiguration = GradleUtil.getConfiguration(
+			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+
+		DependencySet dependencySet = providedConfiguration.getDependencies();
+
+		dependencySet.withType(
+			ProjectDependency.class,
+			new Action<ProjectDependency>() {
+
+				@Override
+				public void execute(ProjectDependency projectDependency) {
+					defaultConfiguration.exclude(
+						Collections.singletonMap(
+							"module", projectDependency.getName()));
+				}
+
+			});
+	}
+
 	protected void configureConfigurations(Project project) {
+		configureConfigurationDefault(project);
+
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":apps:") ||

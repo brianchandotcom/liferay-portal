@@ -1376,6 +1376,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		Gradle gradle = project.getGradle();
 
+		StartParameter startParameter = gradle.getStartParameter();
+
+		List<String> taskNames = startParameter.getTaskNames();
+
 		File gitRepoDir = getRootDir(project, ".gitrepo");
 		final File portalRootDir = getRootDir(
 			project.getRootProject(), "portal-impl");
@@ -1435,10 +1439,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				portalRootDir, recordArtifactTask, testProject);
 			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 			configureTaskProcessResources(buildChangeLogTask);
-
-			StartParameter startParameter = gradle.getStartParameter();
-
-			List<String> taskNames = startParameter.getTaskNames();
 
 			if (taskNames.contains(LiferayJavaPlugin.DEPLOY_TASK_NAME)) {
 				configureTaskDeploy(recordArtifactTask);
@@ -1528,6 +1528,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+
+		if (taskNames.contains(EclipsePlugin.getECLIPSE_TASK_NAME()) ||
+			taskNames.contains("idea")) {
+
+			forceProjectDependenciesEvaluation(project);
+		}
 
 		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
 
@@ -2298,6 +2304,41 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		String s = GradleUtil.toString(object);
 
 		return s.replaceAll("[\\Q\\{}()[]*+?.|^$\\E]", "\\\\$0");
+	}
+
+	protected void forceProjectDependenciesEvaluation(Project project) {
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
+
+		final ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		EclipseModel eclipseModel = GradleUtil.getExtension(
+			project, EclipseModel.class);
+
+		EclipseClasspath eclipseClasspath = eclipseModel.getClasspath();
+
+		for (Configuration configuration :
+				eclipseClasspath.getPlusConfigurations()) {
+
+			DependencySet dependencySet = configuration.getAllDependencies();
+
+			dependencySet.withType(
+				ProjectDependency.class,
+				new Action<ProjectDependency>() {
+
+					@Override
+					public void execute(ProjectDependency projectDependency) {
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						projectConfigurer.configure(
+							(ProjectInternal)dependencyProject);
+					}
+
+				});
+		}
 	}
 
 	protected String getArchivesBaseName(Project project) {

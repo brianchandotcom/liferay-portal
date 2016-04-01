@@ -1473,6 +1473,12 @@ public class JavaClass {
 	}
 
 	private void _formatReturnStatements(JavaTerm javaTerm) {
+		String returnType = javaTerm.getReturnType();
+
+		if (!returnType.equals("boolean")) {
+			return;
+		}
+
 		String javaTermContent = javaTerm.getContent();
 
 		Matcher matcher = _returnPattern.matcher(javaTermContent);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.xml;
+package com.liferay.xml.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -34,7 +34,7 @@ import org.xml.sax.XMLReader;
 /**
  * @author Brian Wing Shun Chan
  * @author Alan Zimmerman
- * @see com.liferay.xml.util.Dom4jUtil
+ * @see com.liferay.util.xml.Dom4jUtil
  */
 public class Dom4jUtil {
 

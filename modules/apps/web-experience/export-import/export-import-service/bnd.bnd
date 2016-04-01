@@ -16,4 +16,3 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Liferay-Require-SchemaVersion: 1.0.0
--liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/xml/DocUtil.class

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.xml;
+package com.liferay.xml.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
- * @see com.liferay.xml.util.DocUtil
+ * @see com.liferay.util.xml.DocUtil
  */
 public class DocUtil {
 

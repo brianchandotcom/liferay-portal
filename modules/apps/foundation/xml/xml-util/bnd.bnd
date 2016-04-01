@@ -1,0 +1,6 @@
+Bundle-Name: Liferay XML Utilities
+Bundle-SymbolicName: com.liferay.xml.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.xml.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

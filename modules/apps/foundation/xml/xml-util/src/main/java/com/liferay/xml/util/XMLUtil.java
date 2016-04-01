@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.xml;
+package com.liferay.xml.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
@@ -25,7 +25,7 @@ import java.io.IOException;
 
 /**
  * @author Leonardo Barros
- * @see com.liferay.xml.util.XMLUtil
+ * @see com.liferay.util.xml.XMLUtil
  */
 public class XMLUtil {
 

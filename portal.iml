@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.bnd" />
+      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/modules" />
+      <excludeFolder url="file://$MODULE_DIR$/nbproject" />
+      <excludeFolder url="file://$MODULE_DIR$/portal-client" />
+      <excludeFolder url="file://$MODULE_DIR$/portal-impl" />
+      <excludeFolder url="file://$MODULE_DIR$/portal-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/portal-test" />
+      <excludeFolder url="file://$MODULE_DIR$/portal-test-integration" />
+      <excludeFolder url="file://$MODULE_DIR$/portal-web" />
+      <excludeFolder url="file://$MODULE_DIR$/support-resin" />
+      <excludeFolder url="file://$MODULE_DIR$/support-tomcat" />
+      <excludeFolder url="file://$MODULE_DIR$/support-websphere" />
+      <excludeFolder url="file://$MODULE_DIR$/util-bridges" />
+      <excludeFolder url="file://$MODULE_DIR$/util-java" />
+      <excludeFolder url="file://$MODULE_DIR$/util-slf4j" />
+      <excludeFolder url="file://$MODULE_DIR$/util-taglib" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

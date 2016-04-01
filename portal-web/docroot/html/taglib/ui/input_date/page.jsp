@@ -161,7 +161,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 						}
 					},
 					popover: {
-						zIndex: Liferay.zIndex.TOOLTIP
+						zIndex: Liferay.zIndex.OVERLAY
 					},
 					trigger: '#<%= nameId %>'
 				}

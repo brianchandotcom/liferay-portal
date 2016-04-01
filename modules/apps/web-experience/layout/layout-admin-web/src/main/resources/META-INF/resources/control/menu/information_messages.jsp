@@ -150,7 +150,7 @@ data.put("qa-id", "info");
 			trigger: trigger,
 			visible: false,
 			width: 300,
-			zIndex: Liferay.zIndex.TOOLTIP
+			zIndex: Liferay.zIndex.OVERLAY
 		}
 	).render();
 </aui:script>

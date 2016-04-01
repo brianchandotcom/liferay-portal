@@ -127,23 +127,25 @@ data.put("qa-id", "info");
 <aui:script position="auto" use="aui-popover,event-outside">
 	var trigger = A.one('#<%= portletNamespace %>infoButton');
 
-	var popOver = new A.Popover(
+	var DOC = A.getDoc();
+
+	new A.Popover(
 		{
 			align: {
 					node: trigger,
-					points:[A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC]
+					points: [A.WidgetPositionAlign.TC, A.WidgetPositionAlign.BC]
 				},
 			bodyContent: A.one('#<%= portletNamespace %>infoContainer'),
 			constrain: true,
 			hideOn: [
 				{
-					node: A.one('document'),
 					eventName: 'key',
-					keyCode: 'esc'
+					keyCode: 'esc',
+					node: DOC
 				},
 				{
-					node: A.one('document'),
-					eventName: 'clickoutside'
+					eventName: 'clickoutside',
+					node: DOC
 				}
 			],
 			position: 'bottom',

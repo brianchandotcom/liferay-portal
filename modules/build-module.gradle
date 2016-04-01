@@ -1,20 +1,2 @@
-import org.gradle.execution.ProjectConfigurer
-
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"
-
-List<String> taskNames = gradle.startParameter.taskNames
-
-if (("eclipse" in taskNames) || ("idea" in taskNames)) {
-	ProjectConfigurer projectConfigurer = gradle.services.get(ProjectConfigurer.class)
-
-	eclipse.classpath.plusConfigurations.each {
-		Configuration configuration ->
-
-		configuration.allDependencies.withType(ProjectDependency) {
-			ProjectDependency projectDependency ->
-
-			projectConfigurer.configure projectDependency.dependencyProject
-		}
-	}
-}

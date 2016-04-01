@@ -12,9 +12,9 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ServiceWrapper.class
 )
-public class _CLASS_NAME_ extends _SERVICE_SHORT_ {
+public class _CLASS_ extends _SERVICE_SHORT_ {
 
-	public _CLASS_NAME_() {
+	public _CLASS_() {
 		super(null);
 	}
 

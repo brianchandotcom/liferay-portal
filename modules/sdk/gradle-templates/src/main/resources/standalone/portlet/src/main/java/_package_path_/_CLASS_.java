@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class _CLASS_NAME_ extends GenericPortlet {
+public class _CLASS_ extends GenericPortlet {
 
 	@Override
 	protected void doView(

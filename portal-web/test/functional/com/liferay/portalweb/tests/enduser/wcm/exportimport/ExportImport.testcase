@@ -540,6 +540,59 @@
 		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="ExportImportPrivatePage" priority="5">
+		<execute macro="Page#add">
+			<var name="pageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Export" />
+		</execute>
+
+		<execute macro="LAR#exportSiteCP">
+			<var name="privateLayout" value="true" />
+		</execute>
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="DownloadTempFile" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="privateLayout" value="true" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Private Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
 	<command name="ExportImportSampleLARPortlet" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />

@@ -323,11 +323,15 @@ public class CustomJspBagRegistryUtil {
 					verifyCustomJsps(contextId, customJspBag);
 				}
 				catch (DuplicateCustomJspException dcje) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(dcje.getMessage(), dcje);
+					}
+
+					registry.ungetService(serviceReference);
+
 					return null;
 				}
 			}
-
-			_customJspBagsMap.put(serviceReference, customJspBag);
 
 			String contextName = GetterUtil.getString(
 				serviceReference.getProperty("context.name"));
@@ -336,8 +340,16 @@ public class CustomJspBagRegistryUtil {
 				initCustomJspBag(contextId, contextName, customJspBag);
 			}
 			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e.getMessage(), e);
+				}
+
+				registry.ungetService(serviceReference);
+
 				return null;
 			}
+
+			_customJspBagsMap.put(serviceReference, customJspBag);
 
 			return customJspBag;
 		}

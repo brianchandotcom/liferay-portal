@@ -285,7 +285,7 @@
 	</command>
 
 	<command name="viewUserSearchResultPG">
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="${pageName}" />
 	</command>
 </definition>

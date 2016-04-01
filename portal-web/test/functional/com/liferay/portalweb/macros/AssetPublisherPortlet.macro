@@ -660,7 +660,7 @@
 	<command name="viewConfigureAPDisplayTemplateFullContentBookmarksPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+		<execute function="Click" locator1="Icon#SHARE" />
 
 		<execute function="AssertElementNotPresent" locator1="Link#READ_MORE" />
 		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
@@ -961,6 +961,8 @@
 		<var name="key_siteScope" value="${siteName1}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="AssertClick" locator1="AP#ADD_ASSET_SCOPED" value1="Add Content (Select Scope and Type)" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

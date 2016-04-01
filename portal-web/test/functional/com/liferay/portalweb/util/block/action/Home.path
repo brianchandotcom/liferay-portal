@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_NAME_HEADER</td>
+	<td>//div[@id='heading']//div[@class='site-name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME_LOGO</td>
 	<td>//h1[@class='site-title']/a/img</td>
 	<td></td>

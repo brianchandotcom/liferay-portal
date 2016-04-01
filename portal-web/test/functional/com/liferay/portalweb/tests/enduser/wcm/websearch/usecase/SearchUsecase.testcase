@@ -861,7 +861,7 @@
 
 		<execute macro="Search#viewUserSearchResultPG">
 			<var name="pageName" value="Welcome" />
-			<var name="siteName" value="Test Test" />
+			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 </definition>

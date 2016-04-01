@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ASSET_SCOPED</td>
+	<td>//a[contains(@id,'add-content-select-scope')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ASSET_TOPPER_TYPE</td>
 	<td>//a[contains(@id,'AssetPublisher')]/span[contains(.,'${key_selectedAsset}')]</td>
 	<td></td>

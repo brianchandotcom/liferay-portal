@@ -454,7 +454,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								List<AssetVocabulary> assetVocabularies = AssetVocabularyLocalServiceUtil.getGroupVocabularies(scopeGroupId, false);
 
 								if (!assetVocabularies.isEmpty()) {
-								%>
+							%>
 
 									<optgroup label="<liferay-ui:message key="vocabularies" />">
 
@@ -471,7 +471,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 									</optgroup>
 
-								<%
+							<%
 								}
 							}
 							%>

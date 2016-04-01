@@ -275,15 +275,15 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																				if (ArrayUtil.isNotEmpty(childrenControls)) {
 																					request.setAttribute("render_controls.jsp-controls", childrenControls);
-																				%>
+																		%>
 
-																				<aui:field-wrapper label="content-metadata">
-																					<ul class="lfr-tree list-unstyled">
-																						<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
-																					</ul>
-																				</aui:field-wrapper>
+																					<aui:field-wrapper label="content-metadata">
+																						<ul class="lfr-tree list-unstyled">
+																							<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
+																						</ul>
+																					</aui:field-wrapper>
 
-																				<%
+																		<%
 																				}
 																			}
 																		}

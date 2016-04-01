@@ -27,7 +27,7 @@ List<PanelCategory> childPanelCategories = (List<PanelCategory>)request.getAttri
 		for (PanelCategory childPanelCategory : childPanelCategories) {
 		%>
 
-				<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" showOpen="<%= childPanelCategories.size() == 1 %>" />
+			<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" showOpen="<%= childPanelCategories.size() == 1 %>" />
 
 		<%
 		}

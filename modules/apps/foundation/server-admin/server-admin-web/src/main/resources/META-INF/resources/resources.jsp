@@ -65,30 +65,30 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			<br />
 
 			<table class="lfr-table memory-status-table">
-			<tr>
-				<td>
-					<h4 class="pull-right"><liferay-ui:message key="used-memory" /></h4>
-				</td>
-				<td>
-					<span class="text-muted"><%= numberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" /></span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h4 class="pull-right"><liferay-ui:message key="total-memory" /></h4>
-				</td>
-				<td>
-					<span class="text-muted"><%= numberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" /></span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h4 class="pull-right"><liferay-ui:message key="maximum-memory" /></h4>
-				</td>
-				<td>
-					<span class="text-muted"><%= numberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" /></span>
-				</td>
-			</tr>
+				<tr>
+					<td>
+						<h4 class="pull-right"><liferay-ui:message key="used-memory" /></h4>
+					</td>
+					<td>
+						<span class="text-muted"><%= numberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" /></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h4 class="pull-right"><liferay-ui:message key="total-memory" /></h4>
+					</td>
+					<td>
+						<span class="text-muted"><%= numberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" /></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h4 class="pull-right"><liferay-ui:message key="maximum-memory" /></h4>
+					</td>
+					<td>
+						<span class="text-muted"><%= numberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" /></span>
+					</td>
+				</tr>
 			</table>
 
 			<br />
@@ -204,7 +204,6 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							%>
 
 							<aui:button cssClass="save-server-button" data-blocking='<%= ParamUtil.getBoolean(request, "blocking") %>' data-cmd="reindex" data-timeout="<%= (timeout == 0) ? StringPool.BLANK : timeout %>" value="execute" />
-
 						</c:when>
 						<c:otherwise>
 							<%= backgroundTaskDisplay.renderDisplayTemplate() %>

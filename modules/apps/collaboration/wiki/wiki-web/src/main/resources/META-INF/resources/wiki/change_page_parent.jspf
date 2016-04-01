@@ -19,30 +19,30 @@
 </div>
 
 <%
-	String parentText = StringPool.BLANK;
+String parentText = StringPool.BLANK;
 
-	WikiPage parentPage = wikiPage.getViewableParentPage();
+WikiPage parentPage = wikiPage.getViewableParentPage();
 
-	if (parentPage == null) {
-		parentText = StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, "none") + StringPool.CLOSE_PARENTHESIS;
-	}
-	else {
-		parentText = parentPage.getTitle();
+if (parentPage == null) {
+	parentText = StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, "none") + StringPool.CLOSE_PARENTHESIS;
+}
+else {
+	parentText = parentPage.getTitle();
+
+	parentPage = parentPage.getViewableParentPage();
+
+	while (parentPage != null) {
+		parentText = parentPage.getTitle() + " &raquo; " + parentText;
 
 		parentPage = parentPage.getViewableParentPage();
-
-		while (parentPage != null) {
-			parentText = parentPage.getTitle() + " &raquo; " + parentText;
-
-			parentPage = parentPage.getViewableParentPage();
-		}
 	}
+}
 
-	List<WikiPage> childPages = WikiPageLocalServiceUtil.getChildren(node.getNodeId(), true, StringPool.BLANK);
+List<WikiPage> childPages = WikiPageLocalServiceUtil.getChildren(node.getNodeId(), true, StringPool.BLANK);
 
-	childPages = ListUtil.sort(childPages);
+childPages = ListUtil.sort(childPages);
 
-	childPages.remove(wikiPage);
+childPages.remove(wikiPage);
 %>
 
 <aui:fieldset>

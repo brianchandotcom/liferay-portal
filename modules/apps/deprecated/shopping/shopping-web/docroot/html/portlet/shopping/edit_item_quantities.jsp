@@ -53,9 +53,9 @@ for (int i = values.size() - 1; i >= 0; i--) {
 			total="<%= rowsCount %>"
 		>
 
-		<liferay-ui:search-container-results
-			results="<%= _getPagePermutations(values, repeats, searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
+			<liferay-ui:search-container-results
+				results="<%= _getPagePermutations(values, repeats, searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+			/>
 
 			<liferay-ui:search-container-row
 				className="String[]"

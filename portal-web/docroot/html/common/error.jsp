@@ -43,39 +43,35 @@ String message = exception.getMessage();
 %>
 
 <center>
+	<br />
 
-<br />
+	<table border="0" cellpadding="0" cellspacing="0" width="95%">
+		<tr>
+			<td>
+				<font color="#FF0000" face="Verdana, Tahoma, Arial" size="2">
+					<c:choose>
+						<c:when test="<%= exception instanceof PrincipalException %>">
+							<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="an-unexpected-system-error-occurred" />
+						</c:otherwise>
+					</c:choose>
 
-<table border="0" cellpadding="0" cellspacing="0" width="95%">
-<tr>
-	<td>
-		<font color="#FF0000" face="Verdana, Tahoma, Arial" size="2">
+					<br />
+				</font>
 
-		<c:choose>
-			<c:when test="<%= exception instanceof PrincipalException %>">
-				<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="an-unexpected-system-error-occurred" />
-			</c:otherwise>
-		</c:choose>
+				<c:if test="<%= message != null %>">
+					<br />
 
-		<br />
+					<%= HtmlUtil.escape(message) %>
+				</c:if>
 
-		</font>
+			</td>
+		</tr>
+	</table>
 
-		<c:if test="<%= message != null %>">
-			<br />
-
-			<%= HtmlUtil.escape(message) %>
-		</c:if>
-
-	</td>
-</tr>
-</table>
-
-<br />
-
+	<br />
 </center>
 
 <%!

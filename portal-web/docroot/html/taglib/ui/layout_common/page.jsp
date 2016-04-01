@@ -28,7 +28,7 @@ boolean includeWebServerDisplayNode = GetterUtil.getBoolean(request.getAttribute
 		if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), portletId)) {
 	%>
 
-		<liferay-portlet:runtime portletName="<%= portletId %>" />
+			<liferay-portlet:runtime portletName="<%= portletId %>" />
 
 	<%
 		}

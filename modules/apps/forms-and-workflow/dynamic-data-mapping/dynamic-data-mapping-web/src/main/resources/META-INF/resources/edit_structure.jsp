@@ -258,15 +258,15 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 										<aui:field-wrapper>
 											<aui:select disabled="<%= structure != null %>" name="storageType">
 
-											<%
-											for (String storageType : ddmDisplayContext.getStorageTypes()) {
-											%>
+												<%
+												for (String storageType : ddmDisplayContext.getStorageTypes()) {
+												%>
 
-												<aui:option label="<%= storageType %>" value="<%= storageType %>" />
+													<aui:option label="<%= storageType %>" value="<%= storageType %>" />
 
-											<%
-											}
-											%>
+												<%
+												}
+												%>
 
 											</aui:select>
 										</aui:field-wrapper>
@@ -278,9 +278,9 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 							</c:choose>
 						</aui:row>
 
-					<c:if test="<%= !ddmDisplayContext.autogenerateStructureKey() %>">
-						<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
-					</c:if>
+						<c:if test="<%= !ddmDisplayContext.autogenerateStructureKey() %>">
+							<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
+						</c:if>
 
 						<aui:input name="description" />
 

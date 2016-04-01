@@ -44,7 +44,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 		/>
 
 		<%
-			portletURL.setParameter("tabs3", "current-and-previous");
+		portletURL.setParameter("tabs3", "current-and-previous");
 		%>
 
 		<aui:nav-item

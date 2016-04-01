@@ -47,19 +47,19 @@ for (int i = 0; i < organizations.size(); i++) {
 
 			<ul class="property-list">
 
-			<%
-			for (Address address : organizationAddresses) {
-			%>
+				<%
+				for (Address address : organizationAddresses) {
+				%>
 
-				<li class="<%= address.isPrimary() ? "icon-star" : StringPool.BLANK %>">
-					<%@ include file="/common/addresses_address_init.jspf" %>
+					<li class="<%= address.isPrimary() ? "icon-star" : StringPool.BLANK %>">
+						<%@ include file="/common/addresses_address_init.jspf" %>
 
-					<%@ include file="/common/addresses_address.jspf" %>
-				</li>
+						<%@ include file="/common/addresses_address.jspf" %>
+					</li>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
 			</ul>
 		</div>

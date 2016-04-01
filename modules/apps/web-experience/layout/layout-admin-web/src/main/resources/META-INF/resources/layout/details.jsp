@@ -174,7 +174,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			<aui:option disabled="<%= selLayout.isFirstParent() && !layoutTypeController.isFirstPageable() %>" label='<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>' selected="<%= selLayout.getType().equals(type) %>" value="<%= type %>" />
 
 		<%
-			}
+		}
 		%>
 
 	</aui:select>

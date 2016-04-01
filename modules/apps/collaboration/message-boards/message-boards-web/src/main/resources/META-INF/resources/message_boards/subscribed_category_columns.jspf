@@ -16,13 +16,13 @@
 
 <liferay-ui:search-container-column-text name="category">
 
-<%
-StringBundler sb = new StringBundler();
+	<%
+	StringBundler sb = new StringBundler();
 
-_buildCategoryBreadcrumb(request, themeDisplay, curCategory, sb);
-%>
+	_buildCategoryBreadcrumb(request, themeDisplay, curCategory, sb);
+	%>
 
-<%= sb.toString() %>
+	<%= sb.toString() %>
 
 </liferay-ui:search-container-column-text>
 

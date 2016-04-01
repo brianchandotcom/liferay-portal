@@ -89,25 +89,25 @@ String keywords = ParamUtil.getString(request, "keywords");
 		searchContainer.setResults(results);
 	%>
 
-	<div id="<portlet:namespace />imageGalleryAssetInfo">
+		<div id="<portlet:namespace />imageGalleryAssetInfo">
 			<div class="form-search">
 				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-images") %>' />
 			</div>
 
-		<br /><br />
+			<br /><br />
 
-		<%
-		Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+			<%
+			Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
-		long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
+			long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
-		request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
-		request.setAttribute("view.jsp-mediaGalleryMimeTypes", dlPortletInstanceSettings.getMimeTypes());
-		request.setAttribute("view.jsp-searchContainer", searchContainer);
-		%>
+			request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", dlPortletInstanceSettings.getMimeTypes());
+			request.setAttribute("view.jsp-searchContainer", searchContainer);
+			%>
 
-		<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
-	</div>
+			<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
+		</div>
 
 	<%
 	}

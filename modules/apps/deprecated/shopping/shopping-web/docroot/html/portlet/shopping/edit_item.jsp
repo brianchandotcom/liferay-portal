@@ -204,60 +204,60 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 
 			<table class="lfr-table">
 
-			<%
-			for (int i = 0; i < fieldsCount; i++) {
-				int curFieldId = i;
+				<%
+				for (int i = 0; i < fieldsCount; i++) {
+					int curFieldId = i;
 
-				if ((fieldId > -1) && (i >= fieldId)) {
-					curFieldId++;
-				}
-
-				String fieldName = ParamUtil.getString(request, "fieldName" + curFieldId);
-				String fieldNameParam = request.getParameter("fieldName" + curFieldId);
-				if ((fieldNameParam == null) || fieldNameParam.equals(StringPool.NULL)) {
-					if (itemFields[curFieldId] != null) {
-						fieldName = itemFields[curFieldId].getName();
+					if ((fieldId > -1) && (i >= fieldId)) {
+						curFieldId++;
 					}
-				}
 
-				String[] fieldValues = StringUtil.split(ParamUtil.getString(request, "fieldValues" + curFieldId));
-				String fieldValuesParam = request.getParameter("fieldValues" + curFieldId);
-				if ((fieldValuesParam == null) || fieldValuesParam.equals(StringPool.NULL)) {
-					if (itemFields[curFieldId] != null) {
-						fieldValues = itemFields[curFieldId].getValuesArray();
+					String fieldName = ParamUtil.getString(request, "fieldName" + curFieldId);
+					String fieldNameParam = request.getParameter("fieldName" + curFieldId);
+					if ((fieldNameParam == null) || fieldNameParam.equals(StringPool.NULL)) {
+						if (itemFields[curFieldId] != null) {
+							fieldName = itemFields[curFieldId].getName();
+						}
 					}
-				}
 
-				String fieldDescription = ParamUtil.getString(request, "fieldDescription" + curFieldId);
-				String fieldDescriptionParam = request.getParameter("fieldDescription" + curFieldId);
-				if ((fieldDescriptionParam == null) || fieldDescriptionParam.equals(StringPool.NULL)) {
-					if (itemFields[curFieldId] != null) {
-						fieldDescription = itemFields[curFieldId].getDescription();
+					String[] fieldValues = StringUtil.split(ParamUtil.getString(request, "fieldValues" + curFieldId));
+					String fieldValuesParam = request.getParameter("fieldValues" + curFieldId);
+					if ((fieldValuesParam == null) || fieldValuesParam.equals(StringPool.NULL)) {
+						if (itemFields[curFieldId] != null) {
+							fieldValues = itemFields[curFieldId].getValuesArray();
+						}
 					}
-				}
-			%>
 
-				<tr>
-					<td>
-						<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="name" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name='<%= "fieldName" + i %>' style="width: 100px;" type="text" value="<%= fieldName %>" />
-					</td>
-					<td>
-						<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="values" name='<%= "fieldValues" + i %>' style="width: 100px;" type="text" value='<%= StringUtil.merge(fieldValues, ", ") %>' />
-					</td>
-					<td>
-						<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="description" name='<%= "fieldDescription" + i %>' style="width: 150px;" type="text" value="<%= fieldDescription %>" />
-					</td>
+					String fieldDescription = ParamUtil.getString(request, "fieldDescription" + curFieldId);
+					String fieldDescriptionParam = request.getParameter("fieldDescription" + curFieldId);
+					if ((fieldDescriptionParam == null) || fieldDescriptionParam.equals(StringPool.NULL)) {
+						if (itemFields[curFieldId] != null) {
+							fieldDescription = itemFields[curFieldId].getDescription();
+						}
+					}
+				%>
 
-					<c:if test="<%= fieldsCount > 0 %>">
+					<tr>
 						<td>
-							<aui:button onClick='<%= renderResponse.getNamespace() + "deleteField(" + i + ");" %>' value="delete" />
+							<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="name" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name='<%= "fieldName" + i %>' style="width: 100px;" type="text" value="<%= fieldName %>" />
 						</td>
-					</c:if>
-				</tr>
+						<td>
+							<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="values" name='<%= "fieldValues" + i %>' style="width: 100px;" type="text" value='<%= StringUtil.merge(fieldValues, ", ") %>' />
+						</td>
+						<td>
+							<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="description" name='<%= "fieldDescription" + i %>' style="width: 150px;" type="text" value="<%= fieldDescription %>" />
+						</td>
 
-			<%
-			}
-			%>
+						<c:if test="<%= fieldsCount > 0 %>">
+							<td>
+								<aui:button onClick='<%= renderResponse.getNamespace() + "deleteField(" + i + ");" %>' value="delete" />
+							</td>
+						</c:if>
+					</tr>
+
+				<%
+				}
+				%>
 
 			</table>
 
@@ -379,46 +379,46 @@ renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") 
 					<tr>
 						<td>
 							<table class="lfr-table">
-							<tr>
-								<td>
-									<aui:input field="minQuantity" fieldParam='<%= "minQuantity" + i %>' ignoreRequestValue="<%= true %>" label="min-qty" model="<%= ShoppingItemPrice.class %>" name="minQuantity" value="<%= String.valueOf(minQuantity) %>" />
-								</td>
-								<td>
-									<aui:input field="maxQuantity" fieldParam='<%= "maxQuantity" + i %>' ignoreRequestValue="<%= true %>" label="max-qty" model="<%= ShoppingItemPrice.class %>" name="maxQuantity" value="<%= String.valueOf(maxQuantity) %>" />
-								</td>
-								<td>
-									<aui:input field="price" fieldParam='<%= "price" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
-								</td>
-								<td>
-									<aui:input field="discount" fieldParam='<%= "discount" + i %>' ignoreRequestValue="<%= true %>" label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= String.valueOf(discount * 100) %>" />
-								</td>
-								<td>
-									<aui:input ignoreRequestValue="<%= true %>" label="taxable" name='<%= "taxable" + i %>' param='<%= "taxable" + i %>' type="checkbox" value="<%= taxable %>" />
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<aui:input field="minQuantity" fieldParam='<%= "minQuantity" + i %>' ignoreRequestValue="<%= true %>" label="min-qty" model="<%= ShoppingItemPrice.class %>" name="minQuantity" value="<%= String.valueOf(minQuantity) %>" />
+									</td>
+									<td>
+										<aui:input field="maxQuantity" fieldParam='<%= "maxQuantity" + i %>' ignoreRequestValue="<%= true %>" label="max-qty" model="<%= ShoppingItemPrice.class %>" name="maxQuantity" value="<%= String.valueOf(maxQuantity) %>" />
+									</td>
+									<td>
+										<aui:input field="price" fieldParam='<%= "price" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
+									</td>
+									<td>
+										<aui:input field="discount" fieldParam='<%= "discount" + i %>' ignoreRequestValue="<%= true %>" label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= String.valueOf(discount * 100) %>" />
+									</td>
+									<td>
+										<aui:input ignoreRequestValue="<%= true %>" label="taxable" name='<%= "taxable" + i %>' param='<%= "taxable" + i %>' type="checkbox" value="<%= taxable %>" />
+									</td>
+								</tr>
 							</table>
 
 							<table class="lfr-table">
-							<tr>
-								<td>
-									<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
-								</td>
-								<td>
-									<aui:input ignoreRequestValue="<%= true %>" label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />
-								</td>
-								<td>
-									<aui:input ignoreRequestValue="<%= true %>" label="active" name='<%= "active" + i %>' type="checkbox" value="<%= active %>" />
-								</td>
-								<td>
-									<aui:input checked="<%= defaultPrice %>" ignoreRequestValue="<%= true %>" label="default" name="defaultPrice" onClick='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "active" + i + ".checked = true;" %>' type="radio" value="<% i %>" />
-								</td>
-
-								<c:if test="<%= pricesCount > 1 %>">
+								<tr>
 									<td>
-										<aui:button onClick='<%= renderResponse.getNamespace() + "deletePrice(" + i + ");" %>' value="delete" />
+										<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
 									</td>
-								</c:if>
-							</tr>
+									<td>
+										<aui:input ignoreRequestValue="<%= true %>" label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />
+									</td>
+									<td>
+										<aui:input ignoreRequestValue="<%= true %>" label="active" name='<%= "active" + i %>' type="checkbox" value="<%= active %>" />
+									</td>
+									<td>
+										<aui:input checked="<%= defaultPrice %>" ignoreRequestValue="<%= true %>" label="default" name="defaultPrice" onClick='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "active" + i + ".checked = true;" %>' type="radio" value="<% i %>" />
+									</td>
+
+									<c:if test="<%= pricesCount > 1 %>">
+										<td>
+											<aui:button onClick='<%= renderResponse.getNamespace() + "deletePrice(" + i + ");" %>' value="delete" />
+										</td>
+									</c:if>
+								</tr>
 							</table>
 
 							<c:if test="<%= (i + 1) < pricesCount %>">

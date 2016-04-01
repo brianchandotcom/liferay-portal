@@ -32,19 +32,19 @@ serverURL.setParameter("tabs2", tabs2);
 		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 			<aui:nav cssClass="navbar-nav">
 
-			<%
-			String[] tabs1Names = new String[] {"resources", "log-levels", "properties", "captcha", "data-migration", "file-uploads", "mail", "external-services", "script", "shutdown"};
+				<%
+				String[] tabs1Names = new String[] {"resources", "log-levels", "properties", "captcha", "data-migration", "file-uploads", "mail", "external-services", "script", "shutdown"};
 
-			for (String tabs1Name : tabs1Names) {
+				for (String tabs1Name : tabs1Names) {
 
-				serverURL.setParameter("tabs1", tabs1Name);
-			%>
+					serverURL.setParameter("tabs1", tabs1Name);
+				%>
 
-				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabs1Name %>" selected="<%= tabs1.equals(tabs1Name) %>" />
+					<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabs1Name %>" selected="<%= tabs1.equals(tabs1Name) %>" />
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
 			</aui:nav>
 		</aui:nav-bar>

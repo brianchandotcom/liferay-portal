@@ -91,49 +91,49 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 			<h4><liferay-ui:message key="credit-card" /></h4>
 
 			<table class="lfr-table">
-			<tr>
-				<th class="text-left">
-					<liferay-ui:message key="full-name" />:
-				</th>
-				<td>
-					<%= HtmlUtil.escape(order.getCcName()) %>
-				</td>
-			</tr>
-			<tr>
-				<th class="text-left">
-					<liferay-ui:message key="type" />:
-				</th>
-				<td>
-					<liferay-ui:message key='<%= "cc_" + HtmlUtil.escape(order.getCcType()) %>' />
-				</td>
-			</tr>
-			<tr>
-				<th class="text-left">
-					<liferay-ui:message key="number" />:
-				</th>
-				<td>
-					<%= CreditCard.hide(order.getCcNumber()) %>
-				</td>
-			</tr>
-			<tr>
-				<th class="text-left">
-					<liferay-ui:message key="expiration-date" />:
-				</th>
-				<td>
-					<%= CalendarUtil.getMonths(locale)[order.getCcExpMonth()] %>, <%= order.getCcExpYear() %>
-				</td>
-			</tr>
-
-			<c:if test="<%= Validator.isNotNull(order.getCcVerNumber()) %>">
 				<tr>
 					<th class="text-left">
-						<liferay-ui:message key="verification-number" />:
+						<liferay-ui:message key="full-name" />:
 					</th>
 					<td>
-						<%= HtmlUtil.escape(order.getCcVerNumber()) %>
+						<%= HtmlUtil.escape(order.getCcName()) %>
 					</td>
 				</tr>
-			</c:if>
+				<tr>
+					<th class="text-left">
+						<liferay-ui:message key="type" />:
+					</th>
+					<td>
+						<liferay-ui:message key='<%= "cc_" + HtmlUtil.escape(order.getCcType()) %>' />
+					</td>
+				</tr>
+				<tr>
+					<th class="text-left">
+						<liferay-ui:message key="number" />:
+					</th>
+					<td>
+						<%= CreditCard.hide(order.getCcNumber()) %>
+					</td>
+				</tr>
+				<tr>
+					<th class="text-left">
+						<liferay-ui:message key="expiration-date" />:
+					</th>
+					<td>
+						<%= CalendarUtil.getMonths(locale)[order.getCcExpMonth()] %>, <%= order.getCcExpYear() %>
+					</td>
+				</tr>
+
+				<c:if test="<%= Validator.isNotNull(order.getCcVerNumber()) %>">
+					<tr>
+						<th class="text-left">
+							<liferay-ui:message key="verification-number" />:
+						</th>
+						<td>
+							<%= HtmlUtil.escape(order.getCcVerNumber()) %>
+						</td>
+					</tr>
+				</c:if>
 
 			</table>
 		</div>
@@ -238,67 +238,67 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 
 	<div class="well">
 		<table class="lfr-table">
-		<tr>
-			<th class="text-left">
-				<liferay-ui:message key="subtotal" />:
-			</th>
-			<td>
-				<%= currencyFormat.format(ShoppingUtil.calculateActualSubtotal(items)) %>
-			</td>
-		</tr>
-		<tr>
-			<th class="text-left">
-				<liferay-ui:message key="tax" />:
-			</th>
-			<td>
-				<%= currencyFormat.format(ShoppingUtil.calculateTax(items, order.getBillingState())) %>
-			</td>
-		</tr>
-		<tr>
-			<th class="text-left">
-				<liferay-ui:message key="shipping" /> <%= Validator.isNotNull(altShippingName) ? "(" + altShippingName + ")" : StringPool.BLANK %>:
-			</th>
-			<td>
-				<%= currencyFormat.format(ShoppingUtil.calculateAlternativeShipping(items, altShipping)) %>
-			</td>
-		</tr>
-
-		<%
-		double insurance = ShoppingUtil.calculateInsurance(items);
-		%>
-
-		<c:if test="<%= cart.isInsure() && (insurance > 0) %>">
 			<tr>
 				<th class="text-left">
-					<liferay-ui:message key="insurance" />:
+					<liferay-ui:message key="subtotal" />:
 				</th>
 				<td>
-					<%= currencyFormat.format(insurance) %>
+					<%= currencyFormat.format(ShoppingUtil.calculateActualSubtotal(items)) %>
 				</td>
 			</tr>
-		</c:if>
-
-		<c:if test="<%= coupon != null %>">
 			<tr>
 				<th class="text-left">
-					<liferay-ui:message key="coupon-discount" />:
+					<liferay-ui:message key="tax" />:
 				</th>
 				<td>
-					<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, order.getBillingState(), coupon)) %>
-
-					<aui:a href="javascript:;" label='<%= "(" + coupon.getCouponId() + ")" %>' onClick='<%= renderResponse.getNamespace() + "viewCoupon();" %>' />
+					<%= currencyFormat.format(ShoppingUtil.calculateTax(items, order.getBillingState())) %>
 				</td>
 			</tr>
-		</c:if>
+			<tr>
+				<th class="text-left">
+					<liferay-ui:message key="shipping" /> <%= Validator.isNotNull(altShippingName) ? "(" + altShippingName + ")" : StringPool.BLANK %>:
+				</th>
+				<td>
+					<%= currencyFormat.format(ShoppingUtil.calculateAlternativeShipping(items, altShipping)) %>
+				</td>
+			</tr>
 
-		<tr>
-			<th class="text-left">
-				<liferay-ui:message key="total" />:
-			</th>
-			<td>
-			<%= currencyFormat.format(ShoppingUtil.calculateTotal(items, order.getBillingState(), coupon, altShipping, cart.isInsure())) %>
-			</td>
-		</tr>
+			<%
+			double insurance = ShoppingUtil.calculateInsurance(items);
+			%>
+
+			<c:if test="<%= cart.isInsure() && (insurance > 0) %>">
+				<tr>
+					<th class="text-left">
+						<liferay-ui:message key="insurance" />:
+					</th>
+					<td>
+						<%= currencyFormat.format(insurance) %>
+					</td>
+				</tr>
+			</c:if>
+
+			<c:if test="<%= coupon != null %>">
+				<tr>
+					<th class="text-left">
+						<liferay-ui:message key="coupon-discount" />:
+					</th>
+					<td>
+						<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, order.getBillingState(), coupon)) %>
+
+						<aui:a href="javascript:;" label='<%= "(" + coupon.getCouponId() + ")" %>' onClick='<%= renderResponse.getNamespace() + "viewCoupon();" %>' />
+					</td>
+				</tr>
+			</c:if>
+
+			<tr>
+				<th class="text-left">
+					<liferay-ui:message key="total" />:
+				</th>
+				<td>
+					<%= currencyFormat.format(ShoppingUtil.calculateTotal(items, order.getBillingState(), coupon, altShipping, cart.isInsure())) %>
+				</td>
+			</tr>
 		</table>
 	</div>
 

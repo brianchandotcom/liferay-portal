@@ -17,33 +17,30 @@
 <%@ include file="/init.jsp" %>
 
 <html dir="<liferay-ui:message key="lang.dir" />">
+	<head>
+		<meta content="no-cache" http-equiv="Cache-Control" />
+		<meta content="no-cache" http-equiv="Pragma" />
+		<meta content="0" http-equiv="Expires" />
+	</head>
 
-<head>
-	<meta content="no-cache" http-equiv="Cache-Control" />
-	<meta content="no-cache" http-equiv="Pragma" />
-	<meta content="0" http-equiv="Expires" />
-</head>
+	<body onLoad="setTimeout('document.fm.submit()', 100);">
+		<form action="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.src()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
 
-<body onLoad="setTimeout('document.fm.submit()', 100);">
+			<%
+			for (KeyValuePair hiddenVariableKVP : iFrameDisplayContext.getHiddenVariableKVPs()) {
+			%>
 
-<form action="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.src()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
+				<input name="<%= HtmlUtil.escapeAttribute(hiddenVariableKVP.getKey()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(hiddenVariableKVP.getValue()) %>" />
 
-<%
-for (KeyValuePair hiddenVariableKVP : iFrameDisplayContext.getHiddenVariableKVPs()) {
-%>
+			<%
+			}
+			%>
 
-	<input name="<%= HtmlUtil.escapeAttribute(hiddenVariableKVP.getKey()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(hiddenVariableKVP.getValue()) %>" />
+			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.userNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserName()) %>" />
 
-<%
-}
-%>
+			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.passwordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
+		</form>
 
-<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.userNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserName()) %>" />
-
-<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.passwordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
-
-</form>
-
-</body>
+	</body>
 
 </html>

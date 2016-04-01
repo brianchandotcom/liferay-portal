@@ -63,79 +63,79 @@ boolean ldapPasswordPolicyEnabled = ldapAuthConfiguration.passwordPolicyEnabled(
 
 		<div class="ldap-servers searchcontainer-content">
 			<table class="table table-bordered table-hover table-striped">
-			<thead class="table-columns">
-			<tr>
-				<th class="table-header">
-					<liferay-ui:message key="ldap-server-id" />
-				</th>
-				<th class="table-header">
-					<liferay-ui:message key="ldap-server-name" />
-				</th>
-				<th class="table-header"></th>
-			</tr>
-			</thead>
+				<thead class="table-columns">
+					<tr>
+						<th class="table-header">
+							<liferay-ui:message key="ldap-server-id" />
+						</th>
+						<th class="table-header">
+							<liferay-ui:message key="ldap-server-name" />
+						</th>
+						<th class="table-header"></th>
+					</tr>
+				</thead>
 
-			<tbody class="table-data">
+				<tbody class="table-data">
 
-			<%
-			for (LDAPServerConfiguration ldapServerConfiguration : ldapServerConfigurations) {
-				long ldapServerId = ldapServerConfiguration.ldapServerId();
+					<%
+					for (LDAPServerConfiguration ldapServerConfiguration : ldapServerConfigurations) {
+						long ldapServerId = ldapServerConfiguration.ldapServerId();
 
-				String ldapServerName = ldapServerConfiguration.serverName();
-			%>
+						String ldapServerName = ldapServerConfiguration.serverName();
+					%>
 
-				<tr data-ldapServerId="<%= ldapServerId %>">
-					<td class="table-cell">
-						<%= ldapServerId %>
-					</td>
-					<td class="table-cell">
-						<%= HtmlUtil.escape(ldapServerName) %>
-					</td>
-					<td align="right" class="table-cell">
-						<div class="control">
-							<c:if test="<%= ldapServerConfigurations.size() > 1 %>">
+						<tr data-ldapServerId="<%= ldapServerId %>">
+							<td class="table-cell">
+								<%= ldapServerId %>
+							</td>
+							<td class="table-cell">
+								<%= HtmlUtil.escape(ldapServerName) %>
+							</td>
+							<td align="right" class="table-cell">
+								<div class="control">
+									<c:if test="<%= ldapServerConfigurations.size() > 1 %>">
 
-								<liferay-ui:icon
-									iconCssClass="icon-arrow-up"
-									message="up"
-									url='<%= "javascript:" + renderResponse.getNamespace() + "raiseLDAPServerPriority(" + ldapServerId + ");" %>'
-								/>
+										<liferay-ui:icon
+											iconCssClass="icon-arrow-up"
+											message="up"
+											url='<%= "javascript:" + renderResponse.getNamespace() + "raiseLDAPServerPriority(" + ldapServerId + ");" %>'
+										/>
 
-								<liferay-ui:icon
-									iconCssClass="icon-arrow-down"
-									message="down"
-									url='<%= "javascript:" + renderResponse.getNamespace() + "lowerLDAPServerPriority(" + ldapServerId + ");" %>'
-								/>
-							</c:if>
+										<liferay-ui:icon
+											iconCssClass="icon-arrow-down"
+											message="down"
+											url='<%= "javascript:" + renderResponse.getNamespace() + "lowerLDAPServerPriority(" + ldapServerId + ");" %>'
+										/>
+									</c:if>
 
-							<portlet:renderURL var="editURL">
-								<portlet:param name="mvcRenderCommandName" value="/portal_settings/edit_ldap_server" />
-								<portlet:param name="redirect" value="<%= authenticationURL %>" />
-								<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
-							</portlet:renderURL>
+									<portlet:renderURL var="editURL">
+										<portlet:param name="mvcRenderCommandName" value="/portal_settings/edit_ldap_server" />
+										<portlet:param name="redirect" value="<%= authenticationURL %>" />
+										<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
+									</portlet:renderURL>
 
-							<liferay-ui:icon
-								iconCssClass="icon-edit"
-								message="edit"
-								url="<%= editURL %>"
-							/>
+									<liferay-ui:icon
+										iconCssClass="icon-edit"
+										message="edit"
+										url="<%= editURL %>"
+									/>
 
-							<portlet:actionURL name="/portal_settings/edit_ldap_server" var="deleteURL">
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-								<portlet:param name="redirect" value="<%= authenticationURL %>" />
-								<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
-							</portlet:actionURL>
+									<portlet:actionURL name="/portal_settings/edit_ldap_server" var="deleteURL">
+										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+										<portlet:param name="redirect" value="<%= authenticationURL %>" />
+										<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
+									</portlet:actionURL>
 
-							<liferay-ui:icon-delete url="<%= deleteURL %>" />
-						</div>
-					</td>
-				</tr>
+									<liferay-ui:icon-delete url="<%= deleteURL %>" />
+								</div>
+							</td>
+						</tr>
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-			</tbody>
+				</tbody>
 			</table>
 		</div>
 	</c:if>

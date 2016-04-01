@@ -259,7 +259,6 @@ if (Validator.isNotNull(keywords)) {
 
 							<liferay-ui:search-container-column-text name="title">
 								<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
-
 									<i class="icon-folder-open"></i>
 
 									<span class="taglib-text">

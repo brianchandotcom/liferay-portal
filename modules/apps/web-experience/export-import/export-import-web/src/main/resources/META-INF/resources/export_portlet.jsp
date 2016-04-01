@@ -353,7 +353,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 																				if (ArrayUtil.isNotEmpty(childrenControls)) {
 																					request.setAttribute("render_controls.jsp-controls", childrenControls);
-																				%>
+																			%>
 
 																					<aui:field-wrapper label="content-metadata">
 																						<ul class="lfr-tree list-unstyled">
@@ -361,7 +361,7 @@ portletURL.setParameter("portletResource", portletResource);
 																						</ul>
 																					</aui:field-wrapper>
 
-																				<%
+																			<%
 																				}
 																			}
 																			%>

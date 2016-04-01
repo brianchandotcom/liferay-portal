@@ -89,7 +89,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 			<c:if test="<%= folderId != rootFolderId %>">
 				<span class="change-search-folder">
-
 					<portlet:renderURL var="changeSearchFolderURL">
 						<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

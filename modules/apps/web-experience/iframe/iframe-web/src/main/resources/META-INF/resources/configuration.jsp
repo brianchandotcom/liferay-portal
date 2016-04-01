@@ -72,27 +72,27 @@ String htmlAttributes =
 
 					<aui:field-wrapper label="user-name">
 						<table class="lfr-table">
-						<tr>
-							<td>
-								<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--userNameField--" type="text" value="<%= iFramePortletInstanceConfiguration.userNameField() %>" />
-							</td>
-							<td>
-								<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formUserName--" type="text" value="<%= iFramePortletInstanceConfiguration.formUserName() %>" />
-							</td>
-						</tr>
+							<tr>
+								<td>
+									<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--userNameField--" type="text" value="<%= iFramePortletInstanceConfiguration.userNameField() %>" />
+								</td>
+								<td>
+									<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formUserName--" type="text" value="<%= iFramePortletInstanceConfiguration.formUserName() %>" />
+								</td>
+							</tr>
 						</table>
 					</aui:field-wrapper>
 
 					<aui:field-wrapper name="password">
 						<table class="lfr-table">
-						<tr>
-							<td>
-								<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--passwordField--" type="text" value="<%= iFramePortletInstanceConfiguration.passwordField() %>" />
-							</td>
-							<td>
-								<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formPassword--" type="text" value="<%= iFramePortletInstanceConfiguration.formPassword() %>" />
-							</td>
-						</tr>
+							<tr>
+								<td>
+									<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--passwordField--" type="text" value="<%= iFramePortletInstanceConfiguration.passwordField() %>" />
+								</td>
+								<td>
+									<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formPassword--" type="text" value="<%= iFramePortletInstanceConfiguration.formPassword() %>" />
+								</td>
+							</tr>
 						</table>
 
 						<aui:input cssClass="lfr-input-text-container" name="preferences--hiddenVariables--" type="text" value="<%= iFrameDisplayContext.getHiddenVariables() %>" />

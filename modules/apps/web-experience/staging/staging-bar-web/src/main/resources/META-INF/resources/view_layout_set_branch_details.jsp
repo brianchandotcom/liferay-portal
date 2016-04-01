@@ -43,18 +43,18 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 					boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 				%>
 
-				<portlet:actionURL name="selectLayoutSetBranch" var="curLayoutSetBranchURL">
-					<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
-					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-				</portlet:actionURL>
+					<portlet:actionURL name="selectLayoutSetBranch" var="curLayoutSetBranchURL">
+						<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+						<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
+						<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
+					</portlet:actionURL>
 
-				<li>
-					<a class="<%= selected ? "disabled" : StringPool.BLANK %>" href="<%= selected ? "javascript:;" : curLayoutSetBranchURL %>">
-						<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" />
-					</a>
-				</li>
+					<li>
+						<a class="<%= selected ? "disabled" : StringPool.BLANK %>" href="<%= selected ? "javascript:;" : curLayoutSetBranchURL %>">
+							<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" />
+						</a>
+					</li>
 
 				<%
 				}

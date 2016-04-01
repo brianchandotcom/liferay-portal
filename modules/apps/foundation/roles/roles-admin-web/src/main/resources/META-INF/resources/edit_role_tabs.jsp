@@ -100,7 +100,7 @@ request.setAttribute("edit_role_permissions.jsp-portletResource", portletResourc
 		for (int i = 0; i < tabs1URLs.length; i++) {
 		%>
 
-		<aui:nav-item href="<%= tabs1URLs[i] %>" label="<%= tabs1Names[i] %>" selected="<%= tabs1Names[i].equals(tabs1) %>" />
+			<aui:nav-item href="<%= tabs1URLs[i] %>" label="<%= tabs1Names[i] %>" selected="<%= tabs1Names[i].equals(tabs1) %>" />
 
 		<%
 		}

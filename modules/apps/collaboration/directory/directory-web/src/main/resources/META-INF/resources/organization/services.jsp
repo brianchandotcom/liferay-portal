@@ -55,70 +55,70 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 				<h4><%= LanguageUtil.get(request, ListTypeServiceUtil.getListType(orgLabor.getTypeId()).getName()) %></h4>
 
 				<table border="1" class="org-labor-table">
-				<tr>
-					<td class="no-color"></td>
+					<tr>
+						<td class="no-color"></td>
 
-					<%
-					for (String day : days) {
-					%>
+						<%
+						for (String day : days) {
+						%>
 
-						<th>
-							<label><%= day %></label>
-						</th>
+							<th>
+								<label><%= day %></label>
+							</th>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</tr>
-				<tr>
-					<td>
-						<strong><liferay-ui:message key="open" /></strong>
-					</td>
-
-					<%
-					for (int j = 0; j < days.length; j++) {
-						int curOpen = openArray[j];
-
-						cal.set(Calendar.HOUR_OF_DAY, curOpen / 100);
-						cal.set(Calendar.MINUTE, curOpen % 100);
-						cal.set(Calendar.SECOND, 0);
-						cal.set(Calendar.MILLISECOND, 0);
-					%>
-
+					</tr>
+					<tr>
 						<td>
-							<%= curOpen != -1 ? timeFormat.format(cal.getTime()) : "" %>
+							<strong><liferay-ui:message key="open" /></strong>
 						</td>
 
-					<%
-					}
-					%>
+						<%
+						for (int j = 0; j < days.length; j++) {
+							int curOpen = openArray[j];
 
-				</tr>
-				<tr>
-					<td>
-						<strong><liferay-ui:message key="close[status]" /></strong>
-					</td>
+							cal.set(Calendar.HOUR_OF_DAY, curOpen / 100);
+							cal.set(Calendar.MINUTE, curOpen % 100);
+							cal.set(Calendar.SECOND, 0);
+							cal.set(Calendar.MILLISECOND, 0);
+						%>
 
-					<%
-					for (int j = 0; j < days.length; j++) {
-						int curClose = closeArray[j];
+							<td>
+								<%= curOpen != -1 ? timeFormat.format(cal.getTime()) : "" %>
+							</td>
 
-						cal.set(Calendar.HOUR_OF_DAY, curClose / 100);
-						cal.set(Calendar.MINUTE, curClose % 100);
-						cal.set(Calendar.SECOND, 0);
-						cal.set(Calendar.MILLISECOND, 0);
-					%>
+						<%
+						}
+						%>
 
+					</tr>
+					<tr>
 						<td>
-							<%= curClose != -1 ? timeFormat.format(cal.getTime()) : "" %>
+							<strong><liferay-ui:message key="close[status]" /></strong>
 						</td>
 
-					<%
-					}
-					%>
+						<%
+						for (int j = 0; j < days.length; j++) {
+							int curClose = closeArray[j];
 
-				</tr>
+							cal.set(Calendar.HOUR_OF_DAY, curClose / 100);
+							cal.set(Calendar.MINUTE, curClose % 100);
+							cal.set(Calendar.SECOND, 0);
+							cal.set(Calendar.MILLISECOND, 0);
+						%>
+
+							<td>
+								<%= curClose != -1 ? timeFormat.format(cal.getTime()) : "" %>
+							</td>
+
+						<%
+						}
+						%>
+
+					</tr>
 				</table>
 			</li>
 		</ul>

@@ -78,7 +78,7 @@ Map<String, Object> data = new HashMap<String, Object>();
 				}
 				%>
 
-				</aui:select>
+			</aui:select>
 		</aui:col>
 	</aui:row>
 </div>

@@ -78,7 +78,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 
 <c:choose>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
-		<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %>>
+		<a aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %>>
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
 					<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
@@ -105,7 +105,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
 			<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-		</div>
+		</a>
 	</c:when>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 		<div class="collapsed panel-toggler">

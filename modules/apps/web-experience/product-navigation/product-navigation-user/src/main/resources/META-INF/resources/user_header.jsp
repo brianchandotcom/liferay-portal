@@ -26,7 +26,7 @@ int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCate
 ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle <%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %> panel-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
+<a aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle <%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %> panel-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
 	<liferay-ui:user-portrait
 		imageCssClass="user-icon-lg"
 		userId="<%= user.getUserId() %>"
@@ -56,4 +56,4 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 	<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
 	<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-</div>
+</a>

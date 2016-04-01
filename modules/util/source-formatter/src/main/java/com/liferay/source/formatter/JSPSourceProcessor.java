@@ -485,6 +485,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				javaClassContent, javaClassLineCount, null, null, null, null);
 		}
 
+		JSPSourceTabCalculator jspSourceTabCalculator =
+			new JSPSourceTabCalculator();
+
+		newContent = jspSourceTabCalculator.calculateTabs(
+			fileName, newContent, (JSPSourceProcessor)this);
+
 		if (!content.equals(newContent)) {
 			_jspContents.put(fileName, newContent);
 		}

@@ -6362,6 +6362,34 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
+						includes="liferay-portal-*/deploy/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="${app.server.parent.dir}//\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-portal-*/osgi/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="${app.server.parent.dir}//\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
 						includes="liferay-portal-*/patching-tool/patches/**"
 					/>
 					<mapper

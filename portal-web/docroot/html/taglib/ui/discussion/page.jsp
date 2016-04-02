@@ -508,7 +508,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					position: 'top',
 					visible: false,
 					width: 400,
-					zIndex: Liferay.zIndex.TOOLTIP
+					zIndex: Liferay.zIndex.OVERLAY
 				}
 			).render(discussionContainer);
 

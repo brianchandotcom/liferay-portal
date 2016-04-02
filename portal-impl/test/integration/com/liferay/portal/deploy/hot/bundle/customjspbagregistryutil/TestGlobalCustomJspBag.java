@@ -33,11 +33,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"context.id=TestCustomJspBag", "context.name=Test Custom JSP Bag",
+		"context.id=TestGlobalCustomJspBag",
+		"context.name=Test Global Custom JSP Bag",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	}
 )
-public class TestCustomJspBag implements CustomJspBag {
+public class TestGlobalCustomJspBag implements CustomJspBag {
 
 	@Override
 	public String getCustomJspDir() {
@@ -56,7 +57,7 @@ public class TestCustomJspBag implements CustomJspBag {
 
 	@Override
 	public boolean isCustomJspGlobal() {
-		return false;
+		return true;
 	}
 
 	private final List<String> _customJsps = new ArrayList<>();

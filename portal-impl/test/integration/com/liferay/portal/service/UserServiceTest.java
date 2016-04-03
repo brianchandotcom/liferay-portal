@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.persistence.CompanyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -76,6 +78,13 @@ public class UserServiceTest {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new LiferayIntegrationTestRule();
+
+		@Before
+		public void setUp() throws Exception {
+			CompanyUtil.clearCache(
+				CompanyLocalServiceUtil.getCompany(
+					TestPropsValues.getCompanyId()));
+		}
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotAddUser() throws Exception {
@@ -836,6 +845,9 @@ public class UserServiceTest {
 
 			portletPreferences.store();
 
+			CompanyUtil.clearCache(
+				CompanyLocalServiceUtil.getCompany(_user.getCompanyId()));
+
 			return portletPreferences;
 		}
 
@@ -854,6 +866,9 @@ public class UserServiceTest {
 
 			portletPreferences.store();
 
+			CompanyUtil.clearCache(
+				CompanyLocalServiceUtil.getCompany(_user.getCompanyId()));
+
 			return portletPreferences;
 		}
 
@@ -866,6 +881,9 @@ public class UserServiceTest {
 				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK);
 
 			portletPreferences.store();
+
+			CompanyUtil.clearCache(
+				CompanyLocalServiceUtil.getCompany(_user.getCompanyId()));
 		}
 
 		private User _user;

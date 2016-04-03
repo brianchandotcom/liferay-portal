@@ -39,10 +39,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.Serializable;
+
 import java.security.Key;
 
 import java.util.Locale;
 import java.util.TimeZone;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Brian Wing Shun Chan
@@ -78,9 +82,9 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public String getAuthType() {
-		return PrefsPropsUtil.getString(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
-			PropsValues.COMPANY_SECURITY_AUTH_TYPE);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._authType;
 	}
 
 	@Override
@@ -177,6 +181,15 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
+	public SecurityBag getSecurityBag() {
+		if (_securityBag == null) {
+			_securityBag = new SecurityBag(getCompanyId());
+		}
+
+		return _securityBag;
+	}
+
+	@Override
 	public String getShortName() throws PortalException {
 		return getName();
 	}
@@ -241,16 +254,16 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public boolean isAutoLogin() {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_AUTO_LOGIN,
-			PropsValues.COMPANY_SECURITY_AUTO_LOGIN);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._autoLogin;
 	}
 
 	@Override
 	public boolean isSendPassword() {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-			PropsValues.COMPANY_SECURITY_SEND_PASSWORD);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._sendPassword;
 	}
 
 	@Override
@@ -262,30 +275,30 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public boolean isSiteLogo() {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_SITE_LOGO,
-			PropsValues.COMPANY_SECURITY_SITE_LOGO);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._siteLogo;
 	}
 
 	@Override
 	public boolean isStrangers() {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_STRANGERS,
-			PropsValues.COMPANY_SECURITY_STRANGERS);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._strangers;
 	}
 
 	@Override
 	public boolean isStrangersVerify() {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
-			PropsValues.COMPANY_SECURITY_STRANGERS_VERIFY);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._strangersVerify;
 	}
 
 	@Override
 	public boolean isStrangersWithMx() {
-		return PrefsPropsUtil.getBoolean(
-			getCompanyId(), PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-			PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX);
+		SecurityBag securityBag = getSecurityBag();
+
+		return securityBag._strangersWithMx;
 	}
 
 	@Override
@@ -301,12 +314,59 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
+	public void setSecurityBag(SecurityBag securityBag) {
+		_securityBag = securityBag;
+	}
+
+	@Override
 	public void setVirtualHostname(String virtualHostname) {
 		_virtualHostname = virtualHostname;
 	}
 
+	public static class SecurityBag implements Serializable {
+
+		private SecurityBag(long companyId) {
+			PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+				companyId, true);
+
+			_authType = PrefsPropsUtil.getString(
+				preferences, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
+				PropsValues.COMPANY_SECURITY_AUTH_TYPE);
+			_autoLogin = PrefsPropsUtil.getBoolean(
+				preferences, PropsKeys.COMPANY_SECURITY_AUTO_LOGIN,
+				PropsValues.COMPANY_SECURITY_AUTO_LOGIN);
+			_sendPassword = PrefsPropsUtil.getBoolean(
+				preferences, PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				PropsValues.COMPANY_SECURITY_SEND_PASSWORD);
+			_siteLogo = PrefsPropsUtil.getBoolean(
+				preferences, PropsKeys.COMPANY_SECURITY_SITE_LOGO,
+				PropsValues.COMPANY_SECURITY_SITE_LOGO);
+			_strangers = PrefsPropsUtil.getBoolean(
+				preferences, PropsKeys.COMPANY_SECURITY_STRANGERS,
+				PropsValues.COMPANY_SECURITY_STRANGERS);
+			_strangersVerify = PrefsPropsUtil.getBoolean(
+				preferences, PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
+				PropsValues.COMPANY_SECURITY_STRANGERS_VERIFY);
+			_strangersWithMx = PrefsPropsUtil.getBoolean(
+				preferences, PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX);
+		}
+
+		private final String _authType;
+		private final boolean _autoLogin;
+		private final boolean _sendPassword;
+		private final boolean _siteLogo;
+		private final boolean _strangers;
+		private final boolean _strangersVerify;
+		private final boolean _strangersWithMx;
+
+	}
+
 	@CacheField
 	private Key _keyObj;
+
+	@CacheField
+	private SecurityBag _securityBag;
 
 	@CacheField
 	private String _virtualHostname;

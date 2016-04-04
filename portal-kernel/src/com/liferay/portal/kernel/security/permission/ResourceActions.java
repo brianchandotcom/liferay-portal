@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Daeyoung Song
  */
+@ProviderType
 public interface ResourceActions {
 
 	public void checkAction(String name, String actionId)

@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1459889013665
+Bnd-LastModified: 1459951128702
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.8.0_72 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2935,7 +2935,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  y.portal.kernel.security.pacl;version="6.2.0",com.liferay.portal.kern
  el.security.pacl.permission;version="7.0.0";uses:="com.liferay.portal
  .kernel.util",com.liferay.portal.kernel.security.permission;version="
- 1.0.0";uses:="com.liferay.portal.kernel.exception,com.liferay.portal.
+ 1.1.0";uses:="com.liferay.portal.kernel.exception,com.liferay.portal.
  kernel.model,javax.portlet,javax.servlet.http",com.liferay.portal.ker
  nel.security.permission.comparator;version="1.0.0",com.liferay.portal
  .kernel.security.pwd;version="1.0.0";uses:="com.liferay.portal.kernel

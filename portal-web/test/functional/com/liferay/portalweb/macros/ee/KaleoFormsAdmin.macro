@@ -32,7 +32,9 @@
 
 		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${kfProcessName}" />
 
-		<execute function="Type" locator1="KaleoFormsAdminEditProcess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
+		<var name="key_fieldName" value="description" />
+
+		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${kfProcessDescription}" />
 	</command>
 
 	<command name="addWorkflow">
@@ -254,7 +256,9 @@
 		<if>
 			<isset var="kfProcessDescriptionEdit" />
 			<then>
-				<execute function="Type" locator1="CPKaleoformsadminEditprocess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescriptionEdit}" />
+				<var name="key_fieldName" value="description" />
+
+				<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${kfProcessDescriptionEdit}" />
 			</then>
 		</if>
 
@@ -566,7 +570,10 @@
 		<var name="key_fieldName" value="name" />
 
 		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${kfProcessName}" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
+
+		<var name="key_fieldName" value="description" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${kfProcessDescription}" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>

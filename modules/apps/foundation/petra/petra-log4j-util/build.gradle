@@ -1,0 +1,6 @@
+dependencies {
+	compile group: "dom4j", name: "dom4j", version: "1.6.1"
+
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "log4j", name: "log4j", version: "1.2.17"
+}

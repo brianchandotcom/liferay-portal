@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.log4j;
+package com.liferay.petra.log4j.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -55,7 +55,7 @@ import org.xml.sax.InputSource;
 /**
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
- * @see com.liferay.petra.log4j.util.Log4JUtil
+ * @see com.liferay.util.log4j.Log4JUtil
  */
 public class Log4JUtil {
 

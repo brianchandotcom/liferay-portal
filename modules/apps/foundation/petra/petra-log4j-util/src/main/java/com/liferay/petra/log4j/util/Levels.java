@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.util.log4j;
+package com.liferay.petra.log4j.util;
 
 import org.apache.log4j.Level;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.petra.log4j.util.Levels
+ * @see com.liferay.util.log4j.Levels
  */
 public class Levels {
 

@@ -961,13 +961,22 @@
 
 		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
-		<execute macro="Form#saveWithoutFormName" />
+		<execute macro="Form#gotoAddFirstField">
+			<var name="fieldType" value="Text" />
+		</execute>
 
-		<execute macro="Form#editName" />
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
 
-		<execute macro="Form#editDescription" />
+		<execute macro="FormFields#save" />
 
 		<execute macro="Form#save" />
+
+		<execute macro="FormsAdmin#viewForm">
+			<var name="formDescription" value="" />
+			<var name="formName" value="Untitled Form" />
+		</execute>
 	</command>
 
 	<command name="SubmitFormWithParagraphField" priority="4">

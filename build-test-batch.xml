@@ -1100,7 +1100,7 @@ ${output.content}</echo>
 									<sequential>
 										<echo>Executing baseline on @{modules.base.dir.name}.</echo>
 
-										<gradle-execute dir="@{modules.base.dir.name}" task="baseline" />
+										<gradle-execute dir="@{modules.base.dir.name}" forcedcacheenabled="false" task="baseline" />
 									</sequential>
 								</for>
 							</then>

@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIVATE_LAYOUT</td>
+	<td>//input[contains(@id,'privatePages')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

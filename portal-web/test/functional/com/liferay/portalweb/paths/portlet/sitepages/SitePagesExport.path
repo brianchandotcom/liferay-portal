@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_EXPORT_BUTTON</td>
-	<td>//ul[contains(@id,'exportConfigurationButtons')]//li/a[@title='Custom']</td>
+	<td>//a[contains(@data-original-title,'Custom Export')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <!--PAGES-->
+<tr>
+	<td>CHANGE_TO_PRIVATE_PAGES</td>
+	<td>//button[contains(@id,'changeToPrivateLayoutsButton')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PAGES_CHANGE_LINK</td>
 	<td>//div/a[contains(@id,'pagesLink')]</td>
@@ -72,37 +77,6 @@
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
 	<td>//input[contains(@id,'LOGO')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--APPLICATION-->
-<tr>
-	<td>APPLICATION_ALL_APPLICATIONS_RADIO</td>
-	<td>//input[contains(@id,'allApplications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_CHOOSE_APPLICATIONS_RADIO</td>
-	<td>//input[contains(@id,'chooseApplications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_CHANGE_LINK</td>
-	<td>//a[contains(@id,'globalConfigurationLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_NAME_CHECKBOX</td>
-	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_NAME</td>
-	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

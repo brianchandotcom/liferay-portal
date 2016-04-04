@@ -980,7 +980,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					if (!projectPath.startsWith(":apps:") &&
 						!projectPath.startsWith(":core:") &&
-						!projectPath.startsWith(":ee:")) {
+						!projectPath.startsWith(":ee:") &&
+						!FileUtil.exists(
+							project.getRootProject(), ".gitrepo")) {
 
 						return true;
 					}
@@ -1201,7 +1203,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		String projectPath = project.getPath();
 
 		if (!projectPath.startsWith(":apps:") &&
-			!projectPath.startsWith(":ee:")) {
+			!projectPath.startsWith(":ee:") &&
+			!FileUtil.exists(project.getRootProject(), ".gitrepo")) {
 
 			return;
 		}
@@ -1341,7 +1344,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":core:") ||
-			projectPath.startsWith(":ee:")) {
+			projectPath.startsWith(":ee:") ||
+			FileUtil.exists(project.getRootProject(), ".gitrepo")) {
 
 			configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);

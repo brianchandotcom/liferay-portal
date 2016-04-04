@@ -110,7 +110,7 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_URL =
 		"https://sourceforge.net/projects/lportal/files/Liferay Portal/" +
-			"7.0.0 RC1/liferay-portal-tomcat-7.0-ce-rc1-20160325160942584.zip";
+			"7.0.0 GA1/liferay-portal-tomcat-7.0-ce-ga1-20160331161017956.zip";
 
 	private static final String _CONFIGS_DIR = "configs";
 

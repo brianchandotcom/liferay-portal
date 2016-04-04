@@ -43,7 +43,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 	title="<%= calendarBooking.getTitle(locale) %>"
 />
 
-<aui:fieldset>
+<aui:fieldset markupView="lexicon">
 	<dl class="property-list">
 		<dt>
 			<liferay-ui:message key="start-date" />:
@@ -169,7 +169,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 	<aui:input name="calendarBookingId" type="hidden" value="<%= calendarBooking.getCalendarBookingId() %>" />
 	<aui:input name="status" type="hidden" />
 
-	<aui:fieldset>
+	<aui:fieldset markupView="lexicon">
 		<aui:button-row>
 
 			<%

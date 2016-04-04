@@ -377,40 +377,40 @@ while (manageableCalendarsIterator.hasNext()) {
 				/>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
+
+		<aui:button-row>
+			<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
+				<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+			</div>
+
+			<%
+			String publishButtonLabel = "publish";
+
+			if (hasWorkflowDefinitionLink) {
+				publishButtonLabel = "submit-for-publication";
+			}
+			%>
+
+			<aui:button name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+			<aui:button name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
+
+			<c:if test="<%= calendarBooking != null %>">
+				<liferay-security:permissionsURL
+					modelResource="<%= CalendarBooking.class.getName() %>"
+					modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
+					redirect="<%= redirectURL %>"
+					resourceGroupId="<%= calendarBooking.getGroupId() %>"
+					resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
+					var="permissionsCalendarBookingURL"
+				/>
+
+				<aui:button href="<%= permissionsCalendarBookingURL %>" value="permissions" />
+			</c:if>
+		</aui:button-row>
 	</aui:fieldset>
 
 	<%@ include file="/calendar_booking_recurrence_container.jspf" %>
-
-	<aui:button-row>
-		<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
-			<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
-		</div>
-
-		<%
-		String publishButtonLabel = "publish";
-
-		if (hasWorkflowDefinitionLink) {
-			publishButtonLabel = "submit-for-publication";
-		}
-		%>
-
-		<aui:button name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-		<aui:button name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
-
-		<c:if test="<%= calendarBooking != null %>">
-			<liferay-security:permissionsURL
-				modelResource="<%= CalendarBooking.class.getName() %>"
-				modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
-				redirect="<%= redirectURL %>"
-				resourceGroupId="<%= calendarBooking.getGroupId() %>"
-				resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
-				var="permissionsCalendarBookingURL"
-			/>
-
-			<aui:button href="<%= permissionsCalendarBookingURL %>" value="permissions" />
-		</c:if>
-	</aui:button-row>
 </aui:form>
 
 <aui:script>

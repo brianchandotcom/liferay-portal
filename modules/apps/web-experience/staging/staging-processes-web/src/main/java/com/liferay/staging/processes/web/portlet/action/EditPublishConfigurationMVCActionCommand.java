@@ -15,6 +15,7 @@
 package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -176,6 +177,10 @@ public class EditPublishConfigurationMVCActionCommand
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				MapUtil.getLong(taskContextMap, "exportImportConfigurationId"));
+
+		exportImportConfiguration =
+			ExportImportConfigurationFactory.cloneExportImportConfiguration(
+				exportImportConfiguration);
 
 		if (exportImportConfiguration.getType() ==
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {

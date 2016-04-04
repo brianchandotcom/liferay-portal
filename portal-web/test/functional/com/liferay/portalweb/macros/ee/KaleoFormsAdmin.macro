@@ -8,6 +8,8 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<var name="key_iframeTitle" value="Field Set" />
 
 		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Field Set" />
@@ -19,6 +21,11 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#ADD_FORM_BUTTON" value1="Add Form" />
 
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+
+		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />

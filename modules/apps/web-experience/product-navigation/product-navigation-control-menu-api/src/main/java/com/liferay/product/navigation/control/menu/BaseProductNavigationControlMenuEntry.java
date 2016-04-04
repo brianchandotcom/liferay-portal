@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +57,7 @@ public abstract class BaseProductNavigationControlMenuEntry
 
 	@Override
 	public Map<String, Object> getData(HttpServletRequest request) {
-		return new HashMap<>();
+		return Collections.emptyMap();
 	}
 
 	@Override

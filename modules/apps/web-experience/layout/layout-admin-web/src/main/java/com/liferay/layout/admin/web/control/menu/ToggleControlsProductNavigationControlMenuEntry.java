@@ -31,6 +31,7 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -56,11 +57,7 @@ public class ToggleControlsProductNavigationControlMenuEntry
 
 	@Override
 	public Map<String, Object> getData(HttpServletRequest request) {
-		Map<String, Object> data = super.getData(request);
-
-		data.put("qa-id", "showControls");
-
-		return data;
+		return _dataMap;
 	}
 
 	@Override
@@ -170,5 +167,8 @@ public class ToggleControlsProductNavigationControlMenuEntry
 			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 			ActionKeys.UPDATE);
 	}
+
+	private static final Map<String, Object> _dataMap =
+		Collections.<String, Object>singletonMap("qa-id", "showControls");
 
 }

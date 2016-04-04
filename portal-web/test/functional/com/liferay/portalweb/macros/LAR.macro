@@ -157,7 +157,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -211,12 +211,21 @@
 	<command name="_importSite">
 		<execute function="Pause" locator1="5000" />
 
+		<execute function="Click" locator1="Button#CONTINUE" />
+
 		<if>
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>
 				<execute function="Click" locator1="BasePortletImport#PERMISSIONS_TITLE" />
 
 				<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${privateLayout}" arg2="true" />
+			<then>
+				<execute function="Click" locator1="SitePagesImport#PRIVATE_LAYOUT" />
 			</then>
 		</if>
 
@@ -242,13 +251,10 @@
 			</then>
 		</if>
 
-		<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
-
-		<execute function="Pause" locator1="5000" />
-
 		<execute function="AssertVisible" locator1="Button#BACK" />
 
 		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />
+
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertTextEquals" locator1="SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 	</command>
@@ -437,6 +443,15 @@
 			<var name="siteScopeName" value="${siteScopeName}" />
 		</execute>
 
+		<execute function="Click" locator1="SitePagesExport#CUSTOM_EXPORT_BUTTON" />
+
+		<if>
+			<equals arg1="${privateLayout}" arg2="true" />
+			<then>
+				<execute function="Click" locator1="SitePagesExport#CHANGE_TO_PRIVATE_PAGES" />
+			</then>
+		</if>
+
 		<execute macro="LAR#_exportSite">
 			<var name="larFileName" value="${larFileName}" />
 			<var name="valueName" value="${valueName}" />
@@ -498,6 +513,7 @@
 					<var name="contentName" value="${contentName}" />
 					<var name="importPermissions" value="${importPermissions}" />
 					<var name="larFileName" value="${larFileName}" />
+					<var name="privateLayout" value="${privateLayout}" />
 				</execute>
 			</then>
 		</if>

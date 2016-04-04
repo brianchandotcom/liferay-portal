@@ -27,13 +27,11 @@ import org.osgi.framework.Bundle;
 public class BundlesMap extends HashMap<String, Bundle> {
 
 	public static String getKey(Bundle bundle) {
-		return bundle.getSymbolicName() + ";version=" + bundle.getVersion();
+		return bundle.getSymbolicName();
 	}
 
 	public static String getKey(Module module) {
-		return
-			module.getBundleSymbolicName() + ";version=" +
-				module.getBundleVersion();
+		return module.getBundleSymbolicName();
 	}
 
 	public BundlesMap(int initialCapacity) {

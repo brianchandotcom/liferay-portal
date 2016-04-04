@@ -1353,6 +1353,8 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<if>
 				<os family="windows" />
 				<then>
+					<stop-edge-driver />
+
 					<mirrors-get
 						dest="tools/selenium/MicrosoftWebDriver.exe"
 						src="http://www.microsoft.com/en-us/download/webdriver/2.0/MicrosoftWebDriver.exe"
@@ -3008,6 +3010,14 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-edge-driver">
+		<sequential>
+			<exec executable="taskkill.exe">
+				<arg line="/F /IM MicrosoftWebDriver.exe" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-ie-driver">
 		<sequential>
 			<exec executable="taskkill.exe">
@@ -3690,6 +3700,13 @@ go]]></replacevalue>
 			<equals arg1="${browser.type}" arg2="chrome" />
 			<then>
 				<stop-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="edge" />
+			<then>
+				<stop-edge-driver />
 			</then>
 		</if>
 

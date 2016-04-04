@@ -8,7 +8,7 @@
 
 	<command name="MongoDBHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="mongodb-hook" />
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<var name="appName" value="MongoDB Expando Adapter" />
 		<var name="portletName" value="mongodb-hook" />

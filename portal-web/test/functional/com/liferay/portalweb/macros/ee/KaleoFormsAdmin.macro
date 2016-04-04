@@ -7,14 +7,14 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
 
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
-		<execute function="Type" locator1="TextInput#NAME" value1="${kfFieldSetName}" />
+		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="addForm">
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#ADD_FORM_BUTTON" value1="Add Form" />
 
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-		<execute function="Type" locator1="TextInput#NAME" value1="${kfFormName}" />
+		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -27,7 +27,11 @@
 		<execute macro="KaleoFormsAdmin#viewDetailsStepCmd" />
 
 		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE" value1="Next" />
-		<execute function="Type" locator1="KaleoFormsAdminEditProcess#DETAILS_NAME_FIELD" value1="${kfProcessName}" />
+
+		<var name="key_fieldName" value="name" />
+
+		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${kfProcessName}" />
+
 		<execute function="Type" locator1="KaleoFormsAdminEditProcess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
 	</command>
 
@@ -224,7 +228,7 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit" />
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-		<execute function="Type" locator1="TextInput#NAME" value1="${kfFormNameEdit}" />
+		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormNameEdit}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -241,7 +245,9 @@
 		<if>
 			<isset var="kfProcessNameEdit" />
 			<then>
-				<execute function="Type" locator1="CPKaleoformsadminEditprocess#DETAILS_NAME_FIELD" value1="${kfProcessNameEdit}" />
+				<var name="key_fieldName" value="name" />
+
+				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${kfProcessNameEdit}" />
 			</then>
 		</if>
 
@@ -557,7 +563,9 @@
 
 		<execute macro="KaleoFormsAdmin#viewDetailsStepCmd" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#DETAILS_NAME_FIELD" value1="${kfProcessName}" />
+		<var name="key_fieldName" value="name" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${kfProcessName}" />
 		<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
 
 		<execute macro="KaleoFormsAdmin#next" />

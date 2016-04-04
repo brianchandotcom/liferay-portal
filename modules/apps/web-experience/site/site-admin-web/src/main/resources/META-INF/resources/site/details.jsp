@@ -104,7 +104,7 @@ else if (group != null) {
 
 <aui:input name="description" placeholder="description" />
 
-<c:if test="<%= (group == null) || !group.isCompany() %>">
+<c:if test="<%= (group == null) || (!group.isCompany() && !group.isGuest()) %>">
 	<aui:input name="active" type="toggle-switch" value="<%= (group == null) ? true : group.isActive() %>" />
 </c:if>
 

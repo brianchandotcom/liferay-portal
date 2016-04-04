@@ -6,6 +6,8 @@
 
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
 
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
 	</command>

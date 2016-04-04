@@ -310,7 +310,6 @@
 	<command name="next">
 		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE" />
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON" value1="Next" />
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="populateFieldBoolean">

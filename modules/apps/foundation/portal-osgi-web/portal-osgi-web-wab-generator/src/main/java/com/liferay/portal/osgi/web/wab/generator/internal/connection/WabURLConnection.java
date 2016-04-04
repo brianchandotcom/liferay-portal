@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
-import com.liferay.portal.osgi.web.wab.generator.internal.processor.WabProcessor;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
@@ -74,13 +73,9 @@ public class WabURLConnection extends URLConnection {
 
 		File file = transferToTempFile(new URL(url.getPath()));
 
-		_wabGenerator.generate(_classLoader, file, parameters);
-
 		try {
-			WabProcessor wabProcessor = new WabProcessor(
+			File processedFile = _wabGenerator.generate(
 				_classLoader, file, parameters);
-
-			File processedFile = wabProcessor.getProcessedFile();
 
 			return new FileInputStream(processedFile);
 		}

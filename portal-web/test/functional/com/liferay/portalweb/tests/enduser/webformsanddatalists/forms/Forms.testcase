@@ -950,7 +950,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithoutAFormNameAndViewErrorMessage" priority="3">
+	<command name="CreateUntitledForm" priority="3">
 		<description message="This is a use case for LPS-64379." />
 
 		<execute macro="Navigator#openURL" />

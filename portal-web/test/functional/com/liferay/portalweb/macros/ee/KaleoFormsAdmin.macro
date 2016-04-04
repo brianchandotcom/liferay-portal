@@ -8,7 +8,10 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-		<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
+		<var name="key_iframeTitle" value="Field Set" />
+
+		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Field Set" />
+
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
 	</command>
 
@@ -525,6 +528,8 @@
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
 			</then>
 			<else>
+				<var name="key_iframeTitle" value="New Field Set" />
+				
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
 			</else>
 		</if>

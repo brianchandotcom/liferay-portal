@@ -85,6 +85,8 @@ public interface Company extends CompanyModel, PersistedModel {
 	public java.lang.String getPortalURL(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.model.impl.CompanyImpl.SecurityBag getSecurityBag();
+
 	public java.lang.String getShortName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -110,6 +112,9 @@ public interface Company extends CompanyModel, PersistedModel {
 	public boolean isStrangersWithMx();
 
 	public void setKeyObj(java.security.Key keyObj);
+
+	public void setSecurityBag(
+		com.liferay.portal.model.impl.CompanyImpl.SecurityBag securityBag);
 
 	public void setVirtualHostname(java.lang.String virtualHostname);
 }

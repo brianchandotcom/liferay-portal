@@ -327,6 +327,11 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
+	public com.liferay.portal.model.impl.CompanyImpl.SecurityBag getSecurityBag() {
+		return _company.getSecurityBag();
+	}
+
+	@Override
 	public java.lang.String getShortName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getShortName();
@@ -581,6 +586,12 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_company.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public void setSecurityBag(
+		com.liferay.portal.model.impl.CompanyImpl.SecurityBag securityBag) {
+		_company.setSecurityBag(securityBag);
 	}
 
 	/**

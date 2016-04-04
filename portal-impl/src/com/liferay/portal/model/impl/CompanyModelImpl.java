@@ -492,6 +492,14 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 	public void setKeyObj(java.security.Key keyObj) {
 	}
 
+	public com.liferay.portal.model.impl.CompanyImpl.SecurityBag getSecurityBag() {
+		return null;
+	}
+
+	public void setSecurityBag(
+		com.liferay.portal.model.impl.CompanyImpl.SecurityBag securityBag) {
+	}
+
 	public java.lang.String getVirtualHostname() {
 		return null;
 	}
@@ -617,6 +625,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 		setKeyObj(null);
 
+		setSecurityBag(null);
+
 		setVirtualHostname(null);
 
 		companyModelImpl._columnBitmask = 0;
@@ -673,6 +683,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		companyCacheModel.active = getActive();
 
 		companyCacheModel._keyObj = getKeyObj();
+
+		companyCacheModel._securityBag = getSecurityBag();
 
 		companyCacheModel._virtualHostname = getVirtualHostname();
 

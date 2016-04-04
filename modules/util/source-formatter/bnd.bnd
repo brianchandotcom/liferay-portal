@@ -80,6 +80,4 @@ Import-Package:\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Tuple.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/ContentUtil.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@xercesImpl-*.jar!/org/apache/xerces/xni/XNIException.class

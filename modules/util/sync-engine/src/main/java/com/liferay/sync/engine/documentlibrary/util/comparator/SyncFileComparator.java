@@ -29,9 +29,11 @@ public class SyncFileComparator implements Comparator<SyncFile> {
 		String event2 = syncFile2.getEvent();
 
 		if (event1.equals(SyncFile.EVENT_DELETE) ||
+			event1.equals(SyncFile.EVENT_MOVE) ||
 			event1.equals(SyncFile.EVENT_TRASH)) {
 
 			if (event2.equals(SyncFile.EVENT_DELETE) ||
+				event2.equals(SyncFile.EVENT_MOVE) ||
 				event2.equals(SyncFile.EVENT_TRASH)) {
 
 				return 0;
@@ -40,6 +42,7 @@ public class SyncFileComparator implements Comparator<SyncFile> {
 			return -1;
 		}
 		else if (event2.equals(SyncFile.EVENT_DELETE) ||
+				 event2.equals(SyncFile.EVENT_MOVE) ||
 				 event2.equals(SyncFile.EVENT_TRASH)) {
 
 			return 1;

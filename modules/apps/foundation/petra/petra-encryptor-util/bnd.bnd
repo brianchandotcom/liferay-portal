@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Petra Encryptor Utilities
+Bundle-SymbolicName: com.liferay.petra.encryptor.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.petra.encryptor.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

@@ -159,6 +159,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertAccessible() throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void assertAlert(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertAlert(this, pattern);
 	}

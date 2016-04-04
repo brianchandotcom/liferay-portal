@@ -39,6 +39,8 @@ public interface LiferaySelenium {
 
 	public void antCommand(String fileName, String target) throws Exception;
 
+	public void assertAccessible() throws Exception;
+
 	public void assertAlert(String pattern) throws Exception;
 
 	public void assertAlertNotPresent() throws Exception;

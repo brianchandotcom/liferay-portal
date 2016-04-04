@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -129,6 +130,25 @@ public class ExportImportConfigurationFactory {
 			user, sourceGroupId, privateLayout, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId,
 			getDefaultPublishingParameters());
+	}
+
+	public static ExportImportConfiguration cloneExportImportConfiguration(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		if (exportImportConfiguration == null) {
+			return null;
+		}
+
+		return ExportImportConfigurationLocalServiceUtil.
+			addExportImportConfiguration(
+				exportImportConfiguration.getUserId(),
+				exportImportConfiguration.getGroupId(),
+				exportImportConfiguration.getName(),
+				exportImportConfiguration.getDescription(),
+				exportImportConfiguration.getType(),
+				exportImportConfiguration.getSettingsMap(),
+				exportImportConfiguration.getStatus(), new ServiceContext());
 	}
 
 	public static Map<String, String[]> getDefaultPublishingParameters(

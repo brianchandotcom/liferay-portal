@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
@@ -341,21 +339,6 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		resourcePermissionPrimKey = getPrimaryKey(layout.getPlid(), portletId);
-
-		boolean useDefaultPortletPermissions = false;
-
-		int count =
-			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				permissionChecker.getCompanyId(), rootPortletId,
-				ResourceConstants.SCOPE_INDIVIDUAL, resourcePermissionPrimKey);
-
-		if (count == 0) {
-			useDefaultPortletPermissions = true;
-		}
-
-		if (useDefaultPortletPermissions) {
-			resourcePermissionPrimKey = rootPortletId;
-		}
 
 		if (strict) {
 			return permissionChecker.hasPermission(

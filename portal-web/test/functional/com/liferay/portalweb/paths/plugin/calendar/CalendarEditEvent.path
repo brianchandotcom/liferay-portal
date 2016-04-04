@@ -169,12 +169,12 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingDetailsPanel']</td>
+	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingDetailsPanel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingDetailsPanel']</td>
+	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarBookingDetailsPanel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,12 +221,12 @@
 <!--INVITATIONS-->
 <tr>
 	<td>INVITATIONS_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingInvitationPanel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INVITATIONS_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarBookingInvitationPanel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -373,12 +373,12 @@
 <!--REMINDERS-->
 <tr>
 	<td>REMINDERS_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingReminderPanel']</td>
+	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingReminderPanel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMINDERS_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingReminderPanel']</td>
+	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarBookingReminderPanel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -439,12 +439,12 @@
 <!--CATEGORIZATION-->
 <tr>
 	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingCategorizationPanel']</td>
+	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingCategorizationPanel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingCategorizationPanel']</td>
+	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarBookingCategorizationPanel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -485,12 +485,12 @@
 <!--RELATED_ASSETS-->
 <tr>
 	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
+	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarBookingAssetLinksPanel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RELATED_ASSETS_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
+	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarBookingAssetLinksPanel')]</td>
 	<td></td>
 </tr>
 <tr>

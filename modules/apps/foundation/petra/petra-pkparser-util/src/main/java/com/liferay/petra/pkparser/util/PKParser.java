@@ -24,6 +24,7 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @see com.liferay.util.PKParser
  */
 public class PKParser {
 

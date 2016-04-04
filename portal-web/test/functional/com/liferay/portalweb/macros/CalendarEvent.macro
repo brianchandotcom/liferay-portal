@@ -21,6 +21,21 @@
 
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
 			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+				<then>
+					<execute function="Click" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+
+					<if>
+						<condition function="IsElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_COLLAPSED" />
+						<then>
+							<execute function="Click" locator1="CalendarEditEvent#DETAILS_PANEL_COLLAPSED" />
+
+							<execute function="AssertElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+						</then>
+					</if>
+				</then>
+			</elseif>
 		</if>
 	</command>
 
@@ -32,6 +47,21 @@
 
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_PANEL_EXPANDED" />
 			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="CalendarEditEvent#INVITATIONS_PANEL_EXPANDED" />
+				<then>
+					<execute function="Click" locator1="CalendarEditEvent#INVITATIONS_PANEL_EXPANDED" />
+
+					<if>
+						<condition function="IsElementPresent" locator1="CalendarEditEvent#INVITATIONS_PANEL_COLLAPSED" />
+						<then>
+							<execute function="Click" locator1="CalendarEditEvent#INVITATIONS_PANEL_COLLAPSED" />
+
+							<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_PANEL_EXPANDED" />
+						</then>
+					</if>
+				</then>
+			</elseif>
 		</if>
 	</command>
 

@@ -386,6 +386,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		copy.rename(closure);
 
+		copy.setEnabled(false);
+
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
@@ -1309,7 +1311,42 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 	}
 
+	protected void configureConfigurationDefault(Project project) {
+		final Configuration defaultConfiguration = GradleUtil.getConfiguration(
+			project, Dependency.DEFAULT_CONFIGURATION);
+
+		Configuration providedConfiguration = GradleUtil.getConfiguration(
+			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+
+		DependencySet dependencySet = providedConfiguration.getDependencies();
+
+		dependencySet.withType(
+			ProjectDependency.class,
+			new Action<ProjectDependency>() {
+
+				@Override
+				public void execute(ProjectDependency projectDependency) {
+					defaultConfiguration.exclude(
+						Collections.singletonMap(
+							"module", projectDependency.getName()));
+				}
+
+			});
+	}
+
 	protected void configureConfigurations(Project project) {
+		configureConfigurationDefault(project);
+
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":core:") ||
+			projectPath.startsWith(":ee:")) {
+
+			configureConfigurationTransitive(
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);
+		}
+
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
@@ -1324,11 +1361,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 	}
 
+	protected void configureConfigurationTransitive(
+		Project project, String name, boolean transitive) {
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, name);
+
+		configuration.setTransitive(transitive);
+	}
+
 	@Override
 	protected void configureDefaults(
 		final Project project, LiferayPlugin liferayPlugin) {
 
 		Gradle gradle = project.getGradle();
+
+		StartParameter startParameter = gradle.getStartParameter();
+
+		List<String> taskNames = startParameter.getTaskNames();
 
 		File gitRepoDir = getRootDir(project, ".gitrepo");
 		final File portalRootDir = getRootDir(
@@ -1389,10 +1439,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				portalRootDir, recordArtifactTask, testProject);
 			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 			configureTaskProcessResources(buildChangeLogTask);
-
-			StartParameter startParameter = gradle.getStartParameter();
-
-			List<String> taskNames = startParameter.getTaskNames();
 
 			if (taskNames.contains(LiferayJavaPlugin.DEPLOY_TASK_NAME)) {
 				configureTaskDeploy(recordArtifactTask);
@@ -1482,6 +1528,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+
+		if (taskNames.contains(EclipsePlugin.getECLIPSE_TASK_NAME()) ||
+			taskNames.contains("idea")) {
+
+			forceProjectDependenciesEvaluation(project);
+		}
 
 		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
 
@@ -2252,6 +2304,41 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		String s = GradleUtil.toString(object);
 
 		return s.replaceAll("[\\Q\\{}()[]*+?.|^$\\E]", "\\\\$0");
+	}
+
+	protected void forceProjectDependenciesEvaluation(Project project) {
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
+
+		final ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		EclipseModel eclipseModel = GradleUtil.getExtension(
+			project, EclipseModel.class);
+
+		EclipseClasspath eclipseClasspath = eclipseModel.getClasspath();
+
+		for (Configuration configuration :
+				eclipseClasspath.getPlusConfigurations()) {
+
+			DependencySet dependencySet = configuration.getAllDependencies();
+
+			dependencySet.withType(
+				ProjectDependency.class,
+				new Action<ProjectDependency>() {
+
+					@Override
+					public void execute(ProjectDependency projectDependency) {
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						projectConfigurer.configure(
+							(ProjectInternal)dependencyProject);
+					}
+
+				});
+		}
 	}
 
 	protected String getArchivesBaseName(Project project) {

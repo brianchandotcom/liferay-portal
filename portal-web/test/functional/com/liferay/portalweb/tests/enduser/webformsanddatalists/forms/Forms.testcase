@@ -132,6 +132,35 @@
 		</execute>
 	</command>
 
+	<command name="CreateUntitledForm" priority="3">
+		<description message="This is a use case for LPS-64379." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#gotoAddFirstField">
+			<var name="fieldType" value="Text" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="FormsAdmin#viewForm">
+			<var name="formDescription" value="" />
+			<var name="formName" value="Untitled Form" />
+		</execute>
+	</command>
+
 	<command name="EditFormsConfigurationViaSystemSettings" priority="3">
 		<description message="This is a use case for LPS-59749" />
 
@@ -947,35 +976,6 @@
 			<var name="fieldLabel" value="Select Field" />
 			<var name="fieldName" value="SelectField" />
 			<var name="fieldValue" value="Select 2" />
-		</execute>
-	</command>
-
-	<command name="CreateUntitledForm" priority="3">
-		<description message="This is a use case for LPS-64379." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-		<execute macro="Form#gotoAddFirstField">
-			<var name="fieldType" value="Text" />
-		</execute>
-
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
-
-		<execute macro="FormFields#save" />
-
-		<execute macro="Form#save" />
-
-		<execute macro="FormsAdmin#viewForm">
-			<var name="formDescription" value="" />
-			<var name="formName" value="Untitled Form" />
 		</execute>
 	</command>
 

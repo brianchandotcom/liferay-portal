@@ -54,12 +54,6 @@ public class ModulesStructureTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					Path buildXmlPath = dirPath.resolve("build.xml");
-
-					if (Files.notExists(buildXmlPath)) {
-						Assert.fail("Missing " + buildXmlPath);
-					}
-
 					Path ivyXmlPath = dirPath.resolve("ivy.xml");
 
 					if (Files.exists(ivyXmlPath)) {

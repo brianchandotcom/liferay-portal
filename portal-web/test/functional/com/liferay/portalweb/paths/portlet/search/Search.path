@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_INFO</td>
+	<td>//div[contains(@class,'search-info')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_SCOPE_SELECT</td>
 	<td>//select[contains(@name,'SearchPortlet_groupId')]</td>
 	<td></td>

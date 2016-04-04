@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BROWSE_IMAGE</td>
+	<td>//button[contains(@class,'browse-image')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CALCULATE</td>
 	<td>//button[contains(.,'Calculate')]</td>
 	<td></td>
@@ -486,6 +491,11 @@
 <tr>
 	<td>REMOVE</td>
 	<td>//button[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_IMAGE</td>
+	<td>//button[contains(@id,'removeImage')]</td>
 	<td></td>
 </tr>
 <tr>

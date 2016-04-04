@@ -114,7 +114,7 @@
 
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -154,7 +154,7 @@
 
 		<execute macro="Bookmark#viewEntry">
 			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -187,7 +187,7 @@
 
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -212,8 +212,8 @@
 		<execute macro="Bookmark#editPG">
 			<var name="bookmarkName" value="Bookmark Name" />
 			<var name="bookmarkNameEdit" value="Bookmark Name Edit" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
-			<var name="bookmarkURLEdit" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="bookmarkURLEdit" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -253,7 +253,7 @@
 
 		<execute macro="Bookmark#viewEntry">
 			<var name="bookmarkName" value="Bookmark Name Edit" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">

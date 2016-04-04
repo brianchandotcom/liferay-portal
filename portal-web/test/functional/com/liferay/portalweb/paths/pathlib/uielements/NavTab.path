@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILE_INFO</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'File Info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERAL</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
 	<td></td>
@@ -251,6 +256,11 @@
 <tr>
 	<td>USER_GROUPS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'User Groups')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Version')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ANGLE_LEFT_BACK</td>
-	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')] | //div[contains(@class,'toolbar-group-content')]//span[contains(@class,'icon-angle-left')]</td>
+	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')]/a | //div[contains(@class,'toolbar-group-content')]//span[contains(@class,'icon-angle-left')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -27,6 +27,51 @@
 		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
 	</command>
 
+	<command name="searchBlogImages">
+		<var name="key_imageFileName" value="${imageFileName}" />
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+
+		<execute function="AssertElementNotPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
+
+		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${imageFileName}" />
+
+		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
+
+		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} in Blog Images" />
+
+		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="searchDMImages">
+		<var name="key_imageFileName" value="${imageFileName}" />
+		<var name="key_uploadFileName" value="${imageFileName}" />
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
+
+		<execute function="AssertElementNotPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+
+		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${imageFileName}" />
+
+		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
+
+		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} everywhere." />
+
+		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
 	<command name="selectBlogImage">
 		<var name="key_imageFileName" value="${imageFileName}" />
 		<var name="key_uploadFileName" value="${imageFileName}" />
@@ -45,18 +90,35 @@
 	</command>
 
 	<command name="selectDMImage">
-		<var name="key_imageFileName" value="${imageFileName}" />
 		<var name="key_uploadFileName" value="${imageFileName}" />
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
 
+		<if>
+			<isset var="dmFolderName" />
+			<then>
+				<var name="key_dmFolderName" value="${dmFolderName}" />
+
+				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmSubFolderName" />
+			<then>
+				<var name="key_dmFolderName" value="${dmSubFolderName}" />
+
+				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmSubFolderName}" />
+			</then>
+		</if>
+
 		<var method="StringUtil#replace('${imageFileName}', ' ', '+')" name="key_imageFileName" />
 
 		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="ItemSelector#CAPTION" value1="${uploadFileName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ItemSelector#CAPTION" value1="${imageFileName}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -84,21 +146,33 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
-	<command name="viewItemDetail">
-		<var name="key_fileDetail" value="${fileDetail}" />
-		<var name="key_imageFileName" value="${uploadFileName}" />
+	<command name="viewBlogImageDetails">
+		<var name="key_imageFileName" value="${imageFileName}" />
+		<var name="key_uploadFileName" value="${uploadFileName}" />
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${uploadFileName}" />
+		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_IMAGE_PREVIEW" />
 		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${uploadFileName}" />
 
 		<execute function="Click" locator1="ItemSelector#FILE_INFO_ICON" />
 
-		<execute function="AssertElementPresent" locator1="ItemSelector#SIDEBAR_HEADER" />
-		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_CONTENT" value1="${fileDetail}" />
+		<execute function="AssertElementPresent" locator1="NavTab#FILE_INFO" />
+		<execute function="AssertElementPresent" locator1="NavTab#VERSION" />
+
+		<execute function="AssertClick" locator1="NavTab#FILE_INFO" value1="File Info" />
+
+		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_FILE_INFO_FORMAT" value1="${imageFormat}" />
+		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_FILE_INFO_SIZE" value1="${imageSize}" />
+		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_FILE_INFO_NAME" value1="${uploadFileName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ItemSelector#SIDEBAR_FILE_INFO_MODIFIED" value1="${lastModifiedBy}" />
+
+		<execute function="AssertClick" locator1="NavTab#VERSION" value1="Version" />
+
+		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_VERSION_VERSION" value1="${versionNumber}" />
+		<execute function="AssertTextEquals" locator1="ItemSelector#SIDEBAR_VERSION_STATUS" value1="${imageStatus}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

@@ -56,6 +56,34 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
+	<command name="addEntryWithCoverImageFromDMFolders">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addTitle">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="BlogsEditEntry#COVER_IMAGE" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+
+		<execute macro="ItemSelector#selectDMImage">
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmSubFolderName" value="${dmSubFolderName}" />
+			<var name="imageFileName" value="${imageFileName}" />
+		</execute>
+
+		<execute function="Pause" locator1="1000" />
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="addEntryWithHTML">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 

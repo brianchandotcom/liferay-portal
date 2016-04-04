@@ -112,6 +112,48 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SIDEBAR_FILE_INFO-->
+<tr>
+	<td>SIDEBAR_FILE_INFO_FORMAT</td>
+	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Format')]/following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_FILE_INFO_MODIFIED</td>
+	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Modified')]/following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_FILE_INFO_NAME</td>
+	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Name')]/following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_FILE_INFO_SIZE</td>
+	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Size')]/following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIDEBAR_VERSION-->
+<tr>
+	<td>SIDEBAR_VERSION_STATUS</td>
+	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Status')]/following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_VERSION_VERSION</td>
+	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Version')]/following-sibling::dd[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SELECT_IMAGE_PREVIEW-->
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>

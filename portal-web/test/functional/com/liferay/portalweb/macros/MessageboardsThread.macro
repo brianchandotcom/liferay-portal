@@ -117,7 +117,7 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute function="Click" locator1="Icon#BACK" />
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
 			<var name="threadSubject" value="${threadSubject}" />

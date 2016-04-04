@@ -741,7 +741,6 @@
 
 		<execute macro="ItemSelector#selectDMImage">
 			<var name="imageFileName" value="DM Document Title" />
-			<var name="uploadFileName" value="DM Document Title" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

@@ -142,12 +142,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="saveWithoutFormName">
-		<execute function="AssertClick" locator1="Form#SAVE_BUTTON_DISABLED" value1="Save" />
-
-		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="submitFormPublish">
 		<execute macro="Form#viewFormPublish">
 			<var name="fieldLabel" value="${fieldLabel}" />

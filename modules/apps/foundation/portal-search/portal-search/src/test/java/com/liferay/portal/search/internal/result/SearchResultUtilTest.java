@@ -15,15 +15,11 @@
 package com.liferay.portal.search.internal.result;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
@@ -39,7 +35,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -47,29 +42,15 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import org.osgi.framework.BundleContext;
-
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(
-	{
-		AssetRendererFactoryRegistryUtil.class, ServiceTrackerMapFactory.class
-	}
-)
+@PrepareForTest(AssetRendererFactoryRegistryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		setUpServiceTrackerMap();
-
-		super.setUp();
-	}
 
 	@Test
 	public void testBlankDocument() {
@@ -189,9 +170,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		SearchResultManagerImpl searchResultManagerImpl =
 			new SearchResultManagerImpl();
 
+		searchResultManagerImpl.setClassNameLocalService(classNameLocalService);
 		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
-
-		searchResultManagerImpl.activate(null);
 
 		return searchResultManagerImpl;
 	}
@@ -215,32 +195,10 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		return summaryFactoryImpl;
 	}
 
-	protected void setUpServiceTrackerMap() {
-		mockStatic(ServiceTrackerMapFactory.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(
-				ServiceTrackerMapFactory.class, "openSingleValueMap",
-				BundleContext.class, Class.class, String.class,
-				ServiceReferenceMapper.class)
-		).toReturn(
-			_serviceTrackerMap
-		);
-
-		when(
-			_serviceTrackerMap.getService(Mockito.anyString())
-		).thenReturn(
-			null
-		);
-	}
-
 	@Mock
 	private Indexer<Object> _indexer;
 
 	@Mock
 	private IndexerRegistry _indexerRegistry;
-
-	@Mock
-	private ServiceTrackerMap<String, SearchResultManager> _serviceTrackerMap;
 
 }

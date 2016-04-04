@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultContributor;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -41,7 +39,6 @@ import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
 import com.liferay.portal.search.internal.result.SummaryFactoryImpl;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -55,7 +52,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -69,20 +65,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(
-	{AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class}
-)
+@PrepareForTest(AssetRendererFactoryRegistryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilDLFileEntryTest
 	extends BaseSearchResultUtilTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		setUpClassNameLocalService();
-	}
 
 	@Test
 	public void testDLFileEntry() throws Exception {
@@ -371,7 +357,7 @@ public class SearchResultUtilDLFileEntryTest
 			new DLFileEntrySearchResultContributor();
 
 		dlFileEntrySearchResultContributor.setClassNameLocalService(
-			_classNameLocalService);
+			classNameLocalService);
 		dlFileEntrySearchResultContributor.setDLAppLocalService(
 			_dlAppLocalService);
 		dlFileEntrySearchResultContributor.setSummaryFactory(
@@ -386,6 +372,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		searchResultManagerImpl.addSearchResultContributor(
 			createSearchResultContributor());
+		searchResultManagerImpl.setClassNameLocalService(classNameLocalService);
 		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
 
 		return searchResultManagerImpl;
@@ -410,28 +397,8 @@ public class SearchResultUtilDLFileEntryTest
 		return summaryFactoryImpl;
 	}
 
-	protected void setUpClassNameLocalService() throws Exception {
-		ClassName className = Mockito.mock(ClassName.class);
-
-		when(
-			_classNameLocalService.getClassName(
-				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
-		).thenReturn(
-			className
-		);
-
-		when(
-			className.getClassName()
-		).thenReturn(
-			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
-		);
-	}
-
 	private static final String _DL_FILE_ENTRY_CLASS_NAME =
 		DLFileEntry.class.getName();
-
-	@Mock
-	private ClassNameLocalService _classNameLocalService;
 
 	@Mock
 	private DLAppLocalService _dlAppLocalService;

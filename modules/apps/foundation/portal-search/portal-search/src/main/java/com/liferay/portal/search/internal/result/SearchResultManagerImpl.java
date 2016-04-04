@@ -14,16 +14,16 @@
 
 package com.liferay.portal.search.internal.result;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultManager;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultContributor;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.HashMap;
@@ -32,9 +32,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -65,10 +62,18 @@ public class SearchResultManagerImpl implements SearchResultManager {
 	public SearchResult createSearchResult(Document document)
 		throws PortalException {
 
-		SearchResultManager searchResultManager = _getSearchResultManager(
-			document);
+		SearchResultContributor searchResultContributor =
+			getSearchResultContributor(document);
 
-		return searchResultManager.createSearchResult(document);
+		if (searchResultContributor == null) {
+			return createSearchResultWithEntryClass(document);
+		}
+
+		if (isClassPresent(document)) {
+			return createSearchResultWithClass(document);
+		}
+
+		return createSearchResultWithEntryClass(document);
 	}
 
 	public void removeSearchResultContributor(
@@ -76,6 +81,13 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 		_searchResultContributors.remove(
 			searchResultContributor.getEntryClassName());
+	}
+
+	@Reference(unbind = "-")
+	public void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -89,58 +101,103 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
-		SearchResultManager searchResultManager = _getSearchResultManager(
-			document);
+		SearchResultContributor searchResultContributor =
+			getSearchResultContributor(document);
 
-		searchResultManager.updateSearchResult(
-			searchResult, document, locale, portletRequest, portletResponse);
-	}
+		if (searchResultContributor != null) {
+			if (isClassPresent(document)) {
+				searchResultContributor.addRelatedModel(
+					searchResult, document, locale, portletRequest,
+					portletResponse);
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SearchResultManager.class, "(model.class.name=*)",
-			new ServiceReferenceMapper<String, SearchResultManager>() {
-
-				@Override
-				public void map(
-					ServiceReference<SearchResultManager> serviceReference,
-					Emitter<String> emitter) {
-
-					Object modelClassName = serviceReference.getProperty(
-						"model.class.name");
-
-					emitter.emit((String)modelClassName);
+				if (searchResult.getSummary() == null) {
+					searchResult.setSummary(
+						getSummaryWithClass(searchResult, locale));
 				}
 
-			});
+				return;
+			}
+		}
+
+		searchResult.setSummary(
+			getSummaryWithEntryClass(
+				document, locale, portletRequest, portletResponse));
 	}
 
-	private SearchResultManager _getSearchResultManager(Document document) {
+	protected SearchResult createSearchResultWithClass(Document document)
+		throws PortalException {
+
+		long classNameId = GetterUtil.getLong(
+			document.get(Field.CLASS_NAME_ID));
+
+		ClassName className = _classNameLocalService.getClassName(classNameId);
+
+		if (className == null) {
+			throw new PortalException(
+				"Unable to get class name from id " + classNameId);
+		}
+
+		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+
+		return new SearchResult(className.getClassName(), classPK);
+	}
+
+	protected SearchResult createSearchResultWithEntryClass(Document document) {
+		String entryClassName = GetterUtil.getString(
+			document.get(Field.ENTRY_CLASS_NAME));
+		long entryClassPK = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		return new SearchResult(entryClassName, entryClassPK);
+	}
+
+	protected SearchResultContributor getSearchResultContributor(
+		Document document) {
+
 		String entryClassName = GetterUtil.getString(
 			document.get(Field.ENTRY_CLASS_NAME));
 
-		SearchResultManager searchResultManager = _serviceTrackerMap.getService(
-			entryClassName);
-
-		if (searchResultManager != null) {
-			return searchResultManager;
-		}
-
-		SearchResultContributor searchResultContributor =
-			_searchResultContributors.get(entryClassName);
-
-		if (searchResultContributor != null) {
-			return new ContributedSearchResultManager(
-				searchResultContributor, _summaryFactory);
-		}
-
-		return new DefaultSearchResultManagerImpl(_summaryFactory);
+		return _searchResultContributors.get(entryClassName);
 	}
 
+	protected Summary getSummaryWithClass(
+			SearchResult searchResult, Locale locale)
+		throws PortalException {
+
+		return _summaryFactory.getSummary(
+			searchResult.getClassName(), searchResult.getClassPK(), locale);
+	}
+
+	protected Summary getSummaryWithEntryClass(
+			Document document, Locale locale, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws PortalException {
+
+		String entryClassName = GetterUtil.getString(
+			document.get(Field.ENTRY_CLASS_NAME));
+		long entryClassPK = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		return _summaryFactory.getSummary(
+			document, entryClassName, entryClassPK, locale, portletRequest,
+			portletResponse);
+	}
+
+	protected boolean isClassPresent(Document document) {
+		long classNameId = GetterUtil.getLong(
+			document.get(Field.CLASS_NAME_ID));
+		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+
+		if ((classNameId > 0) && (classPK > 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private ClassNameLocalService _classNameLocalService;
 	private final HashMap<String, SearchResultContributor>
 		_searchResultContributors = new HashMap<>();
-	private ServiceTrackerMap<String, SearchResultManager> _serviceTrackerMap;
 	private SummaryFactory _summaryFactory;
 
 }

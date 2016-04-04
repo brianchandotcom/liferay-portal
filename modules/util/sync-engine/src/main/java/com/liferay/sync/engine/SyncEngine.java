@@ -219,11 +219,10 @@ public class SyncEngine {
 						"Missing sync site file path {}", syncSiteFilePath);
 				}
 
+				syncSite.setActive(false);
 				syncSite.setUiEvent(SyncSite.UI_EVENT_SYNC_SITE_FOLDER_MISSING);
 
 				SyncSiteService.update(syncSite);
-
-				SyncSiteService.deactivateSyncSite(syncSite.getSyncSiteId());
 			}
 		}
 

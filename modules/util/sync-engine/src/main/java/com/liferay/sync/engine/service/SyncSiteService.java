@@ -64,11 +64,11 @@ public class SyncSiteService {
 		}
 
 		syncSite.setActive(true);
+		syncSite.setState(SyncSite.STATE_SYNCED);
+		syncSite.setUiEvent(SyncSite.UI_EVENT_NONE);
 
 		if (reset) {
 			syncSite.setRemoteSyncTime(-1);
-			syncSite.setState(SyncSite.STATE_SYNCED);
-			syncSite.setUiEvent(SyncSite.UI_EVENT_NONE);
 
 			deleteSyncFiles(syncSite);
 		}

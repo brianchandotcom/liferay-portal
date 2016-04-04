@@ -18,6 +18,8 @@ dependencies {
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "jaxen", name: "jaxen", version: "1.1.1"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
+	compile project(":apps:foundation:petra:petra-content-util")
+	compile project(":apps:foundation:petra:petra-xml-util")
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.1.0"

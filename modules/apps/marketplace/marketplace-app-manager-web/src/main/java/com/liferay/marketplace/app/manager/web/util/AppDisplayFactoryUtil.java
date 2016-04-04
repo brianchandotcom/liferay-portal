@@ -130,7 +130,7 @@ public class AppDisplayFactoryUtil {
 		List<Module> modules = _moduleLocalService.getModules(app.getAppId());
 
 		for (Module module : modules) {
-			Bundle bundle = bundlesMap.get(module);
+			Bundle bundle = bundlesMap.getBundle(module);
 
 			if (bundle != null) {
 				appDisplay.addBundle(bundle);

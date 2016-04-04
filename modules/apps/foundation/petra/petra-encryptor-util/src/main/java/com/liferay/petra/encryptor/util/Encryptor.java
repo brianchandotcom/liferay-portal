@@ -41,6 +41,7 @@ import javax.crypto.KeyGenerator;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @see com.liferay.util.Encryptor
  */
 public class Encryptor {
 

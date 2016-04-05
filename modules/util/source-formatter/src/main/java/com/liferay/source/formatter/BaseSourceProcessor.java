@@ -120,6 +120,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public void processErrorMessage(String fileName, String message) {
+		List<String> errorMessages = _errorMessagesMap.get(fileName);
+
+		if (errorMessages == null) {
+			errorMessages = new ArrayList<>();
+		}
+
+		errorMessages.add(message);
+
+		_errorMessagesMap.put(fileName, errorMessages);
+	}
+
+	@Override
 	public void setSourceFormatterArgs(
 		SourceFormatterArgs sourceFormatterArgs) {
 
@@ -2207,18 +2220,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected void printError(String fileName, String message) {
 		_sourceFormatterHelper.printError(fileName, message);
-	}
-
-	protected void processErrorMessage(String fileName, String message) {
-		List<String> errorMessages = _errorMessagesMap.get(fileName);
-
-		if (errorMessages == null) {
-			errorMessages = new ArrayList<>();
-		}
-
-		errorMessages.add(message);
-
-		_errorMessagesMap.put(fileName, errorMessages);
 	}
 
 	protected void processFormattedFile(

@@ -31,6 +31,8 @@ public interface SourceProcessor {
 
 	public List<String> getModifiedFileNames();
 
+	public void processErrorMessage(String fileName, String message);
+
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 
 }

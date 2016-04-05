@@ -63,10 +63,7 @@ if (!LDAPUtil.isValidFilter(groupFilter)) {
 	return;
 }
 
-String groupMappingsParam =
-	"groupName=" + ParamUtil.getString(request, "groupMappingGroupName") +
-	"\ndescription=" + ParamUtil.getString(request, "groupMappingDescription") +
-	"\nuser=" + ParamUtil.getString(request, "groupMappingUser");
+String groupMappingsParam = "groupName=" + ParamUtil.getString(request, "groupMappingGroupName") + "\ndescription=" + ParamUtil.getString(request, "groupMappingDescription") + "\nuser=" + ParamUtil.getString(request, "groupMappingUser");
 
 Properties groupMappings = PropertiesUtil.load(groupMappingsParam);
 

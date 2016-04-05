@@ -61,7 +61,8 @@ public class WikiNavigationTreeMenuConfigurationAction
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.navigation.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.wiki.navigation.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

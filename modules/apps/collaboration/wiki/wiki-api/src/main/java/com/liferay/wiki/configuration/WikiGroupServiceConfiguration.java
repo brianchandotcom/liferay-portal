@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Iván Zaera
  */
 @ExtendedObjectClassDefinition(
-	category = "collaboration", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "collaboration",
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",

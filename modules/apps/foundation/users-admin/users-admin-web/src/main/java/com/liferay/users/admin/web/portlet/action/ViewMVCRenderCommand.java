@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN, "mvc.command.name=/",
-		"mvc.command.name=/users_admin/view"
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/users_admin/view"
 	},
 	service = MVCRenderCommand.class
 )

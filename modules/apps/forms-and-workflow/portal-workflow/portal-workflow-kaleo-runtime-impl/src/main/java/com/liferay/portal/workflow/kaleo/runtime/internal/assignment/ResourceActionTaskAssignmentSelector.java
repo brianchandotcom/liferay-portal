@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Lundgren
  */
 @Component(
-	immediate = true, property = {"assignee.class.name=com.liferay.portal.kernel.model.ResourceAction"},
+	immediate = true,
+	property = {"assignee.class.name=com.liferay.portal.kernel.model.ResourceAction"},
 	service = TaskAssignmentSelector.class
 )
 public class ResourceActionTaskAssignmentSelector

@@ -41,7 +41,8 @@ public class PortalSettingsTestLDAPGroupsMVCRenderCommand
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		super.servletContext = servletContext;

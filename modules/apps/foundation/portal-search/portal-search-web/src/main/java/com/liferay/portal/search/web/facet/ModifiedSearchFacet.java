@@ -137,7 +137,8 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.search.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.portal.search.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

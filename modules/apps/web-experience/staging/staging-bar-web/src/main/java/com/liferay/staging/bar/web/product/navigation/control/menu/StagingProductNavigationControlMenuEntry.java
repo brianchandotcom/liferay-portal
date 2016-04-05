@@ -37,7 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"product.navigation.control.menu.entry.order:Integer=100"
 	},
-	service = {ProductNavigationControlMenuEntry.class, StagingProductNavigationControlMenuEntry.class}
+	service = {
+		ProductNavigationControlMenuEntry.class,
+		StagingProductNavigationControlMenuEntry.class
+	}
 )
 public class StagingProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
@@ -68,7 +71,8 @@ public class StagingProductNavigationControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

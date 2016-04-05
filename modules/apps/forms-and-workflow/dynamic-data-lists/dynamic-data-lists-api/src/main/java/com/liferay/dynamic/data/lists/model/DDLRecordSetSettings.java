@@ -116,8 +116,8 @@ public interface DDLRecordSetSettings {
 	public boolean sendEmailNotification();
 
 	@DDMFormField(
-		label = "%select-a-storage-type", properties = {"dataSourceType=manual"},
-		type = "select"
+		label = "%select-a-storage-type",
+		properties = {"dataSourceType=manual"}, type = "select"
 	)
 	public String storageType();
 

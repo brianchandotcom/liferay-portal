@@ -67,7 +67,8 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

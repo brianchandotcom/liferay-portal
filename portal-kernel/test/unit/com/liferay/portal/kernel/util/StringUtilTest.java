@@ -261,6 +261,15 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testQuote() {
+		Assert.assertEquals(
+			"'Hello, World!'", StringUtil.quote("Hello, World!"));
+		Assert.assertEquals("%PATH%", StringUtil.quote("PATH", '%'));
+		Assert.assertEquals(
+			"Hello World Hello", StringUtil.quote(" World ", "Hello"));
+	}
+
+	@Test
 	public void testRemoveChar() {
 		Assert.assertEquals("abcd", StringUtil.removeChar("a.b.c.d", '.'));
 		Assert.assertEquals("abcd", StringUtil.removeChar(".a.b.c.d.", '.'));

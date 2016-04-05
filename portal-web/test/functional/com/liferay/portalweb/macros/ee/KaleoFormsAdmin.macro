@@ -444,9 +444,9 @@
 	</command>
 
 	<command name="saveFieldSet">
-		<execute macro="KaleoFormsAdmin#saveFieldSetAfterEdit" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveFieldSetAfterEdit">

@@ -68,9 +68,7 @@
 			<var name="fieldName" value="DMTestField" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -222,9 +220,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -527,9 +523,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -713,7 +707,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSetAfterEdit" />
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${ddlDataDefinitionName} Edit" />
@@ -863,9 +857,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -958,9 +950,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -1147,9 +1137,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -1331,9 +1319,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -1483,7 +1469,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSetAfterEdit" />
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${ddlDataDefinitionName} Edit" />
@@ -1551,7 +1537,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSetAfterEdit" />
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="To Do Edit" />
@@ -1964,9 +1950,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2085,9 +2069,7 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2291,9 +2273,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2404,9 +2384,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2502,9 +2480,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2644,9 +2620,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2786,9 +2760,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -2929,9 +2901,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -3133,9 +3103,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -3409,9 +3377,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#editFieldSet">
 			<var name="kfFieldSetName" value="Field Set Data Definition" />
@@ -3423,7 +3389,7 @@
 			<var name="kfFieldSetName" value="Field Set Data Definition" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSetAfterEdit" />
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 	</command>
 
 	<command name="ViewFieldSetParentDefinitionIframeTitle" priority="3">
@@ -3488,9 +3454,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
@@ -3532,9 +3496,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />

@@ -261,6 +261,15 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testQuote() {
+		Assert.assertEquals(
+			"'Hello, World!'", StringUtil.quote("Hello, World!"));
+		Assert.assertEquals("%PATH%", StringUtil.quote("PATH", '%'));
+		Assert.assertEquals(
+			"Hello World Hello", StringUtil.quote(" World ", "Hello"));
+	}
+
+	@Test
 	public void testRemoveChar() {
 		Assert.assertEquals("abcd", StringUtil.removeChar("a.b.c.d", '.'));
 		Assert.assertEquals("abcd", StringUtil.removeChar(".a.b.c.d.", '.'));
@@ -280,6 +289,21 @@ public class StringUtilTest {
 		String s = "/.*a./b.c.*d./";
 
 		Assert.assertSame(s, StringUtil.removeChars(s, 'x', 'y', 'z'));
+	}
+
+	@Test
+	public void testRemoveFromList() {
+		Assert.assertEquals(
+			"red,green,yellow,",
+			StringUtil.removeFromList("red,blue,green,yellow", "blue"));
+		Assert.assertEquals("", StringUtil.removeFromList("blue", "blue"));
+		Assert.assertEquals("", StringUtil.removeFromList("blue,", "blue"));
+		Assert.assertEquals(
+			"red;green;yellow;",
+			StringUtil.removeFromList("red;blue;green;yellow", "blue", ";"));
+		Assert.assertEquals("", StringUtil.removeFromList("blue", "blue", ";"));
+		Assert.assertEquals(
+			"", StringUtil.removeFromList("blue;", "blue", ";"));
 	}
 
 	@Test
@@ -457,6 +481,32 @@ public class StringUtilTest {
 			StringUtil.shorten(
 				"HelloWorldHelloWorldHelloWorldHelloWorldHelloWorldHello", 20,
 				"... etc."));
+	}
+
+	@Test
+	public void testSplit() {
+		Assert.assertArrayEquals(
+			new String[] {"Alice", "Bob", "Charlie"},
+			StringUtil.split("Alice,Bob,Charlie"));
+		Assert.assertArrayEquals(
+			new boolean[] {true, false, true},
+			StringUtil.split("true,false,true", false));
+		Assert.assertArrayEquals(
+			new String[] {"First", "Second", "Third"},
+			StringUtil.split("First;Second;Third", ';'));
+		Assert.assertArrayEquals(
+			new String[] {"One", "Two", "Three"},
+			StringUtil.split("OnexTwoxThree", 'x'));
+		Assert.assertArrayEquals(
+			new double[] {1.0, 2.0, 3.0}, StringUtil.split("1.0,2.0,3.0", 1.0),
+			0.0001);
+		Assert.assertArrayEquals(
+			new float[] {1.0f, 2.0f, 3.0f},
+			StringUtil.split("1.0,2.0,3.0", 1.0f), .0001f);
+		Assert.assertArrayEquals(
+			new int[] {1, 2, 3}, StringUtil.split("1,2,3", 1));
+		Assert.assertArrayEquals(
+			new long[] {1L, 2L, 3L}, StringUtil.split("1,2,3", 1L));
 	}
 
 	@Test

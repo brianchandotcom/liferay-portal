@@ -264,104 +264,104 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--INVITATIONS_RESOURCES_AVAILABILITY-->
+<!--RESOURCES_AVAILABILITY-->
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_PANEL_COLLAPSED</td>
+	<td>RESOURCES_AVAILABILITY_PANEL_COLLAPSED</td>
 	<td>//div[contains(@class,'toggler-header-collapsed') and contains(@id,'checkAvailability')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_PANEL_EXPANDED</td>
+	<td>RESOURCES_AVAILABILITY_PANEL_EXPANDED</td>
 	<td>//div[contains(@class,'toggler-header-expanded') and contains(@id,'checkAvailability')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_TODAY_BUTTON</td>
+	<td>RESOURCES_AVAILABILITY_TODAY_BUTTON</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'today btn')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_PREV_BUTTON</td>
+	<td>RESOURCES_AVAILABILITY_PREV_BUTTON</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'icon-prev btn')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_NEXT_BUTTON</td>
+	<td>RESOURCES_AVAILABILITY_NEXT_BUTTON</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'icon-next btn')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_DAY_BUTTON</td>
+	<td>RESOURCES_AVAILABILITY_DAY_BUTTON</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-day btn')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_DAY_BUTTON_ACTIVE</td>
+	<td>RESOURCES_AVAILABILITY_DAY_BUTTON_ACTIVE</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-day btn active')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_WEEK_BUTTON</td>
+	<td>RESOURCES_AVAILABILITY_WEEK_BUTTON</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-week btn')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_WEEK_BUTTON_ACTIVE</td>
+	<td>RESOURCES_AVAILABILITY_WEEK_BUTTON_ACTIVE</td>
 	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-week btn active')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_ALL_DAY_TITLE</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_ALL_DAY_TITLE</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'12:00 AM') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'11:59 PM')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]//div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(240, 208, 208)')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event scheduler-event-past calendar-portlet-event-pending scheduler-event-disabled')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR_TITLE</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR_TITLE</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT_TITLE</td>
+	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT_TITLE</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>

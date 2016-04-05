@@ -6,13 +6,13 @@
 
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
 
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-
 		<var name="key_iframeTitle" value="Field Set" />
 
 		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Field Set" />
+
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
 	</command>
@@ -536,7 +536,7 @@
 			</then>
 			<else>
 				<var name="key_iframeTitle" value="New Field Set" />
-				
+
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
 			</else>
 		</if>

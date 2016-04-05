@@ -45,8 +45,6 @@ import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -1531,9 +1529,8 @@ public class FileSystemImporter extends BaseImporter {
 
 		for (String ddmStructureKey : _ddmStructures) {
 			List<JournalArticle> journalArticles =
-				_journalArticleService.getArticlesByStructureId(
-					getGroupId(), ddmStructureKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+				_journalArticleLocalService.getStructureArticles(
+					getGroupId(), ddmStructureKey);
 
 			for (JournalArticle journalArticle : journalArticles) {
 				if ((primaryKeys != null) &&
@@ -1697,13 +1694,6 @@ public class FileSystemImporter extends BaseImporter {
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleService(
-		JournalArticleService journalArticleService) {
-
-		_journalArticleService = journalArticleService;
 	}
 
 	@Reference(unbind = "-")
@@ -1988,7 +1978,6 @@ public class FileSystemImporter extends BaseImporter {
 	private IndexerRegistry _indexerRegistry;
 	private IndexWriterHelper _indexWriterHelper;
 	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleService _journalArticleService;
 	private JSONFactory _jsonFactory;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

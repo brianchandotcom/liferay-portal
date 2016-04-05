@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class JavaSourceTabCalculator {
 
 	public void calculateTabs(
-			String fileName, String content,
+			String fileName, String content, int lineCount, int tabLevel,
 			JavaSourceProcessor javaSourceProcessor)
 		throws Exception {
 
@@ -46,12 +46,9 @@ public class JavaSourceTabCalculator {
 
 			String line = null;
 
-			int lineCount = 0;
-
 			boolean forClause = false;
 			boolean ifClause = false;
 			boolean multiLineComment = false;
-			int tabLevel = 0;
 
 			_extraTabMap = new HashMap<>();
 			_ignoreTabCheck = new HashSet<>();
@@ -122,6 +119,14 @@ public class JavaSourceTabCalculator {
 				}
 			}
 		}
+	}
+
+	public void calculateTabs(
+			String fileName, String content,
+			JavaSourceProcessor javaSourceProcessor)
+		throws Exception {
+
+		calculateTabs(fileName, content, 0, 0, javaSourceProcessor);
 	}
 
 	protected void addExtraTabs(int lineCount, int extra) {

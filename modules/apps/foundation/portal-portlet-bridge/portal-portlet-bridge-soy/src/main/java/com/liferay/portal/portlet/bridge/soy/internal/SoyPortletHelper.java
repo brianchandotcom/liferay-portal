@@ -161,13 +161,14 @@ public class SoyPortletHelper {
 			return Collections.emptySet();
 		}
 
-		Set<String> requiredModules = new LinkedHashSet<>(
-			additionalRequiredModules);
+		Set<String> requiredModules = new LinkedHashSet<>();
 
 		String controllerName = getControllerName(path);
 
 		requiredModules.add(
 			_moduleName.concat(StringPool.SLASH).concat(controllerName));
+
+		requiredModules.addAll(additionalRequiredModules);
 
 		return requiredModules;
 	}

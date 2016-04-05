@@ -1,0 +1,11 @@
+FileTree bndFileTree = fileTree(dir: rootDir, include: "**/bnd.bnd")
+
+URI rootURI = rootDir.toURI()
+
+include bndFileTree.collect {
+	String dirName = rootURI.relativize(it.parentFile.toURI())
+
+	dirName = dirName[0 .. -2]
+
+	dirName.replace('/' as char, ':' as char)
+} as String[]

@@ -623,7 +623,7 @@ public class UpgradeClient {
 		_appServers.put("tomcat", AppServer.getTomcat());
 		_appServers.put("weblogic", AppServer.getWeblogic());
 		_appServers.put("websphere", AppServer.getWebsphere());
-		_appServers.put("wildfly", AppServer.getWildfly());
+		_appServers.put("wildfly", AppServer.getWildFly());
 
 		_datasources.put("db2", Datasource.getDB2Connection());
 		_datasources.put("mariadb", Datasource.getMariaDBConnection());

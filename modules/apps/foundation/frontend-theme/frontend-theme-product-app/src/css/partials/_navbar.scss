@@ -3,6 +3,10 @@
 
 	.portlet {
 		margin: 0;
+
+		&:hover, &.focus {
+			z-index: 501;
+		}
 	}
 }
 

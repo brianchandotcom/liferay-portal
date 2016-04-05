@@ -925,30 +925,15 @@
 	</command>
 
 	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Virtual Instances" />
-		</execute>
-
-		<execute macro="PortalInstances#editCP">
-			<var name="mailDomain" value="gmail.com" />
-			<var name="virtualHost" value="localhost" />
-		</execute>
+		<property name="custom.properties" value="message.boards.email.bulk=false" />
+		<property name="test.smtp.server.enabled" value="true" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
@@ -959,7 +944,7 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -986,7 +971,7 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1019,31 +1004,21 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="MB Category Name" />
+			<var name="content" value="MB Category Name" />
+			<var name="recipient" value="Test Test" />
+			<var name="sender" value="Test Test" />
+			<var name="subject" value="MB Category Name" />
 		</execute>
 
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Test Test" />
-			<var name="gmailAssetType" value="MB Category Name New Message" />
-			<var name="gmailMailTableMessageTitle" value="MB Thread Message Subject" />
-			<var name="gmailMessageBody" value="MB Thread Message Body Liferay Message Boards" />
-			<var name="gmailMessageBodyClosing" value="MB Thread Message Body Liferay Message Boards" />
-			<var name="gmailMessageBodyGreeting" value="MB Thread Message Body Liferay Message Boards" />
-			<var name="gmailMessageTitle" value="MB Category Name New Message: MB Thread Message Subject" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="MB Category Name" />
+			<var name="content" value="MB Category Name" />
+			<var name="recipient" value="userfn userln" />
+			<var name="sender" value="Test Test" />
+			<var name="subject" value="MB Category Name" />
 		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
-		</execute>
-
-		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
 	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">

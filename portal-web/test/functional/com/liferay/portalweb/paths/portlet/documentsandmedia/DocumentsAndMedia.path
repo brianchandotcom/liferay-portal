@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
-	<td>//h4[contains(.,'${key_dmDocumentVersionNumber}')]/..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//dl/dt[contains(.,'${key_dmDocumentVersionNumber}')]/../..//div//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

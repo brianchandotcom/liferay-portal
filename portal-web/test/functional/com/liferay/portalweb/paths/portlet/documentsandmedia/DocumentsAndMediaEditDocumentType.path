@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>PANEL_ADDITIONAL_METADATA_FIELDS</td>
-	<td>//div[@id='additional-metadata-fieldsHeader']//a</td>
+	<td>//div[contains(@id,'additionalMetadataFields')]//a[contains(.,'Additional Metadata Fields')</td>
 	<td></td>
 </tr>
 </tbody>

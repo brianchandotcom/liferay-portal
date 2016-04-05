@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>MOCKMOCK_TO_FIELD</td>
-	<td>//tr[contains(.,'${key_columnEntry}')]/td[2]</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td[2][contains(.,'${key_recipient}')]</td>
 	<td></td>
 </tr>
 <tr>

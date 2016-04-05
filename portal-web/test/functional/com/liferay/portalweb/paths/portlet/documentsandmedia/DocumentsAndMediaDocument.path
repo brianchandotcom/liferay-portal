@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_VERSION</td>
-	<td>//h3[contains(@class,'version')]</td>
+	<td>//div[contains(@class,'sidebar-body')]/dl/dt[contains(.,'Version')]/following-sibling::dd</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CREATED_DATE</td>
-	<td>//div[contains(@class,'sidebar-body') and contains(.,'Created')]//p</td>
+	<td>//div[contains(@class,'sidebar-body')]/dl/dt[3]/following-sibling::dd</td>
 	<td></td>
 </tr>
 <tr>

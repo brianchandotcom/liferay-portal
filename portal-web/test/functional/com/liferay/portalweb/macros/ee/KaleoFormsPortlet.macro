@@ -16,7 +16,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -38,8 +39,10 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_TASK_1" value1="${workflowTask}" />
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
@@ -64,7 +67,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -206,7 +210,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -227,7 +232,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -244,7 +250,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -292,7 +299,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 

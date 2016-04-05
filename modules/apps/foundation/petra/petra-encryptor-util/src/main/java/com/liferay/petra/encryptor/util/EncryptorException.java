@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.petra.encryptor.util;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.petra.encryptor.util.EncryptorException
+ * @see com.liferay.util.EncryptorException
  */
 public class EncryptorException extends Exception {
 

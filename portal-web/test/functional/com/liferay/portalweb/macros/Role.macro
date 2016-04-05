@@ -51,7 +51,9 @@
 			</then>
 		</if>
 
-		<execute macro="PortletEntry#save" />
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addStagingAdminRole">
@@ -574,9 +576,9 @@
 			</if>
 		</for>
 
-		<execute macro="Button#clickSave" />
+		<execute function="AssertClick" locator1="RolesPermissions#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="localizeRoleDescriptionCmd">

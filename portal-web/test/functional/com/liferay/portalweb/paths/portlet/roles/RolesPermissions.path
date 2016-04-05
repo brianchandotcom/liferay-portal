@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td>//button[@type='button']/span[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

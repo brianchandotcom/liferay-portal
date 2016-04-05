@@ -449,10 +449,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="saveFieldSetAfterEdit">
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="saveForm">
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 		<execute macro="Button#clickSave" />

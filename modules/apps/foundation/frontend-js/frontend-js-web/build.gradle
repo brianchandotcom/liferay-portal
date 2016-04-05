@@ -18,7 +18,7 @@ task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
-String alloyUIVersion = "3.0.3-deprecated.26"
+String alloyUIVersion = "3.0.3-deprecated.27"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
 String lexiconVersion = "0.2.12"

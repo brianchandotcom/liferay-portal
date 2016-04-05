@@ -97,7 +97,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

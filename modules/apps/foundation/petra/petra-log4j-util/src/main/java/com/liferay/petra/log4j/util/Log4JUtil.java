@@ -225,12 +225,9 @@ public class Log4JUtil {
 	private static Map<String, String> _getCustomLogSettings() {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-		if (Log4JUtil.class.getClassLoader() == classLoader) {
-			return _customLogSettings;
-		}
-
 		try {
-			Class<?> clazz = classLoader.loadClass(Log4JUtil.class.getName());
+			Class<?> clazz = classLoader.loadClass(
+				"com.liferay.util.log4j.Log4JUtil");
 
 			Field field = ReflectionUtil.getDeclaredField(
 				clazz, "_customLogSettings");

@@ -73,7 +73,25 @@ public class PropsUtil {
 	}
 
 	public static Properties getProperties() {
-		return _instance._getProperties();
+		return getProperties(false);
+	}
+
+	public static Properties getProperties(boolean includeSystem) {
+		Properties properties = _instance._getProperties();
+
+		if (!includeSystem) {
+			return properties;
+		}
+
+		Properties systemCompanyProperties = _instance._getProperties(
+			CompanyConstants.SYSTEM);
+
+		Properties mergedProperties =
+			(Properties)systemCompanyProperties.clone();
+
+		mergedProperties.putAll(properties);
+
+		return mergedProperties;
 	}
 
 	public static Properties getProperties(
@@ -230,11 +248,13 @@ public class PropsUtil {
 	}
 
 	private Configuration _getConfiguration() {
+		return _getConfiguration(CompanyThreadLocal.getCompanyId());
+	}
+
+	private Configuration _getConfiguration(long companyId) {
 		if (_configurations == null) {
 			return _configuration;
 		}
-
-		Long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (companyId > CompanyConstants.SYSTEM) {
 			Configuration configuration = _configurations.get(companyId);
@@ -325,6 +345,10 @@ public class PropsUtil {
 
 	private Properties _getProperties() {
 		return _getConfiguration().getProperties();
+	}
+
+	private Properties _getProperties(long companyId) {
+		return _getConfiguration(companyId).getProperties();
 	}
 
 	private Properties _getProperties(String prefix, boolean removePrefix) {

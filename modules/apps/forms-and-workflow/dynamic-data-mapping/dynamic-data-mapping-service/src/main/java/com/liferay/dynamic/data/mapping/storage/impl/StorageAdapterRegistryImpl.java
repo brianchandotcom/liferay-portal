@@ -52,7 +52,8 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, service = StorageAdapter.class
+		policyOption = ReferencePolicyOption.GREEDY,
+		service = StorageAdapter.class
 	)
 	public void setStorageAdapter(StorageAdapter storageAdapter) {
 		_storageAdaptersMap.put(

@@ -142,7 +142,8 @@ public class CopyApplicationsPortletConfigurationIcon
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

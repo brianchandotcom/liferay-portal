@@ -52,7 +52,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	property = {"item.selector.view.order:Integer=100"}, service = ItemSelectorView.class
+	property = {"item.selector.view.order:Integer=100"},
+	service = ItemSelectorView.class
 )
 public class RecentSitesItemSelectorView
 	implements ItemSelectorView<SiteItemSelectorCriterion> {

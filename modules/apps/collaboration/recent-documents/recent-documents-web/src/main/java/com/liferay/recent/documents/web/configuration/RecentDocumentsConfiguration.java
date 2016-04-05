@@ -24,7 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration",
-	localization = "content/Language", name = "recent.documents.configuration.name"
+	localization = "content/Language",
+	name = "recent.documents.configuration.name"
 )
 public interface RecentDocumentsConfiguration {
 

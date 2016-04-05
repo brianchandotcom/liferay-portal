@@ -4002,6 +4002,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected boolean isAnnotationParameter(String content, String line) {
+		int x = -1;
+
+		while (true) {
+			x = line.indexOf(StringPool.COMMA_AND_SPACE, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(line, x)) {
+				return false;
+			}
+		}
+
 		Matcher matcher = _annotationPattern.matcher(content);
 
 		while (matcher.find()) {

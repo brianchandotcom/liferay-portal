@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.model.CacheField;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -4327,13 +4327,59 @@ public class ServiceBuilder {
 	private JavaMethod[] _getMethods(
 		JavaClass javaClass, boolean superclasses) {
 
-		JavaMethod[] methods = javaClass.getMethods(superclasses);
+		List<String> cacheFieldMethods = new ArrayList<>();
+
+		for (JavaField javaField : javaClass.getFields()) {
+			Annotation[] annotations = javaField.getAnnotations();
+
+			for (Annotation annotation : annotations) {
+				Type type = annotation.getType();
+
+				String className = type.getFullyQualifiedName();
+
+				if (!className.equals(CacheField.class.getName())) {
+					continue;
+				}
+
+				if (!GetterUtil.getBoolean(
+						annotation.getNamedParameter("propagateToInterface"))) {
+
+					String methodName = null;
+
+					Object namedParameter = annotation.getNamedParameter(
+						"methodName");
+
+					if (namedParameter != null) {
+						methodName = StringUtil.unquote(
+							StringUtil.trim(namedParameter.toString()));
+					}
+
+					if (Validator.isNull(methodName)) {
+						methodName = TextFormatter.format(
+							getVariableName(javaField), TextFormatter.G);
+					}
+
+					cacheFieldMethods.add("get".concat(methodName));
+					cacheFieldMethods.add("set".concat(methodName));
+				}
+
+				break;
+			}
+		}
+
+		List<JavaMethod> methods = new ArrayList<>();
+
+		for (JavaMethod javaMethod : javaClass.getMethods(superclasses)) {
+			if (!cacheFieldMethods.contains(javaMethod.getName())) {
+				methods.add(javaMethod);
+			}
+		}
 
 		for (JavaMethod method : methods) {
 			Arrays.sort(method.getExceptions());
 		}
 
-		return methods;
+		return methods.toArray(new JavaMethod[methods.size()]);
 	}
 
 	private String _getSessionTypeName(int sessionType) {

@@ -33,9 +33,9 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheField;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
@@ -408,10 +408,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleImpl.class);
 
-	@CacheField
+	@CacheField(propagateToInterface = true)
 	private String _defaultLanguageId;
 
-	@CacheField
+	@CacheField(propagateToInterface = true)
 	private Document _document;
 
 	private String _smallImageType;

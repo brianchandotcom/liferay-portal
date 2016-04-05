@@ -26,7 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceU
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheField;
+import com.liferay.portal.kernel.model.cache.CacheField;
 
 /**
  * @author Brian Wing Shun Chan
@@ -75,7 +75,7 @@ public class DDMStructureVersionImpl extends DDMStructureVersionBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureVersionImpl.class);
 
-	@CacheField(methodName = "DDMForm")
+	@CacheField(methodName = "DDMForm", propagateToInterface = true)
 	private DDMForm _ddmForm;
 
 }

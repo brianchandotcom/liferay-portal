@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheField;
+import com.liferay.portal.kernel.model.cache.CacheField;
 
 /**
  * @author Marcellus Tavares
@@ -49,7 +49,7 @@ public class DDMStructureLayoutImpl extends DDMStructureLayoutBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureLayoutImpl.class);
 
-	@CacheField(methodName = "DDMFormLayout")
+	@CacheField(methodName = "DDMFormLayout", propagateToInterface = true)
 	private DDMFormLayout _ddmFormLayout;
 
 }

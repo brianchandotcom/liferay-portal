@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheField;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -476,7 +476,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureImpl.class);
 
-	@CacheField(methodName = "DDMForm")
+	@CacheField(methodName = "DDMForm", propagateToInterface = true)
 	private DDMForm _ddmForm;
 
 }

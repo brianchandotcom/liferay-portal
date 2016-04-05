@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.CacheField;
+import com.liferay.portal.kernel.model.cache.CacheField;
 
 import java.util.List;
 
@@ -94,7 +94,7 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 		_recordSetSettings = null;
 	}
 
-	@CacheField(methodName = "DDMFormValues")
+	@CacheField(methodName = "DDMFormValues", propagateToInterface = true)
 	private DDMFormValues _ddmFormValues;
 
 	private DDLRecordSetSettings _recordSetSettings;

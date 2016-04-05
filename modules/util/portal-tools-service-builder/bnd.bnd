@@ -11,11 +11,11 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -liferay-includeresource:\
+	com/liferay/shopping/service.xml=../../../modules/apps/deprecated/shopping/shopping-service/service.xml,\
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/web-experience/journal/journal-service/service.xml,\
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/service.xml,\
-	com/liferay/shopping/service.xml=../../../modules/deprecated/shopping/shopping-service/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/counter/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/mail/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
@@ -69,11 +69,11 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/model/CacheField.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/model/ModelHints.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/model/ModelHintsCallback.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/model/ModelHintsConstants.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/model/ModelHintsUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/model/cache/CacheField.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/nio/charset/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/plugin/Version.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/search/Document.class,\

@@ -47,6 +47,7 @@ public class AppSoap implements Serializable {
 		soapModel.setCategory(model.getCategory());
 		soapModel.setIconURL(model.getIconURL());
 		soapModel.setVersion(model.getVersion());
+		soapModel.setRequired(model.getRequired());
 
 		return soapModel;
 	}
@@ -203,6 +204,18 @@ public class AppSoap implements Serializable {
 		_version = version;
 	}
 
+	public boolean getRequired() {
+		return _required;
+	}
+
+	public boolean isRequired() {
+		return _required;
+	}
+
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	private String _uuid;
 	private long _appId;
 	private long _companyId;
@@ -216,4 +229,5 @@ public class AppSoap implements Serializable {
 	private String _category;
 	private String _iconURL;
 	private String _version;
+	private boolean _required;
 }

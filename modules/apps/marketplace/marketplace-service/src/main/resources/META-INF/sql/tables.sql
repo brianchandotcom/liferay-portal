@@ -11,7 +11,8 @@ create table Marketplace_App (
 	description STRING null,
 	category VARCHAR(75) null,
 	iconURL STRING null,
-	version VARCHAR(75) null
+	version VARCHAR(75) null,
+	required BOOLEAN
 );
 
 create table Marketplace_Module (

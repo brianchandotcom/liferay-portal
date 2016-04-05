@@ -67,7 +67,7 @@ public class AppServer {
 		);
 	}
 
-	public static AppServer getWildfly() {
+	public static AppServer getWildFly() {
 		return new AppServer(
 			"../wildfly-10.0.0", "/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war"

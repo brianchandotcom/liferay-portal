@@ -56,6 +56,15 @@ public class AttributeDefinitionUtilTest {
 	}
 
 	@Test
+	public void testDefaultValueArray() {
+		mockCardinality(Integer.MAX_VALUE);
+
+		mockDefaultValue("A", "B", "C");
+
+		assertDefaultValue("A", "B", "C");
+	}
+
+	@Test
 	public void testDefaultValueBlankString() {
 		mockDefaultValue(StringPool.BLANK);
 

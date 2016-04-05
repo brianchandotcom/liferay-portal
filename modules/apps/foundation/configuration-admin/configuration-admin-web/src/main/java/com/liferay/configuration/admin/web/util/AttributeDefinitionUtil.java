@@ -38,7 +38,9 @@ public class AttributeDefinitionUtil {
 			return new String[] {StringPool.BLANK};
 		}
 
-		if (attributeDefinition.getCardinality() == 0) {
+		if ((attributeDefinition.getCardinality() == 0) ||
+			(defaultValues.length > 1)) {
+
 			return defaultValues;
 		}
 

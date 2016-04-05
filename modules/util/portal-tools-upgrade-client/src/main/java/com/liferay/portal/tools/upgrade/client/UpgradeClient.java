@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.upgrade.tool;
+package com.liferay.portal.tools.upgrade.client;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,7 +47,7 @@ import org.apache.commons.cli.ParseException;
 /**
  * @author David Truong
  */
-public class UpgradeTool {
+public class UpgradeClient {
 
 	public static final String JAVA_HOME = System.getenv("JAVA_HOME");
 
@@ -96,9 +96,9 @@ public class UpgradeTool {
 				logFile = new File(fileName);
 			}
 
-			UpgradeTool upgradeTool = new UpgradeTool(jvmOpts, logFile);
+			UpgradeClient upgradeClient = new UpgradeClient(jvmOpts, logFile);
 
-			upgradeTool.upgrade();
+			upgradeClient.upgrade();
 		}
 		catch (ParseException pe) {
 			System.err.println("Failed to parse command line properties");
@@ -112,7 +112,7 @@ public class UpgradeTool {
 		}
 	}
 
-	public UpgradeTool(String jvmOpts, File logFile) throws Exception {
+	public UpgradeClient(String jvmOpts, File logFile) throws Exception {
 		_consoleReader = new ConsoleReader();
 
 		_datasourcePropertiesFile = new File(

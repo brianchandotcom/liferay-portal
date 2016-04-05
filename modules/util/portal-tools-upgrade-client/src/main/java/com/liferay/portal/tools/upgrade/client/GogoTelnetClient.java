@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.upgrade.tool;
+package com.liferay.portal.tools.upgrade.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

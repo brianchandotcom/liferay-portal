@@ -55,22 +55,23 @@ public class UpgradeClient {
 		try {
 			Options options = _getOptions();
 
-			CommandLineParser parser = new DefaultParser();
+			CommandLineParser commandLineParser = new DefaultParser();
 
-			CommandLine cmd = parser.parse(options, args);
+			CommandLine commandLine = commandLineParser.parse(options, args);
 
-			if (cmd.hasOption("help")) {
-				HelpFormatter formatter = new HelpFormatter();
+			if (commandLine.hasOption("help")) {
+				HelpFormatter helpFormatter = new HelpFormatter();
 
-				formatter.printHelp("Liferay Database Upgrade Tool", options);
+				helpFormatter.printHelp(
+					"Liferay Database Upgrade Tool", options);
 
 				return;
 			}
 
 			String jvmOpts;
 
-			if (cmd.hasOption("jvmOpts")) {
-				jvmOpts = cmd.getOptionValue("jvmOpts");
+			if (commandLine.hasOption("jvmOpts")) {
+				jvmOpts = commandLine.getOptionValue("jvmOpts");
 			}
 			else {
 				jvmOpts =
@@ -80,20 +81,20 @@ public class UpgradeClient {
 
 			File logFile;
 
-			if (cmd.hasOption("logFile")) {
-				logFile = new File(cmd.getOptionValue("logFile"));
+			if (commandLine.hasOption("logFile")) {
+				logFile = new File(commandLine.getOptionValue("logFile"));
 			}
 			else {
 				logFile = new File("upgrade.log");
 			}
 
 			if (logFile.exists()) {
-				String fileName = logFile.getName();
+				String logFileName = logFile.getName();
 
 				logFile.renameTo(
-					new File(fileName + "." + logFile.lastModified()));
+					new File(logFileName + "." + logFile.lastModified()));
 
-				logFile = new File(fileName);
+				logFile = new File(logFileName);
 			}
 
 			UpgradeClient upgradeClient = new UpgradeClient(jvmOpts, logFile);
@@ -200,11 +201,11 @@ public class UpgradeClient {
 
 		try (InputStreamReader isr = new InputStreamReader(
 				process.getInputStream());
-			BufferedReader br = new BufferedReader(isr)) {
+			BufferedReader bufferedReader = new BufferedReader(isr)) {
 
 			String line;
 
-			while ((line = br.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				if (line.equals(
 						"Running modules upgrades. Connect to your Gogo " +
 							"Shell to check the status.")) {
@@ -225,7 +226,7 @@ public class UpgradeClient {
 		boolean upgrading = true;
 
 		while (upgrading) {
-			try (GogoTelnetClient client = new GogoTelnetClient()) {
+			try (GogoTelnetClient gogoTelnetClient = new GogoTelnetClient()) {
 				System.out.println("You are now connected to Gogo Shell");
 
 				_printHelp();
@@ -242,14 +243,14 @@ public class UpgradeClient {
 						_printHelp();
 					}
 					else {
-						System.out.println(client.send(line));
+						System.out.println(gogoTelnetClient.send(line));
 					}
 				}
 
 				System.out.print(
 					"Making sure all upgrades steps have been completed");
 
-				String upgradeSteps = client.send(
+				String upgradeSteps = gogoTelnetClient.send(
 					"upgrade:list | grep Registered | grep step");
 
 				upgrading = upgradeSteps.contains("true");
@@ -312,6 +313,24 @@ public class UpgradeClient {
 		return options;
 	}
 
+	private void _appendLibs(StringBuilder classPath, File dir)
+		throws Exception {
+
+		if (dir.exists() && dir.isDirectory()) {
+			for (File file : dir.listFiles()) {
+				String fileName = file.getName();
+
+				if (file.isFile() && fileName.endsWith("jar")) {
+					classPath.append(
+						file.getCanonicalPath() + File.pathSeparator);
+				}
+				else if (file.isDirectory()) {
+					_appendLibs(classPath, file);
+				}
+			}
+		}
+	}
+
 	private String _getClassPath() throws Exception {
 		StringBuilder classPath = new StringBuilder();
 
@@ -323,45 +342,29 @@ public class UpgradeClient {
 			classPath.append(File.pathSeparator);
 		}
 
-		_getLibs(classPath, new File("lib"));
+		_appendLibs(classPath, new File("lib"));
 
-		_getLibs(classPath, new File("."));
+		_appendLibs(classPath, new File("."));
 
-		_getLibs(classPath, new File(_appServer.getDir(), "bin"));
+		_appendLibs(classPath, new File(_appServer.getDir(), "bin"));
 
-		_getLibs(classPath, _appServer.getGlobalLibDir());
+		_appendLibs(classPath, _appServer.getGlobalLibDir());
 
 		classPath.append(_appServer.getPortalClassesDir().getCanonicalPath());
 
-		_getLibs(classPath, _appServer.getPortalLibDir());
+		_appendLibs(classPath, _appServer.getPortalLibDir());
 
 		return classPath.toString();
 	}
 
-	private void _getLibs(StringBuilder classPath, File dir) throws Exception {
-		if (dir.exists() && dir.isDirectory()) {
-			for (File lib : dir.listFiles()) {
-				String fileName = lib.getName();
-
-				if (lib.isFile() && fileName.endsWith("jar")) {
-					classPath.append(
-						lib.getCanonicalPath() + File.pathSeparator);
-				}
-				else if (lib.isDirectory()) {
-					_getLibs(classPath, lib);
-				}
-			}
-		}
+	private String _getRelativePath(File baseFile, File pathFile) {
+		return _getRelativePath(baseFile.toPath(), pathFile.toPath());
 	}
 
-	private String _getRelativePath(File base, File path) {
-		return _getRelativePath(base.toPath(), path.toPath());
-	}
+	private String _getRelativePath(Path basePath, Path path) {
+		Path relativePath = basePath.relativize(path);
 
-	private String _getRelativePath(Path base, Path path) {
-		Path relative = base.relativize(path);
-
-		return relative.toString();
+		return relativePath.toString();
 	}
 
 	private void _printHelp() {
@@ -393,13 +396,17 @@ public class UpgradeClient {
 		_store(_upgradeProperties, _upgradePropertiesFile);
 	}
 
-	private void _store(Properties props, File propertyFile)
+	private void _store(Properties properties, File propertiesFile)
 		throws FileNotFoundException {
 
-		try (PrintWriter pw = new PrintWriter(propertyFile)) {
-			for (Enumeration e = props.propertyNames(); e.hasMoreElements();) {
-				String key = (String)e.nextElement();
-				pw.println(key + "=" + props.getProperty(key));
+		try (PrintWriter printWriter = new PrintWriter(propertiesFile)) {
+			Enumeration<?> enumeration = properties.propertyNames();
+
+			while (enumeration.hasMoreElements()) {
+				String key = (String)enumeration.nextElement();
+				String value = properties.getProperty(key);
+
+				printWriter.println(key + "=" + value);
 			}
 		}
 	}

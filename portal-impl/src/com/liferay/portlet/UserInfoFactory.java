@@ -99,6 +99,10 @@ public class UserInfoFactory {
 				UserAttributes.LIFERAY_USER_ID,
 				userAttributes.getValue(UserAttributes.LIFERAY_USER_ID));
 
+			userInfo.put(
+				UserAttributes.USER_NAME_FULL,
+				userAttributes.getValue(UserAttributes.USER_NAME_FULL));
+
 			// Portlet user attributes
 
 			for (String userAttributeName : portletApp.getUserAttributes()) {

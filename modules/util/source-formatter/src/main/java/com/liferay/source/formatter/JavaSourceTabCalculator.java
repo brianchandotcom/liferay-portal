@@ -36,7 +36,7 @@ public class JavaSourceTabCalculator {
 
 	public void calculateTabs(
 			String fileName, String content, int lineCount, int tabLevel,
-			JavaSourceProcessor javaSourceProcessor)
+			SourceProcessor sourceProcessor)
 		throws Exception {
 
 		content = stripTrailingComments(content);
@@ -84,7 +84,7 @@ public class JavaSourceTabCalculator {
 					if (Validator.isNotNull(line) && !ifClause) {
 						checkTabLevel(
 							trimmedLine, leadingTabCount, tabLevel, fileName,
-							lineCount, javaSourceProcessor);
+							lineCount, sourceProcessor);
 					}
 
 					if (trimmedLine.startsWith("catch (") ||
@@ -122,11 +122,10 @@ public class JavaSourceTabCalculator {
 	}
 
 	public void calculateTabs(
-			String fileName, String content,
-			JavaSourceProcessor javaSourceProcessor)
+			String fileName, String content, SourceProcessor sourceProcessor)
 		throws Exception {
 
-		calculateTabs(fileName, content, 0, 0, javaSourceProcessor);
+		calculateTabs(fileName, content, 0, 0, sourceProcessor);
 	}
 
 	protected void addExtraTabs(int lineCount, int extra) {
@@ -355,7 +354,7 @@ public class JavaSourceTabCalculator {
 
 	protected void checkTabLevel(
 		String trimmedLine, int leadingTabCount, int tabLevel, String fileName,
-		int lineCount, JavaSourceProcessor javaSourceProcessor) {
+		int lineCount, SourceProcessor sourceProcessor) {
 
 		if (_ignoreTabCheck.contains(lineCount)) {
 			_printIncorrectTabMessage = true;
@@ -370,7 +369,7 @@ public class JavaSourceTabCalculator {
 		}
 		else {
 			if (_printIncorrectTabMessage) {
-				javaSourceProcessor.processErrorMessage(
+				sourceProcessor.processErrorMessage(
 					fileName,
 					"Incorrect tab or line break: " + fileName + " " +
 						lineCount);

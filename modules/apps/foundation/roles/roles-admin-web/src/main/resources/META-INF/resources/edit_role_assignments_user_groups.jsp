@@ -43,6 +43,10 @@ if (tabs3.equals("available")) {
 	<%
 	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
 
+	if (!searchTerms.isSearch()) {
+		searchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
+	}
+
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {

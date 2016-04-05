@@ -43,6 +43,10 @@ if (tabs3.equals("available")) {
 	<%
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
+	if (!searchTerms.isSearch()) {
+		searchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
+	}
+
 	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 	groupParams.put("site", Boolean.TRUE);

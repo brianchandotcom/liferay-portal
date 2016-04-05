@@ -129,12 +129,12 @@
 <!--FIELD_SET_TABLE-->
 <tr>
 	<td>FIELD_SET_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldSetName}')]/td[1])[1]</td>
+	<td>//tr[contains(.,'${key_kfFieldSetName}')]/td[contains(.,'${key_kfFieldSetName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_SET_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldSetName}')]/td[4]//div/a[@title='Actions'])[1]</td>
+	<td>//tr[contains(.,'${key_kfFieldSetName}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -236,12 +236,12 @@
 <!--WORKFLOW_TABLE-->
 <tr>
 	<td>WORKFLOW_TABLE_TITLE</td>
-	<td>//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[contains(.,'${key_workflowDefinitionTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]//div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -310,7 +310,7 @@
 </tr>
 <tr>
 	<td>FORMS_TABLE_ASSIGN_FORM_BUTTON</td>
-	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[3]//button</td>
+	<td>//tr[contains(.,'${key_workflowTask}')]//span[contains(.,'Assign Form')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -33,12 +33,12 @@
 <!--PROCESS_TABLE-->
 <tr>
 	<td>PROCESS_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_kaleoProcesses')]//tr[contains(.,'${key_kfProcessName}')]/td[1]//a)[1]</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[contains(.,'${key_kfProcessName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROCESS_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_kaleoProcesses')]//tr[contains(.,'${key_kfProcessName}')]/td[2]//div/a[@title='Actions'])[1]</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

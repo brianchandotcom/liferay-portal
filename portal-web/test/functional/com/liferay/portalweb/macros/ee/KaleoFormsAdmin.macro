@@ -641,7 +641,7 @@
 	<command name="viewProcessRecord">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_MENULIST_VIEW" value1="View" />
 	</command>
 

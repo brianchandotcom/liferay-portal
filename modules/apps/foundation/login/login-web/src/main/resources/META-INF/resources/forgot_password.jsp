@@ -88,6 +88,7 @@ if (reminderAttempts == null) {
 					<portlet:renderURL var="redirectURL">
 						<portlet:param name="mvcRenderCommandName" value="/login/login" />
 					</portlet:renderURL>
+
 					<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 				</c:if>
 

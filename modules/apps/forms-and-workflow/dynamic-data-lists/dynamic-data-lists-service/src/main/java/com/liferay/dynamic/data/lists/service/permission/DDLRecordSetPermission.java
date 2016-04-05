@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.permission;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,13 +72,17 @@ public class DDLRecordSetPermission {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDLRecord.class.getName(), PortletProvider.Action.EDIT);
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, recordSet.getGroupId(),
-			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), portletId,
-			actionId);
+		if (recordSet.getScope() ==
+				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
 
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
+			Boolean hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, recordSet.getGroupId(),
+				DDLRecordSet.class.getName(), recordSet.getRecordSetId(),
+				portletId, actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
 		}
 
 		if (permissionChecker.hasOwnerPermission(

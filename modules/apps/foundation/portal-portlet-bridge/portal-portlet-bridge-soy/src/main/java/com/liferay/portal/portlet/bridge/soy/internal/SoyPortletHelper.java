@@ -73,7 +73,7 @@ public class SoyPortletHelper {
 			return path;
 		}
 
-		return "Templates.".concat(path).concat(".render");
+		return path.concat(".render");
 	}
 
 	protected JSONObject createContextJSONObject(

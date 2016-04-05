@@ -92,17 +92,18 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_TABLE_NAME" value1="${kfFieldSetName}" />
 		<execute function="Click" locator1="KaleoFormsAdminEditProcess#FIELD_SET_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_MENULIST_CHOOSE" value1="Choose" />
+
 		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="chooseForm">
 		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME" value1="${kfFormName}" />
 		<execute function="Click" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_CHOOSE" value1="Choose" />
 	</command>
 

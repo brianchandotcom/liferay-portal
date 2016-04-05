@@ -26,6 +26,7 @@
 		<column name="category" type="String" />
 		<column name="iconURL" type="String" />
 		<column name="version" type="String" />
+		<column name="required" type="boolean" />
 
 		<!-- Finder methods -->
 

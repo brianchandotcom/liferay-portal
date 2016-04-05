@@ -694,13 +694,9 @@
 	</command>
 
 	<command name="configureReminders">
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#REMINDERS_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#REMINDERS_PANEL_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#REMINDERS_PANEL_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Reminders" />
+		</execute>
 
 		<execute function="Check" locator1="CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_1" />
 		<execute function="Check" locator1="CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_2" />
@@ -1161,14 +1157,9 @@
 	</command>
 
 	<command name="gotoConfigureRelatedAssets">
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#RELATED_ASSETS_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#RELATED_ASSETS_PANEL_COLLAPSED" />
-
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#RELATED_ASSETS_PANEL_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Related Assets" />
+		</execute>
 	</command>
 
 	<command name="gotoRepeatConfiguration">
@@ -1176,7 +1167,9 @@
 	</command>
 
 	<command name="inviteResource">
-		<execute macro="CalendarEvent#_expandInvitationsPanel" />
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Invitations" />
+		</execute>
 
 		<for list="${resourceNameList}" param="resourceName" >
 			<execute function="Type" locator1="CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
@@ -1235,13 +1228,9 @@
 	</command>
 
 	<command name="resourcesAvailability">
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_PANEL_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_PANEL_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Resources Availability" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
 	</command>
@@ -1264,7 +1253,9 @@
 		<if>
 			<isset var="calendarName" />
 			<then>
-				<execute macro="CalendarEvent#_expandDetailsPanel" />
+				<execute macro="CalendarEvent#_expandPanel">
+					<var name="panelName" value="Details" />
+				</execute>
 
 				<execute function="Select" locator1="CalendarEditEvent#DETAILS_CALENDAR_SELECT" value1="${calendarName}" />
 			</then>
@@ -1430,13 +1421,9 @@
 	</command>
 
 	<command name="tag">
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#CATEGORIZATION_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#CATEGORIZATION_PANEL_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#CATEGORIZATION_PANEL_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Categorization" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#CATEGORIZATION_TAG_FIELD" />
 
@@ -1561,7 +1548,9 @@
 	</command>
 
 	<command name="viewAvailableCalendars">
-		<execute macro="CalendarEvent#_expandDetailsPanel" />
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Details" />
+		</execute>
 
 		<for list="${availableCalendarList}" param="availableCalendarName">
 			<var name="key_calendarName" value="${availableCalendarName}" />
@@ -1743,7 +1732,9 @@
 	</command>
 
 	<command name="viewInvitationResourceNotPresent">
-		<execute macro="CalendarEvent#_expandInvitationsPanel" />
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Invitations" />
+		</execute>
 
 		<for list="${resourceNameList}" param="resourceName" >
 			<execute function="Type" locator1="CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
@@ -1998,7 +1989,9 @@
 	</command>
 
 	<command name="viewUnavailableCalendarsNotPresent">
-		<execute macro="CalendarEvent#_expandDetailsPanel" />
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Details" />
+		</execute>
 
 		<for list="${unavailableCalendarList}" param="unavailableCalendarName">
 			<var name="key_calendarName" value="${unavailableCalendarName}" />

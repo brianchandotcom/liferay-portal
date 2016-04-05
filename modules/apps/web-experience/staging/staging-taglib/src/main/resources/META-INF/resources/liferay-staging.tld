@@ -253,6 +253,13 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
+		<attribute>
+			<description>Whether to publish the private pages; otherwise; the public pages are published.</description>
+			<name>privateLayout</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Renders a Select section in the UI for an Export or Publish screen.</description>

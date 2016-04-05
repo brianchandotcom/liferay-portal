@@ -38,9 +38,14 @@ public class RemoteOptionsTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setPrivateLayout(boolean privateLayout) {
+		_privateLayout = privateLayout;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_exportImportConfigurationId = 0;
+		_privateLayout = false;
 	}
 
 	@Override
@@ -53,10 +58,13 @@ public class RemoteOptionsTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:remote-options:exportImportConfigurationId",
 			_exportImportConfigurationId);
+		request.setAttribute(
+			"liferay-staging:remote-options:privateLayout", _privateLayout);
 	}
 
 	private static final String _PAGE = "/remote_options/page.jsp";
 
 	private long _exportImportConfigurationId = 0;
+	private boolean _privateLayout = false;
 
 }

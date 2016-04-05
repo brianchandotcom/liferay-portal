@@ -66,11 +66,11 @@
 				pageContext,
 				new PortalIncludeUtil.HTMLRenderer() {
 
-				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-					curFormNavigatorEntry.include(request, response);
-				}
+					public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+						curFormNavigatorEntry.include(request, response);
+					}
 
-			});
+				});
 			%>
 
 		</aui:fieldset>

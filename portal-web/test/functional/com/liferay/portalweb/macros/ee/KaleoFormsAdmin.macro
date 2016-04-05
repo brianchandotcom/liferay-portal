@@ -449,7 +449,11 @@
 
 	<command name="saveForm">
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+
 		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+		
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

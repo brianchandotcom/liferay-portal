@@ -34,7 +34,7 @@
 	margin-bottom: 15px;
 
 	@include media-query($breakpoint_tablet, null) {
-		margin-left: 132px;
+		margin: 0 0 0 132px;
 		vertical-align: middle;
 	}
 }

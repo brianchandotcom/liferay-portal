@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Staging Taglib
 Bundle-SymbolicName: com.liferay.staging.taglib
-Bundle-Version: 3.0.1
+Bundle-Version: 3.1.0
 Export-Package: com.liferay.staging.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management

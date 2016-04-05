@@ -499,7 +499,7 @@ public class StringUtilTest {
 			StringUtil.split("OnexTwoxThree", 'x'));
 		Assert.assertArrayEquals(
 			new double[] {1.0, 2.0, 3.0}, StringUtil.split("1.0,2.0,3.0", 1.0),
-			.0001);
+			0.0001);
 		Assert.assertArrayEquals(
 			new float[] {1.0f, 2.0f, 3.0f},
 			StringUtil.split("1.0,2.0,3.0", 1.0f), .0001f);

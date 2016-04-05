@@ -50,7 +50,7 @@
 	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>
 
-<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+<c:if test="<%= hasAddUserGroupPermission %>">
 	<portlet:renderURL var="viewUserGroupsURL" />
 
 	<portlet:renderURL var="addUsergroupURL">

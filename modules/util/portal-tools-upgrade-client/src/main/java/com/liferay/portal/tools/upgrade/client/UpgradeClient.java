@@ -625,13 +625,13 @@ public class UpgradeClient {
 		_appServers.put("websphere", AppServer.getWebsphere());
 		_appServers.put("wildfly", AppServer.getWildFly());
 
-		_datasources.put("db2", Datasource.getDB2Connection());
-		_datasources.put("mariadb", Datasource.getMariaDBConnection());
-		_datasources.put("mysql", Datasource.getMySQLConnection());
-		_datasources.put("oracle", Datasource.getOracleConnection());
-		_datasources.put("postgresql", Datasource.getPostgreSQLConnection());
-		_datasources.put("sqlserver", Datasource.getSQLServerConnection());
-		_datasources.put("sybase", Datasource.getSybaseConnection());
+		_datasources.put("db2", Datasource.getDB2());
+		_datasources.put("mariadb", Datasource.getMariaDB());
+		_datasources.put("mysql", Datasource.getMySQL());
+		_datasources.put("oracle", Datasource.getOracle());
+		_datasources.put("postgresql", Datasource.getPostgreSQL());
+		_datasources.put("sqlserver", Datasource.getSQLServer());
+		_datasources.put("sybase", Datasource.getSybase());
 	}
 
 	private AppServer _appServer;

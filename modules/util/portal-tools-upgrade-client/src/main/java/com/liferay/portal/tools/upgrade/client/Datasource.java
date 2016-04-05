@@ -19,7 +19,7 @@ package com.liferay.portal.tools.upgrade.client;
  */
 public class Datasource {
 
-	public static Datasource getDB2Connection() {
+	public static Datasource getDB2() {
 		return new Datasource(
 			"com.ibm.db2.jcc.DB2Driver", "jdbc:db2://", "localhost", 50000,
 			"/lportal",
@@ -28,7 +28,7 @@ public class Datasource {
 					"progressiveStreaming=2;");
 	}
 
-	public static Datasource getMariaDBConnection() {
+	public static Datasource getMariaDB() {
 		return new Datasource(
 			"org.mariadb.jdbc.Driver", "jdbc:mariadb://", "localhost", 0,
 			"/lportal",
@@ -36,7 +36,7 @@ public class Datasource {
 				"&useFastDateParsing=false");
 	}
 
-	public static Datasource getMySQLConnection() {
+	public static Datasource getMySQL() {
 		return new Datasource(
 			"com.mysql.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
 			"/lportal",
@@ -45,25 +45,25 @@ public class Datasource {
 					"&useFastDateParsing=false&useUnicode=true");
 	}
 
-	public static Datasource getOracleConnection() {
+	public static Datasource getOracle() {
 		return new Datasource(
 			"oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@", "localhost", 1521,
 			":xe", "");
 	}
 
-	public static Datasource getPostgreSQLConnection() {
+	public static Datasource getPostgreSQL() {
 		return new Datasource(
 			"org.postgresql.Driver", "jdbc:postgresql://", "localhost", 5432,
 			"/lportal", "");
 	}
 
-	public static Datasource getSQLServerConnection() {
+	public static Datasource getSQLServer() {
 		return new Datasource(
 			"com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://",
 			"localhost", 0, "/lportal", "");
 	}
 
-	public static Datasource getSybaseConnection() {
+	public static Datasource getSybase() {
 		return new Datasource(
 			"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:", "localhost",
 			5000, "/lportal", "");

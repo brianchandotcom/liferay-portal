@@ -95,13 +95,17 @@ renderResponse.setTitle(organization.getName());
 			rowIdProperty="screenName"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
 				name="name"
 				property="fullName"
+				truncate="<%= true %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column screen-name-column"
 				name="screen-name"
 				property="screenName"
+				truncate="<%= true %>"
 			/>
 		</liferay-ui:search-container-row>
 

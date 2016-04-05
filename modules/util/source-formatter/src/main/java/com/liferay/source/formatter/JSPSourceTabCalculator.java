@@ -197,11 +197,11 @@ public class JSPSourceTabCalculator {
 	}
 
 	private String _checkTabsJavaSourceBlock(
-		String content, int tabCount, int start, int end) {
+		String content, int tabCount, int startLine, int endLine) {
 
 		int minLeadingTabCount = -1;
 
-		for (int i = start; i <= end; i++) {
+		for (int i = startLine; i <= endLine; i++) {
 			String line = _jspSourceProcessor.getLine(content, i);
 
 			if (Validator.isNull(line)) {
@@ -220,7 +220,8 @@ public class JSPSourceTabCalculator {
 		}
 
 		if (tabCount != minLeadingTabCount) {
-			return _fixTabs(content, start, end, minLeadingTabCount - tabCount);
+			return _fixTabs(
+				content, startLine, endLine, minLeadingTabCount - tabCount);
 		}
 
 		return content;
@@ -230,10 +231,12 @@ public class JSPSourceTabCalculator {
 		return _fixTabs(content, lineCount, lineCount, diff);
 	}
 
-	private String _fixTabs(String content, int start, int end, int diff) {
+	private String _fixTabs(
+		String content, int startLine, int endLine, int diff) {
+
 		boolean insidePreTag = false;
 
-		for (int i = start; i <= end; i++) {
+		for (int i = startLine; i <= endLine; i++) {
 			String line = _jspSourceProcessor.getLine(content, i);
 
 			if (Validator.isNull(line)) {

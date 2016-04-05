@@ -484,6 +484,32 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testSplit() {
+		Assert.assertArrayEquals(
+			new String[] {"Alice", "Bob", "Charlie"},
+			StringUtil.split("Alice,Bob,Charlie"));
+		Assert.assertArrayEquals(
+			new boolean[] {true, false, true},
+			StringUtil.split("true,false,true", false));
+		Assert.assertArrayEquals(
+			new String[] {"First", "Second", "Third"},
+			StringUtil.split("First;Second;Third", ';'));
+		Assert.assertArrayEquals(
+			new String[] {"One", "Two", "Three"},
+			StringUtil.split("OnexTwoxThree", 'x'));
+		Assert.assertArrayEquals(
+			new double[] {1.0, 2.0, 3.0}, StringUtil.split("1.0,2.0,3.0", 1.0),
+			.0001);
+		Assert.assertArrayEquals(
+			new float[] {1.0f, 2.0f, 3.0f},
+			StringUtil.split("1.0,2.0,3.0", 1.0f), .0001f);
+		Assert.assertArrayEquals(
+			new int[] {1, 2, 3}, StringUtil.split("1,2,3", 1));
+		Assert.assertArrayEquals(
+			new long[] {1L, 2L, 3L}, StringUtil.split("1,2,3", 1L));
+	}
+
+	@Test
 	public void testSplitLines() {
 		String singleLine = "abcdefg";
 

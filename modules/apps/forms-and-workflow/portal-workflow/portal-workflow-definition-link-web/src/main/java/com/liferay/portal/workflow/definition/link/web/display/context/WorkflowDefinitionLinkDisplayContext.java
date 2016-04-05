@@ -181,7 +181,6 @@ public class WorkflowDefinitionLinkDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
-
 		portletURL.setParameter("tabs1", "default-configuration");
 
 		String delta = ParamUtil.getString(_request, "delta");

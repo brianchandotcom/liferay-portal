@@ -285,6 +285,6 @@ public interface AppLocalService extends BaseLocalService,
 
 	public App updateApp(long userId, long remoteAppId, java.lang.String title,
 		java.lang.String description, java.lang.String category,
-		java.lang.String iconURL, java.lang.String version, File file)
-		throws PortalException;
+		java.lang.String iconURL, java.lang.String version, boolean required,
+		File file) throws PortalException;
 }

@@ -20,6 +20,7 @@
 		<property name="category" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="iconURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="required" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.marketplace.model.impl.ModuleImpl" table="Marketplace_Module">
 		<id name="moduleId" type="long">

@@ -292,6 +292,21 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testRemoveFromList() {
+		Assert.assertEquals(
+			"red,green,yellow,",
+			StringUtil.removeFromList("red,blue,green,yellow", "blue"));
+		Assert.assertEquals("", StringUtil.removeFromList("blue", "blue"));
+		Assert.assertEquals("", StringUtil.removeFromList("blue,", "blue"));
+		Assert.assertEquals(
+			"red;green;yellow;",
+			StringUtil.removeFromList("red;blue;green;yellow", "blue", ";"));
+		Assert.assertEquals("", StringUtil.removeFromList("blue", "blue", ";"));
+		Assert.assertEquals(
+			"", StringUtil.removeFromList("blue;", "blue", ";"));
+	}
+
+	@Test
 	public void testReplaceChar() {
 		Assert.assertEquals(
 			"127_0_0_1", StringUtil.replace("127.0.0.1", '.', '_'));

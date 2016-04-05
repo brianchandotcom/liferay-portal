@@ -63,7 +63,9 @@ public class UpgradeClassNames extends UpgradeProcess {
 		while (matcher.find()) {
 			String oldPortalJavaClassName = matcher.group(1);
 
-			if (oldSubs.contains(oldPortalJavaClassName)) {
+			if (oldPortalJavaClassName.contains(".impl") ||
+				oldSubs.contains(oldPortalJavaClassName)) {
+
 				continue;
 			}
 

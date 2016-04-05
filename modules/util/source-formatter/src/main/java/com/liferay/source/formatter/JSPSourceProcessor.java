@@ -1964,7 +1964,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 	private final Pattern _missingEmptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)</[a-z-]+:([a-z-]+)>\n(\t*)<[a-z-]+");
+		"\n(\t*)</[-\\w]+:([-\\w]+)>\n(\t*)<[-\\w]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"[\n\t]<[-\\w]+:[-\\w]+\n.*?\n\t*/?>(\n|$)", Pattern.DOTALL);

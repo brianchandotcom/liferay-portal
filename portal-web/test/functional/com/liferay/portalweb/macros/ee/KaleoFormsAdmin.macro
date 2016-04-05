@@ -22,8 +22,6 @@
 
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 
-		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />

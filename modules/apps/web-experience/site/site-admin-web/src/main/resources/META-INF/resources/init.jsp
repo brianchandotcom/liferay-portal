@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
+page import="com.liferay.petra.pkparser.util.PKParser" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -110,8 +111,7 @@ page import="com.liferay.site.admin.web.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.site.admin.web.constants.SiteAdminWebKeys" %><%@
 page import="com.liferay.site.admin.web.display.context.SiteAdminDisplayContext" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
-page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
-page import="com.liferay.util.PKParser" %>
+page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

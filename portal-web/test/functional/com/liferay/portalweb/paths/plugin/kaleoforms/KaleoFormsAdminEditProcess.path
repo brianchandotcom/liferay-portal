@@ -103,7 +103,7 @@
 <!--FIELD_SET-->
 <tr>
 	<td>SELECTED_FIELD_SET</td>
-	<td>//div[contains(.,'Selected Field Set')]//span[contains(@id,'kaleoformsportlet_ddmStructureDisplay')]</td>
+	<td>//div[contains(@class,'ddm-field-group')]/a[contains(.,'${key_kfFieldSetName}')]</td>
 	<td></td>
 </tr>
 <tr>

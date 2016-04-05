@@ -3066,7 +3066,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-jboss-eap-6.4">
-		<var name="app.server.jboss.dir" value="${app.server.parent.dir}/jboss-eap-6.4" />
+		<var name="app.server.jboss.dir" value="${app.server.parent.dir}/jboss-eap-6.4.0" />
 
 		<antcall target="zip-executable" inheritAll="false">
 			<param name="zip.executable.file" value="liferay-portal-jboss-eap" />

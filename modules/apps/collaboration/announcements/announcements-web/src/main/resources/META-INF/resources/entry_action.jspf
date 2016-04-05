@@ -39,7 +39,7 @@
 
 		<liferay-ui:icon-delete
 			label="<%= true %>"
-			 url="<%= deleteURL %>"
+			url="<%= deleteURL %>"
 		/>
 	</c:if>
 

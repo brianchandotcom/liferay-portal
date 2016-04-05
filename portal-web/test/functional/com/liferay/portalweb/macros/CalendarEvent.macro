@@ -1233,7 +1233,7 @@
 			<var name="panelName" value="Resources Availability" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
 	</command>
 
 	<command name="saveEventUserInvite">

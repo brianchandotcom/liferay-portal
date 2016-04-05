@@ -65,7 +65,7 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -93,6 +93,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		sb.append(iconURL);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", required=");
+		sb.append(required);
 		sb.append("}");
 
 		return sb.toString();
@@ -171,6 +173,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 			appImpl.setVersion(version);
 		}
 
+		appImpl.setRequired(required);
+
 		appImpl.resetOriginalValues();
 
 		return appImpl;
@@ -195,6 +199,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		category = objectInput.readUTF();
 		iconURL = objectInput.readUTF();
 		version = objectInput.readUTF();
+
+		required = objectInput.readBoolean();
 	}
 
 	@Override
@@ -259,6 +265,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		else {
 			objectOutput.writeUTF(version);
 		}
+
+		objectOutput.writeBoolean(required);
 	}
 
 	public String uuid;
@@ -274,4 +282,5 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public String category;
 	public String iconURL;
 	public String version;
+	public boolean required;
 }

@@ -147,6 +147,8 @@ public class AppPersistenceTest {
 
 		newApp.setVersion(RandomTestUtil.randomString());
 
+		newApp.setRequired(RandomTestUtil.randomBoolean());
+
 		_apps.add(_persistence.update(newApp));
 
 		App existingApp = _persistence.findByPrimaryKey(newApp.getPrimaryKey());
@@ -169,6 +171,7 @@ public class AppPersistenceTest {
 		Assert.assertEquals(existingApp.getCategory(), newApp.getCategory());
 		Assert.assertEquals(existingApp.getIconURL(), newApp.getIconURL());
 		Assert.assertEquals(existingApp.getVersion(), newApp.getVersion());
+		Assert.assertEquals(existingApp.getRequired(), newApp.getRequired());
 	}
 
 	@Test
@@ -239,7 +242,7 @@ public class AppPersistenceTest {
 			true, "appId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "remoteAppId",
 			true, "title", true, "description", true, "category", true,
-			"iconURL", true, "version", true);
+			"iconURL", true, "version", true, "required", true);
 	}
 
 	@Test
@@ -470,6 +473,8 @@ public class AppPersistenceTest {
 		app.setIconURL(RandomTestUtil.randomString());
 
 		app.setVersion(RandomTestUtil.randomString());
+
+		app.setRequired(RandomTestUtil.randomBoolean());
 
 		_apps.add(_persistence.update(app));
 

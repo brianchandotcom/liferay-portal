@@ -19,6 +19,7 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="version" type="String" />
+		<field name="required" type="boolean" />
 	</model>
 	<model name="com.liferay.marketplace.model.Module">
 		<field name="uuid" type="String" />

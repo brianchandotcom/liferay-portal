@@ -16,6 +16,7 @@ package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -203,11 +204,16 @@ public class EditExportConfigurationMVCActionCommand
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long exportImportConfigurationId = MapUtil.getLong(
-			taskContextMap, "exportImportConfigurationId");
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				MapUtil.getLong(taskContextMap, "exportImportConfigurationId"));
+
+		exportImportConfiguration =
+			ExportImportConfigurationFactory.cloneExportImportConfiguration(
+				exportImportConfiguration);
 
 		_exportImportService.exportLayoutsAsFileInBackground(
-			exportImportConfigurationId);
+			exportImportConfiguration);
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)

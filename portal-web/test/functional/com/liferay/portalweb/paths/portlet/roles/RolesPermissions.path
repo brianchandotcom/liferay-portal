@@ -443,7 +443,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX</td>
-	<td>//input[contains(@value,'documentlibraryADD_FOLDER')]</td>
+	<td>//input[contains(@value,'document.libraryADD_FOLDER')]</td>
 	<td></td>
 </tr>
 <tr>

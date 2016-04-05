@@ -717,6 +717,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
+					line = formatIncorrectSyntax(line, "\t ", "\t", false);
+
 					line = formatWhitespace(line, javaSource);
 
 					if (line.endsWith(">")) {

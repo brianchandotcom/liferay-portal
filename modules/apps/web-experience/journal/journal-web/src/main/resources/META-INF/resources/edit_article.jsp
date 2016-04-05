@@ -227,7 +227,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	if ((article != null) && (version > 0)) {
 		approved = article.isApproved();
 
-		 if (workflowEnabled) {
+		if (workflowEnabled) {
 			pending = article.isPending();
 		}
 	}

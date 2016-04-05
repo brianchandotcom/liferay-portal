@@ -36,12 +36,13 @@ public class SyncFileComparatorTest {
 		SyncFile syncFile3 = addSyncFile(3, SyncFile.EVENT_DELETE, 0);
 		SyncFile syncFile4 = addSyncFile(4, SyncFile.EVENT_TRASH, 300);
 		SyncFile syncFile5 = addSyncFile(5, SyncFile.EVENT_UPDATE, 0);
+		SyncFile syncFile6 = addSyncFile(6, SyncFile.EVENT_MOVE, 0);
 
 		Collections.sort(_syncFiles, new SyncFileComparator());
 
 		Assert.assertArrayEquals(
 			new SyncFile[] {
-				syncFile3, syncFile4, syncFile5, syncFile1, syncFile2
+				syncFile3, syncFile4, syncFile6, syncFile5, syncFile1, syncFile2
 			},
 			_syncFiles.toArray());
 	}

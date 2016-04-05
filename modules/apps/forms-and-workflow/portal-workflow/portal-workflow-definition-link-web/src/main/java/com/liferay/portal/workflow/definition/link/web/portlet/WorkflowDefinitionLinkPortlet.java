@@ -67,7 +67,8 @@ public class WorkflowDefinitionLinkPortlet extends MVCPortlet {
 		try {
 			WorkflowDefinitionLinkDisplayContext displayContext =
 				new WorkflowDefinitionLinkDisplayContext(
-					renderRequest, _workflowDefinitionLinkLocalService);
+					renderRequest, renderResponse,
+					_workflowDefinitionLinkLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, displayContext);

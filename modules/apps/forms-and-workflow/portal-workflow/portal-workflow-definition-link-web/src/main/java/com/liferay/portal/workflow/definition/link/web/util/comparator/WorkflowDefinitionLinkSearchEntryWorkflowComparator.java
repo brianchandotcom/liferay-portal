@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.definition.link.web.util.comparator;
 
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
 
@@ -21,7 +22,7 @@ import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinition
  * @author Leonardo Barros
  */
 public class WorkflowDefinitionLinkSearchEntryWorkflowComparator
-	implements java.util.Comparator<WorkflowDefinitionLinkSearchEntry> {
+	extends OrderByComparator<WorkflowDefinitionLinkSearchEntry> {
 
 	public WorkflowDefinitionLinkSearchEntryWorkflowComparator(
 		boolean ascending) {

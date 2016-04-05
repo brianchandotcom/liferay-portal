@@ -14,18 +14,17 @@
 
 package com.liferay.portal.workflow.definition.link.web.util;
 
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry;
 import com.liferay.portal.workflow.definition.link.web.util.comparator.WorkflowDefinitionLinkSearchEntryResourceComparator;
 import com.liferay.portal.workflow.definition.link.web.util.comparator.WorkflowDefinitionLinkSearchEntryWorkflowComparator;
-
-import java.util.Comparator;
 
 /**
  * @author Leonardo Barros
  */
 public class WorkflowDefinitionLinkPortletUtil {
 
-	public static Comparator<WorkflowDefinitionLinkSearchEntry>
+	public static OrderByComparator<WorkflowDefinitionLinkSearchEntry>
 		getWorkflowDefinitionLinkOrderByComparator(
 			String orderByCol, String orderByType) {
 
@@ -35,7 +34,8 @@ public class WorkflowDefinitionLinkPortletUtil {
 			orderByAsc = true;
 		}
 
-		Comparator<WorkflowDefinitionLinkSearchEntry> orderByComparator = null;
+		OrderByComparator<WorkflowDefinitionLinkSearchEntry> orderByComparator =
+			null;
 
 		if (orderByCol.equals("resource")) {
 			orderByComparator =

@@ -17,7 +17,6 @@ package com.liferay.mentions.web.servlet.taglib;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -48,11 +47,10 @@ public class MentionsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = response.getWriter();
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("<link href=\"");
 		sb.append(themeDisplay.getPortalURL());
-		sb.append(PortalUtil.getPathContext());
 		sb.append(_servletContext.getContextPath());
 		sb.append("/css/mentions.css\" rel=\"stylesheet\" type = ");
 		sb.append("\"text/css\" />");

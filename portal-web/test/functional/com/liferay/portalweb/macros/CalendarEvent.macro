@@ -13,25 +13,27 @@
 		</if>
 	</command>
 
-	<command name="_expandDetailsPanel">
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#DETAILS_PANEL_COLLAPSED" />
+	<command name="_expandPanel">
+		<var method="StringUtil#upperCase('${panelName}')" name="panelName" />
 
-				<execute function="AssertElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+		<if>
+			<condition function="IsElementPresent" locator1="CalendarEditEvent#${panelName}_PANEL_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="CalendarEditEvent#${panelName}_PANEL_COLLAPSED" />
+
+				<execute function="AssertElementPresent" locator1="CalendarEditEvent#${panelName}_PANEL_EXPANDED" />
 			</then>
 			<elseif>
-				<condition function="IsElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+				<condition function="IsElementPresent" locator1="CalendarEditEvent#${panelName}_PANEL_EXPANDED" />
 				<then>
-					<execute function="Click" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+					<execute function="Click" locator1="CalendarEditEvent#${panelName}_PANEL_EXPANDED" />
 
 					<if>
-						<condition function="IsElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_COLLAPSED" />
+						<condition function="IsElementPresent" locator1="CalendarEditEvent#${panelName}_PANEL_COLLAPSED" />
 						<then>
-							<execute function="Click" locator1="CalendarEditEvent#DETAILS_PANEL_COLLAPSED" />
+							<execute function="Click" locator1="CalendarEditEvent#${panelName}_PANEL_COLLAPSED" />
 
-							<execute function="AssertElementPresent" locator1="CalendarEditEvent#DETAILS_PANEL_EXPANDED" />
+							<execute function="AssertElementPresent" locator1="CalendarEditEvent#${panelName}_PANEL_EXPANDED" />
 						</then>
 					</if>
 				</then>

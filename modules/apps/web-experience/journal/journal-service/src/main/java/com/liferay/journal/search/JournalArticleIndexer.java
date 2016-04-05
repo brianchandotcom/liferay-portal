@@ -176,12 +176,6 @@ public class JournalArticleIndexer
 			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
 
-		String articleType = (String)searchContext.getAttribute("articleType");
-
-		if (Validator.isNotNull(articleType)) {
-			contextBooleanFilter.addRequiredTerm(Field.TYPE, articleType);
-		}
-
 		String ddmStructureKey = (String)searchContext.getAttribute(
 			"ddmStructureKey");
 
@@ -228,7 +222,6 @@ public class JournalArticleIndexer
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
-		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =

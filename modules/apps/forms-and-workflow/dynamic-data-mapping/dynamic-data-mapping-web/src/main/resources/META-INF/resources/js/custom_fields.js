@@ -30,21 +30,18 @@ AUI.add(
 
 		var STR_SPACE = ' ';
 
-		var TPL_BUTTON = '<div class="field-labels-inline">' +
-				'<input type="button" value="' + A.Escape.html(Liferay.Language.get('select')) + '" />' +
-			'<div>';
+		var TPL_INPUT_BUTTON = '<div class="form-group">' +
+			    '<input class="field form-control" type="text" value="" readonly="readonly">' +
+		    	'<div class="button-holder">' +
+		    		'<button class="btn select-button btn-default" type="button">' +
+		    			'<span class="lfr-btn-label">' + A.Escape.html(Liferay.Language.get('select')) + '</span>' +
+		    		'</button>' +
+		    	'</div>' +
+			'</div>';
 
 		var TPL_GEOLOCATION = '<div class="field-labels-inline">' +
 				'<img src="' + themeDisplay.getPathThemeImages() + '/common/geolocation.png" title="' + A.Escape.html(Liferay.Language.get('geolocate')) + '" />' +
 			'<div>';
-
-		var TPL_JOURNAL_ARTICLE = '<div class="lfr-ddm-journal-article">' +
-				'<a href="javascript:;">' + Liferay.Language.get('journal-article') + '</a>' +
-			'</div>';
-
-		var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
-				'<a href="javascript:;">' + Liferay.Language.get('link') + '</a>' +
-			'</div>';
 
 		var TPL_PARAGRAPH = '<p></p>';
 
@@ -52,7 +49,16 @@ AUI.add(
 
 		var TPL_TEXT_HTML = '<textarea class="form-builder-field-node lfr-ddm-text-html"></textarea>';
 
-		var TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>';
+		var TPL_WCM_IMAGE = '<div class="form-group">' +
+			    '<input class="field form-control" type="text" value="" readonly="readonly">' +
+		    	'<div class="button-holder">' +
+		    		'<button class="btn select-button btn-default" type="button">' +
+		    			'<span class="lfr-btn-label">' + A.Escape.html(Liferay.Language.get('select')) + '</span>' +
+		    		'</button>' +
+		    	'</div>' +
+				'<label class="control-label">' + A.Escape.html(Liferay.Language.get('image-description')) + '</label>' +
+				'<input class="field form-control" type="text" value="" disabled>' +
+			'</div>';
 
 		var UNIQUE_FIELD_NAMES_MAP = Liferay.FormBuilder.UNIQUE_FIELD_NAMES_MAP;
 
@@ -1110,7 +1116,7 @@ AUI.add(
 
 				prototype: {
 					getHTML: function() {
-						return TPL_BUTTON;
+						return TPL_INPUT_BUTTON;
 					},
 
 					getPropertyModel: function() {
@@ -1433,7 +1439,7 @@ AUI.add(
 
 				prototype: {
 					getHTML: function() {
-						return TPL_JOURNAL_ARTICLE;
+						return TPL_INPUT_BUTTON;
 					},
 
 					getPropertyModel: function() {
@@ -1467,13 +1473,13 @@ AUI.add(
 					}
 				},
 
-				EXTENDS: FormBuilderTextField,
+				EXTENDS: A.FormBuilderField,
 
 				NAME: 'ddm-link-to-page',
 
 				prototype: {
 					getHTML: function() {
-						return TPL_LINK_TO_PAGE;
+						return TPL_INPUT_BUTTON;
 					}
 				}
 			}

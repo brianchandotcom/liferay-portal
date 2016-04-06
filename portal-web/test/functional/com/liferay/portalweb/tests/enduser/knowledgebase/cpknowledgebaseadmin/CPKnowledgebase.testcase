@@ -182,7 +182,7 @@
 		</execute>
 
 		<execute macro="KBArticle#viewKBArticleWithAttachmentCP">
-			<var name="kbArticleAttachment" value="Document_1.txt (0.3k) Delete" />
+			<var name="kbArticleAttachment" value="Document_1.txt (0KB) Delete" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>

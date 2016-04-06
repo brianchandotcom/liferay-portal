@@ -803,6 +803,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
+	<target name="functional-websphere85-mysql56-jdk7">
+		<run-functional-test app.server.type="websphere" database.type="mysql" />
+	</target>
+
 	<target name="functional-wildfly10-mariadb100-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>

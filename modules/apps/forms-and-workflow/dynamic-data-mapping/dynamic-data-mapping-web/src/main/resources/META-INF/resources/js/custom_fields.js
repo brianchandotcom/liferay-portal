@@ -123,7 +123,7 @@ AUI.add(
 
 						instance.toolbar.add(
 							{
-								label: Liferay.Language.get('choose'),
+								label: Liferay.Language.get('select'),
 								on: {
 									click: A.bind('_onClickChoose', instance)
 								}

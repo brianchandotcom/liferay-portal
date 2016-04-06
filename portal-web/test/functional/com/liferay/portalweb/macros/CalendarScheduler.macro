@@ -254,7 +254,6 @@
 		<execute function="Pause" value1="1000" />
 
 		<var method="selenium#getCurrentHour()" name="currentHour" />
-
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<if>

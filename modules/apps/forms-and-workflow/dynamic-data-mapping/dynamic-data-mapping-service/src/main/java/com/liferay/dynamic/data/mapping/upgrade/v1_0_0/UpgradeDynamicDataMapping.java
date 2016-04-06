@@ -339,7 +339,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return ddmFormValuesXSDDeserializer.deserialize(ddmForm, xml);
 	}
 
-	protected Map<Long, String> getDDMTemplateScriptMap(long structureId)
+	protected Map<String, String> getDDMTemplateScriptMap(long structureId)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -349,13 +349,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.setLong(1, structureId);
 
 			try (ResultSet rs = ps.executeQuery()) {
-				Map<Long, String> ddmTemplateIdsToScriptMap = new HashMap<>();
+				Map<String, String> ddmTemplateIdsToScriptMap = new HashMap<>();
 
 				while (rs.next()) {
 					Long templateId = rs.getLong("templateId");
 					String script = rs.getString("script");
+					String language = rs.getString("language");
 
-					ddmTemplateIdsToScriptMap.put(templateId, script);
+					String key = templateId + StringPool.DOLLAR + language;
+
+					ddmTemplateIdsToScriptMap.put(key, script);
 				}
 
 				return ddmTemplateIdsToScriptMap;

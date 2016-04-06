@@ -56,7 +56,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
 	>
-		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_content_info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">

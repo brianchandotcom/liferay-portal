@@ -74,11 +74,17 @@ if (group != null) {
 				<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
 					<%
+					Group curGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
 					NoSuchLayoutSetException nslse = (NoSuchLayoutSetException)errorException;
 
-					PKParser pkParser = new PKParser(nslse.getMessage());
+					if (nslse.getMessage().indexOf("{") > 0) {
+						String msg = nslse.getMessage();
+						JSONObject jsonObject = JSONFactoryUtil.createJSONObject(msg.substring(msg.indexOf("{")));
+						long errorGroupId = jsonObject.getLong("groupId");
 
-					Group curGroup = GroupLocalServiceUtil.getGroup(pkParser.getLong("groupId"));
+						curGroup = GroupLocalServiceUtil.getGroup(errorGroupId);
+					}
 					%>
 
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />

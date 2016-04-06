@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -30,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Daeyoung Song
  */
+@ProviderType
 public interface ResourceActions {
 
 	public void checkAction(String name, String actionId)
@@ -116,11 +119,15 @@ public interface ResourceActions {
 	public List<Role> getRoles(
 		long companyId, Group group, String modelResource, int[] roleTypes);
 
+	public String[] getRootModelResources();
+
 	public boolean hasModelResourceActions(String name);
 
 	public boolean isOrganizationModelResource(String modelResource);
 
 	public boolean isPortalModelResource(String modelResource);
+
+	public boolean isRootModelResource(String modelResource);
 
 	public void read(
 			String servletContextName, ClassLoader classLoader, String source)

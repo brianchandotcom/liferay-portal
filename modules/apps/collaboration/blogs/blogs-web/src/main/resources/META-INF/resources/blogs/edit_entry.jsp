@@ -395,6 +395,8 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		}
 	};
 
+	var configurationHeader = AUI.$('#configurationContent');
+
 	var createAbstractEditor = function() {
 		var descriptionEditor = window['<portlet:namespace />descriptionEditor'];
 
@@ -403,9 +405,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 
 			blogs.setDescription(window['<portlet:namespace />contentEditor'].getText());
 		}
-	}
-
-	var configurationHeader = AUI.$('#configurationContent');
+	};
 
 	if (configurationHeader.hasClass('in')) {
 		createAbstractEditor();

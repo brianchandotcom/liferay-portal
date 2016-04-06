@@ -807,6 +807,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
+	<target name="functional-weblogic121-mysql56-jdk7">
+		<run-functional-test app.server.type="weblogic" database.type="mysql" />
+	</target>
+
 	<target name="functional-websphere85-mysql56-jdk7">
 		<run-functional-test app.server.type="websphere" database.type="mysql" />
 	</target>

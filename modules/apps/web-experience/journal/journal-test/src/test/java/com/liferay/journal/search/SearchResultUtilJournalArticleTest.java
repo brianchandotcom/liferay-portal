@@ -32,7 +32,6 @@ import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
 import com.liferay.portal.search.internal.result.SummaryFactoryImpl;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -43,20 +42,14 @@ import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({ServiceTrackerCollections.class})
-@RunWith(PowerMockRunner.class)
 public class SearchResultUtilJournalArticleTest
 	extends BaseSearchResultUtilTestCase {
 

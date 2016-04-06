@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultContributor;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
@@ -31,7 +32,6 @@ import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
 import com.liferay.portal.search.internal.result.SummaryFactoryImpl;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
 
@@ -49,9 +49,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(
-	{AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class}
-)
+@PrepareForTest(AssetRendererFactoryRegistryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest
 	extends BaseSearchResultUtilTestCase {
@@ -178,12 +176,13 @@ public class SearchResultUtilMBMessageTest
 		return mbMessageCommentSearchResultContributor;
 	}
 
-	protected SearchResultManagerImpl createSearchResultManagerImpl() {
+	protected SearchResultManager createSearchResultManager() {
 		SearchResultManagerImpl searchResultManagerImpl =
 			new SearchResultManagerImpl();
 
 		searchResultManagerImpl.addSearchResultContributor(
 			createSearchResultContributor());
+		searchResultManagerImpl.setClassNameLocalService(classNameLocalService);
 		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
 
 		return searchResultManagerImpl;
@@ -195,7 +194,7 @@ public class SearchResultUtilMBMessageTest
 			new SearchResultTranslatorImpl();
 
 		searchResultTranslatorImpl.setSearchResultManager(
-			createSearchResultManagerImpl());
+			createSearchResultManager());
 
 		return searchResultTranslatorImpl;
 	}

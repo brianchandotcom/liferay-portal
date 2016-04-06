@@ -325,6 +325,11 @@ public class JournalArticleStagedModelDataHandler
 				portletDataContext.addZipEntry(
 					smallImagePath, smallImage.getTextObj());
 			}
+			else if ((smallImage != null) &&
+					 (smallImage.getTextObj() == null)) {
+
+				article.setSmallImage(false);
+			}
 		}
 
 		List<JournalArticleImage> articleImages =

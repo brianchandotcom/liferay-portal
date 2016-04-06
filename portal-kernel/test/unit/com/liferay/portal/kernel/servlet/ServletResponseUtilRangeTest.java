@@ -63,6 +63,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
+		setUpBrowserSniffer();
 		setUpFileUtil();
 		setUpPropsUtil();
 	}
@@ -179,6 +180,16 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		Assert.assertEquals(range.getStart(), start);
 		Assert.assertEquals(range.getEnd(), end);
 		Assert.assertEquals(range.getLength(), length);
+	}
+
+	protected void setUpBrowserSniffer() {
+		new BrowserSnifferUtil().setBrowserSniffer(_browserSniffer);
+
+		when(
+			_browserSniffer.isIe(Matchers.any(HttpServletRequest.class))
+		).thenReturn(
+			false
+		);
 	}
 
 	protected void setUpFileUtil() {
@@ -299,6 +310,9 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 	private static final String _CONTENT_TYPE_BOUNDARY_PREFACE =
 		"multipart/byteranges; boundary=";
+
+	@Mock
+	private BrowserSniffer _browserSniffer;
 
 	@Mock
 	private com.liferay.portal.kernel.util.File _file;

@@ -343,7 +343,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from DDMTemplate where classPK = ?")) {
+				"select * from DDMTemplate where classPK = ? and type_ = " +
+					"'display'")) {
 
 			ps.setLong(1, structureId);
 

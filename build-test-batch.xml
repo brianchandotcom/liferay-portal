@@ -779,6 +779,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
+	<target name="functional-resin40-mysql56-jdk7">
+		<run-functional-test app.server.type="resin" database.type="mysql" />
+	</target>
+
 	<target name="functional-tomcat8-hypersonic20-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>

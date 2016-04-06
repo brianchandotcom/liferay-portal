@@ -255,16 +255,19 @@
 
 		<var method="selenium#getCurrentHour()" name="currentHour" />
 
+		<var name="key_eventTitle" value="${eventTitle}" />
+
 		<if>
 			<equals arg1="${currentHour}" arg2="23" />
 			<then>
 				<execute macro="CalendarNavigator#gotoNextDay" />
+
+				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 			</then>
+			<else>
+				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" value1="${eventTitle}" />
+			</else>
 		</if>
-
-		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewDefault">

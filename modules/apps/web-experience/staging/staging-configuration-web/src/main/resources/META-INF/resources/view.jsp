@@ -288,7 +288,11 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 										continue;
 									}
 
-									boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
+									boolean staged = portletDataHandler.isPublishToLiveByDefault();
+
+									if (stagingGroup != null) {
+										staged = stagingGroup.isStagedPortlet(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()));
+									}
 								%>
 
 									<li class="flex-container list-group-item">

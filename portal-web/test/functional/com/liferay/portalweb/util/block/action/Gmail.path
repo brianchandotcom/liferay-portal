@@ -91,7 +91,7 @@
 </tr>
 <tr>
 	<td>ADD_ACCOUNT_BUTTON</td>
-	<td>//div[contains(@class,'action-card')]//a[contains(@id,'add-account')]</td>
+	<td>//a[contains(@id,'add-account') and contains(.,'Add account')]</td>
 	<td></td>
 </tr>
 <tr>

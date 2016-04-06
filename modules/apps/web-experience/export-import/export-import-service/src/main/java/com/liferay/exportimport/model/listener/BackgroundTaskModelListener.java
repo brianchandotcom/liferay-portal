@@ -54,7 +54,11 @@ public class BackgroundTaskModelListener
 		try {
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.
-					getExportImportConfiguration(exportImportConfigurationId);
+					fetchExportImportConfiguration(exportImportConfigurationId);
+
+			if (exportImportConfiguration == null) {
+				return;
+			}
 
 			if (exportImportConfiguration.getStatus() ==
 					WorkflowConstants.STATUS_DRAFT) {

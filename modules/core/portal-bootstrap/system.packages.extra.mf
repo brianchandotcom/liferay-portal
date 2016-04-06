@@ -2278,7 +2278,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ersion="1.0.0";uses:="com.liferay.expando.kernel.model,com.liferay.po
  rtal.kernel.search,com.liferay.portal.kernel.service",com.liferay.exp
  ortimport.kernel.background.task;version="1.0.0",com.liferay.exportim
- port.kernel.configuration;version="1.0.0";uses:="com.liferay.exportim
+ port.kernel.configuration;version="1.1.0";uses:="com.liferay.exportim
  port.kernel.model,com.liferay.portal.kernel.exception,com.liferay.por
  tal.kernel.model,javax.portlet",com.liferay.exportimport.kernel.contr
  oller;version="1.0.0";uses:="com.liferay.exportimport.kernel.lar,com.

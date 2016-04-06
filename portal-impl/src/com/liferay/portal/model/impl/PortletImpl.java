@@ -86,6 +86,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -3501,11 +3502,24 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setReady(boolean ready) {
-		_readyMap.put(getRootPortletId(), ready);
+		Boolean currentStatus = _readyMap.putIfAbsent(
+			getRootPortletId(), ready);
+
+		if (ready && (currentStatus != null) &&
+			currentStatus.equals(Boolean.TRUE)) {
+
+			return;
+		}
+
+		if (!ready && (currentStatus != null) &&
+			currentStatus.equals(Boolean.FALSE)) {
+
+			return;
+		}
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		synchronized (_serviceRegistrars) {
+		synchronized (this) {
 			if (ready) {
 				ServiceRegistrar<Portlet> serviceRegistrar =
 					registry.getServiceRegistrar(Portlet.class);
@@ -3967,7 +3981,7 @@ public class PortletImpl extends PortletBaseImpl {
 	public void unsetReady() {
 		_readyMap.remove(getRootPortletId());
 
-		synchronized (_serviceRegistrars) {
+		synchronized (this) {
 			ServiceRegistrar<Portlet> serviceRegistrar =
 				_serviceRegistrars.remove(getRootPortletId());
 
@@ -3983,11 +3997,11 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Map of the ready states of all portlets keyed by their root portlet ID.
 	 */
-	private static final Map<String, Boolean> _readyMap =
+	private static final ConcurrentMap<String, Boolean> _readyMap =
 		new ConcurrentHashMap<>();
 
-	private static final Map<String, ServiceRegistrar<Portlet>>
-		_serviceRegistrars = new HashMap<>();
+	private static final ConcurrentMap<String, ServiceRegistrar<Portlet>>
+		_serviceRegistrars = new ConcurrentHashMap<>();
 
 	/**
 	 * The action timeout of the portlet.

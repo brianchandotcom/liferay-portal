@@ -1,9 +1,12 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.map.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.map.taglib", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.settings.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.staging.taglib", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.users.admin.web", version: "1.0.0"

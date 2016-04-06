@@ -14,7 +14,7 @@ AUI.add(
 
 					signInPortlet: {
 						setter: A.one,
-						value: '#p_p_id_58_'
+						value: '#p_p_id_com_liferay_login_web_portlet_LoginPortlet_'
 					}
 				},
 

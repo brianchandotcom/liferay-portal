@@ -4076,13 +4076,11 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-extra-apps">
-		<var name="extra.apps.zip.file.name" value="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads/extraapps.zip" />
-
 		<if>
-			<available file="${extra.apps.zip.file.name}" />
+			<available file="${extra.apps.zip.file.path}" />
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-extra-apps">
-					<property name="extra.apps.zip.file.name" value="${extra.apps.zip.file.name}" />
+					<property name="extra.apps.zip.file.name" value="${extra.apps.zip.file.path}" />
 				</ant>
 			</then>
 		</if>

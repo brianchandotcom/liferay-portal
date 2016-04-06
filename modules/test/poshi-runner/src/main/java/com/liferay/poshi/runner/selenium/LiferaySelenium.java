@@ -228,6 +228,8 @@ public interface LiferaySelenium {
 
 	public String getCurrentDayName();
 
+	public String getCurrentHour();
+
 	public String getCurrentMonth();
 
 	public String getCurrentYear();

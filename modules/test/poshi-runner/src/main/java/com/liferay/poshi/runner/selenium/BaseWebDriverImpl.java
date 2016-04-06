@@ -814,6 +814,13 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public String getCurrentHour() {
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+	}
+
+	@Override
 	public String getCurrentMonth() {
 		Calendar calendar = Calendar.getInstance();
 

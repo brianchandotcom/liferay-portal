@@ -844,6 +844,66 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	@Test
+	public void testUpgradeTemplateFreemarkerScriptDateFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-with-two-date-fields.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-with-two-date-fields.ftl"), "ftl",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		String[] dateFieldNames = new String[] {"date1", "date2"};
+
+		StringBundler sb = null;
+
+		for (String dateFieldName : dateFieldNames) {
+
+			// Assign Statement
+
+			sb = new StringBundler(5);
+
+			sb.append("<#assign ");
+			sb.append(dateFieldName);
+			sb.append("_Data = getterUtil.getString(");
+			sb.append(dateFieldName);
+			sb.append(".getData())>");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+
+			// If Statement
+
+			sb = new StringBundler(3);
+
+			sb.append("<#if (validator.isNotNull(");
+			sb.append(dateFieldName);
+			sb.append("_Data))>");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+
+			// DateParse Statement
+
+			sb = new StringBundler(5);
+
+			sb.append("<#assign ");
+			sb.append(dateFieldName);
+			sb.append("_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			sb.append(dateFieldName);
+			sb.append("_Data, locale)>");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+		}
+	}
+
+	@Test
 	public void testUpgradeTemplatePermissions() throws Exception {
 		addStructure(
 			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -923,7 +983,7 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	@Test
-	public void testUpgradeTemplateScriptDateFields() throws Exception {
+	public void testUpgradeTemplateVelocityScriptDateFields() throws Exception {
 		addStructure(
 			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			DDMStructureConstants.VERSION_DEFAULT,
@@ -931,14 +991,14 @@ public class UpgradeDynamicDataMappingTest {
 
 		addTemplate(
 			_templateId, _structureId, null,
-			read("ddm-template-with-two-date-fields.ftl"), "ftl",
-			DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+			read("ddm-template-with-two-date-fields.vm"), "vm",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
 
 		_upgradeDynamicDataMapping.upgrade();
 
 		String actualDefinition = getTemplateScript(_templateId);
 
-		String[] dateFieldNames = new String[] {"date1", "date2"};
+		String[] dateFieldNames = new String[] {"$date1", "$date2"};
 
 		StringBundler sb = null;
 
@@ -948,11 +1008,11 @@ public class UpgradeDynamicDataMappingTest {
 
 			sb = new StringBundler(5);
 
-			sb.append("<#assign ");
+			sb.append("#set (");
 			sb.append(dateFieldName);
-			sb.append("_Data = getterUtil.getString(");
+			sb.append("_Data = $getterUtil.getString(");
 			sb.append(dateFieldName);
-			sb.append(".getData())>");
+			sb.append(".getData()))");
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 
@@ -960,9 +1020,9 @@ public class UpgradeDynamicDataMappingTest {
 
 			sb = new StringBundler(3);
 
-			sb.append("<#if (validator.isNotNull(");
+			sb.append("#if ($validator.isNotNull(");
 			sb.append(dateFieldName);
-			sb.append("_Data))>");
+			sb.append("_Data))");
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 
@@ -970,11 +1030,11 @@ public class UpgradeDynamicDataMappingTest {
 
 			sb = new StringBundler(5);
 
-			sb.append("<#assign ");
+			sb.append("#set (");
 			sb.append(dateFieldName);
-			sb.append("_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			sb.append("_DateObj = $dateUtil.parseDate(\"yyyy-MM-dd\", ");
 			sb.append(dateFieldName);
-			sb.append("_Data, locale)>");
+			sb.append("_Data, $locale))");
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 		}

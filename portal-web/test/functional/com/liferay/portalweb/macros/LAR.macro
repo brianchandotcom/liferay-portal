@@ -166,6 +166,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+
 		<execute function="DownloadTempFile" />
 	</command>
 
@@ -256,6 +257,7 @@
 		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />
 
 		<execute function="Pause" locator1="5000" />
+
 		<execute function="AssertTextEquals" locator1="SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 	</command>
 

@@ -26,7 +26,7 @@ String errorMessageKey = StringPool.BLANK;
 Layout targetLayout = null;
 
 if (!layout.isTypeControlPanel()) {
-	if (liveGroup == null) {
+	if ((liveGroup == null) || (stagingGroup == null) || (group.isLayout() && (stagingGroup.getLiveGroupId() == 0))) {
 		errorMessageKey = "this-portlet-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
 	}
 	else {
@@ -51,8 +51,8 @@ if (!layout.isTypeControlPanel()) {
 		}
 	}
 }
-else if (stagingGroup.isLayout()) {
-	if (liveGroup == null) {
+else if (group.isLayout()) {
+	if ((liveGroup == null) || (stagingGroup == null) || (stagingGroup.getLiveGroupId() == 0)) {
 		errorMessageKey = "a-portlet-is-placed-in-this-page-of-scope-that-does-not-exist-in-the-live-site-publish-the-page-first";
 	}
 	else {

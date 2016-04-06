@@ -253,6 +253,15 @@
 
 		<execute function="Pause" value1="1000" />
 
+		<var method="selenium#getCurrentHour()" name="currentHour" />
+
+		<if>
+			<equals arg1="${currentHour}" arg2="23" />
+			<then>
+				<execute macro="CalendarNavigator#gotoNextDay" />
+			</then>
+		</if>
+
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" value1="${eventTitle}" />

@@ -883,9 +883,9 @@ public class UpgradeDynamicDataMappingTest {
 
 			sb = new StringBundler(3);
 
-			sb.append("<#if (validator.isNotNull(");
+			sb.append("<#if validator.isNotNull(");
 			sb.append(dateFieldName);
-			sb.append("_Data))>");
+			sb.append("_Data)>");
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 

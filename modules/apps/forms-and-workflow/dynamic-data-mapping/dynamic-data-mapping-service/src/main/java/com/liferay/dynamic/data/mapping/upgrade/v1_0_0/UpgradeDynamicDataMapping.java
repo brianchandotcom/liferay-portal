@@ -743,7 +743,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			oldTemplateScriptSB = "<#if (" + dateFieldName + "_Data > 0)>";
 
 			newTemplateScriptSB =
-				"<#if (validator.isNotNull(" + dateFieldName + "_Data))>";
+				"<#if validator.isNotNull(" + dateFieldName + "_Data)>";
 		}
 		else if (language.equals("vm")) {
 			dateFieldName = StringPool.DOLLAR + dateFieldName;

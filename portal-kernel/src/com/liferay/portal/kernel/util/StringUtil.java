@@ -2535,9 +2535,9 @@ public class StringUtil {
 
 		StringBundler sb = new StringBundler(s.length() + 5 * newSub.length());
 
-		char[] chars = s.toCharArray();
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
 
-		for (char c : chars) {
 			if (c == oldSub) {
 				sb.append(newSub);
 			}

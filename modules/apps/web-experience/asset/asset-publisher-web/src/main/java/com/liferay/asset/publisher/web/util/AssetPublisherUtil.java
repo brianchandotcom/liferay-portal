@@ -98,9 +98,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1109,7 +1109,7 @@ public class AssetPublisherUtil {
 		String[] scopeIds = portletPreferences.getValues(
 			"scopeIds", new String[] {SCOPE_ID_GROUP_PREFIX + scopeGroupId});
 
-		Set<Long> groupIds = new HashSet<>();
+		Set<Long> groupIds = new LinkedHashSet<>();
 
 		for (String scopeId : scopeIds) {
 			try {
@@ -1614,7 +1614,7 @@ public class AssetPublisherUtil {
 	}
 
 	protected static long[] getSiteGroupIds(long[] groupIds) {
-		Set<Long> siteGroupIds = new HashSet<>();
+		Set<Long> siteGroupIds = new LinkedHashSet<>();
 
 		for (long groupId : groupIds) {
 			siteGroupIds.add(PortalUtil.getSiteGroupId(groupId));

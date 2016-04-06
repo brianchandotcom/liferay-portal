@@ -248,17 +248,17 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected List<String> getDDMDateFieldNames(DDMForm ddmForm)
 		throws Exception {
 
-		List<String> ddmFormDateFieldNames = new ArrayList<>();
+		List<String> ddmDateFieldNames = new ArrayList<>();
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			String dataType = ddmFormField.getType();
 
 			if (dataType.equals("ddm-date")) {
-				ddmFormDateFieldNames.add(ddmFormField.getName());
+				ddmDateFieldNames.add(ddmFormField.getName());
 			}
 		}
 
-		return ddmFormDateFieldNames;
+		return ddmDateFieldNames;
 	}
 
 	protected DDMForm getDDMForm(long structureId) throws Exception {

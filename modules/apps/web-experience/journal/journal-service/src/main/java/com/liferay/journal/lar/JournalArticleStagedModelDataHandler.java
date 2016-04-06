@@ -310,7 +310,9 @@ public class JournalArticleStagedModelDataHandler
 
 				article.setSmallImageURL(smallImageURL);
 			}
-			else if (smallImage != null) {
+			else if ((smallImage != null) &&
+					 (smallImage.getTextObj() != null)) {
+
 				String smallImagePath = ExportImportPathUtil.getModelPath(
 					article,
 					smallImage.getImageId() + StringPool.PERIOD +

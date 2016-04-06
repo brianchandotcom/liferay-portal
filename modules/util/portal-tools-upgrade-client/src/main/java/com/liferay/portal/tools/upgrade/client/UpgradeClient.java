@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.upgrade.client;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -282,9 +283,9 @@ public class UpgradeClient {
 
 		System.out.println("Exiting Gogo Shell");
 
-		process.getInputStream().close();
-		process.getOutputStream().close();
-		process.getErrorStream().close();
+		_close(process.getInputStream());
+		_close(process.getOutputStream());
+		_close(process.getErrorStream());
 
 		process.destroy();
 	}
@@ -334,6 +335,10 @@ public class UpgradeClient {
 		}
 	}
 
+	private void _close(Closeable closeable) throws IOException {
+		closeable.close();
+	}
+
 	private String _getClassPath() throws Exception {
 		StringBuilder classPath = new StringBuilder();
 
@@ -353,7 +358,9 @@ public class UpgradeClient {
 
 		_appendLibs(classPath, _appServer.getGlobalLibDir());
 
-		classPath.append(_appServer.getPortalClassesDir().getCanonicalPath());
+		File portalClassesDir = _appServer.getPortalClassesDir();
+
+		classPath.append(portalClassesDir.getCanonicalPath());
 
 		_appendLibs(classPath, _appServer.getPortalLibDir());
 

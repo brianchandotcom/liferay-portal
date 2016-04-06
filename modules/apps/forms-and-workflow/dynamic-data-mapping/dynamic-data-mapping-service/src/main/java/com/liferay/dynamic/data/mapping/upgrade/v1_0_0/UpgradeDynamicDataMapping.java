@@ -111,6 +111,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -656,22 +657,39 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String updateTemplateScriptDateAssignStatement(
-		String dateFieldName, String script) {
+		String dateFieldName, String language, String script) {
 
 		StringBundler oldTemplateScriptSB = new StringBundler(5);
 		StringBundler newTemplateScriptSB = new StringBundler(5);
 
-		oldTemplateScriptSB.append("<#assign ");
-		oldTemplateScriptSB.append(dateFieldName);
-		oldTemplateScriptSB.append("_Data = getterUtil.getLong(");
-		oldTemplateScriptSB.append(dateFieldName);
-		oldTemplateScriptSB.append(".getData())>");
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("<#assign ");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data = getterUtil.getLong(");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append(".getData())>");
 
-		newTemplateScriptSB.append("<#assign ");
-		newTemplateScriptSB.append(dateFieldName);
-		newTemplateScriptSB.append("_Data = getterUtil.getString(");
-		newTemplateScriptSB.append(dateFieldName);
-		newTemplateScriptSB.append(".getData())>");
+			newTemplateScriptSB.append("<#assign ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data = getterUtil.getString(");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(".getData())>");
+		}
+		else if (language.equals("vm")) {
+			dateFieldName = StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB.append("#set (");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data = $getterUtil.getLong(");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append(".getData()))");
+
+			newTemplateScriptSB.append("#set (");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data = $getterUtil.getString(");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(".getData()))");
+		}
 
 		return StringUtil.replace(
 			script, oldTemplateScriptSB.toString(),
@@ -688,21 +706,27 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return;
 		}
 
-		Map<Long, String> ddmTemplateScriptMap = getDDMTemplateScriptMap(
+		Map<String, String> ddmTemplateScriptMap = getDDMTemplateScriptMap(
 			structureId);
 
-		for (Long ddmTemplateId : ddmTemplateScriptMap.keySet()) {
-			String script = ddmTemplateScriptMap.get(ddmTemplateId);
+		for (Entry<String, String> entrySet : ddmTemplateScriptMap.entrySet()) {
+			String[] templateIdAndLanguage = StringUtil.split(
+				entrySet.getKey(), StringPool.DOLLAR);
+
+			long ddmTemplateId = Long.parseLong(templateIdAndLanguage[0]);
+			String language = templateIdAndLanguage[1];
+
+			String script = entrySet.getValue();
 
 			for (String ddmDateFieldName : ddmDateFieldNames) {
 				script = updateTemplateScriptDateAssignStatement(
-					ddmDateFieldName, script);
+					ddmDateFieldName, language, script);
 
 				script = updateTemplateScriptDateIfStatement(
-					ddmDateFieldName, script);
+					ddmDateFieldName, language, script);
 
 				script = updateTemplateScriptDateParseStatement(
-					ddmDateFieldName, script);
+					ddmDateFieldName, language, script);
 			}
 
 			updateTemplateScript(ddmTemplateId, script);
@@ -710,35 +734,66 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String updateTemplateScriptDateIfStatement(
-		String dateFieldName, String script) {
+		String dateFieldName, String language, String script) {
 
-		String oldTemplateScriptSB = "<#if (" + dateFieldName + "_Data > 0)>";
+		String oldTemplateScriptSB = StringPool.BLANK;
+		String newTemplateScriptSB = StringPool.BLANK;
 
-		String newTemplateScriptSB =
-			"<#if (validator.isNotNull(" + dateFieldName + "_Data))>";
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB = "<#if (" + dateFieldName + "_Data > 0)>";
+
+			newTemplateScriptSB =
+				"<#if (validator.isNotNull(" + dateFieldName + "_Data))>";
+		}
+		else if (language.equals("vm")) {
+			dateFieldName = StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB = "#if (" + dateFieldName + "_Data > 0)";
+
+			newTemplateScriptSB =
+				"#if ($validator.isNotNull(" + dateFieldName + "_Data))";
+		}
 
 		return StringUtil.replace(
 			script, oldTemplateScriptSB, newTemplateScriptSB);
 	}
 
 	protected String updateTemplateScriptDateParseStatement(
-		String dateFieldName, String script) {
+		String dateFieldName, String language, String script) {
 
 		StringBundler oldTemplateScriptSB = new StringBundler(5);
 		StringBundler newTemplateScriptSB = new StringBundler(5);
 
-		oldTemplateScriptSB.append("<#assign ");
-		oldTemplateScriptSB.append(dateFieldName);
-		oldTemplateScriptSB.append("_DateObj = dateUtil.newDate(");
-		oldTemplateScriptSB.append(dateFieldName);
-		oldTemplateScriptSB.append("_Data)>");
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("<#assign ");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_DateObj = dateUtil.newDate(");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data)>");
 
-		newTemplateScriptSB.append("<#assign ");
-		newTemplateScriptSB.append(dateFieldName);
-		newTemplateScriptSB.append(
-			"_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
-		newTemplateScriptSB.append(dateFieldName);
-		newTemplateScriptSB.append("_Data, locale)>");
+			newTemplateScriptSB.append("<#assign ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(
+				"_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data, locale)>");
+		}
+		else if (language.equals("vm")) {
+			dateFieldName = StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB.append("#set (");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_DateObj = $dateUtil.newDate(");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data))");
+
+			newTemplateScriptSB.append("#set (");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(
+				"_DateObj = $dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data, $locale))");
+		}
 
 		return StringUtil.replace(
 			script, oldTemplateScriptSB.toString(),

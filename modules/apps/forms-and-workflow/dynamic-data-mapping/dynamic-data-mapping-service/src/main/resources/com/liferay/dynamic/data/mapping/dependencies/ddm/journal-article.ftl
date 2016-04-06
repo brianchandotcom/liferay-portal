@@ -43,7 +43,7 @@
 			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
-				value="select-web-content"
+				value="select"
 			/>
 
 			<@liferay_aui.button

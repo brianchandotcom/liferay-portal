@@ -190,6 +190,8 @@ AUI.add(
 					)
 				);
 
+				field.addTarget(instance);
+
 				var translationManager = instance.get('translationManager');
 
 				if (translationManager) {

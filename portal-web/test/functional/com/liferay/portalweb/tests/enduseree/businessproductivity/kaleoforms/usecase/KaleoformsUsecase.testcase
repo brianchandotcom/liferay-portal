@@ -6793,8 +6793,8 @@
 	</command>
 
 	<command name="RejectAndResubmitProcess" priority="4">
-		<var name="ddldataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddldataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -6811,8 +6811,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddldataDefinitionDescription" value="${ddldataDefinitionDescription}" />
-			<var name="ddldataDefinitionName" value="${ddldataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -6933,8 +6933,8 @@
 	<command name="RejectAndResubmitProcessAndViewNotifications" priority="4">
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
-		<var name="ddldataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddldataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -6951,8 +6951,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddldataDefinitionDescription" value="${ddldataDefinitionDescription}" />
-			<var name="ddldataDefinitionName" value="${ddldataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -7103,8 +7103,8 @@
 	</command>
 
 	<command name="UpdateDueDate" priority="4">
-		<var name="ddldataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddldataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -7121,8 +7121,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddldataDefinitionDescription" value="${ddldataDefinitionDescription}" />
-			<var name="ddldataDefinitionName" value="${ddldataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -8581,8 +8581,8 @@
 
 	<command name="ViewProcessWithComments" priority="5">
 		<var name="commentList" value="Assigned initial task.,Updating the due date on a process assigned to my roles.,Assign process to Test Test.,Updating the due date on a process assigned to me.,Please make changes and resubmit.,Assigned initial task.,Resubmitting.,Assigned initial task.,Assign process to Test Test again.,Process is approved." />
-		<var name="ddldataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddldataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -8599,8 +8599,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddldataDefinitionDescription" value="${ddldataDefinitionDescription}" />
-			<var name="ddldataDefinitionName" value="${ddldataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -9008,8 +9008,8 @@
 	</command>
 
 	<command name="WithdrawProcess" priority="5">
-		<var name="ddldataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddldataDefinitionName" value="Data Definition" />
+		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
@@ -9026,8 +9026,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddldataDefinitionDescription" value="${ddldataDefinitionDescription}" />
-			<var name="ddldataDefinitionName" value="${ddldataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">

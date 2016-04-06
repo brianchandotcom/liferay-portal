@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_ICON</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//img</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//div//img</td>
 	<td></td>
 </tr>
 <tr>

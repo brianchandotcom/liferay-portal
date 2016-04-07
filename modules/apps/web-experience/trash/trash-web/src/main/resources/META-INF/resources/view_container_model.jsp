@@ -17,55 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL());
 
-long classNameId = ParamUtil.getLong(request, "classNameId");
+portletDisplay.setShowBackIcon(trashContainerModelDisplayContext.isShowBackIcon());
+portletDisplay.setURLBack(trashContainerModelDisplayContext.getBackURL());
 
-String className = PortalUtil.getClassName(classNameId);
-
-long classPK = ParamUtil.getLong(request, "classPK");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectContainer");
-
-TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
-
-TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
-
-long containerModelClassNameId = ParamUtil.getLong(request, "containerModelClassNameId", PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(classPK)));
-
-String containerModelClassName = PortalUtil.getClassName(containerModelClassNameId);
-
-long containerModelId = ParamUtil.getLong(request, "containerModelId");
-
-TrashHandler containerTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(containerModelClassName);
-
-ContainerModel containerModel = null;
-
-if (containerModelId > 0) {
-	containerModel = containerTrashHandler.getContainerModel(containerModelId);
-}
-
-String containerModelName = trashHandler.getContainerModelName();
-
-PortletURL containerURL = renderResponse.createRenderURL();
-
-containerURL.setParameter("mvcPath", "/view_container_model.jsp");
-containerURL.setParameter("redirect", redirect);
-containerURL.setParameter("backURL", currentURL);
-containerURL.setParameter("classNameId", String.valueOf(classNameId));
-containerURL.setParameter("classPK", String.valueOf(classPK));
-
-TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, containerModelClassName, containerModelId, containerURL);
-
-portletDisplay.setShowBackIcon(containerModel != null);
-portletDisplay.setURLBack(backURL);
-
-renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelName));
+renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerModelDisplayContext.getContainerModelName()));
 %>
 
 <div class="alert alert-block">
-	<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, containerModelName), HtmlUtil.escape(trashRenderer.getTitle(locale))} %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
 </div>
 
 <aui:form cssClass="container-fluid-1280" method="post" name="selectContainerFm">
@@ -76,27 +39,27 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 		<%
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("classname", className);
-		data.put("classpk", classPK);
-		data.put("containermodelid", containerModelId);
-		data.put("redirect", redirect);
+		data.put("classname", trashContainerModelDisplayContext.getClassName());
+		data.put("classpk", trashContainerModelDisplayContext.getClassPK());
+		data.put("containermodelid", trashContainerModelDisplayContext.getContainerModelId());
+		data.put("redirect", trashContainerModelDisplayContext.getRedirect());
 		%>
 
-		<aui:button cssClass="btn-lg selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
+		<aui:button cssClass="btn-lg selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", trashContainerModelDisplayContext.getContainerModelName()) %>' />
 	</aui:button-row>
 
 	<br />
 
 	<%
-	containerURL.setParameter("containerModelId", String.valueOf(containerModelId));
+	PortletURL containerURL = trashContainerModelDisplayContext.getContainerURL();
 	%>
 
 	<liferay-ui:search-container
-		searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, containerURL, null, null) %>"
-		total="<%= trashHandler.getContainerModelsCount(classPK, containerModelId) %>"
+		searchContainer="<%= trashContainerModelDisplayContext.getSearchContainer() %>"
+		total="<%= trashContainerModelDisplayContext.getContainerModelsCount() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= trashHandler.getContainerModels(classPK, containerModelId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= trashContainerModelDisplayContext.getContainerModels() %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -114,7 +77,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 			%>
 
 			<liferay-ui:search-container-column-text
-				name="<%= LanguageUtil.get(request, containerModelName) %>"
+				name="<%= LanguageUtil.get(request, trashContainerModelDisplayContext.getContainerModelName()) %>"
 			>
 				<c:choose>
 					<c:when test="<%= curContainerModel.getContainerModelId() > 0 %>">
@@ -132,7 +95,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name='<%= LanguageUtil.format(request, "num-of-x", containerModelName) %>'
+				name='<%= LanguageUtil.format(request, "num-of-x", trashContainerModelDisplayContext.getContainerModelName()) %>'
 				value="<%= String.valueOf(curContainerTrashHandler.getContainerModelsCount(curContainerModelId, curContainerModel.getParentContainerModelId())) %>"
 			/>
 
@@ -141,10 +104,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("classname", className);
-				data.put("classpk", classPK);
+				data.put("classname", trashContainerModelDisplayContext.getClassName());
+				data.put("classpk", trashContainerModelDisplayContext.getClassPK());
 				data.put("containermodelid", curContainerModelId);
-				data.put("redirect", redirect);
+				data.put("redirect", trashContainerModelDisplayContext.getRedirect());
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -156,5 +119,5 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelN
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectContainerFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectContainerFm', '<%= HtmlUtil.escapeJS(trashContainerModelDisplayContext.getEventName()) %>');
 </aui:script>

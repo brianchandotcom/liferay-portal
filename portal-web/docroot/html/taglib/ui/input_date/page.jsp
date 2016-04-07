@@ -151,9 +151,21 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							if (date) {
 								datePicker.updateValue(date[0]);
 							}
+
+							else if (!date && <%= nullable %>) {
+								datePicker.updateValue('');
+							}
 						},
 						selectionChange: function(event) {
-							if (isNaN(event.newSelection[0])) {
+							var notANumber = isNaN(event.newSelection[0]);
+							var notDateObject = Object.prototype.toString.call(event.newSelection[0]) !== '[object Date]';
+							var nullable = <%= nullable %>;
+
+							if (notANumber && !nullable) {
+								event.newSelection[0] = new Date();
+							}
+
+							else if (notANumber && !notDateObject && nullable) {
 								event.newSelection[0] = new Date();
 							}
 
@@ -180,10 +192,16 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var container = instance.get('container');
 
-				if (date) {
+				if (date && !isNaN(date)) {
 					container.one('#<%= dayParamId %>').val(date.getDate());
 					container.one('#<%= monthParamId %>').val(date.getMonth());
 					container.one('#<%= yearParamId %>').val(date.getFullYear());
+				}
+
+				else if (!date || isNaN(date) && <%= nullable %>) {
+					container.one('#<%= dayParamId %>').val('');
+					container.one('#<%= monthParamId %>').val('');
+					container.one('#<%= yearParamId %>').val('');
 				}
 			};
 

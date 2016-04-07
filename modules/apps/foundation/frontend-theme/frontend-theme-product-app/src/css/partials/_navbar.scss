@@ -1,9 +1,12 @@
 #navigation {
 	position: relative;
-	z-index: 300;
 
 	.portlet {
 		margin: 0;
+
+		&:hover, &.focus {
+			z-index: 501;
+		}
 	}
 }
 
@@ -50,7 +53,7 @@
 		overflow: hidden;
 
 		#banner .navbar-toggle {
-			z-index: 503;
+			z-index: 953;
 		}
 	}
 
@@ -70,6 +73,10 @@
 			position: relative;
 		}
 
+		.lfr-nav-child-toggle, .child-menu {
+			display: none;
+		}
+
 		.navbar {
 			margin-bottom: 0;
 
@@ -82,7 +89,7 @@
 					position: fixed;
 					right: 0;
 					top: 0;
-					z-index: 502;
+					z-index: 952;
 				}
 			}
 		}
@@ -113,7 +120,7 @@
 	}
 
 	#navigationCollapse {
-		&.in, &.collapsing  {
+		&.in, &.collapsing {
 			bottom: 0;
 			height: auto;
 			left: 0;
@@ -121,7 +128,7 @@
 			position: fixed;
 			right: 0;
 			top: 0;
-			z-index: 502;
+			z-index: 952;
 
 			#navigation {
 				left: 0;

@@ -297,9 +297,6 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		if (article.isSmallImage()) {
-			Image smallImage = _imageLocalService.fetchImage(
-				article.getSmallImageId());
-
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
 					_journalArticleExportImportContentProcessor.
@@ -310,25 +307,27 @@ public class JournalArticleStagedModelDataHandler
 
 				article.setSmallImageURL(smallImageURL);
 			}
-			else if ((smallImage != null) &&
-					 (smallImage.getTextObj() != null)) {
+			else {
+				Image smallImage = _imageLocalService.fetchImage(
+					article.getSmallImageId());
 
-				String smallImagePath = ExportImportPathUtil.getModelPath(
-					article,
-					smallImage.getImageId() + StringPool.PERIOD +
-						smallImage.getType());
+				if ((smallImage != null) && (smallImage.getTextObj() != null)) {
+					String smallImagePath = ExportImportPathUtil.getModelPath(
+						article,
+						smallImage.getImageId() + StringPool.PERIOD +
+							smallImage.getType());
 
-				articleElement.addAttribute("small-image-path", smallImagePath);
+					articleElement.addAttribute(
+						"small-image-path", smallImagePath);
 
-				article.setSmallImageType(smallImage.getType());
+					article.setSmallImageType(smallImage.getType());
 
-				portletDataContext.addZipEntry(
-					smallImagePath, smallImage.getTextObj());
-			}
-			else if ((smallImage != null) &&
-					 (smallImage.getTextObj() == null)) {
-
-				article.setSmallImage(false);
+					portletDataContext.addZipEntry(
+						smallImagePath, smallImage.getTextObj());
+				}
+				else {
+					article.setSmallImage(false);
+				}
 			}
 		}
 

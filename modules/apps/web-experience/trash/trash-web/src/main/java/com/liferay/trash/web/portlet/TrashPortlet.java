@@ -17,6 +17,8 @@ package com.liferay.trash.web.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -75,6 +77,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = {Portlet.class, TrashPortlet.class}
 )
 public class TrashPortlet extends MVCPortlet {
+
+	public void changeDisplayStyle(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		String displayStyle = ParamUtil.getString(
+			actionRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
+
+		portalPreferences.setValue(
+			TrashPortletKeys.TRASH, "display-style", displayStyle);
+	}
 
 	public void deleteEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)

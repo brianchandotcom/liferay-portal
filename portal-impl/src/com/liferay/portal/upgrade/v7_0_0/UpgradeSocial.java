@@ -16,7 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess.AlterColumnType;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.upgrade.v7_0_0.util.SocialActivityTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,6 +46,10 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		alter(
+			SocialActivityTable.class,
+			new AlterColumnType("extraData", "TEXT null"));
+
 		if (getSocialActivitySetsCount() > 0) {
 			return;
 		}

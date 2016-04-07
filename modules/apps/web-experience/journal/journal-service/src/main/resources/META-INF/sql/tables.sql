@@ -14,7 +14,7 @@ create table JournalArticle (
 	treePath STRING null,
 	articleId VARCHAR(75) null,
 	version DOUBLE,
-	title STRING null,
+	title TEXT null,
 	urlTitle VARCHAR(150) null,
 	description TEXT null,
 	content TEXT null,

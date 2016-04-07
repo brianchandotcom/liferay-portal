@@ -1261,7 +1261,7 @@
 		<property name="publishDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="mimeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="summary" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -1818,7 +1818,7 @@
 		<property name="parentClassNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="parentClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
-		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="receiverUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" table="SocialActivityAchievement">

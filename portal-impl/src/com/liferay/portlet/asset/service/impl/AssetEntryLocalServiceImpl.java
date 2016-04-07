@@ -438,10 +438,34 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		long classTypeId, String keywords, boolean showNonindexable,
 		int[] statuses, int start, int end) {
 
-		return search(
-			companyId, groupIds, userId, className, classTypeId, keywords,
-			keywords, keywords, null, null, showNonindexable, statuses, false,
-			start, end);
+		try {
+			Indexer<?> indexer = AssetSearcher.getInstance();
+
+			AssetSearcher assetSearcher = (AssetSearcher)indexer;
+
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+			assetEntryQuery.setClassNameIds(
+				getClassNameIds(companyId, className));
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupIds, userId, classTypeId, null, null,
+				showNonindexable, statuses, false, start, end);
+
+			searchContext.setKeywords(keywords);
+
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+			return assetSearcher.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	@Override
@@ -485,9 +509,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				getClassNameIds(companyId, className));
 
 			SearchContext searchContext = buildSearchContext(
-				companyId, groupIds, userId, classTypeId, userName, title,
-				description, assetCategoryIds, assetTagNames, showNonindexable,
-				statuses, andSearch, start, end);
+				companyId, groupIds, userId, classTypeId, assetCategoryIds,
+				assetTagNames, showNonindexable, statuses, andSearch, start,
+				end);
+
+			searchContext.setAttribute(Field.DESCRIPTION, description);
+			searchContext.setAttribute(Field.TITLE, title);
+			searchContext.setAttribute(Field.USER_NAME, userName);
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -592,9 +620,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				getClassNameIds(companyId, className));
 
 			SearchContext searchContext = buildSearchContext(
-				companyId, groupIds, userId, classTypeId, userName, title,
-				description, assetCategoryIds, assetTagNames, showNonindexable,
-				statuses, andSearch, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				companyId, groupIds, userId, classTypeId, assetCategoryIds,
+				assetTagNames, showNonindexable, statuses, andSearch,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			searchContext.setAttribute(Field.DESCRIPTION, description);
+			searchContext.setAttribute(Field.TITLE, title);
+			searchContext.setAttribute(Field.USER_NAME, userName);
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -1006,7 +1038,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	protected SearchContext buildSearchContext(
 		long companyId, long[] groupIds, long userId, long classTypeId,
-		String userName, String title, String description,
 		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
 		int[] statuses, boolean andSearch, int start, int end) {
 
@@ -1016,9 +1047,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		searchContext.setAssetCategoryIds(
 			StringUtil.split(assetCategoryIds, 0L));
 		searchContext.setAssetTagNames(StringUtil.split(assetTagNames));
-		searchContext.setAttribute(Field.DESCRIPTION, description);
-		searchContext.setAttribute(Field.TITLE, title);
-		searchContext.setAttribute(Field.USER_NAME, userName);
 		searchContext.setAttribute("paginationType", "regular");
 		searchContext.setAttribute("status", statuses);
 

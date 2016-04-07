@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -69,6 +70,32 @@ public class AssetSearcher extends BaseSearcher {
 		}
 
 		return classNames;
+	}
+
+	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
+		throws Exception {
+
+		String keywords = searchContext.getKeywords();
+
+		if (Validator.isNull(keywords)) {
+			addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
+			addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
+			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		}
+		else {
+			for (String entryClassName : searchContext.getEntryClassNames()) {
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+					entryClassName);
+
+				if (Validator.isNotNull(indexer)) {
+					indexer.postProcessSearchQuery(
+						searchQuery, fullQueryBooleanFilter, searchContext);
+				}
+			}
+		}
 	}
 
 	public void setAssetEntryQuery(AssetEntryQuery assetEntryQuery) {

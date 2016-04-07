@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -680,7 +681,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	public String getRegularURL(HttpServletRequest request)
 		throws PortalException {
 
-		return _getURL(request, false, false);
+		String url = _getURL(request, false, false);
+
+		if (!url.startsWith(Http.HTTP) && !url.startsWith(StringPool.SLASH)) {
+			return StringPool.SLASH + url;
+		}
+
+		return url;
 	}
 
 	@Override

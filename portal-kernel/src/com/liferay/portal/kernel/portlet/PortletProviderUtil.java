@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.toolbar.PreviewPortletProvider;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -111,6 +112,9 @@ public class PortletProviderUtil {
 		else if (action.equals(PortletProvider.Action.MANAGE)) {
 			return getPortletProvider(className, _manageServiceTrackerMap);
 		}
+		else if (action.equals(PortletProvider.Action.PREVIEW)) {
+			return getPortletProvider(className, _previewServiceTrackerMap);
+		}
 		else if (action.equals(PortletProvider.Action.VIEW)) {
 			return getPortletProvider(className, _viewServiceTrackerMap);
 		}
@@ -158,6 +162,9 @@ public class PortletProviderUtil {
 	private static final ServiceTrackerMap<String, ManagePortletProvider>
 		_manageServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			ManagePortletProvider.class, "model.class.name");
+	private static final ServiceTrackerMap<String, PreviewPortletProvider>
+		_previewServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+			PreviewPortletProvider.class, "model.class.name");
 	private static final ServiceTrackerMap<String, ViewPortletProvider>
 		_viewServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			ViewPortletProvider.class, "model.class.name");

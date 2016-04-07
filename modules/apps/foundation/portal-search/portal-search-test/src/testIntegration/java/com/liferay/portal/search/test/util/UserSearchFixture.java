@@ -18,6 +18,9 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -69,10 +72,32 @@ public class UserSearchFixture {
 		return _users;
 	}
 
-	public void setUp() {
+	public void setUp() throws Exception {
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new DummyPermissionChecker() {
+
+				@Override
+				public boolean hasPermission(
+					long groupId, String name, long primKey, String actionId) {
+
+					return true;
+				}
+
+			});
+
+		;
+
+		_principal = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
+
+		PrincipalThreadLocal.setName(_principal);
 	}
 
 	protected static ServiceContext getServiceContext(Group group)
@@ -84,6 +109,8 @@ public class UserSearchFixture {
 
 	private final List<AssetTag> _assetTags = new ArrayList<>();
 	private final List<Group> _groups = new ArrayList<>();
+	private PermissionChecker _permissionChecker;
+	private String _principal;
 	private final List<User> _users = new ArrayList<>();
 
 }

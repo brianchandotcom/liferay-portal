@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.searcher.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -46,10 +47,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author André de Oliveira
  */
+@RunWith(Arquillian.class)
 public class ScopeFacetTest {
 
 	@ClassRule

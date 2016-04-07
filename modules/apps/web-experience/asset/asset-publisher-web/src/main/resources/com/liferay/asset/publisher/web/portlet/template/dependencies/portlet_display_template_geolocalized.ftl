@@ -158,9 +158,11 @@
 			/>
 		</#if>
 
-		<div class="asset-entry-abstract-image">
-			<img src="${assetRenderer.getThumbnailPath(renderRequest)}" />
-		</div>
+		<#if assetRenderer.getThumbnailPath(renderRequest)??>
+			<div class="asset-entry-abstract-image">
+				<img src="${assetRenderer.getThumbnailPath(renderRequest)}" />
+			</div>
+		</#if>
 
 		<#assign assetURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, asset) />
 

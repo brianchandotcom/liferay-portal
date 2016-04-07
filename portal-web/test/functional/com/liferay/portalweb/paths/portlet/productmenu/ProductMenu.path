@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>CATEGORY_COLLAPSED</td>
-	<td>//div[div[@aria-expanded='true']]/../..//a[@aria-expanded='false' and contains(.,'${key_category}')]</td>
+	<td>//div[a[@aria-expanded='true']]/../..//a[@aria-expanded='false' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_EXPANDED</td>
-	<td>//div[div[@aria-expanded='true']]/../..//a[@aria-expanded='true' and contains(.,'${key_category}')]</td>
+	<td>//div[a[@aria-expanded='true']]/../..//a[@aria-expanded='true' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,12 +221,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_SITES_COLLAPSED</td>
-	<td>//div[@role='tab' and contains(@id,'site_administration')]//div[@aria-expanded='false']</td>
+	<td>//*[@data-qa-id='productMenuSiteAdministrationPanelCategory'][@aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_SITES_EXPANDED</td>
-	<td>//div[@role='tab' and contains(@id,'site_administration')]//div[@aria-expanded='true']</td>
+	<td>//*[@data-qa-id='productMenuSiteAdministrationPanelCategory'][@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>
@@ -236,12 +236,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_USER_COLLAPSED</td>
-	<td>//div[@role='tab' and contains(@id,'user')]//div[@aria-expanded='false']</td>
+	<td>//*[@data-qa-id='productMenuUserPanelCategory'][@aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_USER_EXPANDED</td>
-	<td>//div[@role='tab' and contains(@id,'user')]//div[@aria-expanded='true']</td>
+	<td>//*[@data-qa-id='productMenuUserPanelCategory'][@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>
@@ -251,12 +251,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_COLLAPSED</td>
-	<td>//div[@role='tab' and contains(@id,'control_panel')]//div[@aria-expanded='false']</td>
+	<td>//*[@data-qa-id='productMenuControlPanelCategory'][@aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_EXPANDED</td>
-	<td>//div[@role='tab' and contains(@id,'control_panel')]//div[@aria-expanded='true']</td>
+	<td>//*[@data-qa-id='productMenuControlPanelCategory'][@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>

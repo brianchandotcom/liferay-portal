@@ -136,9 +136,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute macro="Panel#expandSidebarPanel">
-			<var name="panelHeading" value="Applications" />
-		</execute>
+		<execute macro="Panel#expandSidebarApplicationsPanel" />
 
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 
@@ -316,9 +314,7 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="ControlMenu#ADD" value1="Add" />
 
-		<execute macro="Panel#expandSidebarPanel">
-			<var name="panelHeading" value="Applications" />
-		</execute>
+		<execute macro="Panel#expandSidebarApplicationsPanel" />
 
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 

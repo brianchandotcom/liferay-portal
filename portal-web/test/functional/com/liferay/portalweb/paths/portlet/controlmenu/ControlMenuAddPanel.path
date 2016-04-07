@@ -66,13 +66,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR_PANEL_HEADING_COLLAPSED</td>
-	<td>//*[@data-qa-id='addPanelBody']//div[contains(@class,'panel-heading')]//div[@aria-expanded='false' and contains(.,'${key_panelHeading}')]</td>]
+	<td>SIDEBAR_APPLICATIONS_PANEL_COLLAPSED</td>
+	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='false' and contains(.,'Applications')]</td>]
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR_PANEL_HEADING_EXPANDED</td>
-	<td>//*[@data-qa-id='addPanelBody']//div[contains(@class,'panel-heading')]//div[@aria-expanded='true' and contains(.,'${key_panelHeading}')]</td>
+	<td>SIDEBAR_APPLICATIONS_PANEL_EXPANDED</td>
+	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='true' and contains(.,'Applications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_CONTENT_PANEL_COLLAPSED</td>
+	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='false' and contains(.,'Content')]</td>]
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_CONTENT_PANEL_EXPANDED</td>
+	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='true' and contains(.,'Content')]</td>
 	<td></td>
 </tr>
 </tbody>

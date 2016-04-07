@@ -15,18 +15,30 @@
 		<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_EXPANDED" value1="${panelHeading}" />
 	</command>
 
-	<command name="expandSidebarPanel">
-		<var name="key_panelHeading" value="${panelHeading}" />
-
+	<command name="expandSidebarApplicationsPanel">
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_COLLAPSED" />
-				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_COLLAPSED" />
+				<condition function="IsElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" />
+				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" />
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" value1="Applications" />
 
-				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_PANEL_HEADING_EXPANDED" />
+				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
+	<command name="expandSidebarContentPanel">
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED" />
+				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED" />
+			</and>
+			<then>
+				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED" value1="Content" />
+
+				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_EXPANDED" />
 			</then>
 		</if>
 	</command>

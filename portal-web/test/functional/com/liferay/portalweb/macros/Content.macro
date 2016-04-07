@@ -5,9 +5,7 @@
 		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
 		<execute function="AssertVisible" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" value1="Content" />
 
-		<execute macro="Panel#expandSidebarPanel">
-			<var name="panelHeading" value="Content" />
-		</execute>
+		<execute macro="Panel#expandSidebarContentPanel" />
 
 		<var name="key_assetType" value="${assetType}" />
 
@@ -21,9 +19,7 @@
 		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
 		<execute function="AssertVisible" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" value1="Content" />
 
-		<execute macro="Panel#expandSidebarPanel">
-			<var name="panelHeading" value="Content" />
-		</execute>
+		<execute macro="Panel#expandSidebarContentPanel" />
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 

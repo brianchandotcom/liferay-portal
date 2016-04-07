@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.knowledgebase.model.KBArticle">
+	<model name="com.liferay.knowledge.base.model.KBArticle">
 		<field name="uuid" type="String" />
 		<field name="kbArticleId" type="long" />
 		<field name="resourcePrimKey" type="long" />
@@ -42,7 +42,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.knowledgebase.model.KBComment">
+	<model name="com.liferay.knowledge.base.model.KBComment">
 		<field name="uuid" type="String" />
 		<field name="kbCommentId" type="long" />
 		<field name="groupId" type="long" />
@@ -60,7 +60,7 @@
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 	</model>
-	<model name="com.liferay.knowledgebase.model.KBFolder">
+	<model name="com.liferay.knowledge.base.model.KBFolder">
 		<field name="uuid" type="String" />
 		<field name="kbFolderId" type="long" />
 		<field name="groupId" type="long" />
@@ -79,7 +79,7 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.knowledgebase.model.KBTemplate">
+	<model name="com.liferay.knowledge.base.model.KBTemplate">
 		<field name="uuid" type="String" />
 		<field name="kbTemplateId" type="long" />
 		<field name="groupId" type="long" />

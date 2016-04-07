@@ -166,7 +166,8 @@ public class ScreensAssetEntryServiceImpl
 		return filteredAssetEntries;
 	}
 
-	protected JSONObject getAssetObjectJSONObject(AssetEntry assetEntry)
+	protected JSONObject getAssetObjectJSONObject(
+			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
 		String className = assetEntry.getClassName();
@@ -177,9 +178,16 @@ public class ScreensAssetEntryServiceImpl
 			return getFileEntryJSONObject(assetEntry);
 		}
 		else if (className.equals(
-
 					"com.liferay.journal.model.JournalArticle")) {
+
 			return getJournalArticleJSONObject(assetEntry);
+		}
+		else if (className.equals(
+					"com.liferay.dynamic.data.lists.model.DDLRecord")) {
+
+			JSONObject ddlRecord = screensDDLRecordService.getDDLRecord(
+				assetEntry.getClassPK(), locale);
+			return ddlRecord;
 		}
 
 		return JSONFactoryUtil.createJSONObject();

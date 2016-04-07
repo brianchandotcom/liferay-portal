@@ -156,6 +156,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CATEGORY_BUTTON</td>
+	<td>//button[contains(@title,'Select ${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TREE_NODE</td>
+	<td>//li[contains(@id,'category')]//div//span[contains(@class,'tree-node-checkbox-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

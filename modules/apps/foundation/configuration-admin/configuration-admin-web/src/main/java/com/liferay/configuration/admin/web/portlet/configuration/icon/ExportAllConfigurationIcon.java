@@ -15,12 +15,14 @@
 package com.liferay.configuration.admin.web.portlet.configuration.icon;
 
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
 
@@ -28,6 +30,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -44,10 +47,15 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		return LanguageUtil.get(resourceBundle, "export-all-settings");
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "export-all-settings");
 	}
 
 	@Override
@@ -78,5 +86,10 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 	public boolean isShow(PortletRequest portletRequest) {
 		return true;
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.configuration.admin.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

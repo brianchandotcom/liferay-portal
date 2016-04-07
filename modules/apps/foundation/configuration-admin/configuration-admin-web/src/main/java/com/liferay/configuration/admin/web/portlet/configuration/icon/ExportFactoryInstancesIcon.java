@@ -21,12 +21,19 @@ import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -44,7 +51,14 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return "export-entries";
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
+
+		return ResourceBundleUtil.getString(resourceBundle, "export-entries");
 	}
 
 	@Override
@@ -90,5 +104,10 @@ public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {
 
 		return false;
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.configuration.admin.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

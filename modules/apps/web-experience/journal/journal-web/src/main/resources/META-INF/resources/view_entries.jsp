@@ -178,6 +178,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="content-column text-strong title-column"
+							href="<%= rowURL %>"
 							name="title"
 							path="/article_title.jsp"
 							truncate="<%= true %>"

@@ -139,7 +139,7 @@
 
 		<var name="key_ddlTemplateName" value="${dataDefinitionTemplateCopyName}" />
 
-		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateCopyName}" />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${dataDefinitionTemplateCopyName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -364,7 +364,7 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${ddlTemplateName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 
@@ -378,7 +378,7 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertTextPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute function="AssertTextPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${ddlTemplateName}" />
 		<execute function="AssertElementNotPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME" />
 	</command>
 
@@ -389,7 +389,7 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertElementNotPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" />
+		<execute function="AssertElementNotPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" />
 	</command>
 
 	<command name="viewWithNoPermissions">

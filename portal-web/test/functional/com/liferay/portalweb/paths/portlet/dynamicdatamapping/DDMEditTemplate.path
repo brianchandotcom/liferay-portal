@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save') and contains(@onclick,'save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//div[@class='button-holder ']/a[contains(.,' Cancel ')]</td>
 	<td></td>

@@ -225,6 +225,10 @@
 		</if>
 	</command>
 
+	<command name="save">
+		<execute function="AssertClick" locator1="DDMEditTemplate#SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Navigator#openURL" />
 
@@ -294,45 +298,52 @@
 			</else>
 		</if>
 
-		<execute macro="WebContentNavigator#gotoViewTemplate">
-			<var name="templateName" value="${templateName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Details" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
-
 		<if>
-			<isset var="structureName" />
+			<not>
+				<equals arg1="${userEditPermission}" arg2="noEditPermission" />
+			</not>
 			<then>
-				<execute function="AssertTextEquals#assertValue" locator1="DDMEditTemplate#DETAILS_STRUCTURE" value1="${structureName}" />
-			</then>
-		</if>
+				<execute macro="WebContentNavigator#gotoViewTemplate">
+					<var name="templateName" value="${templateName}" />
+				</execute>
 
-		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
-			<then>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
-			</then>
-			<elseif>
-				<equals arg1="${templateLanguage}" arg2="xsl" />
-				<then>
-					<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-			</else>
-		</if>
+				<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
-		<if>
-			<isset var="templateScript" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Details" />
+				</execute>
+
+				<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
+
+				<if>
+					<isset var="structureName" />
+					<then>
+						<execute function="AssertTextEquals#assertValue" locator1="DDMEditTemplate#DETAILS_STRUCTURE" value1="${structureName}" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${templateLanguage}" arg2="ftl" />
+					<then>
+						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+					</then>
+					<elseif>
+						<equals arg1="${templateLanguage}" arg2="xsl" />
+						<then>
+							<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+						</then>
+					</elseif>
+					<else>
+						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
+					</else>
+				</if>
+
+				<if>
+					<isset var="templateScript" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+					</then>
+				</if>
 			</then>
 		</if>
 	</command>

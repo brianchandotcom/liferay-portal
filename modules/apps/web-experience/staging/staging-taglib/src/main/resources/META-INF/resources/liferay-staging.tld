@@ -254,7 +254,7 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>Whether to publish the private pages; otherwise; the public pages are published.</description>
+			<description>Whether to publish the private pages; otherwise, the public pages are published.</description>
 			<name>privateLayout</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -295,7 +295,7 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>Whether to render the private pages; otherwise; the public pages are rendered.</description>
+			<description>Whether to render the private pages; otherwise, the public pages are rendered.</description>
 			<name>privateLayout</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -51,4 +51,6 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public boolean hasModuleGroups();
 
+	public boolean isRequired();
+
 }

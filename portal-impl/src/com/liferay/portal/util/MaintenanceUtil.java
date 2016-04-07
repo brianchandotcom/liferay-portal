@@ -127,7 +127,7 @@ public class MaintenanceUtil {
 	private static final MaintenanceUtil _instance = new MaintenanceUtil();
 
 	private String _className;
-	private boolean _maintaining = false;
+	private boolean _maintaining;
 	private String _sessionId;
 	private StringBuffer _status = new StringBuffer();
 

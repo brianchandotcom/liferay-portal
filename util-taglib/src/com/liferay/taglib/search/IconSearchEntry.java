@@ -129,6 +129,6 @@ public class IconSearchEntry extends TextSearchEntry {
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
-	private boolean _toggleRowChecker = false;
+	private boolean _toggleRowChecker;
 
 }

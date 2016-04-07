@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -503,11 +505,26 @@ public class JavaClass {
 		if (!isFinal && !javaTerm.isPublic() &&
 			!_fileName.endsWith("ObjectGraphUtilTest.java")) {
 
-			matcher = _isNullPattern.matcher(javaTermContent);
+			String defaultValue = null;
 
-			if (matcher.find()) {
-				_classContent = StringUtil.replace(
-					_classContent, javaTermContent, matcher.replaceFirst(";$1"));
+			if (StringUtil.isLowerCase(javaFieldType)) {
+				defaultValue = _defaultPrimitiveValues.get(javaFieldType);
+			}
+			else {
+				defaultValue = "null";
+			}
+
+			if (defaultValue != null) {
+				Pattern isDefaultValuePattern = Pattern.compile(
+					" =\\s+" + defaultValue + ";(\\s+)$");
+
+				matcher = isDefaultValuePattern.matcher(javaTermContent);
+
+				if (matcher.find()) {
+					_classContent = StringUtil.replace(
+						_classContent, javaTermContent,
+						matcher.replaceFirst(";$1"));
+				}
 			}
 		}
 
@@ -1548,6 +1565,13 @@ public class JavaClass {
 		_ACCESS_MODIFIER_PUBLIC
 	};
 
+	private static final Map<String, String> _defaultPrimitiveValues =
+		MapUtil.fromArray(
+			new String[] {
+				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
+				"0\\.0d", "float", "0\\.0f", "int", "0", "long", "0L", "short",
+				"0"
+			});
 	private static final List<String> _underscoreNotAllowedMethodNames =
 		ListUtil.fromArray(new String[] {"readObject", "writeObject"});
 
@@ -1568,8 +1592,6 @@ public class JavaClass {
 	private final String _fileName;
 	private final String _indent;
 	private final List<JavaClass> _innerClasses = new ArrayList<>();
-	private final Pattern _isNullPattern = Pattern.compile(
-		" =\\s+null;(\\s+)$");
 	private final JavaSourceProcessor _javaSourceProcessor;
 	private final List<String> _javaTermAccessLevelModifierExcludes;
 	private Set<JavaTerm> _javaTerms;

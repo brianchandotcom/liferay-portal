@@ -625,6 +625,6 @@ public class IconTag extends IncludeTag {
 	private String _target = "_self";
 	private boolean _toolTip;
 	private String _url;
-	private boolean _useDialog = false;
+	private boolean _useDialog;
 
 }

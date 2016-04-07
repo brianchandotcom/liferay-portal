@@ -171,7 +171,7 @@ public class IconListTag extends BaseBodyTagSupport implements BodyTag {
 		"/html/taglib/ui/icon_list/start.jsp";
 
 	private String _endPage;
-	private boolean _showWhenSingleIcon = false;
+	private boolean _showWhenSingleIcon;
 	private String _startPage;
 
 }

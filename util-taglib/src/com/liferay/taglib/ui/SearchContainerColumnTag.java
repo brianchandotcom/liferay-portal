@@ -93,7 +93,7 @@ public abstract class SearchContainerColumnTag
 	protected String cssClass = SearchEntry.DEFAULT_CSS_CLASS;
 	protected int index = -1;
 	protected String name = StringPool.BLANK;
-	protected boolean truncate = false;
+	protected boolean truncate;
 	protected String valign = SearchEntry.DEFAULT_VALIGN;
 
 }

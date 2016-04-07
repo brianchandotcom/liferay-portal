@@ -149,6 +149,6 @@ public class SearchContainerColumnIconTag<R> extends SearchContainerColumnTag {
 
 	private Object _href;
 	private String _icon;
-	private boolean _toggleRowChecker = false;
+	private boolean _toggleRowChecker;
 
 }

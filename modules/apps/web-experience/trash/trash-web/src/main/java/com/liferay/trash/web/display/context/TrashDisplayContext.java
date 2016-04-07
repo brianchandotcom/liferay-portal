@@ -121,7 +121,7 @@ public class TrashDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		if (_displayStyle != null) {
+		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
 		}
 
@@ -135,7 +135,7 @@ public class TrashDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol != null) {
+		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
 		}
 
@@ -146,7 +146,7 @@ public class TrashDisplayContext {
 	}
 
 	public String getOrderByType() {
-		if (_orderByType != null) {
+		if (Validator.isNotNull(_orderByType != null)) {
 			return _orderByType;
 		}
 
@@ -269,6 +269,30 @@ public class TrashDisplayContext {
 		}
 
 		return redirect;
+	}
+
+	public boolean isDescriptiveView() {
+		if (getDisplayStyle().equals("descriptive")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isIconView() {
+		if (getDisplayStyle().equals("icon")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isListView() {
+		if (getDisplayStyle().equals("list")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _containerModelRedirectURL;

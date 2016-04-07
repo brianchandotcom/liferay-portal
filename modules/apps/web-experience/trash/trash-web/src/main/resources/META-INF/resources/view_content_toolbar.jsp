@@ -31,7 +31,7 @@
 		</liferay-portlet:actionURL>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= trashDisplayContext.getDisplayStyle() %>"
 		/>

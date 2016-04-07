@@ -192,112 +192,184 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					}
 					%>
 
-					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
-						name="name"
-						truncate="<%= true %>"
-					>
-						<c:choose>
-							<c:when test="<%= !trashHandler.isContainerModel() %>">
-
-								<%
-								Map<String, Object> data = new HashMap<String, Object>();
-
-								data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
-								data.put("url", viewContentURLString);
-								%>
-
-								<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
-									<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-								</aui:a>
-							</c:when>
-							<c:otherwise>
-								<aui:a href="<%= viewContentURLString %>">
-									<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-								</aui:a>
-							</c:otherwise>
-						</c:choose>
-
-						<c:if test="<%= trashEntry.getRootEntry() != null %>">
-
-							<%
-							TrashEntry rootEntry = trashEntry.getRootEntry();
-
-							TrashHandler rootTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(rootEntry.getClassName());
-
-							TrashRenderer rootTrashRenderer = rootTrashHandler.getTrashRenderer(rootEntry.getClassPK());
-
-							String viewRootContentURLString = null;
-
-							if (rootTrashRenderer != null) {
-								PortletURL viewContentURL = renderResponse.createRenderURL();
-
-								viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-								viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
-
-								viewRootContentURLString = viewContentURL.toString();
-							}
-							%>
-
-							<liferay-util:buffer var="rootEntryIcon">
-								<liferay-ui:icon
-									label="<%= true %>"
-									message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
-									method="get"
-									url="<%= viewRootContentURLString %>"
-								/>
-							</liferay-util:buffer>
-
-							<span class="trash-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="<%= rootTrashHandler.getDeleteMessage() %>" translateArguments="<%= false %>" />)</span>
-						</c:if>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						cssClass="text-column type-column"
-						name="type"
-						value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
-					/>
-
-					<liferay-ui:search-container-column-date
-						cssClass="removed-date-column text-column"
-						name="removed-date"
-						value="<%= trashEntry.getCreateDate() %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						cssClass="removed-by-column text-column"
-						name="removed-by"
-						value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
-					/>
-
 					<c:choose>
-						<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
+						<c:when test="<%= trashDisplayContext.isDescriptiveView() %>">
+							<liferay-ui:search-container-column-icon
+								icon="<%= trashRenderer.getIconCssClass() %>"
+								toggleRowChecker="<%= true %>"
 							/>
-						</c:when>
-						<c:when test="<%= trashEntry.getRootEntry() == null %>">
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="/entry_action.jsp"
-							/>
+
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
+								<h5>
+									<c:choose>
+										<c:when test="<%= !trashHandler.isContainerModel() %>">
+
+											<%
+											Map<String, Object> data = new HashMap<String, Object>();
+
+											data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
+											data.put("url", viewContentURLString);
+											%>
+
+											<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
+												<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+											</aui:a>
+										</c:when>
+										<c:otherwise>
+											<aui:a href="<%= viewContentURLString %>">
+												<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+											</aui:a>
+										</c:otherwise>
+									</c:choose>
+								</h5>
+
+								<h6 class="text-default">
+									<strong><liferay-ui:message key="type" />:</strong> <%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
+								</h6>
+
+								<h6 class="text-default">
+									<strong><liferay-ui:message key="removed-date" />:</strong> <%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
+								</h6>
+
+							</liferay-ui:search-container-column-text>
+
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+									<liferay-ui:search-container-column-jsp
+										cssClass="entry-action-column"
+										path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
+									/>
+								</c:when>
+								<c:when test="<%= trashEntry.getRootEntry() == null %>">
+									<liferay-ui:search-container-column-jsp
+										cssClass="entry-action-column"
+										path="/entry_action.jsp"
+									/>
+								</c:when>
+								<c:otherwise>
+
+									<%
+									request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
+									%>
+
+									<liferay-ui:search-container-column-jsp
+										cssClass="entry-action-column"
+										path="/view_content_action.jsp"
+									/>
+								</c:otherwise>
+							</c:choose>
 						</c:when>
 						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								cssClass="content-column name-column title-column"
+								name="name"
+								truncate="<%= true %>"
+							>
+								<c:choose>
+									<c:when test="<%= !trashHandler.isContainerModel() %>">
 
-							<%
-							request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
-							%>
+										<%
+										Map<String, Object> data = new HashMap<String, Object>();
 
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="/view_content_action.jsp"
+										data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
+										data.put("url", viewContentURLString);
+										%>
+
+										<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
+											<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+										</aui:a>
+									</c:when>
+									<c:otherwise>
+										<aui:a href="<%= viewContentURLString %>">
+											<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+										</aui:a>
+									</c:otherwise>
+								</c:choose>
+
+								<c:if test="<%= trashEntry.getRootEntry() != null %>">
+
+									<%
+									TrashEntry rootEntry = trashEntry.getRootEntry();
+
+									TrashHandler rootTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(rootEntry.getClassName());
+
+									TrashRenderer rootTrashRenderer = rootTrashHandler.getTrashRenderer(rootEntry.getClassPK());
+
+									String viewRootContentURLString = null;
+
+									if (rootTrashRenderer != null) {
+										PortletURL viewContentURL = renderResponse.createRenderURL();
+
+										viewContentURL.setParameter("mvcPath", "/view_content.jsp");
+										viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
+
+										viewRootContentURLString = viewContentURL.toString();
+									}
+									%>
+
+									<liferay-util:buffer var="rootEntryIcon">
+										<liferay-ui:icon
+											label="<%= true %>"
+											message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
+											method="get"
+											url="<%= viewRootContentURLString %>"
+										/>
+									</liferay-util:buffer>
+
+									<span class="trash-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="<%= rootTrashHandler.getDeleteMessage() %>" translateArguments="<%= false %>" />)</span>
+								</c:if>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								cssClass="text-column type-column"
+								name="type"
+								value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
 							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="removed-date-column text-column"
+								name="removed-date"
+								value="<%= trashEntry.getCreateDate() %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="removed-by-column text-column"
+								name="removed-by"
+								value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
+							/>
+
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+									<liferay-ui:search-container-column-jsp
+										cssClass="entry-action-column"
+										path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
+									/>
+								</c:when>
+								<c:when test="<%= trashEntry.getRootEntry() == null %>">
+									<liferay-ui:search-container-column-jsp
+										cssClass="entry-action-column"
+										path="/entry_action.jsp"
+									/>
+								</c:when>
+								<c:otherwise>
+
+									<%
+									request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
+									%>
+
+									<liferay-ui:search-container-column-jsp
+										cssClass="entry-action-column"
+										path="/view_content_action.jsp"
+									/>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" type='<%= approximate ? "more" : "regular" %>' />
+				<liferay-ui:search-iterator displayStyle="<%= trashDisplayContext.getDisplayStyle() %>" markupView="lexicon" type='<%= approximate ? "more" : "regular" %>' />
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>

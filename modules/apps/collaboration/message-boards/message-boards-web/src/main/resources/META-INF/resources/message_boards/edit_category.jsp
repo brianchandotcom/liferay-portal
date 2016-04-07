@@ -17,6 +17,10 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
+MBRequestHelper mbRequestHelper = new MBRequestHelper(request);
+
+MBHomeDisplayContext mbHomeDisplayContext = mbDisplayContextProvider.getMBHomeDisplayContext(request, response);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 MBCategory category = mbRequestHelper.getCategory();

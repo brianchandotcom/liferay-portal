@@ -134,6 +134,35 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	protected void addWorkflowDefinitionDDMFormFieldOptionLabels(
+			DDMFormFieldOptions ddmFormFieldOptions, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!_workflowEngineManager.isDeployed()) {
+			return;
+		}
+
+		List<WorkflowDefinition> workflowDefinitions =
+			_workflowDefinitionManager.getActiveWorkflowDefinitions(
+				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+			String value =
+				workflowDefinition.getName() + StringPool.AT +
+					workflowDefinition.getVersion();
+
+			String version = LanguageUtil.format(
+				themeDisplay.getLocale(), "version-x",
+				workflowDefinition.getVersion(), false);
+
+			String label = workflowDefinition.getName() + " (" + version + ")";
+
+			ddmFormFieldOptions.addOptionLabel(
+				value, themeDisplay.getLocale(), label);
+		}
+	}
+
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -237,23 +266,8 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		ddmFormFieldOptions.addOptionLabel(
 			StringPool.BLANK, locale, LanguageUtil.get(locale, "no-workflow"));
 
-		List<WorkflowDefinition> workflowDefinitions =
-			_workflowDefinitionManager.getActiveWorkflowDefinitions(
-				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-			String value =
-				workflowDefinition.getName() + StringPool.AT +
-					workflowDefinition.getVersion();
-
-			String version = LanguageUtil.format(
-				locale, "version-x", workflowDefinition.getVersion(), false);
-
-			String label = workflowDefinition.getName() + " (" + version + ")";
-
-			ddmFormFieldOptions.addOptionLabel(value, locale, label);
-		}
+		addWorkflowDefinitionDDMFormFieldOptionLabels(
+			ddmFormFieldOptions, themeDisplay);
 
 		return ddmFormFieldOptions;
 	}

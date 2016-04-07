@@ -199,8 +199,10 @@ public class ScreensAssetEntryServiceImpl
 		FileEntry fileEntry = dlAppService.getFileEntry(
 			assetEntry.getClassPK());
 
-		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject(
-			JSONFactoryUtil.looseSerialize(fileEntry));
+		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
+
+		fileEntryJSONObject.put("fileEntry", JSONFactoryUtil.createJSONObject(
+			JSONFactoryUtil.looseSerialize(fileEntry)));
 
 		fileEntryJSONObject.put("url", getFileEntryPreviewURL(fileEntry));
 

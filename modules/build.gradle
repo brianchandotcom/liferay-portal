@@ -1,8 +1,5 @@
 import com.liferay.gradle.util.FileUtil
 
-import org.gradle.internal.hash.HashUtil
-import org.gradle.internal.hash.HashValue
-
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
@@ -24,8 +21,6 @@ gradle.beforeProject {
 			apply from: rootProject.file("build-module.gradle")
 			apply plugin: "pmd"
 
-			task installCache(type: InstallCacheTask)
-
 			configurations {
 				xmltask
 			}
@@ -33,23 +28,6 @@ gradle.beforeProject {
 			dependencies {
 				pmd group: "com.liferay", name: "com.liferay.pmd", version: "1.0.1"
 				xmltask rootProject.files("../lib/development/xmltask.jar")
-			}
-
-			installCache {
-				artifactGroup = "${->project.group}"
-				artifactName = "${->project.archivesBaseName}"
-				artifactVersion = "${->project.version}"
-
-				dependsOn cleanInstallCache
-				dependsOn install
-
-				description = "Installs the project to the local Gradle cache for testing."
-
-				ext {
-					autoClean = false
-				}
-
-				group = "upload"
 			}
 
 			pmd {
@@ -163,76 +141,4 @@ private boolean _hasTestClasses(Project project, String testClassesDirName) {
 	}
 
 	return true
-}
-
-class InstallCacheTask extends DefaultTask {
-
-	@Input
-	Object artifactGroup
-
-	@Input
-	Object artifactName
-
-	@Input
-	Object artifactVersion
-
-	@Input
-	File cacheRootDir = new File(project.gradle.gradleUserHomeDir, "caches/modules-2/files-2.1")
-
-	@Input
-	File mavenRootDir = new File(System.properties["user.home"], ".m2/repository")
-
-	@OutputDirectory
-	File getCacheDestinationDir() {
-		new File(cacheRootDir, "${artifactGroup}/${artifactName}/${artifactVersion}")
-	}
-
-	@InputDirectory
-	File getMavenInputDir() {
-		String mavenArtifactGroup = artifactGroup.replace('.' as char, File.separatorChar)
-
-		new File(mavenRootDir, "${mavenArtifactGroup}/${artifactName}/${artifactVersion}")
-	}
-
-	@TaskAction
-	void installCacheTask() {
-		["jar", "pom"].each {
-			String extension ->
-
-			File file = new File(mavenInputDir, "${artifactName}-${artifactVersion}.${extension}")
-
-			if (!file.exists()) {
-				throw new GradleException("Unable to find " + file)
-			}
-
-			if (extension == "pom") {
-				File tempFile = new File(temporaryDir, file.name)
-
-				project.copy {
-					from file
-					into temporaryDir
-				}
-
-				file = tempFile
-
-				CharsetToolkit charsetToolkit = new CharsetToolkit(file)
-
-				String charset = charsetToolkit.charset.name()
-
-				ant.fixcrlf encoding: charset, eol: "lf", file: file, fixlast: false, outputencoding: "UTF-8"
-			}
-
-			HashValue hashValue = HashUtil.sha1(file)
-
-			String hash = hashValue.asHexString()
-
-			hash.replaceFirst(/^0*/, "")
-
-			project.copy {
-				from file
-				into new File(cacheDestinationDir, hash)
-			}
-		}
-	}
-
 }

@@ -27,6 +27,7 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BaselineTask;
+import com.liferay.gradle.plugins.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -39,6 +40,7 @@ import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
@@ -168,6 +170,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String DEFAULT_REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
+	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
 
@@ -394,6 +398,56 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		classesTask.dependsOn(copy);
 
 		return copy;
+	}
+
+	protected InstallCacheTask addTaskInstallCache(final Project project) {
+		InstallCacheTask installCacheTask = GradleUtil.addTask(
+			project, INSTALL_CACHE_TASK_NAME, InstallCacheTask.class);
+
+		installCacheTask.dependsOn(
+			BasePlugin.CLEAN_TASK_NAME +
+				StringUtil.capitalize(installCacheTask.getName()),
+			MavenPlugin.INSTALL_TASK_NAME);
+
+		installCacheTask.setArtifactGroup(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					return project.getGroup();
+				}
+
+			});
+
+		installCacheTask.setArtifactName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return getArchivesBaseName(project);
+				}
+
+			});
+
+		installCacheTask.setArtifactVersion(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					return project.getVersion();
+				}
+
+			});
+
+		installCacheTask.setDescription(
+			"Installs the project to the local Gradle cache for testing.");
+		installCacheTask.setGroup(BasePlugin.UPLOAD_GROUP);
+
+		GradleUtil.setProperty(
+			installCacheTask, LiferayJavaPlugin.AUTO_CLEAN_PROPERTY_NAME,
+			false);
+
+		return installCacheTask;
 	}
 
 	protected Jar addTaskJarJavadoc(Project project) {
@@ -1421,6 +1475,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			configureSourceSetTestIntegration(
 				project, portalConfiguration, portalTestConfiguration);
 		}
+
+		addTaskInstallCache(project);
 
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);

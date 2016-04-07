@@ -277,10 +277,11 @@ public class ScreensAssetEntryServiceImpl
 				JSONFactoryUtil.looseSerialize(assetEntry));
 
 			jsonObject.put("description", assetEntry.getDescription(locale));
-			jsonObject.put("object", getAssetObjectJSONObject(assetEntry));
+			jsonObject.put(
+				"object", getAssetObjectJSONObject(assetEntry, locale));
+			jsonObject.put("locale", String.valueOf(locale));
 			jsonObject.put("summary", assetEntry.getSummary(locale));
 			jsonObject.put("title", assetEntry.getTitle(locale));
-
 			jsonArray.put(jsonObject);
 		}
 

@@ -2937,6 +2937,91 @@
 		</execute>
 	</command>
 
+	<command name="StagingPublishChildSiteWithReference" priority="4">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#searchInputCP">
+			<var name="siteName" value="Child Site" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page 1" />
+			<var name="siteName" value="Child Site" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Page 1" />
+			<var name="siteName" value="Child Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectParentSiteWebContent">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Child Site" />
+		</execute>
+	</command>
+
 	<command name="StagingPublishOnlySelectedPage" priority="4">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />

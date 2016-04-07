@@ -262,6 +262,43 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="selectParentSiteWebContent">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="${parentSiteName}" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="${parentSiteName}" />
+
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute function="AssertClick" locator1="Link#WEB_CONTENT_ARTICLE" value1="${webContentTitle}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+	</command>
+
 	<command name="selectWebContent">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Web Content Display" />

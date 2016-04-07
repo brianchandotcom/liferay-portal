@@ -237,10 +237,21 @@ public class ScreensAssetEntryServiceImpl
 				journalArticleResource.getArticleId());
 		}
 
-		JSONObject journalArticleJSONObject = JSONFactoryUtil.createJSONObject(
-			JSONFactoryUtil.looseSerialize(journalArticle));
+		JSONObject journalArticleJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
-		journalArticleJSONObject.remove("content");
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONFactoryUtil.looseSerialize(journalArticle));
+		journalArticleJSONObject.put("modelAttributes", jsonObject);
+		journalArticleJSONObject.put(
+			"modelValues", jsonObject.getString("content"));
+
+		jsonObject.remove("content");
+
+		journalArticleJSONObject.put(
+			"DDMStructure", JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(
+					journalArticle.getDDMStructure())));
 
 		return journalArticleJSONObject;
 	}

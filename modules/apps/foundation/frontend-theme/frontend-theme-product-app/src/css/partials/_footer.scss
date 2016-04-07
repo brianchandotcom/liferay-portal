@@ -9,15 +9,14 @@
 }
 
 #company-info {
+	border-bottom: 1px solid #2F3033;
+	margin-bottom: 70px;
+	padding-bottom: 30px;
 	text-align: center;
 
 	@include media-query($breakpoint_tablet, null) {
 		text-align: left;
 	}
-
-	border-bottom: 1px solid #2F3033;
-	margin-bottom: 70px;
-	padding-bottom: 30px;
 }
 
 #footer-brand {

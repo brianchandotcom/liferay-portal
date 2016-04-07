@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Knowledge Base Web
+Bundle-SymbolicName: com.liferay.knowledge.base.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.liferay.util.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Knowledge Base
+Web-ContextPath: /knowledge-base-web
+-liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

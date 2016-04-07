@@ -233,8 +233,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private String[] _queryTerms;
 	private String _rowCheckerId;
 	private String _rowCheckerName;
-	private boolean _showCheckbox = false;
-	private int _status = 0;
+	private boolean _showCheckbox;
+	private int _status;
 	private String _thumbnailSrc;
 	private String _title;
 	private String _url;

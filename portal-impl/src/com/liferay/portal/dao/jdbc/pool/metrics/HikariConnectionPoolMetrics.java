@@ -126,6 +126,6 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 	private HikariPoolMXBean _connectionPool;
 	private final Object _dataSource;
-	private boolean _initializationFailed = false;
+	private boolean _initializationFailed;
 
 }

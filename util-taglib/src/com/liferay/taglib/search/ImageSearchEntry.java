@@ -129,6 +129,6 @@ public class ImageSearchEntry extends TextSearchEntry {
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
 	private String _src;
-	private boolean _toggleRowChecker = false;
+	private boolean _toggleRowChecker;
 
 }

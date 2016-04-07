@@ -149,7 +149,7 @@ public class DoPrivilegedHandler
 	private static final String _BEAN_NAME_SUFFIX_PERSISTENCE = "Persistence";
 
 	private Object _bean;
-	private boolean _hasNotPrivilegedMethods = false;
+	private boolean _hasNotPrivilegedMethods;
 	private List<MethodKey> _notPrivilegedMethods;
 
 	private static class InvokePrivilegedExceptionAction

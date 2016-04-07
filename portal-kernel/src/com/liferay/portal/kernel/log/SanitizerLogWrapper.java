@@ -301,7 +301,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 	private static final boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
 		SystemProperties.get(PropsKeys.LOG_SANITIZER_ENABLED));
 
-	private static boolean _LOG_SANITIZER_ESCAPE_HTML_ENABLED = false;
+	private static boolean _LOG_SANITIZER_ESCAPE_HTML_ENABLED;
 
 	private static char _LOG_SANITIZER_REPLACEMENT_CHARACTER =
 		CharPool.UNDERLINE;

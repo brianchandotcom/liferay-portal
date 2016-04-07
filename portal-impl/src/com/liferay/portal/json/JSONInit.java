@@ -104,6 +104,6 @@ public class JSONInit {
 		}
 	}
 
-	private static boolean _initalized = false;
+	private static boolean _initalized;
 
 }

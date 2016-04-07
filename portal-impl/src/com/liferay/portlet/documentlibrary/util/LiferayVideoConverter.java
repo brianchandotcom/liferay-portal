@@ -442,7 +442,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		LiferayVideoConverter.class);
 
 	private final Properties _ffpresetProperties;
-	private int _height = 0;
+	private int _height;
 	private IContainer _inputIContainer;
 	private final String _inputURL;
 	private IContainer _outputIContainer;
@@ -450,6 +450,6 @@ public class LiferayVideoConverter extends LiferayConverter {
 	private int _videoBitRate;
 	private final String _videoContainer;
 	private IRational _videoFrameRate;
-	private int _width = 0;
+	private int _width;
 
 }

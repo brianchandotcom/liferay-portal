@@ -111,8 +111,8 @@ public class AppViewToolbarTag extends TagSupport {
 		"/html/taglib/ui/app_view_toolbar/start.jsp";
 
 	private String _endPage;
-	private boolean _includeDisplayStyle = false;
-	private boolean _includeSelectAll = false;
+	private boolean _includeDisplayStyle;
+	private boolean _includeSelectAll;
 	private String _searchJsp;
 	private String _startPage;
 

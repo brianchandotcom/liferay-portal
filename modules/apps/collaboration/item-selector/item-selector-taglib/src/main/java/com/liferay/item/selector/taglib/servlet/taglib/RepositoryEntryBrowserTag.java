@@ -219,7 +219,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 	private PortletURL _portletURL;
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
-	private int _repositoryEntriesCount = 0;
+	private int _repositoryEntriesCount;
 	private boolean _showBreadcrumb;
 	private boolean _showDragAndDropZone = true;
 	private String _tabName;

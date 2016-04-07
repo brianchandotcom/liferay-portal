@@ -366,7 +366,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_var = var;
 	}
 
-	private boolean _compactEmptyResultsMessage = false;
+	private boolean _compactEmptyResultsMessage;
 	private String _cssClass = StringPool.BLANK;
 	private String _curParam = SearchContainer.DEFAULT_CUR_PARAM;
 	private int _delta = SearchContainer.DEFAULT_DELTA;

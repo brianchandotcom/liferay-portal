@@ -149,7 +149,7 @@ public class SelectPagesTag extends IncludeTag {
 	private boolean _logo = true;
 	private boolean _privateLayout;
 	private String _selectedLayoutIds = StringPool.BLANK;
-	private boolean _showDeleteMissingLayouts = false;
+	private boolean _showDeleteMissingLayouts;
 	private boolean _themeReference = true;
 	private String _treeId = StringPool.BLANK;
 

@@ -198,7 +198,7 @@ public class UpgradeProcessUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeProcessUtil.class);
 
-	private static boolean _createIGImageDocumentType = false;
+	private static boolean _createIGImageDocumentType;
 	private static final Map<Long, String> _languageIds = new HashMap<>();
 
 }

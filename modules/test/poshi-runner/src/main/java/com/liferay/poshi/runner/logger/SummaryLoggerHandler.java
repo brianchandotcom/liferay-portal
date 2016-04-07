@@ -879,7 +879,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	private static LoggerElement _causeBodyLoggerElement;
-	private static boolean _containsMinorStepWarning = false;
+	private static boolean _containsMinorStepWarning;
 	private static Element _majorStepElement;
 	private static LoggerElement _majorStepLoggerElement;
 	private static LoggerElement _majorStepsLoggerElement;

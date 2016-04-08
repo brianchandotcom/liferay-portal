@@ -79,8 +79,8 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							%>
 
 							<select id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>" name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--">
-								<option <%= curValue ? "selected" : "" %> value="1"><liferay-ui:message key="true" /></option>
-								<option <%= !curValue ? "selected" : "" %> value="0"><liferay-ui:message key="false" /></option>
+								<option <%= curValue ? "selected" : "" %> value="1"><liferay-ui:message key="<%= Boolean.TRUE.toString() %>" /></option>
+								<option <%= !curValue ? "selected" : "" %> value="0"><liferay-ui:message key="<%= Boolean.FALSE.toString() %>" /></option>
 							</select>
 						</c:when>
 						<c:when test="<%= type == ExpandoColumnConstants.BOOLEAN_ARRAY %>">

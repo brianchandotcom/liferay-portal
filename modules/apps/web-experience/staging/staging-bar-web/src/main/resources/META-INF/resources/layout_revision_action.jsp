@@ -39,7 +39,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-				<portlet:param name="major" value="true" />
+				<portlet:param name="major" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="workflowAction" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 			</portlet:actionURL>
 

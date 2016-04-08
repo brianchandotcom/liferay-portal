@@ -141,7 +141,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 							<liferay-staging:select-pages action="<%= Constants.PUBLISH %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" groupId="<%= stagingGroupId %>" privateLayout="<%= privateLayout %>" treeId="<%= treeId %>" />
 						</c:if>
 
-						<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="true" type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
+						<liferay-staging:content cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" showAllPortlets="<%= true %>" type="<%= stagingGroup.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
 
 						<liferay-staging:deletions cmd="<%= cmd %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" />
 

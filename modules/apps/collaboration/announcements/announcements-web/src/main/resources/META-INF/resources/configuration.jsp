@@ -109,7 +109,7 @@ if (!roles.isEmpty()) {
 								<liferay-ui:input-move-boxes
 									leftBoxName="currentScopeGroupIds"
 									leftList="<%= leftList %>"
-									leftReorder="true"
+									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="displaying"
 									rightBoxName="availableScopeGroupIds"
 									rightList="<%= rightList %>"
@@ -148,7 +148,7 @@ if (!roles.isEmpty()) {
 								<liferay-ui:input-move-boxes
 									leftBoxName="currentScopeOrganizationIds"
 									leftList="<%= leftList %>"
-									leftReorder="true"
+									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="displaying"
 									rightBoxName="availableScopeOrganizationIds"
 									rightList="<%= rightList %>"
@@ -187,7 +187,7 @@ if (!roles.isEmpty()) {
 								<liferay-ui:input-move-boxes
 									leftBoxName="currentScopeUserGroupIds"
 									leftList="<%= leftList %>"
-									leftReorder="true"
+									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="displaying"
 									rightBoxName="availableScopeUserGroupIds"
 									rightList="<%= rightList %>"
@@ -226,7 +226,7 @@ if (!roles.isEmpty()) {
 								<liferay-ui:input-move-boxes
 									leftBoxName="currentScopeRoleIds"
 									leftList="<%= leftList %>"
-									leftReorder="true"
+									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="displaying"
 									rightBoxName="availableScopeRoleIds"
 									rightList="<%= rightList %>"

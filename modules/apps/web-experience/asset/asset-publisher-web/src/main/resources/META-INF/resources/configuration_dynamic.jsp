@@ -100,7 +100,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentClassNameIds"
 							leftList="<%= typesLeftList %>"
-							leftReorder="true"
+							leftReorder="<%= Boolean.TRUE.toString() %>"
 							leftTitle="selected"
 							rightBoxName="availableClassNameIds"
 							rightList="<%= typesRightList %>"
@@ -220,7 +220,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								<liferay-ui:input-move-boxes
 									leftBoxName='<%= className + "currentClassTypeIds" %>'
 									leftList="<%= subtypesLeftList %>"
-									leftReorder="true"
+									leftReorder="<%= Boolean.TRUE.toString() %>"
 									leftTitle="selected"
 									rightBoxName='<%= className + "availableClassTypeIds" %>'
 									rightList="<%= subtypesRightList %>"

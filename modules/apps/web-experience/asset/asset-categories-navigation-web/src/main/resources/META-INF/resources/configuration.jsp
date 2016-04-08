@@ -47,7 +47,7 @@
 				<liferay-ui:input-move-boxes
 					leftBoxName="currentAssetVocabularyIds"
 					leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
-					leftReorder="true"
+					leftReorder="<%= Boolean.TRUE.toString() %>"
 					leftTitle="current"
 					rightBoxName="availableAssetVocabularyIds"
 					rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"

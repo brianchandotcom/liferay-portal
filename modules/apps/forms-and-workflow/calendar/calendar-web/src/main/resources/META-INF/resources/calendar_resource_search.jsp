@@ -34,8 +34,8 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 		<aui:input name="<%= CalendarResourceDisplayTerms.DESCRIPTION %>" value="<%= displayTerms.getDescription() %>" />
 
 		<aui:select name="<%= CalendarResourceDisplayTerms.ACTIVE %>">
-			<aui:option label="yes" selected="<%= displayTerms.isActive() %>" value="true" />
-			<aui:option label="no" selected="<%= !displayTerms.isActive() %>" value="false" />
+			<aui:option label="yes" selected="<%= displayTerms.isActive() %>" value="<%= true %>" />
+			<aui:option label="no" selected="<%= !displayTerms.isActive() %>" value="<%= false %>" />
 		</aui:select>
 
 		<aui:select name="<%= CalendarResourceDisplayTerms.SCOPE %>">

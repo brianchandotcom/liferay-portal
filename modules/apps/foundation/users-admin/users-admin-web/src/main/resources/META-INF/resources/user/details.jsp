@@ -195,8 +195,8 @@ if (selContact != null) {
 
 		<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
 			<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "gender") %>' label="gender" model="<%= Contact.class %>" name="male">
-				<aui:option label="male" value="true" />
-				<aui:option label="female" value="false" />
+				<aui:option label="male" value="<%= true %>" />
+				<aui:option label="female" value="<%= false %>" />
 			</aui:select>
 		</c:if>
 

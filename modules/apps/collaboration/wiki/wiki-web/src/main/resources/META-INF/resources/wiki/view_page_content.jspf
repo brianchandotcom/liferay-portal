@@ -31,7 +31,7 @@ try {
 						<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 						<portlet:param name="title" value="<%= title %>" />
-						<portlet:param name="removeRedirect" value="true" />
+						<portlet:param name="removeRedirect" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:renderURL>
 
 					<div class="btn-toolbar">

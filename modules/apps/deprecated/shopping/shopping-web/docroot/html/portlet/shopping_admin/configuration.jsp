@@ -85,7 +85,7 @@ shoppingGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfi
 					<liferay-ui:input-move-boxes
 						leftBoxName="current_cc_types"
 						leftList="<%= leftList %>"
-						leftReorder="true"
+						leftReorder="<%= Boolean.TRUE.toString() %>"
 						leftTitle="current"
 						rightBoxName="available_cc_types"
 						rightList="<%= rightList %>"

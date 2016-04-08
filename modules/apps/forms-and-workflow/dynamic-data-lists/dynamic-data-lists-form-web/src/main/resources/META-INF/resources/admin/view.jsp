@@ -59,7 +59,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							colspan="2"
+							colspan="<%= 2 %>"
 							href="<%= rowURL %>"
 							path="/admin/view_record_set_descriptive.jsp"
 						/>

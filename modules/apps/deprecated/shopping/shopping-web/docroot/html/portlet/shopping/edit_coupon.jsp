@@ -85,7 +85,7 @@ renderResponse.setTitle(((coupon == null) ? LanguageUtil.get(request, "coupon") 
 
 			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" label="expiration-date" name="endDate" />
 
-			<aui:input name="active" value="<%= Boolean.TRUE %>" />
+			<aui:input name="active" value="<%= true %>" />
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="discount">

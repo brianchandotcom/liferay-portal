@@ -1098,6 +1098,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String line, String tagName, String attributeAndValue)
 		throws Exception {
 
+		if (attributeAndValue.matches(
+				".*=\"<%= Boolean\\.(FALSE|TRUE) %>\".*")) {
+
+			String newAttributeAndValue = StringUtil.replace(
+				attributeAndValue,
+				new String[] {
+					"=\"<%= Boolean.FALSE %>\"", "=\"<%= Boolean.TRUE %>\""
+				},
+				new String[] {"=\"<%= false %>\"", "=\"<%= true %>\""});
+
+			return StringUtil.replace(
+				line, attributeAndValue, newAttributeAndValue);
+		}
+
 		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
 			attributeAndValue.contains("\"<%=")) {
 

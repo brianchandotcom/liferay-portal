@@ -98,7 +98,7 @@
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentVisibleNodes"
 				leftList="<%= leftList %>"
-				leftReorder="true"
+				leftReorder="<%= Boolean.TRUE.toString() %>"
 				leftTitle="visible"
 				rightBoxName="availableVisibleNodes"
 				rightList="<%= rightList %>"

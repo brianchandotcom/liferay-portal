@@ -162,7 +162,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 		<liferay-ui:input-move-boxes
 			leftBoxName="currentLanguageIds"
 			leftList="<%= leftList %>"
-			leftReorder="true"
+			leftReorder="<%= Boolean.TRUE.toString() %>"
 			leftTitle="current"
 			rightBoxName="availableLanguageIds"
 			rightList="<%= rightList %>"

@@ -115,7 +115,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 		var form = $(document.<portlet:namespace />fm);
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/edit_action" var="editorURL">
-			<portlet:param name="ajax" value="true" />
+			<portlet:param name="ajax" value="<%= Boolean.TRUE.toString() %>" />
 		</liferay-portlet:resourceURL>
 
 		$.ajax(

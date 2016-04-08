@@ -48,7 +48,7 @@
 	<liferay-ui:input-move-boxes
 		leftBoxName="current_actions"
 		leftList="<%= leftList %>"
-		leftReorder="true"
+		leftReorder="<%= Boolean.TRUE.toString() %>"
 		leftTitle="current"
 		rightBoxName="available_actions"
 		rightList="<%= rightList %>"

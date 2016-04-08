@@ -112,7 +112,7 @@ else {
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 					<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
-					<portlet:param name="rootFolder" value="true" />
+					<portlet:param name="rootFolder" value="<%= Boolean.TRUE.toString() %>" />
 				</portlet:renderURL>
 
 				<liferay-ui:icon

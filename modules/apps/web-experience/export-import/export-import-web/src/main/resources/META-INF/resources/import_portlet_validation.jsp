@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="importPortletURL">
-	<portlet:param name="p_p_isolated" value="true" />
+	<portlet:param name="p_p_isolated" value="<%= Boolean.TRUE.toString() %>" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />

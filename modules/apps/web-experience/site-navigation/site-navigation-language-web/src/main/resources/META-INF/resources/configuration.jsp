@@ -44,7 +44,7 @@
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentLanguageIds"
 				leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
-				leftReorder="true"
+				leftReorder="<%= Boolean.TRUE.toString() %>"
 				leftTitle="current"
 				rightBoxName="availableLanguageIds"
 				rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"

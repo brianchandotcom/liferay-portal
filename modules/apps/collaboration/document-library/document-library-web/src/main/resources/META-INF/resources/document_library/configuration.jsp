@@ -63,7 +63,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<liferay-ui:input-move-boxes
 					leftBoxName="currentDisplayViews"
 					leftList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
-					leftReorder="true"
+					leftReorder="<%= Boolean.TRUE.toString() %>"
 					leftTitle="current"
 					rightBoxName="availableDisplayViews"
 					rightList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
@@ -92,7 +92,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentEntryColumns"
 						leftList="<%= dlPortletInstanceSettingsHelper.getCurrentEntryColumns() %>"
-						leftReorder="true"
+						leftReorder="<%= Boolean.TRUE.toString() %>"
 						leftTitle="current"
 						rightBoxName="availableEntryColumns"
 						rightList="<%= dlPortletInstanceSettingsHelper.getAvailableEntryColumns() %>"

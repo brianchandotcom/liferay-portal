@@ -186,7 +186,7 @@
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentMetadataFields"
 				leftList="<%= leftList %>"
-				leftReorder="true"
+				leftReorder="<%= Boolean.TRUE.toString() %>"
 				leftTitle="current"
 				rightBoxName="availableMetadataFields"
 				rightList="<%= rightList %>"

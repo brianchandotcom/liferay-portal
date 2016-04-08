@@ -47,7 +47,7 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-			<portlet:param name="spreadsheet" value="true" />
+			<portlet:param name="spreadsheet" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

@@ -112,7 +112,7 @@ catch (NoSuchFolderException nsfe) {
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentFolderColumns"
 							leftList="<%= leftList %>"
-							leftReorder="true"
+							leftReorder="<%= Boolean.TRUE.toString() %>"
 							leftTitle="current"
 							rightBoxName="availableFolderColumns"
 							rightList="<%= rightList %>"
@@ -159,7 +159,7 @@ catch (NoSuchFolderException nsfe) {
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentEntryColumns"
 							leftList="<%= leftList %>"
-							leftReorder="true"
+							leftReorder="<%= Boolean.TRUE.toString() %>"
 							leftTitle="current"
 							rightBoxName="availableEntryColumns"
 							rightList="<%= rightList %>"

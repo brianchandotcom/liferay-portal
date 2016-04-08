@@ -8,6 +8,7 @@ buildCSS {
 }
 
 dependencies {
+	compile group: "com.deque", name: "axe-selenium", version: "1.1"
 	compile group: "com.google.guava", name: "guava", version: "16.0.1"
 	compile group: "com.jayway.jsonpath", name: "json-path", version: "2.1.0"
 	compile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"

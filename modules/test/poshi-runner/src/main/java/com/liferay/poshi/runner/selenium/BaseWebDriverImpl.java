@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.deque.axe.AXE;
+
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.OSDetector;
@@ -26,7 +28,11 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import java.io.File;
 import java.io.StringReader;
+
+import java.net.URI;
+import java.net.URL;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -44,6 +50,9 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import junit.framework.TestCase;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -156,6 +165,33 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void antCommand(String fileName, String target) throws Exception {
 		LiferaySeleniumHelper.antCommand(this, fileName, target);
+	}
+
+	@Override
+	public void assertAccessible() throws Exception {
+		WebDriver webDriver = WebDriverUtil.getWebDriver();
+
+		String sourceDirFilePath = LiferaySeleniumHelper.getSourceDirFilePath(
+			getTestDependenciesDirName());
+
+		File axeFile = new File(sourceDirFilePath + "/axe.min.js");
+
+		URI axeURI = axeFile.toURI();
+
+		URL axeURL = axeURI.toURL();
+
+		AXE.Builder axeBuilder = new AXE.Builder(webDriver, axeURL);
+
+		AXE.Builder axeBuilderOptions = axeBuilder.options(
+			PropsValues.ACCESSIBILITY_STANDARDS_JSON);
+
+		JSONObject responseJSON = axeBuilderOptions.analyze();
+
+		JSONArray violations = responseJSON.getJSONArray("violations");
+
+		if (violations.length() != 0) {
+			throw new Exception(AXE.report(violations));
+		}
 	}
 
 	@Override

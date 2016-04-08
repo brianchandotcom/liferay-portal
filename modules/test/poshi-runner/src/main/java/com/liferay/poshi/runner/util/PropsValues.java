@@ -19,6 +19,9 @@ package com.liferay.poshi.runner.util;
  */
 public class PropsValues {
 
+	public static final String ACCESSIBILITY_STANDARDS_JSON = PropsUtil.get(
+		"accessibility.standards.json");
+
 	public static final String BROWSER_COMMANDS_DIR_NAME = PropsUtil.get(
 		"browser.commands.dir.name");
 

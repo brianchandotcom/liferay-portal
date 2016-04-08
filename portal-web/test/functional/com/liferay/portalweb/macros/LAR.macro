@@ -450,9 +450,7 @@
 		<if>
 			<equals arg1="${privateLayout}" arg2="true" />
 			<then>
-				<execute macro="SitePageNavigator#gotoPages">
-					<var name="page" value="Private Pages" />
-				</execute>
+				<execute function="Click" locator1="SitePagesExport#CHANGE_TO_PRIVATE_PAGES" />
 			</then>
 		</if>
 

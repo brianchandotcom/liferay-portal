@@ -45,6 +45,11 @@
 </tr>
 <!--PAGES-->
 <tr>
+	<td>CHANGE_TO_PRIVATE_PAGES</td>
+	<td>//button[contains(@id,'changeToPrivateLayoutsButton')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_CHANGE_LINK</td>
 	<td>//div/a[contains(@id,'pagesLink')]</td>
 	<td></td>

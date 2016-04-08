@@ -50,6 +50,15 @@ import org.apache.commons.lang.time.StopWatch;
 public class SetupWizardSampleDataUtil {
 
 	public static void addSampleData(long companyId) throws Exception {
+		addSampleData(
+			companyId, "Liferay", "Joe", "Bloggs", "test@liferay.com");
+	}
+
+	public static void addSampleData(
+			long companyId, String companyName, String userFirstName,
+			String userLastName, String userEmailAddress)
+		throws Exception {
+
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -59,8 +68,6 @@ public class SetupWizardSampleDataUtil {
 		}
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
-
-		String companyName = "Liferay";
 
 		Account account = company.getAccount();
 
@@ -107,10 +114,8 @@ public class SetupWizardSampleDataUtil {
 			intranetLayout.getGroupId(), true, intranetLayout.getLayoutId(),
 			intranetLayout.getTypeSettings());
 
-		String emailAddress = "test@liferay.com";
-
 		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
-			company.getCompanyId(), emailAddress);
+			company.getCompanyId(), userEmailAddress);
 
 		ScreenNameGenerator screenNameGenerator =
 			ScreenNameGeneratorFactory.getInstance();
@@ -119,19 +124,16 @@ public class SetupWizardSampleDataUtil {
 			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX, "test");
 
 		try {
-			screenName = screenNameGenerator.generate(0, 0, emailAddress);
+			screenName = screenNameGenerator.generate(0, 0, userEmailAddress);
 		}
 		catch (Exception e) {
 		}
 
-		String userFirstName = "Joe";
-
-		String userLastName = "Bloggs";
-
 		if (user == null) {
 			user = UserLocalServiceUtil.addDefaultAdminUser(
-				companyId, screenName, emailAddress, LocaleUtil.getDefault(),
-				userFirstName, StringPool.BLANK, userLastName);
+				companyId, screenName, userEmailAddress,
+				LocaleUtil.getDefault(), userFirstName, StringPool.BLANK,
+				userLastName);
 		}
 		else {
 			user.setScreenName(screenName);

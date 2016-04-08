@@ -803,12 +803,12 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-tomcat8-mysql56-jdk7" />
 	</target>
 
-	<target name="functional-tomcat8-postgresql94-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
-	</target>
-
 	<target name="functional-tomcat8-oracle12-jdk7">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
+	</target>
+
+	<target name="functional-tomcat8-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
 	<target name="functional-tomcat8-sybase16-jdk7">

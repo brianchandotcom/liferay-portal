@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.Dom4jUtil;
@@ -45,9 +44,7 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 /**
  * @author Hugo Huijser
@@ -1185,12 +1182,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_numericalPortletNameElementExcludes = getPropertyList(
 			"numerical.portlet.name.element.excludes");
 		_xmlExcludes = getPropertyList("xml.excludes");
-	}
-
-	protected Document readXML(String content) throws DocumentException {
-		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
-
-		return saxReader.read(new UnsyncStringReader(content));
 	}
 
 	protected String sortPoshiAttributes(String fileName, String content)

@@ -31,7 +31,7 @@
 		<execute function="AssertElementNotPresent" locator1="Button#SIGN_IN" />
 
 		<execute function="Pause" locator1="60000" />
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="?? DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
 		<execute function="AssertElementPresent" locator1="Button#SIGN_IN" value1="Sign In" />

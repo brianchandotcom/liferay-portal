@@ -1155,7 +1155,27 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return line;
+		if (!attributeAndValue.matches(".*=\"(false|true)\".*")) {
+			return line;
+		}
+
+		JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
+			setAttributeMethodName, new Type[] {new Type("java.lang.String")},
+			true);
+
+		if (setAttributeMethod == null) {
+			return line;
+		}
+
+		String newAttributeAndValue = StringUtil.replace(
+			attributeAndValue, new String[] {"=\"false\"", "=\"true\""},
+			new String[] {
+				"=\"<%= Boolean.FALSE.toString() %>\"",
+				"=\"<%= Boolean.TRUE.toString() %>\""
+			});
+
+		return StringUtil.replace(
+			line, attributeAndValue, newAttributeAndValue);
 	}
 
 	protected String formatTaglibVariable(String fileName, String content) {

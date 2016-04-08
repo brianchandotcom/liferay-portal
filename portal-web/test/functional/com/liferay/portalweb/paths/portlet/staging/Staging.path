@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>STAGING_STATUS</td>
-	<td>//tr/td[contains(@class,'status-column')]</td>
+	<td>xpath=(//h6[contains(text(),'Successful')])[1]</td>
 	<td></td>
 </tr>
 <tr>

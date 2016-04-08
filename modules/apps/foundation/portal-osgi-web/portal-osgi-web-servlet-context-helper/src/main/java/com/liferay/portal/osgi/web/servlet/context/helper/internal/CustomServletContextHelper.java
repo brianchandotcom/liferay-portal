@@ -62,13 +62,7 @@ public class CustomServletContextHelper
 
 	@Override
 	public String getRealPath(String path) {
-		URL url = getResource(path);
-
-		if (url == null) {
-			return null;
-		}
-
-		return url.toExternalForm();
+		return null;
 	}
 
 	@Override

@@ -21,18 +21,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
-import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -42,8 +37,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
@@ -51,7 +44,6 @@ import java.io.IOException;
 
 import java.sql.Connection;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -293,18 +285,6 @@ public class SetupWizardUtil {
 
 		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, emailAddress);
 
-		ScreenNameGenerator screenNameGenerator =
-			ScreenNameGeneratorFactory.getInstance();
-
-		String screenName = GetterUtil.getString(
-			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX, "test");
-
-		try {
-			screenName = screenNameGenerator.generate(0, 0, emailAddress);
-		}
-		catch (Exception e) {
-		}
-
 		String firstName = ParamUtil.getString(
 			request, "adminFirstName", PropsValues.DEFAULT_ADMIN_FIRST_NAME);
 		String lastName = ParamUtil.getString(
@@ -320,61 +300,9 @@ public class SetupWizardUtil {
 
 		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_NAME, fullName);
 
-		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
-			themeDisplay.getCompanyId(), emailAddress);
-
-		if (user != null) {
-			String greeting = LanguageUtil.format(
-				themeDisplay.getLocale(), "welcome-x", fullName, false);
-
-			Contact contact = user.getContact();
-
-			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
-
-			birthdayCal.setTime(contact.getBirthday());
-
-			int birthdayMonth = birthdayCal.get(Calendar.MONTH);
-			int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
-			int birthdayYear = birthdayCal.get(Calendar.YEAR);
-
-			user = UserLocalServiceUtil.updateUser(
-				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, false, user.getReminderQueryQuestion(),
-				user.getReminderQueryAnswer(), screenName, emailAddress,
-				user.getFacebookId(), user.getOpenId(), false, null,
-				themeDisplay.getLanguageId(), user.getTimeZoneId(), greeting,
-				user.getComments(), firstName, user.getMiddleName(), lastName,
-				contact.getPrefixId(), contact.getSuffixId(), contact.isMale(),
-				birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
-				contact.getFacebookSn(), contact.getJabberSn(),
-				contact.getSkypeSn(), contact.getTwitterSn(),
-				contact.getJobTitle(), null, null, null, null, null,
-				new ServiceContext());
-		}
-		else {
-			UserLocalServiceUtil.addDefaultAdminUser(
-				themeDisplay.getCompanyId(), screenName, emailAddress,
-				themeDisplay.getLocale(), firstName, StringPool.BLANK,
-				lastName);
-
-			user = UserLocalServiceUtil.getUserByEmailAddress(
-				themeDisplay.getCompanyId(), emailAddress);
-
-			String defaultAdminEmailAddress =
-				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-					PropsValues.COMPANY_DEFAULT_WEB_ID;
-
-			if (!emailAddress.equals(defaultAdminEmailAddress)) {
-				User testUser = UserLocalServiceUtil.fetchUserByEmailAddress(
-					themeDisplay.getCompanyId(), defaultAdminEmailAddress);
-
-				if (testUser != null) {
-					UserLocalServiceUtil.updateStatus(
-						testUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-						new ServiceContext());
-				}
-			}
-		}
+		User user = SetupWizardSampleDataUtil.updateAdminUser(
+			company, themeDisplay.getLocale(), themeDisplay.getLanguageId(),
+			emailAddress, firstName, lastName, fullName);
 
 		user = UserLocalServiceUtil.updatePasswordReset(user.getUserId(), true);
 

@@ -2838,6 +2838,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		appImpl.setCategory(app.getCategory());
 		appImpl.setIconURL(app.getIconURL());
 		appImpl.setVersion(app.getVersion());
+		appImpl.setRequired(app.isRequired());
 
 		return appImpl;
 	}

@@ -89,6 +89,11 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 		return _version.toString();
 	}
 
+	@Override
+	public boolean isRequired() {
+		return false;
+	}
+
 	private final String _description;
 	private final String _title;
 	private final Version _version;

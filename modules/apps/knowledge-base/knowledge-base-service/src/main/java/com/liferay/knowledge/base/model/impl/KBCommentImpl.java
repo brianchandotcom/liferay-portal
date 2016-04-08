@@ -16,24 +16,22 @@ package com.liferay.knowledge.base.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.knowledge.base.model.KBComment;
+
 /**
- * The extended model implementation for the KBComment service. Represents a row in the &quot;KBComment&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.knowledge.base.model.KBComment} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Peter Shin
+ * @author Daniel Kocsis
  */
 @ProviderType
 public class KBCommentImpl extends KBCommentBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a k b comment model instance should use the {@link com.liferay.knowledge.base.model.KBComment} interface instead.
-	 */
 	public KBCommentImpl() {
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(KBComment.class);
 	}
 
 }

@@ -16,28 +16,142 @@ package com.liferay.knowledge.base.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.base.KBCommentServiceBaseImpl;
+import com.liferay.knowledge.base.service.permission.AdminPermission;
+import com.liferay.knowledge.base.service.permission.KBCommentPermission;
+import com.liferay.knowledge.base.service.permission.SuggestionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
- * The implementation of the k b comment remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.knowledge.base.service.KBCommentService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see KBCommentServiceBaseImpl
- * @see com.liferay.knowledge.base.service.KBCommentServiceUtil
  */
 @ProviderType
 public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.knowledge.base.service.KBCommentServiceUtil} to access the k b comment remote service.
-	 */
+	@Override
+	public KBComment deleteKBComment(KBComment kbComment)
+		throws PortalException {
+
+		KBCommentPermission.check(
+			getPermissionChecker(), kbComment, ActionKeys.DELETE);
+
+		return kbCommentLocalService.deleteKBComment(kbComment);
+	}
+
+	@Override
+	public KBComment deleteKBComment(long kbCommentId) throws PortalException {
+		KBComment kbComment = kbCommentPersistence.findByPrimaryKey(
+			kbCommentId);
+
+		return deleteKBComment(kbComment);
+	}
+
+	@Override
+	public KBComment getKBComment(long kbCommentId) throws PortalException {
+		KBCommentPermission.check(
+			getPermissionChecker(), kbCommentId, ActionKeys.VIEW);
+
+		return kbCommentLocalService.getKBComment(kbCommentId);
+	}
+
+	public List<KBComment> getKBComments(
+			long groupId, int status, int start, int end)
+		throws PortalException {
+
+		if (AdminPermission.contains(
+				getPermissionChecker(), groupId, ActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentPersistence.findByG_S(groupId, status, start, end);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<KBComment> getKBComments(
+			long groupId, String className, long classPK, int status, int start,
+			int end)
+		throws PortalException {
+
+		if (SuggestionPermission.contains(
+				getPermissionChecker(), groupId, className, classPK,
+				ActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentLocalService.getKBComments(
+				className, classPK, status, start, end);
+		}
+
+		return Collections.emptyList();
+	}
+
+	public int getKBCommentsCount(long groupId, int status)
+		throws PortalException {
+
+		if (AdminPermission.contains(
+				getPermissionChecker(), groupId, ActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentPersistence.countByG_S(groupId, status);
+		}
+
+		return 0;
+	}
+
+	@Override
+	public int getKBCommentsCount(
+			long groupId, String className, long classPK, int status)
+		throws PortalException {
+
+		if (SuggestionPermission.contains(
+				getPermissionChecker(), groupId, className, classPK,
+				ActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentLocalService.getKBCommentsCount(
+				className, classPK, status);
+		}
+
+		return 0;
+	}
+
+	public KBComment updateKBComment(
+			long kbCommentId, long classNameId, long classPK, String content,
+			int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		KBCommentPermission.check(
+			getPermissionChecker(), kbCommentId, ActionKeys.UPDATE);
+
+		return kbCommentLocalService.updateKBComment(
+			kbCommentId, classNameId, classPK, content, status, serviceContext);
+	}
+
+	public KBComment updateKBComment(
+			long kbCommentId, long classNameId, long classPK, String content,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KBComment kbComment = kbCommentPersistence.findByPrimaryKey(
+			kbCommentId);
+
+		return updateKBComment(
+			kbCommentId, classNameId, classPK, content, kbComment.getStatus(),
+			serviceContext);
+	}
+
+	public KBComment updateStatus(
+			long kbCommentId, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		KBCommentPermission.check(
+			getPermissionChecker(), kbCommentId, ActionKeys.UPDATE);
+
+		return kbCommentLocalService.updateStatus(
+			getUserId(), kbCommentId, status, serviceContext);
+	}
+
 }

@@ -151,22 +151,30 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							if (date) {
 								datePicker.updateValue(date[0]);
 							}
-
-							else if (!date && <%= nullable %>) {
+							else if (<%= nullable %> && !date) {
 								datePicker.updateValue('');
 							}
 						},
 						selectionChange: function(event) {
-							var notANumber = isNaN(event.newSelection[0]);
-							var notDateObject = Object.prototype.toString.call(event.newSelection[0]) !== '[object Date]';
+							var newSelection = event.newSelection[0];
+
 							var nullable = <%= nullable %>;
 
-							if (notANumber && !nullable) {
+							var date = A.DataType.Date.parse(newSelection);
+							var invalidNumber = isNaN(newSelection);
+
+							if (invalidNumber && !nullable) {
 								event.newSelection[0] = new Date();
 							}
+							else if (invalidNumber && !date && nullable) {
 
-							else if (notANumber && !notDateObject && nullable) {
-								event.newSelection[0] = new Date();
+								var selection = new Date();
+
+								if (!newSelection) {
+									selection = '';
+								}
+
+								event.newSelection[0] = selection;
 							}
 
 							datePicker.updateValue(event.newSelection[0]);
@@ -192,17 +200,19 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var container = instance.get('container');
 
+				var dateVal = '';
+				var monthVal = '';
+				var yearVal = '';
+
 				if (date && !isNaN(date)) {
-					container.one('#<%= dayParamId %>').val(date.getDate());
-					container.one('#<%= monthParamId %>').val(date.getMonth());
-					container.one('#<%= yearParamId %>').val(date.getFullYear());
+					dateVal = date.getDate();
+					monthVal = date.getMonth();
+					yearVal = date.getFullYear();
 				}
 
-				else if (!date || isNaN(date) && <%= nullable %>) {
-					container.one('#<%= dayParamId %>').val('');
-					container.one('#<%= monthParamId %>').val('');
-					container.one('#<%= yearParamId %>').val('');
-				}
+				container.one('#<%= dayParamId %>').val(dateVal);
+				container.one('#<%= monthParamId %>').val(monthVal);
+				container.one('#<%= yearParamId %>').val(yearVal);
 			};
 
 			datePicker.after(

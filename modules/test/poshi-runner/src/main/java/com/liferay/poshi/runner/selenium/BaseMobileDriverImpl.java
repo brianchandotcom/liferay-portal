@@ -573,6 +573,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public String getCurrentHour() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String getCurrentMonth() {
 		throw new UnsupportedOperationException();
 	}

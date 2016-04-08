@@ -42,9 +42,10 @@
 
 		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${kfProcessName}" />
 
-		<var name="key_fieldName" value="description" />
-
-		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${kfProcessDescription}" />
+		<execute macro="FormFields#editTextMultiline">
+			<var name="fieldName" value="description" />
+			<var name="fieldValue" value="${kfProcessDescription}" />
+		</execute>
 	</command>
 
 	<command name="addWorkflow">
@@ -267,9 +268,10 @@
 		<if>
 			<isset var="kfProcessDescriptionEdit" />
 			<then>
-				<var name="key_fieldName" value="description" />
-
-				<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${kfProcessDescriptionEdit}" />
+				<execute macro="FormFields#editTextMultiline">
+					<var name="fieldName" value="description" />
+					<var name="fieldValue" value="${kfProcessDescriptionEdit}" />
+				</execute>
 			</then>
 		</if>
 

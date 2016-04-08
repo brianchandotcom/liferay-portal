@@ -144,7 +144,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 							</h6>
 
 							<h5>
-								<%= archivedSettings.getName() %>
+								<%= HtmlUtil.escape(archivedSettings.getName()) %>
 							</h5>
 						</liferay-ui:search-container-column-text>
 
@@ -175,15 +175,16 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 					<c:when test='<%= displayStyle.equals("list") %>'>
 						<liferay-ui:search-container-column-text
 							cssClass="content-column name-column title-column"
-							name="name"
-							truncate="<%= true %>"
-						/>
+							truncate="<%= true %>">
+
+							<%= HtmlUtil.escape(archivedSettings.getName()) %>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-column user-name-column"
-							name="user-name"
-							property="userName"
-						/>
+							cssClass="text-column user-name-column">
+
+							<%= HtmlUtil.escape(archivedSettings.getUserName()) %>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date
 							cssClass="modified-date-column text-column"

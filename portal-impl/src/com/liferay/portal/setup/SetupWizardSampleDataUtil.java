@@ -106,16 +106,24 @@ public class SetupWizardSampleDataUtil {
 		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
 			company.getCompanyId(), "test@liferay.com");
 
+		String userFirstName = "Joe";
+
+		String userLastName = "Bloggs";
+
 		if (user == null) {
 			user = UserLocalServiceUtil.addDefaultAdminUser(
 				companyId, "joebloggs", "test@liferay.com",
-				LocaleUtil.getDefault(), "Joe", StringPool.BLANK, "Bloggs");
+				LocaleUtil.getDefault(), userFirstName, StringPool.BLANK,
+				userLastName);
 		}
 		else {
 			user.setScreenName("joebloggs");
-			user.setGreeting("Welcome Joe Bloggs!");
-			user.setFirstName("Joe");
-			user.setLastName("Bloggs");
+
+			user.setGreeting(
+				"Welcome " + userFirstName + " " + userLastName + "!");
+
+			user.setFirstName(userFirstName);
+			user.setLastName(userLastName);
 		}
 
 		user.setPasswordReset(false);

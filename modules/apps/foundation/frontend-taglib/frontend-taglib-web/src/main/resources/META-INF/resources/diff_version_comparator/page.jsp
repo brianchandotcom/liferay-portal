@@ -187,7 +187,7 @@ if (Validator.isNotNull(languageId)) {
 							</div>
 
 							<div class="version-info">
-								<span class="user-info"><%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %></span>
+								<span class="user-info"><%= HtmlUtil.escape(userDisplay.getFullName()) %></span>
 								<span class="date-info"><%= displayDate %></span>
 							</div>
 						</div>

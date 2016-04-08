@@ -5,7 +5,7 @@
 		<div class="user-info">
 			<div class="aspect-ratio-bg-cover user-icon user-icon-xl" ${main_menu_style}></div>
 
-			<div class="h3">${user_name}</div>
+			<div class="h3">${htmlUtil.escape(user_name)}</div>
 
 			<div class="time-zone">
 				<small>

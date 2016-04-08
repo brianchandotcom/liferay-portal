@@ -116,7 +116,7 @@ public abstract class MimeResponseImpl
 
 	@Override
 	public boolean isCommitted() {
-		return false;
+		return _response.isCommitted();
 	}
 
 	@Override

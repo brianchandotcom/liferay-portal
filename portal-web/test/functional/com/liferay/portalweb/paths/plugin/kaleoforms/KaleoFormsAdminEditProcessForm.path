@@ -21,7 +21,7 @@
 <!--FORM_TABLE-->
 <tr>
 	<td>FORM_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmTemplates')]//tr[contains(.,'${key_kfFormName}')]/td[1])[1]</td>
+	<td>//tr[contains(.,'${key_kfFormName}')]/td[contains(.,'${key_kfFormName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>FORM_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmTemplates')]//tr[contains(.,'${key_kfFormName}')]/td[3]//div/a[@title='Actions'])[1]</td>
+	<td>//tr[contains(.,'${key_kfFormName}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

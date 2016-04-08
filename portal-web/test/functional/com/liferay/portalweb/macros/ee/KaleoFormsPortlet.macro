@@ -1,5 +1,9 @@
 <definition>
 	<command name="approveProcess">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Assigned to My Roles" />
+		</execute>
+
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_TASK_1" value1="${workflowTask}" />
@@ -16,11 +20,16 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="assignProcessToMe">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Assigned to Me" />
+		</execute>
+
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
@@ -38,8 +47,10 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_TASK_1" value1="${workflowTask}" />
 		<execute function="AssertTextEquals" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_NAME_1" value1="${kfProcessName}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1" />
@@ -64,7 +75,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -206,7 +218,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -227,7 +240,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -244,7 +258,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -292,7 +307,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+		<execute macro="Button#clickDone" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -454,8 +470,17 @@
 	</command>
 
 	<command name="viewNoTasks">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tasks." />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tasks." />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Assigned to Me" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks." />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Assigned to My Roles" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO_2" value1="There are no tasks." />
 	</command>
 
 	<command name="viewProcessAssignedToMe">
@@ -505,13 +530,17 @@
 		<execute function="AssertTextEquals" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_STATUS" value1="${kfProcessStatus}" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_END_DATE" />
+
 		<execute function="Click" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertTextNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 		<execute function="AssertTextNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_STATUS" value1="${kfProcessStatus}" />
 		<execute function="AssertElementNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementNotPresent" locator1="KaleoForms#MY_PENDING_REQUESTS_TABLE_END_DATE" />
-		<execute function="AssertTextEquals" locator1="KaleoForms#MY_PENDING_REQUESTS_INFO_MESSAGE" value1="There are no pending publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no pending publications requested by me." />
 	</command>
 </definition>

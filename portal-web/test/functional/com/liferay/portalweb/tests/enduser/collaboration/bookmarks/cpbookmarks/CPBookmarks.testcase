@@ -346,7 +346,7 @@
 		<var name="bookmarkURL" value="https://www.liferay.com" />
 		<var name="editBookmarkDescription" value="This is a test bookmark edit!" />
 		<var name="editBookmarkName" value="Test Bookmark Edit" />
-		<var name="editBookmarkURL" value="http://www.narutofan.com" />
+		<var name="editBookmarkURL" value="https://www.google.com" />
 
 		<execute macro="Navigator#openURL" />
 

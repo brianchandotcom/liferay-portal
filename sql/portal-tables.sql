@@ -1648,7 +1648,7 @@ create table UserNotificationEvent (
 	userNotificationEventId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
-	type_ VARCHAR(75) null,
+	type_ VARCHAR(200) null,
 	timestamp LONG,
 	deliveryType INTEGER,
 	deliverBy LONG,

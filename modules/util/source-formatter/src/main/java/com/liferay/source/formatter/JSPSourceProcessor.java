@@ -48,6 +48,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+
 /**
  * @author Hugo Huijser
  */
@@ -1101,11 +1104,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return line;
 		}
 
-		if (tagName.startsWith("liferay-")) {
-			tagName = tagName.substring(8);
-		}
-
-		JavaClass tagJavaClass = getTagJavaClass(tagName);
+		JavaClass tagJavaClass = _tagJavaClassesMap.get(tagName);
 
 		if (tagJavaClass == null) {
 			return line;
@@ -1348,86 +1347,26 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return _primitiveTagAttributeDataTypes;
 	}
 
-	protected JavaClass getTagJavaClass(String tag) throws Exception {
-		JavaClass tagJavaClass = _tagJavaClassesMap.get(tag);
-
-		if (tagJavaClass != null) {
-			return tagJavaClass;
+	protected String getUtilTaglibSrcDirName() {
+		if (_utilTaglibSrcDirName != null) {
+			return _utilTaglibSrcDirName;
 		}
 
-		String[] tagParts = StringUtil.split(tag, CharPool.COLON);
-
-		if (tagParts.length != 2) {
-			return null;
-		}
-
-		String utilTaglibDirName = getUtilTaglibDirName();
-
-		if (Validator.isNull(utilTaglibDirName)) {
-			return null;
-		}
-
-		String tagName = tagParts[1];
-
-		String tagJavaClassName = TextFormatter.format(
-			tagName, TextFormatter.M);
-
-		tagJavaClassName =
-			TextFormatter.format(tagJavaClassName, TextFormatter.G) + "Tag";
-
-		String tagCategory = tagParts[0];
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(utilTaglibDirName);
-		sb.append("/src/com/liferay/taglib/");
-		sb.append(tagCategory);
-		sb.append(StringPool.SLASH);
-		sb.append(tagJavaClassName);
-		sb.append(".java");
-
-		File tagJavaFile = new File(sb.toString());
-
-		if (!tagJavaFile.exists()) {
-			return null;
-		}
-
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
-
-		javaDocBuilder.addSource(tagJavaFile);
-
-		sb = new StringBundler(4);
-
-		sb.append("com.liferay.taglib.");
-		sb.append(tagCategory);
-		sb.append(StringPool.PERIOD);
-		sb.append(tagJavaClassName);
-
-		tagJavaClass = javaDocBuilder.getClassByName(sb.toString());
-
-		_tagJavaClassesMap.put(tag, tagJavaClass);
-
-		return tagJavaClass;
-	}
-
-	protected String getUtilTaglibDirName() {
-		if (_utilTaglibDirName != null) {
-			return _utilTaglibDirName;
-		}
-
-		File utilTaglibDir = getFile("util-taglib", PORTAL_MAX_DIR_LEVEL);
+		File utilTaglibDir = getFile("util-taglib/src", PORTAL_MAX_DIR_LEVEL);
 
 		if (utilTaglibDir != null) {
-			_utilTaglibDirName = utilTaglibDir.getAbsolutePath();
+			_utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
 
-			_utilTaglibDirName = StringUtil.replace(
-				_utilTaglibDirName, StringPool.BACK_SLASH, StringPool.SLASH);
+			_utilTaglibSrcDirName = StringUtil.replace(
+				_utilTaglibSrcDirName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			_utilTaglibSrcDirName += StringPool.SLASH;
 		}
 		else {
-			_utilTaglibDirName = StringPool.BLANK;
+			_utilTaglibSrcDirName = StringPool.BLANK;
 		}
 
-		return _utilTaglibDirName;
+		return _utilTaglibSrcDirName;
 	}
 
 	protected String getVariableName(String line) {
@@ -1755,6 +1694,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
 		}
+
+		_populateTagJavaClasses();
 	}
 
 	@Override
@@ -1781,6 +1722,92 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		return StringUtil.replace(
 			line, attributeAndValue, newAttributeAndValue);
+	}
+
+	private void _populateTagJavaClasses() throws Exception {
+		List<String> tldFileNames = getFileNames(
+			new String[] {"**/dependencies/**", "**/util-taglib/**"},
+			new String[] {"**/*.tld"});
+
+		outerLoop:
+		for (String tldFileName : tldFileNames) {
+			File tldFile = new File(tldFileName);
+
+			tldFileName = StringUtil.replace(
+				tldFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			String content = FileUtil.read(tldFile);
+
+			Document document = readXML(content);
+
+			Element rootElement = document.getRootElement();
+
+			Element shortNameElement = rootElement.element("short-name");
+
+			String shortName = shortNameElement.getStringValue();
+
+			List<Element> tagElements = rootElement.elements("tag");
+
+			String srcDir = null;
+
+			for (Element tagElement : tagElements) {
+				Element tagClassElement = tagElement.element("tag-class");
+
+				String tagClassName = tagClassElement.getStringValue();
+
+				if (!tagClassName.startsWith("com.liferay")) {
+					continue;
+				}
+
+				if (srcDir == null) {
+					if (tldFileName.contains("/src/")) {
+						srcDir = tldFile.getAbsolutePath();
+
+						srcDir = StringUtil.replace(
+							srcDir, StringPool.BACK_SLASH, StringPool.SLASH);
+
+						srcDir =
+							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +
+								"/src/main/java/";
+					}
+					else {
+						srcDir = getUtilTaglibSrcDirName();
+
+						if (Validator.isNull(srcDir)) {
+							continue outerLoop;
+						}
+					}
+				}
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(srcDir);
+				sb.append(
+					StringUtil.replace(
+						tagClassName, CharPool.PERIOD, CharPool.SLASH));
+				sb.append(".java");
+
+				File tagJavaFile = new File(sb.toString());
+
+				if (!tagJavaFile.exists()) {
+					continue;
+				}
+
+				JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
+
+				javaDocBuilder.addSource(tagJavaFile);
+
+				JavaClass tagJavaClass = javaDocBuilder.getClassByName(
+					tagClassName);
+
+				Element tagNameElement = tagElement.element("name");
+
+				String tagName = tagNameElement.getStringValue();
+
+				_tagJavaClassesMap.put(
+					shortName + StringPool.COLON + tagName, tagJavaClass);
+			}
+		}
 	}
 
 	private static final String[] _INCLUDES = new String[] {
@@ -1995,7 +2022,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
 		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private List<String> _unusedVariablesExcludes;
-	private String _utilTaglibDirName;
+	private String _utilTaglibSrcDirName;
 	private final Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 

@@ -304,7 +304,7 @@
 
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkName" value="Test Bookmark1 Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 			<var name="bookmarkViewableBy" value="Owner" />
 		</execute>
 
@@ -406,12 +406,12 @@
 
 		<execute macro="Bookmark#gotoPG">
 			<var name="bookmarkName" value="Test Bookmark1 Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Bookmark#viewEntry">
 			<var name="bookmarkName" value="Test Bookmark1 Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2014,7 +2014,7 @@
 
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 			<var name="bookmarkViewableBy" value="Owner" />
 		</execute>
 
@@ -2056,7 +2056,7 @@
 
 		<execute macro="Bookmark#viewNoPG">
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -2088,7 +2088,7 @@
 
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

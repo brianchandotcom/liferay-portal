@@ -495,7 +495,6 @@
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
 		<execute function="AssertElementNotPresent" locator1="Link#EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="Link#PERMISSIONS" value1="Permissions" />
 		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -536,7 +535,6 @@
 		<var name="key_entryTitle" value="Blogs Entry Title" />
 
 		<execute function="AssertElementNotPresent" locator1="Link#EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="Link#PERMISSIONS" value1="Permissions" />
 		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" value1="Move to the Recycle Bin" />
 	</command>
 

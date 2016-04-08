@@ -51,7 +51,10 @@ public class SetupWizardSampleDataUtil {
 
 	public static void addSampleData(long companyId) throws Exception {
 		addSampleData(
-			companyId, "Liferay", "Joe", "Bloggs", "test@liferay.com");
+			companyId, PropsValues.COMPANY_DEFAULT_NAME,
+			PropsValues.DEFAULT_ADMIN_FIRST_NAME,
+			PropsValues.DEFAULT_ADMIN_LAST_NAME,
+			PropsValues.ADMIN_EMAIL_FROM_NAME);
 	}
 
 	public static void addSampleData(

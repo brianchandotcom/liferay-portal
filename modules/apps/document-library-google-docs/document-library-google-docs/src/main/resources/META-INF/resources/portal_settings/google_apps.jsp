@@ -26,7 +26,7 @@ String googleClientId = PrefsParamUtil.getString(companyPortletPreferences, requ
 %>
 
 <aui:fieldset>
-	<aui:input label='<%= ResourceBundleUtil.getString(resourceBundle, "google-apps-api-key") %>' localizeLabel="<%= Boolean.FALSE %>" name="settings--googleAppsAPIKey--" type="text" value="<%= googleAppsAPIKey %>" />
+	<aui:input label='<%= ResourceBundleUtil.getString(resourceBundle, "google-apps-api-key") %>' localizeLabel="<%= false %>" name="settings--googleAppsAPIKey--" type="text" value="<%= googleAppsAPIKey %>" />
 
-	<aui:input label='<%= ResourceBundleUtil.getString(resourceBundle, "google-client-id") %>' localizeLabel="<%= Boolean.FALSE %>" name="settings--googleClientId--" type="text" value="<%= googleClientId %>" />
+	<aui:input label='<%= ResourceBundleUtil.getString(resourceBundle, "google-client-id") %>' localizeLabel="<%= false %>" name="settings--googleClientId--" type="text" value="<%= googleClientId %>" />
 </aui:fieldset>

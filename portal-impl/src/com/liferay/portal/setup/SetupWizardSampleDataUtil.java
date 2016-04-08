@@ -70,30 +70,24 @@ public class SetupWizardSampleDataUtil {
 			_log.info("Adding sample data");
 		}
 
-		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
-
-		Account account = company.getAccount();
-
-		account.setName(companyName);
-
-		String legalCompanyName = companyName + ", Inc.";
-
-		account.setLegalName(legalCompanyName);
-
-		AccountLocalServiceUtil.updateAccount(account);
+		Company company = updateCompany(
+			CompanyLocalServiceUtil.getCompanyById(companyId), companyName,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 		User defaultUser = company.getDefaultUser();
+
+		Account account = company.getAccount();
 
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
 				defaultUser.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-				legalCompanyName, true);
+				account.getLegalName(), true);
 
 		GroupLocalServiceUtil.updateFriendlyURL(
 			organization.getGroupId(), "/main");
 
-		String extranetName = legalCompanyName + " Extranet";
+		String extranetName = account.getLegalName() + " Extranet";
 
 		Layout extranetLayout = LayoutLocalServiceUtil.addLayout(
 			defaultUser.getUserId(), organization.getGroupId(), false,
@@ -105,7 +99,7 @@ public class SetupWizardSampleDataUtil {
 			extranetLayout.getGroupId(), false, extranetLayout.getLayoutId(),
 			extranetLayout.getTypeSettings());
 
-		String intranetName = legalCompanyName + " Intranet";
+		String intranetName = account.getLegalName() + " Intranet";
 
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
 			defaultUser.getUserId(), organization.getGroupId(), true,
@@ -160,6 +154,27 @@ public class SetupWizardSampleDataUtil {
 		if (_log.isInfoEnabled()) {
 			_log.info("Finished adding data in " + stopWatch.getTime() + " ms");
 		}
+	}
+
+	public static Company updateCompany(
+			Company company, String companyName, String languageId)
+		throws Exception {
+
+		Account account = company.getAccount();
+
+		account.setName(companyName);
+
+		account.setLegalName(companyName + ", Inc.");
+
+		AccountLocalServiceUtil.updateAccount(account);
+
+		User defaultUser = company.getDefaultUser();
+
+		defaultUser.setLanguageId(languageId);
+
+		UserLocalServiceUtil.updateUser(defaultUser);
+
+		return company;
 	}
 
 	protected static void addOrganizations(

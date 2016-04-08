@@ -20,14 +20,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
-import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -398,27 +396,14 @@ public class SetupWizardUtil {
 		Company company = CompanyLocalServiceUtil.getCompanyById(
 			PortalInstances.getDefaultCompanyId());
 
-		Account account = company.getAccount();
-
-		String currentName = account.getName();
-
-		String newName = ParamUtil.getString(
-			request, "companyName", PropsValues.COMPANY_DEFAULT_NAME);
-
-		if (!currentName.equals(newName)) {
-			account.setName(newName);
-
-			AccountLocalServiceUtil.updateAccount(account);
-		}
-
 		String languageId = ParamUtil.getString(
 			request, "companyLocale", getDefaultLanguageId());
 
-		User defaultUser = company.getDefaultUser();
+		String companyName = ParamUtil.getString(
+			request, "companyName", PropsValues.COMPANY_DEFAULT_NAME);
 
-		defaultUser.setLanguageId(languageId);
-
-		UserLocalServiceUtil.updateUser(defaultUser);
+		SetupWizardSampleDataUtil.updateCompany(
+			company, companyName, languageId);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

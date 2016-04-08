@@ -127,7 +127,9 @@
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
-		<execute macro="Button#clickSave" />
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<if>
 			<equals arg1="${userEmailAddressVariation}" arg2="Invalid" />

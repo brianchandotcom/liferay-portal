@@ -210,6 +210,8 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
 
+		<execute function="Refresh" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 

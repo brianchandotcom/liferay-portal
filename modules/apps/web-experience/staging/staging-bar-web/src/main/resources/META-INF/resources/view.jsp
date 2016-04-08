@@ -170,9 +170,34 @@ if (layout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
 					<li class="control-menu-link control-menu-nav-item hidden-xs live-link">
-						<a class="control-menu-icon" href="<%= StagingUtil.getRemoteSiteURL(group, layout.isPrivateLayout()) %>" value="go-to-remote-live">
-							<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
-						</a>
+
+						<%
+						String remoteSiteURL = StringPool.BLANK;
+
+						try {
+							remoteSiteURL = StagingUtil.getRemoteSiteURL(group, layout.isPrivateLayout());
+						%>
+
+							<a class="control-menu-icon" href="<%= remoteSiteURL %>" value="go-to-remote-live">
+								<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+							</a>
+
+						<%
+						}
+						catch (SystemException se) {
+							_log.error(se, se);
+						%>
+
+							<a class="control-menu-icon" value="go-to-remote-live">
+								<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+							</a>
+
+							<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="an-unexpected-error-occurred-while-accessing-the-remote-live" toolTip="<%= true %>" />
+
+						<%
+						}
+						%>
+
 					</li>
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
@@ -344,3 +369,7 @@ if (layout != null) {
 		checkBackgroundTasks();
 	</aui:script>
 </c:if>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_staging_bar_web.view_jsp");
+%>

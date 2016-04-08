@@ -42,11 +42,39 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 
 					<%
 					data.put("qa-id", "live");
+
+					try {
+						String liveGroupURL = siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL();
 					%>
 
-					<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL()) ? "active" : StringPool.BLANK %>">
-						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL() %>" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
-					</span>
+						<span class="<%= Validator.isNull(liveGroupURL) ? "active" : StringPool.BLANK %>">
+							<aui:a data="<%= data %>" href="<%= liveGroupURL %>" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
+						</span>
+
+					<%
+					}
+					catch (SystemException se) {
+						_log.error(se, se);
+					%>
+
+						<aui:a data="<%= data %>" href="" id="remoteLiveLink" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
+
+						<aui:script use="aui-tooltip">
+							new A.Tooltip(
+								{
+									bodyContent: Liferay.Language.get('an-unexpected-error-occurred-while-accessing-the-remote-live'),
+									position: 'right',
+									trigger: A.one('#<portlet:namespace />remoteLiveLink'),
+									visible: false,
+									zIndex: Liferay.zIndex.TOOLTIP
+								}
+							).render();
+						</aui:script>
+
+					<%
+					}
+					%>
+
 				</div>
 			</c:if>
 
@@ -64,3 +92,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 		<liferay-application-list:panel-category-body panelCategory="<%= panelCategory %>" />
 	</c:if>
 </c:if>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_product_navigation_site_administration.sites.site_administration_body_jsp");
+%>

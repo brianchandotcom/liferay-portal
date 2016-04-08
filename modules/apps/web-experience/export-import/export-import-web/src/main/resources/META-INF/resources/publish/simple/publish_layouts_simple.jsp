@@ -16,15 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-staging:defineObjects />
+
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.PUBLISH_TO_LIVE);
 
-long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"), ParamUtil.getLong(request, "exportImportConfigurationId"));
 
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 boolean localPublishing = true;
 String publishMessageKey = "publish-to-live";
@@ -65,7 +66,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 	</aui:nav-bar>
 
 	<portlet:actionURL name="editPublishConfiguration" var="confirmedActionURL">
-		<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
+		<portlet:param name="mvcRenderCommandName" value="editPublishConfigurationSimple" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 		<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 	</portlet:actionURL>
@@ -74,6 +75,12 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="exportImportConfigurationId" type="hidden" value="<%= exportImportConfigurationId %>" />
+
+		<%@ include file="/publish/error/error_auth_exception.jspf" %>
+
+		<%@ include file="/publish/error/error_remote_export_exception.jspf" %>
+
+		<%@ include file="/publish/error/error_remote_options_exception.jspf" %>
 
 		<div class="export-dialog-tree">
 
@@ -144,8 +151,6 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 
 										long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 										long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
-
-										Group liveGroup = groupDisplayContextHelper.getLiveGroup();
 
 										UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 

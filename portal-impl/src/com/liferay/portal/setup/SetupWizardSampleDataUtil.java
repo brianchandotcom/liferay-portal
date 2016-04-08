@@ -56,10 +56,15 @@ public class SetupWizardSampleDataUtil {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
+		String companyName = "Liferay";
+
 		Account account = company.getAccount();
 
-		account.setName("Liferay");
-		account.setLegalName("Liferay, Inc");
+		account.setName(companyName);
+
+		String legalCompanyName = companyName + ", Inc.";
+
+		account.setLegalName(legalCompanyName);
 
 		AccountLocalServiceUtil.updateAccount(account);
 
@@ -69,25 +74,29 @@ public class SetupWizardSampleDataUtil {
 			OrganizationLocalServiceUtil.addOrganization(
 				defaultUser.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-				"Liferay, Inc.", true);
+				legalCompanyName, true);
 
 		GroupLocalServiceUtil.updateFriendlyURL(
-			organization.getGroupId(), "/liferay");
+			organization.getGroupId(), "/main");
+
+		String extranetName = legalCompanyName + " Extranet";
 
 		Layout extranetLayout = LayoutLocalServiceUtil.addLayout(
 			defaultUser.getUserId(), organization.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Liferay, Inc. Extranet",
-			null, null, LayoutConstants.TYPE_PORTLET, false, "/extranet",
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, extranetName, null, null,
+			LayoutConstants.TYPE_PORTLET, false, "/extranet",
 			new ServiceContext());
 
 		LayoutLocalServiceUtil.updateLayout(
 			extranetLayout.getGroupId(), false, extranetLayout.getLayoutId(),
 			extranetLayout.getTypeSettings());
 
+		String intranetName = legalCompanyName + " Intranet";
+
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
 			defaultUser.getUserId(), organization.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Liferay, Inc. Intranet",
-			null, null, LayoutConstants.TYPE_PORTLET, false, "/intranet",
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, intranetName, null, null,
+			LayoutConstants.TYPE_PORTLET, false, "/intranet",
 			new ServiceContext());
 
 		LayoutLocalServiceUtil.updateLayout(
@@ -116,7 +125,7 @@ public class SetupWizardSampleDataUtil {
 		OrganizationLocalServiceUtil.addUserOrganization(
 			user.getUserId(), organization);
 
-		addOrganizations(defaultUser, organization);
+		addOrganizations(companyName, defaultUser, organization);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Finished adding data in " + stopWatch.getTime() + " ms");
@@ -124,11 +133,12 @@ public class SetupWizardSampleDataUtil {
 	}
 
 	protected static void addOrganizations(
-			User defaultUser, Organization parentOrganization)
+			String companyName, User defaultUser,
+			Organization parentOrganization)
 		throws Exception {
 
 		for (Object[] organizationArray : _ORGANIZATION_ARRAYS) {
-			String name = "Liferay " + organizationArray[0];
+			String name = companyName + organizationArray[0];
 			long regionId = (Long)organizationArray[1];
 			long countryId = (Long)organizationArray[2];
 			String type = (String)organizationArray[3];

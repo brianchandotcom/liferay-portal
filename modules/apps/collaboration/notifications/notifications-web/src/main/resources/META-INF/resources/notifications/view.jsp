@@ -103,3 +103,58 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 		submitForm(form, '<portlet:actionURL name="markAllAsRead" />');
 	}
 </aui:script>
+
+<aui:script use="aui-base,liferay-notice">
+	var form = A.one('#<portlet:namespace />fm');
+
+	form.delegate(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var currentTarget = event.currentTarget;
+
+			A.io.request(
+				currentTarget.attr('href'),
+				{
+					dataType: 'JSON',
+					on: {
+						success: function() {
+							var responseData = this.get('responseData');
+
+							if (responseData.success) {
+								var notificationContainer = currentTarget.ancestor('li.list-group-item');
+
+								if (notificationContainer) {
+									notificationContainer.remove();
+								}
+							}
+							else {
+								getNotice().show();
+							}
+						}
+					}
+				}
+			);
+		},
+		'.user-notification-action'
+	);
+
+	var notice;
+
+	function getNotice() {
+		if (!notice) {
+			notice = new Liferay.Notice(
+				{
+					closeText: false,
+					content: '<liferay-ui:message key="an-unexpected-error-occurred"/><button class="close" type="button">&times;</button>',
+					timeout: 5000,
+					toggleText: false,
+					type: 'warning',
+					useAnimation: false
+				}
+			);
+		}
+		return notice;
+	}
+</aui:script>

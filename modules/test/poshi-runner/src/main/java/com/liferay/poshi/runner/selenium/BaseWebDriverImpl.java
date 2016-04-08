@@ -174,7 +174,9 @@ public abstract class BaseWebDriverImpl
 		String sourceDirFilePath = LiferaySeleniumHelper.getSourceDirFilePath(
 			getTestDependenciesDirName());
 
-		URI axeURI = new File(sourceDirFilePath + "/axe.min.js").toURI();
+		File axeFile = new File(sourceDirFilePath + "/axe.min.js");
+
+		URI axeURI = axeFile.toURI();
 
 		URL axeURL = axeURI.toURL();
 

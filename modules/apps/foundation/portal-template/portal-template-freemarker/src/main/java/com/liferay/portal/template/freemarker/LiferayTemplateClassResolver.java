@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.core.Environment;
@@ -221,6 +222,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		for (String allowedClassName : allowedClassNames) {
+			if (Validator.isBlank(allowedClassName)) {
+				continue;
+			}
+
 			ClassLoader classLoader = findClassLoader(
 				allowedClassName, bundleContext);
 

@@ -190,6 +190,17 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 
 						viewContentURLString = viewContentURL.toString();
 					}
+
+					String actionPath = "/view_content_action.jsp";
+
+					if (Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse))) {
+						actionPath = trashRenderer.renderActions(renderRequest, renderResponse);
+					}
+					else if(trashEntry.getRootEntry() == null) {
+						actionPath = "/entry_action.jsp";
+					} else {
+						request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
+					}
 					%>
 
 					<c:choose>
@@ -202,20 +213,18 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
+								<h6 class="text-default">
+									<%= LanguageUtil.format(resourceBundle, "removed-x", dateFormatDateTime.format(trashEntry.getCreateDate())) %>
+								</h6>
+
 								<h5>
 									<c:choose>
 										<c:when test="<%= !trashHandler.isContainerModel() %>">
-
-											<%
-											Map<String, Object> data = new HashMap<String, Object>();
-
-											data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
-											data.put("url", viewContentURLString);
-											%>
-
-											<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
-												<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-											</aui:a>
+											<span class="preview" data-title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>" data-url="<%= viewContentURLString %>">
+												<aui:a href="javascript:;">
+													<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+												</aui:a>
+											</span>
 										</c:when>
 										<c:otherwise>
 											<aui:a href="<%= viewContentURLString %>">
@@ -229,37 +238,42 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 									<strong><liferay-ui:message key="type" />:</strong> <%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
 								</h6>
 
-								<h6 class="text-default">
-									<strong><liferay-ui:message key="removed-date" />:</strong> <%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
-								</h6>
-
 							</liferay-ui:search-container-column-text>
 
-							<c:choose>
-								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-									<liferay-ui:search-container-column-jsp
-										cssClass="entry-action-column"
-										path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
-									/>
-								</c:when>
-								<c:when test="<%= trashEntry.getRootEntry() == null %>">
-									<liferay-ui:search-container-column-jsp
-										cssClass="entry-action-column"
-										path="/entry_action.jsp"
-									/>
-								</c:when>
-								<c:otherwise>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="<%= actionPath %>"
+							/>
+						</c:when>
+						<c:when test="<%= trashDisplayContext.isIconView() %>">
 
-									<%
-									request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
-									%>
+							<%
+							row.setCssClass("entry-card lfr-asset-item");
+							%>
 
-									<liferay-ui:search-container-column-jsp
-										cssClass="entry-action-column"
-										path="/view_content_action.jsp"
-									/>
-								</c:otherwise>
-							</c:choose>
+							<liferay-ui:search-container-column-text>
+
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
+								data.put("url", viewContentURLString);
+								%>
+
+								<liferay-frontend:icon-vertical-card
+									actionJsp="<%= actionPath %>"
+									actionJspServletContext="<%= application %>"
+									cssClass='<%= !trashHandler.isContainerModel() ? "preview" : "" %>'
+									data="<%= !trashHandler.isContainerModel() ? data : null %>"
+									icon="<%= trashRenderer.getIconCssClass() %>"
+									resultRow="<%= row %>"
+									rowChecker="<%= searchContainer.getRowChecker() %>"
+									title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
+									url='<%= !trashHandler.isContainerModel() ? "javascript:;" : viewContentURLString %>'
+								>
+									<%@ include file="/trash_entry_vertical_card.jspf" %>
+								</liferay-frontend:icon-vertical-card>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
@@ -269,17 +283,11 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							>
 								<c:choose>
 									<c:when test="<%= !trashHandler.isContainerModel() %>">
-
-										<%
-										Map<String, Object> data = new HashMap<String, Object>();
-
-										data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
-										data.put("url", viewContentURLString);
-										%>
-
-										<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
-											<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-										</aui:a>
+										<span class="preview" data-title="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>" data-url="<%= viewContentURLString %>">
+											<aui:a href="javascript:;">
+												<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+											</aui:a>
+										</span>
 									</c:when>
 									<c:otherwise>
 										<aui:a href="<%= viewContentURLString %>">
@@ -340,31 +348,10 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
 							/>
 
-							<c:choose>
-								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
-									<liferay-ui:search-container-column-jsp
-										cssClass="entry-action-column"
-										path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
-									/>
-								</c:when>
-								<c:when test="<%= trashEntry.getRootEntry() == null %>">
-									<liferay-ui:search-container-column-jsp
-										cssClass="entry-action-column"
-										path="/entry_action.jsp"
-									/>
-								</c:when>
-								<c:otherwise>
-
-									<%
-									request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
-									%>
-
-									<liferay-ui:search-container-column-jsp
-										cssClass="entry-action-column"
-										path="/view_content_action.jsp"
-									/>
-								</c:otherwise>
-							</c:choose>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="<%= actionPath %>"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-row>
@@ -381,15 +368,17 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 		function(event) {
 			var currentTarget = event.currentTarget;
 
+			var parent = currentTarget.ancestor('.preview');
+
 			var urlPreview = new Liferay.UrlPreview(
 				{
-					title: currentTarget.attr('data-title'),
-					url: currentTarget.attr('data-url')
+					title: parent.attr('data-title'),
+					url: parent.attr('data-url')
 				}
 			);
 
 			urlPreview.open();
 		},
-		'.preview'
+		'.preview a'
 	);
 </aui:script>

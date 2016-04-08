@@ -239,6 +239,19 @@
 					}
 				);
 			}
+			else if (UA.safari) {
+				A.use(
+					'node-event-html5',
+					function(A) {
+						A.getWin().on(
+							'pagehide',
+							function(event) {
+								Util.enableFormButtons(inputs, form);
+							}
+						);
+					}
+				);
+			}
 		},
 
 		disableToggleBoxes: function(checkBoxId, toggleBoxId, checkDisabled) {

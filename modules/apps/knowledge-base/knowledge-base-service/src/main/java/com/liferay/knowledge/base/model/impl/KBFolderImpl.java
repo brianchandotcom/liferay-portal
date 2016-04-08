@@ -16,24 +16,69 @@ package com.liferay.knowledge.base.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Locale;
+
 /**
- * The extended model implementation for the KBFolder service. Represents a row in the &quot;KBFolder&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.knowledge.base.model.KBFolder} interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class KBFolderImpl extends KBFolderBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a k b folder model instance should use the {@link com.liferay.knowledge.base.model.KBFolder} interface instead.
-	 */
 	public KBFolderImpl() {
 	}
+
+	@Override
+	public long getClassNameId() {
+		if (_classNameId == 0) {
+			_classNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
+		}
+
+		return _classNameId;
+	}
+
+	@Override
+	public String getParentTitle(Locale locale) throws PortalException {
+		if (getParentKBFolderId() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return "(" + LanguageUtil.get(locale, "none") + ")";
+		}
+
+		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
+			getParentKBFolderId());
+
+		return kbFolder.getName();
+	}
+
+	@Override
+	public boolean isEmpty() throws PortalException {
+		int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
+			getGroupId(), getKbFolderId(), WorkflowConstants.STATUS_ANY);
+
+		if (kbArticlesCount > 0) {
+			return false;
+		}
+
+		int kbFoldersCount = KBFolderServiceUtil.getKBFoldersCount(
+			getGroupId(), getKbFolderId());
+
+		if (kbFoldersCount > 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private long _classNameId;
 
 }

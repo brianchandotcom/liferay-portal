@@ -16,28 +16,120 @@ package com.liferay.knowledge.base.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBFolderServiceBaseImpl;
+import com.liferay.knowledge.base.service.permission.KBFolderPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
 
 /**
- * The implementation of the k b folder remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.knowledge.base.service.KBFolderService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see KBFolderServiceBaseImpl
- * @see com.liferay.knowledge.base.service.KBFolderServiceUtil
  */
 @ProviderType
 public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.knowledge.base.service.KBFolderServiceUtil} to access the k b folder remote service.
-	 */
+	@Override
+	public KBFolder addKBFolder(
+			long groupId, long parentResourceClassNameId,
+			long parentResourcePrimKey, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KBFolderPermission.check(
+			getPermissionChecker(), groupId, parentResourcePrimKey,
+			ActionKeys.ADD_KB_FOLDER);
+
+		return kbFolderLocalService.addKBFolder(
+			getUserId(), groupId, parentResourceClassNameId,
+			parentResourcePrimKey, name, description, serviceContext);
+	}
+
+	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException {
+		KBFolderPermission.check(
+			getPermissionChecker(), kbFolderId, ActionKeys.DELETE);
+
+		return kbFolderLocalService.deleteKBFolder(kbFolderId);
+	}
+
+	public KBFolder fetchKBFolderByUrlTitle(
+			long groupId, long parentKbFolderId, String urlTitle)
+		throws PortalException {
+
+		KBFolder kbFolder = kbFolderLocalService.fetchKBFolderByUrlTitle(
+			groupId, parentKbFolderId, urlTitle);
+
+		if (kbFolder == null) {
+			return null;
+		}
+
+		KBFolderPermission.check(
+			getPermissionChecker(), kbFolder, ActionKeys.VIEW);
+
+		return kbFolder;
+	}
+
+	@Override
+	public KBFolder getKBFolder(long kbFolderId) throws PortalException {
+		KBFolderPermission.check(
+			getPermissionChecker(), kbFolderId, ActionKeys.VIEW);
+
+		return kbFolderLocalService.getKBFolder(kbFolderId);
+	}
+
+	public KBFolder getKBFolderByUrlTitle(
+			long groupId, long parentKbFolderId, String urlTitle)
+		throws PortalException {
+
+		KBFolder kbFolder = kbFolderLocalService.getKBFolderByUrlTitle(
+			groupId, parentKbFolderId, urlTitle);
+
+		KBFolderPermission.check(
+			getPermissionChecker(), kbFolder, ActionKeys.VIEW);
+
+		return kbFolder;
+	}
+
+	@Override
+	public List<KBFolder> getKBFolders(
+			long groupId, long parentKBFolderId, int start, int end)
+		throws PortalException {
+
+		return kbFolderPersistence.filterFindByG_P(
+			groupId, parentKBFolderId, start, end);
+	}
+
+	@Override
+	public int getKBFoldersCount(long groupId, long parentKBFolderId)
+		throws PortalException {
+
+		return kbFolderPersistence.filterCountByG_P(groupId, parentKBFolderId);
+	}
+
+	@Override
+	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
+		throws PortalException {
+
+		KBFolderPermission.check(
+			getPermissionChecker(), kbFolderId, ActionKeys.MOVE_KB_FOLDER);
+
+		kbFolderLocalService.moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
+	@Override
+	public KBFolder updateKBFolder(
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			long kbFolderId, String name, String description)
+		throws PortalException {
+
+		KBFolderPermission.check(
+			getPermissionChecker(), kbFolderId, ActionKeys.UPDATE);
+
+		return kbFolderLocalService.updateKBFolder(
+			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
+			description);
+	}
+
 }

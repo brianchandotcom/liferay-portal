@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -32,9 +33,12 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Calendar;
 
@@ -103,8 +107,22 @@ public class SetupWizardSampleDataUtil {
 			intranetLayout.getGroupId(), true, intranetLayout.getLayoutId(),
 			intranetLayout.getTypeSettings());
 
+		String emailAddress = "test@liferay.com";
+
 		User user = UserLocalServiceUtil.fetchUserByEmailAddress(
-			company.getCompanyId(), "test@liferay.com");
+			company.getCompanyId(), emailAddress);
+
+		ScreenNameGenerator screenNameGenerator =
+			ScreenNameGeneratorFactory.getInstance();
+
+		String screenName = GetterUtil.getString(
+			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX, "test");
+
+		try {
+			screenName = screenNameGenerator.generate(0, 0, emailAddress);
+		}
+		catch (Exception e) {
+		}
 
 		String userFirstName = "Joe";
 
@@ -112,12 +130,11 @@ public class SetupWizardSampleDataUtil {
 
 		if (user == null) {
 			user = UserLocalServiceUtil.addDefaultAdminUser(
-				companyId, "joebloggs", "test@liferay.com",
-				LocaleUtil.getDefault(), userFirstName, StringPool.BLANK,
-				userLastName);
+				companyId, screenName, emailAddress, LocaleUtil.getDefault(),
+				userFirstName, StringPool.BLANK, userLastName);
 		}
 		else {
-			user.setScreenName("joebloggs");
+			user.setScreenName(screenName);
 
 			user.setGreeting(
 				"Welcome " + userFirstName + " " + userLastName + "!");

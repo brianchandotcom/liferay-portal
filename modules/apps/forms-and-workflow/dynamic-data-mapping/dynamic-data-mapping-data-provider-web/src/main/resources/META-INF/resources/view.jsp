@@ -73,7 +73,7 @@ ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByTyp
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					colspan="2"
+					colspan="<%= 2 %>"
 					href="<%= rowURL %>"
 					path="/data_provider_descriptive.jsp"
 				/>

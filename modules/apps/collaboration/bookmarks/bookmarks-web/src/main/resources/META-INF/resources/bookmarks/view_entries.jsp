@@ -102,7 +102,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							colspan="2"
+							colspan="<%= 2 %>"
 							path="/bookmarks/view_folder_descriptive.jsp"
 						/>
 
@@ -137,7 +137,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							colspan="2"
+							colspan="<%= 2 %>"
 							path="/bookmarks/view_entry_descriptive.jsp"
 						/>
 

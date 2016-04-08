@@ -81,7 +81,7 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
-							colspan="2"
+							colspan="<%= 2 %>"
 							href="<%= rowURL %>"
 							path="/view_record_set_descriptive.jsp"
 						/>

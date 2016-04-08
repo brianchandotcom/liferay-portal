@@ -2904,6 +2904,11 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Staging#viewPublishContentCountViaPortletStagingCP">
 			<var name="contentCount" value="1" />
 			<var name="contentInformation" value="Web Content (1)" />

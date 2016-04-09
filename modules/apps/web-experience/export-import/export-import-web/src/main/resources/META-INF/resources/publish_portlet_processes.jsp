@@ -91,21 +91,23 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 		<liferay-ui:search-container-column-text>
 			<c:if test="<%= !backgroundTask.isInProgress() %>">
+				<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
-				<%
-				Date completionDate = backgroundTask.getCompletionDate();
-				%>
+					<%
+					Date completionDate = backgroundTask.getCompletionDate();
+					%>
 
-				<liferay-portlet:actionURL name="deleteBackgroundTask" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-				</liferay-portlet:actionURL>
+					<liferay-portlet:actionURL name="deleteBackgroundTask" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="deleteBackgroundTaskURL">
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+					</liferay-portlet:actionURL>
 
-				<liferay-ui:icon-delete
-					label="<%= true %>"
-					message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
-					url="<%= deleteBackgroundTaskURL %>"
-				/>
+					<liferay-ui:icon-delete
+						label="<%= true %>"
+						message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
+						url="<%= deleteBackgroundTaskURL %>"
+					/>
+				</liferay-ui:icon-menu>
 			</c:if>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>

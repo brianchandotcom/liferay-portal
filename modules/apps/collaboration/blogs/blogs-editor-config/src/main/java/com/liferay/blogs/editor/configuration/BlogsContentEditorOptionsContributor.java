@@ -65,4 +65,7 @@ public class BlogsContentEditorOptionsContributor
 		editorOptions.setUploadURL(portletURL.toString());
 	}
 
+	public void hashi() {
+	}
+
 }

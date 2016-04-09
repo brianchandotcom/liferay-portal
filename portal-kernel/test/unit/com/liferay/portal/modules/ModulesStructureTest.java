@@ -56,8 +56,10 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanBuildScripts() throws IOException {
+		final Path modulesDirPath = Paths.get("modules");
+
 		Files.walkFileTree(
-			Paths.get("modules"),
+			modulesDirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -71,6 +73,14 @@ public class ModulesStructureTest {
 
 					if (dirName.charAt(0) == '.') {
 						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					if (!dirPath.equals(modulesDirPath)) {
+						Path buildXmlPath = dirPath.resolve("build.xml");
+
+						if (Files.exists(buildXmlPath)) {
+							Assert.fail("Forbidden " + buildXmlPath);
+						}
 					}
 
 					Path ivyXmlPath = dirPath.resolve("ivy.xml");

@@ -14,6 +14,14 @@
 
 package com.liferay.portal.modules;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.FileImpl;
+
+import java.io.FileReader;
 import java.io.IOException;
 
 import java.nio.file.FileVisitResult;
@@ -26,8 +34,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,6 +46,13 @@ import org.junit.Test;
  * @author Andrea Di Giorgi
  */
 public class ModulesStructureTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+	}
 
 	@Test
 	public void testScanBuildScripts() throws IOException {
@@ -44,7 +62,8 @@ public class ModulesStructureTest {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-					Path dirPath, BasicFileAttributes basicFileAttributes) {
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
 					Path dirNamePath = dirPath.getFileName();
 
@@ -60,7 +79,10 @@ public class ModulesStructureTest {
 						Assert.fail("Forbidden " + ivyXmlPath);
 					}
 
-					if (Files.exists(dirPath.resolve("bnd.bnd"))) {
+					if (Files.exists(dirPath.resolve(".gitrepo"))) {
+						_testGitRepoBuildScripts(dirPath);
+					}
+					else if (Files.exists(dirPath.resolve("bnd.bnd"))) {
 						Path buildGradlePath = dirPath.resolve("build.gradle");
 
 						if (Files.notExists(buildGradlePath)) {
@@ -118,6 +140,145 @@ public class ModulesStructureTest {
 				}
 
 			});
+	}
+
+	private void _addGradlePluginNames(
+			Set<String> pluginNames, String pluginNamePrefix,
+			Path buildGradlePath, String pluginIdPrefix,
+			String[] pluginIdSuffixes)
+		throws IOException {
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new FileReader(buildGradlePath.toFile()))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = StringUtil.trim(line);
+
+				for (String pluginIdSuffix : pluginIdSuffixes) {
+					String pluginLine =
+						"apply plugin: \"" + pluginIdPrefix + pluginIdSuffix +
+							"\"";
+
+					if (line.equals(pluginLine)) {
+						pluginNames.add(pluginNamePrefix + pluginIdSuffix);
+					}
+				}
+			}
+		}
+	}
+
+	private String _getGitRepoBuildGradle(Path dirPath) throws IOException {
+		final Set<String> pluginNames = new TreeSet<>();
+
+		pluginNames.add("com.liferay.gradle.plugins");
+
+		Files.walkFileTree(
+			dirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path buildGradlePath = dirPath.resolve("build.gradle");
+
+					if (Files.exists(buildGradlePath) &&
+						Files.notExists(dirPath.resolve(".gitrepo"))) {
+
+						_addGradlePluginNames(
+							pluginNames, "com.liferay.gradle.plugins.",
+							buildGradlePath, "com.liferay.",
+							new String[] {
+								"cache", "lang.merger", "maven.plugin.builder"
+							});
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		StringBundler sb = new StringBundler(pluginNames.size() * 5 - 1);
+
+		int i = 0;
+
+		for (String pluginName : pluginNames) {
+			if (i > 0) {
+				sb.append(CharPool.NEW_LINE);
+			}
+
+			sb.append("\t\t");
+			sb.append("classpath group: \"com.liferay\", name: \"");
+			sb.append(pluginName);
+			sb.append("\", version: \"latest.release\"");
+
+			i++;
+		}
+
+		return StringUtil.replace(
+			_GIT_REPO_BUILD_GRADLE_TEMPLATE, "[$BUILDSCRIPT_DEPENDENCIES$]",
+			sb.toString());
+	}
+
+	private void _testGitRepoBuildScripts(Path dirPath) throws IOException {
+		Path buildGradlePath = dirPath.resolve("build.gradle");
+		Path settingsGradlePath = dirPath.resolve("settings.gradle");
+
+		boolean buildGradleExists = Files.exists(buildGradlePath);
+		boolean settingsGradleExists = Files.exists(settingsGradlePath);
+
+		if (!buildGradleExists && !settingsGradleExists) {
+			return;
+		}
+
+		if (!buildGradleExists) {
+			Assert.fail("Missing " + buildGradlePath);
+		}
+
+		String buildGradle = FileUtil.read(buildGradlePath.toFile());
+
+		Assert.assertEquals(
+			"Incorrect " + buildGradlePath, _getGitRepoBuildGradle(dirPath),
+			buildGradle);
+
+		if (!settingsGradleExists) {
+			Assert.fail("Missing " + settingsGradlePath);
+		}
+
+		String settingsGradle = FileUtil.read(settingsGradlePath.toFile());
+
+		Assert.assertEquals(
+			"Incorrect " + settingsGradlePath,
+			_GIT_REPO_SETTINGS_GRADLE_TEMPLATE, settingsGradle);
+	}
+
+	private static final String _GIT_REPO_BUILD_GRADLE_TEMPLATE;
+
+	private static final String _GIT_REPO_SETTINGS_GRADLE_TEMPLATE;
+
+	static {
+		try {
+			ClassLoader classLoader =
+				ModulesStructureTest.class.getClassLoader();
+
+			_GIT_REPO_BUILD_GRADLE_TEMPLATE = StringUtil.read(
+				classLoader,
+				"com/liferay/portal/modules/dependencies/" +
+					"git_repo_build_gradle.tmpl");
+			_GIT_REPO_SETTINGS_GRADLE_TEMPLATE = StringUtil.read(
+				classLoader,
+				"com/liferay/portal/modules/dependencies/" +
+					"git_repo_settings_gradle.tmpl");
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

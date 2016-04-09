@@ -63,7 +63,7 @@ public class ResourcePermissionFinderImpl
 			ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			ResourcePermissionPersistenceImpl.
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByC_N_S_P_R_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),

@@ -1,0 +1,18 @@
+buildscript {
+	dependencies {
+[$BUILDSCRIPT_DEPENDENCIES$]
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+configure(subprojects.findAll {!it.childProjects}) {
+	apply plugin: "com.liferay.defaults.plugin"
+	apply plugin: "com.liferay.plugin"
+}

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -76,13 +77,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.wiring.BundleCapability;
+import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Mika Koivisto
@@ -202,8 +210,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		_configuration = null;
 
-		_taglibMappings.clear();
-
 		templateContextHelper.removeAllHelperUtilities();
 
 		templateContextHelper = null;
@@ -275,8 +281,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		if (isEnableDebuggerService()) {
 			DebuggerService.getBreakpoints("*");
 		}
-
-		initTaglibMappings();
 	}
 
 	@Reference(unbind = "-")
@@ -313,9 +317,19 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+		_classLoader = new FreeMarkerBundleClassloader(_bundle);
 
-		_classLoader = bundleWiring.getClassLoader();
+		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, stateMask, new TaglibBundleTrackerCustomizer());
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
 	}
 
 	@Override
@@ -354,29 +368,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			new ServletContextInvocationHandler(servletContext));
 	}
 
-	protected void initTaglibMappings() {
-		Enumeration<URL> enumeration = _bundle.findEntries(
-			"/", "*taglib-mapping.properties", false);
-
-		if (enumeration == null) {
-			return;
-		}
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			try (InputStream inputStream = url.openStream()) {
-				Properties properties = PropertiesUtil.load(
-					inputStream, StringPool.UTF8);
-
-				_taglibMappings.putAll(PropertiesUtil.toMap(properties));
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-	}
-
 	protected boolean isEnableDebuggerService() {
 		if ((System.getProperty("freemarker.debug.password") != null) &&
 			(System.getProperty("freemarker.debug.port") != null)) {
@@ -393,7 +384,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		FreeMarkerManager.class);
 
 	private Bundle _bundle;
-	private ClassLoader _classLoader;
+	private BundleTracker<Bundle> _bundleTracker;
+	private volatile FreeMarkerBundleClassloader _classLoader;
 	private Configuration _configuration;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
@@ -402,6 +394,110 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
+
+	private class TaglibBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<Bundle> {
+
+		@Override
+		public Bundle addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
+			boolean track = false;
+
+			Enumeration<URL> enumeration = bundle.findEntries(
+				"/", "*taglib-mapping.properties", false);
+
+			if (enumeration != null) {
+				while (enumeration.hasMoreElements()) {
+					URL url = enumeration.nextElement();
+
+					try (InputStream inputStream = url.openStream()) {
+						Properties properties = PropertiesUtil.load(
+							inputStream, StringPool.UTF8);
+
+						_taglibMappings.putAll(
+							PropertiesUtil.toMap(properties));
+
+						track = true;
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
+				}
+			}
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			List<BundleCapability> bundleCapabilities =
+				bundleWiring.getCapabilities("osgi.extender");
+
+			for (BundleCapability bundleCapability : bundleCapabilities) {
+				Map<String, Object> attributes =
+					bundleCapability.getAttributes();
+
+				Object value = attributes.get("osgi.extender");
+
+				if (value.equals("jsp.taglib")) {
+					Bundle[] bundles = ArrayUtil.append(
+						_classLoader.getBundles(), bundle);
+
+					_classLoader = new FreeMarkerBundleClassloader(bundles);
+
+					track = true;
+
+					break;
+				}
+			}
+
+			if (track) {
+				return bundle;
+			}
+
+			return null;
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			Bundle bundleCapabilities) {
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent, Bundle trackedBundle) {
+
+			Bundle[] bundles = _classLoader.getBundles();
+
+			if (ArrayUtil.contains(bundles, trackedBundle)) {
+				bundles = ArrayUtil.remove(bundles, trackedBundle);
+
+				_classLoader = new FreeMarkerBundleClassloader(bundles);
+			}
+
+			Enumeration<URL> enumeration = trackedBundle.findEntries(
+				"/", "*taglib-mapping.properties", false);
+
+			if (enumeration == null) {
+				return;
+			}
+
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				try (InputStream inputStream = url.openStream()) {
+					Properties properties = PropertiesUtil.load(
+						inputStream, StringPool.UTF8);
+
+					for (Object keyObject : properties.keySet()) {
+						_taglibMappings.remove(keyObject);
+					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
+		}
+	}
 
 	private class ServletContextInvocationHandler implements InvocationHandler {
 
@@ -455,7 +551,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				return url;
 			}
 
-			url = _bundle.getResource(path);
+			url = _classLoader.getResource(path);
 
 			if (url != null) {
 				return url;

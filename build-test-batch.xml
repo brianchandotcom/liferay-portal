@@ -1124,11 +1124,39 @@ ${output.content}</echo>
 						<if>
 							<isset property="modules.base.dir.names.with.changes" />
 							<then>
-								<for list="${modules.base.dir.names.with.changes}" param="modules.base.dir.name">
+								<for list="${modules.base.dir.names.with.changes}" param="module.base.dir.name">
 									<sequential>
-										<echo>Executing baseline on @{modules.base.dir.name}.</echo>
+										<var name="module.baseline.task.name" unset="true" />
+										<var name="modules.base.dir.name" unset="true" />
 
-										<gradle-execute dir="@{modules.base.dir.name}" forcedcacheenabled="false" task="baseline" />
+										<propertyregex
+											input="@{module.base.dir.name}"
+											override="true"
+											property="modules.base.dir.name"
+											regexp="(.*/modules)(/.*)"
+											replace="\1"
+										/>
+
+										<propertyregex
+											input="@{module.base.dir.name}"
+											override="true"
+											property="module.baseline.task.name"
+											regexp="(.*/modules)(/.*)"
+											replace="\2"
+										/>
+
+										<antelope:stringutil property="module.baseline.task.name" string="${module.baseline.task.name}">
+											<antelope:replace regex="/" replacement=":" />
+										</antelope:stringutil>
+
+										<var name="module.baseline.task.name" value="${module.baseline.task.name}:baseline" />
+
+										<echo>Executing ${module.baseline.task.name} on ${modules.base.dir.name}.</echo>
+
+										<gradle-execute dir="${modules.base.dir.name}" forcedcacheenabled="false" task="${module.baseline.task.name}" />
+
+										<var name="module.baseline.task.name" unset="true" />
+										<var name="modules.base.dir.name" unset="true" />
 									</sequential>
 								</for>
 							</then>

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 
-import java.io.Serializable;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -45,13 +43,12 @@ public class ModifiedFacetProcessor extends RangeFacetProcessor {
 
 		SearchContext searchContext = facet.getSearchContext();
 
-		Serializable modified = searchContext.getAttribute(_MODIFIED);
+		String rangeParam = GetterUtil.getString(
+			searchContext.getAttribute(facet.getFieldId()));
 
-		if (Validator.isNotNull(modified)) {
-			addRange(defaultRangeBuilder, GetterUtil.getString(modified));
+		if (Validator.isNotNull(rangeParam)) {
+			addRange(defaultRangeBuilder, rangeParam);
 		}
 	}
-
-	private static final String _MODIFIED = "modified";
 
 }

@@ -919,6 +919,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#add">
@@ -2902,6 +2906,11 @@
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#viewPublishContentCountViaPortletStagingCP">

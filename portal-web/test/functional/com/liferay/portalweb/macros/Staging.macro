@@ -643,7 +643,7 @@
 			<var name="portlet" value="Staging" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="Staging#STAGING_STATUS" value1="Successful" />
 	</command>
 
 	<command name="redoStagingPageVersioningPG">

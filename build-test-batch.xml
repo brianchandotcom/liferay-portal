@@ -1149,7 +1149,7 @@ ${output.content}</echo>
 											<antelope:replace regex="/" replacement=":" />
 										</antelope:stringutil>
 
-										<var name="module.baseline.task.name" value="${module.baseline.task.name}baseline" />
+										<var name="module.baseline.task.name" value="${module.baseline.task.name}:baseline" />
 
 										<echo>Executing ${module.baseline.task.name} on ${modules.base.dir.name}.</echo>
 

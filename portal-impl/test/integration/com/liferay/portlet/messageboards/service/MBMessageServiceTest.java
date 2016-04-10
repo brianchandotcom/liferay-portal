@@ -24,6 +24,7 @@ import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -135,10 +137,16 @@ public class MBMessageServiceTest {
 					BasePersistenceImpl.class.getName(), Level.ERROR);
 			CaptureAppender captureAppender2 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					DoAsUserThread.class.getName(), Level.ERROR);
+					DefaultTransactionExecutor.class.getName(), Level.ERROR);
 			CaptureAppender captureAppender3 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					JDBCExceptionReporter.class.getName(), Level.ERROR)) {
+					DoAsUserThread.class.getName(), Level.ERROR);
+			CaptureAppender captureAppender4 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					JDBCExceptionReporter.class.getName(), Level.ERROR);
+			CaptureAppender captureAppender5 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					SynchronousDestination.class.getName(), Level.ERROR);) {
 
 			for (DoAsUserThread doAsUserThread : doAsUserThreads) {
 				doAsUserThread.start();
@@ -150,7 +158,28 @@ public class MBMessageServiceTest {
 
 			DB db = DBManagerUtil.getDB();
 
-			if (db.getDBType() == DBType.SYBASE) {
+			if (db.getDBType() == DBType.HYPERSONIC) {
+				for (LoggingEvent loggingEvent :
+						captureAppender2.getLoggingEvents()) {
+
+					String message = loggingEvent.getRenderedMessage();
+
+					Assert.assertTrue(
+						message.startsWith(
+							"Application exception overridden by commit " +
+								"exception"));
+				}
+
+				for (LoggingEvent loggingEvent :
+						captureAppender5.getLoggingEvents()) {
+
+					String message = loggingEvent.getRenderedMessage();
+
+					Assert.assertTrue(
+						message.startsWith("Unable to process message"));
+				}
+			}
+			else if (db.getDBType() == DBType.SYBASE) {
 				for (LoggingEvent loggingEvent :
 						captureAppender1.getLoggingEvents()) {
 
@@ -161,7 +190,7 @@ public class MBMessageServiceTest {
 				}
 
 				for (LoggingEvent loggingEvent :
-						captureAppender2.getLoggingEvents()) {
+						captureAppender3.getLoggingEvents()) {
 
 					String message = loggingEvent.getRenderedMessage();
 
@@ -174,7 +203,7 @@ public class MBMessageServiceTest {
 				}
 
 				for (LoggingEvent loggingEvent :
-						captureAppender3.getLoggingEvents()) {
+						captureAppender4.getLoggingEvents()) {
 
 					String message = loggingEvent.getRenderedMessage();
 

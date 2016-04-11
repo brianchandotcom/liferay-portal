@@ -16,9 +16,12 @@ package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -48,17 +51,18 @@ public class RangeFacetProcessor
 
 		defaultRangeBuilder.field(facetConfiguration.getFieldName());
 
-		doProcessFacet(defaultRangeBuilder, facet);
+		addConfigurationRanges(facetConfiguration, defaultRangeBuilder);
+
+		addCustomRange(facet, defaultRangeBuilder);
 
 		if (defaultRangeBuilder.hasRanges()) {
 			searchRequestBuilder.addAggregation(defaultRangeBuilder);
 		}
 	}
 
-	protected void doProcessFacet(
-		DefaultRangeBuilder defaultRangeBuilder, Facet facet) {
-
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+	protected void addConfigurationRanges(
+		FacetConfiguration facetConfiguration,
+		DefaultRangeBuilder defaultRangeBuilder) {
 
 		JSONObject jsonObject = facetConfiguration.getData();
 
@@ -77,6 +81,23 @@ public class RangeFacetProcessor
 
 			defaultRangeBuilder.addRange(range[0], range[1]);
 		}
+	}
+
+	protected void addCustomRange(
+		Facet facet, DefaultRangeBuilder defaultRangeBuilder) {
+
+		SearchContext searchContext = facet.getSearchContext();
+
+		String rangeParam = GetterUtil.getString(
+			searchContext.getAttribute(facet.getFieldId()));
+
+		if (Validator.isNull(rangeParam)) {
+			return;
+		}
+
+		String[] range = RangeParserUtil.parserRange(rangeParam);
+
+		defaultRangeBuilder.addRange(range[0], range[1]);
 	}
 
 }

@@ -177,6 +177,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			app.setTitle(pluginPackage.getName());
 			app.setDescription(pluginPackage.getLongDescription());
 			app.setVersion(pluginPackage.getVersion());
+			app.setRequired(true);
 
 			app.addContextName(pluginPackage.getContext());
 
@@ -461,16 +462,19 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		String category = properties.getProperty("category");
 		String iconURL = properties.getProperty("icon-url");
 		String version = properties.getProperty("version");
+		boolean required = GetterUtil.getBoolean(
+			properties.getProperty("required"));
 
 		return updateApp(
 			userId, remoteAppId, title, description, category, iconURL, version,
-			file);
+			required, file);
 	}
 
 	@Override
 	public App updateApp(
 			long userId, long remoteAppId, String title, String description,
-			String category, String iconURL, String version, File file)
+			String category, String iconURL, String version, boolean required,
+			File file)
 		throws PortalException {
 
 		// App
@@ -502,6 +506,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		app.setCategory(category);
 		app.setIconURL(iconURL);
 		app.setVersion(version);
+		app.setRequired(required);
 
 		appPersistence.update(app);
 

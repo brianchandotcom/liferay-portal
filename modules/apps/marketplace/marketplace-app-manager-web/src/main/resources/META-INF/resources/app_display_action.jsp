@@ -42,19 +42,21 @@ String bundleIds = _getBundleIds(appDisplay);
 
 	<c:choose>
 		<c:when test="<%= appDisplay.getState() == BundleStateConstants.ACTIVE %>">
-			<portlet:actionURL name="deactivateBundles" var="deactivateBundlesURL">
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="bundleIds" value="<%= bundleIds %>" />
-			</portlet:actionURL>
+			<c:if test="<%= !appDisplay.isRequired() %>">
+				<portlet:actionURL name="deactivateBundles" var="deactivateBundlesURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="bundleIds" value="<%= bundleIds %>" />
+				</portlet:actionURL>
 
-			<%
-			String taglibDeactivateBundlesURL = "javascript:if (confirm(\'" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "\')) {submitForm(document.hrefFm, \'" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "\');};";
-			%>
+				<%
+				String taglibDeactivateBundlesURL = "javascript:if (confirm(\'" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "\')) {submitForm(document.hrefFm, \'" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "\');};";
+				%>
 
-			<liferay-ui:icon
-				message="deactivate"
-				url="<%= taglibDeactivateBundlesURL %>"
-			/>
+				<liferay-ui:icon
+					message="deactivate"
+					url="<%= taglibDeactivateBundlesURL %>"
+				/>
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<portlet:actionURL name="activateBundles" var="activateBundlesURL">
@@ -69,12 +71,14 @@ String bundleIds = _getBundleIds(appDisplay);
 		</c:otherwise>
 	</c:choose>
 
-	<portlet:actionURL name="uninstallBundles" var="uninstallBundlesURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="bundleIds" value="<%= bundleIds %>" />
-	</portlet:actionURL>
+	<c:if test="<%= !appDisplay.isRequired() %>">
+		<portlet:actionURL name="uninstallBundles" var="uninstallBundlesURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="bundleIds" value="<%= bundleIds %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= uninstallBundlesURL %>" />
+		<liferay-ui:icon-delete url="<%= uninstallBundlesURL %>" />
+	</c:if>
 </liferay-ui:icon-menu>
 
 <%!

@@ -159,10 +159,12 @@ public class LiferayPackageInstaller
 		String description = properties.getProperty("description");
 		String category = properties.getProperty("category");
 		String iconURL = properties.getProperty("icon-url");
+		boolean required = GetterUtil.getBoolean(
+			properties.getProperty("required"));
 
 		App app = _appLocalService.updateApp(
 			0, remoteAppId, title, description, category, iconURL, version,
-			null);
+			required, null);
 
 		String[] bundles = StringUtil.split(properties.getProperty("bundles"));
 

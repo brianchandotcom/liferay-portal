@@ -72,6 +72,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 		attributes.put("category", getCategory());
 		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
+		attributes.put("required", getRequired());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class AppWrapper implements App, ModelWrapper<App> {
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
 		}
 	}
 
@@ -293,6 +300,16 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	/**
+	* Returns the required of this app.
+	*
+	* @return the required of this app
+	*/
+	@Override
+	public boolean getRequired() {
+		return _app.getRequired();
+	}
+
+	/**
 	* Returns the title of this app.
 	*
 	* @return the title of this app
@@ -381,6 +398,16 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	@Override
 	public boolean isNew() {
 		return _app.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this app is required.
+	*
+	* @return <code>true</code> if this app is required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isRequired() {
+		return _app.isRequired();
 	}
 
 	@Override
@@ -507,6 +534,16 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	@Override
 	public void setRemoteAppId(long remoteAppId) {
 		_app.setRemoteAppId(remoteAppId);
+	}
+
+	/**
+	* Sets whether this app is required.
+	*
+	* @param required the required of this app
+	*/
+	@Override
+	public void setRequired(boolean required) {
+		_app.setRequired(required);
 	}
 
 	/**

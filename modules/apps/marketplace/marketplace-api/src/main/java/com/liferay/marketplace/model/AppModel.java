@@ -282,6 +282,27 @@ public interface AppModel extends BaseModel<App>, ShardedModel,
 	 */
 	public void setVersion(String version);
 
+	/**
+	 * Returns the required of this app.
+	 *
+	 * @return the required of this app
+	 */
+	public boolean getRequired();
+
+	/**
+	 * Returns <code>true</code> if this app is required.
+	 *
+	 * @return <code>true</code> if this app is required; <code>false</code> otherwise
+	 */
+	public boolean isRequired();
+
+	/**
+	 * Sets whether this app is required.
+	 *
+	 * @param required the required of this app
+	 */
+	public void setRequired(boolean required);
+
 	@Override
 	public boolean isNew();
 

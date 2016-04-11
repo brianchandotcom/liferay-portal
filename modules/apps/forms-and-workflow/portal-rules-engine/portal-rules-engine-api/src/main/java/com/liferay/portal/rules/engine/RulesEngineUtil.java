@@ -14,18 +14,18 @@
 
 package com.liferay.portal.rules.engine;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
  * @author Raymond Augé
  * @deprecated As of 7.0.0
  */
-@Component(immediate = true, service = RulesEngineUtil.class)
 public class RulesEngineUtil {
 
 	public static void add(
@@ -70,7 +70,7 @@ public class RulesEngineUtil {
 	}
 
 	public static RulesEngine getRulesEngine() {
-		return _rulesEngine;
+		return _serviceTracker.getService();
 	}
 
 	public static void remove(String domainName) throws RulesEngineException {
@@ -84,7 +84,7 @@ public class RulesEngineUtil {
 		getRulesEngine().update(domainName, rulesResourceRetriever);
 	}
 
-	@Reference
-	private static RulesEngine _rulesEngine;
+	private static final ServiceTracker<RulesEngine, RulesEngine>
+		_serviceTracker = ServiceTrackerFactory.open(RulesEngine.class);
 
 }

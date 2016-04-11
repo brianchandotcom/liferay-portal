@@ -698,22 +698,22 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW</td>
-	<td>//td[contains(@class,'scheduler-today') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td>//td[contains(@class,'scheduler-today') and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_MONTH_VIEW</td>
-	<td>//table[contains(@class,'scheduler-view-table-data')]//td[contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td>//table[contains(@class,'scheduler-view-table-data')]//td[contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_REPEATING_DAILY_REPEATED_EVENT_WEEK_AND_MONTH_VIEW</td>
-	<td>//div[contains(@class,'scheduler-event-repeated') and (@title='${key_eventTitle}')]/../../following-sibling::td//div[@title='${key_eventTitle}')]</td>
+	<td>//div[contains(@class,'scheduler-event-repeated') and (@title='${key_eventTitle}')]/../../following-sibling::td//div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_REPEATING_WEEKLY_REPEATED_EVENT_WEEK_AND_MONTH_VIEW</td>
-	<td>//div[@class='scheduler-view-table-row' and contains(.,'${key_eventTitle}')]/following-sibling::div//div[@title='${key_eventTitle}']</td>
+	<td>//div[@class='scheduler-view-table-row' and contains(.,'${key_eventTitle}')]/following-sibling::div//div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -723,12 +723,12 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_YEARLY_EVENT_DAY_WEEK_AND_MONTH_VIEW</td>
-	<td>//td[contains(@class,'scheduler-view-day') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td>//td[contains(@class,'scheduler-view-day') and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_NOT_TODAY</td>
-	<td>//td[not(contains(@class,'scheduler-today')) and contains(@class,'scheduler-view') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
+	<td>//td[not(contains(@class,'scheduler-today')) and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 </tbody>

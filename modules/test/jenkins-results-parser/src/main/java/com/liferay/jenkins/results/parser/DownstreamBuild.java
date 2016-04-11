@@ -42,9 +42,8 @@ public class DownstreamBuild extends BaseBuild {
 			throw new IllegalArgumentException("Invalid invocation URL");
 		}
 
-		master = invocationURLMatcher.group("master");
 		jobName = invocationURLMatcher.group("jobName");
-
+		master = invocationURLMatcher.group("master");
 		String queryString = invocationURLMatcher.group("queryString");
 
 		Map<String, String> invokedParameters = getParameters(queryString);
@@ -96,7 +95,7 @@ public class DownstreamBuild extends BaseBuild {
 
 				setStatus("running");
 
-				System.out.println(getBuildMessage());
+				System.out.println(_getBuildMessage());
 			}
 			else {
 				JSONObject queueItem = getQueueItemJSONObject();
@@ -107,7 +106,7 @@ public class DownstreamBuild extends BaseBuild {
 				else if (myStatus.equals("queued") && (queueItem == null)) {
 					setStatus("missing");
 
-					System.out.println(getBuildMessage());
+					System.out.println(_getBuildMessage());
 				}
 			}
 		}
@@ -135,16 +134,16 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected JSONObject getCompletedBuildJSONObject() throws Exception {
-		JSONArray builds = getBuildsJSONArray();
+		JSONArray buildsJSONArray = getBuildsJSONArray();
 
-		for (int i = 0; i < builds.length(); i++) {
-			JSONObject build = builds.getJSONObject(i);
+		for (int i = 0; i < buildsJSONArray.length(); i++) {
+			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-			if ((buildNumber == build.getInt("number")) &&
-				(build.get("result") != null) &&
-				!build.getBoolean("building")) {
+			if ((buildNumber == buildJSONObject.getInt("number")) &&
+				(buildJSONObject.get("result") != null) &&
+				!buildJSONObject.getBoolean("building")) {
 
-				return build;
+				return buildJSONObject;
 			}
 		}
 
@@ -239,19 +238,24 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected JSONObject getQueueItemJSONObject() throws Exception {
-		JSONArray queueItems = getQueueItemsJSONArray();
+		JSONArray queueItemsJSONArray = getQueueItemsJSONArray();
 
-		for (int i = 0; i < queueItems.length(); i++) {
-			JSONObject queueItem = queueItems.getJSONObject(i);
+		for (int i = 0; i < queueItemsJSONArray.length(); i++) {
+			JSONObject queueItemJSONObject = queueItemsJSONArray.getJSONObject(
+				i);
 
-			String queueItemName = queueItem.getJSONObject(
-				"task").getString("name");
-			Map<String, String> buildParameters = getParameters(queueItem);
+			Map<String, String> buildParameters = getParameters(
+				queueItemJSONObject);
+
+			JSONObject taskJSONObject = queueItemJSONObject.getJSONObject(
+				"task");
+
+			String queueItemName = taskJSONObject.getString("name");
 
 			if (queueItemName.equals(jobName) &&
 				buildParameters.equals(parameters)) {
 
-				return queueItem;
+				return queueItemJSONObject;
 			}
 		}
 
@@ -269,13 +273,13 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected JSONObject getRunningBuildJSONObject() throws Exception {
-		JSONArray builds = getBuildsJSONArray();
+		JSONArray buildsJSONArray = getBuildsJSONArray();
 
-		for (int i = 0; i < builds.length(); i++) {
-			JSONObject build = builds.getJSONObject(i);
+		for (int i = 0; i < buildsJSONArray.length(); i++) {
+			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-			if (parameters.equals(getParameters(build))) {
-				return build;
+			if (parameters.equals(getParameters(buildJSONObject))) {
+				return buildJSONObject;
 			}
 		}
 
@@ -286,7 +290,7 @@ public class DownstreamBuild extends BaseBuild {
 	protected Map<String, String> parameters;
 	protected TopLevelBuild topLevelBuild;
 
-	private String getBuildMessage() {
+	private String _getBuildMessage() {
 		String myStatus = getStatus();
 
 		StringBuilder sb = new StringBuilder();

@@ -22,19 +22,29 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute(WebKeys.ASSET_RENDERER_FACTORY);
 %>
 
-<c:choose>
-	<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
-		<liferay-frontend:vertical-card
-			imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
-			subtitle="<%= assetRendererFactory.getTypeName(locale) %>"
-			title="<%= assetRenderer.getTitle(locale) %>"
-		/>
-	</c:when>
-	<c:otherwise>
-		<liferay-frontend:icon-vertical-card
-			icon="<%= assetRendererFactory.getIconCssClass() %>"
-			subtitle="<%= assetRendererFactory.getTypeName(locale) %>"
-			title="<%= assetRenderer.getTitle(locale) %>"
-		/>
-	</c:otherwise>
-</c:choose>
+<div class="card card-dm">
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
+			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= assetRenderer.getThumbnailPath(renderRequest) %>')">
+				<img alt="" class="sr-only" src="<%= assetRenderer.getThumbnailPath(renderRequest) %>" />
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover icon-vertical-card-container">
+				<aui:icon cssClass="icon-vertical-card-image" image="<%= assetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+
+	<div class="card-footer">
+		<div class="card-dm-details">
+			<div class="card-dm-text-large">
+				<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+			</div>
+
+			<div class="card-dm-text">
+				<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale)) %>
+			</div>
+		</div>
+	</div>
+</div>

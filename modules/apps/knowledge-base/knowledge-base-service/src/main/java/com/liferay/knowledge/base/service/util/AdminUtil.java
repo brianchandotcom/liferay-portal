@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.petra.content.util.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.ContentUtil;
 
 import java.util.Map;
 
@@ -87,6 +87,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_ADDED_BODY);
 	}
 
@@ -114,6 +115,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_ADDED_SUBJECT);
 	}
 
@@ -128,6 +130,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_BODY);
 	}
@@ -158,6 +161,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_SUBJECT);
 	}
@@ -215,6 +219,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_BODY);
 	}
 
@@ -244,6 +249,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_SUBJECT);
 	}
@@ -259,6 +265,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_BODY);
 	}
 
@@ -288,6 +295,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_SUBJECT);
 	}
@@ -303,6 +311,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_UPDATED_BODY);
 	}
 
@@ -330,6 +339,7 @@ public class AdminUtil {
 		}
 
 		return ContentUtil.get(
+			AdminUtil.class.getClassLoader(),
 			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_UPDATED_SUBJECT);
 	}
 

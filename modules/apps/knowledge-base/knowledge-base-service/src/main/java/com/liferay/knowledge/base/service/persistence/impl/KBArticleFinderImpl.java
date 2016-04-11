@@ -17,13 +17,13 @@ package com.liferay.knowledge.base.service.persistence.impl;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.impl.KBArticleImpl;
 import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.math.BigInteger;
 
@@ -46,7 +46,8 @@ public class KBArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(_COUNT_BY_URL_TITLE);
+			String sql = CustomSQLUtil.get(
+				KBArticleFinderImpl.class, _COUNT_BY_URL_TITLE);
 
 			sql = replaceWorkflowStatus(sql, status);
 
@@ -85,7 +86,8 @@ public class KBArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(_FIND_BY_URL_TITLE);
+			String sql = CustomSQLUtil.get(
+				KBArticleFinderImpl.class, _FIND_BY_URL_TITLE);
 
 			sql = replaceWorkflowStatus(sql, status);
 

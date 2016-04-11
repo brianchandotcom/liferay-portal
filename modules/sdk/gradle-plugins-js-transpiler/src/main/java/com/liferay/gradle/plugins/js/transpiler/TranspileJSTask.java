@@ -265,6 +265,9 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 			}
 		}
 
+		completeArgs.add("--soyDeps");
+		completeArgs.add(getNodeDir() + "/node_modules/metal*/src/**/*.soy");
+
 		completeArgs.add("--soyDest");
 		completeArgs.add(destination);
 

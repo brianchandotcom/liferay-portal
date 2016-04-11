@@ -171,8 +171,7 @@ public class SourceFormatter {
 						return null;
 					}
 
-				}
-			);
+				});
 
 			futures.add(future);
 		}

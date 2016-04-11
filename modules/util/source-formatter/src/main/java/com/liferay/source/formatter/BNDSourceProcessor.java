@@ -140,8 +140,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			return StringUtil.replace(
-				content, includeResources, replacement);
+			return StringUtil.replace(content, includeResources, replacement);
 		}
 
 		return content;
@@ -196,20 +195,20 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
-	private Pattern _bndDefinitionPattern = Pattern.compile(
+	private final Pattern _bndDefinitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
-	private Pattern _exportsPattern = Pattern.compile(
+	private final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:\\\\\n(.*?\n)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private Pattern _importsPattern = Pattern.compile(
+	private final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:\\\\\n(.*?\n)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private Pattern _includeResourcePattern = Pattern.compile(
+	private final Pattern _includeResourcePattern = Pattern.compile(
 		"^(-liferay)?-includeresource:[\\s\\S]*?([^\\\\]\n|\\Z)",
 		Pattern.MULTILINE);
-	private Pattern _incorrectTabPattern = Pattern.compile(
+	private final Pattern _incorrectTabPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
-	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
+	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 
 	private static class DefinitionComparator implements Comparator<String> {

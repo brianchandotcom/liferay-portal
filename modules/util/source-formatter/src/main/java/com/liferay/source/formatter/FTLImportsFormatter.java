@@ -31,6 +31,18 @@ import java.util.regex.Pattern;
  */
 public class FTLImportsFormatter extends BaseImportsFormatter {
 
+	protected static List<String> getImportsList(String content) {
+		List<String> importsList = new ArrayList<>();
+
+		Matcher matcher = _importsPattern.matcher(content);
+
+		while (matcher.find()) {
+			importsList.add(matcher.group());
+		}
+
+		return importsList;
+	}
+
 	@Override
 	protected ImportPackage createImportPackage(String line) {
 		return createJavaImportPackage(line);
@@ -73,18 +85,6 @@ public class FTLImportsFormatter extends BaseImportsFormatter {
 			"$1\n\n$2");
 
 		return content;
-	}
-
-	protected static List<String> getImportsList(String content) {
-		List<String> importsList = new ArrayList<>();
-
-		Matcher matcher = _importsPattern.matcher(content);
-
-		while (matcher.find()) {
-			importsList.add(matcher.group());
-		}
-
-		return importsList;
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

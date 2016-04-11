@@ -172,9 +172,8 @@ public class JavaSourceTabCalculator {
 			return;
 		}
 
-		String[] texts = new String[] {
-			"{\n", ";\n", ",\n", "\n)", "\t)", "\t}", ")\n"
-		};
+		String[] texts =
+			new String[] {"{\n", ";\n", ",\n", "\n)", "\t)", "\t}", ")\n"};
 
 		if (line.endsWith(":")) {
 			if (line.startsWith("case ") || line.startsWith("default")) {
@@ -348,7 +347,8 @@ public class JavaSourceTabCalculator {
 				StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_PARENTHESIS
 			},
 			new String[] {
-				StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS},
+				StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS
+			},
 			level);
 	}
 
@@ -497,16 +497,16 @@ public class JavaSourceTabCalculator {
 
 	private Map<Integer, Integer> _extraTabMap;
 	private Set<Integer> _ignoreTabCheck;
-	private JavaSourceProcessor _javaSourceProcessor =
+	private final JavaSourceProcessor _javaSourceProcessor =
 		new JavaSourceProcessor();
-	private Pattern _methodDeclarationPattern = Pattern.compile(
+	private final Pattern _methodDeclarationPattern = Pattern.compile(
 		"^\\s*(private|protected|public) .*?(\\{|;)\n", Pattern.DOTALL);
 	private boolean _printIncorrectTabMessage;
-	private Pattern _throwsExceptionPattern = Pattern.compile(
+	private final Pattern _throwsExceptionPattern = Pattern.compile(
 		"\t((default .*)|(throws (E|(.*(Error|Exception|Fault|Throwable)))))" +
 			"(;| \\{)$",
 		Pattern.DOTALL);
-	private Pattern _trailingCommentPattern = Pattern.compile(
+	private final Pattern _trailingCommentPattern = Pattern.compile(
 		"(\n|\t).*\\S(( |\t)+//.*?)\n");
 
 }

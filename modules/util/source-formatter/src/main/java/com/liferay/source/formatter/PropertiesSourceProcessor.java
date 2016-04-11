@@ -528,7 +528,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			Properties properties = new Properties();
 
 			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			InputStream inputStream = new FileInputStream(fileName);
 
@@ -573,7 +573,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	private static final int _MAX_LINE_LENGTH = 80;
 
-	private Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
+	private final Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
 		new HashMap<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private String _portalPortalPropertiesContent;

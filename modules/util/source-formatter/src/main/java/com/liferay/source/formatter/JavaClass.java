@@ -1584,7 +1584,7 @@ public class JavaClass {
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
-	private int _constructorCount = 0;
+	private int _constructorCount;
 	private final String _content;
 	private final Pattern _enumTypePattern = Pattern.compile(
 		"\t[A-Z0-9]+[ _,;\\(\n]");
@@ -1601,9 +1601,9 @@ public class JavaClass {
 	private final String _name;
 	private final JavaClass _outerClass;
 	private String _packagePath;
-	private Pattern _returnPattern1 = Pattern.compile(
+	private final Pattern _returnPattern1 = Pattern.compile(
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
-	private Pattern _returnPattern2 = Pattern.compile(
+	private final Pattern _returnPattern2 = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
 
 }

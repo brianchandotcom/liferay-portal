@@ -404,12 +404,12 @@ public class JavaTerm {
 		}
 	}
 
-	private String _content;
-	private String _indent;
-	private JavaSourceProcessor _javaSourceProcessor =
+	private final String _content;
+	private final String _indent;
+	private final JavaSourceProcessor _javaSourceProcessor =
 		new JavaSourceProcessor();
-	private int _lineCount;
-	private String _name;
+	private final int _lineCount;
+	private final String _name;
 	private List<String> _parameterNames;
 	private List<String> _parameterTypes;
 	private String _returnType;

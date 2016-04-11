@@ -62,7 +62,7 @@ public class JSPImportsFormatter extends BaseImportsFormatter {
 
 		String newImports = sortAndGroupImports(imports);
 
-		content = StringUtil.replaceFirst(content, imports, newImports + "\n"); 
+		content = StringUtil.replaceFirst(content, imports, newImports + "\n");
 
 		return StringUtil.trimTrailing(content);
 	}

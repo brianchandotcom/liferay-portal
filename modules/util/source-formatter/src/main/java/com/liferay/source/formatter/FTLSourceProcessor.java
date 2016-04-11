@@ -235,13 +235,13 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
-	private Pattern _liferayVariablePattern = Pattern.compile(
+	private final Pattern _liferayVariablePattern = Pattern.compile(
 		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
-	private Pattern _liferayVariablesPattern = Pattern.compile(
+	private final Pattern _liferayVariablesPattern = Pattern.compile(
 		"(^\t*<#assign liferay_.*>\n)+", Pattern.MULTILINE);
-	private Pattern _multiParameterTagPattern = Pattern.compile(
+	private final Pattern _multiParameterTagPattern = Pattern.compile(
 		"\n(\t*)<@.+=.+=.+/>");
-	private Pattern _singleParameterTagPattern = Pattern.compile(
+	private final Pattern _singleParameterTagPattern = Pattern.compile(
 		"(<@[\\w\\.]+ \\w+)( )?=([^=]+?)/>");
 
 }

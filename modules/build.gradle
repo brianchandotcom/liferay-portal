@@ -84,6 +84,9 @@ gradle.beforeProject {
 				}
 			}
 		}
+		else if (FileUtil.exists(project, "build.xml")) {
+			ant.importBuild "build.xml"
+		}
 
 		if (System.getenv("JENKINS_HOME")) {
 			pluginManager.withPlugin("com.liferay.node") {

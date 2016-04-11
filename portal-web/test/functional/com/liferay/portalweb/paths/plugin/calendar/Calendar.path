@@ -555,6 +555,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_ALL_DAY</td>
+	<td>//div[contains(@class,'calendar-portlet-event')]/div[contains(@class,'scheduler-event-content') and contains(.,'${key_eventTitle}')]/../../div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_APPROVED</td>
 	<td>//div[@class='scheduler-event calendar-portlet-event-approved']/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>

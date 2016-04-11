@@ -222,9 +222,17 @@
 	<command name="selectSpecificEvent">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" />
+		<if>
+			<contains string="${eventTitle}" substring="All Day" />
+			<then>
+				<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY" value1="${eventTitle}" />
+			</then>
+			<else>
+				<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" />
 
-		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+				<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewAgenda">

@@ -54,9 +54,20 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
+		Element rootElement = document.getRootElement();
+
+		List<Element> tagElements = rootElement.elements("tag");
+
+		for (Element tagElement : tagElements) {
+			Element nameElement = tagElement.element("name");
+
+			checkOrder(
+				fileName, tagElement, "attribute", nameElement.getText(),
+				new TagElementComparator());
+		}
+
 		checkOrder(
-			fileName, document.getRootElement(), "tag", null,
-			new TagElementComparator());
+			fileName, rootElement, "tag", null, new TagElementComparator());
 
 		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}

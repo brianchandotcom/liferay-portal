@@ -166,6 +166,24 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="generate-gulp-user-config-json">
+		<attribute default="${app.server.type}" name="app.server.type" />
+		<attribute default="${app.server.@{app.server.type}.dir}" name="app.server.dir" />
+		<attribute default="user-config.json" name="file.name" />
+		<attribute default="portlets/@{portlet.name}/docroot/js/tests/util" name="file.path" />
+		<attribute default="${lp.plugins.dir}" name="plugins.dir" />
+		<attribute default="${project.dir}" name="portal.dir" />
+		<attribute name="portlet.name" />
+
+		<sequential>
+			<echo file="@{plugins.dir}/@{file.path}/@{file.name}"><![CDATA[{
+	"bundle": "@{app.server.dir}",
+	"source": "@{portal.dir}",
+	"deployDir": "@{app.server.dir}/webapps/ROOT"
+}]]></echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-jdbc-properties">
 		<attribute name="properties.file" />
 		<element name="post-action" optional="true" />

@@ -111,60 +111,22 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 		</c:choose>
 	</c:when>
 	<c:otherwise>
+		<div class="sidebar-header">
+			<h4><liferay-ui:message key="home" /></h4>
+		</div>
 
-		<%
-		long classPK = trashDisplayContext.getClassPK();
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
 
-		TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
+		<div class="sidebar-body">
+			<h5><liferay-ui:message key="num-of-items" /></h5>
 
-		TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
-		%>
-
-		<c:choose>
-			<c:when test="<%= trashRenderer != null %>">
-				<div class="sidebar-header">
-					<ul class="list-inline list-unstyled sidebar-header-actions">
-						<li>
-							<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
-						</li>
-					</ul>
-
-					<h4><%= trashRenderer.getTitle(locale) %></h4>
-				</div>
-
-				<aui:nav-bar>
-					<aui:nav cssClass="navbar-nav">
-						<aui:nav-item label="details" selected="<%= true %>" />
-					</aui:nav>
-				</aui:nav-bar>
-
-				<div class="sidebar-body">
-					<h5><liferay-ui:message key="num-of-items" /></h5>
-
-					<p>
-						<%= trashHandler.getTrashModelsCount(classPK) %>
-					</p>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="sidebar-header">
-					<h4><liferay-ui:message key="home" /></h4>
-				</div>
-
-				<aui:nav-bar>
-					<aui:nav cssClass="navbar-nav">
-						<aui:nav-item label="details" selected="<%= true %>" />
-					</aui:nav>
-				</aui:nav-bar>
-
-				<div class="sidebar-body">
-					<h5><liferay-ui:message key="num-of-items" /></h5>
-
-					<p>
-						<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
-					</p>
-				</div>
-			</c:otherwise>
-		</c:choose>
+			<p>
+				<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
+			</p>
+		</div>
 	</c:otherwise>
 </c:choose>

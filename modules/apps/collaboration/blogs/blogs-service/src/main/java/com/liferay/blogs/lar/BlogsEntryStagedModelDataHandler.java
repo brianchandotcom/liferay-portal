@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -120,7 +121,7 @@ public class BlogsEntryStagedModelDataHandler
 			Image smallImage = _imageLocalService.fetchImage(
 				entry.getSmallImageId());
 
-			if (smallImage != null) {
+			if ((smallImage != null) && (smallImage.getTextObj() != null)) {
 				String smallImagePath = ExportImportPathUtil.getModelPath(
 					entry,
 					smallImage.getImageId() + StringPool.PERIOD +
@@ -132,6 +133,21 @@ public class BlogsEntryStagedModelDataHandler
 
 				portletDataContext.addZipEntry(
 					smallImagePath, smallImage.getTextObj());
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Unable to export small image with id ");
+					sb.append(entry.getSmallImageId());
+					sb.append(" to blog entry ");
+					sb.append(entry.getEntryId());
+
+					_log.warn(sb.toString());
+				}
+
+				entry.setSmallImage(false);
+				entry.setSmallImageId(0);
 			}
 		}
 

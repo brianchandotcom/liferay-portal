@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
@@ -297,9 +299,6 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		if (article.isSmallImage()) {
-			Image smallImage = _imageLocalService.fetchImage(
-				article.getSmallImageId());
-
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
 					_journalArticleExportImportContentProcessor.
@@ -310,18 +309,39 @@ public class JournalArticleStagedModelDataHandler
 
 				article.setSmallImageURL(smallImageURL);
 			}
-			else if (smallImage != null) {
-				String smallImagePath = ExportImportPathUtil.getModelPath(
-					article,
-					smallImage.getImageId() + StringPool.PERIOD +
-						smallImage.getType());
+			else {
+				Image smallImage = _imageLocalService.fetchImage(
+					article.getSmallImageId());
 
-				articleElement.addAttribute("small-image-path", smallImagePath);
+				if ((smallImage != null) && (smallImage.getTextObj() != null)) {
+					String smallImagePath = ExportImportPathUtil.getModelPath(
+						article,
+						smallImage.getImageId() + StringPool.PERIOD +
+							smallImage.getType());
 
-				article.setSmallImageType(smallImage.getType());
+					articleElement.addAttribute(
+						"small-image-path", smallImagePath);
 
-				portletDataContext.addZipEntry(
-					smallImagePath, smallImage.getTextObj());
+					article.setSmallImageType(smallImage.getType());
+
+					portletDataContext.addZipEntry(
+						smallImagePath, smallImage.getTextObj());
+				}
+				else {
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("Unable to export small image with id ");
+						sb.append(article.getSmallImageId());
+						sb.append(" to article ");
+						sb.append(article.getArticleId());
+
+						_log.warn(sb.toString());
+					}
+
+					article.setSmallImage(false);
+					article.setSmallImageId(0);
+				}
 			}
 		}
 
@@ -956,6 +976,9 @@ public class JournalArticleStagedModelDataHandler
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleStagedModelDataHandler.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;

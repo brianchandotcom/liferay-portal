@@ -17,7 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1456,52 +1455,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return elementName.substring(0, pos);
 		}
-
-	}
-
-	private static class ElementComparator
-		extends NaturalOrderStringComparator {
-
-		public ElementComparator() {
-			this(_NAME_ATTRIBUTE_DEFAULT);
-		}
-
-		public ElementComparator(boolean importPackage) {
-			this(_NAME_ATTRIBUTE_DEFAULT, importPackage);
-		}
-
-		public ElementComparator(String nameAttribute) {
-			this(nameAttribute, false);
-		}
-
-		public ElementComparator(String nameAttribute, boolean importPackage) {
-			_nameAttribute = nameAttribute;
-			_importPackage = importPackage;
-		}
-
-		public int compare(Element element1, Element element2) {
-			String elementName1 = getElementName(element1);
-			String elementName2 = getElementName(element2);
-
-			if (_importPackage) {
-				return elementName1.compareTo(elementName2);
-			}
-
-			return super.compare(elementName1, elementName2);
-		}
-
-		protected String getElementName(Element element) {
-			return element.attributeValue(getNameAttribute());
-		}
-
-		protected String getNameAttribute() {
-			return _nameAttribute;
-		}
-
-		private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
-
-		private boolean _importPackage;
-		private String _nameAttribute;
 
 	}
 

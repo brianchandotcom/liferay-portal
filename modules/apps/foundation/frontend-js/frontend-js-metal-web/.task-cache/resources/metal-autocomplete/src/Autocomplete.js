@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete", ['exports', 'metal/src/metal', 'metal-debounce/src/debounce', 'metal-dom/src/all/dom', 'metal-promise/src/promise/Promise', 'metal-position/src/all/position', './AutocompleteBase', 'metal-soy/src/soy', 'metal-jquery-adapter/src/JQueryAdapter', './Autocomplete.soy', 'metal-list/src/List'], function (exports, _metal, _debounce, _dom, _Promise, _position, _AutocompleteBase2, _soy, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete", ['exports', 'metal/src/metal', 'metal-debounce/src/debounce', 'metal-dom/src/all/dom', 'metal-promise/src/promise/Promise', 'metal-position/src/all/position', './AutocompleteBase', 'metal-soy/src/Soy', './Autocomplete.soy', 'metal-jquery-adapter/src/JQueryAdapter', 'metal-list/src/List'], function (exports, _metal, _debounce, _dom, _Promise, _position, _AutocompleteBase2, _Soy, _Autocomplete, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -12,6 +12,10 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete", ['expo
 	var _dom2 = _interopRequireDefault(_dom);
 
 	var _AutocompleteBase3 = _interopRequireDefault(_AutocompleteBase2);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
+
+	var _Autocomplete2 = _interopRequireDefault(_Autocomplete);
 
 	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
@@ -97,7 +101,7 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete", ['expo
 		};
 
 		Autocomplete.prototype.getList = function getList() {
-			return this.components[this.id + '-list'];
+			return this.components.list;
 		};
 
 		Autocomplete.prototype.handleDocClick_ = function handleDocClick_() {
@@ -154,15 +158,14 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete", ['expo
 		return Autocomplete;
 	}(_AutocompleteBase3.default);
 
-	Autocomplete.prototype.registerMetalComponent && Autocomplete.prototype.registerMetalComponent(Autocomplete, 'Autocomplete')
-
+	_Soy2.default.register(Autocomplete, _Autocomplete2.default);
 
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	Autocomplete.ATTRS = {
+	Autocomplete.STATE = {
 		/**
    * Function that converts a given item to the format that should be used by
    * the autocomplete.
@@ -170,19 +173,18 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete", ['expo
    */
 		format: {
 			value: function value(item) {
-				return _metal2.default.isString(item) ? {
-					textPrimary: item
-				} : item;
+				if (_metal2.default.isString(item)) {
+					item = {
+						textPrimary: item
+					};
+				}
+				if (_metal2.default.isObject(item) && !item.text) {
+					item.text = item.textPrimary;
+				}
+				return item;
 			}
 		}
 	};
-
-	/**
-  * The class that will be used as this component's renderer.
-  * @type {!Function}
-  * @static
-  */
-	Autocomplete.RENDERER = _soy.SoyRenderer;
 
 	exports.default = Autocomplete;
 	_JQueryAdapter2.default.register('autocomplete', Autocomplete);

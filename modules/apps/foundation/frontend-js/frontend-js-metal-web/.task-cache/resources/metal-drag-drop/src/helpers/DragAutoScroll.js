@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll", ['exports', 'metal/src/metal', 'metal-attribute/src/Attribute', 'metal-position/src/all/position'], function (exports, _metal, _Attribute2, _position) {
+define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll", ['exports', 'metal/src/metal', 'metal-state/src/State', 'metal-position/src/all/position'], function (exports, _metal, _State2, _position) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll",
 
 	var _metal2 = _interopRequireDefault(_metal);
 
-	var _Attribute3 = _interopRequireDefault(_Attribute2);
+	var _State3 = _interopRequireDefault(_State2);
 
 	var _position2 = _interopRequireDefault(_position);
 
@@ -47,8 +47,8 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll",
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var DragAutoScroll = function (_Attribute) {
-		_inherits(DragAutoScroll, _Attribute);
+	var DragAutoScroll = function (_State) {
+		_inherits(DragAutoScroll, _State);
 
 		/**
    * @inheritDoc
@@ -57,7 +57,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll",
 		function DragAutoScroll(opt_config) {
 			_classCallCheck(this, DragAutoScroll);
 
-			var _this = _possibleConstructorReturn(this, _Attribute.call(this, opt_config));
+			var _this = _possibleConstructorReturn(this, _State.call(this, opt_config));
 
 			/**
     * The handler for the current call to `setTimeout`.
@@ -74,7 +74,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll",
 
 
 		DragAutoScroll.prototype.disposeInternal = function disposeInternal() {
-			_Attribute.prototype.disposeInternal.call(this);
+			_State.prototype.disposeInternal.call(this);
 			this.stop();
 		};
 
@@ -137,17 +137,14 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragAutoScroll",
 		};
 
 		return DragAutoScroll;
-	}(_Attribute3.default);
-
-	DragAutoScroll.prototype.registerMetalComponent && DragAutoScroll.prototype.registerMetalComponent(DragAutoScroll, 'DragAutoScroll')
-
+	}(_State3.default);
 
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	DragAutoScroll.ATTRS = {
+	DragAutoScroll.STATE = {
 		/**
    * The delay in ms before an element is scrolled automatically.
    * @type {number}

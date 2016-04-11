@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-events/src/events', './Modal.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _events, _Modal, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-events/src/events', './Modal.soy', 'metal-component/src/all/component', 'metal-soy/src/Soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _events, _Modal, _component, _Soy, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -10,6 +10,10 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 	var _dom2 = _interopRequireDefault(_dom);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
+
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
@@ -49,26 +53,18 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Modal = function (_ModalBase) {
-		_inherits(Modal, _ModalBase);
+	var Modal = function (_Component) {
+		_inherits(Modal, _Component);
 
-		/**
-   * @inheritDoc
-   */
-
-		function Modal(opt_config) {
+		function Modal() {
 			_classCallCheck(this, Modal);
 
-			var _this = _possibleConstructorReturn(this, _ModalBase.call(this, opt_config));
-
-			_this.eventHandler_ = new _events.EventHandler();
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
 
-		/**
-   * @inheritDoc
-   */
-
+		Modal.prototype.created = function created() {
+			this.eventHandler_ = new _events.EventHandler();
+		};
 
 		Modal.prototype.attached = function attached() {
 			this.autoFocus_(this.autoFocus);
@@ -84,14 +80,14 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 		};
 
 		Modal.prototype.detached = function detached() {
-			_ModalBase.prototype.detached.call(this);
+			_Component.prototype.detached.call(this);
 			this.eventHandler_.removeAllListeners();
 		};
 
 		Modal.prototype.disposeInternal = function disposeInternal() {
 			_dom2.default.exitDocument(this.overlayElement);
 			this.unrestrictFocus_();
-			_ModalBase.prototype.disposeInternal.call(this);
+			_Component.prototype.disposeInternal.call(this);
 		};
 
 		Modal.prototype.handleDocumentFocus_ = function handleDocumentFocus_(event) {
@@ -111,7 +107,9 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 		};
 
 		Modal.prototype.restrictFocus_ = function restrictFocus_() {
-			this.restrictFocusHandle_ = _dom2.default.on(document, 'focus', this.handleDocumentFocus_.bind(this), true);
+			if (!this.restrictFocusHandle_) {
+				this.restrictFocusHandle_ = _dom2.default.on(document, 'focus', this.handleDocumentFocus_.bind(this), true);
+			}
 		};
 
 		Modal.prototype.shiftFocusBack_ = function shiftFocusBack_() {
@@ -142,7 +140,7 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 			this.element.style.display = visible ? 'block' : '';
 			this.syncOverlay(this.overlay);
 			if (this.visible) {
-				this.lastFocusedElement_ = document.activeElement;
+				this.lastFocusedElement_ = this.lastFocusedElement_ || document.activeElement;
 				this.autoFocus_(this.autoFocus);
 				this.restrictFocus_();
 			} else {
@@ -154,6 +152,7 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 		Modal.prototype.unrestrictFocus_ = function unrestrictFocus_() {
 			if (this.restrictFocusHandle_) {
 				this.restrictFocusHandle_.removeListener();
+				this.restrictFocusHandle_ = null;
 			}
 		};
 
@@ -162,20 +161,9 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 		};
 
 		return Modal;
-	}(_Modal2.default);
+	}(_component2.default);
 
-	Modal.prototype.registerMetalComponent && Modal.prototype.registerMetalComponent(Modal, 'Modal')
-
-
-	/**
-  * Default modal elementClasses.
-  * @default modal
-  * @type {string}
-  * @static
-  */
-	Modal.ELEMENT_CLASSES = 'modal';
-
-	Modal.ATTRS = {
+	Modal.STATE = {
 		/**
    * A selector for the element that should be automatically focused when the modal
    * becomes visible, or `false` if no auto focus should happen. Defaults to the
@@ -252,6 +240,8 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal", ['exports', 'metal/s
 			value: 'dialog'
 		}
 	};
+
+	_Soy2.default.register(Modal, _Modal2.default);
 
 	exports.default = Modal;
 	_JQueryAdapter2.default.register('modal', Modal);

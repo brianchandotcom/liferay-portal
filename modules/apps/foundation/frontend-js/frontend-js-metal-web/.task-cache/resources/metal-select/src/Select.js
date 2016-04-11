@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Select.soy', 'metal-jquery-adapter/src/JQueryAdapter', 'metal-dropdown/src/Dropdown'], function (exports, _metal, _dom, _Select, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', 'metal-soy/src/Soy', './Select.soy', 'metal-jquery-adapter/src/JQueryAdapter', 'metal-dropdown/src/Dropdown'], function (exports, _metal, _dom, _component, _Soy, _Select, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -8,6 +8,10 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 	var _metal2 = _interopRequireDefault(_metal);
 
 	var _dom2 = _interopRequireDefault(_dom);
+
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _Select2 = _interopRequireDefault(_Select);
 
@@ -49,13 +53,13 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Select = function (_SelectBase) {
-		_inherits(Select, _SelectBase);
+	var Select = function (_Component) {
+		_inherits(Select, _Component);
 
 		function Select() {
 			_classCallCheck(this, Select);
 
-			return _possibleConstructorReturn(this, _SelectBase.apply(this, arguments));
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
 
 		Select.prototype.findItemIndex_ = function findItemIndex_(element) {
@@ -76,12 +80,12 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 		};
 
 		Select.prototype.getDropdown = function getDropdown() {
-			return this.components[this.id + '-dropdown'];
+			return this.components.dropdown;
 		};
 
-		Select.prototype.handleDropdownAttrsSynced_ = function handleDropdownAttrsSynced_(data) {
+		Select.prototype.handleDropdownStateSynced_ = function handleDropdownStateSynced_(data) {
 			if (this.openedWithKeyboard_) {
-				// This is done on `attrsSynced` because the items need to have already
+				// This is done on `stateSynced` because the items need to have already
 				// been made visible before we try focusing them.
 				this.focusIndex_(0);
 				this.openedWithKeyboard_ = false;
@@ -91,7 +95,7 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 		};
 
 		Select.prototype.handleItemClick_ = function handleItemClick_(event) {
-			this.selectedIndex = this.findItemIndex_(event.delegateTarget);
+			this.selectedIndex = this.findItemIndex_(event.currentTarget);
 			this.getDropdown().close();
 			event.preventDefault();
 		};
@@ -121,18 +125,23 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 			}
 		};
 
+		Select.prototype.setItems_ = function setItems_(items) {
+			return items.map(function (item) {
+				return _Soy2.default.toIncDom(item);
+			});
+		};
+
 		return Select;
-	}(_Select2.default);
+	}(_component2.default);
 
-	Select.prototype.registerMetalComponent && Select.prototype.registerMetalComponent(Select, 'Select')
-
+	_Soy2.default.register(Select, _Select2.default);
 
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	Select.ATTRS = {
+	Select.STATE = {
 		/**
    * The CSS class used by the select menu arrow.
    * @type {string}
@@ -161,14 +170,12 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 		},
 
 		/**
-   * A list representing the select dropdown items. Can be either already a list
-   * of objects specifying both name and value for each item, or just a list of
-   * names, in which case the values will be the indexes where the names show up
-   * on the list.
-   * @type {!Array<string>|!Array<!{name: string, value: string}>}
+   * A list representing the select dropdown items.
+   * @type {!Array<string>}
    * @default []
    */
 		items: {
+			setter: 'setItems_',
 			validator: function validator(val) {
 				return val instanceof Array;
 			},
@@ -183,6 +190,9 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
    * @type {string}
    */
 		label: {
+			setter: function setter(label) {
+				return _Soy2.default.toIncDom(label);
+			},
 			validator: _metal2.default.isString
 		},
 
@@ -194,6 +204,16 @@ define("frontend-js-metal-web@1.0.6/metal-select/src/Select", ['exports', 'metal
 			validator: _metal2.default.isNumber,
 			valueFn: function valueFn() {
 				return this.label || !this.items.length ? -1 : 0;
+			}
+		},
+
+		/**
+   * A list representing the select dropdown values.
+   * @type {Array<string>=}
+   */
+		values: {
+			validator: function validator(val) {
+				return val instanceof Array;
 			}
 		}
 	};

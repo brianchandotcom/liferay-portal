@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-position/src/all/position', 'metal-component/src/all/component', 'metal-events/src/events', 'metal-soy/src/soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _position, _component, _events, _soy, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-position/src/all/position', 'metal-component/src/all/component', 'metal-events/src/events', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _position, _component, _events, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -52,27 +52,19 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
 	var TooltipBase = function (_Component) {
 		_inherits(TooltipBase, _Component);
 
-		/**
-   * @inheritDoc
-   */
-
-		function TooltipBase(opt_config) {
+		function TooltipBase() {
 			_classCallCheck(this, TooltipBase);
 
-			var _this = _possibleConstructorReturn(this, _Component.call(this, opt_config));
-
-			_this.eventHandler_ = new _events.EventHandler();
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
-
-		/**
-   * @inheritDoc
-   */
-
 
 		TooltipBase.prototype.attached = function attached() {
 			this.align();
 			this.syncTriggerEvents(this.triggerEvents);
+		};
+
+		TooltipBase.prototype.created = function created() {
+			this.eventHandler_ = new _events.EventHandler();
 		};
 
 		TooltipBase.prototype.detached = function detached() {
@@ -144,14 +136,8 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
 				if (dataTitle) {
 					this.title = dataTitle;
 				}
-				if (this.visible) {
-					alignElement.setAttribute('aria-describedby', this.id);
-				} else {
-					alignElement.removeAttribute('aria-describedby');
-				}
 				if (this.inDocument) {
-					var finalPosition = TooltipBase.Align.align(this.element, alignElement, this.position);
-					this.updatePositionCSS(finalPosition);
+					this.alignedPosition = TooltipBase.Align.align(this.element, alignElement, this.position);
 				}
 			}
 		};
@@ -187,16 +173,8 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
 			this.align();
 		};
 
-		TooltipBase.prototype.updatePositionCSS = function updatePositionCSS(position) {
-			_dom2.default.removeClasses(this.element, TooltipBase.PositionClasses.join(' '));
-			_dom2.default.addClasses(this.element, TooltipBase.PositionToClass[position]);
-		};
-
 		return TooltipBase;
 	}(_component2.default);
-
-	TooltipBase.prototype.registerMetalComponent && TooltipBase.prototype.registerMetalComponent(TooltipBase, 'TooltipBase')
-
 
 	/**
   * @inheritDoc
@@ -206,11 +184,19 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
 	TooltipBase.Align = _position.Align;
 
 	/**
-  * TooltipBase attrbutes definition.
+  * TooltipBase state definition.
   * @type {!Object}
   * @static
   */
-	TooltipBase.ATTRS = {
+	TooltipBase.STATE = {
+		/**
+   * The current position of the tooltip after being aligned via `Align.align`.
+   * @type {number}
+   */
+		alignedPosition: {
+			validator: TooltipBase.Align.isValidPosition
+		},
+
 		/**
    * Element to align tooltip with.
    * @type {Element}
@@ -251,7 +237,7 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
 		/**
    * The position to try alignment. If not possible the best position will be
    * found.
-   * @type {Align.Top|Align.Right|Align.Bottom|Align.Left}
+   * @type {number}
    * @default Align.Bottom
    */
 		position: {
@@ -263,7 +249,9 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
    * Content to be placed inside tooltip.
    * @type {string}
    */
-		title: {}
+		title: {
+			isHtml: true
+		}
 	};
 
 	/**
@@ -272,15 +260,6 @@ define("frontend-js-metal-web@1.0.6/metal-tooltip/src/TooltipBase", ['exports', 
   * @static
   */
 	TooltipBase.PositionClasses = ['top', 'right', 'bottom', 'left'];
-
-	/**
-  * A map from each `Align` position to the appropriate tooltip class.
-  * @type {!Array}
-  * @static
-  */
-	TooltipBase.PositionToClass = ['top', 'top', 'right', 'bottom', 'bottom', 'bottom', 'left', 'top'];
-
-	TooltipBase.RENDERER = _soy.SoyRenderer;
 
 	exports.default = TooltipBase;
 	_JQueryAdapter2.default.register('tooltipBase', TooltipBase);

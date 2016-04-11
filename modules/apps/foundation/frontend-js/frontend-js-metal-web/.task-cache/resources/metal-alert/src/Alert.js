@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Alert.soy', 'metal-anim/src/Anim', 'metal-events/src/events', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _Alert, _Anim, _events, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-anim/src/Anim', 'metal-component/src/all/component', 'metal-events/src/events', 'metal-soy/src/Soy', './Alert.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _Anim, _component, _events, _Soy, _Alert, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,9 +7,13 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/s
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _Alert2 = _interopRequireDefault(_Alert);
-
 	var _Anim2 = _interopRequireDefault(_Anim);
+
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
+
+	var _Alert2 = _interopRequireDefault(_Alert);
 
 	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
@@ -49,25 +53,21 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/s
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Alert = function (_AlertBase) {
-		_inherits(Alert, _AlertBase);
+	var Alert = function (_Component) {
+		_inherits(Alert, _Component);
 
-		function Alert(opt_config) {
+		function Alert() {
 			_classCallCheck(this, Alert);
 
-			var _this = _possibleConstructorReturn(this, _AlertBase.call(this, opt_config));
-
-			_this.eventHandler_ = new _events.EventHandler();
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
 
-		/**
-   * @inheritDoc
-   */
-
+		Alert.prototype.created = function created() {
+			this.eventHandler_ = new _events.EventHandler();
+		};
 
 		Alert.prototype.detached = function detached() {
-			_AlertBase.prototype.detached.call(this);
+			_Component.prototype.detached.call(this);
 			this.eventHandler_.removeAllListeners();
 			clearTimeout(this.delay_);
 		};
@@ -89,8 +89,18 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/s
 			this.visible = false;
 		};
 
+		Alert.prototype.hideCompletely_ = function hideCompletely_() {
+			if (!this.isDisposed() && !this.visible) {
+				_Component.prototype.syncVisible.call(this, false);
+			}
+		};
+
 		Alert.prototype.toggle = function toggle() {
 			this.visible = !this.visible;
+		};
+
+		Alert.prototype.show = function show() {
+			this.visible = true;
 		};
 
 		Alert.prototype.syncDismissible = function syncDismissible(dismissible) {
@@ -98,20 +108,6 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/s
 				this.eventHandler_.add(_dom2.default.on(document, 'click', this.handleDocClick_.bind(this)));
 			} else {
 				this.eventHandler_.removeAllListeners();
-			}
-
-			_dom2.default[dismissible ? 'addClasses' : 'removeClasses'](this.element, 'alert-dismissible');
-		};
-
-		Alert.prototype.syncVisible = function syncVisible(visible) {
-			_dom2.default.removeClasses(this.element, this.animClasses[visible ? 'hide' : 'show']);
-			_dom2.default.addClasses(this.element, this.animClasses[visible ? 'show' : 'hide']);
-			// Some browsers do not fire transitionend events when running in background
-			// tab, see https://bugzilla.mozilla.org/show_bug.cgi?id=683696.
-			_Anim2.default.emulateEnd(this.element);
-
-			if (visible && _metal.core.isNumber(this.hideDelay)) {
-				this.syncHideDelay(this.hideDelay);
 			}
 		};
 
@@ -122,36 +118,56 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/s
 			}
 		};
 
-		Alert.prototype.syncSpinnerDone = function syncSpinnerDone(spinnerDone) {
-			if (this.spinner) {
-				var spinnerElement = this.element.querySelector('.alert-spinner');
-				_dom2.default.removeClasses(spinnerElement, 'alert-spinner-done');
-				if (spinnerDone) {
-					_dom2.default.addClasses(spinnerElement, 'alert-spinner-done');
+		Alert.prototype.syncVisible = function syncVisible(visible, prevVisible) {
+			var _this2 = this;
+
+			var shouldAsync = false;
+			if (!visible) {
+				_dom2.default.once(this.element, 'animationend', this.hideCompletely_.bind(this));
+				_dom2.default.once(this.element, 'transitionend', this.hideCompletely_.bind(this));
+			} else if (_metal.core.isDef(prevVisible)) {
+				shouldAsync = true;
+				_Component.prototype.syncVisible.call(this, true);
+			}
+
+			var showOrHide = function showOrHide() {
+				if (_this2.isDisposed()) {
+					return;
 				}
+
+				_dom2.default.removeClasses(_this2.element, _this2.animClasses[visible ? 'hide' : 'show']);
+				_dom2.default.addClasses(_this2.element, _this2.animClasses[visible ? 'show' : 'hide']);
+
+				// Some browsers do not fire transitionend events when running in background
+				// tab, see https://bugzilla.mozilla.org/show_bug.cgi?id=683696.
+				_Anim2.default.emulateEnd(_this2.element);
+
+				if (visible && _metal.core.isNumber(_this2.hideDelay)) {
+					_this2.syncHideDelay(_this2.hideDelay);
+				}
+			};
+
+			if (shouldAsync) {
+				// We need to start the animation asynchronously because of the possible
+				// previous call to `super.syncVisible`, which doesn't allow the show
+				// animation to work as expected.
+				setTimeout(showOrHide, 0);
+			} else {
+				showOrHide();
 			}
 		};
 
 		return Alert;
-	}(_Alert2.default);
+	}(_component2.default);
 
-	Alert.prototype.registerMetalComponent && Alert.prototype.registerMetalComponent(Alert, 'Alert')
-
-
-	/**
-  * Default alert elementClasses.
-  * @default alert
-  * @type {string}
-  * @static
-  */
-	Alert.ELEMENT_CLASSES = 'alert';
+	_Soy2.default.register(Alert, _Alert2.default);
 
 	/**
-  * Alert attributes definition.
+  * Alert state definition.
   * @type {!Object}
   * @static
   */
-	Alert.ATTRS = {
+	Alert.STATE = {
 		/**
    * The CSS classes that should be added to the alert when being shown/hidden.
    * @type {!Object}
@@ -169,7 +185,7 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert", ['exports', 'metal/s
    * @type {string}
    */
 		body: {
-			value: ''
+			isHtml: true
 		},
 
 		/**

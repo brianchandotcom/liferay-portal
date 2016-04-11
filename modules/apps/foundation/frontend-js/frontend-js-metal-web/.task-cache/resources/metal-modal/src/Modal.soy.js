@@ -1,11 +1,14 @@
-define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.templates = exports.Modal = undefined;
 
-  var _component2 = _interopRequireDefault(_component);
+  var _Component3 = _interopRequireDefault(_Component2);
+
+  var _Soy2 = _interopRequireDefault(_Soy);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,78 +46,95 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _soy.SoyTemplates.get();
-  // This file was automatically generated from Modal.soy.
-  // Please don't edit this file by hand.
+  var templates;
+  goog.loadModule(function (exports) {
 
-  /**
-   * @fileoverview Templates in namespace Templates.Modal.
-   */
+    // This file was automatically generated from Modal.soy.
+    // Please don't edit this file by hand.
 
-  if (typeof Templates.Modal == 'undefined') {
-    Templates.Modal = {};
-  }
+    /**
+     * @fileoverview Templates in namespace Modal.
+     * @public
+     */
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Modal.render = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="modal component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '" role="' + soy.$$escapeHtmlAttribute(opt_data.role ? opt_data.role : 'dialog') + '" aria-labelledby="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-header"><div class="modal-dialog" tabindex="0"><div class="modal-content">' + Templates.Modal.header(opt_data, null, opt_ijData) + Templates.Modal.body(opt_data, null, opt_ijData) + Templates.Modal.footer(opt_data, null, opt_ijData) + '</div></div></div>');
-  };
-  if (goog.DEBUG) {
-    Templates.Modal.render.soyTemplateName = 'Templates.Modal.render';
-  }
+    goog.module('Modal.incrementaldom');
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Modal.body = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<section id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-body" class="modal-body">' + (opt_data.body ? soy.$$escapeHtml(opt_data.body) : '') + '</section>');
-  };
-  if (goog.DEBUG) {
-    Templates.Modal.body.soyTemplateName = 'Templates.Modal.body';
-  }
+    var soy = goog.require('soy');
+    var soydata = goog.require('soydata');
+    /** @suppress {extraRequire} */
+    goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('goog.i18n.bidi');
+    var IncrementalDom = goog.require('incrementaldom');
+    var ie_open = IncrementalDom.elementOpen;
+    var ie_close = IncrementalDom.elementClose;
+    var ie_void = IncrementalDom.elementVoid;
+    var ie_open_start = IncrementalDom.elementOpenStart;
+    var ie_open_end = IncrementalDom.elementOpenEnd;
+    var itext = IncrementalDom.text;
+    var iattr = IncrementalDom.attr;
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Modal.footer = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<footer id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-footer" class="modal-footer">' + (opt_data.footer ? soy.$$escapeHtml(opt_data.footer) : '') + '</footer>');
-  };
-  if (goog.DEBUG) {
-    Templates.Modal.footer.soyTemplateName = 'Templates.Modal.footer';
-  }
+    /**
+     * @param {{
+     *    body: (?soydata.SanitizedHtml|string|undefined),
+     *    elementClasses: (null|string|undefined),
+     *    footer: (?soydata.SanitizedHtml|string|undefined),
+     *    header: (?soydata.SanitizedHtml|string|undefined),
+     *    role: (null|string|undefined)
+     * }} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {void}
+     * @suppress {checkTypes}
+     */
+    function $render(opt_data, opt_ignored, opt_ijData) {
+      opt_data = opt_data || {};
+      soy.asserts.assertType(opt_data.body == null || opt_data.body instanceof Function || opt_data.body instanceof soydata.UnsanitizedText || goog.isString(opt_data.body), 'body', opt_data.body, '?soydata.SanitizedHtml|string|undefined');
+      var body = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.body;
+      soy.asserts.assertType(opt_data.elementClasses == null || opt_data.elementClasses instanceof goog.soy.data.SanitizedContent || goog.isString(opt_data.elementClasses), 'elementClasses', opt_data.elementClasses, 'null|string|undefined');
+      var elementClasses = /** @type {null|string|undefined} */opt_data.elementClasses;
+      soy.asserts.assertType(opt_data.footer == null || opt_data.footer instanceof Function || opt_data.footer instanceof soydata.UnsanitizedText || goog.isString(opt_data.footer), 'footer', opt_data.footer, '?soydata.SanitizedHtml|string|undefined');
+      var footer = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.footer;
+      soy.asserts.assertType(opt_data.header == null || opt_data.header instanceof Function || opt_data.header instanceof soydata.UnsanitizedText || goog.isString(opt_data.header), 'header', opt_data.header, '?soydata.SanitizedHtml|string|undefined');
+      var header = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.header;
+      soy.asserts.assertType(opt_data.role == null || opt_data.role instanceof goog.soy.data.SanitizedContent || goog.isString(opt_data.role), 'role', opt_data.role, 'null|string|undefined');
+      var role = /** @type {null|string|undefined} */opt_data.role;
+      ie_open('div', null, null, 'class', 'modal' + (elementClasses ? ' ' + elementClasses : ''), 'role', role ? role : 'dialog');
+      ie_open('div', null, null, 'class', 'modal-dialog', 'tabindex', '0');
+      ie_open('div', null, null, 'class', 'modal-content');
+      ie_open('header', null, null, 'class', 'modal-header');
+      if (header) {
+        ie_open('button', null, null, 'type', 'button', 'class', 'close', 'data-onclick', 'hide', 'aria-label', 'Close');
+        ie_open('span', null, null, 'aria-hidden', 'true');
+        itext('×');
+        ie_close('span');
+        ie_close('button');
+        header();
+      }
+      ie_close('header');
+      ie_open('section', null, null, 'class', 'modal-body');
+      if (body) {
+        body();
+      }
+      ie_close('section');
+      ie_open('footer', null, null, 'class', 'modal-footer');
+      if (footer) {
+        footer();
+      }
+      ie_close('footer');
+      ie_close('div');
+      ie_close('div');
+      ie_close('div');
+    }
+    exports.render = $render;
+    if (goog.DEBUG) {
+      $render.soyTemplateName = 'Modal.render';
+    }
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Modal.header = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<header id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-header" class="modal-header">' + (opt_data.header ? '<button type="button" class="close" data-onclick="hide" aria-label="Close"><span aria-hidden="true">×</span></button>' + soy.$$escapeHtml(opt_data.header) : '') + '</header>');
-  };
-  if (goog.DEBUG) {
-    Templates.Modal.header.soyTemplateName = 'Templates.Modal.header';
-  }
-
-  Templates.Modal.render.params = ["id", "role"];
-  Templates.Modal.body.params = ["id", "body"];
-  Templates.Modal.footer.params = ["footer", "id"];
-  Templates.Modal.header.params = ["header", "id"];
+    exports.render.params = ["body", "elementClasses", "footer", "header", "role"];
+    exports.templates = templates = exports;
+    return exports;
+  });
 
   var Modal = function (_Component) {
     _inherits(Modal, _Component);
@@ -126,12 +146,11 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
     }
 
     return Modal;
-  }(_component2.default);
+  }(_Component3.default);
 
-  Modal.prototype.registerMetalComponent && Modal.prototype.registerMetalComponent(Modal, 'Modal')
-
-  Modal.RENDERER = _soy.SoyRenderer;
-  _soy.SoyAop.registerTemplates('Modal');
-  exports.default = Modal;
+  _Soy2.default.register(Modal, templates);
+  exports.default = templates;
+  exports.Modal = Modal;
+  exports.templates = templates;
 });
 //# sourceMappingURL=Modal.soy.js.map

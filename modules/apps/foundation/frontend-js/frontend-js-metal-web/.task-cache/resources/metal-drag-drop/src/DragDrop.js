@@ -170,15 +170,12 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/DragDrop", ['exports', '
 		return DragDrop;
 	}(_Drag3.default);
 
-	DragDrop.prototype.registerMetalComponent && DragDrop.prototype.registerMetalComponent(DragDrop, 'DragDrop')
-
-
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	DragDrop.ATTRS = {
+	DragDrop.STATE = {
 		/**
    * The "aria-dropeffect" value to be set for all targets. If not set,
    * this html attribute will have to be set manually on the targets.

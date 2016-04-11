@@ -1,40 +1,60 @@
-{namespace Templates.Select}
+{namespace Select}
 
 /**
- * This renders the main element.
  * @param? arrowClass
- * @param buttonClass
+ * @param? buttonClass
  * @param? elementClasses
+ * @param? handleDropdownStateSynced_
+ * @param? handleItemClick_
  * @param? hiddenInputName
- * @param id
  * @param items
- * @param label
+ * @param? values
  * @param? selectedIndex
- * @skipUpdates elementClasses
  */
 {template .render}
-	<div id="{$id}" class="select component{$elementClasses ? ' ' + $elementClasses : ''}" data-onkeydown="handleKeyDown_">
+	{@param? label: html}
+	<div class="select{$elementClasses ? ' ' + $elementClasses : ''}" data-onkeydown="handleKeyDown_">
 		{let $currSelectedIndex: isNonnull($selectedIndex) ? $selectedIndex : ($label or (length($items) == 0) ? -1 : 0) /}
 		<input
 			type="hidden"
 			name="{$hiddenInputName ? $hiddenInputName : ''}"
-			value="{$currSelectedIndex == -1 ? '' : $items[$currSelectedIndex]}"
-		/>
-		{call Templates.Dropdown.render}
+			value="{$currSelectedIndex == -1 ? '' : $values ? $values[$currSelectedIndex] : ''}"
+		>
+		{call Dropdown.render}
 			{param body kind="html"}
 				{foreach $item in $items}
-					<li data-onclick="{$id}:handleItemClick_" class="select-option{$currSelectedIndex == index($item) ? ' selected' : ''}">
-						<a href="javascript:;">{$item}</a>
+					<li data-onclick="{$handleItemClick_ ?: ''}" class="select-option{$currSelectedIndex == index($item) ? ' selected' : ''}">
+						<a href="javascript:;">
+							{call .renderAsHtml_}
+								{param value: $item /}
+							{/call}
+						</a>
 					</li>
 				{/foreach}
 			{/param}
-			{param events: ['attrsSynced': $id + ':handleDropdownAttrsSynced_'] /}
+			{param events: ['stateSynced': $handleDropdownStateSynced_] /}
 			{param header kind="html"}
-				<button class="{$buttonClass} dropdown-select" type="button" data-onclick="toggle">
-					{$currSelectedIndex == -1 ? $label : $items[$currSelectedIndex]} <span class="{$arrowClass ? $arrowClass : 'caret'}"></span>
+				<button class="{$buttonClass ? $buttonClass : ''} dropdown-select" type="button" data-onclick="toggle">
+					{if $currSelectedIndex == -1}
+						{if $label}
+							{$label}
+						{/if}
+					{else}
+						{call .renderAsHtml_}
+							{param value: $items[$currSelectedIndex] /}
+						{/call}
+					{/if}
+					{sp}<span class="{$arrowClass ? $arrowClass : 'caret'}"></span>
 				</button>
 			{/param}
-			{param id: $id + '-dropdown' /}
+			{param key: 'dropdown' /}
 		{/call}
 	</div>
+{/template}
+
+/**
+ */
+{template .renderAsHtml_}
+	{@param value: html}
+	{$value}
 {/template}

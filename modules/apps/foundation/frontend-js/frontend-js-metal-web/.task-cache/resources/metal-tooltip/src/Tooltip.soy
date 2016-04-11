@@ -1,27 +1,22 @@
-{namespace Templates.Tooltip}
+{namespace Tooltip}
 
 /**
  * This renders the main element.
+ * @param? alignedPosition
  * @param? elementClasses
- * @param id
  * @param? position
- * @skipUpdates elementClasses position
  */
 {template .render}
-	{let $positionClasses: ['top', 'right', 'bottom', 'left'] /}
-	{let $positionClass: isNonnull($position) ? $positionClasses[$position] : 'bottom' /}
-	<div id="{$id}" class="tooltip component {$positionClass}{$elementClasses ? ' ' + $elementClasses : ''}" role="tooltip">
+	{@param? title: html}
+	{let $positionClasses: ['top', 'top', 'right', 'bottom', 'bottom', 'bottom', 'left', 'top'] /}
+	{let $currentPosition: isNonnull($alignedPosition) ? $alignedPosition : $position /}
+	{let $positionClass: isNonnull($currentPosition) ? $positionClasses[$currentPosition] : 'bottom' /}
+	<div class="tooltip {$positionClass}{$elementClasses ? ' ' + $elementClasses : ''}" role="tooltip">
 		<div class="tooltip-arrow"></div>
-		{call .inner data="all" /}
+		<section class="tooltip-inner">
+			{if $title}
+				{$title}
+			{/if}
+		</section>
 	</div>
-{/template}
-
-/**
- * @param? title
- * @param id
- */
-{template .inner}
-	<section id="{$id}-inner" class="tooltip-inner">
-		{$title ? $title : ''}
-	</section>
 {/template}

@@ -1,29 +1,28 @@
-{namespace Templates.Dropdown}
+{namespace Dropdown}
 
 /**
+ * @param? alignedPosition
+ * @param? classMap
  * @param? elementClasses
  * @param? expanded
- * @param header
- * @param id
- * @skipUpdates elementClasses expanded
+ * @param? position
+ * @param? positionClassOnMenu
  */
 {template .render}
-	<div id="{$id}" class="dropdown component{$elementClasses ? ' ' + $elementClasses : ''}{$expanded ? ' open' : ''}">
+	{@param? body: html}
+	{@param? header: html}
+
+	{let $classes: $classMap ? $classMap : ['dropup', 'dropup', 'dropright', 'dropdown', 'dropdown', 'dropdown', 'dropleft', 'dropup'] /}
+	{let $currentPosition: isNonnull($alignedPosition) ? $alignedPosition : $position /}
+	{let $positionClass: isNonnull($currentPosition) ? $classes[$currentPosition] : 'dropdown' /}
+	<div class="{$positionClassOnMenu ? 'dropdown' : $positionClass}{$elementClasses ? ' ' + $elementClasses : ''}{$expanded ? ' open' : ''}">
 		{if $header}
 			{$header}
 		{/if}
-		{call .body data="all" /}
+		<ul class="dropdown-menu{$positionClassOnMenu ? ' ' + $positionClass : ''}">
+			{if $body}
+				{$body}
+			{/if}
+		</ul>
 	</div>
-{/template}
-
-/**
- * @param body
- * @param id
- */
-{template .body}
-	<ul id="{$id}-body" class="dropdown-menu">
-		{if $body}
-			{$body}
-		{/if}
-	</ul>
 {/template}

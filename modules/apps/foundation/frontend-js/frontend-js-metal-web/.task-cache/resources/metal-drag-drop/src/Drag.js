@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-attribute/src/Attribute', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal-events/src/events', 'metal-position/src/all/position'], function (exports, _metal, _dom, _Attribute2, _DragAutoScroll, _DragScrollDelta, _DragShim, _events, _position) {
+define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './helpers/DragAutoScroll', './helpers/DragScrollDelta', './helpers/DragShim', 'metal-events/src/events', 'metal-position/src/all/position', 'metal-state/src/State'], function (exports, _metal, _dom, _DragAutoScroll, _DragScrollDelta, _DragShim, _events, _position, _State2) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,8 +7,6 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 
 	var _dom2 = _interopRequireDefault(_dom);
 
-	var _Attribute3 = _interopRequireDefault(_Attribute2);
-
 	var _DragAutoScroll2 = _interopRequireDefault(_DragAutoScroll);
 
 	var _DragScrollDelta2 = _interopRequireDefault(_DragScrollDelta);
@@ -16,6 +14,8 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 	var _DragShim2 = _interopRequireDefault(_DragShim);
 
 	var _position2 = _interopRequireDefault(_position);
+
+	var _State3 = _interopRequireDefault(_State2);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -53,8 +53,8 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Drag = function (_Attribute) {
-		_inherits(Drag, _Attribute);
+	var Drag = function (_State) {
+		_inherits(Drag, _State);
 
 		/**
    * @inheritDoc
@@ -63,7 +63,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 		function Drag(opt_config) {
 			_classCallCheck(this, Drag);
 
-			var _this = _possibleConstructorReturn(this, _Attribute.call(this, opt_config));
+			var _this = _possibleConstructorReturn(this, _State.call(this, opt_config));
 
 			/**
     * The drag placeholder that is active at the moment.
@@ -310,7 +310,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 			this.dragScrollDelta_ = null;
 			this.sourceHandler_.removeAllListeners();
 			this.sourceHandler_ = null;
-			_Attribute.prototype.disposeInternal.call(this);
+			_State.prototype.disposeInternal.call(this);
 		};
 
 		Drag.prototype.getActiveDrag = function getActiveDrag() {
@@ -466,6 +466,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 			this.createActiveDragPlaceholder_();
 			_dom2.default.addClasses(this.activeDragPlaceholder_, this.draggingClass);
 			this.activeDragPlaceholder_.setAttribute('aria-grabbed', 'true');
+			this.emit(Drag.Events.START);
 		};
 
 		Drag.prototype.toElements_ = function toElements_(elementOrSelector) {
@@ -521,17 +522,14 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 		};
 
 		return Drag;
-	}(_Attribute3.default);
-
-	Drag.prototype.registerMetalComponent && Drag.prototype.registerMetalComponent(Drag, 'Drag')
-
+	}(_State3.default);
 
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	Drag.ATTRS = {
+	Drag.STATE = {
 		/**
    * Configuration object for the `DragAutoScroll` instance that will be used for
    * automatically scrolling the elements in `scrollContainers` during drag when
@@ -698,11 +696,12 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
   */
 	Drag.Events = {
 		DRAG: 'drag',
-		END: 'end'
+		END: 'end',
+		START: 'start'
 	};
 
 	/**
-  * Holds the values that can be passed to the `dragPlaceholder` attribute.
+  * Holds the values that can be passed to the `dragPlaceholder` state key.
   * @type {!Object}
   * @static
   */

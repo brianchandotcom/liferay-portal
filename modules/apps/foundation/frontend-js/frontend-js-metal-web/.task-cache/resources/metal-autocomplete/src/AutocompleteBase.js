@@ -54,24 +54,16 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/AutocompleteBase", ['
 	var AutocompleteBase = function (_Component) {
 		_inherits(AutocompleteBase, _Component);
 
-		/**
-   * @inheritDoc
-   */
-
-		function AutocompleteBase(opt_config) {
+		function AutocompleteBase() {
 			_classCallCheck(this, AutocompleteBase);
 
-			var _this = _possibleConstructorReturn(this, _Component.call(this, opt_config));
-
-			_this.eventHandler_ = new _events.EventHandler();
-			_this.on('select', _this.select);
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
 
-		/**
-   * @inheritDoc
-   */
-
+		AutocompleteBase.prototype.created = function created() {
+			this.eventHandler_ = new _events.EventHandler();
+			this.on('select', this.select);
+		};
 
 		AutocompleteBase.prototype.attached = function attached() {
 			if (this.inputElement) {
@@ -122,15 +114,12 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/AutocompleteBase", ['
 		return AutocompleteBase;
 	}(_component2.default);
 
-	AutocompleteBase.prototype.registerMetalComponent && AutocompleteBase.prototype.registerMetalComponent(AutocompleteBase, 'AutocompleteBase')
-
-
 	/**
-  * AutocompleteBase attributes definition.
+  * AutocompleteBase state definition.
   * @type {!Object}
   * @static
   */
-	AutocompleteBase.ATTRS = {
+	AutocompleteBase.STATE = {
 		/**
    * Function or array, which have to return the results from the query.
    * If function, it should return an `array` or a `Promise`. In case of
@@ -171,7 +160,7 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/AutocompleteBase", ['
    */
 		select: {
 			value: function value(selectedValue) {
-				this.inputElement.value = selectedValue.textPrimary;
+				this.inputElement.value = selectedValue.text;
 				this.inputElement.focus();
 			},
 			validator: _metal2.default.isFunction

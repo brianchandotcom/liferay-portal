@@ -1,11 +1,14 @@
-define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.templates = exports.Autocomplete = undefined;
 
-  var _component2 = _interopRequireDefault(_component);
+  var _Component3 = _interopRequireDefault(_Component2);
+
+  var _Soy2 = _interopRequireDefault(_Soy);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,33 +46,60 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete.soy", ['
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _soy.SoyTemplates.get();
-  // This file was automatically generated from Autocomplete.soy.
-  // Please don't edit this file by hand.
+  var templates;
+  goog.loadModule(function (exports) {
 
-  /**
-   * @fileoverview Templates in namespace Templates.Autocomplete.
-   */
+    // This file was automatically generated from Autocomplete.soy.
+    // Please don't edit this file by hand.
 
-  if (typeof Templates.Autocomplete == 'undefined') {
-    Templates.Autocomplete = {};
-  }
+    /**
+     * @fileoverview Templates in namespace Autocomplete.
+     * @public
+     */
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Autocomplete.render = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="autocomplete autocomplete-list component ' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '">' + soy.$$escapeHtml(Templates.List.render({ events: { itemSelected: opt_data.id + ':onListItemSelected_' }, id: opt_data.id + '-list' }, null, opt_ijData)) + '</div>');
-  };
-  if (goog.DEBUG) {
-    Templates.Autocomplete.render.soyTemplateName = 'Templates.Autocomplete.render';
-  }
+    goog.module('Autocomplete.incrementaldom');
 
-  Templates.Autocomplete.render.params = ["id"];
+    /** @suppress {extraRequire} */
+    var soy = goog.require('soy');
+    /** @suppress {extraRequire} */
+    var soydata = goog.require('soydata');
+    /** @suppress {extraRequire} */
+    goog.require('goog.i18n.bidi');
+    /** @suppress {extraRequire} */
+    goog.require('goog.asserts');
+    var IncrementalDom = goog.require('incrementaldom');
+    var ie_open = IncrementalDom.elementOpen;
+    var ie_close = IncrementalDom.elementClose;
+    var ie_void = IncrementalDom.elementVoid;
+    var ie_open_start = IncrementalDom.elementOpenStart;
+    var ie_open_end = IncrementalDom.elementOpenEnd;
+    var itext = IncrementalDom.text;
+    var iattr = IncrementalDom.attr;
+
+    var $templateAlias1 = _Soy2.default.getTemplate('List.incrementaldom', 'render');
+
+    /**
+     * @param {Object<string, *>=} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {void}
+     * @suppress {checkTypes}
+     */
+    function $render(opt_data, opt_ignored, opt_ijData) {
+      opt_data = opt_data || {};
+      ie_open('div', null, null, 'class', 'autocomplete autocomplete-list component ' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''));
+      $templateAlias1({ events: { itemSelected: opt_data.onListItemSelected_ }, key: 'list' }, null, opt_ijData);
+      ie_close('div');
+    }
+    exports.render = $render;
+    if (goog.DEBUG) {
+      $render.soyTemplateName = 'Autocomplete.render';
+    }
+
+    exports.render.params = ["elementClasses", "onListItemSelected_"];
+    exports.templates = templates = exports;
+    return exports;
+  });
 
   var Autocomplete = function (_Component) {
     _inherits(Autocomplete, _Component);
@@ -81,12 +111,11 @@ define("frontend-js-metal-web@1.0.6/metal-autocomplete/src/Autocomplete.soy", ['
     }
 
     return Autocomplete;
-  }(_component2.default);
+  }(_Component3.default);
 
-  Autocomplete.prototype.registerMetalComponent && Autocomplete.prototype.registerMetalComponent(Autocomplete, 'Autocomplete')
-
-  Autocomplete.RENDERER = _soy.SoyRenderer;
-  _soy.SoyAop.registerTemplates('Autocomplete');
-  exports.default = Autocomplete;
+  _Soy2.default.register(Autocomplete, templates);
+  exports.default = templates;
+  exports.Autocomplete = Autocomplete;
+  exports.templates = templates;
 });
 //# sourceMappingURL=Autocomplete.soy.js.map

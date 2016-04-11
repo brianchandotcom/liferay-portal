@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal/src/metal', 'metal-drag-drop/src/all/drag', 'metal-position/src/all/position', './Slider.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _drag, _position, _Slider, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', 'metal-drag-drop/src/all/drag', 'metal-position/src/all/position', 'metal-soy/src/Soy', './Slider.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _component, _drag, _position, _Soy, _Slider, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,13 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 
 	var _metal2 = _interopRequireDefault(_metal);
 
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _component2 = _interopRequireDefault(_component);
+
 	var _position2 = _interopRequireDefault(_position);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _Slider2 = _interopRequireDefault(_Slider);
 
@@ -49,32 +55,14 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Slider = function (_SliderBase) {
-		_inherits(Slider, _SliderBase);
+	var Slider = function (_Component) {
+		_inherits(Slider, _Component);
 
-		/**
-   * @inheritDoc
-   */
-
-		function Slider(opt_config) {
+		function Slider() {
 			_classCallCheck(this, Slider);
 
-			var _this = _possibleConstructorReturn(this, _SliderBase.call(this, opt_config));
-
-			/**
-    * Map of different slider DOM elements. Used as a cache to prevent unnecessary dom lookups
-    * on succesive queries.
-    * @type {Map}
-    * @protected
-    */
-			_this.elements_ = new Map();
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
-
-		/**
-   * @inheritDoc
-   */
-
 
 		Slider.prototype.attached = function attached() {
 			/**
@@ -83,17 +71,10 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
     * @protected
     */
 			this.drag_ = new _drag.Drag({
-				constrain: this.getElement_('.rail'),
-				handles: this.getElement_('.handle'),
-				sources: this.getElement_('.rail-handle')
+				constrain: this.element.querySelector('.rail'),
+				handles: this.element.querySelector('.handle'),
+				sources: this.element.querySelector('.rail-handle')
 			});
-
-			/**
-    * Position and dimensions of the slider element.
-    * @type {DOMRect}
-    * @protected
-    */
-			this.elementRegion_ = _position2.default.getRegion(this.element);
 
 			this.attachDragEvents_();
 		};
@@ -104,27 +85,12 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 		};
 
 		Slider.prototype.disposeInternal = function disposeInternal() {
-			_SliderBase.prototype.disposeInternal.call(this);
-
+			_Component.prototype.disposeInternal.call(this);
 			this.drag_.dispose();
-			this.elements_ = null;
-			this.elementRegion_ = null;
-		};
-
-		Slider.prototype.getElement_ = function getElement_(query) {
-			var element = this.elements_.get(query);
-
-			if (!element) {
-				element = this.element.querySelector(query);
-
-				this.elements_.set(query, element);
-			}
-
-			return element;
 		};
 
 		Slider.prototype.onRailMouseDown_ = function onRailMouseDown_(event) {
-			if (event.target === this.getElement_('.rail') || event.target === this.getElement_('.rail-active')) {
+			if (_dom2.default.hasClass(event.target, 'rail') || _dom2.default.hasClass(event.target, 'rail-active')) {
 				this.updateValue_(event.offsetX, 0);
 			}
 		};
@@ -150,17 +116,15 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 		};
 
 		Slider.prototype.updateHandlePosition_ = function updateHandlePosition_() {
-			var positionValue = 100 * (this.value - this.min) / (this.max - this.min) + '%';
-
-			if (!(this.drag_ && this.drag_.isDragging())) {
-				this.getElement_('.rail-handle').style.left = positionValue;
+			if (!this.drag_ || !this.drag_.isDragging()) {
+				var positionValue = 100 * (this.value - this.min) / (this.max - this.min) + '%';
+				this.element.querySelector('.rail-handle').style.left = positionValue;
 			}
-
-			this.getElement_('.rail-active').style.width = positionValue;
 		};
 
 		Slider.prototype.updateValue_ = function updateValue_(handlePosition, offset) {
-			this.value = Math.round(offset + handlePosition / this.elementRegion_.width * (this.max - this.min));
+			var region = _position2.default.getRegion(this.element);
+			this.value = Math.round(offset + handlePosition / region.width * (this.max - this.min));
 		};
 
 		Slider.prototype.updateValueFromDragData_ = function updateValueFromDragData_(data) {
@@ -168,12 +132,14 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 		};
 
 		return Slider;
-	}(_Slider2.default);
+	}(_component2.default);
 
-	Slider.prototype.registerMetalComponent && Slider.prototype.registerMetalComponent(Slider, 'Slider')
+	_Soy2.default.register(Slider, _Slider2.default);
 
-
-	Slider.ATTRS = {
+	/**
+  * `Slider`'s state definition.
+  */
+	Slider.STATE = {
 		/**
    * Name of the hidden input field that holds the slider value. Useful when slider is embedded
    * inside a form so it can automatically send its value.
@@ -204,23 +170,15 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 		/**
    * Defines the currently selected value on the slider.
    * @type {number}
-   * @default 50
+   * @default 0
    */
 		value: {
 			validator: function validator(val) {
 				return _metal2.default.isNumber(val) && this.min <= val && val <= this.max;
 			},
-			value: 80
+			value: 0
 		}
 	};
-
-	/**
-  * Default slider elementClasses.
-  * @default slider
-  * @type {string}
-  * @static
-  */
-	Slider.ELEMENT_CLASSES = 'slider';
 
 	exports.default = Slider;
 	_JQueryAdapter2.default.register('slider', Slider);

@@ -1,44 +1,43 @@
-{namespace Templates.Treeview}
+{namespace Treeview}
 
 /**
  * This renders the main element.
  * @param id
  * @param? elementClasses
- * @skipUpdates elementClasses
+ * @param nodes
  */
 {template .render}
 	<div id="{$id}" class="treeview component{$elementClasses ? ' ' + $elementClasses : ''}" role="tree">
-		{call .nodes data="all" /}
+		{call .nodes}
+			{param nodes: $nodes /}
+		{/call}
 	</div>
 {/template}
 
 /**
- * @param id
  * @param nodes
- * @param? parentSurfaceId
- * @param? surfaceId
+ * @param? parentPath
  */
 {template .nodes}
-	{let $elementId: $id + '-' + (isNonnull($surfaceId) ? $surfaceId : 'nodes') /}
-	<ul id="{$elementId}" class="treeview-nodes">
-		{foreach $node in $nodes}
-			{let $index: index($node) /}
-			{call .node}
-				{param id: $id /}
-				{param node: $node /}
-				{param surfaceId: isNonnull($parentSurfaceId) ? ($parentSurfaceId + '-' + $index) : $index /}
-			{/call}
-		{/foreach}
-	</ul>
+	{if $nodes}
+		<ul class="treeview-nodes">
+			{foreach $node in $nodes}
+				{let $index: index($node) /}
+				{call .node}
+					{param node: $node /}
+					{param path: isNonnull($parentPath) ? ($parentPath + '-' + $index) : $index /}
+				{/call}
+			{/foreach}
+		</ul>
+	{/if}
 {/template}
 
 /**
- * @param id
  * @param node
- * @param surfaceId
+ * @param path
  */
-{template .node private="true"}
-	<li id="{$id}-{$surfaceId}" class="treeview-node">
+{template .node}
+	<li class="treeview-node" data-treeview-path="{$path}">
 		{if $node}
 			<div class="treeview-node-wrapper{$node.expanded ? ' expanded' : ''}">
 				<div
@@ -53,14 +52,10 @@
 					{/if}
 					<span class="treeview-node-name">{$node.name}</span>
 				</div>
-				{if $node.children}
-					{call .nodes}
-						{param id: $id /}
-						{param nodes: $node.children /}
-						{param parentSurfaceId: $surfaceId /}
-						{param surfaceId: $surfaceId + '-nodes' /}
-					{/call}
-				{/if}
+				{call .nodes}
+					{param nodes: $node.children /}
+					{param parentPath: $path /}
+				{/call}
 			</div>
 		{/if}
 	</li>

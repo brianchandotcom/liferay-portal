@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './Switcher.soy.js', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _SwitcherSoy, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher", ['exports', 'metal/src/metal', './Switcher.soy', 'metal-component/src/all/component', 'metal-soy/src/Soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _Switcher, _component, _Soy, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,9 +7,11 @@ define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher", ['exports', 'm
 
 	var _metal2 = _interopRequireDefault(_metal);
 
-	var _dom2 = _interopRequireDefault(_dom);
+	var _Switcher2 = _interopRequireDefault(_Switcher);
 
-	var _SwitcherSoy2 = _interopRequireDefault(_SwitcherSoy);
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
@@ -49,47 +51,28 @@ define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher", ['exports', 'm
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Switcher = function (_SwitcherBase) {
-		_inherits(Switcher, _SwitcherBase);
+	var Switcher = function (_Component) {
+		_inherits(Switcher, _Component);
 
 		function Switcher() {
 			_classCallCheck(this, Switcher);
 
-			return _possibleConstructorReturn(this, _SwitcherBase.apply(this, arguments));
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
-
-		Switcher.prototype.attached = function attached() {
-			this.on('click', this.handleClick);
-		};
 
 		Switcher.prototype.handleClick = function handleClick() {
 			this.checked = !this.checked;
 		};
 
-		Switcher.prototype.syncChecked = function syncChecked(checked) {
-			_dom2.default[checked ? 'addClasses' : 'removeClasses'](this.element, 'switcher-on');
-		};
-
 		return Switcher;
-	}(_SwitcherSoy2.default);
-
-	Switcher.prototype.registerMetalComponent && Switcher.prototype.registerMetalComponent(Switcher, 'Switcher')
-
+	}(_component2.default);
 
 	/**
-  * Default switcher elementClasses.
-  * @default list
-  * @type {string}
-  * @static
-  */
-	Switcher.ELEMENT_CLASSES = 'switcher';
-
-	/**
-  * Switcher attributes definition.
+  * Switcher state definition.
   * @type {!Object}
   * @static
   */
-	Switcher.ATTRS = {
+	Switcher.STATE = {
 		/**
    * Flag indicating if the switcher is currently checked or not.
    * @type {boolean}
@@ -100,6 +83,7 @@ define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher", ['exports', 'm
 			value: false
 		}
 	};
+	_Soy2.default.register(Switcher, _Switcher2.default);
 
 	exports.default = Switcher;
 	_JQueryAdapter2.default.register('switcher', Switcher);

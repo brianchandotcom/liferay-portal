@@ -1,11 +1,14 @@
-define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.templates = exports.Alert = undefined;
 
-  var _component2 = _interopRequireDefault(_component);
+  var _Component3 = _interopRequireDefault(_Component2);
+
+  var _Soy2 = _interopRequireDefault(_Soy);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,33 +46,82 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert.soy", ['exports', 'met
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _soy.SoyTemplates.get();
-  // This file was automatically generated from Alert.soy.
-  // Please don't edit this file by hand.
+  var templates;
+  goog.loadModule(function (exports) {
 
-  /**
-   * @fileoverview Templates in namespace Templates.Alert.
-   */
+    // This file was automatically generated from Alert.soy.
+    // Please don't edit this file by hand.
 
-  if (typeof Templates.Alert == 'undefined') {
-    Templates.Alert = {};
-  }
+    /**
+     * @fileoverview Templates in namespace Alert.
+     * @public
+     */
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Alert.render = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="alert alert-dismissible component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '" role="alert">' + (opt_data.spinner ? '<span class="alert-spinner' + soy.$$escapeHtmlAttribute(opt_data.spinnerClasses ? ' ' + opt_data.spinnerClasses : '') + '"></span>' : '') + '<span class="alert-body">' + (opt_data.body ? soy.$$escapeHtml(opt_data.body) : '') + '</span>' + (opt_data.dismissible ? '<button type="button" class="close" aria-label="Close" data-onclick="toggle"><span aria-hidden="true">×</span></button>' : '') + '</div>');
-  };
-  if (goog.DEBUG) {
-    Templates.Alert.render.soyTemplateName = 'Templates.Alert.render';
-  }
+    goog.module('Alert.incrementaldom');
 
-  Templates.Alert.render.params = ["body", "dismissible", "id", "spinner", "spinnerClasses"];
+    /** @suppress {extraRequire} */
+    var soy = goog.require('soy');
+    /** @suppress {extraRequire} */
+    var soydata = goog.require('soydata');
+    /** @suppress {extraRequire} */
+    goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('soy.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('goog.i18n.bidi');
+    var IncrementalDom = goog.require('incrementaldom');
+    var ie_open = IncrementalDom.elementOpen;
+    var ie_close = IncrementalDom.elementClose;
+    var ie_void = IncrementalDom.elementVoid;
+    var ie_open_start = IncrementalDom.elementOpenStart;
+    var ie_open_end = IncrementalDom.elementOpenEnd;
+    var itext = IncrementalDom.text;
+    var iattr = IncrementalDom.attr;
+
+    /**
+     * @param {{
+     *    dismissible: (?),
+     *    spinner: (?),
+     *    spinnerDone: (?),
+     *    elementClasses: (?),
+     *    spinnerClasses: (?),
+     *    body: (?soydata.SanitizedHtml|string|undefined)
+     * }} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {void}
+     * @suppress {checkTypes}
+     */
+    function $render(opt_data, opt_ignored, opt_ijData) {
+      soy.asserts.assertType(opt_data.body == null || opt_data.body instanceof Function || opt_data.body instanceof soydata.UnsanitizedText || goog.isString(opt_data.body), 'body', opt_data.body, '?soydata.SanitizedHtml|string|undefined');
+      var body = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.body;
+      ie_open('div', null, null, 'class', 'alert' + (opt_data.dismissible ? ' alert-dismissible' : '') + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''), 'role', 'alert');
+      if (opt_data.spinner) {
+        ie_void('span', null, null, 'class', 'alert-spinner' + (opt_data.spinnerClasses ? ' ' + opt_data.spinnerClasses : '') + (opt_data.spinnerDone ? ' alert-spinner-done' : ''));
+      }
+      ie_open('span', null, null, 'class', 'alert-body');
+      if (body) {
+        body();
+      }
+      ie_close('span');
+      if (opt_data.dismissible) {
+        ie_open('button', null, null, 'type', 'button', 'class', 'close', 'aria-label', 'Close', 'data-onclick', 'toggle');
+        ie_open('span', null, null, 'aria-hidden', 'true');
+        itext('×');
+        ie_close('span');
+        ie_close('button');
+      }
+      ie_close('div');
+    }
+    exports.render = $render;
+    if (goog.DEBUG) {
+      $render.soyTemplateName = 'Alert.render';
+    }
+
+    exports.render.params = ["body", "dismissible", "spinner", "spinnerDone", "elementClasses", "spinnerClasses"];
+    exports.templates = templates = exports;
+    return exports;
+  });
 
   var Alert = function (_Component) {
     _inherits(Alert, _Component);
@@ -81,12 +133,11 @@ define("frontend-js-metal-web@1.0.6/metal-alert/src/Alert.soy", ['exports', 'met
     }
 
     return Alert;
-  }(_component2.default);
+  }(_Component3.default);
 
-  Alert.prototype.registerMetalComponent && Alert.prototype.registerMetalComponent(Alert, 'Alert')
-
-  Alert.RENDERER = _soy.SoyRenderer;
-  _soy.SoyAop.registerTemplates('Alert');
-  exports.default = Alert;
+  _Soy2.default.register(Alert, templates);
+  exports.default = templates;
+  exports.Alert = Alert;
+  exports.templates = templates;
 });
 //# sourceMappingURL=Alert.soy.js.map

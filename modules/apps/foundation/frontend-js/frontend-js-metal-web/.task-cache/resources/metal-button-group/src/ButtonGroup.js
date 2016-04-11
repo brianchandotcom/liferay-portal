@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ButtonGroup.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _ButtonGroup, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup", ['exports', 'metal/src/metal', 'metal-component/src/all/component', 'metal-soy/src/Soy', './ButtonGroup.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _component, _Soy, _ButtonGroup, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,9 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup", ['expor
 
 	var _metal2 = _interopRequireDefault(_metal);
 
-	var _dom2 = _interopRequireDefault(_dom);
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
 
@@ -49,41 +51,14 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup", ['expor
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var ButtonGroup = function (_ButtonGroupBase) {
-		_inherits(ButtonGroup, _ButtonGroupBase);
+	var ButtonGroup = function (_Component) {
+		_inherits(ButtonGroup, _Component);
 
-		/**
-   * @inheritDoc
-   */
-
-		function ButtonGroup(opt_config) {
+		function ButtonGroup() {
 			_classCallCheck(this, ButtonGroup);
 
-			var _this = _possibleConstructorReturn(this, _ButtonGroupBase.call(this, opt_config));
-
-			_this.buttonElements_ = null;
-
-			_this.on('selectedChanged', _this.defaultSelectedChanged_, true);
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
-
-		/**
-   * The default behavior of the `selectedChanged` event. Adds or removes the CSS
-   * class defined by `ButtonGroup.SELECTED_CLASS` to each button.
-   * @param {!Object} event
-   * @protected
-   */
-
-
-		ButtonGroup.prototype.defaultSelectedChanged_ = function defaultSelectedChanged_(event) {
-			for (var i = 0; i < this.buttonElements_.length; i++) {
-				if (event.newVal.indexOf(this.buttons[i].label) !== -1) {
-					_dom2.default.addClasses(this.buttonElements_[i], ButtonGroup.SELECTED_CLASS);
-				} else {
-					_dom2.default.removeClasses(this.buttonElements_[i], ButtonGroup.SELECTED_CLASS);
-				}
-			}
-		};
 
 		ButtonGroup.prototype.handleClick_ = function handleClick_(event) {
 			var button = event.delegateTarget;
@@ -110,22 +85,17 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup", ['expor
 			return selected;
 		};
 
-		ButtonGroup.prototype.syncButtons = function syncButtons() {
-			this.buttonElements_ = this.element.querySelectorAll('button');
-		};
-
 		return ButtonGroup;
-	}(_ButtonGroup2.default);
+	}(_component2.default);
 
-	ButtonGroup.prototype.registerMetalComponent && ButtonGroup.prototype.registerMetalComponent(ButtonGroup, 'ButtonGroup')
-
+	_Soy2.default.register(ButtonGroup, _ButtonGroup2.default);
 
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	ButtonGroup.ATTRS = {
+	ButtonGroup.STATE = {
 		/**
    * Configuration for the buttons that should be rendered in this group.
    * Each button config should be given as an object. Supported options are:
@@ -167,13 +137,6 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup", ['expor
 			}
 		}
 	};
-
-	/**
-  * Default element classes.
-  * @type {string}
-  * @static
-  */
-	ButtonGroup.ELEMENT_CLASSES = 'btn-group';
 
 	/**
   * The CSS class added to selected buttons.

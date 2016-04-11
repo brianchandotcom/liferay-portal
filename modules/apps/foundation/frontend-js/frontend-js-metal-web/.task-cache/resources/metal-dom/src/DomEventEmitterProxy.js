@@ -78,7 +78,6 @@ define("frontend-js-metal-web@1.0.6/metal-dom/src/DomEventEmitterProxy", ['expor
 		return DomEventEmitterProxy;
 	}(_events.EventEmitterProxy);
 
-	DomEventEmitterProxy.prototype.registerMetalComponent && DomEventEmitterProxy.prototype.registerMetalComponent(DomEventEmitterProxy, 'DomEventEmitterProxy')
 	exports.default = DomEventEmitterProxy;
 });
 //# sourceMappingURL=DomEventEmitterProxy.js.map

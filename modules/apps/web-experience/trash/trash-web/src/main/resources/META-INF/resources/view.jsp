@@ -214,7 +214,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								colspan="<%= 2 %>"
 							>
 								<h6 class="text-default">
-									<%= LanguageUtil.format(resourceBundle, "removed-x", dateFormatDateTime.format(trashEntry.getCreateDate())) %>
+									<liferay-ui:message arguments="<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>" key="removed-x" />
 								</h6>
 
 								<h5>
@@ -237,7 +237,6 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								<h6 class="text-default">
 									<strong><liferay-ui:message key="type" />:</strong> <%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
 								</h6>
-
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
@@ -263,7 +262,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								<liferay-frontend:icon-vertical-card
 									actionJsp="<%= actionPath %>"
 									actionJspServletContext="<%= application %>"
-									cssClass='<%= !trashHandler.isContainerModel() ? "preview" : "" %>'
+									cssClass='<%= !trashHandler.isContainerModel() ? "preview" : StringPool.BLANK %>'
 									data="<%= !trashHandler.isContainerModel() ? data : null %>"
 									icon="<%= trashRenderer.getIconCssClass() %>"
 									resultRow="<%= row %>"
@@ -275,7 +274,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								</liferay-frontend:icon-vertical-card>
 							</liferay-ui:search-container-column-text>
 						</c:when>
-						<c:otherwise>
+						<c:when test="<%= trashDisplayContext.isListView() %>">
 							<liferay-ui:search-container-column-text
 								cssClass="content-column name-column title-column"
 								name="name"
@@ -352,7 +351,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 								cssClass="entry-action-column"
 								path="<%= actionPath %>"
 							/>
-						</c:otherwise>
+						</c:when>
 					</c:choose>
 				</liferay-ui:search-container-row>
 

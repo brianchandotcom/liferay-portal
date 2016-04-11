@@ -48,12 +48,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerM
 		<aui:button cssClass="btn-lg selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", trashContainerModelDisplayContext.getContainerModelName()) %>' />
 	</aui:button-row>
 
-	<br />
-
-	<%
-	PortletURL containerURL = trashContainerModelDisplayContext.getContainerURL();
-	%>
-
 	<liferay-ui:search-container
 		searchContainer="<%= trashContainerModelDisplayContext.getSearchContainer() %>"
 		total="<%= trashContainerModelDisplayContext.getContainerModelsCount() %>"
@@ -70,6 +64,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "select-x", trashContainerM
 
 			<%
 			long curContainerModelId = curContainerModel.getContainerModelId();
+
+			PortletURL containerURL = trashContainerModelDisplayContext.getContainerURL();
 
 			containerURL.setParameter("containerModelId", String.valueOf(curContainerModelId));
 

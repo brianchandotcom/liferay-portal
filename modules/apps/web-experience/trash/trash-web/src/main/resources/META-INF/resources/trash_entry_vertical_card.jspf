@@ -15,7 +15,7 @@
 --%>
 
 <liferay-frontend:vertical-card-header>
-	<%= LanguageUtil.format(resourceBundle, "removed-x", dateFormatDateTime.format(trashEntry.getCreateDate())) %>
+	<liferay-ui:message arguments="<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>" key="removed-x" />
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>

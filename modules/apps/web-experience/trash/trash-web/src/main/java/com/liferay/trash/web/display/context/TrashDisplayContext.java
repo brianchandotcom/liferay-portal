@@ -146,7 +146,7 @@ public class TrashDisplayContext {
 	}
 
 	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType != null)) {
+		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
 		}
 
@@ -272,7 +272,7 @@ public class TrashDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (getDisplayStyle().equals("descriptive")) {
+		if (Validator.equals(getDisplayStyle(), "descriptive")) {
 			return true;
 		}
 
@@ -280,7 +280,7 @@ public class TrashDisplayContext {
 	}
 
 	public boolean isIconView() {
-		if (getDisplayStyle().equals("icon")) {
+		if (Validator.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -288,7 +288,7 @@ public class TrashDisplayContext {
 	}
 
 	public boolean isListView() {
-		if (getDisplayStyle().equals("list")) {
+		if (Validator.equals(getDisplayStyle(), "list")) {
 			return true;
 		}
 

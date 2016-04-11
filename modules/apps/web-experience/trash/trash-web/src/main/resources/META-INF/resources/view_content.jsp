@@ -142,7 +142,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 								<h6 class="text-default">
 									<liferay-ui:message key="type" /> <%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>
 								</h6>
-
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
@@ -195,7 +194,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 								</c:choose>
 							</liferay-ui:search-container-column-text>
 						</c:when>
-						<c:otherwise>
+						<c:when test="<%= trashDisplayContext.isListView() %>">
 							<liferay-ui:search-container-column-text
 								cssClass="content-column name-column title-column"
 								name="name"
@@ -221,7 +220,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 								cssClass="entry-action-column"
 								path="/view_content_action.jsp"
 							/>
-						</c:otherwise>
+						</c:when>
 					</c:choose>
 				</liferay-ui:search-container-row>
 

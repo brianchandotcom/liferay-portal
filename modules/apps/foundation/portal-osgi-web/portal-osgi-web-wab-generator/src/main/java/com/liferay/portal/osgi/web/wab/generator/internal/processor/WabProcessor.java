@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.osgi.web.wab.generator.internal.introspection.ClassLoaderSource;
 import com.liferay.portal.osgi.web.wab.generator.internal.introspection.Source;
 import com.liferay.portal.osgi.web.wab.generator.internal.util.AntUtil;
+import com.liferay.portal.osgi.web.wab.generator.internal.util.ManifestUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -526,21 +527,12 @@ public class WabProcessor {
 	}
 
 	protected boolean isValidOSGiBundle() {
-		Manifest manifest = null;
-
 		try {
-			manifest = getManifest();
+			return ManifestUtil.isValidOSGiBundle(getManifest());
 		}
 		catch (IOException ioe) {
 			return false;
 		}
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		String bundleSymbolicName = GetterUtil.getString(
-			attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
-
-		return Validator.isNotNull(bundleSymbolicName);
 	}
 
 	protected void processBundleClasspath(

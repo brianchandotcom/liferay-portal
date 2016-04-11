@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
+import com.liferay.portal.osgi.web.wab.generator.internal.util.ManifestUtil;
+
 import java.io.File;
 
 import java.net.URL;
@@ -42,6 +44,12 @@ public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
 
 	@Override
 	public URL transform(URL artifact) throws Exception {
+		if ("file".equals(artifact.getProtocol()) &&
+			ManifestUtil.isValidOSGiBundle(artifact.getPath())) {
+
+			return artifact;
+		}
+
 		String path = artifact.getPath();
 
 		int x = path.lastIndexOf("/");

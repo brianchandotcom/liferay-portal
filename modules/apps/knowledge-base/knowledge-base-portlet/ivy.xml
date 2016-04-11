@@ -11,9 +11,9 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.journal.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.journal.api" org="com.liferay" rev="2.0.0" />
 		<dependency name="com.liferay.knowledge.base.api" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.markdown.converter" org="com.liferay" rev="1.0.2" />
-		<dependency name="com.liferay.wiki.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.wiki.api" org="com.liferay" rev="2.0.0" />
 	</dependencies>
 </ivy-module>

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.knowledgebase.admin</model-name>
+		<model-name>com.liferay.knowledge.base.admin</model-name>
 		<portlet-ref>
 			<portlet-name>1</portlet-name>
 		</portlet-ref>
@@ -40,7 +40,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.knowledgebase.display</model-name>
+		<model-name>com.liferay.knowledge.base.display</model-name>
 		<portlet-ref>
 			<portlet-name>2</portlet-name>
 		</portlet-ref>
@@ -69,7 +69,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.knowledgebase.model.KBArticle</model-name>
+		<model-name>com.liferay.knowledge.base.model.KBArticle</model-name>
 		<portlet-ref>
 			<portlet-name>1</portlet-name>
 		</portlet-ref>
@@ -99,7 +99,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.knowledgebase.model.KBFolder</model-name>
+		<model-name>com.liferay.knowledge.base.model.KBFolder</model-name>
 		<portlet-ref>
 			<portlet-name>1</portlet-name>
 		</portlet-ref>
@@ -130,7 +130,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.knowledgebase.model.KBTemplate</model-name>
+		<model-name>com.liferay.knowledge.base.model.KBTemplate</model-name>
 		<portlet-ref>
 			<portlet-name>1</portlet-name>
 		</portlet-ref>

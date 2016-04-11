@@ -14,21 +14,13 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.facet.FacetProcessor;
-
-import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
- * @authot Tibor Lipusz
+ * @author Tibor Lipusz
  */
 @Component(
 	immediate = true,
@@ -38,26 +30,4 @@ import org.osgi.service.component.annotations.Component;
 	service = FacetProcessor.class
 )
 public class ModifiedFacetProcessor extends RangeFacetProcessor {
-
-	@Override
-	public void processFacet(SolrQuery solrQuery, Facet facet) {
-		super.processFacet(solrQuery, facet);
-
-		SearchContext searchContext = facet.getSearchContext();
-
-		String range = GetterUtil.getString(
-			searchContext.getAttribute(facet.getFieldId()));
-
-		if (Validator.isNull(range)) {
-			return;
-		}
-
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		String facetQuery =
-			facetConfiguration.getFieldName() + StringPool.COLON + range;
-
-		solrQuery.addFacetQuery(facetQuery);
-	}
-
 }

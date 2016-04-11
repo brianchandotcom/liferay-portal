@@ -23,7 +23,6 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	name="name"
 	truncate="<%= true %>"
 >
-
 	<%= HtmlUtil.escape(mdrRuleGroup.getName(locale)) %>
 
 	<c:if test="<%= Validator.isNotNull(mdrRuleGroup.getDescription(locale)) %>">

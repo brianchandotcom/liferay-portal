@@ -111,7 +111,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-gr
 	</div>
 
 	<%@ include file="/view_flat_user_groups.jspf" %>
-
 </aui:form>
 
 <aui:script>

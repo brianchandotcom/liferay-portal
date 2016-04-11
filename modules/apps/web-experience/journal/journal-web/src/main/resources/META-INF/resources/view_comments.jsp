@@ -24,7 +24,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 	emptyResultsMessage="no-comment-was-found"
 	searchContainer="<%= journalDisplayContext.getCommentsSearchContainer() %>"
 >
-
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.kernel.model.MBMessage"
 		cssClass="entry-display-style selectable"

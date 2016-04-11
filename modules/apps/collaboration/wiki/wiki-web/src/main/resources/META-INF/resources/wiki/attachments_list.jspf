@@ -21,7 +21,6 @@
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= attachmentsFileEntriesCount %>"
 >
-
 	<liferay-ui:search-container-results
 		results="<%= paginate ? ListUtil.subList(attachmentsFileEntries, searchContainer.getStart(), searchContainer.getEnd()) : attachmentsFileEntries %>"
 	/>

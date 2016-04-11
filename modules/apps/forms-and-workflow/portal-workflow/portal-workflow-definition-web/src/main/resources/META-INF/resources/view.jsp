@@ -125,7 +125,6 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
 			modelVar="workflowDefinition"
 		>
-
 			<liferay-ui:search-container-column-text
 				name="name"
 				value="<%= workflowDefinitionDisplayContext.getName(workflowDefinition) %>"

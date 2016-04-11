@@ -103,7 +103,6 @@ roleSearch.setResults(ListUtil.subList(roles, roleSearch.getStart(), roleSearch.
 			keyProperty="roleId"
 			modelVar="role"
 		>
-
 			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

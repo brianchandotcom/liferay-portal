@@ -157,9 +157,7 @@
 						<liferay-ui:message key="display-date" />:
 					</dt>
 					<dd>
-
 						<%= HtmlUtil.escape(dateFormatDateTime.format(displayDate)) %>
-
 					</dd>
 				</c:if>
 
@@ -168,9 +166,7 @@
 						<liferay-ui:message key="expiration-date" />:
 					</dt>
 					<dd>
-
 						<%= HtmlUtil.escape(dateFormatDateTime.format(expirationDate)) %>
-
 					</dd>
 				</c:if>
 
@@ -179,9 +175,7 @@
 						<liferay-ui:message key="review-date" />:
 					</dt>
 					<dd>
-
 						<%= HtmlUtil.escape(dateFormatDateTime.format(reviewDate)) %>
-
 					</dd>
 				</c:if>
 			</dl>
@@ -210,18 +204,14 @@
 						<liferay-ui:message key="latest-aproved-version" />
 					</dt>
 					<dd>
-
 						<%= HtmlUtil.escape(latestApprovedVersion) %>
-
 					</dd>
 
 					<dt>
 						<liferay-ui:message key="latest-aproved-version-author" />:
 					</dt>
 					<dd>
-
 						<%= HtmlUtil.escape(latestApprovedVersionAuthor) %>
-
 					</dd>
 				</dl>
 			</c:if>

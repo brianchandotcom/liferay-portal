@@ -130,7 +130,6 @@ else {
 									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(recordVersion.getUserName()), dateFormatDateTime.format(recordVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 								</p>
 							</div>
-
 						</div>
 					</liferay-ui:section>
 
@@ -143,7 +142,6 @@ else {
 					</liferay-ui:section>
 				</liferay-ui:tabs>
 			</div>
-
 		</div>
 	</c:if>
 

@@ -63,7 +63,6 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 	iteratorURL="<%= iteratorURL %>"
 	total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 >
-
 	<liferay-ui:search-container-results
 		results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
 	/>

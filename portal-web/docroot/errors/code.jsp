@@ -114,7 +114,6 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 			</body>
 		</c:otherwise>
 	</c:choose>
-
 </html>
 
 <%!

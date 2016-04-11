@@ -86,7 +86,6 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			</td>
 		</tr>
 	</c:if>
-
 </table>
 
 <%!

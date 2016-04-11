@@ -94,7 +94,6 @@ boolean ldapPasswordPolicyEnabled = ldapAuthConfiguration.passwordPolicyEnabled(
 							<td align="right" class="table-cell">
 								<div class="control">
 									<c:if test="<%= ldapServerConfigurations.size() > 1 %>">
-
 										<liferay-ui:icon
 											iconCssClass="icon-arrow-up"
 											message="up"

@@ -20,7 +20,6 @@
 			<c:if test="<%= showUserDetails %>">
 				</div>
 			</c:if>
-
 		</div>
 	</div>
 </c:if>

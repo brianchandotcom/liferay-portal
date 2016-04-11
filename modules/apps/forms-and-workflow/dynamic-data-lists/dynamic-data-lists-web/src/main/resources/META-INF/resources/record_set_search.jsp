@@ -27,7 +27,6 @@ RecordSetDisplayTerms displayTerms = new RecordSetDisplayTerms(renderRequest);
 	id="toggle_id_dynamic_data_lists_record_set_search"
 	markupView="lexicon"
 >
-
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= RecordSetDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 

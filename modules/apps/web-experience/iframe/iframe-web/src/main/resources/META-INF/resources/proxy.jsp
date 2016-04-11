@@ -40,7 +40,5 @@
 
 			<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.passwordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
 		</form>
-
 	</body>
-
 </html>

@@ -60,7 +60,6 @@ ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByTyp
 				keyProperty="dataProviderInstanceId"
 				modelVar="dataProviderInstance"
 			>
-
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

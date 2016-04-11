@@ -117,7 +117,6 @@ userSearch.setResults(users);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearch %>"
 	>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"

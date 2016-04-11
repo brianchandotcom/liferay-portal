@@ -41,7 +41,6 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 		<liferay-ui:search-container
 			searchContainer="<%= structureSearch %>"
 		>
-
 			<liferay-ui:search-container-results>
 				<%@ include file="/structure_search_results.jspf" %>
 			</liferay-ui:search-container-results>
@@ -51,7 +50,6 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 				keyProperty="structureId"
 				modelVar="structure"
 			>
-
 				<liferay-ui:search-container-column-text
 					name="id"
 					value="<%= String.valueOf(structure.getStructureId()) %>"

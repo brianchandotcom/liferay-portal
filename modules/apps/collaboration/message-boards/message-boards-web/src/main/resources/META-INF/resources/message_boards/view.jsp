@@ -82,7 +82,6 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 		/>
 
 		<%@ include file="/message_boards/view_threads.jspf" %>
-
 	</c:when>
 	<c:when test='<%= mbListDisplayContext.isShowSearch() || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>'>
 

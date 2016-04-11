@@ -167,7 +167,6 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 								</c:otherwise>
 							</c:choose>
 						</div>
-
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>

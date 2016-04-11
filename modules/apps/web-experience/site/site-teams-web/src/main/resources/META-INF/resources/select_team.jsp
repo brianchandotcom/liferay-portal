@@ -84,7 +84,6 @@ teamSearch.setTotal(teamsCount);
 	<liferay-ui:search-container
 		searchContainer="<%= teamSearch %>"
 	>
-
 		<liferay-ui:search-container-results
 			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getKeywords(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>

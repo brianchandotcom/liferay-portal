@@ -112,7 +112,6 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearchContainer %>"
 	>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			cssClass="selectable"

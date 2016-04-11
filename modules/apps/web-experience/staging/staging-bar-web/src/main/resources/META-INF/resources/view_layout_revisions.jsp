@@ -96,7 +96,6 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 							<liferay-ui:search-container-column-text
 								name="status"
 							>
-
 								<aui:model-context bean="<%= curLayoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 								<%

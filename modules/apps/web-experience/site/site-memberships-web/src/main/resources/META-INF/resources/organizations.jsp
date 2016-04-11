@@ -111,7 +111,6 @@ organizationSearch.setResults(organizations);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= organizationSearch %>"
 	>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
 			escapedModel="<%= true %>"

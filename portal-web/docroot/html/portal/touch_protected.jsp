@@ -51,9 +51,6 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 					</td>
 				</tr>
 			</table>
-
 		</center>
-
 	</body>
-
 </html>

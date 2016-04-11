@@ -347,8 +347,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			newContent, _emptyLineInNestedTagsPattern1, true);
 		newContent = fixEmptyLineInNestedTags(
 			newContent, _emptyLineInNestedTagsPattern2, false);
-		newContent = fixEmptyLineInNestedTags(
-			newContent, _emptyLineInNestedTagsPattern3, false);
 
 		newContent = fixMissingEmptyLinesBetweenTags(newContent);
 
@@ -539,8 +537,30 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
+			String tabs2 = null;
+
+			if (startTag) {
+				String secondLine = matcher.group(3);
+
+				if (secondLine.equals("<%") || secondLine.startsWith("<%--") ||
+					secondLine.startsWith("<!--")) {
+
+					continue;
+				}
+
+				tabs2 = matcher.group(2);
+			}
+			else {
+				String firstLine = matcher.group(2);
+
+				if (firstLine.equals("%>")) {
+					continue;
+				}
+
+				tabs2 = matcher.group(3);
+			}
+
 			String tabs1 = matcher.group(1);
-			String tabs2 = matcher.group(2);
 
 			if ((startTag && ((tabs1.length() + 1) == tabs2.length())) ||
 				(!startTag && ((tabs1.length() - 1) == tabs2.length()))) {
@@ -1073,6 +1093,19 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
+			char beforeClosingTagChar = content.charAt(matcher.start(2) - 1);
+
+			if ((beforeClosingTagChar != CharPool.NEW_LINE) &&
+				(beforeClosingTagChar != CharPool.TAB)) {
+
+				String closingTag = matcher.group(2);
+				String tabs = matcher.group(1);
+
+				return StringUtil.replaceFirst(
+					content, closingTag, "\n" + tabs + closingTag,
+					matcher.start(2));
+			}
+
 			String tag = matcher.group();
 
 			String singlelineTag = StringUtil.removeChar(
@@ -2000,11 +2033,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
-		"\n(\t*)<\\w.*[^/]>\n\n(\t*)<\\w.*>\n");
+		"\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
 	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(
-		"\n(\t*)/>\n\n(\t*)</\\w.*>(\n|$)");
-	private final Pattern _emptyLineInNestedTagsPattern3 = Pattern.compile(
-		"\n(\t*)<\\w.*>\n\n(\t*)</\\w.*>(\n|$)");
+		"\n(\t*)(.*>)\n\n(\t*)</.*(\n|$)");
 	private final Pattern _ifTagPattern = Pattern.compile(
 		"^<c:if test=('|\")<%= (.+) %>('|\")>$");
 	private final List<String> _importClassNames = new ArrayList<>();
@@ -2030,7 +2061,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)</[-\\w]+:([-\\w]+)>\n(\t*)<[-\\w]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
-		"[\n\t]<[-\\w]+:[-\\w]+\n.*?\n\t*/?>(\n|$)", Pattern.DOTALL);
+		"\n(\t*)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +

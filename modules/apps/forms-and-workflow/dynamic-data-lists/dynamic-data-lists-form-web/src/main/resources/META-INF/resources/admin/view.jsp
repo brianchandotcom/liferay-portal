@@ -69,7 +69,6 @@ portletURL.setParameter("displayStyle", displayStyle);
 						/>
 					</c:when>
 					<c:otherwise>
-
 						<liferay-ui:search-container-column-text
 							cssClass="content-column title-column"
 							href="<%= rowURL %>"

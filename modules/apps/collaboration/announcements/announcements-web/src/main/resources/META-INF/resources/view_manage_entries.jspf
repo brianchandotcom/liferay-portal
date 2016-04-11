@@ -40,7 +40,6 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 		%>
 
 		<%@ include file="/entry_select_scope.jspf" %>
-
 	</aui:fieldset>
 
 	<c:choose>

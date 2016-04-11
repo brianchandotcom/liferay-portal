@@ -203,7 +203,6 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				%>
 
 				<%= layoutTypeController.includeEditContent(dynamicServletRequest, response, selLayout) %>
-
 			</div>
 
 		<%

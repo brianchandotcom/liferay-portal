@@ -115,9 +115,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						</h6>
 
 						<h5 id="<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>">
-
 							<%= HtmlUtil.escape(backgroundTask.getName()) %>
-
 						</h5>
 
 						<c:if test="<%= backgroundTask.isInProgress() %>">

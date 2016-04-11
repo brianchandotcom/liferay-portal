@@ -76,9 +76,6 @@ if (session.getId().equals(MaintenanceUtil.getSessionId())) {
 					</td>
 				</tr>
 			</table>
-
 		</center>
-
 	</body>
-
 </html>

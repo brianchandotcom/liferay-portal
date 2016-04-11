@@ -58,7 +58,6 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 				cssClass="app-view-entry-taglib entry-display-style"
 				modelVar="result"
 			>
-
 				<%@ include file="/document_library/cast_result.jspf" %>
 
 				<c:choose>

@@ -75,11 +75,8 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 							</td>
 						</tr>
 					</table>
-
 				</center>
-
 			</body>
-
 		</html>
 
 		<%

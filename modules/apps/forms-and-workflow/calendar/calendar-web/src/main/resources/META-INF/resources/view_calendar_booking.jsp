@@ -203,7 +203,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 </aui:script>
 
 <c:if test="<%= calendarBooking.isRecurring() %>">
-
 	<%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
 
 	<aui:script use="liferay-calendar-recurrence-util">

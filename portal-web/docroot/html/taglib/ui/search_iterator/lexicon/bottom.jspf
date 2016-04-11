@@ -19,7 +19,6 @@
 				<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' markupView="<%= markupView %>" searchContainer="<%= searchContainer %>" type="<%= type %>" />
 			</div>
 		</c:if>
-
 	</div>
 </div>
 

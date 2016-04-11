@@ -304,7 +304,6 @@ dateFormatDateTime.setTimeZone(timeZone);
 									</tr>
 								</c:otherwise>
 							</c:choose>
-
 						</table>
 					</td>
 				</tr>
@@ -691,7 +690,6 @@ dateFormatDateTime.setTimeZone(timeZone);
 				</td>
 			</tr>
 		</c:if>
-
 	</table>
 
 	<br />
@@ -706,5 +704,4 @@ dateFormatDateTime.setTimeZone(timeZone);
 			<input class="btn btn-default" type="submit" value="<liferay-ui:message key="query" />" />
 		</c:otherwise>
 	</c:choose>
-
 </form>

@@ -49,7 +49,6 @@ for (DDLRecordVersion recordVersion: recordVersions) {
 				<liferay-ui:message key="create-date" />: <%= dateSearchEntry.getName(request) %>
 			</small>
 		</p>
-
 	</div>
 
 	<%} %>

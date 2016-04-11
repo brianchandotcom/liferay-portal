@@ -23,7 +23,6 @@
 	%>
 
 	<%= sb.toString() %>
-
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text

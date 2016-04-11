@@ -264,7 +264,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 							</c:choose>
 						</tr>
 					</c:if>
-
 				</table>
 			</td>
 		</tr>

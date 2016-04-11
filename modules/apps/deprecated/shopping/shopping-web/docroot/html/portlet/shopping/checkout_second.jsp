@@ -134,7 +134,6 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 						</td>
 					</tr>
 				</c:if>
-
 			</table>
 		</div>
 	</c:if>

@@ -391,32 +391,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a toolbar for viewing items in app view.</description>
-		<name>app-view-toolbar</name>
-		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>Whether to include the option to choose a display style for component items. If the value is <![CDATA[<code>true</code>]]>, a list of display style options is rendered. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>includeDisplayStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>Whether to include an option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>includeSelectAll</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>The file path for a search JSP page.</description>
-			<name>searchJsp</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a component for displaying search results of entries in app view.</description>
 		<name>app-view-search-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewSearchEntryTag</tag-class>
@@ -552,6 +526,32 @@
 		<attribute>
 			<description>The current and past versions of the entry.</description>
 			<name>versions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Creates a toolbar for viewing items in app view.</description>
+		<name>app-view-toolbar</name>
+		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether to include the option to choose a display style for component items. If the value is <![CDATA[<code>true</code>]]>, a list of display style options is rendered. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>includeDisplayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether to include an option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>includeSelectAll</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>The file path for a search JSP page.</description>
+			<name>searchJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -781,12 +781,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>showHeader</name>
+			<name>showExtraInfo</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>showExtraInfo</name>
+			<name>showHeader</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1225,12 +1225,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>ignoreAttributeNames</name>
+			<name>editable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>editable</name>
+			<name>ignoreAttributeNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1316,16 +1316,16 @@
 		<tag-class>com.liferay.taglib.ui.EmptyResultMessageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>Whether to use only the empty results message and text styling, and not use the large smiley face animation. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>compact</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>message</name>
@@ -2008,15 +2008,15 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to extend the icon menu by default. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>showExpanded</name>
+			<description>Whether to show an arrow, indicating a popup dialog, next to the icon menu's trigger icon. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>showArrow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to show an arrow, indicating a popup dialog, next to the icon menu's trigger icon. The default value is <![CDATA[<code>true</code>]]>.</description>
-			<name>showArrow</name>
+			<description>Whether to extend the icon menu by default. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>showExpanded</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
@@ -2144,15 +2144,15 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>Whether to disable the namespace for the component. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>disableNamespace</name>
+			<description>Whether to disable the input field. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to disable the input field. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>disabled</name>
+			<description>Whether to disable the namespace for the component. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>disableNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
@@ -2295,16 +2295,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>inlineEdit</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>inlineEditSaveURL</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>A map of configuration parameters. The map holds key value pairs of <![CDATA[<code>&lt;String, String&gt;</code>]]>.</description>
 			<name>fileBrowserParams</name>
 			<required>false</required>
@@ -2319,6 +2309,16 @@
 		<attribute>
 			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>contents</code>]]>.</description>
 			<name>initMethod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inlineEdit</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inlineEditSaveURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2450,12 +2450,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>formName</name>
+			<name>format</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>format</name>
+			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -3170,6 +3170,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>membership-policy-error</name>
+		<tag-class>com.liferay.taglib.ui.MembershipPolicyErrorTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>menu</name>
 		<tag-class>com.liferay.taglib.ui.MenuTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3188,11 +3193,6 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	</tag>
-	<tag>
-		<name>membership-policy-error</name>
-		<tag-class>com.liferay.taglib.ui.MembershipPolicyErrorTag</tag-class>
-		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<description>Creates a message to display to the user.</description>
@@ -3587,6 +3587,36 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
+		</attribute>
+	</tag>
+	<tag>
+		<name>quick-access</name>
+		<tag-class>com.liferay.taglib.ui.QuickAccessTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>contentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>quick-access-entry</name>
+		<tag-class>com.liferay.taglib.ui.QuickAccessEntryTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -4110,12 +4140,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The path of the image.</description>
-			<name>src</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>index</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4123,6 +4147,12 @@
 		<attribute>
 			<name>name</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The path of the image.</description>
+			<name>src</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -4257,12 +4287,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
-			<name>valign</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>A workflow status for the item.</description>
 			<name>status</name>
 			<required>false</required>
@@ -4275,6 +4299,12 @@
 		</attribute>
 		<attribute>
 			<name>statusDate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
+			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -4532,13 +4562,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>stringKey</name>
+			<description>A state for the component. Possible values are <![CDATA[<code>success</code>]]>, <![CDATA[<code>warning</code>]]>, <![CDATA[<code>info</code>]]>, <![CDATA[<code>default</code>]]>, <![CDATA[<code>primary</code>]]>, or <![CDATA[<code>danger</code>]]>.</description>
+			<name>state</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A state for the component. Possible values are <![CDATA[<code>success</code>]]>, <![CDATA[<code>warning</code>]]>, <![CDATA[<code>info</code>]]>, <![CDATA[<code>default</code>]]>, <![CDATA[<code>primary</code>]]>, or <![CDATA[<code>danger</code>]]>.</description>
-			<name>state</name>
+			<name>stringKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -4826,12 +4856,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>icon</name>
+			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayStyle</name>
+			<name>icon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -5087,11 +5117,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>urls</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url0</name>
 			<required>false</required>
@@ -5148,6 +5173,11 @@
 		<attribute>
 			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url9</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>urls</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -5284,36 +5314,6 @@
 		<attribute>
 			<name>toolbarItem</name>
 			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>quick-access</name>
-		<tag-class>com.liferay.taglib.ui.QuickAccessTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>contentId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>quick-access-entry</name>
-		<tag-class>com.liferay.taglib.ui.QuickAccessEntryTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>onClick</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>url</name>
-			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

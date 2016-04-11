@@ -888,13 +888,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
-			<name>localizeLabel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>languageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -915,8 +908,22 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<name>localizeLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[The maximum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the max value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
 			<name>max</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The minimum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the min value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
+			<name>min</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
@@ -927,13 +934,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Class</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The minimum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the min value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
-			<name>min</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
 			<name>multiple</name>
@@ -1183,14 +1183,14 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the component instance.]]></description>
-			<name>id</name>
+			<name>file</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>file</name>
+			<description><![CDATA[An ID for the component instance.]]></description>
+			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -1498,16 +1498,16 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>sandbox</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>require</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>sandbox</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[AlloyUI modules to be used in the script. Names of multiple modules must be separated by commas.]]></description>

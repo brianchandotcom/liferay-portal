@@ -4,5 +4,5 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay.webjars</groupId>
   <artifactId>com.liferay.webjars.metal-components</artifactId>
-  <version>1.0.0-rc.11</version>
+  <version>1.0.0-rc.17</version>
 </project>

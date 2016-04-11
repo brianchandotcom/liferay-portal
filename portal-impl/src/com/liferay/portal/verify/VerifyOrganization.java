@@ -90,7 +90,7 @@ public class VerifyOrganization extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler();
 
-			sb.append("select AssetEntry.entryId, Organization_.uuid_ from ");
+			sb.append("select AssetEntry.classPK, Organization_.uuid_ from ");
 			sb.append(
 				"AssetEntry, Organization_ where AssetEntry.classNameId = ");
 
@@ -111,14 +111,15 @@ public class VerifyOrganization extends VerifyProcess {
 						AutoBatchPreparedStatementUtil.autoBatch(
 							connection.prepareStatement(
 								"update AssetEntry set classUuid = ? where " +
-									"entryId = ?"))) {
+									"classPK = ? and classNameId = ?"))) {
 
 					while (rs.next()) {
-						long entryId = rs.getLong("AssetEntry.entryId");
+						long classPK = rs.getLong("AssetEntry.classPK");
 						String uuid = rs.getString("Organization_.uuid_");
 
 						ps2.setString(1, uuid);
-						ps2.setLong(2, entryId);
+						ps2.setLong(2, classPK);
+						ps2.setLong(3, classNameId);
 
 						ps2.addBatch();
 					}

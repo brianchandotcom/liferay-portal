@@ -1,3 +1,0 @@
-dependencies {
-	provided group: "com.liferay", name: "com.liferay.map.taglib", version: "1.0.0"
-}

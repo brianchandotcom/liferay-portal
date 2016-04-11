@@ -1,3 +1,0 @@
-dependencies {
-	provided group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
-}

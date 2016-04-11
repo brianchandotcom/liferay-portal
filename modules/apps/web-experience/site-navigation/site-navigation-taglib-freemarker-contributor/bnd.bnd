@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Site Navigation Taglib FreeMarker Contributor
-Bundle-SymbolicName: com.liferay.site.navigation.taglib.freemarker.contributor
-Bundle-Version: 2.0.1
-Import-Package: com.liferay.site.navigation.taglib.servlet.taglib
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--liferay-includeresource: @com.liferay.site.navigation.taglib-*.jar!/META-INF/resources/liferay-site-navigation.tld

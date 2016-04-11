@@ -1754,12 +1754,12 @@ this task.
 			<os family="windows" />
 			<then>
 				<exec dir="${app.server.tcserver.dir}" executable="cmd">
-					<arg line="/c set JAVA_OPTS= &amp; tcruntime-instance.bat create liferay" />
+					<arg line="/c set JAVA_OPTS= &amp; tcruntime-instance.bat create liferay -v ${app.server.tcserver.tomcat.version}" />
 				</exec>
 			</then>
 			<else>
 				<exec dir="${app.server.tcserver.dir}" executable="${app.server.tcserver.dir}/tcruntime-instance.sh">
-					<arg line="create liferay" />
+					<arg line="create liferay -v ${app.server.tcserver.tomcat.version}" />
 				</exec>
 			</else>
 		</if>

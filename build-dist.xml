@@ -1802,6 +1802,7 @@ this task.
 					<replacetoken><![CDATA[wrapper.java.additional.9=-Xss256K]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
 wrapper.java.additional.10="-XX:MaxPermSize=256M"
+wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 				</replace>
 			</then>
 		</if>

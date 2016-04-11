@@ -1073,6 +1073,19 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
+			char beforeClosingTagChar = content.charAt(matcher.start(2) - 1);
+
+			if ((beforeClosingTagChar != CharPool.NEW_LINE) &&
+				(beforeClosingTagChar != CharPool.TAB)) {
+
+				String closingTag = matcher.group(2);
+				String tabs = matcher.group(1);
+
+				return StringUtil.replaceFirst(
+					content, closingTag, "\n" + tabs + closingTag,
+					matcher.start(2));
+			}
+
 			String tag = matcher.group();
 
 			String singlelineTag = StringUtil.removeChar(
@@ -2030,7 +2043,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)</[-\\w]+:([-\\w]+)>\n(\t*)<[-\\w]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
-		"[\n\t]<[-\\w]+:[-\\w]+\n.*?\n\t*/?>(\n|$)", Pattern.DOTALL);
+		"\n(\t*)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +

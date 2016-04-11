@@ -146,6 +146,8 @@ public class CalendarBookingPersistenceTest {
 
 		newCalendarBooking.setParentCalendarBookingId(RandomTestUtil.nextLong());
 
+		newCalendarBooking.setRecurringCalendarBookingId(RandomTestUtil.nextLong());
+
 		newCalendarBooking.setVEventUid(RandomTestUtil.randomString());
 
 		newCalendarBooking.setTitle(RandomTestUtil.randomString());
@@ -210,6 +212,8 @@ public class CalendarBookingPersistenceTest {
 			newCalendarBooking.getCalendarResourceId());
 		Assert.assertEquals(existingCalendarBooking.getParentCalendarBookingId(),
 			newCalendarBooking.getParentCalendarBookingId());
+		Assert.assertEquals(existingCalendarBooking.getRecurringCalendarBookingId(),
+			newCalendarBooking.getRecurringCalendarBookingId());
 		Assert.assertEquals(existingCalendarBooking.getVEventUid(),
 			newCalendarBooking.getVEventUid());
 		Assert.assertEquals(existingCalendarBooking.getTitle(),
@@ -304,6 +308,14 @@ public class CalendarBookingPersistenceTest {
 	}
 
 	@Test
+	public void testCountByRecurringCalendarBookingId()
+		throws Exception {
+		_persistence.countByRecurringCalendarBookingId(RandomTestUtil.nextLong());
+
+		_persistence.countByRecurringCalendarBookingId(0L);
+	}
+
+	@Test
 	public void testCountByC_P() throws Exception {
 		_persistence.countByC_P(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
@@ -370,11 +382,12 @@ public class CalendarBookingPersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "calendarId", true,
 			"calendarResourceId", true, "parentCalendarBookingId", true,
-			"vEventUid", true, "title", true, "location", true, "startTime",
-			true, "endTime", true, "allDay", true, "recurrence", true,
-			"firstReminder", true, "firstReminderType", true, "secondReminder",
-			true, "secondReminderType", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"recurringCalendarBookingId", true, "vEventUid", true, "title",
+			true, "location", true, "startTime", true, "endTime", true,
+			"allDay", true, "recurrence", true, "firstReminder", true,
+			"firstReminderType", true, "secondReminder", true,
+			"secondReminderType", true, "lastPublishDate", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
 	}
 
@@ -632,6 +645,8 @@ public class CalendarBookingPersistenceTest {
 		calendarBooking.setCalendarResourceId(RandomTestUtil.nextLong());
 
 		calendarBooking.setParentCalendarBookingId(RandomTestUtil.nextLong());
+
+		calendarBooking.setRecurringCalendarBookingId(RandomTestUtil.nextLong());
 
 		calendarBooking.setVEventUid(RandomTestUtil.randomString());
 

@@ -97,9 +97,11 @@
 			<var name="url" value="http://localhost:8080/api/jsonws/user/update-status/user-id/20250/status/6?p_auth=" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="{&quot;exception&quot;:&quot;User  must have DELETE permission for com.liferay.portal.kernel.model.User &quot;,&quot;throwable&quot;:&quot;com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission: User  must have DELETE permission for com.liferay.portal.kernel.model.User &quot;,&quot;error&quot;:{&quot;message&quot;:&quot;User  must have DELETE permission for com.liferay.portal.kernel.model.User &quot;,&quot;type&quot;:&quot;com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission&quot;}}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="must have DELETE permission for com.liferay.portal.kernel.model.User" />
 
-		<execute function="AssertConsoleTextPresent" value1="User  must have DELETE permission for com.liferay.portal.kernel.model.User" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission" />
+
+		<execute function="AssertConsoleTextPresent" value1="must have DELETE permission for com.liferay.portal.kernel.model.User" />
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="5">

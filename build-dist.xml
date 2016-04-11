@@ -1738,7 +1738,7 @@ this task.
 			src="${app.server.parent.dir}/${app.server.tcserver.zip.name}"
 		>
 			<mapper
-				from="vfabric-tc-server-developer-${app.server.tcserver.version}.RELEASE/*"
+				from="pivotal-tc-server-developer-${app.server.tcserver.version}.RELEASE/*"
 				to="tc-server-${app.server.tcserver.version}/*"
 				type="glob"
 			/>

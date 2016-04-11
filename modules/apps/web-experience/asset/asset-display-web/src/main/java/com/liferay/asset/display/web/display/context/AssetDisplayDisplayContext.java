@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.display.context;
+package com.liferay.asset.display.web.display.context;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 

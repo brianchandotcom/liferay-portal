@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.portlet;
+package com.liferay.asset.display.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

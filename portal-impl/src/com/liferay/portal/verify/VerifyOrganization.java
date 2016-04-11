@@ -90,7 +90,8 @@ public class VerifyOrganization extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler();
 
-			sb.append("select AssetEntry.classPK, Organization_.uuid_ from ");
+			sb.append("select distinct AssetEntry.classPK, ");
+			sb.append("Organization_.uuid_ from ");
 			sb.append(
 				"AssetEntry, Organization_ where AssetEntry.classNameId = ");
 

@@ -2271,7 +2271,7 @@
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="Go to Site Administration" />
+			<var name="permissionDefinitionValue" value="View Site Administration Menu" />
 			<var name="permissionNavigationValue" value="Site Memberships > Site" />
 		</execute>
 	</command>

@@ -282,6 +282,34 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 		return _kbArticle.compareTo(kbArticle);
 	}
 
+	@Override
+	public java.util.List<java.lang.Long> getAncestorResourcePrimaryKeys()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticle.getAncestorResourcePrimaryKeys();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticle.getAttachmentsFileEntries();
+	}
+
+	@Override
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticle.getAttachmentsFolderId();
+	}
+
+	@Override
+	public long getClassNameId() {
+		return _kbArticle.getClassNameId();
+	}
+
+	@Override
+	public long getClassPK() {
+		return _kbArticle.getClassPK();
+	}
+
 	/**
 	* Returns the company ID of this k b article.
 	*
@@ -397,6 +425,12 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 		return _kbArticle.getModifiedDate();
 	}
 
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle getParentKBArticle()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticle.getParentKBArticle();
+	}
+
 	/**
 	* Returns the parent resource class name ID of this k b article.
 	*
@@ -415,6 +449,12 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	@Override
 	public long getParentResourcePrimKey() {
 		return _kbArticle.getParentResourcePrimKey();
+	}
+
+	@Override
+	public java.lang.String getParentTitle(java.util.Locale locale, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticle.getParentTitle(locale, status);
 	}
 
 	/**
@@ -667,6 +707,11 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 		return _kbArticle.isExpired();
 	}
 
+	@Override
+	public boolean isFirstVersion() {
+		return _kbArticle.isFirstVersion();
+	}
+
 	/**
 	* Returns <code>true</code> if this k b article is inactive.
 	*
@@ -725,6 +770,11 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	@Override
 	public boolean isResourceMain() {
 		return _kbArticle.isResourceMain();
+	}
+
+	@Override
+	public boolean isRoot() {
+		return _kbArticle.isRoot();
 	}
 
 	/**

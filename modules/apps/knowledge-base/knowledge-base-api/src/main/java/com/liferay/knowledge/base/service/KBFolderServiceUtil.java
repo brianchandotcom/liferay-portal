@@ -41,6 +41,53 @@ public class KBFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBFolderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
+		long groupId, long parentResourceClassNameId,
+		long parentResourcePrimKey, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addKBFolder(groupId, parentResourceClassNameId,
+			parentResourcePrimKey, name, description, serviceContext);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder deleteKBFolder(
+		long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteKBFolder(kbFolderId);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
+		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder getKBFolder(
+		long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBFolder(kbFolderId);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
+		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFolders(
+		long groupId, long parentKBFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
+	}
+
+	public static int getKBFoldersCount(long groupId, long parentKBFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBFoldersCount(groupId, parentKBFolderId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +96,20 @@ public class KBFolderServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void moveKBFolder(long kbFolderId, long parentKBFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+		long parentResourceClassNameId, long parentResourcePrimKey,
+		long kbFolderId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKBFolder(parentResourceClassNameId,
+			parentResourcePrimKey, kbFolderId, name, description);
 	}
 
 	public static KBFolderService getService() {

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,6 +73,11 @@ public interface KBFolderLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBFolder addKBFolder(KBFolder kbFolder);
+
+	public KBFolder addKBFolder(long userId, long groupId,
+		long parentResourceClassNameId, long parentResourcePrimKey,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new k b folder with the primary key. Does not add the k b folder to the database.
@@ -167,7 +173,16 @@ public interface KBFolderLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolder(long kbFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolderByUrlTitle(long groupId,
+		long parentKbFolderId, java.lang.String urlTitle)
+		throws PortalException;
 
 	/**
 	* Returns the k b folder matching the UUID and group.
@@ -200,6 +215,10 @@ public interface KBFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
+		java.lang.String urlTitle) throws PortalException;
+
 	/**
 	* Returns the k b folder matching the UUID and group.
 	*
@@ -211,6 +230,10 @@ public interface KBFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolderByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns a range of all the k b folders.
@@ -260,6 +283,10 @@ public interface KBFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBFoldersCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBFoldersCount(long groupId, long parentKBFolderId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -272,6 +299,9 @@ public interface KBFolderLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
+		throws PortalException;
+
 	/**
 	* Updates the k b folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -280,4 +310,8 @@ public interface KBFolderLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBFolder updateKBFolder(KBFolder kbFolder);
+
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

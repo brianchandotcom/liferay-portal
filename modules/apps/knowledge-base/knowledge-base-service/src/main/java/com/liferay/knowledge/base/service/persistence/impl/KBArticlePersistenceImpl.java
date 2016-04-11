@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2463,6 +2465,330 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G(long resourcePrimKey, long groupId) {
+		return filterFindByR_G(resourcePrimKey, groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G(long resourcePrimKey, long groupId,
+		int start, int end) {
+		return filterFindByR_G(resourcePrimKey, groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G(long resourcePrimKey, long groupId,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G(resourcePrimKey, groupId, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_GROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByR_G_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_PrevAndNext(kbArticleId, resourcePrimKey, groupId,
+				orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByR_G_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByR_G_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByR_G_PrevAndNext(Session session,
+		KBArticle kbArticle, long resourcePrimKey, long groupId,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_GROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(resourcePrimKey);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the k b articles where resourcePrimKey = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param resourcePrimKey the resource prim key
@@ -2530,6 +2856,59 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G(long resourcePrimKey, long groupId) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G(resourcePrimKey, groupId);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_R_G_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_GROUPID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_R_G_RESOURCEPRIMKEY_2 = "kbArticle.resourcePrimKey = ? AND ";
@@ -5726,6 +6105,329 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_L(long groupId, boolean latest) {
+		return filterFindByG_L(groupId, latest, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_L(long groupId, boolean latest,
+		int start, int end) {
+		return filterFindByG_L(groupId, latest, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_L(long groupId, boolean latest,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_L(groupId, latest, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_L_PrevAndNext(long kbArticleId,
+		long groupId, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_L_PrevAndNext(kbArticleId, groupId, latest,
+				orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_L_PrevAndNext(session, kbArticle, groupId,
+					latest, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_L_PrevAndNext(session, kbArticle, groupId,
+					latest, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_L_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(latest);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the k b articles where groupId = &#63; and latest = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -5793,6 +6495,59 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_L(long groupId, boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_L(groupId, latest);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LATEST_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_L_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -6264,6 +7019,329 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_M(long groupId, boolean main) {
+		return filterFindByG_M(groupId, main, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_M(long groupId, boolean main,
+		int start, int end) {
+		return filterFindByG_M(groupId, main, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_M(long groupId, boolean main,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_M(groupId, main, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_M_PrevAndNext(long kbArticleId,
+		long groupId, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_M_PrevAndNext(kbArticleId, groupId, main,
+				orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_M_PrevAndNext(session, kbArticle, groupId,
+					main, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_M_PrevAndNext(session, kbArticle, groupId,
+					main, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_M_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, boolean main,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(main);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the k b articles where groupId = &#63; and main = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -6331,6 +7409,59 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_M(long groupId, boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_M(groupId, main);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_M_MAIN_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_M_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -6804,6 +7935,328 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S(long groupId, int status) {
+		return filterFindByG_S(groupId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S(long groupId, int status, int start,
+		int end) {
+		return filterFindByG_S(groupId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S(long groupId, int status, int start,
+		int end, OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S(groupId, status, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_S_PrevAndNext(long kbArticleId,
+		long groupId, int status, OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_PrevAndNext(kbArticleId, groupId, status,
+				orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_S_PrevAndNext(session, kbArticle, groupId,
+					status, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_S_PrevAndNext(session, kbArticle, groupId,
+					status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_S_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, int status,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the k b articles where groupId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -6871,6 +8324,59 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S(long groupId, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S(groupId, status);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_S_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -11774,6 +13280,502 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
+		long groupId, boolean latest) {
+		return filterFindByR_G_L(resourcePrimKey, groupId, latest,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
+		long groupId, boolean latest, int start, int end) {
+		return filterFindByR_G_L(resourcePrimKey, groupId, latest, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
+		long groupId, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_L(resourcePrimKey, groupId, latest, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByR_G_L_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_L_PrevAndNext(kbArticleId, resourcePrimKey,
+				groupId, latest, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByR_G_L_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, latest, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByR_G_L_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, latest, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByR_G_L_PrevAndNext(Session session,
+		KBArticle kbArticle, long resourcePrimKey, long groupId,
+		boolean latest, OrderByComparator<KBArticle> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(resourcePrimKey);
+
+		qPos.add(groupId);
+
+		qPos.add(latest);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest) {
+		return filterFindByR_G_L(resourcePrimKeies, groupId, latest,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest, int start, int end) {
+		return filterFindByR_G_L(resourcePrimKeies, groupId, latest, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_L(resourcePrimKeies, groupId, latest, start, end,
+				orderByComparator);
+		}
+
+		if (resourcePrimKeies == null) {
+			resourcePrimKeies = new long[0];
+		}
+		else if (resourcePrimKeies.length > 1) {
+			resourcePrimKeies = ArrayUtil.unique(resourcePrimKeies);
+
+			Arrays.sort(resourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		if (resourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(resourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_LATEST_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -12151,6 +14153,146 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G_L(long resourcePrimKey, long groupId,
+		boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G_L(resourcePrimKey, groupId, latest);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_LATEST_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G_L(long[] resourcePrimKeies, long groupId,
+		boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G_L(resourcePrimKeies, groupId, latest);
+		}
+
+		if (resourcePrimKeies == null) {
+			resourcePrimKeies = new long[0];
+		}
+		else if (resourcePrimKeies.length > 1) {
+			resourcePrimKeies = ArrayUtil.unique(resourcePrimKeies);
+
+			Arrays.sort(resourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		if (resourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(resourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_L_LATEST_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_R_G_L_RESOURCEPRIMKEY_2 = "kbArticle.resourcePrimKey = ? AND ";
@@ -12671,6 +14813,501 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
+		long groupId, boolean main) {
+		return filterFindByR_G_M(resourcePrimKey, groupId, main,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
+		long groupId, boolean main, int start, int end) {
+		return filterFindByR_G_M(resourcePrimKey, groupId, main, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
+		long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_M(resourcePrimKey, groupId, main, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByR_G_M_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_M_PrevAndNext(kbArticleId, resourcePrimKey,
+				groupId, main, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByR_G_M_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, main, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByR_G_M_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, main, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByR_G_M_PrevAndNext(Session session,
+		KBArticle kbArticle, long resourcePrimKey, long groupId, boolean main,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(resourcePrimKey);
+
+		qPos.add(groupId);
+
+		qPos.add(main);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main) {
+		return filterFindByR_G_M(resourcePrimKeies, groupId, main,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main, int start, int end) {
+		return filterFindByR_G_M(resourcePrimKeies, groupId, main, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_M(resourcePrimKeies, groupId, main, start, end,
+				orderByComparator);
+		}
+
+		if (resourcePrimKeies == null) {
+			resourcePrimKeies = new long[0];
+		}
+		else if (resourcePrimKeies.length > 1) {
+			resourcePrimKeies = ArrayUtil.unique(resourcePrimKeies);
+
+			Arrays.sort(resourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		if (resourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(resourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_MAIN_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -13047,6 +15684,146 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G_M(long resourcePrimKey, long groupId,
+		boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G_M(resourcePrimKey, groupId, main);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_MAIN_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G_M(long[] resourcePrimKeies, long groupId,
+		boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G_M(resourcePrimKeies, groupId, main);
+		}
+
+		if (resourcePrimKeies == null) {
+			resourcePrimKeies = new long[0];
+		}
+		else if (resourcePrimKeies.length > 1) {
+			resourcePrimKeies = ArrayUtil.unique(resourcePrimKeies);
+
+			Arrays.sort(resourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		if (resourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(resourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_M_MAIN_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_R_G_M_RESOURCEPRIMKEY_2 = "kbArticle.resourcePrimKey = ? AND ";
@@ -13567,6 +16344,501 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
+		long groupId, int status) {
+		return filterFindByR_G_S(resourcePrimKey, groupId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
+		long groupId, int status, int start, int end) {
+		return filterFindByR_G_S(resourcePrimKey, groupId, status, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
+		long groupId, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_S(resourcePrimKey, groupId, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByR_G_S_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_S_PrevAndNext(kbArticleId, resourcePrimKey,
+				groupId, status, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByR_G_S_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, status, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByR_G_S_PrevAndNext(session, kbArticle,
+					resourcePrimKey, groupId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByR_G_S_PrevAndNext(Session session,
+		KBArticle kbArticle, long resourcePrimKey, long groupId, int status,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(resourcePrimKey);
+
+		qPos.add(groupId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status) {
+		return filterFindByR_G_S(resourcePrimKeies, groupId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status, int start, int end) {
+		return filterFindByR_G_S(resourcePrimKeies, groupId, status, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByR_G_S(resourcePrimKeies, groupId, status, start, end,
+				orderByComparator);
+		}
+
+		if (resourcePrimKeies == null) {
+			resourcePrimKeies = new long[0];
+		}
+		else if (resourcePrimKeies.length > 1) {
+			resourcePrimKeies = ArrayUtil.unique(resourcePrimKeies);
+
+			Arrays.sort(resourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		if (resourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(resourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -13943,6 +17215,145 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param resourcePrimKey the resource prim key
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G_S(long resourcePrimKey, long groupId, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G_S(resourcePrimKey, groupId, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(resourcePrimKey);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param resourcePrimKeies the resource prim keies
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByR_G_S(long[] resourcePrimKeies, long groupId,
+		int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByR_G_S(resourcePrimKeies, groupId, status);
+		}
+
+		if (resourcePrimKeies == null) {
+			resourcePrimKeies = new long[0];
+		}
+		else if (resourcePrimKeies.length > 1) {
+			resourcePrimKeies = ArrayUtil.unique(resourcePrimKeies);
+
+			Arrays.sort(resourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		if (resourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(resourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_R_G_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_R_G_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_R_G_S_RESOURCEPRIMKEY_2 = "kbArticle.resourcePrimKey = ? AND ";
@@ -14468,6 +17879,504 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest) {
+		return filterFindByG_P_L(groupId, parentResourcePrimKey, latest,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest, int start, int end) {
+		return filterFindByG_P_L(groupId, parentResourcePrimKey, latest, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_L(groupId, parentResourcePrimKey, latest, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentResourcePrimKey);
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param latest the latest
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_P_L_PrevAndNext(long kbArticleId,
+		long groupId, long parentResourcePrimKey, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_L_PrevAndNext(kbArticleId, groupId,
+				parentResourcePrimKey, latest, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_P_L_PrevAndNext(session, kbArticle,
+					groupId, parentResourcePrimKey, latest, orderByComparator,
+					true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_P_L_PrevAndNext(session, kbArticle,
+					groupId, parentResourcePrimKey, latest, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_P_L_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, long parentResourcePrimKey,
+		boolean latest, OrderByComparator<KBArticle> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(parentResourcePrimKey);
+
+		qPos.add(latest);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest) {
+		return filterFindByG_P_L(groupId, parentResourcePrimKeies, latest,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest, int start, int end) {
+		return filterFindByG_P_L(groupId, parentResourcePrimKeies, latest,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_L(groupId, parentResourcePrimKeies, latest, start,
+				end, orderByComparator);
+		}
+
+		if (parentResourcePrimKeies == null) {
+			parentResourcePrimKeies = new long[0];
+		}
+		else if (parentResourcePrimKeies.length > 1) {
+			parentResourcePrimKeies = ArrayUtil.unique(parentResourcePrimKeies);
+
+			Arrays.sort(parentResourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		if (parentResourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(parentResourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_LATEST_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -14850,6 +18759,146 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_L(long groupId, long parentResourcePrimKey,
+		boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_L(groupId, parentResourcePrimKey, latest);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_L_LATEST_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentResourcePrimKey);
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_L(long groupId, long[] parentResourcePrimKeies,
+		boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_L(groupId, parentResourcePrimKeies, latest);
+		}
+
+		if (parentResourcePrimKeies == null) {
+			parentResourcePrimKeies = new long[0];
+		}
+		else if (parentResourcePrimKeies.length > 1) {
+			parentResourcePrimKeies = ArrayUtil.unique(parentResourcePrimKeies);
+
+			Arrays.sort(parentResourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
+
+		if (parentResourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_P_L_PARENTRESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(parentResourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_L_LATEST_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_P_L_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -15375,6 +19424,504 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main) {
+		return filterFindByG_P_M(groupId, parentResourcePrimKey, main,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main, int start, int end) {
+		return filterFindByG_P_M(groupId, parentResourcePrimKey, main, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_M(groupId, parentResourcePrimKey, main, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentResourcePrimKey);
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param main the main
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_P_M_PrevAndNext(long kbArticleId,
+		long groupId, long parentResourcePrimKey, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_M_PrevAndNext(kbArticleId, groupId,
+				parentResourcePrimKey, main, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_P_M_PrevAndNext(session, kbArticle,
+					groupId, parentResourcePrimKey, main, orderByComparator,
+					true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_P_M_PrevAndNext(session, kbArticle,
+					groupId, parentResourcePrimKey, main, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_P_M_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, long parentResourcePrimKey,
+		boolean main, OrderByComparator<KBArticle> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(parentResourcePrimKey);
+
+		qPos.add(main);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main) {
+		return filterFindByG_P_M(groupId, parentResourcePrimKeies, main,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main, int start, int end) {
+		return filterFindByG_P_M(groupId, parentResourcePrimKeies, main, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_M(groupId, parentResourcePrimKeies, main, start,
+				end, orderByComparator);
+		}
+
+		if (parentResourcePrimKeies == null) {
+			parentResourcePrimKeies = new long[0];
+		}
+		else if (parentResourcePrimKeies.length > 1) {
+			parentResourcePrimKeies = ArrayUtil.unique(parentResourcePrimKeies);
+
+			Arrays.sort(parentResourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
+
+		if (parentResourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(parentResourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_M_MAIN_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -15755,6 +20302,146 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_M(long groupId, long parentResourcePrimKey,
+		boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_M(groupId, parentResourcePrimKey, main);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_M_MAIN_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentResourcePrimKey);
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_M(long groupId, long[] parentResourcePrimKeies,
+		boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_M(groupId, parentResourcePrimKeies, main);
+		}
+
+		if (parentResourcePrimKeies == null) {
+			parentResourcePrimKeies = new long[0];
+		}
+		else if (parentResourcePrimKeies.length > 1) {
+			parentResourcePrimKeies = ArrayUtil.unique(parentResourcePrimKeies);
+
+			Arrays.sort(parentResourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
+
+		if (parentResourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_P_M_PARENTRESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(parentResourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_M_MAIN_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_P_M_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -16280,6 +20967,504 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_S(long groupId,
+		long parentResourcePrimKey, int status) {
+		return filterFindByG_P_S(groupId, parentResourcePrimKey, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_S(long groupId,
+		long parentResourcePrimKey, int status, int start, int end) {
+		return filterFindByG_P_S(groupId, parentResourcePrimKey, status, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_S(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_S(groupId, parentResourcePrimKey, status, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentResourcePrimKey);
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_P_S_PrevAndNext(long kbArticleId,
+		long groupId, long parentResourcePrimKey, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_S_PrevAndNext(kbArticleId, groupId,
+				parentResourcePrimKey, status, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_P_S_PrevAndNext(session, kbArticle,
+					groupId, parentResourcePrimKey, status, orderByComparator,
+					true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_P_S_PrevAndNext(session, kbArticle,
+					groupId, parentResourcePrimKey, status, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_P_S_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, long parentResourcePrimKey,
+		int status, OrderByComparator<KBArticle> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(parentResourcePrimKey);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status) {
+		return filterFindByG_P_S(groupId, parentResourcePrimKeies, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status, int start, int end) {
+		return filterFindByG_P_S(groupId, parentResourcePrimKeies, status,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_S(groupId, parentResourcePrimKeies, status, start,
+				end, orderByComparator);
+		}
+
+		if (parentResourcePrimKeies == null) {
+			parentResourcePrimKeies = new long[0];
+		}
+		else if (parentResourcePrimKeies.length > 1) {
+			parentResourcePrimKeies = ArrayUtil.unique(parentResourcePrimKeies);
+
+			Arrays.sort(parentResourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
+
+		if (parentResourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(parentResourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -16661,6 +21846,146 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKey the parent resource prim key
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_S(long groupId, long parentResourcePrimKey,
+		int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_S(groupId, parentResourcePrimKey, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_2);
+
+		query.append(_FINDER_COLUMN_G_P_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(parentResourcePrimKey);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentResourcePrimKeies the parent resource prim keies
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_S(long groupId, long[] parentResourcePrimKeies,
+		int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_S(groupId, parentResourcePrimKeies, status);
+		}
+
+		if (parentResourcePrimKeies == null) {
+			parentResourcePrimKeies = new long[0];
+		}
+		else if (parentResourcePrimKeies.length > 1) {
+			parentResourcePrimKeies = ArrayUtil.unique(parentResourcePrimKeies);
+
+			Arrays.sort(parentResourcePrimKeies);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
+
+		if (parentResourcePrimKeies.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_P_S_PARENTRESOURCEPRIMKEY_7);
+
+			query.append(StringUtil.merge(parentResourcePrimKeies));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_P_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_P_S_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -17204,6 +22529,373 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT(long groupId, long kbFolderId,
+		String urlTitle) {
+		return filterFindByG_KBFI_UT(groupId, kbFolderId, urlTitle,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT(long groupId, long kbFolderId,
+		String urlTitle, int start, int end) {
+		return filterFindByG_KBFI_UT(groupId, kbFolderId, urlTitle, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT(long groupId, long kbFolderId,
+		String urlTitle, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_UT(groupId, kbFolderId, urlTitle, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			if (bindUrlTitle) {
+				qPos.add(urlTitle);
+			}
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_KBFI_UT_PrevAndNext(long kbArticleId,
+		long groupId, long kbFolderId, String urlTitle,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_UT_PrevAndNext(kbArticleId, groupId,
+				kbFolderId, urlTitle, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_KBFI_UT_PrevAndNext(session, kbArticle,
+					groupId, kbFolderId, urlTitle, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_KBFI_UT_PrevAndNext(session, kbArticle,
+					groupId, kbFolderId, urlTitle, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_KBFI_UT_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, long kbFolderId, String urlTitle,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(kbFolderId);
+
+		if (bindUrlTitle) {
+			qPos.add(urlTitle);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the k b articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -17291,6 +22983,79 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_KBFI_UT(long groupId, long kbFolderId,
+		String urlTitle) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_KBFI_UT(groupId, kbFolderId, urlTitle);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_URLTITLE_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			if (bindUrlTitle) {
+				qPos.add(urlTitle);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_KBFI_UT_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -17806,6 +23571,345 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_S(long groupId, long kbFolderId,
+		int status) {
+		return filterFindByG_KBFI_S(groupId, kbFolderId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_S(long groupId, long kbFolderId,
+		int status, int start, int end) {
+		return filterFindByG_KBFI_S(groupId, kbFolderId, status, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_S(long groupId, long kbFolderId,
+		int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_S(groupId, kbFolderId, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_KBFOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_KBFI_S_PrevAndNext(long kbArticleId,
+		long groupId, long kbFolderId, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_S_PrevAndNext(kbArticleId, groupId, kbFolderId,
+				status, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_KBFI_S_PrevAndNext(session, kbArticle,
+					groupId, kbFolderId, status, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_KBFI_S_PrevAndNext(session, kbArticle,
+					groupId, kbFolderId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_KBFI_S_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, long kbFolderId, int status,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_KBFOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(kbFolderId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the k b articles where groupId = &#63; and kbFolderId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -17879,6 +23983,64 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_KBFI_S(long groupId, long kbFolderId, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_KBFI_S(groupId, kbFolderId, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_KBFOLDERID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_KBFI_S_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -18403,6 +24565,546 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_L(long groupId, String sections,
+		boolean latest) {
+		return filterFindByG_S_L(groupId, sections, latest, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_L(long groupId, String sections,
+		boolean latest, int start, int end) {
+		return filterFindByG_S_L(groupId, sections, latest, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_L(long groupId, String sections,
+		boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_L(groupId, sections, latest, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindSections) {
+				qPos.add(sections);
+			}
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param latest the latest
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_S_L_PrevAndNext(long kbArticleId,
+		long groupId, String sections, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_L_PrevAndNext(kbArticleId, groupId, sections,
+				latest, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_S_L_PrevAndNext(session, kbArticle,
+					groupId, sections, latest, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_S_L_PrevAndNext(session, kbArticle,
+					groupId, sections, latest, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_S_L_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, String sections, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_LATEST_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindSections) {
+			qPos.add(sections);
+		}
+
+		qPos.add(latest);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param latest the latest
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_L(long groupId, String[] sectionses,
+		boolean latest) {
+		return filterFindByG_S_L(groupId, sectionses, latest,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_L(long groupId, String[] sectionses,
+		boolean latest, int start, int end) {
+		return filterFindByG_S_L(groupId, sectionses, latest, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param latest the latest
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_L(long groupId, String[] sectionses,
+		boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_L(groupId, sectionses, latest, start, end,
+				orderByComparator);
+		}
+
+		if (sectionses == null) {
+			sectionses = new String[0];
+		}
+		else if (sectionses.length > 1) {
+			sectionses = ArrayUtil.distinct(sectionses,
+					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(sectionses, NULL_SAFE_STRING_COMPARATOR);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_GROUPID_2);
+
+		if (sectionses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < sectionses.length; i++) {
+				String sections = sectionses[i];
+
+				if (sections == null) {
+					query.append(_FINDER_COLUMN_G_S_L_SECTIONS_4);
+				}
+				else if (sections.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_S_L_SECTIONS_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_S_L_SECTIONS_5);
+				}
+
+				if ((i + 1) < sectionses.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_LATEST_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			for (String sections : sectionses) {
+				if ((sections != null) && !sections.isEmpty()) {
+					qPos.add(sections);
+				}
+			}
+
+			qPos.add(latest);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -18831,6 +25533,178 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S_L(long groupId, String sections, boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S_L(groupId, sections, latest);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_L_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_L_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_LATEST_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindSections) {
+				qPos.add(sections);
+			}
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param latest the latest
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S_L(long groupId, String[] sectionses,
+		boolean latest) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S_L(groupId, sectionses, latest);
+		}
+
+		if (sectionses == null) {
+			sectionses = new String[0];
+		}
+		else if (sectionses.length > 1) {
+			sectionses = ArrayUtil.distinct(sectionses,
+					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(sectionses, NULL_SAFE_STRING_COMPARATOR);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_L_GROUPID_2);
+
+		if (sectionses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < sectionses.length; i++) {
+				String sections = sectionses[i];
+
+				if (sections == null) {
+					query.append(_FINDER_COLUMN_G_S_L_SECTIONS_4);
+				}
+				else if (sections.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_S_L_SECTIONS_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_S_L_SECTIONS_5);
+				}
+
+				if ((i + 1) < sectionses.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_L_LATEST_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			for (String sections : sectionses) {
+				if ((sections != null) && !sections.isEmpty()) {
+					qPos.add(sections);
+				}
+			}
+
+			qPos.add(latest);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_S_L_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -19363,6 +26237,546 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_M(long groupId, String sections,
+		boolean main) {
+		return filterFindByG_S_M(groupId, sections, main, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_M(long groupId, String sections,
+		boolean main, int start, int end) {
+		return filterFindByG_S_M(groupId, sections, main, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_M(long groupId, String sections,
+		boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_M(groupId, sections, main, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindSections) {
+				qPos.add(sections);
+			}
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param main the main
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_S_M_PrevAndNext(long kbArticleId,
+		long groupId, String sections, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_M_PrevAndNext(kbArticleId, groupId, sections,
+				main, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_S_M_PrevAndNext(session, kbArticle,
+					groupId, sections, main, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_S_M_PrevAndNext(session, kbArticle,
+					groupId, sections, main, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_S_M_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, String sections, boolean main,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_MAIN_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindSections) {
+			qPos.add(sections);
+		}
+
+		qPos.add(main);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param main the main
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_M(long groupId, String[] sectionses,
+		boolean main) {
+		return filterFindByG_S_M(groupId, sectionses, main, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_M(long groupId, String[] sectionses,
+		boolean main, int start, int end) {
+		return filterFindByG_S_M(groupId, sectionses, main, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param main the main
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_M(long groupId, String[] sectionses,
+		boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_M(groupId, sectionses, main, start, end,
+				orderByComparator);
+		}
+
+		if (sectionses == null) {
+			sectionses = new String[0];
+		}
+		else if (sectionses.length > 1) {
+			sectionses = ArrayUtil.distinct(sectionses,
+					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(sectionses, NULL_SAFE_STRING_COMPARATOR);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_GROUPID_2);
+
+		if (sectionses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < sectionses.length; i++) {
+				String sections = sectionses[i];
+
+				if (sections == null) {
+					query.append(_FINDER_COLUMN_G_S_M_SECTIONS_4);
+				}
+				else if (sections.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_S_M_SECTIONS_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_S_M_SECTIONS_5);
+				}
+
+				if ((i + 1) < sectionses.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_MAIN_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			for (String sections : sectionses) {
+				if ((sections != null) && !sections.isEmpty()) {
+					qPos.add(sections);
+				}
+			}
+
+			qPos.add(main);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -19791,6 +27205,178 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S_M(long groupId, String sections, boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S_M(groupId, sections, main);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_M_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_M_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_MAIN_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindSections) {
+				qPos.add(sections);
+			}
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param main the main
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S_M(long groupId, String[] sectionses,
+		boolean main) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S_M(groupId, sectionses, main);
+		}
+
+		if (sectionses == null) {
+			sectionses = new String[0];
+		}
+		else if (sectionses.length > 1) {
+			sectionses = ArrayUtil.distinct(sectionses,
+					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(sectionses, NULL_SAFE_STRING_COMPARATOR);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_M_GROUPID_2);
+
+		if (sectionses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < sectionses.length; i++) {
+				String sections = sectionses[i];
+
+				if (sections == null) {
+					query.append(_FINDER_COLUMN_G_S_M_SECTIONS_4);
+				}
+				else if (sections.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_S_M_SECTIONS_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_S_M_SECTIONS_5);
+				}
+
+				if ((i + 1) < sectionses.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_M_MAIN_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			for (String sections : sectionses) {
+				if ((sections != null) && !sections.isEmpty()) {
+					qPos.add(sections);
+				}
+			}
+
+			qPos.add(main);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_S_M_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -20322,6 +27908,546 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_S(long groupId, String sections,
+		int status) {
+		return filterFindByG_S_S(groupId, sections, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_S(long groupId, String sections,
+		int status, int start, int end) {
+		return filterFindByG_S_S(groupId, sections, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_S(long groupId, String sections,
+		int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_S(groupId, sections, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindSections) {
+				qPos.add(sections);
+			}
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_S_S_PrevAndNext(long kbArticleId,
+		long groupId, String sections, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_S_PrevAndNext(kbArticleId, groupId, sections,
+				status, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_S_S_PrevAndNext(session, kbArticle,
+					groupId, sections, status, orderByComparator, true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_S_S_PrevAndNext(session, kbArticle,
+					groupId, sections, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_S_S_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, String sections, int status,
+		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindSections) {
+			qPos.add(sections);
+		}
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_S(long groupId, String[] sectionses,
+		int status) {
+		return filterFindByG_S_S(groupId, sectionses, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_S(long groupId, String[] sectionses,
+		int status, int start, int end) {
+		return filterFindByG_S_S(groupId, sectionses, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_S_S(long groupId, String[] sectionses,
+		int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_S_S(groupId, sectionses, status, start, end,
+				orderByComparator);
+		}
+
+		if (sectionses == null) {
+			sectionses = new String[0];
+		}
+		else if (sectionses.length > 1) {
+			sectionses = ArrayUtil.distinct(sectionses,
+					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(sectionses, NULL_SAFE_STRING_COMPARATOR);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_GROUPID_2);
+
+		if (sectionses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < sectionses.length; i++) {
+				String sections = sectionses[i];
+
+				if (sections == null) {
+					query.append(_FINDER_COLUMN_G_S_S_SECTIONS_4);
+				}
+				else if (sections.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_S_S_SECTIONS_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_S_S_SECTIONS_5);
+				}
+
+				if ((i + 1) < sectionses.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			for (String sections : sectionses) {
+				if ((sections != null) && !sections.isEmpty()) {
+					qPos.add(sections);
+				}
+			}
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -20750,6 +28876,177 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sections the sections
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S_S(long groupId, String sections, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S_S(groupId, sections, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_S_GROUPID_2);
+
+		boolean bindSections = false;
+
+		if (sections == null) {
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_1);
+		}
+		else if (sections.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_3);
+		}
+		else {
+			bindSections = true;
+
+			query.append(_FINDER_COLUMN_G_S_S_SECTIONS_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindSections) {
+				qPos.add(sections);
+			}
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param sectionses the sectionses
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_S_S(long groupId, String[] sectionses, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_S_S(groupId, sectionses, status);
+		}
+
+		if (sectionses == null) {
+			sectionses = new String[0];
+		}
+		else if (sectionses.length > 1) {
+			sectionses = ArrayUtil.distinct(sectionses,
+					NULL_SAFE_STRING_COMPARATOR);
+
+			Arrays.sort(sectionses, NULL_SAFE_STRING_COMPARATOR);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_S_GROUPID_2);
+
+		if (sectionses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < sectionses.length; i++) {
+				String sections = sectionses[i];
+
+				if (sections == null) {
+					query.append(_FINDER_COLUMN_G_S_S_SECTIONS_4);
+				}
+				else if (sections.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_S_S_SECTIONS_6);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_S_S_SECTIONS_5);
+				}
+
+				if ((i + 1) < sectionses.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_S_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			for (String sections : sectionses) {
+				if ((sections != null) && !sections.isEmpty()) {
+					qPos.add(sections);
+				}
+			}
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_S_S_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -21341,6 +29638,563 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	}
 
 	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param status the status
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, String urlTitle, int status) {
+		return filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, String urlTitle, int status, int start, int end) {
+		return filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, status,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param status the status
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, String urlTitle, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, status,
+				start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			if (bindUrlTitle) {
+				qPos.add(urlTitle);
+			}
+
+			qPos.add(status);
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current k b article
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next k b article
+	 * @throws NoSuchArticleException if a k b article with the primary key could not be found
+	 */
+	@Override
+	public KBArticle[] filterFindByG_KBFI_UT_ST_PrevAndNext(long kbArticleId,
+		long groupId, long kbFolderId, String urlTitle, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws NoSuchArticleException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_UT_ST_PrevAndNext(kbArticleId, groupId,
+				kbFolderId, urlTitle, status, orderByComparator);
+		}
+
+		KBArticle kbArticle = findByPrimaryKey(kbArticleId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KBArticle[] array = new KBArticleImpl[3];
+
+			array[0] = filterGetByG_KBFI_UT_ST_PrevAndNext(session, kbArticle,
+					groupId, kbFolderId, urlTitle, status, orderByComparator,
+					true);
+
+			array[1] = kbArticle;
+
+			array[2] = filterGetByG_KBFI_UT_ST_PrevAndNext(session, kbArticle,
+					groupId, kbFolderId, urlTitle, status, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KBArticle filterGetByG_KBFI_UT_ST_PrevAndNext(Session session,
+		KBArticle kbArticle, long groupId, long kbFolderId, String urlTitle,
+		int status, OrderByComparator<KBArticle> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(kbFolderId);
+
+		if (bindUrlTitle) {
+			qPos.add(urlTitle);
+		}
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kbArticle);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KBArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param statuses the statuses
+	 * @return the matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, String urlTitle, int[] statuses) {
+		return filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @return the range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, String urlTitle, int[] statuses, int start, int end) {
+		return filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			statuses, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of k b articles
+	 * @param end the upper bound of the range of k b articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, String urlTitle, int[] statuses, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, statuses,
+				start, end, orderByComparator);
+		}
+
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else if (statuses.length > 1) {
+			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_2);
+		}
+
+		if (statuses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_STATUS_7);
+
+			query.append(StringUtil.merge(statuses));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(KBArticleModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(KBArticleModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, KBArticleImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, KBArticleImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			if (bindUrlTitle) {
+				qPos.add(urlTitle);
+			}
+
+			return (List<KBArticle>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the k b articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -21778,6 +30632,182 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param status the status
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_KBFI_UT_ST(long groupId, long kbFolderId,
+		String urlTitle, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, status);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			if (bindUrlTitle) {
+				qPos.add(urlTitle);
+			}
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param kbFolderId the kb folder ID
+	 * @param urlTitle the url title
+	 * @param statuses the statuses
+	 * @return the number of matching k b articles that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_KBFI_UT_ST(long groupId, long kbFolderId,
+		String urlTitle, int[] statuses) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, statuses);
+		}
+
+		if (statuses == null) {
+			statuses = new int[0];
+		}
+		else if (statuses.length > 1) {
+			statuses = ArrayUtil.unique(statuses);
+
+			Arrays.sort(statuses);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_KBFI_UT_ST_KBFOLDERID_2);
+
+		boolean bindUrlTitle = false;
+
+		if (urlTitle == null) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_1);
+		}
+		else if (urlTitle.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_3);
+		}
+		else {
+			bindUrlTitle = true;
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_URLTITLE_2);
+		}
+
+		if (statuses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_G_KBFI_UT_ST_STATUS_7);
+
+			query.append(StringUtil.merge(statuses));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				KBArticle.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(kbFolderId);
+
+			if (bindUrlTitle) {
+				qPos.add(urlTitle);
+			}
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_KBFI_UT_ST_GROUPID_2 = "kbArticle.groupId = ? AND ";
@@ -23196,7 +32226,17 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 	private static final String _SQL_SELECT_KBARTICLE_WHERE = "SELECT kbArticle FROM KBArticle kbArticle WHERE ";
 	private static final String _SQL_COUNT_KBARTICLE = "SELECT COUNT(kbArticle) FROM KBArticle kbArticle";
 	private static final String _SQL_COUNT_KBARTICLE_WHERE = "SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "kbArticle.rootResourcePrimKey";
+	private static final String _FILTER_SQL_SELECT_KBARTICLE_WHERE = "SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ";
+	private static final String _FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ";
+	private static final String _FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId";
+	private static final String _FILTER_SQL_COUNT_KBARTICLE_WHERE = "SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ";
+	private static final String _FILTER_ENTITY_ALIAS = "kbArticle";
+	private static final String _FILTER_ENTITY_TABLE = "KBArticle";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kbArticle.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "KBArticle.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No KBArticle exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KBArticle exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KBArticlePersistenceImpl.class);

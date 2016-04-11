@@ -167,6 +167,11 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 		return _kbFolder.compareTo(kbFolder);
 	}
 
+	@Override
+	public long getClassNameId() {
+		return _kbFolder.getClassNameId();
+	}
+
 	/**
 	* Returns the company ID of this k b folder.
 	*
@@ -262,6 +267,12 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 		return _kbFolder.getParentKBFolderId();
 	}
 
+	@Override
+	public java.lang.String getParentTitle(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolder.getParentTitle(locale);
+	}
+
 	/**
 	* Returns the primary key of this k b folder.
 	*
@@ -335,6 +346,12 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	@Override
 	public boolean isCachedModel() {
 		return _kbFolder.isCachedModel();
+	}
+
+	@Override
+	public boolean isEmpty()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolder.isEmpty();
 	}
 
 	@Override

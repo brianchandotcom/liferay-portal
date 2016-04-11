@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,6 +77,10 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KBTemplate addKBTemplate(KBTemplate kbTemplate);
 
+	public KBTemplate addKBTemplate(long userId, java.lang.String title,
+		java.lang.String content, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new k b template with the primary key. Does not add the k b template to the database.
 	*
@@ -81,14 +89,19 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	*/
 	public KBTemplate createKBTemplate(long kbTemplateId);
 
+	public void deleteGroupKBTemplates(long groupId) throws PortalException;
+
 	/**
 	* Deletes the k b template from the database. Also notifies the appropriate model listeners.
 	*
 	* @param kbTemplate the k b template
 	* @return the k b template that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public KBTemplate deleteKBTemplate(KBTemplate kbTemplate);
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public KBTemplate deleteKBTemplate(KBTemplate kbTemplate)
+		throws PortalException;
 
 	/**
 	* Deletes the k b template with the primary key from the database. Also notifies the appropriate model listeners.
@@ -99,6 +112,9 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public KBTemplate deleteKBTemplate(long kbTemplateId)
+		throws PortalException;
+
+	public void deleteKBTemplates(long[] kbTemplateIds)
 		throws PortalException;
 
 	/**
@@ -189,6 +205,13 @@ public interface KBTemplateLocalService extends BaseLocalService,
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBTemplate> getGroupKBTemplates(long groupId, int start,
+		int end, OrderByComparator<KBTemplate> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupKBTemplatesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -274,6 +297,12 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBTemplate> search(long groupId, java.lang.String title,
+		java.lang.String content, Date startDate, Date endDate,
+		boolean andOperator, int start, int end,
+		OrderByComparator<KBTemplate> orderByComparator);
+
 	/**
 	* Updates the k b template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -282,4 +311,12 @@ public interface KBTemplateLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBTemplate updateKBTemplate(KBTemplate kbTemplate);
+
+	public KBTemplate updateKBTemplate(long kbTemplateId,
+		java.lang.String title, java.lang.String content,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void updateKBTemplateResources(KBTemplate kbTemplate,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
 }

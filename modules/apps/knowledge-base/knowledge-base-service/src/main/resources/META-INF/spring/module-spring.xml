@@ -4,6 +4,7 @@
 	<bean id="com.liferay.knowledge.base.service.KBArticleLocalService" class="com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl" />
 	<bean id="com.liferay.knowledge.base.service.KBArticleService" class="com.liferay.knowledge.base.service.impl.KBArticleServiceImpl" />
 	<bean id="com.liferay.knowledge.base.service.persistence.KBArticlePersistence" class="com.liferay.knowledge.base.service.persistence.impl.KBArticlePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.knowledge.base.service.persistence.KBArticleFinder" class="com.liferay.knowledge.base.service.persistence.impl.KBArticleFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.knowledge.base.service.KBCommentLocalService" class="com.liferay.knowledge.base.service.impl.KBCommentLocalServiceImpl" />
 	<bean id="com.liferay.knowledge.base.service.KBCommentService" class="com.liferay.knowledge.base.service.impl.KBCommentServiceImpl" />
 	<bean id="com.liferay.knowledge.base.service.persistence.KBCommentPersistence" class="com.liferay.knowledge.base.service.persistence.impl.KBCommentPersistenceImpl" parent="basePersistence" />

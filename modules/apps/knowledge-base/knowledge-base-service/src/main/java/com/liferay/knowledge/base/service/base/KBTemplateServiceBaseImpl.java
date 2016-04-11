@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBTemplateService;
+import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
@@ -115,6 +116,24 @@ public abstract class KBTemplateServiceBaseImpl extends BaseServiceImpl
 	public void setKBArticlePersistence(
 		KBArticlePersistence kbArticlePersistence) {
 		this.kbArticlePersistence = kbArticlePersistence;
+	}
+
+	/**
+	 * Returns the k b article finder.
+	 *
+	 * @return the k b article finder
+	 */
+	public KBArticleFinder getKBArticleFinder() {
+		return kbArticleFinder;
+	}
+
+	/**
+	 * Sets the k b article finder.
+	 *
+	 * @param kbArticleFinder the k b article finder
+	 */
+	public void setKBArticleFinder(KBArticleFinder kbArticleFinder) {
+		this.kbArticleFinder = kbArticleFinder;
 	}
 
 	/**
@@ -605,6 +624,8 @@ public abstract class KBTemplateServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.knowledge.base.service.KBArticleService kbArticleService;
 	@BeanReference(type = KBArticlePersistence.class)
 	protected KBArticlePersistence kbArticlePersistence;
+	@BeanReference(type = KBArticleFinder.class)
+	protected KBArticleFinder kbArticleFinder;
 	@BeanReference(type = com.liferay.knowledge.base.service.KBCommentLocalService.class)
 	protected com.liferay.knowledge.base.service.KBCommentLocalService kbCommentLocalService;
 	@BeanReference(type = com.liferay.knowledge.base.service.KBCommentService.class)

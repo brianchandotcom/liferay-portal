@@ -32,6 +32,57 @@ public class KBCommentServiceWrapper implements KBCommentService,
 		_kbCommentService = kbCommentService;
 	}
 
+	@Override
+	public com.liferay.knowledge.base.model.KBComment deleteKBComment(
+		com.liferay.knowledge.base.model.KBComment kbComment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.deleteKBComment(kbComment);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBComment deleteKBComment(
+		long kbCommentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.deleteKBComment(kbCommentId);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBComment getKBComment(
+		long kbCommentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.getKBComment(kbCommentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
+		long groupId, java.lang.String className, long classPK, int status,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.getKBComments(groupId, className, classPK,
+			status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.knowledge.base.model.KBComment> getKBComments(
+		long groupId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.getKBComments(groupId, status, start, end);
+	}
+
+	@Override
+	public int getKBCommentsCount(long groupId, java.lang.String className,
+		long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.getKBCommentsCount(groupId, className,
+			classPK, status);
+	}
+
+	@Override
+	public int getKBCommentsCount(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.getKBCommentsCount(groupId, status);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -40,6 +91,35 @@ public class KBCommentServiceWrapper implements KBCommentService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _kbCommentService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBComment updateKBComment(
+		long kbCommentId, long classNameId, long classPK,
+		java.lang.String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.updateKBComment(kbCommentId, classNameId,
+			classPK, content, serviceContext);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBComment updateKBComment(
+		long kbCommentId, long classNameId, long classPK,
+		java.lang.String content, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.updateKBComment(kbCommentId, classNameId,
+			classPK, content, status, serviceContext);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBComment updateStatus(
+		long kbCommentId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentService.updateStatus(kbCommentId, status,
+			serviceContext);
 	}
 
 	@Override

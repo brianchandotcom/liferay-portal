@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +76,14 @@ public interface KBCommentLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public KBComment addKBComment(KBComment kbComment);
 
+	public KBComment addKBComment(long userId, long classNameId, long classPK,
+		java.lang.String content, ServiceContext serviceContext)
+		throws PortalException;
+
+	public KBComment addKBComment(long userId, long classNameId, long classPK,
+		java.lang.String content, int userRating, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new k b comment with the primary key. Does not add the k b comment to the database.
 	*
@@ -86,9 +97,12 @@ public interface KBCommentLocalService extends BaseLocalService,
 	*
 	* @param kbComment the k b comment
 	* @return the k b comment that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public KBComment deleteKBComment(KBComment kbComment);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public KBComment deleteKBComment(KBComment kbComment)
+		throws PortalException;
 
 	/**
 	* Deletes the k b comment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -99,6 +113,9 @@ public interface KBCommentLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public KBComment deleteKBComment(long kbCommentId)
+		throws PortalException;
+
+	public void deleteKBComments(java.lang.String className, long classPK)
 		throws PortalException;
 
 	/**
@@ -201,6 +218,10 @@ public interface KBCommentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment getKBComment(long kbCommentId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBComment getKBComment(long userId, java.lang.String className,
+		long classPK) throws PortalException;
+
 	/**
 	* Returns the k b comment matching the UUID and group.
 	*
@@ -212,6 +233,22 @@ public interface KBCommentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment getKBCommentByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(java.lang.String className,
+		long classPK, int start, int end, OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(java.lang.String className,
+		long classPK, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(java.lang.String className,
+		long classPK, int[] status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(long groupId, int status, int start,
+		int end);
 
 	/**
 	* Returns a range of all the k b comments.
@@ -226,6 +263,11 @@ public interface KBCommentLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(long userId,
+		java.lang.String className, long classPK, int start, int end,
+		OrderByComparator<KBComment> orderByComparator);
 
 	/**
 	* Returns all the k b comments matching the UUID and company.
@@ -261,6 +303,24 @@ public interface KBCommentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBCommentsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(java.lang.String className, long classPK,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(java.lang.String className, long classPK,
+		int[] status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBCommentsCount(long userId, java.lang.String className,
+		long classPK);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -281,4 +341,15 @@ public interface KBCommentLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBComment updateKBComment(KBComment kbComment);
+
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, java.lang.String content, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public KBComment updateKBComment(long kbCommentId, long classNameId,
+		long classPK, java.lang.String content, int userRating, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public KBComment updateStatus(long userId, long kbCommentId, int status,
+		ServiceContext serviceContext) throws PortalException;
 }

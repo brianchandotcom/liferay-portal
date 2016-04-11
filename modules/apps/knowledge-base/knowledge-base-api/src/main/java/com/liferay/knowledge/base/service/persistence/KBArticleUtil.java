@@ -820,6 +820,78 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G(long resourcePrimKey,
+		long groupId) {
+		return getPersistence().filterFindByR_G(resourcePrimKey, groupId);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G(long resourcePrimKey,
+		long groupId, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G(resourcePrimKey, groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G(long resourcePrimKey,
+		long groupId, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G(resourcePrimKey, groupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByR_G_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByR_G_PrevAndNext(kbArticleId, resourcePrimKey,
+			groupId, orderByComparator);
+	}
+
+	/**
 	* Removes all the k b articles where resourcePrimKey = &#63; and groupId = &#63; from the database.
 	*
 	* @param resourcePrimKey the resource prim key
@@ -838,6 +910,17 @@ public class KBArticleUtil {
 	*/
 	public static int countByR_G(long resourcePrimKey, long groupId) {
 		return getPersistence().countByR_G(resourcePrimKey, groupId);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G(long resourcePrimKey, long groupId) {
+		return getPersistence().filterCountByR_G(resourcePrimKey, groupId);
 	}
 
 	/**
@@ -1846,6 +1929,75 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_L(long groupId, boolean latest) {
+		return getPersistence().filterFindByG_L(groupId, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_L(long groupId, boolean latest,
+		int start, int end) {
+		return getPersistence().filterFindByG_L(groupId, latest, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_L(long groupId, boolean latest,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_L(groupId, latest, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_L_PrevAndNext(long kbArticleId,
+		long groupId, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_L_PrevAndNext(kbArticleId, groupId, latest,
+			orderByComparator);
+	}
+
+	/**
 	* Removes all the k b articles where groupId = &#63; and latest = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1864,6 +2016,17 @@ public class KBArticleUtil {
 	*/
 	public static int countByG_L(long groupId, boolean latest) {
 		return getPersistence().countByG_L(groupId, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_L(long groupId, boolean latest) {
+		return getPersistence().filterCountByG_L(groupId, latest);
 	}
 
 	/**
@@ -2015,6 +2178,74 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_M(long groupId, boolean main) {
+		return getPersistence().filterFindByG_M(groupId, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_M(long groupId, boolean main,
+		int start, int end) {
+		return getPersistence().filterFindByG_M(groupId, main, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_M(long groupId, boolean main,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_M(groupId, main, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param main the main
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_M_PrevAndNext(long kbArticleId,
+		long groupId, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_M_PrevAndNext(kbArticleId, groupId, main,
+			orderByComparator);
+	}
+
+	/**
 	* Removes all the k b articles where groupId = &#63; and main = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -2033,6 +2264,17 @@ public class KBArticleUtil {
 	*/
 	public static int countByG_M(long groupId, boolean main) {
 		return getPersistence().countByG_M(groupId, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_M(long groupId, boolean main) {
+		return getPersistence().filterCountByG_M(groupId, main);
 	}
 
 	/**
@@ -2186,6 +2428,74 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S(long groupId, int status) {
+		return getPersistence().filterFindByG_S(groupId, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S(long groupId, int status,
+		int start, int end) {
+		return getPersistence().filterFindByG_S(groupId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S(long groupId, int status,
+		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S(groupId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_S_PrevAndNext(long kbArticleId,
+		long groupId, int status, OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_S_PrevAndNext(kbArticleId, groupId, status,
+			orderByComparator);
+	}
+
+	/**
 	* Removes all the k b articles where groupId = &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -2204,6 +2514,17 @@ public class KBArticleUtil {
 	*/
 	public static int countByG_S(long groupId, int status) {
 		return getPersistence().countByG_S(groupId, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S(long groupId, int status) {
+		return getPersistence().filterCountByG_S(groupId, status);
 	}
 
 	/**
@@ -3786,6 +4107,142 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
+		long groupId, boolean latest) {
+		return getPersistence()
+				   .filterFindByR_G_L(resourcePrimKey, groupId, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
+		long groupId, boolean latest, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G_L(resourcePrimKey, groupId, latest, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_L(long resourcePrimKey,
+		long groupId, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G_L(resourcePrimKey, groupId, latest, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByR_G_L_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByR_G_L_PrevAndNext(kbArticleId, resourcePrimKey,
+			groupId, latest, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest) {
+		return getPersistence()
+				   .filterFindByR_G_L(resourcePrimKeies, groupId, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G_L(resourcePrimKeies, groupId, latest,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G_L(resourcePrimKeies, groupId, latest,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
 	*
 	* <p>
@@ -3906,6 +4363,34 @@ public class KBArticleUtil {
 	public static int countByR_G_L(long[] resourcePrimKeies, long groupId,
 		boolean latest) {
 		return getPersistence().countByR_G_L(resourcePrimKeies, groupId, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G_L(long resourcePrimKey, long groupId,
+		boolean latest) {
+		return getPersistence()
+				   .filterCountByR_G_L(resourcePrimKey, groupId, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G_L(long[] resourcePrimKeies,
+		long groupId, boolean latest) {
+		return getPersistence()
+				   .filterCountByR_G_L(resourcePrimKeies, groupId, latest);
 	}
 
 	/**
@@ -4082,6 +4567,140 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
+		long groupId, boolean main) {
+		return getPersistence().filterFindByR_G_M(resourcePrimKey, groupId, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
+		long groupId, boolean main, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G_M(resourcePrimKey, groupId, main, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_M(long resourcePrimKey,
+		long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G_M(resourcePrimKey, groupId, main, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param main the main
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByR_G_M_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByR_G_M_PrevAndNext(kbArticleId, resourcePrimKey,
+			groupId, main, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main) {
+		return getPersistence()
+				   .filterFindByR_G_M(resourcePrimKeies, groupId, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G_M(resourcePrimKeies, groupId, main, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G_M(resourcePrimKeies, groupId, main, start,
+			end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
 	*
 	* <p>
@@ -4202,6 +4821,34 @@ public class KBArticleUtil {
 	public static int countByR_G_M(long[] resourcePrimKeies, long groupId,
 		boolean main) {
 		return getPersistence().countByR_G_M(resourcePrimKeies, groupId, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G_M(long resourcePrimKey, long groupId,
+		boolean main) {
+		return getPersistence()
+				   .filterCountByR_G_M(resourcePrimKey, groupId, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G_M(long[] resourcePrimKeies,
+		long groupId, boolean main) {
+		return getPersistence()
+				   .filterCountByR_G_M(resourcePrimKeies, groupId, main);
 	}
 
 	/**
@@ -4374,6 +5021,142 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
+		long groupId, int status) {
+		return getPersistence()
+				   .filterFindByR_G_S(resourcePrimKey, groupId, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
+		long groupId, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G_S(resourcePrimKey, groupId, status, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_S(long resourcePrimKey,
+		long groupId, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G_S(resourcePrimKey, groupId, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByR_G_S_PrevAndNext(long kbArticleId,
+		long resourcePrimKey, long groupId, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByR_G_S_PrevAndNext(kbArticleId, resourcePrimKey,
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status) {
+		return getPersistence()
+				   .filterFindByR_G_S(resourcePrimKeies, groupId, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByR_G_S(resourcePrimKeies, groupId, status,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByR_G_S(resourcePrimKeies, groupId, status,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
 	*
 	* <p>
@@ -4494,6 +5277,34 @@ public class KBArticleUtil {
 	public static int countByR_G_S(long[] resourcePrimKeies, long groupId,
 		int status) {
 		return getPersistence().countByR_G_S(resourcePrimKeies, groupId, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param resourcePrimKey the resource prim key
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G_S(long resourcePrimKey, long groupId,
+		int status) {
+		return getPersistence()
+				   .filterCountByR_G_S(resourcePrimKey, groupId, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
+	*
+	* @param resourcePrimKeies the resource prim keies
+	* @param groupId the group ID
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByR_G_S(long[] resourcePrimKeies,
+		long groupId, int status) {
+		return getPersistence()
+				   .filterCountByR_G_S(resourcePrimKeies, groupId, status);
 	}
 
 	/**
@@ -4672,6 +5483,142 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest) {
+		return getPersistence()
+				   .filterFindByG_P_L(groupId, parentResourcePrimKey, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_L(groupId, parentResourcePrimKey, latest,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_L(groupId, parentResourcePrimKey, latest,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param latest the latest
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_P_L_PrevAndNext(long kbArticleId,
+		long groupId, long parentResourcePrimKey, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_P_L_PrevAndNext(kbArticleId, groupId,
+			parentResourcePrimKey, latest, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest) {
+		return getPersistence()
+				   .filterFindByG_P_L(groupId, parentResourcePrimKeies, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_L(groupId, parentResourcePrimKeies, latest,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_L(groupId, parentResourcePrimKeies, latest,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
 	*
 	* <p>
@@ -4796,6 +5743,34 @@ public class KBArticleUtil {
 		long[] parentResourcePrimKeies, boolean latest) {
 		return getPersistence()
 				   .countByG_P_L(groupId, parentResourcePrimKeies, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_P_L(long groupId,
+		long parentResourcePrimKey, boolean latest) {
+		return getPersistence()
+				   .filterCountByG_P_L(groupId, parentResourcePrimKey, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_P_L(long groupId,
+		long[] parentResourcePrimKeies, boolean latest) {
+		return getPersistence()
+				   .filterCountByG_P_L(groupId, parentResourcePrimKeies, latest);
 	}
 
 	/**
@@ -4972,6 +5947,142 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main) {
+		return getPersistence()
+				   .filterFindByG_P_M(groupId, parentResourcePrimKey, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_M(groupId, parentResourcePrimKey, main,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_M(groupId, parentResourcePrimKey, main,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param main the main
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_P_M_PrevAndNext(long kbArticleId,
+		long groupId, long parentResourcePrimKey, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_P_M_PrevAndNext(kbArticleId, groupId,
+			parentResourcePrimKey, main, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main) {
+		return getPersistence()
+				   .filterFindByG_P_M(groupId, parentResourcePrimKeies, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_M(groupId, parentResourcePrimKeies, main,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_M(groupId, parentResourcePrimKeies, main,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
 	*
 	* <p>
@@ -5096,6 +6207,34 @@ public class KBArticleUtil {
 		long[] parentResourcePrimKeies, boolean main) {
 		return getPersistence()
 				   .countByG_P_M(groupId, parentResourcePrimKeies, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_P_M(long groupId,
+		long parentResourcePrimKey, boolean main) {
+		return getPersistence()
+				   .filterCountByG_P_M(groupId, parentResourcePrimKey, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_P_M(long groupId,
+		long[] parentResourcePrimKeies, boolean main) {
+		return getPersistence()
+				   .filterCountByG_P_M(groupId, parentResourcePrimKeies, main);
 	}
 
 	/**
@@ -5274,6 +6413,142 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_S(long groupId,
+		long parentResourcePrimKey, int status) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentResourcePrimKey, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_S(long groupId,
+		long parentResourcePrimKey, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentResourcePrimKey, status,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_S(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentResourcePrimKey, status,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_P_S_PrevAndNext(long kbArticleId,
+		long groupId, long parentResourcePrimKey, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_P_S_PrevAndNext(kbArticleId, groupId,
+			parentResourcePrimKey, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentResourcePrimKeies, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentResourcePrimKeies, status,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_P_S(groupId, parentResourcePrimKeies, status,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
 	*
 	* <p>
@@ -5398,6 +6673,34 @@ public class KBArticleUtil {
 		long[] parentResourcePrimKeies, int status) {
 		return getPersistence()
 				   .countByG_P_S(groupId, parentResourcePrimKeies, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKey the parent resource prim key
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_P_S(long groupId,
+		long parentResourcePrimKey, int status) {
+		return getPersistence()
+				   .filterCountByG_P_S(groupId, parentResourcePrimKey, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentResourcePrimKeies the parent resource prim keies
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_P_S(long groupId,
+		long[] parentResourcePrimKeies, int status) {
+		return getPersistence()
+				   .filterCountByG_P_S(groupId, parentResourcePrimKeies, status);
 	}
 
 	/**
@@ -5574,6 +6877,85 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT(long groupId,
+		long kbFolderId, java.lang.String urlTitle) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT(groupId, kbFolderId, urlTitle);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT(groupId, kbFolderId, urlTitle, start,
+			end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT(groupId, kbFolderId, urlTitle, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_KBFI_UT_PrevAndNext(
+		long kbArticleId, long groupId, long kbFolderId,
+		java.lang.String urlTitle,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_PrevAndNext(kbArticleId, groupId,
+			kbFolderId, urlTitle, orderByComparator);
+	}
+
+	/**
 	* Removes all the k b articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -5596,6 +6978,20 @@ public class KBArticleUtil {
 	public static int countByG_KBFI_UT(long groupId, long kbFolderId,
 		java.lang.String urlTitle) {
 		return getPersistence().countByG_KBFI_UT(groupId, kbFolderId, urlTitle);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_KBFI_UT(long groupId, long kbFolderId,
+		java.lang.String urlTitle) {
+		return getPersistence()
+				   .filterCountByG_KBFI_UT(groupId, kbFolderId, urlTitle);
 	}
 
 	/**
@@ -5769,6 +7165,82 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_S(long groupId,
+		long kbFolderId, int status) {
+		return getPersistence().filterFindByG_KBFI_S(groupId, kbFolderId, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_S(long groupId,
+		long kbFolderId, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_KBFI_S(groupId, kbFolderId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_S(long groupId,
+		long kbFolderId, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_KBFI_S(groupId, kbFolderId, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_KBFI_S_PrevAndNext(
+		long kbArticleId, long groupId, long kbFolderId, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_KBFI_S_PrevAndNext(kbArticleId, groupId,
+			kbFolderId, status, orderByComparator);
+	}
+
+	/**
 	* Removes all the k b articles where groupId = &#63; and kbFolderId = &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -5790,6 +7262,20 @@ public class KBArticleUtil {
 	*/
 	public static int countByG_KBFI_S(long groupId, long kbFolderId, int status) {
 		return getPersistence().countByG_KBFI_S(groupId, kbFolderId, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_KBFI_S(long groupId, long kbFolderId,
+		int status) {
+		return getPersistence()
+				   .filterCountByG_KBFI_S(groupId, kbFolderId, status);
 	}
 
 	/**
@@ -5966,6 +7452,138 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_L(long groupId,
+		java.lang.String sections, boolean latest) {
+		return getPersistence().filterFindByG_S_L(groupId, sections, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_L(long groupId,
+		java.lang.String sections, boolean latest, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_L(groupId, sections, latest, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_L(long groupId,
+		java.lang.String sections, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_L(groupId, sections, latest, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param latest the latest
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_S_L_PrevAndNext(long kbArticleId,
+		long groupId, java.lang.String sections, boolean latest,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_S_L_PrevAndNext(kbArticleId, groupId,
+			sections, latest, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param latest the latest
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_L(long groupId,
+		java.lang.String[] sectionses, boolean latest) {
+		return getPersistence().filterFindByG_S_L(groupId, sectionses, latest);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_L(long groupId,
+		java.lang.String[] sectionses, boolean latest, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_L(groupId, sectionses, latest, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param latest the latest
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_L(long groupId,
+		java.lang.String[] sectionses, boolean latest, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_L(groupId, sectionses, latest, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
 	*
 	* <p>
@@ -6086,6 +7704,32 @@ public class KBArticleUtil {
 	public static int countByG_S_L(long groupId, java.lang.String[] sectionses,
 		boolean latest) {
 		return getPersistence().countByG_S_L(groupId, sectionses, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S_L(long groupId,
+		java.lang.String sections, boolean latest) {
+		return getPersistence().filterCountByG_S_L(groupId, sections, latest);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and latest = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param latest the latest
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S_L(long groupId,
+		java.lang.String[] sectionses, boolean latest) {
+		return getPersistence().filterCountByG_S_L(groupId, sectionses, latest);
 	}
 
 	/**
@@ -6258,6 +7902,138 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_M(long groupId,
+		java.lang.String sections, boolean main) {
+		return getPersistence().filterFindByG_S_M(groupId, sections, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_M(long groupId,
+		java.lang.String sections, boolean main, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_M(groupId, sections, main, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_M(long groupId,
+		java.lang.String sections, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_M(groupId, sections, main, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param main the main
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_S_M_PrevAndNext(long kbArticleId,
+		long groupId, java.lang.String sections, boolean main,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_S_M_PrevAndNext(kbArticleId, groupId,
+			sections, main, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param main the main
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_M(long groupId,
+		java.lang.String[] sectionses, boolean main) {
+		return getPersistence().filterFindByG_S_M(groupId, sectionses, main);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_M(long groupId,
+		java.lang.String[] sectionses, boolean main, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_M(groupId, sectionses, main, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param main the main
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_M(long groupId,
+		java.lang.String[] sectionses, boolean main, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_M(groupId, sectionses, main, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
 	*
 	* <p>
@@ -6378,6 +8154,32 @@ public class KBArticleUtil {
 	public static int countByG_S_M(long groupId, java.lang.String[] sectionses,
 		boolean main) {
 		return getPersistence().countByG_S_M(groupId, sectionses, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S_M(long groupId,
+		java.lang.String sections, boolean main) {
+		return getPersistence().filterCountByG_S_M(groupId, sections, main);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param main the main
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S_M(long groupId,
+		java.lang.String[] sectionses, boolean main) {
+		return getPersistence().filterCountByG_S_M(groupId, sectionses, main);
 	}
 
 	/**
@@ -6554,6 +8356,138 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_S(long groupId,
+		java.lang.String sections, int status) {
+		return getPersistence().filterFindByG_S_S(groupId, sections, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_S(long groupId,
+		java.lang.String sections, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_S(groupId, sections, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_S(long groupId,
+		java.lang.String sections, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_S(groupId, sections, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_S_S_PrevAndNext(long kbArticleId,
+		long groupId, java.lang.String sections, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_S_S_PrevAndNext(kbArticleId, groupId,
+			sections, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_S(long groupId,
+		java.lang.String[] sectionses, int status) {
+		return getPersistence().filterFindByG_S_S(groupId, sectionses, status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_S(long groupId,
+		java.lang.String[] sectionses, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_S_S(groupId, sectionses, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_S_S(long groupId,
+		java.lang.String[] sectionses, int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_S_S(groupId, sectionses, status, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
 	*
 	* <p>
@@ -6674,6 +8608,32 @@ public class KBArticleUtil {
 	public static int countByG_S_S(long groupId, java.lang.String[] sectionses,
 		int status) {
 		return getPersistence().countByG_S_S(groupId, sectionses, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sections the sections
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S_S(long groupId,
+		java.lang.String sections, int status) {
+		return getPersistence().filterCountByG_S_S(groupId, sections, status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and sections LIKE any &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param sectionses the sectionses
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_S_S(long groupId,
+		java.lang.String[] sectionses, int status) {
+		return getPersistence().filterCountByG_S_S(groupId, sectionses, status);
 	}
 
 	/**
@@ -6862,6 +8822,154 @@ public class KBArticleUtil {
 	}
 
 	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param status the status
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int status) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			status);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int status, int start,
+		int end) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param status the status
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int status, int start,
+		int end, OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the k b articles before and after the current k b article in the ordered set of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	*
+	* @param kbArticleId the primary key of the current k b article
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next k b article
+	* @throws NoSuchArticleException if a k b article with the primary key could not be found
+	*/
+	public static KBArticle[] filterFindByG_KBFI_UT_ST_PrevAndNext(
+		long kbArticleId, long groupId, long kbFolderId,
+		java.lang.String urlTitle, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST_PrevAndNext(kbArticleId, groupId,
+			kbFolderId, urlTitle, status, orderByComparator);
+	}
+
+	/**
+	* Returns all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param statuses the statuses
+	* @return the matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int[] statuses) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			statuses);
+	}
+
+	/**
+	* Returns a range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param statuses the statuses
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @return the range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int[] statuses, int start,
+		int end) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			statuses, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param statuses the statuses
+	* @param start the lower bound of the range of k b articles
+	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching k b articles that the user has permission to view
+	*/
+	public static List<KBArticle> filterFindByG_KBFI_UT_ST(long groupId,
+		long kbFolderId, java.lang.String urlTitle, int[] statuses, int start,
+		int end, OrderByComparator<KBArticle> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			statuses, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the k b articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
 	*
 	* <p>
@@ -6995,6 +9103,38 @@ public class KBArticleUtil {
 		java.lang.String urlTitle, int[] statuses) {
 		return getPersistence()
 				   .countByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle, statuses);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param status the status
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_KBFI_UT_ST(long groupId, long kbFolderId,
+		java.lang.String urlTitle, int status) {
+		return getPersistence()
+				   .filterCountByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			status);
+	}
+
+	/**
+	* Returns the number of k b articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param kbFolderId the kb folder ID
+	* @param urlTitle the url title
+	* @param statuses the statuses
+	* @return the number of matching k b articles that the user has permission to view
+	*/
+	public static int filterCountByG_KBFI_UT_ST(long groupId, long kbFolderId,
+		java.lang.String urlTitle, int[] statuses) {
+		return getPersistence()
+				   .filterCountByG_KBFI_UT_ST(groupId, kbFolderId, urlTitle,
+			statuses);
 	}
 
 	/**

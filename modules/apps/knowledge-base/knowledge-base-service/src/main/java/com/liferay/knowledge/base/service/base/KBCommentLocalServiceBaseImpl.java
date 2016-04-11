@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
+import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
@@ -133,10 +134,12 @@ public abstract class KBCommentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param kbComment the k b comment
 	 * @return the k b comment that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public KBComment deleteKBComment(KBComment kbComment) {
+	public KBComment deleteKBComment(KBComment kbComment)
+		throws PortalException {
 		return kbCommentPersistence.remove(kbComment);
 	}
 
@@ -491,6 +494,24 @@ public abstract class KBCommentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setKBArticlePersistence(
 		KBArticlePersistence kbArticlePersistence) {
 		this.kbArticlePersistence = kbArticlePersistence;
+	}
+
+	/**
+	 * Returns the k b article finder.
+	 *
+	 * @return the k b article finder
+	 */
+	public KBArticleFinder getKBArticleFinder() {
+		return kbArticleFinder;
+	}
+
+	/**
+	 * Sets the k b article finder.
+	 *
+	 * @param kbArticleFinder the k b article finder
+	 */
+	public void setKBArticleFinder(KBArticleFinder kbArticleFinder) {
+		this.kbArticleFinder = kbArticleFinder;
 	}
 
 	/**
@@ -889,6 +910,8 @@ public abstract class KBCommentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.knowledge.base.service.KBArticleLocalService kbArticleLocalService;
 	@BeanReference(type = KBArticlePersistence.class)
 	protected KBArticlePersistence kbArticlePersistence;
+	@BeanReference(type = KBArticleFinder.class)
+	protected KBArticleFinder kbArticleFinder;
 	@BeanReference(type = com.liferay.knowledge.base.service.KBCommentLocalService.class)
 	protected KBCommentLocalService kbCommentLocalService;
 	@BeanReference(type = KBCommentPersistence.class)

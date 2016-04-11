@@ -16,9 +16,16 @@ package com.liferay.knowledge.base.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.knowledge.base.service.KBCommentServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.knowledge.base.service.KBCommentServiceUtil} service utility. The
+ * {@link KBCommentServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,170 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see KBCommentServiceHttp
  * @see com.liferay.knowledge.base.model.KBCommentSoap
- * @see com.liferay.knowledge.base.service.KBCommentServiceUtil
+ * @see KBCommentServiceUtil
  * @generated
  */
 @ProviderType
 public class KBCommentServiceSoap {
+	public static com.liferay.knowledge.base.model.KBCommentSoap deleteKBComment(
+		com.liferay.knowledge.base.model.KBCommentSoap kbComment)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.deleteKBComment(com.liferay.knowledge.base.model.impl.KBCommentModelImpl.toModel(
+						kbComment));
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap deleteKBComment(
+		long kbCommentId) throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.deleteKBComment(kbCommentId);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap getKBComment(
+		long kbCommentId) throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.getKBComment(kbCommentId);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, int status, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, status, start, end);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, java.lang.String className, long classPK, int status,
+		int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, className, classPK,
+					status, start, end);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getKBCommentsCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getKBCommentsCount(long groupId,
+		java.lang.String className, long classPK, int status)
+		throws RemoteException {
+		try {
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
+					className, classPK, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap updateKBComment(
+		long kbCommentId, long classNameId, long classPK,
+		java.lang.String content, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.updateKBComment(kbCommentId,
+					classNameId, classPK, content, status, serviceContext);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap updateKBComment(
+		long kbCommentId, long classNameId, long classPK,
+		java.lang.String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.updateKBComment(kbCommentId,
+					classNameId, classPK, content, serviceContext);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap updateStatus(
+		long kbCommentId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBComment returnValue = KBCommentServiceUtil.updateStatus(kbCommentId,
+					status, serviceContext);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(KBCommentServiceSoap.class);
 }

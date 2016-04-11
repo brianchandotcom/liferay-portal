@@ -53,6 +53,17 @@ public class KBFolderLocalServiceUtil {
 		return getService().addKBFolder(kbFolder);
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
+		long userId, long groupId, long parentResourceClassNameId,
+		long parentResourcePrimKey, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addKBFolder(userId, groupId, parentResourceClassNameId,
+			parentResourcePrimKey, name, description, serviceContext);
+	}
+
 	/**
 	* Creates a new k b folder with the primary key. Does not add the k b folder to the database.
 	*
@@ -175,9 +186,22 @@ public class KBFolderLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolder fetchFirstChildKBFolder(
+		long groupId, long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchFirstChildKBFolder(groupId, kbFolderId);
+	}
+
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
 		long kbFolderId) {
 		return getService().fetchKBFolder(kbFolderId);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
+		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
 	}
 
 	/**
@@ -218,6 +242,13 @@ public class KBFolderLocalServiceUtil {
 		return getService().getKBFolder(kbFolderId);
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUrlTitle(
+		long groupId, long parentKbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getKBFolderByUrlTitle(groupId, parentKbFolderId, urlTitle);
+	}
+
 	/**
 	* Returns the k b folder matching the UUID and group.
 	*
@@ -230,6 +261,12 @@ public class KBFolderLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFolders(
+		long groupId, long parentKBFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
 	}
 
 	/**
@@ -287,6 +324,11 @@ public class KBFolderLocalServiceUtil {
 		return getService().getKBFoldersCount();
 	}
 
+	public static int getKBFoldersCount(long groupId, long parentKBFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBFoldersCount(groupId, parentKBFolderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -302,6 +344,11 @@ public class KBFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void moveKBFolder(long kbFolderId, long parentKBFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveKBFolder(kbFolderId, parentKBFolderId);
+	}
+
 	/**
 	* Updates the k b folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -311,6 +358,15 @@ public class KBFolderLocalServiceUtil {
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		com.liferay.knowledge.base.model.KBFolder kbFolder) {
 		return getService().updateKBFolder(kbFolder);
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+		long parentResourceClassNameId, long parentResourcePrimKey,
+		long kbFolderId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKBFolder(parentResourceClassNameId,
+			parentResourcePrimKey, kbFolderId, name, description);
 	}
 
 	public static KBFolderLocalService getService() {

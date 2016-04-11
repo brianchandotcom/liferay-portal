@@ -53,4 +53,27 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 				return KBArticle.class;
 			}
 		};
+
+	public java.util.List<java.lang.Long> getAncestorResourcePrimaryKeys()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long getAttachmentsFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long getClassNameId();
+
+	public long getClassPK();
+
+	public com.liferay.knowledge.base.model.KBArticle getParentKBArticle()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String getParentTitle(java.util.Locale locale, int status)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isFirstVersion();
+
+	public boolean isRoot();
 }

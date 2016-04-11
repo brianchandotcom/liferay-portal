@@ -41,6 +41,54 @@ public class KBTemplateServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.knowledge.base.model.KBTemplate addKBTemplate(
+		java.lang.String portletId, java.lang.String title,
+		java.lang.String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addKBTemplate(portletId, title, content, serviceContext);
+	}
+
+	public static com.liferay.knowledge.base.model.KBTemplate deleteKBTemplate(
+		long kbTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteKBTemplate(kbTemplateId);
+	}
+
+	public static void deleteKBTemplates(long groupId, long[] kbTemplateIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteKBTemplates(groupId, kbTemplateIds);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBTemplate> getGroupKBTemplates(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator) {
+		return getService()
+				   .getGroupKBTemplates(groupId, start, end, orderByComparator);
+	}
+
+	public static int getGroupKBTemplatesCount(long groupId) {
+		return getService().getGroupKBTemplatesCount(groupId);
+	}
+
+	public static com.liferay.knowledge.base.model.KBTemplate getKBTemplate(
+		long kbTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBTemplate(kbTemplateId);
+	}
+
+	public static com.liferay.knowledge.base.model.KBTemplateSearchDisplay getKBTemplateSearchDisplay(
+		long groupId, java.lang.String title, java.lang.String content,
+		java.util.Date startDate, java.util.Date endDate, boolean andOperator,
+		int[] curStartValues, int cur, int delta,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBTemplate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getKBTemplateSearchDisplay(groupId, title, content,
+			startDate, endDate, andOperator, curStartValues, cur, delta,
+			orderByComparator);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +97,15 @@ public class KBTemplateServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.knowledge.base.model.KBTemplate updateKBTemplate(
+		long kbTemplateId, java.lang.String title, java.lang.String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateKBTemplate(kbTemplateId, title, content,
+			serviceContext);
 	}
 
 	public static KBTemplateService getService() {

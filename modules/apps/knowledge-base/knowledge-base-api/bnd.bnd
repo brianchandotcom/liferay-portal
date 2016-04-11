@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Knowledge Base API
+Bundle-SymbolicName: com.liferay.knowledge.base.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.knowledge.base.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Knowledge Base

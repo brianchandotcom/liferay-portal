@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledgebase.util;
+package com.liferay.knowledge.base.constants;
 
 import com.liferay.portal.kernel.model.PortletConstants;
 
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.PortletConstants;
  * @author Brian Wing Shun Chan
  * @author Peter Shin
  */
-public class PortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
+public class KnowledgeBasePortletKeys {
 
 	public static final String KNOWLEDGE_BASE_ADMIN =
 		"1_WAR_knowledgebaseportlet";
@@ -29,8 +29,7 @@ public class PortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
 		"3_WAR_knowledgebaseportlet";
 
 	public static final String KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE =
-		PortletKeys.KNOWLEDGE_BASE_ARTICLE +
-			PortletConstants.INSTANCE_SEPARATOR + "0000";
+		KNOWLEDGE_BASE_ARTICLE + PortletConstants.INSTANCE_SEPARATOR + "0000";
 
 	public static final String KNOWLEDGE_BASE_DISPLAY =
 		"2_WAR_knowledgebaseportlet";

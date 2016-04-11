@@ -1,48 +1,61 @@
-{namespace Templates.ListItem}
+{namespace ListItem}
 
 /**
- * @param id
  * @param index
  * @param item
  * @param? elementClasses
- * @skipUpdates elementClasses
  */
 {template .render}
-	<li id="{$id}" class="listitem list-group-item component{$elementClasses ? ' ' + $elementClasses : ''} clearfix" data-index="{$index}">
-		{call .item data="all" /}
+	<li class="listitem list-group-item {$elementClasses ? ' ' + $elementClasses : ''} clearfix" data-index="{$index}">
+		{if $item.avatar}
+			<span class="list-image pull-left {$item.avatar.class}">
+				{call .htmlContent}
+					{param content: $item.avatar.content /}
+				{/call}
+			</span>
+		{/if}
+		<div class="list-main-content pull-left">
+			<div class="list-text-primary">
+				{call .htmlContent}
+					{param content: $item.textPrimary /}
+				{/call}
+			</div>
+			{if $item.textSecondary}
+				<div class="list-text-secondary">
+					{call .htmlContent}
+						{param content: $item.textSecondary /}
+					{/call}
+				</div>
+			{/if}
+		</div>
+		{if $item.icons}
+			{foreach $icon in $item.icons}
+				<span class="btn-icon {$icon} pull-right"></span>
+			{/foreach}
+		{/if}
+		{if $item.iconsHtml}
+			<div class="pull-right">
+				{foreach $iconHtml in $item.iconsHtml}
+					{call .htmlContent}
+						{param content: $iconHtml /}
+					{/call}
+				{/foreach}
+			</div>
+		{/if}
+		{if $item.label}
+			<span class="label list-label pull-right {$item.label.class}">
+				{$item.label.content}
+			</span>
+		{/if}
 	</li>
 {/template}
 
 /**
- * @param item
+ * Prints the given param content as html.
  */
-{template .item}
-	{if $item.avatar}
-		<span class="list-image pull-left {$item.avatar.class}">
-			{$item.avatar.content}
-		</span>
-	{/if}
-	<div class="list-main-content pull-left">
-		<div class="list-text-primary">{$item.textPrimary}</div>
-		{if $item.textSecondary}
-			<div class="list-text-secondary">{$item.textSecondary}</div>
-		{/if}
-	</div>
-	{if $item.icons}
-		{foreach $icon in $item.icons}
-			<span class="btn-icon {$icon} pull-right"></span>
-		{/foreach}
-	{/if}
-	{if $item.iconsHtml}
-		<div class="pull-right">
-			{foreach $iconHtml in $item.iconsHtml}
-				{$iconHtml}
-			{/foreach}
-		</div>
-	{/if}
-	{if $item.label}
-		<span class="label list-label pull-right {$item.label.class}">
-			{$item.label.content}
-		</span>
+{template .htmlContent kind="html"}
+	{@param? content: html}
+	{if $content}
+		{$content}
 	{/if}
 {/template}

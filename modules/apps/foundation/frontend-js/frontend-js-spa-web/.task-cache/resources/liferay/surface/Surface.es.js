@@ -69,7 +69,6 @@ define("frontend-js-spa-web@1.0.6/liferay/surface/Surface.es", ['exports', 'meta
 		return LiferaySurface;
 	}(_Surface3.default);
 
-	LiferaySurface.prototype.registerMetalComponent && LiferaySurface.prototype.registerMetalComponent(LiferaySurface, 'LiferaySurface')
 	exports.default = LiferaySurface;
 });
 //# sourceMappingURL=Surface.es.js.map

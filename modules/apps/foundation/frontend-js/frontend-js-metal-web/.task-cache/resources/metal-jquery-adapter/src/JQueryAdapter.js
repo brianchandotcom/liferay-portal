@@ -64,9 +64,9 @@ define("frontend-js-metal-web@1.0.6/metal-jquery-adapter/src/JQueryAdapter", ['e
 			element: element[0]
 		});
 		if (instance) {
-			instance.setAttrs(config);
+			instance.setState(config);
 		} else {
-			instance = new Ctor(config).render();
+			instance = new Ctor(config);
 			instance.on('*', onMetalEvent.bind(null, name, element));
 			element.data(fullName, instance);
 		}

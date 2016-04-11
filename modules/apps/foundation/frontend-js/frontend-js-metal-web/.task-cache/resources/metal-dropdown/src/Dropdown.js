@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-position/src/all/position', './Dropdown.soy', 'metal-events/src/events', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _position, _Dropdown, _events, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-position/src/all/position', 'metal-component/src/all/component', 'metal-events/src/events', 'metal-soy/src/Soy', './Dropdown.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _position, _component, _events, _Soy, _Dropdown, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -6,6 +6,10 @@ define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'm
 	});
 
 	var _dom2 = _interopRequireDefault(_dom);
+
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
@@ -62,34 +66,26 @@ define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'm
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Dropdown = function (_DropdownBase) {
-		_inherits(Dropdown, _DropdownBase);
+	var Dropdown = function (_Component) {
+		_inherits(Dropdown, _Component);
 
-		/**
-   * @inheritDoc
-   */
-
-		function Dropdown(opt_config) {
+		function Dropdown() {
 			_classCallCheck(this, Dropdown);
 
-			var _this = _possibleConstructorReturn(this, _DropdownBase.call(this, opt_config));
-
-			_this.eventHandler_ = new _events.EventHandler();
-			return _this;
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
 
-		/**
-   * @inheritDoc
-   */
-
-
 		Dropdown.prototype.attached = function attached() {
-			_DropdownBase.prototype.attached.call(this);
+			_Component.prototype.attached.call(this);
 			this.eventHandler_.add(_dom2.default.on(document, 'click', this.handleDocClick_.bind(this)));
 		};
 
+		Dropdown.prototype.created = function created() {
+			this.eventHandler_ = new _events.EventHandler();
+		};
+
 		Dropdown.prototype.detached = function detached() {
-			_DropdownBase.prototype.detached.call(this);
+			_Component.prototype.detached.call(this);
 			this.eventHandler_.removeAllListeners();
 		};
 
@@ -124,39 +120,17 @@ define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'm
 		};
 
 		Dropdown.prototype.syncExpanded = function syncExpanded(expanded) {
-			if (expanded) {
-				_dom2.default.addClasses(this.element, 'open');
-				if (this.alignElementSelector) {
-					var alignElement = this.element.querySelector(this.alignElementSelector);
-					if (alignElement) {
-						var bodyElement = this.getRenderer().getSurfaceElement('body');
-						var position = _position.Align.align(bodyElement, alignElement, this.position);
-						this.updatePositionCss_(position);
-					}
+			if (expanded && this.alignElementSelector) {
+				var alignElement = this.element.querySelector(this.alignElementSelector);
+				if (alignElement) {
+					var bodyElement = this.element.querySelector('.dropdown-menu');
+					this.alignedPosition = _position.Align.align(bodyElement, alignElement, this.position);
 				}
-			} else {
-				_dom2.default.removeClasses(this.element, 'open');
 			}
-		};
-
-		Dropdown.prototype.syncPosition = function syncPosition(position) {
-			this.updatePositionCss_(position);
 		};
 
 		Dropdown.prototype.toggle = function toggle() {
 			this.expanded = !this.expanded;
-		};
-
-		Dropdown.prototype.updatePositionCss_ = function updatePositionCss_(position) {
-			var element = this.element;
-			if (this.positionClassOnMenu) {
-				element = element.querySelector('.dropdown-menu');
-			}
-			if (this.alignedPosition_) {
-				_dom2.default.removeClasses(element, this.classMap[this.alignedPosition_]);
-			}
-			_dom2.default.addClasses(element, this.classMap[position]);
-			this.alignedPosition_ = position;
 		};
 
 		Dropdown.prototype.validatePosition_ = function validatePosition_(position) {
@@ -198,17 +172,24 @@ define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'm
 		};
 
 		return Dropdown;
-	}(_Dropdown2.default);
+	}(_component2.default);
 
-	Dropdown.prototype.registerMetalComponent && Dropdown.prototype.registerMetalComponent(Dropdown, 'Dropdown')
-
+	_Soy2.default.register(Dropdown, _Dropdown2.default);
 
 	/**
-  * Attrbutes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	Dropdown.ATTRS = {
+	Dropdown.STATE = {
+		/**
+   * The current position of the tooltip after being aligned via `Align.align`.
+   * @type {number}
+   */
+		alignedPosition: {
+			validator: _position.Align.isValidPosition
+		},
+
 		/**
    * Optional selector for finding the element that the dropdown should be
    * aligned to. If given, the dropdown will automatically find the best position
@@ -271,7 +252,7 @@ define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'm
 		},
 
 		/**
-   * Flag indicating if the position class (specified by `classMap` attribute)
+   * Flag indicating if the position class (specified by `classMap` state)
    * should be added on the "dropdown-menu" element, instead of the main element.
    * @type {boolean}
    */
@@ -279,14 +260,6 @@ define("frontend-js-metal-web@1.0.6/metal-dropdown/src/Dropdown", ['exports', 'm
 			value: false
 		}
 	};
-
-	/**
-  * Default dropdown elementClasses.
-  * @default dropdown
-  * @type {string}
-  * @static
-  */
-	Dropdown.ELEMENT_CLASSES = 'dropdown';
 
 	exports.default = Dropdown;
 	_JQueryAdapter2.default.register('dropdown', Dropdown);

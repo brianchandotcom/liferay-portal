@@ -126,7 +126,6 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/helpers/DragScrollDelta"
 		return DragScrollDelta;
 	}(_events.EventEmitter);
 
-	DragScrollDelta.prototype.registerMetalComponent && DragScrollDelta.prototype.registerMetalComponent(DragScrollDelta, 'DragScrollDelta')
 	exports.default = DragScrollDelta;
 });
 //# sourceMappingURL=DragScrollDelta.js.map

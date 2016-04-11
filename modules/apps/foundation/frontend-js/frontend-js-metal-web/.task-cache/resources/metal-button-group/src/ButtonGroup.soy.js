@@ -1,11 +1,14 @@
-define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.templates = exports.ButtonGroup = undefined;
 
-  var _component2 = _interopRequireDefault(_component);
+  var _Component3 = _interopRequireDefault(_Component2);
+
+  var _Soy2 = _interopRequireDefault(_Soy);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,67 +46,96 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['e
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _soy.SoyTemplates.get();
-  // This file was automatically generated from ButtonGroup.soy.
-  // Please don't edit this file by hand.
+  var templates;
+  goog.loadModule(function (exports) {
 
-  /**
-   * @fileoverview Templates in namespace Templates.ButtonGroup.
-   */
+    // This file was automatically generated from ButtonGroup.soy.
+    // Please don't edit this file by hand.
 
-  if (typeof Templates.ButtonGroup == 'undefined') {
-    Templates.ButtonGroup = {};
-  }
+    /**
+     * @fileoverview Templates in namespace ButtonGroup.
+     * @public
+     */
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.ButtonGroup.render = function (opt_data, opt_ignored, opt_ijData) {
-    var output = '<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="btn-group component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '">';
-    var buttonList8 = opt_data.buttons;
-    var buttonListLen8 = buttonList8.length;
-    for (var buttonIndex8 = 0; buttonIndex8 < buttonListLen8; buttonIndex8++) {
-      var buttonData8 = buttonList8[buttonIndex8];
-      var type__soy9 = buttonData8.type ? buttonData8.type : 'button';
-      var cssClass__soy10 = buttonData8.cssClass ? buttonData8.cssClass : 'btn btn-default';
-      output += '<button type="' + soy.$$escapeHtmlAttribute(type__soy9) + '" class="' + soy.$$escapeHtmlAttribute(cssClass__soy10) + soy.$$escapeHtmlAttribute(Templates.ButtonGroup.selectedClass({ label: buttonData8.label, selected: opt_data.selected }, null, opt_ijData)) + '" data-index="' + soy.$$escapeHtmlAttribute(buttonIndex8) + '" data-onclick="handleClick_"><span class="btn-group-label">' + soy.$$escapeHtml(buttonData8.label ? buttonData8.label : '') + '</span>' + (buttonData8.icon ? '<span class="' + soy.$$escapeHtmlAttribute(buttonData8.icon) + '"></span>' : '') + '</button>';
-    }
-    output += '</div>';
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
-  };
-  if (goog.DEBUG) {
-    Templates.ButtonGroup.render.soyTemplateName = 'Templates.ButtonGroup.render';
-  }
+    goog.module('ButtonGroup.incrementaldom');
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.ButtonGroup.selectedClass = function (opt_data, opt_ignored, opt_ijData) {
-    var output = '';
-    if (opt_data.selected) {
-      var selectedValueList34 = opt_data.selected;
-      var selectedValueListLen34 = selectedValueList34.length;
-      for (var selectedValueIndex34 = 0; selectedValueIndex34 < selectedValueListLen34; selectedValueIndex34++) {
-        var selectedValueData34 = selectedValueList34[selectedValueIndex34];
-        output += selectedValueData34 == opt_data.label ? ' btn-group-selected' : '';
+    /** @suppress {extraRequire} */
+    var soy = goog.require('soy');
+    /** @suppress {extraRequire} */
+    var soydata = goog.require('soydata');
+    /** @suppress {extraRequire} */
+    goog.require('goog.i18n.bidi');
+    /** @suppress {extraRequire} */
+    goog.require('goog.asserts');
+    var IncrementalDom = goog.require('incrementaldom');
+    var ie_open = IncrementalDom.elementOpen;
+    var ie_close = IncrementalDom.elementClose;
+    var ie_void = IncrementalDom.elementVoid;
+    var ie_open_start = IncrementalDom.elementOpenStart;
+    var ie_open_end = IncrementalDom.elementOpenEnd;
+    var itext = IncrementalDom.text;
+    var iattr = IncrementalDom.attr;
+
+    /**
+     * @param {Object<string, *>=} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {void}
+     * @suppress {checkTypes}
+     */
+    function $render(opt_data, opt_ignored, opt_ijData) {
+      ie_open('div', null, null, 'id', opt_data.id, 'class', 'btn-group component' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''));
+      var buttonList28 = opt_data.buttons;
+      var buttonListLen28 = buttonList28.length;
+      for (var buttonIndex28 = 0; buttonIndex28 < buttonListLen28; buttonIndex28++) {
+        var buttonData28 = buttonList28[buttonIndex28];
+        var type__soy8 = buttonData28.type ? buttonData28.type : 'button';
+        var cssClass__soy9 = buttonData28.cssClass ? buttonData28.cssClass : 'btn btn-default';
+        ie_open('button', null, null, 'type', type__soy8, 'class', cssClass__soy9 + $selectedClass({ label: buttonData28.label, selected: opt_data.selected }, null, opt_ijData), 'data-index', buttonIndex28, 'data-onclick', 'handleClick_');
+        ie_open('span', null, null, 'class', 'btn-group-label');
+        itext((goog.asserts.assert((buttonData28.label ? buttonData28.label : '') != null), buttonData28.label ? buttonData28.label : ''));
+        ie_close('span');
+        if (buttonData28.icon) {
+          ie_void('span', null, null, 'class', buttonData28.icon);
+        }
+        ie_close('button');
       }
+      ie_close('div');
     }
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
-  };
-  if (goog.DEBUG) {
-    Templates.ButtonGroup.selectedClass.soyTemplateName = 'Templates.ButtonGroup.selectedClass';
-  }
+    exports.render = $render;
+    if (goog.DEBUG) {
+      $render.soyTemplateName = 'ButtonGroup.render';
+    }
 
-  Templates.ButtonGroup.render.params = ["buttons", "id"];
-  Templates.ButtonGroup.selectedClass.private = true;
+    /**
+     * @param {Object<string, *>=} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {string}
+     * @suppress {checkTypes}
+     */
+    function $selectedClass(opt_data, opt_ignored, opt_ijData) {
+      var output = '';
+      if (opt_data.selected) {
+        var selectedValueList37 = opt_data.selected;
+        var selectedValueListLen37 = selectedValueList37.length;
+        for (var selectedValueIndex37 = 0; selectedValueIndex37 < selectedValueListLen37; selectedValueIndex37++) {
+          var selectedValueData37 = selectedValueList37[selectedValueIndex37];
+          output += selectedValueData37 == opt_data.label ? ' btn-group-selected' : '';
+        }
+      }
+      return output;
+    }
+    exports.selectedClass = $selectedClass;
+    if (goog.DEBUG) {
+      $selectedClass.soyTemplateName = 'ButtonGroup.selectedClass';
+    }
+
+    exports.render.params = ["buttons", "elementClasses", "id", "selected"];
+    exports.selectedClass.params = ["label", "selected"];
+    exports.templates = templates = exports;
+    return exports;
+  });
 
   var ButtonGroup = function (_Component) {
     _inherits(ButtonGroup, _Component);
@@ -115,12 +147,11 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['e
     }
 
     return ButtonGroup;
-  }(_component2.default);
+  }(_Component3.default);
 
-  ButtonGroup.prototype.registerMetalComponent && ButtonGroup.prototype.registerMetalComponent(ButtonGroup, 'ButtonGroup')
-
-  ButtonGroup.RENDERER = _soy.SoyRenderer;
-  _soy.SoyAop.registerTemplates('ButtonGroup');
-  exports.default = ButtonGroup;
+  _Soy2.default.register(ButtonGroup, templates);
+  exports.default = templates;
+  exports.ButtonGroup = ButtonGroup;
+  exports.templates = templates;
 });
 //# sourceMappingURL=ButtonGroup.soy.js.map

@@ -1,17 +1,30 @@
-{namespace Templates.ProgressBar}
+{namespace ProgressBar}
 
 /**
  * This renders the main element.
+ * @param? barClass
  * @param? elementClasses
  * @param id
- * @skipUpdates elementClasses
+ * @param? label
+ * @param? max
+ * @param? min
+ * @param? value
  */
 {template .render}
+	{let $curMax: $max ? $max : 100 /}
+	{let $curMin: $min ? $min : 0 /}
+	{let $curValue: $value ? $value : 0 /}
 	<div
 		id="{$id}"
-		class="progress component{$elementClasses ? ' ' + $elementClasses : ''}"
+		class="progress {$elementClasses ? ' ' + $elementClasses : ''}"
 		role="progressbar"
+		aria-valuemax="{$curMax}"
+		aria-valuemin="{$curMin}"
+		aria-valuenow="{$curValue}"
 		tabindex="0">
-		<div class="progress-bar"></div>
+		{let $percentage: floor((($curValue - $curMin) * 100) / ($curMax - $curMin)) /}
+		<div
+			class="progress-bar{$barClass ? ' ' + $barClass : ''}"
+			style="width: {$percentage}%">{$label ? $label : ''}</div>
 	</div>
 {/template}

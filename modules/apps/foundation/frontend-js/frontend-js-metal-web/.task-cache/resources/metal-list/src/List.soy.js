@@ -1,11 +1,14 @@
-define("frontend-js-metal-web@1.0.6/metal-list/src/List.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.6/metal-list/src/List.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.templates = exports.List = undefined;
 
-  var _component2 = _interopRequireDefault(_component);
+  var _Component3 = _interopRequireDefault(_Component2);
+
+  var _Soy2 = _interopRequireDefault(_Soy);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,60 +46,79 @@ define("frontend-js-metal-web@1.0.6/metal-list/src/List.soy", ['exports', 'metal
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _soy.SoyTemplates.get();
-  // This file was automatically generated from List.soy.
-  // Please don't edit this file by hand.
+  var templates;
+  goog.loadModule(function (exports) {
 
-  /**
-   * @fileoverview Templates in namespace Templates.List.
-   */
+    // This file was automatically generated from List.soy.
+    // Please don't edit this file by hand.
 
-  if (typeof Templates.List == 'undefined') {
-    Templates.List = {};
-  }
+    /**
+     * @fileoverview Templates in namespace List.
+     * @public
+     */
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.List.render = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="list component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + '">' + Templates.List.items(opt_data, null, opt_ijData) + '</div>');
-  };
-  if (goog.DEBUG) {
-    Templates.List.render.soyTemplateName = 'Templates.List.render';
-  }
+    goog.module('List.incrementaldom');
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.List.items = function (opt_data, opt_ignored, opt_ijData) {
-    var output = '<ul id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '-items" class="list-group" data-onclick="handleClick">';
-    if (opt_data.itemsHtml != null) {
-      output += soy.$$escapeHtml(opt_data.itemsHtml);
-    } else {
-      var itemList18 = opt_data.items;
-      var itemListLen18 = itemList18.length;
-      for (var itemIndex18 = 0; itemIndex18 < itemListLen18; itemIndex18++) {
-        var itemData18 = itemList18[itemIndex18];
-        output += Templates.ListItem.render({ id: opt_data.id + '-items-' + itemIndex18, index: itemIndex18, item: itemData18 }, null, opt_ijData);
+    /** @suppress {extraRequire} */
+    var soy = goog.require('soy');
+    /** @suppress {extraRequire} */
+    var soydata = goog.require('soydata');
+    /** @suppress {extraRequire} */
+    goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('soy.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('goog.i18n.bidi');
+    var IncrementalDom = goog.require('incrementaldom');
+    var ie_open = IncrementalDom.elementOpen;
+    var ie_close = IncrementalDom.elementClose;
+    var ie_void = IncrementalDom.elementVoid;
+    var ie_open_start = IncrementalDom.elementOpenStart;
+    var ie_open_end = IncrementalDom.elementOpenEnd;
+    var itext = IncrementalDom.text;
+    var iattr = IncrementalDom.attr;
+
+    var $templateAlias1 = _Soy2.default.getTemplate('ListItem.incrementaldom', 'render');
+
+    /**
+     * @param {{
+     *    elementClasses: (?),
+     *    items: (?),
+     *    itemsHtml: (?soydata.SanitizedHtml|string|undefined)
+     * }} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {void}
+     * @suppress {checkTypes}
+     */
+    function $render(opt_data, opt_ignored, opt_ijData) {
+      opt_data = opt_data || {};
+      soy.asserts.assertType(opt_data.itemsHtml == null || opt_data.itemsHtml instanceof Function || opt_data.itemsHtml instanceof soydata.UnsanitizedText || goog.isString(opt_data.itemsHtml), 'itemsHtml', opt_data.itemsHtml, '?soydata.SanitizedHtml|string|undefined');
+      var itemsHtml = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.itemsHtml;
+      ie_open('div', null, null, 'class', 'list' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''));
+      ie_open('ul', null, null, 'class', 'list-group', 'data-onclick', 'handleClick');
+      if (itemsHtml != null) {
+        itemsHtml();
+      } else {
+        var itemList14 = opt_data.items;
+        var itemListLen14 = itemList14.length;
+        for (var itemIndex14 = 0; itemIndex14 < itemListLen14; itemIndex14++) {
+          var itemData14 = itemList14[itemIndex14];
+          $templateAlias1({ index: itemIndex14, item: itemData14, key: '-items-' + itemIndex14 }, null, opt_ijData);
+        }
       }
+      ie_close('ul');
+      ie_close('div');
     }
-    output += '</ul>';
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
-  };
-  if (goog.DEBUG) {
-    Templates.List.items.soyTemplateName = 'Templates.List.items';
-  }
+    exports.render = $render;
+    if (goog.DEBUG) {
+      $render.soyTemplateName = 'List.render';
+    }
 
-  Templates.List.render.params = ["id"];
-  Templates.List.items.params = ["id", "items", "itemsHtml"];
+    exports.render.params = ["itemsHtml", "elementClasses", "items"];
+    exports.templates = templates = exports;
+    return exports;
+  });
 
   var List = function (_Component) {
     _inherits(List, _Component);
@@ -108,12 +130,11 @@ define("frontend-js-metal-web@1.0.6/metal-list/src/List.soy", ['exports', 'metal
     }
 
     return List;
-  }(_component2.default);
+  }(_Component3.default);
 
-  List.prototype.registerMetalComponent && List.prototype.registerMetalComponent(List, 'List')
-
-  List.RENDERER = _soy.SoyRenderer;
-  _soy.SoyAop.registerTemplates('List');
-  exports.default = List;
+  _Soy2.default.register(List, templates);
+  exports.default = templates;
+  exports.List = List;
+  exports.templates = templates;
 });
 //# sourceMappingURL=List.soy.js.map

@@ -55,6 +55,6 @@ public class JSTranspilerDefaultsPlugin
 
 	private static final String _LFR_AMD_LOADER_VERSION = "1.3.5";
 
-	private static final String _METAL_CLI_VERSION = "0.5.3";
+	private static final String _METAL_CLI_VERSION = "1.3.1";
 
 }

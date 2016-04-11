@@ -78,7 +78,6 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/ActionURLScreen.es", ['exports'
 		return ActionURLScreen;
 	}(_EventScreen3.default);
 
-	ActionURLScreen.prototype.registerMetalComponent && ActionURLScreen.prototype.registerMetalComponent(ActionURLScreen, 'ActionURLScreen')
 	exports.default = ActionURLScreen;
 });
 //# sourceMappingURL=ActionURLScreen.es.js.map

@@ -58,7 +58,6 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/RenderURLScreen.es", ['exports'
 		return RenderURLScreen;
 	}(_EventScreen3.default);
 
-	RenderURLScreen.prototype.registerMetalComponent && RenderURLScreen.prototype.registerMetalComponent(RenderURLScreen, 'RenderURLScreen')
 	exports.default = RenderURLScreen;
 });
 //# sourceMappingURL=RenderURLScreen.es.js.map

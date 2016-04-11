@@ -1,47 +1,23 @@
-{namespace Templates.Slider}
+{namespace Slider}
 
 /**
  * This renders the main element.
  * @param? elementClasses
- * @param id
- * @skipUpdates elementClasses
+ * @param? inputName
+ * @param? max
+ * @param? min
+ * @param? value
  */
 {template .render}
-	<div id="{$id}" class="slider component{$elementClasses ? ' ' + $elementClasses : ''}">
-		{call .input data="all" /}
-		{call .label data="all" /}
-		{call .rail data="all" /}
-	</div>
-{/template}
-
-/**
- * @param id
- * @param inputName
- * @param value
- */
-{template .input}
-	<div id="{$id}-input">
-		<input name="{$inputName ? $inputName : $id}" type="hidden" value="{$value}">
-	</div>
-{/template}
-
-/**
- * @param id
- * @param value
- */
-{template .label}
-	<div id="{$id}-label">
-		<span>{$value}</span>
-	</div>
-{/template}
-
-/**
- * @param id
- */
-{template .rail}
-	<div id="{$id}-rail">
+	{let $maxNumber: $max ?: 100 /}
+	{let $minNumber: $min ?: 0 /}
+	{let $valueNumber: $value ?: 0 /}
+	<div class="slider {$elementClasses ?: ''}">
+		<input name="{$inputName ?: ''}" type="hidden" value="{$valueNumber}">
+		<span>{$valueNumber}</span>
+		{let $percentage: (100 * ($valueNumber - $minNumber) / ($maxNumber - $minNumber)) + '%' /}
 		<div class="rail" data-onmousedown="onRailMouseDown_">
-			<div class="rail-active"></div>
+			<div class="rail-active" style="width: {$percentage}"></div>
 			<div class="rail-handle">
 				<div class="handle" tabindex="0"></div>
 			</div>

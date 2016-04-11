@@ -1,26 +1,18 @@
-define("frontend-js-metal-web@1.0.6/metal-soy/src/SoyAop", ['exports', './SoyTemplates'], function (exports, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.6/metal-soy/src/SoyAop", ['exports'], function (exports) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-
-	var _SoyTemplates2 = _interopRequireDefault(_SoyTemplates);
-
-	function _interopRequireDefault(obj) {
-		return obj && obj.__esModule ? obj : {
-			default: obj
-		};
-	}
-
 	var SoyAop = {
 		/**
-   * The function that should be called instead of a template call. If null, the original function
-   * will be called instead.
-   * @type {function()}
+   * The functions that should be called instead of a template call. The last
+   * function in the array is the one that is intercepting at the moment. If the
+   * array is empty, the original function will be called instead.
+   * @type {!Array<function()>}
    * @protected
    */
-		interceptFn_: null,
+		interceptFns_: [],
 
 		/**
    * Gets the original function of the given template function. If no original exists,
@@ -33,53 +25,60 @@ define("frontend-js-metal-web@1.0.6/metal-soy/src/SoyAop", ['exports', './SoyTem
 		},
 
 		/**
-   * Handles a template call, calling the current interception function if one is set, or otherwise
-   * just calling the original function instead.
-   * @param {string} compName The name of the component this template function belongs to.
-   * @param {string} templateName The name of the template this call was made for.
-   * @param {!function()} originalFn The original template function that was intercepted.
+   * Handles a template call, calling the current interception function if one
+   * is set, or otherwise just calling the original function instead.
+   * @param {!function()} originalFn The original template function that was
+   *     intercepted.
    * @param {Object} opt_data Template data object.
    * @param {*} opt_ignored
    * @param {Object} opt_ijData Template injected data object.
-   * @return {*} The return value of the function that is called to handle this interception.
+   * @return {*} The return value of the function that is called to handle this
+   *     interception.
    */
-		handleTemplateCall_: function handleTemplateCall_(compName, templateName, originalFn, opt_data, opt_ignored, opt_ijData) {
-			if (SoyAop.interceptFn_) {
-				return SoyAop.interceptFn_.call(null, compName, templateName, originalFn, opt_data, opt_ignored, opt_ijData);
+		handleTemplateCall_: function handleTemplateCall_(originalFn, opt_data, opt_ignored, opt_ijData) {
+			var interceptFn = SoyAop.interceptFns_[SoyAop.interceptFns_.length - 1];
+			if (interceptFn) {
+				return interceptFn.call(null, originalFn, opt_data, opt_ignored, opt_ijData);
 			} else {
 				return originalFn.call(null, opt_data, opt_ignored, opt_ijData);
 			}
 		},
 
 		/**
-   * Registers the templates for the requested component so they can be intercepted.
-   * @param {string} compName
+   * Registers a template function that should be intercepted.
+   * @param {!Object} templates The original templates object containing the
+   *     function to be intercepted.
+   * @param {string} name The name of the template function to intercept.
    */
-		registerTemplates: function registerTemplates(compName) {
-			var compTemplates = _SoyTemplates2.default.get(compName);
-			Object.keys(compTemplates).forEach(function (templateName) {
-				var originalFn = compTemplates[templateName];
-				if (!originalFn.originalFn) {
-					compTemplates[templateName] = SoyAop.handleTemplateCall_.bind(null, compName, templateName, originalFn);
-					compTemplates[templateName].originalFn = originalFn;
-				}
-			});
+		registerForInterception: function registerForInterception(templates, name) {
+			var originalFn = templates[name];
+			if (!originalFn.originalFn) {
+				templates[name] = SoyAop.handleTemplateCall_.bind(null, originalFn);
+				templates[name].originalFn = originalFn;
+			}
 		},
 
 		/**
-   * Starts intercepting all template calls, replacing them with a call
-   * to the given function instead.
+   * Starts intercepting all template calls, replacing them with a call to the
+   * given function instead.
    * @param {!function()} fn
    */
 		startInterception: function startInterception(fn) {
-			SoyAop.interceptFn_ = fn;
+			SoyAop.interceptFns_.push(fn);
 		},
 
 		/**
    * Stops intercepting template calls.
    */
+		stopAllInterceptions: function stopAllInterceptions() {
+			SoyAop.interceptFns_ = [];
+		},
+
+		/**
+   * Stops intercepting template calls with the last registered function.
+   */
 		stopInterception: function stopInterception() {
-			SoyAop.interceptFn_ = null;
+			SoyAop.interceptFns_.pop();
 		}
 	};
 

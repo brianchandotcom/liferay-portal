@@ -1,11 +1,13 @@
-define("frontend-js-metal-web@1.0.6/metal-treeview/src/Treeview", ['exports', 'metal-dom/src/all/dom', './Treeview.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _dom, _Treeview, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-treeview/src/Treeview", ['exports', 'metal-component/src/all/component', 'metal-soy/src/Soy', './Treeview.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _component, _Soy, _Treeview, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _dom2 = _interopRequireDefault(_dom);
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _Treeview2 = _interopRequireDefault(_Treeview);
 
@@ -47,19 +49,14 @@ define("frontend-js-metal-web@1.0.6/metal-treeview/src/Treeview", ['exports', 'm
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var Treeview = function (_TreeviewBase) {
-		_inherits(Treeview, _TreeviewBase);
+	var Treeview = function (_Component) {
+		_inherits(Treeview, _Component);
 
 		function Treeview() {
 			_classCallCheck(this, Treeview);
 
-			return _possibleConstructorReturn(this, _TreeviewBase.apply(this, arguments));
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
-
-		Treeview.prototype.attached = function attached() {
-			this.on('nodesChanged', this.onNodesChanged_);
-			this.getRenderer().on('renderSurface', this.handleRenderSurface_.bind(this));
-		};
 
 		Treeview.prototype.getNodeObj = function getNodeObj(path) {
 			var obj = this.nodes[path[0]];
@@ -69,67 +66,34 @@ define("frontend-js-metal-web@1.0.6/metal-treeview/src/Treeview", ['exports', 'm
 			return obj;
 		};
 
-		Treeview.prototype.getNodeObjFromId_ = function getNodeObjFromId_(id) {
-			var path = id.substr(this.id.length + 1).split('-');
-			return this.getNodeObj(path);
-		};
-
 		Treeview.prototype.handleNodeClicked_ = function handleNodeClicked_(event) {
-			this.toggleExpandedState_(event.delegateTarget);
+			this.toggleExpandedState_(event.delegateTarget.parentNode.parentNode);
 		};
 
 		Treeview.prototype.handleNodeKeyUp_ = function handleNodeKeyUp_(event) {
 			if (event.keyCode === 13 || event.keyCode === 32) {
-				this.toggleExpandedState_(event.delegateTarget);
+				this.toggleExpandedState_(event.delegateTarget.parentNode.parentNode);
 			}
-		};
-
-		Treeview.prototype.handleRenderSurface_ = function handleRenderSurface_(data, event) {
-			if (this.ignoreSurfaceUpdate_) {
-				event.preventDefault();
-				this.ignoreSurfaceUpdate_ = false;
-			}
-		};
-
-		Treeview.prototype.onNodesChanged_ = function onNodesChanged_() {
-			this.ignoreSurfaceUpdate_ = false;
 		};
 
 		Treeview.prototype.toggleExpandedState_ = function toggleExpandedState_(node) {
-			var nodeObj = this.getNodeObjFromId_(node.parentNode.parentNode.id);
+			var path = node.getAttribute('data-treeview-path').split('-');
+			var nodeObj = this.getNodeObj(path);
 			nodeObj.expanded = !nodeObj.expanded;
-			if (nodeObj.expanded) {
-				_dom2.default.addClasses(node.parentNode, 'expanded');
-				node.setAttribute('aria-expanded', 'true');
-			} else {
-				_dom2.default.removeClasses(node.parentNode, 'expanded');
-				node.setAttribute('aria-expanded', 'false');
-			}
-
 			this.nodes = this.nodes;
-			this.ignoreSurfaceUpdate_ = true;
 		};
 
 		return Treeview;
-	}(_Treeview2.default);
+	}(_component2.default);
 
-	Treeview.prototype.registerMetalComponent && Treeview.prototype.registerMetalComponent(Treeview, 'Treeview')
-
-
-	/**
-  * Default tree view elementClasses.
-  * @default treeView
-  * @type {string}
-  * @static
-  */
-	Treeview.ELEMENT_CLASSES = 'treeview';
+	_Soy2.default.register(Treeview, _Treeview2.default);
 
 	/**
-  * Treeview attributes definition.
+  * Treeview state definition.
   * @type {!Object}
   * @static
   */
-	Treeview.ATTRS = {
+	Treeview.STATE = {
 		/**
    * This tree view's nodes. Each node should have a name, and can optionally
    * have nested children nodes. It should also indicate if its children are

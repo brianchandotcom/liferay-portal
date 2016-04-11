@@ -1,14 +1,14 @@
-{namespace Templates.Switcher}
+{namespace Switcher}
 
 /**
  * This renders the main element
  * @param? checked
  * @param? elementClasses
- * @param id
- * @skipUpdates checked elementClasses
  */
 {template .render}
-	<div id="{$id}" class="switcher component{$elementClasses ? ' ' + $elementClasses : ''}{$checked ? ' switcher-on' : ''}">
+	<div
+		class="switcher{$elementClasses ? ' ' + $elementClasses : ''}{$checked ? ' switcher-on' : ''}"
+		data-onclick="handleClick">
 		<div class="switcher-control">
 			<div class="switcher-control-icon"></div>
 		</div>

@@ -132,7 +132,6 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'm
 		return EventScreen;
 	}(_HtmlScreen3.default);
 
-	EventScreen.prototype.registerMetalComponent && EventScreen.prototype.registerMetalComponent(EventScreen, 'EventScreen')
 	exports.default = EventScreen;
 });
 //# sourceMappingURL=EventScreen.es.js.map

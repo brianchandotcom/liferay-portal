@@ -1,4 +1,4 @@
-define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ProgressBar.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _dom, _ProgressBar, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar", ['exports', 'metal/src/metal', 'metal-component/src/all/component', 'metal-soy/src/Soy', './ProgressBar.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _metal, _component, _Soy, _ProgressBar, _JQueryAdapter) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,7 +7,9 @@ define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar", ['export
 
 	var _metal2 = _interopRequireDefault(_metal);
 
-	var _dom2 = _interopRequireDefault(_dom);
+	var _component2 = _interopRequireDefault(_component);
+
+	var _Soy2 = _interopRequireDefault(_Soy);
 
 	var _ProgressBar2 = _interopRequireDefault(_ProgressBar);
 
@@ -49,21 +51,14 @@ define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar", ['export
 		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	var ProgressBar = function (_ProgressBarBase) {
-		_inherits(ProgressBar, _ProgressBarBase);
+	var ProgressBar = function (_Component) {
+		_inherits(ProgressBar, _Component);
 
 		function ProgressBar() {
 			_classCallCheck(this, ProgressBar);
 
-			return _possibleConstructorReturn(this, _ProgressBarBase.apply(this, arguments));
+			return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 		}
-
-		ProgressBar.prototype.getBarElement = function getBarElement() {
-			if (!this.barElement_) {
-				this.barElement_ = this.element.childNodes[0];
-			}
-			return this.barElement_;
-		};
 
 		ProgressBar.prototype.setterValueFn_ = function setterValueFn_(value) {
 			if (value < this.min) {
@@ -75,61 +70,27 @@ define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar", ['export
 			return value;
 		};
 
-		ProgressBar.prototype.syncBarClass = function syncBarClass(barClass, prevBarClass) {
-			var barElement = this.getBarElement();
-			_dom2.default.removeClasses(barElement, prevBarClass);
-			_dom2.default.addClasses(barElement, barClass);
-		};
-
-		ProgressBar.prototype.syncLabel = function syncLabel() {
-			var barElement = this.getBarElement();
-			_dom2.default.removeChildren(barElement);
-			if (this.label) {
-				_dom2.default.append(barElement, this.label);
-			}
-		};
-
 		ProgressBar.prototype.syncMax = function syncMax(max) {
 			if (max < this.value) {
 				this.value = max;
-			} else {
-				this.updateBar_();
 			}
-			this.element.setAttribute('aria-valuemax', this.max);
 		};
 
 		ProgressBar.prototype.syncMin = function syncMin(min) {
 			if (min > this.value) {
 				this.value = min;
-			} else {
-				this.updateBar_();
 			}
-			this.element.setAttribute('aria-valuemin', this.min);
-		};
-
-		ProgressBar.prototype.syncValue = function syncValue() {
-			this.updateBar_();
-			this.element.setAttribute('aria-valuenow', this.value);
-		};
-
-		ProgressBar.prototype.updateBar_ = function updateBar_() {
-			var barElement = this.getBarElement();
-			var percentage = Math.floor((this.value - this.min) * 100 / (this.max - this.min));
-			barElement.style.width = percentage + '%';
 		};
 
 		return ProgressBar;
-	}(_ProgressBar2.default);
-
-	ProgressBar.prototype.registerMetalComponent && ProgressBar.prototype.registerMetalComponent(ProgressBar, 'ProgressBar')
-
+	}(_component2.default);
 
 	/**
-  * Attributes definition.
+  * State definition.
   * @type {!Object}
   * @static
   */
-	ProgressBar.ATTRS = {
+	ProgressBar.STATE = {
 		/**
    * Optional CSS classes to be added to the inner progress bar element,
    * like 'progress-bar-danger'.
@@ -179,13 +140,7 @@ define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar", ['export
 			value: 0
 		}
 	};
-
-	/**
-  * Default modal elementClasses.
-  * @type {string}
-  * @static
-  */
-	ProgressBar.ELEMENT_CLASSES = 'progress';
+	_Soy2.default.register(ProgressBar, _ProgressBar2.default);
 
 	exports.default = ProgressBar;
 	_JQueryAdapter2.default.register('progressBar', ProgressBar);

@@ -1,11 +1,14 @@
-define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/soy'], function (exports, _component, _soy) {
+define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.templates = exports.Switcher = undefined;
 
-  var _component2 = _interopRequireDefault(_component);
+  var _Component3 = _interopRequireDefault(_Component2);
+
+  var _Soy2 = _interopRequireDefault(_Soy);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -43,33 +46,60 @@ define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher.soy", ['exports'
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var Templates = _soy.SoyTemplates.get();
-  // This file was automatically generated from Switcher.soy.
-  // Please don't edit this file by hand.
+  var templates;
+  goog.loadModule(function (exports) {
 
-  /**
-   * @fileoverview Templates in namespace Templates.Switcher.
-   */
+    // This file was automatically generated from Switcher.soy.
+    // Please don't edit this file by hand.
 
-  if (typeof Templates.Switcher == 'undefined') {
-    Templates.Switcher = {};
-  }
+    /**
+     * @fileoverview Templates in namespace Switcher.
+     * @public
+     */
 
-  /**
-   * @param {Object.<string, *>=} opt_data
-   * @param {(null|undefined)=} opt_ignored
-   * @param {Object.<string, *>=} opt_ijData
-   * @return {!soydata.SanitizedHtml}
-   * @suppress {checkTypes}
-   */
-  Templates.Switcher.render = function (opt_data, opt_ignored, opt_ijData) {
-    return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="switcher component' + soy.$$escapeHtmlAttribute(opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + soy.$$escapeHtmlAttribute(opt_data.checked ? ' switcher-on' : '') + '"><div class="switcher-control"><div class="switcher-control-icon"></div></div></div>');
-  };
-  if (goog.DEBUG) {
-    Templates.Switcher.render.soyTemplateName = 'Templates.Switcher.render';
-  }
+    goog.module('Switcher.incrementaldom');
 
-  Templates.Switcher.render.params = ["id"];
+    /** @suppress {extraRequire} */
+    var soy = goog.require('soy');
+    /** @suppress {extraRequire} */
+    var soydata = goog.require('soydata');
+    /** @suppress {extraRequire} */
+    goog.require('goog.i18n.bidi');
+    /** @suppress {extraRequire} */
+    goog.require('goog.asserts');
+    var IncrementalDom = goog.require('incrementaldom');
+    var ie_open = IncrementalDom.elementOpen;
+    var ie_close = IncrementalDom.elementClose;
+    var ie_void = IncrementalDom.elementVoid;
+    var ie_open_start = IncrementalDom.elementOpenStart;
+    var ie_open_end = IncrementalDom.elementOpenEnd;
+    var itext = IncrementalDom.text;
+    var iattr = IncrementalDom.attr;
+
+    /**
+     * @param {Object<string, *>=} opt_data
+     * @param {(null|undefined)=} opt_ignored
+     * @param {Object<string, *>=} opt_ijData
+     * @return {void}
+     * @suppress {checkTypes}
+     */
+    function $render(opt_data, opt_ignored, opt_ijData) {
+      opt_data = opt_data || {};
+      ie_open('div', null, null, 'class', 'switcher' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : '') + (opt_data.checked ? ' switcher-on' : ''), 'data-onclick', 'handleClick');
+      ie_open('div', null, null, 'class', 'switcher-control');
+      ie_void('div', null, null, 'class', 'switcher-control-icon');
+      ie_close('div');
+      ie_close('div');
+    }
+    exports.render = $render;
+    if (goog.DEBUG) {
+      $render.soyTemplateName = 'Switcher.render';
+    }
+
+    exports.render.params = ["checked", "elementClasses"];
+    exports.templates = templates = exports;
+    return exports;
+  });
 
   var Switcher = function (_Component) {
     _inherits(Switcher, _Component);
@@ -81,12 +111,11 @@ define("frontend-js-metal-web@1.0.6/metal-switcher/src/Switcher.soy", ['exports'
     }
 
     return Switcher;
-  }(_component2.default);
+  }(_Component3.default);
 
-  Switcher.prototype.registerMetalComponent && Switcher.prototype.registerMetalComponent(Switcher, 'Switcher')
-
-  Switcher.RENDERER = _soy.SoyRenderer;
-  _soy.SoyAop.registerTemplates('Switcher');
-  exports.default = Switcher;
+  _Soy2.default.register(Switcher, templates);
+  exports.default = templates;
+  exports.Switcher = Switcher;
+  exports.templates = templates;
 });
 //# sourceMappingURL=Switcher.soy.js.map

@@ -148,8 +148,7 @@ public class SoyPortletHelperTest {
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(bundle);
 
 		Assert.assertEquals(
-			"Templates.View.render",
-			soyPortletHelper.getTemplateNamespace("View"));
+			"View.render", soyPortletHelper.getTemplateNamespace("View"));
 	}
 
 	protected Template createMockedTemplate() {

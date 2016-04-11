@@ -62,11 +62,11 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/EventsCollector", ['expo
 			_this.eventHandles_ = {};
 
 			/**
-    * Holds flags indicating which selectors a group has listeners for.
-    * @type {!Object<string, !Object<string, boolean>>}
+    * Holds flags indicating which selectors have listeners.
+    * @type {!Object<string, boolean>}
     * @protected
     */
-			_this.groupHasListener_ = {};
+			_this.hasListener_ = {};
 			return _this;
 		}
 
@@ -75,16 +75,13 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/EventsCollector", ['expo
    * been attached.
    * @param {string} eventType
    * @param {string} fnNamesString
-   * @param {string=} groupName
    */
 
 
 		EventsCollector.prototype.attachListener = function attachListener(eventType, fnNamesString) {
-			var groupName = arguments.length <= 2 || arguments[2] === undefined ? 'element' : arguments[2];
-
 			var selector = '[data-on' + eventType + '="' + fnNamesString + '"]';
 
-			this.groupHasListener_[groupName][selector] = true;
+			this.hasListener_[selector] = true;
 
 			if (!this.eventHandles_[selector]) {
 				this.eventHandles_[selector] = new _events.EventHandler();
@@ -95,21 +92,6 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/EventsCollector", ['expo
 						this.eventHandles_[selector].add(this.component_.delegate(eventType, selector, this.onEvent_.bind(this, fn)));
 					}
 				}
-			}
-		};
-
-		EventsCollector.prototype.attachListenersFromHtml = function attachListenersFromHtml(content) {
-			var groupName = arguments.length <= 1 || arguments[1] === undefined ? 'element' : arguments[1];
-
-			this.startCollecting(groupName);
-			if (content.indexOf('data-on') === -1) {
-				return;
-			}
-			var regex = /data-on([a-z]+)=['"]([^'"]+)['"]/g;
-			var match = regex.exec(content);
-			while (match) {
-				this.attachListener(match[1], match[2], groupName);
-				match = regex.exec(content);
 			}
 		};
 
@@ -125,18 +107,9 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/EventsCollector", ['expo
 
 		EventsCollector.prototype.detachUnusedListeners = function detachUnusedListeners() {
 			for (var selector in this.eventHandles_) {
-				if (this.eventHandles_[selector]) {
-					var unused = true;
-					for (var groupName in this.groupHasListener_) {
-						if (this.groupHasListener_[groupName][selector]) {
-							unused = false;
-							break;
-						}
-					}
-					if (unused) {
-						this.eventHandles_[selector].removeAllListeners();
-						this.eventHandles_[selector] = null;
-					}
+				if (this.eventHandles_[selector] && !this.hasListener_[selector]) {
+					this.eventHandles_[selector].removeAllListeners();
+					this.eventHandles_[selector] = null;
 				}
 			}
 		};
@@ -144,10 +117,6 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/EventsCollector", ['expo
 		EventsCollector.prototype.disposeInternal = function disposeInternal() {
 			this.detachAllListeners();
 			this.component_ = null;
-		};
-
-		EventsCollector.prototype.hasAttachedForGroup = function hasAttachedForGroup(group) {
-			return !!this.groupHasListener_.hasOwnProperty(group);
 		};
 
 		EventsCollector.prototype.onEvent_ = function onEvent_(fn, event) {
@@ -160,15 +129,12 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/EventsCollector", ['expo
 		};
 
 		EventsCollector.prototype.startCollecting = function startCollecting() {
-			var groupName = arguments.length <= 0 || arguments[0] === undefined ? 'element' : arguments[0];
-
-			this.groupHasListener_[groupName] = {};
+			this.hasListener_ = {};
 		};
 
 		return EventsCollector;
 	}(_metal.Disposable);
 
-	EventsCollector.prototype.registerMetalComponent && EventsCollector.prototype.registerMetalComponent(EventsCollector, 'EventsCollector')
 	exports.default = EventsCollector;
 });
 //# sourceMappingURL=EventsCollector.js.map

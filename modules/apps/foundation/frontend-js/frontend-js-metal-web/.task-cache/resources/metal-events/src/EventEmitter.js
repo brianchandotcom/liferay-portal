@@ -266,7 +266,6 @@ define("frontend-js-metal-web@1.0.6/metal-events/src/EventEmitter", ['exports', 
 		return EventEmitter;
 	}(_metal.Disposable);
 
-	EventEmitter.prototype.registerMetalComponent && EventEmitter.prototype.registerMetalComponent(EventEmitter, 'EventEmitter')
 	exports.default = EventEmitter;
 });
 //# sourceMappingURL=EventEmitter.js.map

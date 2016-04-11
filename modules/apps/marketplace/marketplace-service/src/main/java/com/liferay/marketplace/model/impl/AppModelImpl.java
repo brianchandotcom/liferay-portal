@@ -84,7 +84,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			{ "description", Types.VARCHAR },
 			{ "category", Types.VARCHAR },
 			{ "iconURL", Types.VARCHAR },
-			{ "version", Types.VARCHAR }
+			{ "version", Types.VARCHAR },
+			{ "required", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -102,9 +103,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		TABLE_COLUMNS_MAP.put("category", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iconURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null,required BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_App";
 	public static final String ORDER_BY_JPQL = " ORDER BY app.appId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_App.appId ASC";
@@ -152,6 +154,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		model.setCategory(soapModel.getCategory());
 		model.setIconURL(soapModel.getIconURL());
 		model.setVersion(soapModel.getVersion());
+		model.setRequired(soapModel.getRequired());
 
 		return model;
 	}
@@ -229,6 +232,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		attributes.put("category", getCategory());
 		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
+		attributes.put("required", getRequired());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -314,6 +318,12 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
 		}
 	}
 
@@ -559,6 +569,22 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		_version = version;
 	}
 
+	@JSON
+	@Override
+	public boolean getRequired() {
+		return _required;
+	}
+
+	@Override
+	public boolean isRequired() {
+		return _required;
+	}
+
+	@Override
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -609,6 +635,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		appImpl.setCategory(getCategory());
 		appImpl.setIconURL(getIconURL());
 		appImpl.setVersion(getVersion());
+		appImpl.setRequired(getRequired());
 
 		appImpl.resetOriginalValues();
 
@@ -774,12 +801,14 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			appCacheModel.version = null;
 		}
 
+		appCacheModel.required = getRequired();
+
 		return appCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -807,6 +836,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(getIconURL());
 		sb.append(", version=");
 		sb.append(getVersion());
+		sb.append(", required=");
+		sb.append(getRequired());
 		sb.append("}");
 
 		return sb.toString();
@@ -814,7 +845,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.marketplace.model.App");
@@ -872,6 +903,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			"<column><column-name>version</column-name><column-value><![CDATA[");
 		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>required</column-name><column-value><![CDATA[");
+		sb.append(getRequired());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -902,6 +937,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private String _originalCategory;
 	private String _iconURL;
 	private String _version;
+	private boolean _required;
 	private long _columnBitmask;
 	private App _escapedModel;
 }

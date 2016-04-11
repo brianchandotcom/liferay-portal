@@ -103,6 +103,11 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 		return _app.getVersion();
 	}
 
+	@Override
+	public boolean isRequired() {
+		return _app.isRequired();
+	}
+
 	private final App _app;
 
 }

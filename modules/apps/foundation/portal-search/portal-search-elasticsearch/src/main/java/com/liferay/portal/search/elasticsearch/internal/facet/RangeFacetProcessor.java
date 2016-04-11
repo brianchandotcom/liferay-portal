@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -55,17 +55,6 @@ public class RangeFacetProcessor
 		}
 	}
 
-	protected void addRange(
-		DefaultRangeBuilder defaultRangeBuilder, String range) {
-
-		range = range.replace(StringPool.OPEN_BRACKET, StringPool.BLANK);
-		range = range.replace(StringPool.CLOSE_BRACKET, StringPool.BLANK);
-
-		String[] rangeParts = range.split(StringPool.SPACE);
-
-		defaultRangeBuilder.addRange(rangeParts[0], rangeParts[2]);
-	}
-
 	protected void doProcessFacet(
 		DefaultRangeBuilder defaultRangeBuilder, Facet facet) {
 
@@ -82,7 +71,11 @@ public class RangeFacetProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			addRange(defaultRangeBuilder, rangeJSONObject.getString("range"));
+			String rangeString = rangeJSONObject.getString("range");
+
+			String[] range = RangeParserUtil.parserRange(rangeString);
+
+			defaultRangeBuilder.addRange(range[0], range[1]);
 		}
 	}
 

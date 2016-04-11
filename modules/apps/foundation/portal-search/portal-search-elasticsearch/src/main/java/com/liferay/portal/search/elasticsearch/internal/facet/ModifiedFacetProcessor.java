@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
@@ -46,9 +47,13 @@ public class ModifiedFacetProcessor extends RangeFacetProcessor {
 		String rangeParam = GetterUtil.getString(
 			searchContext.getAttribute(facet.getFieldId()));
 
-		if (Validator.isNotNull(rangeParam)) {
-			addRange(defaultRangeBuilder, rangeParam);
+		if (Validator.isNull(rangeParam)) {
+			return;
 		}
+
+		String[] range = RangeParserUtil.parserRange(rangeParam);
+
+		defaultRangeBuilder.addRange(range[0], range[1]);
 	}
 
 }

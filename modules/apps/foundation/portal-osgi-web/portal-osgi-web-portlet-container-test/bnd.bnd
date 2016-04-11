@@ -1,9 +1,7 @@
 Bundle-Name: Liferay Portal OSGi Web Portlet Container Test
 Bundle-SymbolicName: com.liferay.portal.osgi.web.portlet.container.test
 Bundle-Version: 1.0.0
-Include-Resource:\
-	test-classes/integration,\
-	@lib/com.liferay.util.java.jar!/com/liferay/util/Encryptor*.class
+Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
 Require-Capability:\

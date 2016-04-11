@@ -395,8 +395,6 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		}
 	};
 
-	var configurationHeader = AUI.$('#configurationContent');
-
 	var createAbstractEditor = function() {
 		var descriptionEditor = window['<portlet:namespace />descriptionEditor'];
 
@@ -407,11 +405,13 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		}
 	};
 
-	if (configurationHeader.hasClass('in')) {
+	var configurationContentHeader = AUI.$('#configurationContent');
+
+	if (configurationContentHeader.hasClass('in')) {
 		createAbstractEditor();
 	}
 	else {
-		configurationHeader.on('show.bs.collapse', createAbstractEditor);
+		configurationContentHeader.on('show.bs.collapse', createAbstractEditor);
 	}
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);

@@ -391,32 +391,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a toolbar for viewing items in app view.</description>
-		<name>app-view-toolbar</name>
-		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>Whether to include the option to choose a display style for component items. If the value is <![CDATA[<code>true</code>]]>, a list of display style options is rendered. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>includeDisplayStyle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>Whether to include an option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
-			<name>includeSelectAll</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description>The file path for a search JSP page.</description>
-			<name>searchJsp</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a component for displaying search results of entries in app view.</description>
 		<name>app-view-search-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewSearchEntryTag</tag-class>
@@ -552,6 +526,32 @@
 		<attribute>
 			<description>The current and past versions of the entry.</description>
 			<name>versions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Creates a toolbar for viewing items in app view.</description>
+		<name>app-view-toolbar</name>
+		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether to include the option to choose a display style for component items. If the value is <![CDATA[<code>true</code>]]>, a list of display style options is rendered. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>includeDisplayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether to include an option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>includeSelectAll</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>The file path for a search JSP page.</description>
+			<name>searchJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -3170,6 +3170,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>membership-policy-error</name>
+		<tag-class>com.liferay.taglib.ui.MembershipPolicyErrorTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>menu</name>
 		<tag-class>com.liferay.taglib.ui.MenuTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3188,11 +3193,6 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-	</tag>
-	<tag>
-		<name>membership-policy-error</name>
-		<tag-class>com.liferay.taglib.ui.MembershipPolicyErrorTag</tag-class>
-		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<description>Creates a message to display to the user.</description>
@@ -3587,6 +3587,36 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
+		</attribute>
+	</tag>
+	<tag>
+		<name>quick-access</name>
+		<tag-class>com.liferay.taglib.ui.QuickAccessTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>contentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>quick-access-entry</name>
+		<tag-class>com.liferay.taglib.ui.QuickAccessEntryTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -5284,36 +5314,6 @@
 		<attribute>
 			<name>toolbarItem</name>
 			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>quick-access</name>
-		<tag-class>com.liferay.taglib.ui.QuickAccessTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>contentId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>quick-access-entry</name>
-		<tag-class>com.liferay.taglib.ui.QuickAccessEntryTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>onClick</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>url</name>
-			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

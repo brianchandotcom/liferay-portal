@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.util;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBArticleConstants;
 import com.liferay.knowledgebase.model.KBComment;
@@ -123,9 +124,12 @@ public class KBSuggestionListDisplayContext {
 			portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
 		}
 		else if (Validator.isNull(_kbArticle.getUrlTitle()) ||
-				 portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+				 portletId.equals(
+					 KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 
-			if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			if (portletId.equals(
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+
 				portletURL.setParameter(
 					"mvcPath", _templatePath + "/view_article.jsp");
 			}

@@ -25,8 +25,8 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBArticle;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -153,7 +153,9 @@ public class KBArticleAssetEntriesUtil {
 		}
 		else if (className.equals(KBArticle.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE,
+				request,
+				KnowledgeBasePortletKeys.
+					KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE,
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/article/view_article.jsp");

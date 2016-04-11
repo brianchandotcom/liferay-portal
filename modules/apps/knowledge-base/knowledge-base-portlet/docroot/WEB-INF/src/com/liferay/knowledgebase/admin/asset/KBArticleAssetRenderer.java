@@ -15,11 +15,11 @@
 package com.liferay.knowledgebase.admin.asset;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.service.permission.KBArticlePermission;
 import com.liferay.knowledgebase.util.ActionKeys;
 import com.liferay.knowledgebase.util.KnowledgeBaseUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -113,8 +113,9 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		Group group = GroupLocalServiceUtil.fetchGroup(_kbArticle.getGroupId());
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, PortletKeys.KNOWLEDGE_BASE_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, group,
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 		portletURL.setParameter(

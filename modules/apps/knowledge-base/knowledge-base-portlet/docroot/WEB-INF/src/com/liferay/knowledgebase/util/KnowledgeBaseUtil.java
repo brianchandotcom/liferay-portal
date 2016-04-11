@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.util;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBComment;
 import com.liferay.knowledgebase.model.KBCommentConstants;
@@ -406,8 +407,8 @@ public class KnowledgeBaseUtil {
 		throws JSONException {
 
 		String preferredKBFolderURLTitle = portalPreferences.getValue(
-			PortletKeys.KNOWLEDGE_BASE_DISPLAY, "preferredKBFolderURLTitle",
-			"{}");
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY,
+			"preferredKBFolderURLTitle", "{}");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			preferredKBFolderURLTitle);
@@ -508,8 +509,8 @@ public class KnowledgeBaseUtil {
 		throws JSONException {
 
 		String preferredKBFolderURLTitle = portalPreferences.getValue(
-			PortletKeys.KNOWLEDGE_BASE_DISPLAY, "preferredKBFolderURLTitle",
-			"{}");
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY,
+			"preferredKBFolderURLTitle", "{}");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			preferredKBFolderURLTitle);
@@ -517,8 +518,8 @@ public class KnowledgeBaseUtil {
 		jsonObject.put(contentRootPrefix, value);
 
 		portalPreferences.setValue(
-			PortletKeys.KNOWLEDGE_BASE_DISPLAY, "preferredKBFolderURLTitle",
-			jsonObject.toString());
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY,
+			"preferredKBFolderURLTitle", jsonObject.toString());
 	}
 
 	public static List<KBArticle> sort(

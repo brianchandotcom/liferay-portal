@@ -17,6 +17,7 @@ package com.liferay.knowledgebase.admin.asset;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.exception.NoSuchArticleException;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.service.KBArticleLocalServiceUtil;
@@ -95,7 +96,7 @@ public class KBArticleAssetRendererFactory
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.KNOWLEDGE_BASE_DISPLAY;
+		return KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY;
 	}
 
 	@Override
@@ -115,7 +116,7 @@ public class KBArticleAssetRendererFactory
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, getGroup(liferayPortletRequest),
-			PortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");

@@ -14,7 +14,7 @@
 
 package com.liferay.knowledgebase.service.permission;
 
-import com.liferay.knowledgebase.util.PortletKeys;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
@@ -43,7 +43,7 @@ public class DisplayPermission extends BaseResourcePermissionChecker {
 
 		return contains(
 			permissionChecker, RESOURCE_NAME,
-			PortletKeys.KNOWLEDGE_BASE_DISPLAY, groupId, actionId);
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY, groupId, actionId);
 	}
 
 	@Override

@@ -15,9 +15,9 @@
 package com.liferay.knowledgebase.admin.importer.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.exception.KBArticleImportException;
 import com.liferay.knowledgebase.model.KBArticle;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -162,7 +162,8 @@ public class KBArticleImporterUtil {
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
-			kbArticle.getClassPK(), PortletKeys.KNOWLEDGE_BASE_ARTICLE,
+			kbArticle.getClassPK(),
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ARTICLE,
 			kbArticle.getAttachmentsFolderId(), inputStream, imageFileName,
 			mimeType, false);
 

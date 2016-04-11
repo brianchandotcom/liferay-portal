@@ -17,6 +17,7 @@ package com.liferay.knowledgebase.service.impl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.admin.importer.KBArticleImporter;
 import com.liferay.knowledgebase.admin.social.AdminActivityKeys;
 import com.liferay.knowledgebase.admin.util.AdminSubscriptionSender;
@@ -37,7 +38,6 @@ import com.liferay.knowledgebase.service.KBArticleServiceUtil;
 import com.liferay.knowledgebase.service.base.KBArticleLocalServiceBaseImpl;
 import com.liferay.knowledgebase.util.KnowledgeBaseConstants;
 import com.liferay.knowledgebase.util.KnowledgeBaseUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.PortletPropsValues;
 import com.liferay.knowledgebase.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledgebase.util.comparator.KBArticleVersionComparator;
@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -1337,7 +1338,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
-			kbArticle.getClassPK(), PortletKeys.KNOWLEDGE_BASE_ARTICLE,
+			kbArticle.getClassPK(),
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ARTICLE,
 			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
 			false);
 	}
@@ -1781,8 +1783,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			portletPreferencesLocalService.getPreferences(
 				kbArticle.getCompanyId(), kbArticle.getGroupId(),
 				PortletKeys.PREFS_OWNER_TYPE_GROUP,
-				PortletKeys.PREFS_PLID_SHARED, PortletKeys.KNOWLEDGE_BASE_ADMIN,
-				null);
+				PortletKeys.PREFS_PLID_SHARED,
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, null);
 
 		if (serviceContext.isCommandAdd() &&
 			!AdminUtil.getEmailKBArticleAddedEnabled(preferences)) {

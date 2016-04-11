@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.service.impl;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.admin.util.AdminUtil;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBArticleSearchDisplay;
@@ -24,7 +25,6 @@ import com.liferay.knowledgebase.service.permission.DisplayPermission;
 import com.liferay.knowledgebase.service.permission.KBArticlePermission;
 import com.liferay.knowledgebase.util.ActionKeys;
 import com.liferay.knowledgebase.util.KnowledgeBaseUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.comparator.KBArticleModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -77,12 +77,14 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.equals(KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			AdminPermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				ActionKeys.ADD_KB_ARTICLE);
 		}
-		else if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+		else if (portletId.equals(
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 			DisplayPermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				ActionKeys.ADD_KB_ARTICLE);
@@ -116,7 +118,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		throws PortalException {
 
 		checkAttachmentPermissions(
-			groupId, PortletKeys.KNOWLEDGE_BASE_ADMIN, resourcePrimKey);
+			groupId, KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
+			resourcePrimKey);
 
 		kbArticleLocalService.addTempAttachment(
 			groupId, getUserId(), fileName, tempFolderName, inputStream,
@@ -150,7 +153,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		throws PortalException {
 
 		checkAttachmentPermissions(
-			groupId, PortletKeys.KNOWLEDGE_BASE_ADMIN, resourcePrimKey);
+			groupId, KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
+			resourcePrimKey);
 
 		kbArticleLocalService.deleteTempAttachment(
 			groupId, getUserId(), fileName, tempFolderName);
@@ -659,11 +663,13 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	public void subscribeGroupKBArticles(long groupId, String portletId)
 		throws PortalException {
 
-		if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.equals(KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			AdminPermission.check(
 				getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 		}
-		else if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+		else if (portletId.equals(
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 			DisplayPermission.check(
 				getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 		}
@@ -686,11 +692,13 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	public void unsubscribeGroupKBArticles(long groupId, String portletId)
 		throws PortalException {
 
-		if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.equals(KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			AdminPermission.check(
 				getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 		}
-		else if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+		else if (portletId.equals(
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 			DisplayPermission.check(
 				getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 		}
@@ -837,13 +845,14 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		throws PortalException {
 
 		if ((resourcePrimKey <= 0) &&
-			portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			portletId.equals(KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 
 			AdminPermission.check(
 				getPermissionChecker(), groupId, ActionKeys.ADD_KB_ARTICLE);
 		}
 		else if ((resourcePrimKey <= 0) &&
-				 portletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+				 portletId.equals(
+					 KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
 
 			DisplayPermission.check(
 				getPermissionChecker(), groupId, ActionKeys.ADD_KB_ARTICLE);

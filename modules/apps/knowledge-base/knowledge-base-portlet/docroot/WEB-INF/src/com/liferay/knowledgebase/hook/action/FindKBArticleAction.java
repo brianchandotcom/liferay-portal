@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.hook.action;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.admin.util.AdminUtil;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBFolder;
@@ -22,7 +23,6 @@ import com.liferay.knowledgebase.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledgebase.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledgebase.service.permission.KBArticlePermission;
 import com.liferay.knowledgebase.util.ActionKeys;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -177,7 +177,8 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		if (Validator.equals(
 				portletId,
-				PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
+				KnowledgeBasePortletKeys.
+					KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
 
 			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
 		}
@@ -227,7 +228,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portlet.getPortletId());
 
-				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+				if (rootPortletId.equals(
+						KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -267,7 +270,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+				if (rootPortletId.equals(
+						KnowledgeBasePortletKeys.KNOWLEDGE_BASE_SECTION)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -298,7 +303,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+				if (rootPortletId.equals(
+						KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -348,10 +355,14 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
-		if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+		if (rootPortletId.equals(
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+
 			mvcPath = "/article/view_article.jsp";
 		}
-		else if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+		else if (rootPortletId.equals(
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_SECTION)) {
+
 			mvcPath = "/section/view_article.jsp";
 		}
 
@@ -384,7 +395,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
 
-		if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+		if (rootPortletId.equals(
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_SECTION)) {
+
 			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
 		}
 
@@ -395,13 +408,14 @@ public class FindKBArticleAction extends BaseStrutsAction {
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		long selPlid = PortalUtil.getPlidFromPortletId(
-			layout.getGroupId(), PortletKeys.KNOWLEDGE_BASE_DISPLAY);
+			layout.getGroupId(),
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY);
 
 		if (selPlid != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-			return PortletKeys.KNOWLEDGE_BASE_DISPLAY;
+			return KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY;
 		}
 
-		return PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE;
+		return KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE;
 	}
 
 	protected boolean isParentFolder(long resourcePrimKey, long kbFolderId)

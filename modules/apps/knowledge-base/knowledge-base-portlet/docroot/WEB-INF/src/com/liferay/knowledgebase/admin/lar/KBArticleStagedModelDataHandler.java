@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.admin.util.AdminUtil;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBArticleConstants;
@@ -30,7 +31,6 @@ import com.liferay.knowledgebase.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledgebase.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledgebase.service.persistence.KBArticleUtil;
 import com.liferay.knowledgebase.util.KnowledgeBaseUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -396,7 +396,7 @@ public class KBArticleStagedModelDataHandler
 					portletDataContext.getUserId(
 						importedKBArticle.getUserUuid()),
 					KBArticle.class.getName(), importedKBArticle.getClassPK(),
-					PortletKeys.KNOWLEDGE_BASE_ADMIN,
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
 					importedKBArticle.getAttachmentsFolderId(), inputStream,
 					fileName, mimeType, true);
 			}

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.util;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.model.KBFolder;
 import com.liferay.knowledgebase.model.KBFolderConstants;
@@ -47,20 +48,24 @@ public class KBArticleURLHelper {
 
 		String portletId = PortalUtil.getPortletId(_renderRequest);
 
-		if (portletId.startsWith(PortletKeys.KNOWLEDGE_BASE_ADMIN) ||
-			portletId.startsWith(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+		if (portletId.startsWith(
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN) ||
+			portletId.startsWith(
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_SECTION)) {
 
 			portletURL.setParameter(
 				"mvcPath", _templatePath + "view_article.jsp");
 		}
 
-		if (portletId.startsWith(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.startsWith(
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(_renderRequest));
 		}
 
 		if (Validator.isNull(kbArticle.getUrlTitle()) ||
-			portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			portletId.equals(KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 
 			portletURL.setParameter(
 				"resourceClassNameId",

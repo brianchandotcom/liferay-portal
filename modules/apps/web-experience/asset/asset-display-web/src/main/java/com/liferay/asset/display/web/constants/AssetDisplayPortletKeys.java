@@ -12,24 +12,14 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.upgrade;
-
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.asset.display.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class AssetDisplayWebUpgrade implements UpgradeStepRegistrator {
+public class AssetDisplayPortletKeys {
 
-	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.asset.display.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
-	}
+	public static final String ASSET_DISPLAY =
+		"com_liferay_asset_display_web_portlet_AssetDisplayPortlet";
 
 }

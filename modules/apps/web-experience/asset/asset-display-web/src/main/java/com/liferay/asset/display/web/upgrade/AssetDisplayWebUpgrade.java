@@ -12,28 +12,24 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.portlet;
+package com.liferay.asset.display.web.upgrade;
 
-import com.liferay.asset.browser.web.constants.AssetDisplayPortletKeys;
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.PreviewPortletProvider;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.asset.kernel.model.AssetEntry"},
-	service = PreviewPortletProvider.class
-)
-public class AssetDisplayPreviewPortletProvider
-	extends BasePortletProvider implements PreviewPortletProvider {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class AssetDisplayWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public String getPortletName() {
-		return AssetDisplayPortletKeys.ASSET_DISPLAY;
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.asset.display.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
 	}
 
 }

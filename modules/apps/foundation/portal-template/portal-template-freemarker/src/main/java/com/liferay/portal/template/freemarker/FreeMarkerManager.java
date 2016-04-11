@@ -520,7 +520,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			boolean track = false;
 
 			Enumeration<URL> enumeration = bundle.findEntries(
-				"/", "*taglib-mapping.properties", false);
+				"/META-INF", "taglib-mappings.properties", true);
 
 			if (enumeration != null) {
 				while (enumeration.hasMoreElements()) {
@@ -591,7 +591,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			}
 
 			Enumeration<URL> enumeration = trackedBundle.findEntries(
-				"/", "*taglib-mapping.properties", false);
+				"/META-INF", "taglib-mappings.properties", true);
 
 			if (enumeration == null) {
 				return;

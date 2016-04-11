@@ -14,7 +14,7 @@
 
 package com.liferay.sync.engine.documentlibrary.util;
 
-import com.liferay.sync.engine.documentlibrary.util.comparator.SyncFileComparator;
+import com.liferay.sync.engine.documentlibrary.util.comparator.SyncFileSizeComparator;
 import com.liferay.sync.engine.model.SyncFile;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Shinn Lok
  */
-public class SyncFileComparatorTest {
+public class SyncFileSizeComparatorTest {
 
 	@Test
 	public void testSort() {
@@ -38,7 +38,7 @@ public class SyncFileComparatorTest {
 		SyncFile syncFile5 = addSyncFile(5, SyncFile.EVENT_UPDATE, 0);
 		SyncFile syncFile6 = addSyncFile(6, SyncFile.EVENT_MOVE, 0);
 
-		Collections.sort(_syncFiles, new SyncFileComparator());
+		Collections.sort(_syncFiles, new SyncFileSizeComparator());
 
 		Assert.assertArrayEquals(
 			new SyncFile[] {

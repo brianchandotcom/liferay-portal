@@ -24,6 +24,8 @@ import com.liferay.sync.engine.util.test.SyncSiteTestUtil;
 
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,13 +45,15 @@ public class SyncSiteWatchEventListenerTest extends BaseTestCase {
 			10158, FileUtil.getFilePathName(filePathName, "test-site1"), 10185,
 			syncAccount.getSyncAccountId());
 
-		SyncSiteService.activateSyncSite(_syncSite1.getSyncSiteId(), true);
+		SyncSiteService.activateSyncSite(
+			_syncSite1.getSyncSiteId(), new ArrayList<>(), true);
 
 		_syncSite2 = SyncSiteTestUtil.addSyncSite(
 			10158, FileUtil.getFilePathName(filePathName, "test-site2"), 10186,
 			syncAccount.getSyncAccountId());
 
-		SyncSiteService.activateSyncSite(_syncSite2.getSyncSiteId(), true);
+		SyncSiteService.activateSyncSite(
+			_syncSite2.getSyncSiteId(), new ArrayList<>(), true);
 	}
 
 	@After

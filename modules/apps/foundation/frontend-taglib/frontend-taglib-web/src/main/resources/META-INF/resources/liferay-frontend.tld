@@ -810,11 +810,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>orderColumns</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>orderByCol</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -822,6 +817,11 @@
 		<attribute>
 			<name>orderByType</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>orderColumns</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -836,12 +836,12 @@
 		<tag-class>com.liferay.frontend.taglib.web.servlet.taglib.SidebarPanelTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>searchContainerId</name>
+			<name>resourceURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>resourceURL</name>
+			<name>searchContainerId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

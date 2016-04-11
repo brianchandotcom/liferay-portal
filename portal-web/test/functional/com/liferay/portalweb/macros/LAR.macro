@@ -157,7 +157,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText('//tr/td[7]//span/a')" name="valueName" />
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -322,6 +322,8 @@
 
 	<command name="_selectImportFileSite">
 		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
 

@@ -76,7 +76,7 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 				if (strippedQuotesLine.contains(StringPool.QUOTE)) {
 					line = StringUtil.replace(
-						line, StringPool.QUOTE, StringPool.APOSTROPHE);
+						line, CharPool.QUOTE, CharPool.APOSTROPHE);
 				}
 
 				sb.append(line);

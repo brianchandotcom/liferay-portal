@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,7 +81,7 @@ public class XMLAttributesSorter {
 			File file = new File(basedir + fullFileName);
 
 			fullFileName = StringUtil.replace(
-				fullFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fullFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			String content = FileUtil.read(file);
 

@@ -351,7 +351,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 				else {
 					processErrorMessage(
-						fileName, "Use " + s + ": " + fileName + " " + lineCount);
+						fileName,
+						"Use " + s + ": " + fileName + " " + lineCount);
 				}
 			}
 		}
@@ -444,8 +445,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String className = stagedModelTypeClassName.substring(0, pos);
 
 			Pattern packageNamePattern = Pattern.compile(
-				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." +
-					className + ";");
+				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." + className +
+					";");
 
 			Matcher packageNameMatcher = packageNamePattern.matcher(content);
 
@@ -508,8 +509,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				sb.append("vulnerability using ");
 			}
 			else {
-				sb.append("Use SecureXMLBuilderUtil.newDocumentBuilderFactory");
-				sb.append(" instead of ");
+				sb.append("Use SecureXMLBuilderUtil.");
+				sb.append("newDocumentBuilderFactory instead of ");
 			}
 
 			sb.append(xmlVulnerabitily);
@@ -660,8 +661,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					if (!match.equals(").")) {
 						newContent = StringUtil.replaceFirst(
-							newContent, "\n" + matcher.group(2), StringPool.BLANK,
-							matcher.end(1));
+							newContent, "\n" + matcher.group(2),
+							StringPool.BLANK, matcher.end(1));
 
 						continue;
 					}
@@ -1015,8 +1016,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
 				_checkJavaFieldTypesExcludes,
-				_javaTermAccessLevelModifierExcludes,
-				_javaTermSortExcludes, _testAnnotationsExcludes);
+				_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
+				_testAnnotationsExcludes);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -1135,6 +1136,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			String tabs = matcher1.group(2);
+
 			int tabCount = tabs.length();
 
 			int pos = matcher1.start();
@@ -1784,7 +1786,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				(line.endsWith("|") || line.endsWith("&&") ||
 				 line.endsWith(") {")) &&
 				(previousLine.endsWith("|") || previousLine.endsWith("&&")) &&
-				(previousLineLength + trimmedLine.length() <
+				((previousLineLength + trimmedLine.length()) <
 					_MAX_LINE_LENGTH) &&
 				(lineLevel <= 0) && (previousLineLevel >= 0)) {
 
@@ -2302,7 +2304,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if (line.endsWith(" throws") ||
 						(previousLine.endsWith(
 							StringPool.OPEN_PARENTHESIS) &&
-						 line.contains(" throws " ) &&
+						 line.contains(" throws ") &&
 						 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 
 						processErrorMessage(
@@ -3069,9 +3071,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					if (nextLine.endsWith(StringPool.SEMICOLON)) {
 						return getCombinedLinesContent(
-							content, fileName, line, trimmedLine,
-							lineLength, lineCount, previousLine, null,
-							tabDiff, false, true, i + 1);
+							content, fileName, line, trimmedLine, lineLength,
+							lineCount, previousLine, null, tabDiff, false, true,
+							i + 1);
 					}
 				}
 			}
@@ -3196,8 +3198,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (trimmedLine.equals(linePart)) {
 					processErrorMessage(
-						fileName,
-						"line break: " + fileName + " " + lineCount);
+						fileName, "line break: " + fileName + " " + lineCount);
 
 					return null;
 				}
@@ -3285,12 +3286,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String linePart = trimmedLine.substring(0, x + 3);
 
 				return getCombinedLinesContent(
-					content, fileName, line, trimmedLine, lineLength,
-					lineCount, previousLine, linePart, tabDiff, true, true, 0);
+					content, fileName, line, trimmedLine, lineLength, lineCount,
+					previousLine, linePart, tabDiff, true, true, 0);
 			}
 			else if (trimmedLine.endsWith(" =") &&
 					 ((trimmedLine.length() + previousLineLength) <
-						_MAX_LINE_LENGTH)) {
+						 _MAX_LINE_LENGTH)) {
 
 				for (int i = 0;; i++) {
 					String nextLine = getLine(content, lineCount + i + 1);
@@ -3315,7 +3316,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if ((pos > 0) &&
 				Character.isLetterOrDigit(
-					trimmedPreviousLine.charAt(pos -1 ))) {
+					trimmedPreviousLine.charAt(pos -1))) {
 
 				String filePart = trimmedPreviousLine.substring(pos + 1);
 
@@ -4066,6 +4067,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected void postFormat() throws Exception {
+		checkBndInheritAnnotationOption();
+	}
+
+	@Override
 	protected void preFormat() {
 		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
 			getProperty("add.missing.deprecation.release.version"));
@@ -4092,11 +4098,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_testAnnotationsExcludes = getPropertyList("test.annotations.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
-	}
-
-	@Override
-	protected void postFormat() throws Exception {
-		checkBndInheritAnnotationOption();
 	}
 
 	protected void setBNDInheritRequiredValue(
@@ -4172,19 +4173,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final int _MAX_LINE_LENGTH = 80;
 
-	private static Pattern _annotationPattern = Pattern.compile(
+	private static final Pattern _annotationPattern = Pattern.compile(
 		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private Pattern _annotationMetaTypePattern = Pattern.compile(
+	private final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"\\s(name|description) = \"%");
-	private Pattern _arrayPattern = Pattern.compile(
+	private final Pattern _arrayPattern = Pattern.compile(
 		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
-	private Pattern _assertEqualsPattern = Pattern.compile(
+	private final Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
-	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
-	private Pattern _catchExceptionPattern = Pattern.compile(
+	private final Map<String, Tuple> _bndInheritRequiredTupleMap =
+		new HashMap<>();
+	private final Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExcludes;
 	private boolean _checkRegistryInTestClasses;
@@ -4193,82 +4195,83 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
-	private Pattern _combinedLinesPattern1 = Pattern.compile(
+	private final Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");
-	private Pattern _combinedLinesPattern2 = Pattern.compile(
+	private final Pattern _combinedLinesPattern2 = Pattern.compile(
 		"\n(\t*)@.+(\\()\n");
-	private Pattern _componentAnnotationPattern = Pattern.compile(
+	private final Pattern _componentAnnotationPattern = Pattern.compile(
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private List<String> _diamondOperatorExcludes;
-	private Pattern _diamondOperatorPattern = Pattern.compile(
+	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
-	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
+	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExcludes;
 	private List<String> _hibernateSQLQueryExcludes;
-	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
+	private final Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
-	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
+	private final Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
 		"(\t| )@?(class|enum|interface|new)\\s");
-	private Pattern _incorrectLineBreakPattern1 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
-	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\\{\n\n\t*\\}");
-	private Pattern _incorrectLineBreakPattern3 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
 		", new .*\\(.*\\) \\{\n");
-	private Pattern _incorrectLineBreakPattern4 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
-	private Pattern _incorrectLineBreakPattern5 = Pattern.compile(
+	private final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
 		"\n(\t*).*\\}\n(\t*)\\);");
-	private Pattern[] _javaSerializationVulnerabilityPatterns = new Pattern[] {
-		Pattern.compile(
-			".*(new [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL),
-		Pattern.compile(
-			".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
+	private final Pattern[] _javaSerializationVulnerabilityPatterns =
+		new Pattern[] {
+			Pattern.compile(
+				".*(new [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL),
+			Pattern.compile(
+				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
 	private List<String> _javaTermAccessLevelModifierExcludes;
 	private List<String> _javaTermSortExcludes;
 	private List<String> _lineLengthExcludes;
-	private Pattern _logLevelPattern = Pattern.compile(
+	private final Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
-	private Pattern _logPattern = Pattern.compile(
+	private final Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
-	private Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
+	private final Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
 		"[a-z0-9.]");
-	private Pattern _missingEmptyLinePattern1 = Pattern.compile(
+	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
 		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
-	private Pattern _missingEmptyLinePattern2 = Pattern.compile(
+	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
-	private Map<String, String> _moduleFileContentsMap = new HashMap<>();
+	private final Map<String, String> _moduleFileContentsMap = new HashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
-	private Pattern _processCallablePattern = Pattern.compile(
+	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExcludes;
-	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
-	private Pattern _redundantEmptyLines1 = Pattern.compile(
+	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private final Pattern _redundantEmptyLines1 = Pattern.compile(
 		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
-	private Pattern _redundantEmptyLines2 = Pattern.compile(
+	private final Pattern _redundantEmptyLines2 = Pattern.compile(
 		" \\* @author .*\n \\*\\/\n\n");
-	private Pattern _referenceMethodContentPattern = Pattern.compile(
+	private final Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
-	private Pattern _referenceMethodPattern = Pattern.compile(
+	private final Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
-	private Pattern _registryImportPattern = Pattern.compile(
+	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
 	private List<String> _secureDeserializationExcludes;
 	private List<String> _secureRandomExcludes;
 	private List<String> _secureXmlExcludes;
-	private Pattern _serviceUtilImportPattern = Pattern.compile(
+	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
-	private Pattern _setVariablePattern = Pattern.compile(
+	private final Pattern _setVariablePattern = Pattern.compile(
 		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
-	private Pattern _stagedModelTypesPattern = Pattern.compile(
+	private final Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExcludes;
 	private List<String> _testAnnotationsExcludes;
-	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
+	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExcludes;
 

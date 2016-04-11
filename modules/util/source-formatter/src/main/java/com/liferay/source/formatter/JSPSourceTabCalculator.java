@@ -430,7 +430,7 @@ public class JSPSourceTabCalculator {
 					int lineTabLevel = _calculateTabLevel(
 						trimmedLine, javaSource);
 
-					if (!javaSource && Math.abs(lineTabLevel) > 1) {
+					if (!javaSource && (Math.abs(lineTabLevel) > 1)) {
 						return null;
 					}
 
@@ -471,7 +471,7 @@ public class JSPSourceTabCalculator {
 		while (true) {
 			int x = text.indexOf("<%");
 
-			if (x == - 1) {
+			if (x == -1) {
 				return text;
 			}
 
@@ -568,7 +568,7 @@ public class JSPSourceTabCalculator {
 			_closed = closed;
 		}
 
-		private boolean _closed = false;
+		private boolean _closed;
 		private final Pattern _closeTagNamePattern = Pattern.compile(
 			"</([\\-:\\w]+?)>");
 		private final boolean _javaSource;

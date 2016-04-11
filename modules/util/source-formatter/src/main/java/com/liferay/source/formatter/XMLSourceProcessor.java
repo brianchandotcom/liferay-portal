@@ -696,8 +696,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		processErrorMessage(
 			fileName,
-				"LPS-51315 Avoid using WHERE ... NOT IN: " + fileName + " " +
-					content.substring(y + 1, z));
+			"LPS-51315 Avoid using WHERE ... NOT IN: " + fileName + " " +
+				content.substring(y + 1, z));
 	}
 
 	protected String formatDDLStructuresXML(String content) throws Exception {

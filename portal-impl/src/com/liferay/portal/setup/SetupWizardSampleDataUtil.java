@@ -62,12 +62,13 @@ public class SetupWizardSampleDataUtil {
 			companyId, PropsValues.COMPANY_DEFAULT_NAME,
 			PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 			PropsValues.DEFAULT_ADMIN_LAST_NAME,
-			PropsValues.ADMIN_EMAIL_FROM_NAME);
+			PropsValues.ADMIN_EMAIL_FROM_NAME, false);
 	}
 
 	public static void addSampleData(
 			long companyId, String companyName, String adminUserFirstName,
-			String adminUserLastName, String adminUserEmailAddress)
+			String adminUserLastName, String adminUserEmailAddress,
+			boolean resetPassword)
 		throws Exception {
 
 		StopWatch stopWatch = new StopWatch();
@@ -82,21 +83,11 @@ public class SetupWizardSampleDataUtil {
 			CompanyLocalServiceUtil.getCompanyById(companyId), companyName,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
-		FullNameGenerator fullNameGenerator =
-			FullNameGeneratorFactory.getInstance();
-
-		String adminUserFullName = fullNameGenerator.getFullName(
-			adminUserFirstName, null, adminUserLastName);
-
 		User adminUser = updateAdminUser(
 			company, LocaleUtil.getDefault(),
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 			adminUserEmailAddress, adminUserFirstName, adminUserLastName,
-			adminUserFullName);
-
-		adminUser.setPasswordReset(false);
-
-		UserLocalServiceUtil.updateUser(adminUser);
+			resetPassword);
 
 		User defaultUser = company.getDefaultUser();
 
@@ -148,7 +139,7 @@ public class SetupWizardSampleDataUtil {
 	public static User updateAdminUser(
 			Company company, Locale locale, String languageId,
 			String adminEmailAddress, String adminFirstName,
-			String adminLastName, String adminFullName)
+			String adminLastName, boolean resetPassword)
 		throws PortalException {
 
 		ScreenNameGenerator screenNameGenerator =
@@ -167,6 +158,12 @@ public class SetupWizardSampleDataUtil {
 			company.getCompanyId(), adminEmailAddress);
 
 		if (adminUser != null) {
+			FullNameGenerator fullNameGenerator =
+				FullNameGeneratorFactory.getInstance();
+
+			String adminFullName = fullNameGenerator.getFullName(
+				adminFirstName, null, adminLastName);
+
 			String greeting = LanguageUtil.format(
 				locale, "welcome-x", adminFullName, false);
 
@@ -219,7 +216,8 @@ public class SetupWizardSampleDataUtil {
 			}
 		}
 
-		return adminUser;
+		return UserLocalServiceUtil.updatePasswordReset(
+			adminUser.getUserId(), resetPassword);
 	}
 
 	public static Company updateCompany(

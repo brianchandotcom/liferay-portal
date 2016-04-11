@@ -22,10 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.FullNameGenerator;
-import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -290,21 +287,14 @@ public class SetupWizardUtil {
 		String lastName = ParamUtil.getString(
 			request, "adminLastName", PropsValues.DEFAULT_ADMIN_LAST_NAME);
 
-		FullNameGenerator fullNameGenerator =
-			FullNameGeneratorFactory.getInstance();
-
-		String fullName = fullNameGenerator.getFullName(
-			firstName, null, lastName);
-
-		PropsValues.ADMIN_EMAIL_FROM_NAME = fullName;
-
-		unicodeProperties.put(PropsKeys.ADMIN_EMAIL_FROM_NAME, fullName);
-
 		User user = SetupWizardSampleDataUtil.updateAdminUser(
 			company, themeDisplay.getLocale(), themeDisplay.getLanguageId(),
-			emailAddress, firstName, lastName, fullName);
+			emailAddress, firstName, lastName, true);
 
-		user = UserLocalServiceUtil.updatePasswordReset(user.getUserId(), true);
+		PropsValues.ADMIN_EMAIL_FROM_NAME = user.getFullName();
+
+		unicodeProperties.put(
+			PropsKeys.ADMIN_EMAIL_FROM_NAME, user.getFullName());
 
 		HttpSession session = request.getSession();
 

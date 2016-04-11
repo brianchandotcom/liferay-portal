@@ -4,7 +4,7 @@
 
 		<!-- Configure IdP (Identity Provider) on http://localhost:8080 with database lportal and saml deployed -->
 
-		<execute macro="ProductMenu#gotoControlPanelApps">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="SAML Admin" />
 		</execute>
 

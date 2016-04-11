@@ -66,7 +66,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +92,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		sb.append(calendarResourceId);
 		sb.append(", parentCalendarBookingId=");
 		sb.append(parentCalendarBookingId);
+		sb.append(", recurringCalendarBookingId=");
+		sb.append(recurringCalendarBookingId);
 		sb.append(", vEventUid=");
 		sb.append(vEventUid);
 		sb.append(", title=");
@@ -172,6 +174,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		calendarBookingImpl.setCalendarId(calendarId);
 		calendarBookingImpl.setCalendarResourceId(calendarResourceId);
 		calendarBookingImpl.setParentCalendarBookingId(parentCalendarBookingId);
+		calendarBookingImpl.setRecurringCalendarBookingId(recurringCalendarBookingId);
 
 		if (vEventUid == null) {
 			calendarBookingImpl.setVEventUid(StringPool.BLANK);
@@ -281,6 +284,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		calendarResourceId = objectInput.readLong();
 
 		parentCalendarBookingId = objectInput.readLong();
+
+		recurringCalendarBookingId = objectInput.readLong();
 		vEventUid = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -342,6 +347,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		objectOutput.writeLong(calendarResourceId);
 
 		objectOutput.writeLong(parentCalendarBookingId);
+
+		objectOutput.writeLong(recurringCalendarBookingId);
 
 		if (vEventUid == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -430,6 +437,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 	public long calendarId;
 	public long calendarResourceId;
 	public long parentCalendarBookingId;
+	public long recurringCalendarBookingId;
 	public String vEventUid;
 	public String title;
 	public String description;

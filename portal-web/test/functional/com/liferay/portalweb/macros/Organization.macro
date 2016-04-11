@@ -364,7 +364,7 @@
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsAssignuserrolesUser#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsAssignuserrolesUser#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute macro="IFrame#selectTopFrame" />
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>

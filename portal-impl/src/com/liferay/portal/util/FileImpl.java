@@ -429,8 +429,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				text = tika.parseToString(is);
 			}
 		}
-		catch (Exception e) {
-			Throwable throwable = ExceptionUtils.getRootCause(e);
+		catch (Throwable t) {
+			Throwable throwable = ExceptionUtils.getRootCause(t);
 
 			if ((throwable instanceof CryptographyException) ||
 				(throwable instanceof EncryptedDocumentException) ||
@@ -442,13 +442,13 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 							fileName);
 				}
 			}
-			else if (e instanceof TikaException) {
+			else if (t instanceof TikaException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to extract text from " + fileName);
 				}
 			}
 			else {
-				_log.error(e, e);
+				_log.error(t, t);
 			}
 		}
 		finally {

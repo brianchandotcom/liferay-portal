@@ -23,8 +23,6 @@ import com.liferay.knowledge.base.exception.KBCommentContentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
 import com.liferay.knowledge.base.service.base.KBCommentLocalServiceBaseImpl;
 import com.liferay.knowledge.base.service.util.AdminSubscriptionSender;
 import com.liferay.knowledge.base.service.util.AdminUtil;
@@ -422,13 +420,13 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 
 		try {
 			if (className.equals(KBArticle.class.getName())) {
-				kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+				kbArticle = kbArticleLocalService.getLatestKBArticle(
 					kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 				jsonObject.put("title", kbArticle.getTitle());
 			}
 			else if (className.equals(KBTemplate.class.getName())) {
-				kbTemplate = KBTemplateLocalServiceUtil.getKBTemplate(
+				kbTemplate = kbTemplateLocalService.getKBTemplate(
 					kbComment.getClassPK());
 
 				jsonObject.put("title", kbTemplate.getTitle());

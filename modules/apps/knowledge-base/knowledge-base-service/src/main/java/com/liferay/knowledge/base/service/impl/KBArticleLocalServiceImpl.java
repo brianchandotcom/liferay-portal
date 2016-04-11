@@ -33,8 +33,6 @@ import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.importer.KBArticleImporter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl;
 import com.liferay.knowledge.base.service.util.AdminSubscriptionSender;
 import com.liferay.knowledge.base.service.util.AdminUtil;
@@ -44,6 +42,7 @@ import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -65,7 +64,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -354,7 +353,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Attachments
 
-		PortletFileRepositoryUtil.deletePortletFolder(
+		portletFileRepository.deletePortletFolder(
 			kbArticle.getAttachmentsFolderId());
 
 		// Subscriptions
@@ -971,7 +970,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBArticle kbArticle = KBArticleServiceUtil.getKBArticle(
+		KBArticle kbArticle = kbArticleLocalService.getKBArticle(
 			resourcePrimKey, version);
 
 		return updateKBArticle(
@@ -1335,10 +1334,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			InputStream inputStream, String mimeType)
 		throws PortalException {
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		PortletFileRepositoryUtil.addPortletFileEntry(
+		portletFileRepository.addPortletFileEntry(
 			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
 			kbArticle.getClassPK(), PortletKeys.KNOWLEDGE_BASE_ARTICLE,
 			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
@@ -1888,7 +1887,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		for (long removeFileEntryId : removeFileEntryIds) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(removeFileEntryId);
+			portletFileRepository.deletePortletFileEntry(removeFileEntryId);
 		}
 	}
 
@@ -2015,6 +2014,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
 		}
 	}
+
+	@BeanReference(type = PortletFileRepository.class)
+	protected PortletFileRepository portletFileRepository;
 
 	private static final int[] _STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_PENDING

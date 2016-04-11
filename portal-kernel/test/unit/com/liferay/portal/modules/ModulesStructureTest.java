@@ -70,6 +70,10 @@ public class ModulesStructureTest {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
+					if (dirPath.equals(modulesDirPath)) {
+						return FileVisitResult.CONTINUE;
+					}
+
 					Path dirNamePath = dirPath.getFileName();
 
 					String dirName = dirNamePath.toString();
@@ -78,19 +82,8 @@ public class ModulesStructureTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (!dirPath.equals(modulesDirPath)) {
-						Path buildXmlPath = dirPath.resolve("build.xml");
-
-						if (Files.exists(buildXmlPath)) {
-							Assert.fail("Forbidden " + buildXmlPath);
-						}
-					}
-
-					Path ivyXmlPath = dirPath.resolve("ivy.xml");
-
-					if (Files.exists(ivyXmlPath)) {
-						Assert.fail("Forbidden " + ivyXmlPath);
-					}
+					Path buildGradlePath = dirPath.resolve("build.gradle");
+					Path buildXMLPath = dirPath.resolve("build.xml");
 
 					if (Files.exists(dirPath.resolve(".gitrepo"))) {
 						_testGitRepoBuildScripts(
@@ -98,10 +91,25 @@ public class ModulesStructureTest {
 							gitRepoSettingsGradleTemplate);
 					}
 					else if (Files.exists(dirPath.resolve("bnd.bnd"))) {
-						Path buildGradlePath = dirPath.resolve("build.gradle");
-
 						if (Files.notExists(buildGradlePath)) {
 							Assert.fail("Missing " + buildGradlePath);
+						}
+
+						if (Files.exists(buildXMLPath)) {
+							Assert.fail("Forbidden " + buildXMLPath);
+						}
+
+						Path ivyXmlPath = dirPath.resolve("ivy.xml");
+
+						if (Files.exists(ivyXmlPath)) {
+							Assert.fail("Forbidden " + ivyXmlPath);
+						}
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+					else if (Files.exists(buildXMLPath)) {
+						if (Files.exists(buildGradlePath)) {
+							Assert.fail("Forbidden " + buildGradlePath);
 						}
 
 						return FileVisitResult.SKIP_SUBTREE;

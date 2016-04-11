@@ -2230,10 +2230,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(message.getGroupId());
 
-		String emailAddress = PortalUtil.getUserEmailAddress(
-			message.getUserId());
-		String fullName = PortalUtil.getUserName(
-			message.getUserId(), message.getUserName());
+		User user = userPersistence.fetchByPrimaryKey(userId);
+
+		String emailAddress = user.getEmailAddress();
+		String fullName = user.getFullName();
 
 		if (message.isAnonymous()) {
 			emailAddress = StringPool.BLANK;

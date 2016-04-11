@@ -1968,6 +1968,10 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sign In" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Sign In" />
 		</execute>

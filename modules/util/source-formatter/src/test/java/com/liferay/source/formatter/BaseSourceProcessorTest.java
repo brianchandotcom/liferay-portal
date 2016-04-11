@@ -40,26 +40,26 @@ public class BaseSourceProcessorTest {
 	@Test
 	public void testGetModuleLangPath() throws Exception {
 		testGetModuleLangPath(
-			"./modules/apps/forms-and-workflow/dynamic-data-lists" +
+			"modules/apps/forms-and-workflow/dynamic-data-lists" +
 				"/dynamic-data-lists-form-web",
-			"./modules/apps/forms-and-workflow/dynamic-data-lists" +
+			"modules/apps/forms-and-workflow/dynamic-data-lists" +
 				"/dynamic-data-lists-form-web/../../dynamic-data-mapping" +
 					"/dynamic-data-mapping-lang/src/main/resources/content",
-			"./modules/apps/forms-and-workflow/dynamic-data-lists" +
+			"modules/apps/forms-and-workflow/dynamic-data-lists" +
 				"/dynamic-data-lists-form-web/src/main/resources/content");
 		testGetModuleLangPath(
-			"./modules/apps/forms-and-workflow/dynamic-data-mapping" +
+			"modules/apps/forms-and-workflow/dynamic-data-mapping" +
 				"/dynamic-data-mapping-web",
-			"./modules/apps/forms-and-workflow/dynamic-data-mapping" +
+			"modules/apps/forms-and-workflow/dynamic-data-mapping" +
 				"/dynamic-data-mapping-lang/src/main/resources/content");
 		testGetModuleLangPath(
-			"./modules/apps/forms-and-workflow/portal-workflow" +
+			"modules/apps/forms-and-workflow/portal-workflow" +
 				"/portal-workflow-definition-web",
-			"./modules/apps/forms-and-workflow/portal-workflow" +
+			"modules/apps/forms-and-workflow/portal-workflow" +
 				"/portal-workflow-lang/src/main/resources/content");
 		testGetModuleLangPath(
-			"./modules/apps/web-experience/staging/staging-bar-web",
-			"./modules/apps/web-experience/staging/staging-lang/src/main" +
+			"modules/apps/web-experience/staging/staging-bar-web",
+			"modules/apps/web-experience/staging/staging-lang/src/main" +
 				"/resources/content");
 	}
 
@@ -94,10 +94,17 @@ public class BaseSourceProcessorTest {
 			String moduleDirName, String... expectedModuleLangDirNames)
 		throws Exception {
 
+		moduleDirName = _TEST_RESOURCES_DIR_NAME + moduleDirName;
+
+		for (int i = 0; i < expectedModuleLangDirNames.length; i++) {
+			expectedModuleLangDirNames[i] =
+				_TEST_RESOURCES_DIR_NAME + expectedModuleLangDirNames[i];
+		}
+
 		String buildGradleContent = StringPool.BLANK;
 
 		File file = _baseSourceProcessor.getFile(
-			moduleDirName + "/build.gradle",
+			moduleDirName + "/build.testgradle",
 			_baseSourceProcessor.PORTAL_MAX_DIR_LEVEL);
 
 		if (file != null) {
@@ -109,6 +116,9 @@ public class BaseSourceProcessorTest {
 			_baseSourceProcessor.getModuleLangDirNames(
 				moduleDirName, buildGradleContent));
 	}
+
+	private static final String _TEST_RESOURCES_DIR_NAME =
+		"./modules/util/source-formatter/src/test/resources/";
 
 	private BaseSourceProcessor _baseSourceProcessor;
 

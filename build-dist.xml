@@ -1794,14 +1794,14 @@ this task.
 			<os family="windows" />
 			<then>
 				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
-					<replacetoken><![CDATA[wrapper.java.additional.8="-Xmx512M"]]></replacetoken>
+					<replacetoken><![CDATA[wrapper.java.additional.8=-Xmx512M]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.8="-Xmx1024M"]]></replacevalue>
 				</replace>
 
 				<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
-					<replacetoken><![CDATA[wrapper.java.additional.9="-Xss256K"]]></replacetoken>
+					<replacetoken><![CDATA[wrapper.java.additional.9=-Xss256K]]></replacetoken>
 					<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
-						wrapper.java.additional.10="-XX:MaxPermSize=256m"]]></replacevalue>
+wrapper.java.additional.10="-XX:MaxPermSize=256M"
 				</replace>
 			</then>
 		</if>

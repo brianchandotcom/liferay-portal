@@ -1856,7 +1856,7 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		public Set<Locale> getAvailableLocales() {
-			return new HashSet<>(_languageIdLocalesMap.values());
+			return _availableLocales;
 		}
 
 		public Locale getByLanguageCode(String languageCode) {
@@ -1911,12 +1911,15 @@ public class LanguageImpl implements Language, Serializable {
 					LocaleUtil.fromLanguageId(languageId, false));
 			}
 
+			_availableLocales = new HashSet<>(_languageIdLocalesMap.values());
+
 			_supportedLocalesSet = new HashSet<>(
 				_languageIdLocalesMap.values());
 
 			_supportedLocalesSet.removeAll(_localesBetaSet);
 		}
 
+		private final Set<Locale> _availableLocales;
 		private final Set<String> _duplicateLanguageCodes = new HashSet<>();
 		private final Map<String, Locale> _languageCodeLocalesMap =
 			new HashMap<>();

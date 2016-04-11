@@ -61,6 +61,7 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -404,6 +405,44 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							StringPool.SPACE + fileName);
 				}
 			}
+		}
+	}
+
+	protected void checkOrder(
+		String fileName, Element rootElement, String elementName,
+		String parentElementName, ElementComparator elementComparator) {
+
+		if (rootElement == null) {
+			return;
+		}
+
+		List<Element> elements = rootElement.elements(elementName);
+
+		Element previousElement = null;
+
+		for (Element element : elements) {
+			if ((previousElement != null) &&
+				(elementComparator.compare(previousElement, element) > 0)) {
+
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("order ");
+				sb.append(elementName);
+				sb.append(": ");
+				sb.append(fileName);
+				sb.append(StringPool.SPACE);
+
+				if (Validator.isNotNull(parentElementName)) {
+					sb.append(parentElementName);
+					sb.append(StringPool.SPACE);
+				}
+
+				sb.append(elementComparator.getElementName(element));
+
+				processErrorMessage(fileName, sb.toString());
+			}
+
+			previousElement = element;
 		}
 	}
 

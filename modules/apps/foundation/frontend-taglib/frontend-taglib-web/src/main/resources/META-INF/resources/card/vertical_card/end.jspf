@@ -15,49 +15,60 @@
 --%>
 
 			<c:if test="<%= Validator.isNotNull(actionJsp) || Validator.isNotNull(footer) || Validator.isNotNull(header) || Validator.isNotNull(subtitle) || Validator.isNotNull(title) %>">
-				<div class="card-footer">
-					<div class="card-dm-more-options">
-						<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
-					</div>
-
-					<div class="card-dm-details">
+				<div class="card-row card-row-layout-fixed card-row-padded card-row-valign-top taglib-vertical-card-footer">
+					<div class="card-col-content lfr-card-details-column">
 						<c:if test="<%= Validator.isNotNull(header) %>">
-							<div class="card-dm-text-small">
+							<span class="lfr-card-modified-by-text truncate-text" title="<%= header %>">
 								<%= header %>
-							</div>
+							</span>
 						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(title) %>">
-							<aui:a href="<%= url %>">
-								<div class="card-dm-text-large"><%= HtmlUtil.escape(title) %></div>
-							</aui:a>
+							<span class="lfr-card-title-text truncate-text">
+								<aui:a href="<%= url %>" title="<%= HtmlUtil.escape(title) %>">
+									<%= HtmlUtil.escape(title) %>
+								</aui:a>
+							</span>
 						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(subtitle) %>">
-							<div class="card-dm-text">
+							<span class="lfr-card-subtitle-text truncate-text" title="<%= HtmlUtil.escape(subtitle) %>">
 								<%= HtmlUtil.escape(subtitle) %>
-							</div>
+							</span>
 						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(footer) %>">
-							<div class="card-dm-text-small">
+							<span class="lfr-card-workflow-text truncate-text">
 								<%= footer %>
-							</div>
+							</span>
 						</c:if>
 					</div>
+
+					<liferay-util:buffer var="actionJspBuffer">
+						<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
+					</liferay-util:buffer>
+
+					<c:if test="<%= Validator.isNotNull(actionJspBuffer) %>">
+						<div class="card-col-field lfr-card-actions-column">
+							<%= actionJspBuffer %>
+						</div>
+					</c:if>
 				</div>
 			</c:if>
 		</div>
 
-		<c:if test="<%= showCheckbox %>">
-			<c:choose>
-				<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-					<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
-				</c:when>
-				<c:when test="<%= showCheckbox %>">
-					<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
-				</c:when>
-			</c:choose>
-		</c:if>
-	</div>
+	<c:choose>
+		<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
+			<liferay-util:buffer var="checkboxInput">
+				<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+			</liferay-util:buffer>
+
+			<c:if test="<%= Validator.isNotNull(checkboxInput) %>">
+				</div>
+			</c:if>
+		</c:when>
+		<c:when test="<%= showCheckbox %>">
+			</div>
+		</c:when>
+	</c:choose>
 </div>

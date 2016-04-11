@@ -876,6 +876,8 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
+		<var name="key_portletName" value="Blogs" />
+
 		<execute function="AssertElementNotPresent" locator1="BasePortlet#TITLE" value1="Blogs" />
 
 		<execute macro="User#loginPG">
@@ -897,6 +899,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
 		</execute>
+
+		<var name="key_portletName" value="Blogs" />
 
 		<execute function="AssertElementPresent" locator1="BasePortlet#TITLE" value1="Blogs" />
 
@@ -920,6 +924,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
 		</execute>
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
 
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 
@@ -950,6 +956,8 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 
 		<execute macro="User#loginPG">
@@ -971,6 +979,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
 		</execute>
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
 
 		<execute function="AssertElementPresent" locator1="BlogsEntry#TITLE" />
 

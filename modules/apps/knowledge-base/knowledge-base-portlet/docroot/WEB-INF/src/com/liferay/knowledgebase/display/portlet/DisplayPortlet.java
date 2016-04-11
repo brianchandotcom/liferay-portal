@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.display.portlet;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.display.selector.KBArticleSelection;
 import com.liferay.knowledgebase.display.selector.KBArticleSelector;
 import com.liferay.knowledgebase.display.selector.KBArticleSelectorFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.knowledgebase.service.KBFolderServiceUtil;
 import com.liferay.knowledgebase.service.permission.KBArticlePermission;
 import com.liferay.knowledgebase.util.ActionKeys;
 import com.liferay.knowledgebase.util.KnowledgeBaseUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.knowledgebase.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
@@ -181,7 +181,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, PortletKeys.KNOWLEDGE_BASE_DISPLAY,
+			actionRequest, KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter("kbFolderUrlTitle", kbFolder.getUrlTitle());

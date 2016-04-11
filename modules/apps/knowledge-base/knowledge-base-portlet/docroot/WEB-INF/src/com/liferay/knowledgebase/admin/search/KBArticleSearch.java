@@ -14,9 +14,9 @@
 
 package com.liferay.knowledgebase.admin.search;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBArticle;
 import com.liferay.knowledgebase.util.KnowledgeBaseUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -93,11 +93,11 @@ public class KBArticleSearch extends SearchContainer<KBArticle> {
 				"kbArticlesOrderByType", StringPool.BLANK);
 
 			String oldOrderByCol = preferences.getValue(
-				PortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-articles-order-by-col",
-				portletOrderByCol);
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-articles-order-by-col", portletOrderByCol);
 			String oldOrderByType = preferences.getValue(
-				PortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-articles-order-by-type",
-				portletOrderByType);
+				KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-articles-order-by-type", portletOrderByType);
 
 			String orderByCol = ParamUtil.getString(
 				portletRequest, "orderByCol", oldOrderByCol);
@@ -108,10 +108,10 @@ public class KBArticleSearch extends SearchContainer<KBArticle> {
 				!Validator.equals(orderByType, oldOrderByType)) {
 
 				preferences.setValue(
-					PortletKeys.KNOWLEDGE_BASE_ADMIN,
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
 					"kb-articles-order-by-col", orderByCol);
 				preferences.setValue(
-					PortletKeys.KNOWLEDGE_BASE_ADMIN,
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
 					"kb-articles-order-by-type", orderByType);
 
 				KBArticleSearchTerms searchTerms =

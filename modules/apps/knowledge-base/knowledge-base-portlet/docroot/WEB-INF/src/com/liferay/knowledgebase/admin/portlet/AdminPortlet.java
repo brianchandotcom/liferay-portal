@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.admin.portlet;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.exception.KBArticleImportException;
 import com.liferay.knowledgebase.exception.KBTemplateContentException;
 import com.liferay.knowledgebase.exception.KBTemplateTitleException;
@@ -29,7 +30,6 @@ import com.liferay.knowledgebase.portlet.BaseKBPortlet;
 import com.liferay.knowledgebase.service.KBArticleServiceUtil;
 import com.liferay.knowledgebase.service.KBFolderServiceUtil;
 import com.liferay.knowledgebase.service.KBTemplateServiceUtil;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -354,7 +354,7 @@ public class AdminPortlet extends BaseKBPortlet {
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, PortletKeys.KNOWLEDGE_BASE_ADMIN,
+				actionRequest, KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN,
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

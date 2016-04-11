@@ -14,7 +14,7 @@
 
 package com.liferay.knowledgebase.hook.events;
 
-import com.liferay.knowledgebase.util.PortletKeys;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,7 +68,8 @@ public class ServicePreAction extends Action {
 		}
 
 		if (!portletId.equals(
-				PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
+				KnowledgeBasePortletKeys.
+					KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
 
 			return;
 		}

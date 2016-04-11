@@ -14,7 +14,7 @@
 
 package com.liferay.knowledgebase.service.permission;
 
-import com.liferay.knowledgebase.util.PortletKeys;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
@@ -42,8 +42,8 @@ public class AdminPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME, PortletKeys.KNOWLEDGE_BASE_ADMIN,
-			groupId, actionId);
+			permissionChecker, RESOURCE_NAME,
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, groupId, actionId);
 	}
 
 	@Override

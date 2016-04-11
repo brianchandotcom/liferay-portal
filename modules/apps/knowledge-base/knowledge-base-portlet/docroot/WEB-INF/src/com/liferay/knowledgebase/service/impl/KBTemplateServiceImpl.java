@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.service.impl;
 
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.knowledgebase.model.KBTemplate;
 import com.liferay.knowledgebase.model.KBTemplateSearchDisplay;
 import com.liferay.knowledgebase.model.impl.KBTemplateSearchDisplayImpl;
@@ -22,7 +23,6 @@ import com.liferay.knowledgebase.service.permission.AdminPermission;
 import com.liferay.knowledgebase.service.permission.DisplayPermission;
 import com.liferay.knowledgebase.service.permission.KBTemplatePermission;
 import com.liferay.knowledgebase.util.ActionKeys;
-import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,12 +45,14 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.equals(KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			AdminPermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				ActionKeys.ADD_KB_TEMPLATE);
 		}
-		else if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+		else if (portletId.equals(
+					KnowledgeBasePortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 			DisplayPermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				ActionKeys.ADD_KB_TEMPLATE);

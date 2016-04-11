@@ -14,7 +14,7 @@
 
 package com.liferay.knowledgebase.hook.upgrade.v1_3_5;
 
-import com.liferay.knowledgebase.util.PortletKeys;
+import com.liferay.knowledge.base.constants.KnowledgeBasePortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 
 /**
@@ -26,19 +26,23 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void doUpgrade() throws Exception {
 		runSQL("alter table KBArticle add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.KNOWLEDGE_BASE_ADMIN, "KBArticle");
+		updateLastPublishDates(
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, "KBArticle");
 
 		runSQL("alter table KBComment add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.KNOWLEDGE_BASE_ADMIN, "KBComment");
+		updateLastPublishDates(
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, "KBComment");
 
 		runSQL("alter table KBFolder add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.KNOWLEDGE_BASE_ADMIN, "KBFolder");
+		updateLastPublishDates(
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, "KBFolder");
 
 		runSQL("alter table KBTemplate add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.KNOWLEDGE_BASE_ADMIN, "KBTemplate");
+		updateLastPublishDates(
+			KnowledgeBasePortletKeys.KNOWLEDGE_BASE_ADMIN, "KBTemplate");
 	}
 
 }

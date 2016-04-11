@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.facet.FacetProcessor;
 
-import java.io.Serializable;
-
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,18 +45,19 @@ public class ModifiedFacetProcessor extends RangeFacetProcessor {
 
 		SearchContext searchContext = facet.getSearchContext();
 
-		Serializable modified = searchContext.getAttribute("modified");
+		String range = GetterUtil.getString(
+			searchContext.getAttribute(facet.getFieldId()));
 
-		if (Validator.isNotNull(modified)) {
-			FacetConfiguration facetConfiguration =
-				facet.getFacetConfiguration();
-
-			String facetQuery =
-				facetConfiguration.getFieldName() + StringPool.COLON +
-					GetterUtil.getString(modified);
-
-			solrQuery.addFacetQuery(facetQuery);
+		if (Validator.isNull(range)) {
+			return;
 		}
+
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+		String facetQuery =
+			facetConfiguration.getFieldName() + StringPool.COLON + range;
+
+		solrQuery.addFacetQuery(facetQuery);
 	}
 
 }

@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[contains(@id,'cas-import-from-ldap')]</td>
+	<td>//input[contains(@name,'cas--importFromLDAP')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGIN_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-login-url')]</td>
+	<td>//label[contains(.,'CAS server login URL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_LOGOUT_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-logout-url')]</td>
+	<td>//label[contains(.,'CAS server logout URL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-no-such-user-redirect-url')]</td>
+	<td>//label[contains(@for,'noSuchUserRedirectU')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_NAME_HEADER</td>
-	<td>//label[contains(@for,'cas-server-name')]</td>
+	<td>//label[contains(@for,'serverNa')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVER_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-server-url')]</td>
+	<td>//label[following-sibling::input[contains(@name,'cas--serverURL')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_CAS_SERVICE_URL_HEADER</td>
-	<td>//label[contains(@for,'cas-service-url')]</td>
+	<td>//label[following-sibling::input[contains(@name,'cas--serviceURL')]]</td>
 	<td></td>
 </tr>
 <tr>

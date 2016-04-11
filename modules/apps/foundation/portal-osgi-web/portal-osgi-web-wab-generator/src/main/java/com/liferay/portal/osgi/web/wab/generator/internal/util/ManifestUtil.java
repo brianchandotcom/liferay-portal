@@ -29,21 +29,6 @@ import org.osgi.framework.Constants;
  */
 public class ManifestUtil {
 
-	public static boolean isValidOSGiBundle(String path) {
-		try (Jar jar = new Jar(_WAR, path)) {
-			String bundleSymbolicName = jar.getBsn();
-
-			if (bundleSymbolicName != null) {
-				return true;
-			}
-		}
-		catch (Exception e) {
-			// Ignore this case
-		}
-
-		return false;
-	}
-
 	public static boolean isValidOSGiBundle(Manifest manifest) {
 		if (manifest == null) {
 			return false;
@@ -57,6 +42,23 @@ public class ManifestUtil {
 		return Validator.isNotNull(bundleSymbolicName);
 	}
 
-	private final static String _WAR = "WAR";
+	public static boolean isValidOSGiBundle(String path) {
+		try (Jar jar = new Jar(_WAR, path)) {
+			String bundleSymbolicName = jar.getBsn();
+
+			if (bundleSymbolicName != null) {
+				return true;
+			}
+		}
+		catch (Exception e) {
+
+			// Ignore this case
+
+		}
+
+		return false;
+	}
+
+	private static final String _WAR = "WAR";
 
 }

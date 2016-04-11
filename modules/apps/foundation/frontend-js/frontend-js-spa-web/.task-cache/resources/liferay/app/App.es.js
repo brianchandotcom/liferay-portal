@@ -166,7 +166,6 @@ define("frontend-js-spa-web@1.0.6/liferay/app/App.es", ['exports', 'senna/src/ap
 		return LiferayApp;
 	}(_App3.default);
 
-	LiferayApp.prototype.registerMetalComponent && LiferayApp.prototype.registerMetalComponent(LiferayApp, 'LiferayApp')
 	exports.default = LiferayApp;
 });
 //# sourceMappingURL=App.es.js.map

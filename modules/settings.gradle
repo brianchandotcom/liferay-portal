@@ -11,6 +11,7 @@ else {
 		exclude "sdk/gradle-templates/src/"
 
 		include "*/**/build.gradle"
+		include "*/**/build.xml"
 		include "apps/foundation/frontend-theme/*/gulpfile.js"
 	}
 }

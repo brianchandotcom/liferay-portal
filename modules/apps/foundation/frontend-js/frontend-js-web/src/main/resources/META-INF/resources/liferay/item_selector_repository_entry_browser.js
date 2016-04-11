@@ -260,11 +260,7 @@ AUI.add(
 					_onItemUploadCancel: function(event) {
 						var instance = this;
 
-						var uploadItemViewer = instance._uploadItemViewer;
-
-						if (uploadItemViewer) {
-							uploadItemViewer.hide();
-						}
+						instance._uploadItemViewer.hide();
 					},
 
 					_onItemUploadComplete: function(itemData) {
@@ -272,9 +268,7 @@ AUI.add(
 
 						var uploadItemViewer = instance._uploadItemViewer;
 
-						if (uploadItemViewer) {
-							uploadItemViewer.updateCurrentImage(itemData);
-						}
+						uploadItemViewer.updateCurrentImage(itemData);
 
 						instance._onItemSelected(uploadItemViewer);
 					},
@@ -282,11 +276,7 @@ AUI.add(
 					_onItemUploadError: function(event) {
 						var instance = this;
 
-						var uploadItemViewer = instance._uploadItemViewer;
-
-						if (uploadItemViewer) {
-							uploadItemViewer.hide();
-						}
+						instance._uploadItemViewer.hide();
 
 						instance._getUploadErrorMessage(event.error).show();
 					},

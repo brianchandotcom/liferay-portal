@@ -21,7 +21,6 @@
 		modelVar="workflowInstance"
 		stringKey="<%= true %>"
 	>
-
 		<liferay-ui:search-container-row-parameter
 			name="workflowInstance"
 			value="<%= workflowInstance %>"

@@ -121,7 +121,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer='<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found") %>'
 		>
-
 			<liferay-ui:search-container-results>
 				<%@ include file="/blogs_admin/entry_search_results.jspf" %>
 			</liferay-ui:search-container-results>

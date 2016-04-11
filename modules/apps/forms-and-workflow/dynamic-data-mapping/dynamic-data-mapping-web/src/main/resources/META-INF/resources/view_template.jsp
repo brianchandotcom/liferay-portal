@@ -109,13 +109,11 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
-
 		<liferay-ui:search-container
 			id="ddmTemplates"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= templateSearch %>"
 		>
-
 			<liferay-ui:search-container-results>
 				<%@ include file="/template_search_results.jspf" %>
 			</liferay-ui:search-container-results>

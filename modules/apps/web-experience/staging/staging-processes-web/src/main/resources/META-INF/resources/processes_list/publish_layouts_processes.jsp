@@ -69,7 +69,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		orderByType="<%= orderByType %>"
 		rowChecker="<%= new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 	>
-
 		<liferay-ui:search-container-results>
 
 			<%
@@ -141,9 +140,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						</h6>
 
 						<h5 id="<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>">
-
 							<%= HtmlUtil.escape(backgroundTaskName) %>
-
 						</h5>
 
 						<c:if test="<%= backgroundTask.isInProgress() %>">

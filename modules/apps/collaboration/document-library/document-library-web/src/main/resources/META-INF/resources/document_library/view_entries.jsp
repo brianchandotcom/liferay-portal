@@ -229,7 +229,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 			className="Object"
 			modelVar="result"
 		>
-
 			<%@ include file="/document_library/cast_result.jspf" %>
 
 			<c:choose>

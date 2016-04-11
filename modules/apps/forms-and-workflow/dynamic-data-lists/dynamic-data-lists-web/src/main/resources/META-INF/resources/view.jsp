@@ -91,7 +91,6 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 						/>
 					</c:when>
 					<c:otherwise>
-
 						<%@ include file="/search_columns.jspf" %>
 
 						<liferay-ui:search-container-column-jsp

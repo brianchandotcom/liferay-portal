@@ -72,13 +72,11 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<aui:input name="deleteStructureIds" type="hidden" />
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
-
 		<liferay-ui:search-container
 			id="ddmStructures"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= structureSearch %>"
 		>
-
 			<liferay-ui:search-container-results>
 				<%@ include file="/structure_search_results.jspf" %>
 			</liferay-ui:search-container-results>

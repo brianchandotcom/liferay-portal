@@ -73,7 +73,6 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			orderByType="asc"
 			searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
 		>
-
 			<liferay-ui:search-container-results>
 				<%@ include file="/export_import_configuration_search_results.jspf" %>
 			</liferay-ui:search-container-results>

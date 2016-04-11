@@ -30,7 +30,6 @@ portletURL.setParameter("struts_action", "/polls/view");
 
 <div class="container-fluid-1280 main-content-body">
 	<aui:form method="post" name="fm">
-
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entries-were-found"
 			iteratorURL="<%= portletURL %>"

@@ -75,7 +75,6 @@ if (entry == null) {
 				%>
 
 				<%@ include file="/entry_select_scope.jspf" %>
-
 			</c:otherwise>
 		</c:choose>
 

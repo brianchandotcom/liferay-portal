@@ -113,7 +113,6 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-
 						<h5>
 							<c:choose>
 								<c:when test="<%= !themeId.equals(theme.getThemeId()) %>">

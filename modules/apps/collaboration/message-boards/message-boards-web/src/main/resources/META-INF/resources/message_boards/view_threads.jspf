@@ -68,7 +68,6 @@
 		keyProperty="primaryKeyObj"
 		modelVar="result"
 	>
-
 		<%@ include file="/message_boards/thread_cast_result.jspf" %>
 
 		<%

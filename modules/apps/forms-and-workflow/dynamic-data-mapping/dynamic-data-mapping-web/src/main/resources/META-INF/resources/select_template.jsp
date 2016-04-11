@@ -100,7 +100,6 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				keyProperty="templateId"
 				modelVar="template"
 			>
-
 				<liferay-ui:search-container-column-text
 					name="id"
 					value="<%= String.valueOf(template.getTemplateId()) %>"

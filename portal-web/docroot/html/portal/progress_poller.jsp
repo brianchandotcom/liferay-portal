@@ -47,7 +47,5 @@ if (progressTracker != null) {
 				}
 			}());
 		</script>
-
 	</body>
-
 </html>

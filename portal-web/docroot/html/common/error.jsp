@@ -66,7 +66,6 @@ String message = exception.getMessage();
 
 					<%= HtmlUtil.escape(message) %>
 				</c:if>
-
 			</td>
 		</tr>
 	</table>

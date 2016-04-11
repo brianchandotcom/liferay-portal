@@ -102,7 +102,6 @@ if (groupThreadsUserId > 0) {
 				keyProperty="categoryId"
 				modelVar="result"
 			>
-
 				<%@ include file="/message_boards/cast_result.jspf" %>
 
 				<c:choose>

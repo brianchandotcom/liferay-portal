@@ -44,9 +44,6 @@ String movie = ParamUtil.getString(request, "movie");
 					so.write('flashMovie');
 				</script>
 			</c:if>
-
 		</center>
-
 	</body>
-
 </html>

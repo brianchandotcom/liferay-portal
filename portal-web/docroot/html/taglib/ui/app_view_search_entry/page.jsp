@@ -80,9 +80,7 @@ summary.setQueryTerms(queryTerms);
 								<liferay-ui:message key="versions" />:
 							</dt>
 							<dd>
-
 								<%= StringUtil.merge(versions, StringPool.COMMA_AND_SPACE) %>
-
 							</dd>
 						</c:if>
 
@@ -91,9 +89,7 @@ summary.setQueryTerms(queryTerms);
 								<liferay-ui:message key="<%= containerType %>" />:
 							</dt>
 							<dd>
-
 								<%= HtmlUtil.escape(containerName) %>
-
 							</dd>
 						</c:if>
 					</dl>

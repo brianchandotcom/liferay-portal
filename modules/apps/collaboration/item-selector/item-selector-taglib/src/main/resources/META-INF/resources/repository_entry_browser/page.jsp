@@ -195,7 +195,6 @@ if (Validator.isNotNull(keywords)) {
 				className="com.liferay.portal.kernel.repository.model.RepositoryEntry"
 				modelVar="repositoryEntry"
 			>
-
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("list") %>'>
 

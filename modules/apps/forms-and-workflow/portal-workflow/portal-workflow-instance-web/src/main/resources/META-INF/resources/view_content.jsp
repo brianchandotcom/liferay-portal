@@ -39,7 +39,6 @@ renderResponse.setTitle(assetRenderer.getTitle(locale));
 %>
 
 <c:if test="<%= assetEntry != null %>">
-
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"
 		assetRenderer="<%= assetRenderer %>"

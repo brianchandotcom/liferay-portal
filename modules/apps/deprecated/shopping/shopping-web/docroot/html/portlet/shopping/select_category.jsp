@@ -43,7 +43,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		iteratorURL="<%= portletURL %>"
 		total="<%= ShoppingCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId) %>"
 	>
-
 		<liferay-ui:search-container-results
 			results="<%= ShoppingCategoryServiceUtil.getCategories(scopeGroupId, categoryId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
@@ -54,7 +53,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			keyProperty="categoryId"
 			modelVar="curCategory"
 		>
-
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="struts_action" value="/shopping/select_category" />
 				<portlet:param name="categoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />

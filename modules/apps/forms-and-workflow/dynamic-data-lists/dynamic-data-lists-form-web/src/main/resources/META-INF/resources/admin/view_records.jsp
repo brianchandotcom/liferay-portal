@@ -74,7 +74,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>"
 		>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecord"
 				cssClass="entry-display-style selectable"

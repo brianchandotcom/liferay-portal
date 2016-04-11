@@ -134,7 +134,6 @@ if (!resultRowSplitterEntries.isEmpty()) {
 									<%= headerNameValue %>
 								</c:otherwise>
 							</c:choose>
-
 						</th>
 
 					<%

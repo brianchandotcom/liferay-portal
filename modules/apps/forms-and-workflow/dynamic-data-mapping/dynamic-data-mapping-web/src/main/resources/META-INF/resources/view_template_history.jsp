@@ -72,7 +72,6 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 			keyProperty="templateVersionId"
 			modelVar="templateVersion"
 		>
-
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/view_template_version.jsp" />
 				<portlet:param name="redirect" value="<%= redirect %>" />

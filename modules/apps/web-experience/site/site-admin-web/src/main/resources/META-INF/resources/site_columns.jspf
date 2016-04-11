@@ -82,7 +82,6 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
@@ -95,7 +94,6 @@
 	cssClass="members-column text-column"
 	name="members"
 >
-
 	<span onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" unicode="<%= true %>" />');">
 
 		<%

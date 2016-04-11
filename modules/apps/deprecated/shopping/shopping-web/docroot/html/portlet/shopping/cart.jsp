@@ -192,7 +192,6 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			<liferay-ui:search-container-column-text
 				name="cart"
 			>
-
 				<c:choose>
 					<c:when test="<%= item.isSmallImage() %>">
 						<img alt="<%= HtmlUtil.escapeAttribute(item.getSku()) %>" src="<%= item.getShoppingItemImageURL(themeDisplay) %>" />

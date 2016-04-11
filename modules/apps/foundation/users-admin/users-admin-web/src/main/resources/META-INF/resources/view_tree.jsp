@@ -160,7 +160,6 @@ if (organization != null) {
 						%>
 
 						<%= organizationsTitle %>
-
 					</liferay-util:buffer>
 
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" markupView="lexicon" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">

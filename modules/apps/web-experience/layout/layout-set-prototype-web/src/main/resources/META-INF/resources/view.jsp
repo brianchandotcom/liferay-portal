@@ -178,7 +178,6 @@
 						name="name"
 						truncate="<%= true %>"
 					>
-
 						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
 
 						<%

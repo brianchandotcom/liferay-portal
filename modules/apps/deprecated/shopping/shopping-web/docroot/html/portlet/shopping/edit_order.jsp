@@ -187,7 +187,6 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 							</td>
 						</tr>
 					</c:if>
-
 				</table>
 			</c:otherwise>
 		</c:choose>

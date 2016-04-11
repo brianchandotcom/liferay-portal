@@ -113,7 +113,6 @@ if (step == 1) {
 					keyProperty="organizationId"
 					modelVar="organization"
 				>
-
 					<liferay-ui:search-container-column-text
 						name="name"
 						orderable="<%= true %>"

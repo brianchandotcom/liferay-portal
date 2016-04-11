@@ -43,7 +43,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	refresh="<%= false %>"
 	type="tabs nav-tabs-default"
 >
-
 	<aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
 		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
@@ -87,7 +86,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 				iteratorURL="<%= configurationRenderURL %>"
 				total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) %>"
 			>
-
 				<liferay-ui:search-container-results
 					results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), getDDLRecordSetOrderByComparator(orderByCol, orderByType)) %>"
 				/>

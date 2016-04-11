@@ -173,7 +173,6 @@
 						%>
 
 						<%= content %>
-
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

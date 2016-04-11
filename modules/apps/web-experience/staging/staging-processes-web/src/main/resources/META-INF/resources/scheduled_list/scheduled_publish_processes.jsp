@@ -52,7 +52,6 @@ else {
 		orderByCol="<%= orderByCol %>"
 		orderByType="<%= orderByType %>"
 	>
-
 		<liferay-ui:search-container-results>
 
 			<%
@@ -73,7 +72,6 @@ else {
 			className="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse"
 			modelVar="schedulerResponse"
 		>
-
 			<liferay-ui:search-container-column-text
 				cssClass="background-task-user-column"
 				name="user"
@@ -130,7 +128,6 @@ else {
 					<liferay-ui:search-container-column-text
 						name="end-date"
 					>
-
 						<liferay-ui:message key='<%= LanguageUtil.get(request, "no-end-date") %>' />
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

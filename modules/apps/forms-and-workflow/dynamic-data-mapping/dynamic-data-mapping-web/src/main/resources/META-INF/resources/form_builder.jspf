@@ -239,14 +239,26 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	Liferay.after('showTab', afterShowTab);
 
-	var clearShowTabHandle = function(event) {
+	var onDestroyPortlet = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.detach('showTab', afterShowTab);
-			Liferay.detach('destroyPortlet', clearShowTabHandle);
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+
+			formBuilder.propertyList.get('data').each(
+				function(model) {
+					var editor = model.get('editor');
+
+					if (editor) {
+						editor.destroy();
+					}
+				}
+			);
+
+			formBuilder.destroy();
 		}
 	};
 
-	Liferay.on('destroyPortlet', clearShowTabHandle);
+	Liferay.on('destroyPortlet', onDestroyPortlet);
 
 	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>formBuilder'] = formBuilder;
 

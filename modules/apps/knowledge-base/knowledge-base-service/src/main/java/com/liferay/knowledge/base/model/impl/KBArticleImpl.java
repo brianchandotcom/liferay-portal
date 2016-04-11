@@ -16,24 +16,160 @@ package com.liferay.knowledge.base.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.knowledge.base.constants.KBArticleConstants;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.knowledge.base.service.util.KBArticleAttachmentsUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 /**
- * The extended model implementation for the KBArticle service. Represents a row in the &quot;KBArticle&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.knowledge.base.model.KBArticle} interface.
- * </p>
- *
+ * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class KBArticleImpl extends KBArticleBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a k b article model instance should use the {@link com.liferay.knowledge.base.model.KBArticle} interface instead.
-	 */
 	public KBArticleImpl() {
 	}
+
+	@Override
+	public List<Long> getAncestorResourcePrimaryKeys() throws PortalException {
+		List<Long> ancestorResourcePrimaryKeys = new ArrayList<>();
+
+		ancestorResourcePrimaryKeys.add(getResourcePrimKey());
+
+		KBArticle kbArticle = this;
+
+		while (!kbArticle.isRoot()) {
+			kbArticle = kbArticle.getParentKBArticle();
+
+			if (kbArticle == null) {
+				break;
+			}
+
+			ancestorResourcePrimaryKeys.add(kbArticle.getResourcePrimKey());
+		}
+
+		return ancestorResourcePrimaryKeys;
+	}
+
+	@Override
+	public List<FileEntry> getAttachmentsFileEntries() throws PortalException {
+		return PortletFileRepositoryUtil.getPortletFileEntries(
+			getGroupId(), getAttachmentsFolderId(),
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public long getAttachmentsFolderId() throws PortalException {
+		if (_attachmentsFolderId > 0) {
+			return _attachmentsFolderId;
+		}
+
+		_attachmentsFolderId = KBArticleAttachmentsUtil.getFolderId(
+			getGroupId(), getUserId(), getResourcePrimKey());
+
+		return _attachmentsFolderId;
+	}
+
+	@Override
+	public long getClassNameId() {
+		if (_classNameId == 0) {
+			_classNameId = PortalUtil.getClassNameId(
+				KBArticleConstants.getClassName());
+		}
+
+		return _classNameId;
+	}
+
+	@Override
+	public long getClassPK() {
+		if (isApproved()) {
+			return getResourcePrimKey();
+		}
+
+		return getKbArticleId();
+	}
+
+	@Override
+	public KBArticle getParentKBArticle() throws PortalException {
+		long parentResourcePrimKey = getParentResourcePrimKey();
+
+		if ((parentResourcePrimKey <= 0) ||
+			(getParentResourceClassNameId() != getClassNameId())) {
+
+			return null;
+		}
+
+		return KBArticleLocalServiceUtil.getLatestKBArticle(
+			parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public String getParentTitle(Locale locale, int status)
+		throws PortalException {
+
+		if (isRoot()) {
+			return "(" + LanguageUtil.get(locale, "none") + ")";
+		}
+
+		if (getParentResourceClassNameId() == getClassNameId()) {
+			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+				getParentResourcePrimKey(), status);
+
+			return kbArticle.getTitle();
+		}
+		else {
+			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
+				getParentResourcePrimKey());
+
+			return kbFolder.getName();
+		}
+	}
+
+	@Override
+	public boolean isFirstVersion() {
+		if (getVersion() == KBArticleConstants.DEFAULT_VERSION) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isResourceMain() {
+		return isMain();
+	}
+
+	@Override
+	public boolean isRoot() {
+		if (getParentResourcePrimKey() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(KBArticleImpl.class);
+
+	private long _attachmentsFolderId;
+	private long _classNameId;
 
 }

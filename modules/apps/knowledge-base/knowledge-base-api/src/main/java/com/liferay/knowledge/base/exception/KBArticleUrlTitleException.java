@@ -39,4 +39,35 @@ public class KBArticleUrlTitleException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustNotBeDuplicate extends KBArticleUrlTitleException {
+
+		public MustNotBeDuplicate(String urlTitle) {
+			super("Duplicate URL title " + urlTitle);
+		}
+
+	}
+
+	public static class MustNotContainInvalidCharacters
+		extends KBArticleUrlTitleException {
+
+		public MustNotContainInvalidCharacters(String urlTitle) {
+			super(
+				"URL title " + urlTitle + " must start with a '/' and " +
+					"contain only alphanumeric characters, dashes, and " +
+						"underscores");
+		}
+
+	}
+
+	public static class MustNotExceedMaximumSize
+		extends KBArticleUrlTitleException {
+
+		public MustNotExceedMaximumSize(String urlTitle, int urlTitleMaxSize) {
+			super(
+				"URL title " + urlTitle + " must have fewer than " +
+					urlTitleMaxSize + " characters");
+		}
+
+	}
+
 }

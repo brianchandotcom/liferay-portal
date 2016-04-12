@@ -20,14 +20,19 @@ import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.language.LanguageResources;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,6 +82,11 @@ public class CommentUserNotificationHandler
 	}
 
 	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Override
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer assetRenderer,
 		ServiceContext serviceContext) {
@@ -112,30 +122,30 @@ public class CommentUserNotificationHandler
 			}
 		}
 
+		String[] arguments = null;
+
 		if (assetRenderer != null) {
-			message = LanguageUtil.format(
-				serviceContext.getLocale(), message,
-				new String[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
-							jsonObject.getLong("userId"), StringPool.BLANK)),
-					HtmlUtil.escape(
-						assetRenderer.getTitle(serviceContext.getLocale()))
-				},
-				false);
+			arguments = new String[] {
+				HtmlUtil.escape(
+					PortalUtil.getUserName(
+						jsonObject.getLong("userId"),
+						StringPool.BLANK)),
+				HtmlUtil.escape(
+					assetRenderer.getTitle(serviceContext.getLocale()))
+			};
 		}
 		else {
-			message = LanguageUtil.format(
-				serviceContext.getLocale(), message,
-				new String[] {
-					HtmlUtil.escape(
-						PortalUtil.getUserName(
-							jsonObject.getLong("userId"), StringPool.BLANK))
-				},
-				false);
+			arguments = new String[] {
+				HtmlUtil.escape(
+					PortalUtil.getUserName(
+						jsonObject.getLong("userId"), StringPool.BLANK))
+			};
 		}
 
-		return message;
+		ResourceBundle resourceBundle = getResourceBundle(
+			serviceContext.getLocale());
+
+		return ResourceBundleUtil.getString(resourceBundle, message, arguments);
 	}
 
 	@Reference(unbind = "-")
@@ -145,6 +155,17 @@ public class CommentUserNotificationHandler
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.comment.web)", unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

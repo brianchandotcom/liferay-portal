@@ -16,12 +16,14 @@ package com.liferay.message.boards.web.notifications;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,13 +48,15 @@ public class MBUserNotificationHandler
 		JSONObject jsonObject, ServiceContext serviceContext, String message,
 		String typeName) {
 
-		return LanguageUtil.format(
-			serviceContext.getLocale(), message,
+		ResourceBundle resourceBundle = getResourceBundle(
+			serviceContext.getLocale());
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, message,
 			new String[] {
 				HtmlUtil.escape(jsonObject.getString("fullName")),
 				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-			},
-			false);
+			});
 	}
 
 }

@@ -25,15 +25,23 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
@@ -48,6 +56,11 @@ public class MicroblogsUserNotificationHandler
 	}
 
 	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Override
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
@@ -56,19 +69,20 @@ public class MicroblogsUserNotificationHandler
 			_microblogsEntryLocalService.fetchMicroblogsEntry(
 				assetRenderer.getClassPK());
 
-		String title = StringPool.BLANK;
-
 		String userFullName = HtmlUtil.escape(
 			PortalUtil.getUserName(
 				microblogsEntry.getUserId(), StringPool.BLANK));
 
 		int notificationType = jsonObject.getInt("notificationType");
 
+		String message = StringPool.BLANK;
+		String[] arguments = null;
+
 		if (notificationType ==
 				MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY) {
 
-			title = serviceContext.translate(
-				"x-commented-on-your-post", userFullName);
+			message = "x-commented-on-your-microblogs-entry";
+			arguments = new String[] {userFullName};
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.
@@ -81,26 +95,32 @@ public class MicroblogsUserNotificationHandler
 				parentMicroblogsEntryUserId);
 
 			if (user != null) {
-				title = serviceContext.translate(
-					"x-also-commented-on-x's-post", userFullName,
-					user.getFullName());
+				message = "x-also-commented-on-x's-microblogs-entry";
+				arguments = new String[] {userFullName, user.getFullName()};
 			}
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.
 						NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
 
-			title = serviceContext.translate(
-				"x-commented-on-a-post-you-are-tagged-in", userFullName);
+			message = "x-commented-on-a-microblogs-entry-you-are-tagged-in";
+			arguments = new String[] {userFullName};
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
 
-			title = serviceContext.translate(
-				"x-tagged-you-in-a-post", userFullName);
+			message = "x-tagged-you-in-a-microblogs-entry";
+			arguments = new String[] {userFullName};
 		}
 
-		return title;
+		if (Validator.isNull(message)) {
+			return StringPool.BLANK;
+		}
+
+		ResourceBundle resourceBundle = getResourceBundle(
+			serviceContext.getLocale());
+
+		return ResourceBundleUtil.getString(resourceBundle, message, arguments);
 	}
 
 	@Reference(unbind = "-")
@@ -110,12 +130,24 @@ public class MicroblogsUserNotificationHandler
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.microblogs.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 
 }

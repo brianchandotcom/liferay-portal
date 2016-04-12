@@ -21,13 +21,16 @@ import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.language.LanguageResources;
 
 import java.util.ResourceBundle;
 
@@ -67,6 +70,11 @@ public class MentionsUserNotificationHandler
 	}
 
 	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
+	}
+
+	@Override
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
@@ -81,27 +89,28 @@ public class MentionsUserNotificationHandler
 		String typeName = assetRendererFactory.getTypeName(
 			serviceContext.getLocale());
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", serviceContext.getLocale(), getClass());
+		String message = StringPool.BLANK;
+		String[] arguments = null;
 
 		if ((mbMessage != null) && mbMessage.isDiscussion()) {
-			return LanguageUtil.format(
-				resourceBundle, "x-mentioned-you-in-a-comment-in-a-x",
-				new String[] {
-					HtmlUtil.escape(assetRenderer.getUserName()),
-					StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-				},
-				false);
+			message = "x-mentioned-you-in-a-comment-in-a-x";
+			arguments = new String[] {
+				HtmlUtil.escape(assetRenderer.getUserName()),
+				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
+			};
 		}
 		else {
-			return LanguageUtil.format(
-				resourceBundle, "x-mentioned-you-in-a-x",
-				new String[] {
-					HtmlUtil.escape(assetRenderer.getUserName()),
-					StringUtil.toLowerCase(HtmlUtil.escape(typeName))
-				},
-				false);
+			message = "x-mentioned-you-in-a-x";
+			arguments = new String[] {
+				HtmlUtil.escape(assetRenderer.getUserName()),
+				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
+			};
 		}
+
+		ResourceBundle resourceBundle = getResourceBundle(
+			serviceContext.getLocale());
+
+		return ResourceBundleUtil.getString(resourceBundle, message, arguments);
 	}
 
 	@Reference(unbind = "-")
@@ -111,6 +120,17 @@ public class MentionsUserNotificationHandler
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.mentions.web)", unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
 	private MBMessageLocalService _mbMessageLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

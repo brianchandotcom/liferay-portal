@@ -149,6 +149,13 @@ public class ResourceBundleUtil {
 		}
 	}
 
+	public static String getString(
+		ResourceBundle resourceBundle, String key, Object[] arguments) {
+
+		return getString(
+			resourceBundle, resourceBundle.getLocale(), key, arguments);
+	}
+
 	public static void loadResourceBundles(
 		Map<String, ResourceBundle> resourceBundles, Locale locale,
 		ResourceBundleLoader resourceBundleLoader) {

@@ -293,6 +293,14 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, resourcePermissionPrimKey, actionId);
 		}
 
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			group = layout.getGroup();
+
+			groupId = layout.getGroupId();
+		}
+
 		if ((layout instanceof VirtualLayout) && layout.isTypeControlPanel()) {
 			VirtualLayout virtualLayout = (VirtualLayout)layout;
 
@@ -311,16 +319,12 @@ public class PortletPermissionImpl implements PortletPermission {
 				permissionChecker, layout, portletId, actionId);
 		}
 
-		Group group = layout.getGroup();
-
 		if (!group.isLayoutSetPrototype() &&
 			actionId.equals(ActionKeys.CONFIGURATION) &&
 			!SitesUtil.isLayoutUpdateable(layout)) {
 
 			return false;
 		}
-
-		groupId = layout.getGroupId();
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 

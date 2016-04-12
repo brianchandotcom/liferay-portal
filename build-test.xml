@@ -3778,9 +3778,27 @@ go]]></replacevalue>
 		<if>
 			<and>
 				<equals arg1="${database.type}" arg2="db2" />
-				<equals arg1="${database.version}" arg2="9.7" />
 			</and>
 			<then>
+				<if>
+					<equals arg1="${database.version}" arg2="9.7" />
+					<then>
+						<var name="database.version.full" value="9.7.4" />
+					</then>
+					<elseif>
+						<equals arg1="${database.version}" arg2="10.1" />
+						<then>
+							<var name="database.version.full" value="10.1.0" />
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${database.version}" arg2="10.5" />
+						<then>
+							<var name="database.version.full" value="10.5.1" />
+						</then>
+					</elseif>
+				</if>
+
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
 						dir="${app.server.lib.global.dir}"
@@ -3792,57 +3810,11 @@ go]]></replacevalue>
 					<sequential>
 						<mirrors-get
 							dest="${todir}"
-							src="${test.jdbc.drivers.url}/db2/9.7.4/@{jdbc.driver}"
+							src="${test.jdbc.drivers.url}/db2/${database.version.full}/@{jdbc.driver}"
 						/>
 					</sequential>
 				</for>
 			</then>
-			<elseif>
-				<and>
-					<equals arg1="${database.type}" arg2="db2" />
-					<equals arg1="${database.version}" arg2="10.1" />
-				</and>
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${app.server.lib.global.dir}"
-							includes="${jdbc.db2.driver}"
-						/>
-					</delete>
-
-					<for list="${jdbc.db2.driver}" param="jdbc.driver">
-						<sequential>
-							<mirrors-get
-								dest="${todir}"
-								src="${test.jdbc.drivers.url}/db2/10.1.0/@{jdbc.driver}"
-							/>
-						</sequential>
-					</for>
-				</then>
-			</elseif>
-			<elseif>
-				<and>
-					<equals arg1="${database.type}" arg2="db2" />
-					<equals arg1="${database.version}" arg2="10.5" />
-				</and>
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${app.server.lib.global.dir}"
-							includes="${jdbc.db2.driver}"
-						/>
-					</delete>
-
-					<for list="${jdbc.db2.driver}" param="jdbc.driver">
-						<sequential>
-							<mirrors-get
-								dest="${todir}"
-								src="${test.jdbc.drivers.url}/db2/10.5.1/@{jdbc.driver}"
-							/>
-						</sequential>
-					</for>
-				</then>
-			</elseif>
 			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="mariadb" />
@@ -3878,9 +3850,27 @@ go]]></replacevalue>
 			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.version}" arg2="10" />
 				</and>
 				<then>
+					<if>
+						<equals arg1="${database.version}" arg2="10" />
+						<then>
+							<var name="database.version.full" value="10.2.0.1.0" />
+						</then>
+						<elseif>
+							<equals arg1="${database.version}" arg2="11" />
+							<then>
+								<var name="database.version.full" value="11.2.0.1.0" />
+							</then>
+						</elseif>
+						<elseif>
+							<equals arg1="${database.version}" arg2="12" />
+							<then>
+								<var name="database.version.full" value="12.1.0.2" />
+							</then>
+						</elseif>
+					</if>
+
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
 							dir="${app.server.lib.global.dir}"
@@ -3890,45 +3880,7 @@ go]]></replacevalue>
 
 					<mirrors-get
 						dest="${todir}"
-						src="${test.jdbc.drivers.url}/oracle/10.2.0.1.0/${jdbc.oracle.driver}"
-					/>
-				</then>
-			</elseif>
-			<elseif>
-				<and>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.version}" arg2="11" />
-				</and>
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${app.server.lib.global.dir}"
-							includes="${jdbc.oracle.driver}"
-						/>
-					</delete>
-
-					<mirrors-get
-						dest="${todir}"
-						src="${test.jdbc.drivers.url}/oracle/11.2.0.1.0/${jdbc.oracle.driver}"
-					/>
-				</then>
-			</elseif>
-			<elseif>
-				<and>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.version}" arg2="12" />
-				</and>
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${app.server.lib.global.dir}"
-							includes="${jdbc.oracle.driver}"
-						/>
-					</delete>
-
-					<mirrors-get
-						dest="${todir}"
-						src="${test.jdbc.drivers.url}/oracle/12.1.0.2/${jdbc.oracle.driver}"
+						src="${test.jdbc.drivers.url}/oracle/${database.version.full}/${jdbc.oracle.driver}"
 					/>
 				</then>
 			</elseif>

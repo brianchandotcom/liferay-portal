@@ -239,17 +239,14 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			for (Element roleAssignmentElement : roleAssignmentElements) {
 				long roleId = GetterUtil.getLong(
 					roleAssignmentElement.elementText("role-id"));
-				String roleType = roleAssignmentElement.elementText(
-					"role-type");
+				String roleType = GetterUtil.getString(
+					roleAssignmentElement.elementText("role-type"),
+					RoleConstants.TYPE_REGULAR_LABEL);
 				String name = roleAssignmentElement.elementText("name");
 
 				RoleAssignment roleAssignment = null;
 
 				if (Validator.isNotNull(name)) {
-					if (Validator.isNull(roleType)) {
-						roleType = RoleConstants.TYPE_REGULAR_LABEL;
-					}
-
 					roleAssignment = new RoleAssignment(name, roleType);
 
 					boolean autoCreate = GetterUtil.getBoolean(
@@ -493,13 +490,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			for (Element roleReceipientElement : roleReceipientElements) {
 				long roleId = GetterUtil.getLong(
 					roleReceipientElement.elementText("role-id"));
-				String roleType = roleReceipientElement.elementText(
-					"role-type");
-
-				if (Validator.isNull(roleType)) {
-					roleType = RoleConstants.TYPE_REGULAR_LABEL;
-				}
-
+				String roleType = GetterUtil.getString(
+					roleReceipientElement.elementText("role-type"),
+					RoleConstants.TYPE_REGULAR_LABEL);
 				String name = roleReceipientElement.elementText("name");
 
 				RoleRecipient roleRecipient = null;

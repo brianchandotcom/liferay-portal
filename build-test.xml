@@ -3776,8 +3776,29 @@ go]]></replacevalue>
 		<get-database-property property.name="database.version" />
 
 		<if>
-			<equals arg1="${database.type}" arg2="db2" />
+			<and>
+				<equals arg1="${database.type}" arg2="db2" />
+			</and>
 			<then>
+				<if>
+					<equals arg1="${database.version}" arg2="9.7" />
+					<then>
+						<var name="database.version.full" value="9.7.4" />
+					</then>
+					<elseif>
+						<equals arg1="${database.version}" arg2="10.1" />
+						<then>
+							<var name="database.version.full" value="10.1.0" />
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${database.version}" arg2="10.5" />
+						<then>
+							<var name="database.version.full" value="10.5.1" />
+						</then>
+					</elseif>
+				</if>
+
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
 						dir="${app.server.lib.global.dir}"
@@ -3789,7 +3810,7 @@ go]]></replacevalue>
 					<sequential>
 						<mirrors-get
 							dest="${todir}"
-							src="${test.jdbc.drivers.url}/db2/10.5.1/@{jdbc.driver}"
+							src="${test.jdbc.drivers.url}/db2/${database.version.full}/@{jdbc.driver}"
 						/>
 					</sequential>
 				</for>
@@ -3829,9 +3850,27 @@ go]]></replacevalue>
 			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.version}" arg2="10" />
 				</and>
 				<then>
+					<if>
+						<equals arg1="${database.version}" arg2="10" />
+						<then>
+							<var name="database.version.full" value="10.2.0.1.0" />
+						</then>
+						<elseif>
+							<equals arg1="${database.version}" arg2="11" />
+							<then>
+								<var name="database.version.full" value="11.2.0.1.0" />
+							</then>
+						</elseif>
+						<elseif>
+							<equals arg1="${database.version}" arg2="12" />
+							<then>
+								<var name="database.version.full" value="12.1.0.2" />
+							</then>
+						</elseif>
+					</if>
+
 					<delete includeemptydirs="true" failonerror="false">
 						<fileset
 							dir="${app.server.lib.global.dir}"
@@ -3841,45 +3880,7 @@ go]]></replacevalue>
 
 					<mirrors-get
 						dest="${todir}"
-						src="${test.jdbc.drivers.url}/oracle/10.2.0.1.0/${jdbc.oracle.driver}"
-					/>
-				</then>
-			</elseif>
-			<elseif>
-				<and>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.version}" arg2="11" />
-				</and>
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${app.server.lib.global.dir}"
-							includes="${jdbc.oracle.driver}"
-						/>
-					</delete>
-
-					<mirrors-get
-						dest="${todir}"
-						src="${test.jdbc.drivers.url}/oracle/11.2.0.1.0/${jdbc.oracle.driver}"
-					/>
-				</then>
-			</elseif>
-			<elseif>
-				<and>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.version}" arg2="12" />
-				</and>
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${app.server.lib.global.dir}"
-							includes="${jdbc.oracle.driver}"
-						/>
-					</delete>
-
-					<mirrors-get
-						dest="${todir}"
-						src="${test.jdbc.drivers.url}/oracle/12.1.0.2/${jdbc.oracle.driver}"
+						src="${test.jdbc.drivers.url}/oracle/${database.version.full}/${jdbc.oracle.driver}"
 					/>
 				</then>
 			</elseif>
@@ -6559,14 +6560,24 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
-						<exec executable="${db2.executable}">
-							<arg line="drop db lportal" />
-						</exec>
+						<if>
+							<os family="windows" />
+							<then>
+								<exec executable="${db2.executable}">
+									<arg line="/c /w db2 -fcreate.sql -td;" />
+								</exec>
+							</then>
+							<else>
+								<exec executable="${db2.executable}">
+									<arg line="drop db lportal" />
+								</exec>
 
-						<exec executable="${db2.executable}" failonerror="true">
-							<arg value="-fcreate.sql" />
-							<arg value="-t" />
-						</exec>
+								<exec executable="${db2.executable}" failonerror="true">
+									<arg value="-fcreate.sql" />
+									<arg value="-t" />
+								</exec>
+							</else>
+						</if>
 					</then>
 					<elseif>
 						<equals arg1="${database.type}" arg2="hypersonic" />

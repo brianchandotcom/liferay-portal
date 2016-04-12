@@ -69,10 +69,6 @@ public class SoyPortletHelper {
 	}
 
 	public String getTemplateNamespace(String path) {
-		if (_moduleName == null) {
-			return path;
-		}
-
 		return path.concat(".render");
 	}
 

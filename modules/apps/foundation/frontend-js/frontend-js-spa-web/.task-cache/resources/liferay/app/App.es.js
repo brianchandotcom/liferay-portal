@@ -128,7 +128,7 @@ define("frontend-js-spa-web@1.0.6/liferay/app/App.es", ['exports', 'senna/src/ap
 			});
 
 			if (event.error) {
-				if (event.error.invalidStatus || event.error.requestError) {
+				if (event.error.invalidStatus || event.error.requestError || event.error.timeout) {
 					if (event.form) {
 						event.form.submit();
 					} else {

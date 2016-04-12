@@ -70,7 +70,7 @@ AUI.add(
 				var instance = this;
 
 				instance.bindInputEvent('blur', instance._onInputBlur);
-				instance.bindInputEvent('change', instance._onInputChange);
+				instance.bindInputEvent(['input', 'change'], instance._onValueChange);
 			},
 
 			_onInputBlur: function(event) {
@@ -85,7 +85,7 @@ AUI.add(
 				);
 			},
 
-			_onInputChange: function(event) {
+			_onValueChange: function(event) {
 				var instance = this;
 
 				instance.fire(

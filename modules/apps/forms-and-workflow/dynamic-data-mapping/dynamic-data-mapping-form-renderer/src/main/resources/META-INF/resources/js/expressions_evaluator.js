@@ -23,7 +23,6 @@ AUI.add(
 						var instance = this;
 
 						instance.after('evaluationEnded', instance._afterEvaluationEnded);
-						instance.after('evaluationStarted', instance._afterEvaluationStarted);
 					},
 
 					evaluate: function(callback) {
@@ -33,15 +32,19 @@ AUI.add(
 
 						var form = instance.get('form');
 
-						if (instance._request) {
-							instance._request.stop();
+						if (instance.isEvaluating()) {
+							instance.stop();
 						}
 
-						if (enabled && form && !instance.evaluating()) {
+						if (enabled && form) {
 							instance.fire('evaluationStarted');
+
+							form.disableSubmitButton();
 
 							instance._evaluate(
 								function(result) {
+									form.enableSubmitButton();
+
 									instance.fire(
 										'evaluationEnded',
 										{
@@ -57,22 +60,24 @@ AUI.add(
 						}
 					},
 
-					evaluating: function() {
+					isEvaluating: function() {
 						var instance = this;
 
-						return instance._evaluating === true;
+						return instance._request !== undefined;
+					},
+
+					stop: function() {
+						var instance = this;
+
+						instance._request.destroy();
+
+						delete instance._request;
 					},
 
 					_afterEvaluationEnded: function() {
 						var instance = this;
 
-						instance._evaluating = null;
-					},
-
-					_afterEvaluationStarted: function() {
-						var instance = this;
-
-						instance._evaluating = true;
+						instance.stop();
 					},
 
 					_evaluate: function(callback) {
@@ -95,6 +100,7 @@ AUI.add(
 										if (event.details[1].statusText !== 'abort') {
 											callback.call(instance, null);
 										}
+
 										callback.call(instance, {});
 									},
 									success: function() {

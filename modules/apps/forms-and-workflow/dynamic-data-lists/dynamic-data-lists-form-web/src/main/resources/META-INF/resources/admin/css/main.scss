@@ -15,6 +15,15 @@ $horizontal-spacing: 35px;
 }
 
 .ddl-form-settings-modal,
+.ddl-publish-modal,
+.dynamic-data-mapping-data-providers-modal,
+.lfr-ddl-field-settings-modal {
+	.btn {
+		transition: opacity 0.5s;
+	}
+}
+
+.ddl-form-settings-modal,
 .lfr-ddl-field-settings-modal.form-builder-field-settings,
 .publish-modal-container {
 	.modal-body {
@@ -598,6 +607,10 @@ $horizontal-spacing: 35px;
 
 	.aspect-ratio img {
 		top: 0;
+	}
+
+	.btn {
+		transition: opacity 0.5s;
 	}
 
 	.control-label {

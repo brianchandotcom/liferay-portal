@@ -29,7 +29,7 @@ AUI.add(
 				instance._eventHandlers.push(
 					evaluator.after('evaluationEnded', A.bind('_afterVisibilityEvaluationEnded', instance)),
 					evaluator.after('evaluationStarted', A.bind('_afterVisibilityEvaluationStarted', instance)),
-					instance.after('valueChanged', instance._afterValueChanged),
+					instance.after('valueChanged', A.debounce(instance._afterValueChanged, 200, instance)),
 					instance.after('visibleChange', instance._afterVisibleChange)
 				);
 			},

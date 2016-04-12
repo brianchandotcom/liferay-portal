@@ -72,5 +72,10 @@
 /apps/foundation/frontend-theme/*/build_gradle
 /apps/foundation/frontend-theme/*/dist
 /apps/foundation/frontend-theme/*/liferay-theme.json
+liferay-hook.xml.processed
 npm-debug.log
 uptodate.properties
+
+!/apps/knowledge-base/knowledge-base-portlet/.classpath
+!/apps/knowledge-base/knowledge-base-portlet/.project
+!/apps/knowledge-base/knowledge-base-portlet/docroot/WEB-INF/lib

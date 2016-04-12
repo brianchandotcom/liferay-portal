@@ -323,6 +323,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_parameterValue = String.valueOf(_stack.pop());
 			_parameterValue = _parameterValue.trim();
 		}
+		else if (qName.equals("role-name") ||
+				 qName.equals("transport-guarantee")) {
+
+			_logger.log(
+				Logger.LOG_WARNING,
+				qName + " from web.xml in Bundle " + _bundle +
+					" is not supported. This value will be ignored");
+		}
 		else if (qName.equals("servlet")) {
 			_webXMLDefinition.setServletDefinition(
 				_servletDefinition.getName(), _servletDefinition);

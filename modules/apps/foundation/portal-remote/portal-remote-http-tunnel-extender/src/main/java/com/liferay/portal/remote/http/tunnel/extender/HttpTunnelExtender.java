@@ -16,7 +16,7 @@ package com.liferay.portal.remote.http.tunnel.extender;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.remote.http.tunnel.configuration.HttpTunnelExtenderConfiguration;
+import com.liferay.portal.remote.http.tunnel.extender.configuration.HttpTunnelExtenderConfiguration;
 import com.liferay.portal.servlet.TunnelServlet;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 

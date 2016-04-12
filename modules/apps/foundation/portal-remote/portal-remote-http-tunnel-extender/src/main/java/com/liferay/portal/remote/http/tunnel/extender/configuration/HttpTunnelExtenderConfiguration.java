@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.http.tunnel.configuration;
+package com.liferay.portal.remote.http.tunnel.extender.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

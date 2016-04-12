@@ -351,6 +351,8 @@ AUI.add(
 
 						uri = Liferay.Util.addParams(instance.get('namespace') + 'eventName=' + instance.get('namespace') + 'selectTag', uri);
 
+						uri = Liferay.Util.addParams(instance.get('namespace') + 'selectedTags=' + instance.entries.keys.join(), uri);
+
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
 								eventName: instance.get('namespace') + 'selectTag',

@@ -16,7 +16,7 @@ package com.liferay.asset.tags.selector.web.display.context;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.asset.tags.selector.web.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -142,7 +142,7 @@ public class AssetTagsSelectorDisplayContext {
 		tagsSearchContainer.setOrderByType(orderByType);
 
 		tagsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+			new EntriesChecker(_renderRequest, _renderResponse));
 
 		int tagsCount = AssetTagServiceUtil.getTagsCount(
 			themeDisplay.getScopeGroupId(), keywords);

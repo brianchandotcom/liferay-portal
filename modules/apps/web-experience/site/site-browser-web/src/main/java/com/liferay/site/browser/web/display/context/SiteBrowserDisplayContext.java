@@ -124,6 +124,8 @@ public class SiteBrowserDisplayContext {
 
 		_groupParams = new LinkedHashMap<>();
 
+		_groupParams.put("active", Boolean.TRUE);
+
 		if (isManualMembership()) {
 			_groupParams.put("manualMembership", Boolean.TRUE);
 		}

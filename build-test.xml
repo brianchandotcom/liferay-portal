@@ -6608,14 +6608,24 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
-						<exec executable="${db2.executable}">
-							<arg line="drop db lportal" />
-						</exec>
+						<if>
+							<os family="windows" />
+							<then>
+								<exec executable="${db2.executable}">
+									<arg line="/c /w db2 -fcreate.sql -td;" />
+								</exec>
+							</then>
+							<else>
+								<exec executable="${db2.executable}">
+									<arg line="drop db lportal" />
+								</exec>
 
-						<exec executable="${db2.executable}" failonerror="true">
-							<arg value="-fcreate.sql" />
-							<arg value="-t" />
-						</exec>
+								<exec executable="${db2.executable}" failonerror="true">
+									<arg value="-fcreate.sql" />
+									<arg value="-t" />
+								</exec>
+							</else>
+						</if>
 					</then>
 					<elseif>
 						<equals arg1="${database.type}" arg2="hypersonic" />

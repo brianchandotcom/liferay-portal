@@ -21,3 +21,9 @@ $portlet-content-border-left-width: 1px !default;
 $portlet-content-border-right-width: 1px !default;
 $portlet-content-border-top-width: 1px !default;
 $portlet-content-border-width: $portlet-content-border-top-width $portlet-content-border-right-width $portlet-content-border-bottom-width $portlet-content-border-left-width !default;
+
+// Portlet Decorator
+
+$portlet-decorate-bg: #FFF;
+$portlet-decorate-border-color: #DEEEEE;
+$portlet-decorate-border: 1px;

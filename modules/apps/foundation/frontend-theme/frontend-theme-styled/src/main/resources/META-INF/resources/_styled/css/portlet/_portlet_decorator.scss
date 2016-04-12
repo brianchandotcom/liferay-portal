@@ -1,0 +1,8 @@
+.portlet-decorate .portlet-content {
+	background: $portlet-decorate-bg;
+	border: $portlet-decorate-border solid $portlet-decorate-border-color;
+}
+
+.portlet-barebone .portlet-content {
+	padding: 0;
+}

@@ -57,11 +57,11 @@ else {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "permissions"), currentURL);
 }
 
-long groupId = themeDisplay.getScopeGroupId();
-
-if (resourceGroupId > 0) {
-	groupId = resourceGroupId;
+if (resourceGroupId == 0) {
+	resourceGroupId = themeDisplay.getScopeGroupId();
 }
+
+long groupId = resourceGroupId;
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);
 

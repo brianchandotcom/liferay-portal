@@ -19,8 +19,12 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -112,6 +116,23 @@ public class RatingsEntryStagedModelDataHandler
 		long newClassPK = MapUtil.getLong(
 			relatedClassPKs, entry.getClassPK(), entry.getClassPK());
 
+		try {
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(entry.getClassName());
+
+			persistedModelLocalService.getPersistedModel(newClassPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to import ratings entry with id " +
+						entry.getEntryId());
+			}
+
+			return;
+		}
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);
 
@@ -133,6 +154,9 @@ public class RatingsEntryStagedModelDataHandler
 
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RatingsEntryStagedModelDataHandler.class);
 
 	private GroupLocalService _groupLocalService;
 	private RatingsEntryLocalService _ratingsEntryLocalService;

@@ -28,7 +28,7 @@
 		</execute>
 
 		<var name="pageName" value="Test Page1" />
-		<var name="portletBody" value="Welcome to Liferay Portal" />
+		<var name="portletBody" value="Welcome to Liferay" />
 		<var name="portletName" value="Hello World" />
 
 		<task summary="Add a '${portletName}' portlet to the page named '${pageName}'">

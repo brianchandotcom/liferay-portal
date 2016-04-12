@@ -3776,7 +3776,10 @@ go]]></replacevalue>
 		<get-database-property property.name="database.version" />
 
 		<if>
-			<equals arg1="${database.type}" arg2="db2" />
+			<and>
+				<equals arg1="${database.type}" arg2="db2" />
+				<equals arg1="${database.version}" arg2="9.7" />
+			</and>
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
@@ -3789,11 +3792,57 @@ go]]></replacevalue>
 					<sequential>
 						<mirrors-get
 							dest="${todir}"
-							src="${test.jdbc.drivers.url}/db2/10.5.1/@{jdbc.driver}"
+							src="${test.jdbc.drivers.url}/db2/9.7.4/@{jdbc.driver}"
 						/>
 					</sequential>
 				</for>
 			</then>
+			<elseif>
+				<and>
+					<equals arg1="${database.type}" arg2="db2" />
+					<equals arg1="${database.version}" arg2="10.1" />
+				</and>
+				<then>
+					<delete includeemptydirs="true" failonerror="false">
+						<fileset
+							dir="${app.server.lib.global.dir}"
+							includes="${jdbc.db2.driver}"
+						/>
+					</delete>
+
+					<for list="${jdbc.db2.driver}" param="jdbc.driver">
+						<sequential>
+							<mirrors-get
+								dest="${todir}"
+								src="${test.jdbc.drivers.url}/db2/10.1.0/@{jdbc.driver}"
+							/>
+						</sequential>
+					</for>
+				</then>
+			</elseif>
+			<elseif>
+				<and>
+					<equals arg1="${database.type}" arg2="db2" />
+					<equals arg1="${database.version}" arg2="10.5" />
+				</and>
+				<then>
+					<delete includeemptydirs="true" failonerror="false">
+						<fileset
+							dir="${app.server.lib.global.dir}"
+							includes="${jdbc.db2.driver}"
+						/>
+					</delete>
+
+					<for list="${jdbc.db2.driver}" param="jdbc.driver">
+						<sequential>
+							<mirrors-get
+								dest="${todir}"
+								src="${test.jdbc.drivers.url}/db2/10.5.1/@{jdbc.driver}"
+							/>
+						</sequential>
+					</for>
+				</then>
+			</elseif>
 			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="mariadb" />

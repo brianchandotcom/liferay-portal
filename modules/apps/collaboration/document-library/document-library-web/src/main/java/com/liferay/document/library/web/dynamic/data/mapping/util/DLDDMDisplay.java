@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.dynamic.data.mapping.util;
+package com.liferay.document.library.web.dynamic.data.mapping.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.storage.StorageType;

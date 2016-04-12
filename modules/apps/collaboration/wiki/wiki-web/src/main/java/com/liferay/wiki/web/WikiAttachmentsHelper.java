@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki;
+package com.liferay.wiki.web;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.model.TrashedModel;

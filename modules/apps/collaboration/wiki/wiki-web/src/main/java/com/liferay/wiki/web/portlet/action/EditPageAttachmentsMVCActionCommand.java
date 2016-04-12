@@ -56,10 +56,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
-import com.liferay.wiki.WikiAttachmentsHelper;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
+import com.liferay.wiki.web.WikiAttachmentsHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
 public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference(unbind = "-")
-	public void set_wikiAttachmentsHelper(
+	public void setWikiAttachmentsHelper(
 		WikiAttachmentsHelper wikiAttachmentsHelper) {
 
 		_wikiAttachmentsHelper = wikiAttachmentsHelper;

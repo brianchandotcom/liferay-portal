@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -238,8 +239,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			for (Element roleAssignmentElement : roleAssignmentElements) {
 				long roleId = GetterUtil.getLong(
 					roleAssignmentElement.elementText("role-id"));
-				String roleType = roleAssignmentElement.elementText(
-					"role-type");
+				String roleType = GetterUtil.getString(
+					roleAssignmentElement.elementText("role-type"),
+					RoleConstants.TYPE_REGULAR_LABEL);
 				String name = roleAssignmentElement.elementText("name");
 
 				RoleAssignment roleAssignment = null;
@@ -488,8 +490,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			for (Element roleReceipientElement : roleReceipientElements) {
 				long roleId = GetterUtil.getLong(
 					roleReceipientElement.elementText("role-id"));
-				String roleType = roleReceipientElement.elementText(
-					"role-type");
+				String roleType = GetterUtil.getString(
+					roleReceipientElement.elementText("role-type"),
+					RoleConstants.TYPE_REGULAR_LABEL);
 				String name = roleReceipientElement.elementText("name");
 
 				RoleRecipient roleRecipient = null;

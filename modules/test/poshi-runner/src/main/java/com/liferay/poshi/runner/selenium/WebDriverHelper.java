@@ -1092,7 +1092,7 @@ public class WebDriverHelper {
 	protected static void scrollWebElementIntoView(
 		WebDriver webDriver, WebElement webElement) {
 
-		if (!webElement.isDisplayed()) {
+		if (!webElement.isDisplayed() || isObscured(webDriver, webElement)) {
 			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();

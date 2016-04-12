@@ -198,10 +198,10 @@
 			<then>
 				<var name="key_parentFieldName" value="${parentFieldName}" />
 
-				<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHILD_FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON_" value1="Choose from Document Library" />
+				<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHILD_FIELD_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON_" value1="Select" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Choose from Document Library" />
+				<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Select" />
 			</else>
 		</if>
 

@@ -63,6 +63,7 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1911,12 +1912,16 @@ public class LanguageImpl implements Language, Serializable {
 					LocaleUtil.fromLanguageId(languageId, false));
 			}
 
-			_availableLocales = new HashSet<>(_languageIdLocalesMap.values());
+			_availableLocales = Collections.unmodifiableSet(
+				new HashSet<>(_languageIdLocalesMap.values()));
 
-			_supportedLocalesSet = new HashSet<>(
+			Set<Locale> supportedLocalesSet = new HashSet<>(
 				_languageIdLocalesMap.values());
 
-			_supportedLocalesSet.removeAll(_localesBetaSet);
+			supportedLocalesSet.removeAll(_localesBetaSet);
+
+			_supportedLocalesSet = Collections.unmodifiableSet(
+				supportedLocalesSet);
 		}
 
 		private final Set<Locale> _availableLocales;

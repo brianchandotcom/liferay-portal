@@ -1769,7 +1769,7 @@ this task.
 			<then>
 				<replace file="${app.server.tcserver.bin.dir}/setenv.bat">
 					<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
-					<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=512m]]></replacevalue>
+					<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxMetaspaceSize=512m]]></replacevalue>
 				</replace>
 			</then>
 			<else>

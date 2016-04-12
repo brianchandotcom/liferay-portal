@@ -38,6 +38,18 @@ public class JCalendarUtil {
 
 	public static final long SECOND = 1000;
 
+	public static long convertTimeToNewDay(long oldTime, long newTime) {
+		Calendar oldJCalendar = JCalendarUtil.getJCalendar(oldTime);
+		Calendar newJCalendar = JCalendarUtil.getJCalendar(newTime);
+
+		newJCalendar.set(Calendar.AM_PM, oldJCalendar.get(Calendar.AM_PM));
+		newJCalendar.set(Calendar.HOUR, oldJCalendar.get(Calendar.HOUR));
+		newJCalendar.set(Calendar.MINUTE, oldJCalendar.get(Calendar.MINUTE));
+		newJCalendar.set(Calendar.SECOND, oldJCalendar.get(Calendar.SECOND));
+
+		return newJCalendar.getTimeInMillis();
+	}
+
 	public static long getDaysBetween(
 		Calendar startTimeJCalendar, Calendar endTimeJCalendar) {
 

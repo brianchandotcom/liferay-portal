@@ -84,7 +84,7 @@ class LiferayApp extends App {
 		);
 
 		if (event.error) {
-			if (event.error.invalidStatus || event.error.requestError) {
+			if (event.error.invalidStatus || event.error.requestError || event.error.timeout) {
 				if (event.form) {
 					event.form.submit();
 				}

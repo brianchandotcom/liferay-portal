@@ -79,14 +79,14 @@ public class DownstreamBuild extends BaseBuild {
 
 	@Override
 	public void update() throws Exception {
-		String myStatus = getStatus();
+		String status = getStatus();
 
-		if (myStatus.equals("completed") || myStatus.equals("invalid")) {
+		if (status.equals("completed") || status.equals("invalid")) {
 			return;
 		}
 
-		if (myStatus.equals("queued") || myStatus.equals("starting") ||
-			myStatus.equals("missing")) {
+		if (status.equals("queued") || status.equals("starting") ||
+			status.equals("missing")) {
 
 			JSONObject build = getRunningBuildJSONObject();
 
@@ -100,10 +100,10 @@ public class DownstreamBuild extends BaseBuild {
 			else {
 				JSONObject queueItem = getQueueItemJSONObject();
 
-				if (myStatus.equals("started") && (queueItem != null)) {
+				if (status.equals("started") && (queueItem != null)) {
 					setStatus("queued");
 				}
-				else if (myStatus.equals("queued") && (queueItem == null)) {
+				else if (status.equals("queued") && (queueItem == null)) {
 					setStatus("missing");
 
 					System.out.println(_getBuildMessage());
@@ -111,9 +111,9 @@ public class DownstreamBuild extends BaseBuild {
 			}
 		}
 
-		myStatus = getStatus();
+		status = getStatus();
 
-		if (myStatus.equals("running")) {
+		if (status.equals("running")) {
 			JSONObject build = getCompletedBuildJSONObject();
 
 			if (build != null) {
@@ -291,7 +291,7 @@ public class DownstreamBuild extends BaseBuild {
 	protected TopLevelBuild topLevelBuild;
 
 	private String _getBuildMessage() {
-		String myStatus = getStatus();
+		String status = getStatus();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -299,7 +299,7 @@ public class DownstreamBuild extends BaseBuild {
 		sb.append(jobName);
 		sb.append("'");
 
-		if (myStatus.equals("completed")) {
+		if (status.equals("completed")) {
 			sb.append(" completed at ");
 			sb.append(getBuildURL());
 			sb.append(". ");
@@ -307,42 +307,42 @@ public class DownstreamBuild extends BaseBuild {
 			return sb.toString();
 		}
 
-		if (myStatus.equals("queued")) {
+		if (status.equals("queued")) {
 			sb.append(" is queued at ");
 			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
-		if (myStatus.equals("running")) {
+		if (status.equals("running")) {
 			sb.append(" started at ");
 			sb.append(getBuildURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
-		if (myStatus.equals("starting")) {
+		if (status.equals("starting")) {
 			sb.append(" invoked at ");
 			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
-		if (myStatus.equals("invalid")) {
+		if (status.equals("invalid")) {
 			sb.append(" is invalid ");
 			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
-		if (myStatus.equals("missing")) {
+		if (status.equals("missing")) {
 			sb.append(" is missing ");
 			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();
 		}
 
-		throw new RuntimeException("Unknown status: " + myStatus + ".");
+		throw new RuntimeException("Unknown status: " + status + ".");
 	}
 
 	private static final Pattern _invocationURLPattern = Pattern.compile(

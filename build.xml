@@ -358,7 +358,9 @@
 									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 								</gradle-execute>
 
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP" />
+								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
+									<arg value="-Dportal.build=true" />
+								</gradle-execute>
 							</else>
 						</if>
 					</then>

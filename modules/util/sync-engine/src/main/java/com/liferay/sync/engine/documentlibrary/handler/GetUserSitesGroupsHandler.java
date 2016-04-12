@@ -60,15 +60,9 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 				getSyncAccountId());
 
-			String remoteSyncSiteName = remoteSyncSite.getName();
-
-			if (!FileUtil.isValidFileName(remoteSyncSiteName)) {
-				remoteSyncSiteName = String.valueOf(
-					remoteSyncSite.getGroupId());
-			}
-
 			String filePathName = FileUtil.getFilePathName(
-				syncAccount.getFilePathName(), remoteSyncSiteName);
+				syncAccount.getFilePathName(),
+				remoteSyncSite.getSanitizedName());
 
 			if (localSyncSite == null) {
 				SyncSite deletedSyncSite = SyncSiteService.fetchSyncSite(

@@ -455,6 +455,13 @@ public class FileEventUtil {
 		}
 
 		BatchEventManager.fireBatchEvents();
+
+		List<SyncFile> resyncingSyncFiles = SyncFileService.findSyncFiles(
+			syncAccountId, SyncFile.UI_EVENT_RESYNCING, "syncFileId", true);
+
+		for (SyncFile resyncingSyncFile : resyncingSyncFiles) {
+			resyncFolder(syncAccountId, resyncingSyncFile);
+		}
 	}
 
 	public static void updateFile(

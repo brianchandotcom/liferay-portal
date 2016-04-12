@@ -28,6 +28,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +52,8 @@ public class SyncAccountServiceTest extends BaseTestCase {
 			System.getProperty("user.home"), "liferay-sync-test3");
 
 		SyncAccount syncAccount2 = SyncAccountService.addSyncAccount(
-			targetFilePathName, "test3@liferay.com", 1, "test", 5, null, null,
+			targetFilePathName, "test3@liferay.com", 1, "", "", false, "", "",
+			"test", 5, Collections.<SyncSite, List<SyncFile>>emptyMap(), null,
 			false, "http://localhost:8080");
 
 		syncAccount2 = SyncAccountService.fetchSyncAccount(

@@ -209,7 +209,9 @@ public abstract class Watcher implements Runnable {
 
 		String fileName = String.valueOf(filePath.getFileName());
 
-		if (FileUtil.isIgnoredFilePath(filePath) || (fileName.length() > 255)) {
+		if (FileUtil.isIgnoredFilePath(filePath) ||
+			FileUtil.isUnsynced(filePath) || (fileName.length() > 255)) {
+
 			if (_logger.isDebugEnabled()) {
 				_logger.debug("Ignored file path {}", filePath);
 			}

@@ -1062,6 +1062,33 @@ public class WebDriverHelper {
 		}
 	}
 
+	protected static boolean isObscured(
+		WebDriver webDriver, WebElement webElement) {
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrapsDriver.getWrappedDriver();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var element = arguments[0];");
+		sb.append("console.log(element);");
+		sb.append("var rect = element.getBoundingClientRect();");
+		sb.append("elementX = (rect.right + rect.left) / 2;");
+		sb.append("elementY = (rect.top + rect.bottom) / 2;");
+		sb.append("var newElement = ");
+		sb.append("document.elementFromPoint(elementX, elementY);");
+		sb.append("if (element == newElement) {");
+		sb.append("return false;}");
+		sb.append("return true;");
+
+		Boolean isObscured = (Boolean)javascriptExecutor.executeScript(
+			sb.toString(), webElement);
+
+		return isObscured.booleanValue();
+	}
+
 	protected static void scrollWebElementIntoView(
 		WebDriver webDriver, WebElement webElement) {
 

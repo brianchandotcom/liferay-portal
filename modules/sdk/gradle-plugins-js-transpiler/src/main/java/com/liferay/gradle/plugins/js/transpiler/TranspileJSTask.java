@@ -311,20 +311,14 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		completeArgs.add(destination);
 
 		completeArgs.add("--soySrc");
-
-		for (String soySrcInclude : getSoySrcIncludes()) {
-			completeArgs.add(soySrcInclude);
-		}
+		completeArgs.addAll(getSoySrcIncludes());
 
 		if (isSoySkipMetalGeneration()) {
 			completeArgs.add("--soySkipMetalGeneration");
 		}
 
 		completeArgs.add("--src");
-
-		for (String srcInclude : getSrcIncludes()) {
-			completeArgs.add(srcInclude);
-		}
+		completeArgs.addAll(getSrcIncludes());
 
 		return completeArgs;
 	}

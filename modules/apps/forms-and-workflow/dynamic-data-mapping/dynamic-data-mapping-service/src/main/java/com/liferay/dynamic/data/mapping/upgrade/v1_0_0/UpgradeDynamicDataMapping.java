@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -344,10 +345,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from DDMTemplate where classPK = ? and type_ = " +
-					"'display'")) {
+				"select * from DDMTemplate where classPK = ? and type_ = ?")) {
 
 			ps.setLong(1, structureId);
+			ps.setString(2, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
 
 			try (ResultSet rs = ps.executeQuery()) {
 				Map<String, String> ddmTemplateIdsToScriptMap = new HashMap<>();

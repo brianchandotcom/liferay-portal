@@ -9,6 +9,7 @@ else {
 		exclude "sdk/*/samples/"
 		exclude "sdk/gradle-templates/classes/"
 		exclude "sdk/gradle-templates/src/"
+		exclude "util/*/samples/"
 
 		include "*/**/build.gradle"
 

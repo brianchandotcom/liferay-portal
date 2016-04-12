@@ -1441,7 +1441,7 @@
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
+			<var name="viewType" value="Day" />
 		</execute>
 
 		<execute macro="CalendarScheduler#selectSpecificEvent">

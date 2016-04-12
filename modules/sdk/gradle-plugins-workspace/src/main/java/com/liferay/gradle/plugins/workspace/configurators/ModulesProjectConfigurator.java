@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayDefaultsPlugin;
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
@@ -73,6 +74,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 		addRepositoryDefault(project, workspaceExtension);
 		configureLiferay(project, workspaceExtension);
+		configureTaskRunPoshi(project);
 
 		configureRootTaskDistBundle(
 			project, RootProjectConfigurator.DIST_BUNDLE_TAR_TASK_NAME);
@@ -144,6 +146,13 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+	}
+
+	protected void configureTaskRunPoshi(Project project) {
+		Task task = GradleUtil.getTask(
+			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
+
+		task.dependsOn(LiferayJavaPlugin.DEPLOY_TASK_NAME);
 	}
 
 	@Override

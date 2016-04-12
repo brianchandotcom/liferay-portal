@@ -876,9 +876,9 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<var name="key_portletName" value="Blogs" />
-
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#TITLE" value1="Blogs" />
+		<execute function="AssertElementNotPresent" locator1="BasePortlet#TITLE" value1="Blogs">
+			<var name="key_portletName" value="Blogs" />
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -900,9 +900,9 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<var name="key_portletName" value="Blogs" />
-
-		<execute function="AssertElementPresent" locator1="BasePortlet#TITLE" value1="Blogs" />
+		<execute function="AssertElementPresent" locator1="BasePortlet#TITLE" value1="Blogs">
+			<var name="key_portletName" value="Blogs" />
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -925,9 +925,9 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE">
+			<var name="key_entryTitle" value="Blogs Entry Title" />
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -956,9 +956,9 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE">
+			<var name="key_entryTitle" value="Blogs Entry Title" />
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -980,9 +980,9 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<var name="key_entryTitle" value="Blogs Entry Title" />
-
-		<execute function="AssertElementPresent" locator1="BlogsEntry#TITLE" />
+		<execute function="AssertElementPresent" locator1="BlogsEntry#TITLE">
+			<var name="key_entryTitle" value="Blogs Entry Title" />
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />

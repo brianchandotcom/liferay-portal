@@ -119,36 +119,16 @@ public class SoyPortletHelperTest {
 	}
 
 	@Test
-	public void testTemplateNamespaceWithBundleWithoutPackageFile()
-		throws Exception {
-
+	public void testTemplateNamespace() throws Exception {
 		Bundle bundle = mock(Bundle.class);
 
 		String path = "View";
 
 		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(bundle);
 
-		Assert.assertEquals(path, soyPortletHelper.getTemplateNamespace(path));
-	}
-
-	@Test
-	public void testTemplateNamespaceWithBundleWithPackageFile()
-		throws Exception {
-
-		Bundle bundle = mock(Bundle.class);
-
-		Class<?> clazz = getClass();
-
-		when(
-			bundle.getEntry(Matchers.eq("package.json"))
-		).thenReturn(
-			clazz.getResource("dependencies/package.json")
-		);
-
-		SoyPortletHelper soyPortletHelper = new SoyPortletHelper(bundle);
-
 		Assert.assertEquals(
-			"View.render", soyPortletHelper.getTemplateNamespace("View"));
+			path.concat(".render"),
+			soyPortletHelper.getTemplateNamespace(path));
 	}
 
 	protected Template createMockedTemplate() {

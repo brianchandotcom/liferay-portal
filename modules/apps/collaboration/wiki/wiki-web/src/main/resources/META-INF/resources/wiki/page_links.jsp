@@ -74,23 +74,36 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 
 						<%
 						for (WikiPage outgoingLinkPage : outgoingLinkPages) {
-							WikiNode wikiNode = outgoingLinkPage.getNode();
-
-							PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-							portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
-							portletURL.setParameter("redirect", currentURL);
-							portletURL.setParameter("nodeName", wikiNode.getName());
-							portletURL.setParameter("title", outgoingLinkPage.getTitle());
 						%>
 
-							<h4>
-								<a class="text-default" href="<%= portletURL.toString() %>"><%= outgoingLinkPage.getTitle() %></a>
-							</h4>
+							<c:choose>
+								<c:when test="<%= outgoingLinkPage.isNew() %>">
+									<h4 class="truncate-text">
+										<a class="text-default" href="<%= outgoingLinkPage.getTitle() %>"><%= outgoingLinkPage.getTitle() %></a>
+									</h4>
+								</c:when>
+								<c:otherwise>
 
-							<small>
-								<aui:workflow-status markupView="lexicon" showLabel="<%= false %>" status="<%= outgoingLinkPage.getStatus() %>" />
-							</small>
+									<%
+									WikiNode wikiNode = outgoingLinkPage.getNode();
+
+									PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+									portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
+									portletURL.setParameter("redirect", currentURL);
+									portletURL.setParameter("nodeName", wikiNode.getName());
+									portletURL.setParameter("title", outgoingLinkPage.getTitle());
+									%>
+
+									<h4 class="truncate-text">
+										<a class="text-default" href="<%= portletURL.toString() %>"><%= outgoingLinkPage.getTitle() %></a>
+									</h4>
+
+									<small>
+										<aui:workflow-status markupView="lexicon" showLabel="<%= false %>" status="<%= outgoingLinkPage.getStatus() %>" />
+									</small>
+								</c:otherwise>
+							</c:choose>
 
 						<%
 						}

@@ -67,18 +67,14 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException {
 
-		File file = null;
+		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(bytes)) {
 
-		try {
-			file = FileUtil.createTempFile(bytes);
-
-			addFile(companyId, repositoryId, fileName, file);
+			addFile(
+				companyId, repositoryId, fileName, unsyncByteArrayInputStream);
 		}
 		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			FileUtil.delete(file);
+			throw new SystemException("Unable to read bytes", ioe);
 		}
 	}
 
@@ -475,18 +471,15 @@ public abstract class BaseStore implements Store {
 			String versionLabel, byte[] bytes)
 		throws PortalException {
 
-		File file = null;
+		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(bytes)) {
 
-		try {
-			file = FileUtil.createTempFile(bytes);
-
-			updateFile(companyId, repositoryId, fileName, versionLabel, file);
+			updateFile(
+				companyId, repositoryId, fileName, versionLabel,
+				unsyncByteArrayInputStream);
 		}
 		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			FileUtil.delete(file);
+			throw new SystemException("Unable to read bytes", ioe);
 		}
 	}
 

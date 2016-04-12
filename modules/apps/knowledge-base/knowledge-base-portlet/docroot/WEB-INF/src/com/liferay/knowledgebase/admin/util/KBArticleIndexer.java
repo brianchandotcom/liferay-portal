@@ -154,8 +154,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			}
 		}
 
-		String resourcePrimKey = document.get(Field.ENTRY_CLASS_PK);
-
 		return new Summary(title, content);
 	}
 

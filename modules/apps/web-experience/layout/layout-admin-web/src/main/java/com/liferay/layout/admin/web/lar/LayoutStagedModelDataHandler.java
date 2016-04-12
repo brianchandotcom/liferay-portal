@@ -677,7 +677,7 @@ public class LayoutStagedModelDataHandler
 
 		Image image = _imageLocalService.getImage(layout.getIconImageId());
 
-		if (image != null) {
+		if ((image != null) && (image.getTextObj() != null)) {
 			String iconPath = ExportImportPathUtil.getModelPath(
 				portletDataContext.getScopeGroupId(), Image.class.getName(),
 				image.getImageId());
@@ -688,6 +688,20 @@ public class LayoutStagedModelDataHandler
 			iconImagePathElement.addText(iconPath);
 
 			portletDataContext.addZipEntry(iconPath, image.getTextObj());
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Unable to export icon image with id ");
+				sb.append(layout.getIconImageId());
+				sb.append(" to layout ");
+				sb.append(layout.getLayoutId());
+
+				_log.warn(sb.toString());
+			}
+
+			layout.setIconImageId(0);
 		}
 	}
 

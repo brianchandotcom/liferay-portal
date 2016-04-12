@@ -29,6 +29,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -192,9 +195,6 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		if (template.isSmallImage()) {
-			Image smallImage = _imageLocalService.fetchImage(
-				template.getSmallImageId());
-
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
 					_ddmTemplateExportImportContentProcessor.
@@ -205,19 +205,39 @@ public class DDMTemplateStagedModelDataHandler
 
 				template.setSmallImageURL(smallImageURL);
 			}
-			else if (smallImage != null) {
-				String smallImagePath = ExportImportPathUtil.getModelPath(
-					template,
-					smallImage.getImageId() + StringPool.PERIOD +
-						template.getSmallImageType());
+			else {
+				Image smallImage = _imageLocalService.fetchImage(
+					template.getSmallImageId());
 
-				templateElement.addAttribute(
-					"small-image-path", smallImagePath);
+				if ((smallImage != null) && (smallImage.getTextObj() != null)) {
+					String smallImagePath = ExportImportPathUtil.getModelPath(
+						template,
+						smallImage.getImageId() + StringPool.PERIOD +
+							template.getSmallImageType());
 
-				template.setSmallImageType(smallImage.getType());
+					templateElement.addAttribute(
+						"small-image-path", smallImagePath);
 
-				portletDataContext.addZipEntry(
-					smallImagePath, smallImage.getTextObj());
+					template.setSmallImageType(smallImage.getType());
+
+					portletDataContext.addZipEntry(
+						smallImagePath, smallImage.getTextObj());
+				}
+				else {
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("Unable to export small image with id ");
+						sb.append(template.getSmallImageId());
+						sb.append(" to template ");
+						sb.append(template.getTemplateKey());
+
+						_log.warn(sb.toString());
+					}
+
+					template.setSmallImage(false);
+					template.setSmallImageId(0);
+				}
 			}
 		}
 
@@ -487,6 +507,9 @@ public class DDMTemplateStagedModelDataHandler
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMTemplateStagedModelDataHandler.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateExportImportContentProcessor

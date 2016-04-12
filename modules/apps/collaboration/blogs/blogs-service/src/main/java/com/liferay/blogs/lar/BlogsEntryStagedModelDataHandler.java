@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,31 +118,49 @@ public class BlogsEntryStagedModelDataHandler
 		Element entryElement = portletDataContext.getExportDataElement(entry);
 
 		if (entry.isSmallImage()) {
-			Image smallImage = _imageLocalService.fetchImage(
-				entry.getSmallImageId());
+			if (entry.getSmallImageFileEntryId() > 0) {
+				FileEntry fileEntry =
+					PortletFileRepositoryUtil.getPortletFileEntry(
+						entry.getSmallImageFileEntryId());
 
-			if (smallImage != null) {
-				String smallImagePath = ExportImportPathUtil.getModelPath(
-					entry,
-					smallImage.getImageId() + StringPool.PERIOD +
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, entry, fileEntry,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
+			}
+			else if (entry.getSmallImageId() > 0) {
+				Image smallImage = _imageLocalService.fetchImage(
+					entry.getSmallImageId());
+
+				if ((smallImage != null) && (smallImage.getTextObj() != null)) {
+					String smallImagePath = ExportImportPathUtil.getModelPath(
+						entry,
+						smallImage.getImageId() + StringPool.PERIOD +
 						smallImage.getType());
 
-				entryElement.addAttribute("small-image-path", smallImagePath);
+					entryElement.addAttribute(
+						"small-image-path", smallImagePath);
 
-				entry.setSmallImageType(smallImage.getType());
+					entry.setSmallImageType(smallImage.getType());
 
-				portletDataContext.addZipEntry(
-					smallImagePath, smallImage.getTextObj());
+					portletDataContext.addZipEntry(
+						smallImagePath, smallImage.getTextObj());
+				}
+				else {
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("Unable to export small image with id ");
+						sb.append(entry.getSmallImageId());
+						sb.append(" to blog entry ");
+						sb.append(entry.getEntryId());
+
+						_log.warn(sb.toString());
+					}
+
+					entry.setSmallImage(false);
+					entry.setSmallImageId(0);
+				}
 			}
-		}
-
-		if (entry.getSmallImageFileEntryId() != 0) {
-			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-				entry.getSmallImageFileEntryId());
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, entry, fileEntry,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
 
 		if (entry.getCoverImageFileEntryId() != 0) {

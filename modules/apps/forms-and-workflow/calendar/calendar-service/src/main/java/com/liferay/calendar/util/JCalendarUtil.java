@@ -121,6 +121,18 @@ public class JCalendarUtil {
 		return timeZone.getOffset(System.currentTimeMillis());
 	}
 
+	public static boolean isLaterDay(Calendar jCalendar1, Calendar jCalendar2) {
+		Calendar adjustedJCalendar1 = toLastHourJCalendar(jCalendar1);
+		Calendar adjustedJCalendar2 = toLastHourJCalendar(jCalendar2);
+
+		if (adjustedJCalendar1.after(adjustedJCalendar2)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public static boolean isSameDayOfWeek(
 		Calendar jCalendar1, Calendar jCalendar2) {
 

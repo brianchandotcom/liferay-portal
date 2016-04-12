@@ -4066,6 +4066,150 @@
 		</execute>
 	</command>
 
+	<command name="TrashEntryReferencePublishing" priority="5">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithDocumentCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="portletName" value="Web Content Display" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Documents and Media" />
+			<var name="contentDateRange" value="All" />
+		</execute>
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#deleteCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="contentDateRange" value="All" />
+			<var name="uncheckContentNameList" value="Documents and Media" />
+			<var name="uncheckSubContent" value="Web Content" />
+		</execute>
+
+		<execute macro="Staging#publishToLive">
+			<var name="failureExpected" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Documents and Media" />
+			<var name="contentDateRange" value="All" />
+		</execute>
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+	</command>
+
 	<command name="ViewHistoryVersionWithDeletedUser" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

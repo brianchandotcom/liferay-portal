@@ -39,6 +39,11 @@
 	<td>//h6[contains(.,'Successful')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROCESS_FAILED</td>
+	<td>//h6[contains(.,'Failed')]</td>
+	<td></td>
+</tr>
 <!--STAGING-->
 <tr>
 	<td>STAGING_NEW_PUBLICATION_PROCESS_NAVIGATION</td>

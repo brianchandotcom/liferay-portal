@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RANGE_ALL</td>
+	<td>//label[contains(.,'All')]/input[contains(@id,'rangeAll')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_LIVE</td>
 	<td>//label[contains(.,'Remote Live')]/input[@type='radio']</td>
 	<td></td>

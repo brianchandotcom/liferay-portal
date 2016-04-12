@@ -430,6 +430,33 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
+	<command name="addWithDocumentCP">
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+
+		<var name="key_imageFileName" value="${dmDocumentTitle}" />
+
+		<var method="StringUtil#replace('${dmDocumentTitle}', ' ', '+')" name="key_imageFileName" />
+
+		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="addWithGlobalStructurePGViaWCD">
 		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
 			<var name="structureName" value="${selectStructureName}" />

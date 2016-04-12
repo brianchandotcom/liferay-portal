@@ -300,15 +300,31 @@
 		</if>
 
 		<if>
-			<isset var="contentDateRange" />
+			<equals arg1="${contentDateRange}" arg2="All" />
 			<then>
 				<execute function="Click" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT" />
+
+				<execute function="Click" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
+
+				<execute function="Check" locator1="Radio#RANGE_ALL" />
+
+				<execute function="Click" locator1="StagingPublishToLive#REFRESH_COUNTS" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${contentDateRange}" arg2="Date Range" />
+			<then>
+				<execute function="Click" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT" />
+
 				<execute function="Click" locator1="StagingPublishToLive#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
 				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
 				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+
+				<execute function="Click" locator1="StagingPublishToLive#REFRESH_COUNTS" />
 			</then>
 		</if>
 
@@ -358,14 +374,12 @@
 			<then>
 				<execute function="Click" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT" />
 
-				<var name="key_contentName" value="${contentName}" />
+				<var name="key_uncheckSubContent" value="${uncheckSubContent}" />
 
-				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
-				<var name="key_subContent" value="${uncheckSubContent}" />
-
 				<execute function="Uncheck" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
@@ -595,7 +609,15 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
+		<if>
+			<isset var="failureExpected" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Staging#PROCESS_FAILED" value1="Failed" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
+			</else>
+		</if>
 
 		<execute function="SelectFrameTop" />
 

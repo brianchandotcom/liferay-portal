@@ -474,9 +474,9 @@ public class FileSystemStore extends BaseStore {
 	protected void deleteEmptyAncestors(
 		long companyId, long repositoryId, File file) {
 
-		String[] fileNames = file.list();
+		File parentFile = file.getParentFile();
 
-		if ((fileNames == null) || (fileNames.length > 0)) {
+		if (!file.delete()) {
 			return;
 		}
 
@@ -491,9 +491,7 @@ public class FileSystemStore extends BaseStore {
 			_repositoryDirs.remove(repositoryDirKey);
 		}
 
-		File parentFile = file.getParentFile();
-
-		if (file.delete() && (parentFile != null)) {
+		if (parentFile != null) {
 			deleteEmptyAncestors(companyId, repositoryId, parentFile);
 		}
 	}

@@ -1875,7 +1875,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return ddmFolderId;
 		}
 
-		protected void addDLFileEntry(
+		protected DLFileEntry addDLFileEntry(
 				String uuid, long fileEntryId, long groupId, long companyId,
 				long userId, String userName, Timestamp createDate,
 				Timestamp modifiedDate, long classNameId, long classPK,
@@ -1919,7 +1919,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			dlFileEntry.setCustom2ImageId(custom2ImageId);
 			dlFileEntry.setManualCheckInRequired(manualCheckInRequired);
 
-			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+			return dlFileEntry;
 		}
 
 		protected void addDLFileVersion(
@@ -2078,17 +2078,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		protected long getDLFolderId(
 			long groupId, long parentFolderId, String name) {
 
-			try {
-				DLFolder dlFolder = _dlFolderLocalService.getFolder(
-					groupId, parentFolderId, name);
+			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+				groupId, parentFolderId, name);
 
-				return dlFolder.getFolderId();
-			}
-			catch (PortalException pe) {
-				_log.error("Unable to get DLfolder ID " + pe);
-
+			if (dlFolder == null) {
 				return 0;
 			}
+
+			return dlFolder.getFolderId();
 		}
 
 		protected String getExtension(String fileName) {
@@ -2138,7 +2135,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				File file = DLStoreUtil.getFile(
 					_companyId, CompanyConstants.SYSTEM, filePath);
 
-				addDLFileEntry(
+				DLFileEntry dlFileEntry = addDLFileEntry(
 					fileEntryUuid, fileEntryId, _groupId, _companyId, _userId,
 					_userName, _createDate, _createDate, 0, 0, _groupId,
 					dlFolderId, StringPool.BLANK, name, fileName, extension,
@@ -2147,6 +2144,21 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					DLFileEntryConstants.VERSION_DEFAULT, file.length(),
 					DLFileEntryConstants.DEFAULT_READ_COUNT, 0, 0, 0, 0, false);
+
+				// File version
+
+				addDLFileVersion(
+					fileEntryUuid, increment(), _groupId, _companyId, _userId,
+					_userName, _createDate, _createDate, _groupId, dlFolderId,
+					fileEntryId, StringPool.BLANK, fileName, extension,
+					MimeTypesUtil.getContentType(fileName), fileName,
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					DLFileEntryConstants.VERSION_DEFAULT, file.length(),
+					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+					_userId, _userName, _createDate);
+
+				_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 				// Resource permissions
 
@@ -2166,19 +2178,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					DLFileEntry.class.getName(), RoleConstants.GUEST,
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					getActionIdsLong(_guestPermissions));
-
-				// File version
-
-				addDLFileVersion(
-					fileEntryUuid, increment(), _groupId, _companyId, _userId,
-					_userName, _createDate, _createDate, _groupId, dlFolderId,
-					fileEntryId, StringPool.BLANK, fileName, extension,
-					MimeTypesUtil.getContentType(fileName), fileName,
-					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-					DLFileEntryConstants.VERSION_DEFAULT, file.length(),
-					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
-					_userId, _userName, _createDate);
 
 				// Asset entry
 

@@ -1061,9 +1061,7 @@ public abstract class BaseMobileDriverImpl
 			return isInViewport(locator);
 		}
 		else {
-			if (!webElement.isDisplayed()) {
-				WebDriverHelper.scrollWebElementIntoView(this, webElement);
-			}
+			WebDriverHelper.scrollWebElementIntoView(this, webElement);
 
 			return webElement.isDisplayed();
 		}

@@ -1092,15 +1092,17 @@ public class WebDriverHelper {
 	protected static void scrollWebElementIntoView(
 		WebDriver webDriver, WebElement webElement) {
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+		if (!webElement.isDisplayed()) {
+			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+			WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
 
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
+			JavascriptExecutor javascriptExecutor =
+				(JavascriptExecutor)wrappedWebDriver;
 
-		javascriptExecutor.executeScript(
-			"arguments[0].scrollIntoView(false);", webElement);
+			javascriptExecutor.executeScript(
+				"arguments[0].scrollIntoView(false);", webElement);
+		}
 	}
 
 	protected static void selectByRegexpText(

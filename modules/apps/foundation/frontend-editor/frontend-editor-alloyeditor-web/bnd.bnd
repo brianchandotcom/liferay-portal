@@ -6,8 +6,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-alloyeditor-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)
--liferay-includeresource:\
+-includeresource:\
 	content=../frontend-editor-lang/src/main/resources/content,\
-	META-INF/resources=tmp/META-INF/resources,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/Encryptor.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/EncryptorException.class
+	META-INF/resources=tmp/META-INF/resources

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.petra.encryptor.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +41,7 @@ import javax.crypto.KeyGenerator;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
- * @see com.liferay.petra.encryptor.util.Encryptor
+ * @see com.liferay.util.Encryptor
  */
 public class Encryptor {
 

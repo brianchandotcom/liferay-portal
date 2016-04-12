@@ -5,6 +5,5 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="${Bundle-Version}"
 -liferay-includeresource:\
-	@com.liferay.util.java-*.jar!/com/liferay/util/Encryptor.class,\
 	@jcommon-*.jar,\
 	@jfreechart-*.jar

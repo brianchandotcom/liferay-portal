@@ -42,7 +42,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 	>
 
 		<%
-		List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
+		List<Group> childSites = curGroup.getChildren(true);
 
 		boolean hasAddChildSitePermisison = siteAdminDisplayContext.hasAddChildSitePermission(curGroup);
 
@@ -55,6 +55,15 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 
 			viewSubsitesURL.setParameter("mvcPath", "/view.jsp");
 			viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
+		}
+
+		String viewSiteURL = StringPool.BLANK;
+
+		if (curGroup.getPublicLayoutsPageCount() > 0) {
+			viewSiteURL = curGroup.getDisplayURL(themeDisplay, false);
+		}
+		else if (curGroup.getPrivateLayoutsPageCount() > 0) {
+			viewSiteURL = curGroup.getDisplayURL(themeDisplay, true);
 		}
 		%>
 
@@ -77,12 +86,14 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 					colspan="<%= 2 %>"
 				>
 					<h5>
-						<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+						<aui:a href="<%= viewSiteURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 					</h5>
 
 					<c:if test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
 						<h6 class="text-default">
-							<strong><liferay-ui:message key="child-sites" /></strong>: <%= childSites.size() %>
+							<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
+								<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
+							</aui:a>
 						</h6>
 					</c:if>
 
@@ -118,7 +129,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : null %>"
+								url="<%= viewSiteURL %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:vertical-card>
@@ -131,7 +142,7 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 								resultRow="<%= row %>"
 								rowChecker="<%= searchContainer.getRowChecker() %>"
 								title="<%= curGroup.getDescriptiveName(locale) %>"
-								url="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : null %>"
+								url="<%= viewSiteURL %>"
 							>
 								<%@ include file="/site_vertical_card.jspf" %>
 							</liferay-frontend:icon-vertical-card>

@@ -722,6 +722,8 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 		public X509TrustManagerImpl() {
 			try {
+				X509TrustManager x509TrustManager = null;
+
 				TrustManagerFactory trustManagerFactory =
 					TrustManagerFactory.getInstance(
 						TrustManagerFactory.getDefaultAlgorithm());
@@ -732,11 +734,13 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 						trustManagerFactory.getTrustManagers()) {
 
 					if (trustManager instanceof X509TrustManager) {
-						_x509TrustManager = (X509TrustManager)trustManager;
+						x509TrustManager = (X509TrustManager)trustManager;
 
 						break;
 					}
 				}
+
+				_x509TrustManager = x509TrustManager;
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);

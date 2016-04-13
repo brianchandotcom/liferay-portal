@@ -1027,7 +1027,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
 
 		<if>
@@ -1038,8 +1038,6 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TAGS" value1="" />
 		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_ACTIONS" />
 	</command>
 
@@ -1189,8 +1187,6 @@
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TAGS" value1="" />
 		<execute function="AssertVisible" locator1="Sites#SITE_TABLE_ACTIONS" />
 	</command>
 

@@ -116,9 +116,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setStatus(String status) {
-		_status = status;
+		if (!status.equals(_status)) {
+			_status = status;
 
-		statusModifiedTime = System.currentTimeMillis();
+			statusModifiedTime = System.currentTimeMillis();
+		}
 	}
 
 	protected int buildNumber;

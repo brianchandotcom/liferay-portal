@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.knowledgebase.service.persistence.KBArticleFinder.countByUrlTitle">
+	<sql id="com.liferay.knowledge.base.service.persistence.KBArticleFinder.countByUrlTitle">
 		SELECT
 			count(*)
 		FROM
@@ -17,7 +17,7 @@
 			KBFolder.urlTitle = ? AND
 			KBArticle.status IN ([$WORKFLOW_STATUS$])
 	</sql>
-	<sql id="com.liferay.knowledgebase.service.persistence.KBArticleFinder.findByUrlTitle">
+	<sql id="com.liferay.knowledge.base.service.persistence.KBArticleFinder.findByUrlTitle">
 		SELECT
 			KBArticle.*
 		FROM

@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.events;
 
 import com.liferay.knowledge.base.constants.PortletKeys;
 import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
@@ -31,9 +32,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Peter Shin
  */
+@Component(
+	property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
 public class KBServicePreAction extends Action {
 
 	@Override

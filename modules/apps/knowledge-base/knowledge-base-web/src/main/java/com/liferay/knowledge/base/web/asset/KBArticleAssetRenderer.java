@@ -15,12 +15,12 @@
 package com.liferay.knowledge.base.web.asset;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.knowledge.base.constants.ActionKeys;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
-import com.liferay.knowledge.base.web.constants.WebKeys;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -113,7 +113,7 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		Group group = GroupLocalServiceUtil.fetchGroup(_kbArticle.getGroupId());
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, PortletKeys.KNOWLEDGE_BASE_ADMIN, 0,
+			liferayPortletRequest, group, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0,
 			0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
@@ -131,7 +131,7 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+				KBWebKeys.THEME_DISPLAY);
 
 		return KnowledgeBaseUtil.getKBArticleURL(
 			themeDisplay.getPlid(), _kbArticle.getResourcePrimKey(),
@@ -156,13 +156,13 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		return KBArticlePermission.contains(
-			permissionChecker, _kbArticle, ActionKeys.UPDATE);
+			permissionChecker, _kbArticle, KBActionKeys.UPDATE);
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		return KBArticlePermission.contains(
-			permissionChecker, _kbArticle, ActionKeys.VIEW);
+			permissionChecker, _kbArticle, KBActionKeys.VIEW);
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 			String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.KNOWLEDGE_BASE_KB_ARTICLE, _kbArticle);
+		request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, _kbArticle);
 
 		return super.include(request, response, template);
 	}

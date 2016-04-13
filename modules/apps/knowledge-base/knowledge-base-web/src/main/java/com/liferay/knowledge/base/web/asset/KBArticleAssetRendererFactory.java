@@ -18,8 +18,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.knowledge.base.constants.ActionKeys;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_ADMIN},
+	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
 	service = AssetRendererFactory.class
 )
 public class KBArticleAssetRendererFactory
@@ -103,7 +103,7 @@ public class KBArticleAssetRendererFactory
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.KNOWLEDGE_BASE_DISPLAY;
+		return KBPortletKeys.KNOWLEDGE_BASE_DISPLAY;
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class KBArticleAssetRendererFactory
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, getGroup(liferayPortletRequest),
-			PortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
+			KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
@@ -133,7 +133,7 @@ public class KBArticleAssetRendererFactory
 		throws Exception {
 
 		return AdminPermission.contains(
-			permissionChecker, groupId, ActionKeys.ADD_KB_ARTICLE);
+			permissionChecker, groupId, KBActionKeys.ADD_KB_ARTICLE);
 	}
 
 	@Override

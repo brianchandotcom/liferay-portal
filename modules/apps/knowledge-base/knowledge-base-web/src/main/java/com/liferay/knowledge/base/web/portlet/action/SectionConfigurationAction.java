@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.web.portlet.action;
 
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_SECTION},
+	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SECTION},
 	service = ConfigurationAction.class
 )
 public class SectionConfigurationAction

@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.web.portlet;
 
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.exception.KBTemplateContentException;
 import com.liferay.knowledge.base.exception.KBTemplateTitleException;
@@ -31,7 +31,7 @@ import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
-import com.liferay.knowledge.base.web.constants.WebKeys;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -96,7 +96,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/admin/",
 		"javax.portlet.init-param.view-template=/admin/view.jsp",
-		"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_ADMIN,
+		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-admin-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
@@ -113,7 +113,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		long[] resourcePrimKeys = StringUtil.split(
 			ParamUtil.getString(actionRequest, "resourcePrimKeys"), 0L);
@@ -145,7 +145,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		long[] kbTemplateIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "kbTemplateIds"), 0L);
@@ -162,7 +162,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(KBWebKeys.THEME_DISPLAY);
 
 			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
@@ -214,7 +214,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		try {
 			int status = WorkflowConstants.STATUS_ANY;
 
-			renderRequest.setAttribute(WebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 
 			KBArticle kbArticle = null;
 
@@ -234,7 +234,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			}
 
 			renderRequest.setAttribute(
-				WebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 
 			KBTemplate kbTemplate = null;
 
@@ -246,7 +246,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			}
 
 			renderRequest.setAttribute(
-				WebKeys.KNOWLEDGE_BASE_KB_TEMPLATE, kbTemplate);
+				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE, kbTemplate);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
@@ -268,7 +268,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		String portletId = PortalUtil.getPortletId(actionRequest);
 
@@ -281,7 +281,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		String portletId = PortalUtil.getPortletId(actionRequest);
 
@@ -294,7 +294,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		Enumeration<String> enu = actionRequest.getParameterNames();
 
@@ -323,7 +323,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -385,10 +385,10 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(KBWebKeys.THEME_DISPLAY);
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, PortletKeys.KNOWLEDGE_BASE_ADMIN,
+				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

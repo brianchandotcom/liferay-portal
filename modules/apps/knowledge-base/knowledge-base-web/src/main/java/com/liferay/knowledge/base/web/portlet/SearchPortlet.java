@@ -14,8 +14,8 @@
 
 package com.liferay.knowledge.base.web.portlet;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -25,7 +25,7 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
-import com.liferay.knowledge.base.web.constants.WebKeys;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/search/",
 		"javax.portlet.init-param.view-template=/search/view.jsp",
-		"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_SEARCH,
+		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SEARCH,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-search-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
@@ -86,7 +86,7 @@ public class SearchPortlet extends BaseKBPortlet {
 		try {
 			int status = getStatus(renderRequest);
 
-			renderRequest.setAttribute(WebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 
 			KBArticle kbArticle = null;
 
@@ -99,7 +99,7 @@ public class SearchPortlet extends BaseKBPortlet {
 			}
 
 			renderRequest.setAttribute(
-				WebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
@@ -187,7 +187,7 @@ public class SearchPortlet extends BaseKBPortlet {
 
 	protected int getStatus(RenderRequest renderRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
 			return WorkflowConstants.STATUS_APPROVED;
@@ -211,7 +211,7 @@ public class SearchPortlet extends BaseKBPortlet {
 			themeDisplay.getPermissionChecker();
 
 		if (KBArticlePermission.contains(
-				permissionChecker, resourcePrimKey, ActionKeys.UPDATE)) {
+				permissionChecker, resourcePrimKey, KBActionKeys.UPDATE)) {
 
 			return ParamUtil.getInteger(
 				renderRequest, "status", WorkflowConstants.STATUS_ANY);

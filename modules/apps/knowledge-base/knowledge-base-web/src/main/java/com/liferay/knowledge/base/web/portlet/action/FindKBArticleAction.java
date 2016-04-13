@@ -14,9 +14,9 @@
 
 package com.liferay.knowledge.base.web.portlet.action;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
@@ -183,7 +183,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		if (Validator.equals(
 				portletId,
-				PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
+				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
 
 			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
 		}
@@ -205,7 +205,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (!KBArticlePermission.contains(
-				permissionChecker, kbArticle, ActionKeys.VIEW)) {
+				permissionChecker, kbArticle, KBActionKeys.VIEW)) {
 
 			return null;
 		}
@@ -233,7 +233,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portlet.getPortletId());
 
-				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -273,7 +273,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -304,7 +304,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -354,10 +354,10 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
-		if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 			mvcPath = "/article/view_article.jsp";
 		}
-		else if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+		else if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 			mvcPath = "/section/view_article.jsp";
 		}
 
@@ -390,7 +390,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		portletURL.setWindowState(LiferayWindowState.NORMAL);
 
-		if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
+		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 			portletURL.setWindowState(LiferayWindowState.MAXIMIZED);
 		}
 
@@ -401,13 +401,13 @@ public class FindKBArticleAction extends BaseStrutsAction {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		long selPlid = PortalUtil.getPlidFromPortletId(
-			layout.getGroupId(), PortletKeys.KNOWLEDGE_BASE_DISPLAY);
+			layout.getGroupId(), KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 
 		if (selPlid != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-			return PortletKeys.KNOWLEDGE_BASE_DISPLAY;
+			return KBPortletKeys.KNOWLEDGE_BASE_DISPLAY;
 		}
 
-		return PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE;
+		return KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE;
 	}
 
 	protected boolean isParentFolder(long resourcePrimKey, long kbFolderId)

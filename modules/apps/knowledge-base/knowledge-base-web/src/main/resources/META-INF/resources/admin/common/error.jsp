@@ -16,12 +16,12 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<c:if test="<%= !rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
 	<liferay-ui:error-header />
 </c:if>
 
 <c:choose>
-	<c:when test="<%= rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+	<c:when test="<%= rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
 		<liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-selected-article-no-longer-exists" />
 	</c:when>
 	<c:otherwise>

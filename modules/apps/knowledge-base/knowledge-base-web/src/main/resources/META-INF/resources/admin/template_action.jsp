@@ -19,13 +19,13 @@
 <%
 String mvcPath = ParamUtil.getString(request, "mvcPath");
 
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 KBTemplate kbTemplate = (KBTemplate)row.getObject();
 %>
 
 <liferay-ui:icon-menu cssClass="kb-template-action" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, ActionKeys.VIEW) %>">
+	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.VIEW) %>">
 		<liferay-portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' />
 			<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
@@ -38,7 +38,7 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, ActionKeys.UPDATE) %>">
+	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -52,7 +52,7 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= KBTemplate.class.getName() %>"
 			modelResourceDescription="<%= kbTemplate.getTitle() %>"
@@ -69,7 +69,7 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, ActionKeys.DELETE) %>">
+	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.DELETE) %>">
 		<liferay-portlet:actionURL name="deleteKBTemplate" var="deleteURL">
 			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />

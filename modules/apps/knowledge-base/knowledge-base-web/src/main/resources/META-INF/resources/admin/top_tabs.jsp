@@ -20,14 +20,14 @@
 String mvcPath = ParamUtil.getString(request, "mvcPath");
 %>
 
-<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.VIEW_KB_TEMPLATES) %>">
+<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_KB_TEMPLATES) %>">
 
 	<%
 	List<String> names = new ArrayList<String>();
 	List<String> urls = new ArrayList<String>();
 	String value = null;
 
-	if (PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.VIEW)) {
+	if (PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), KBActionKeys.VIEW)) {
 		PortletURL kbArticlesURL = renderResponse.createRenderURL();
 
 		kbArticlesURL.setParameter("mvcPath", "/admin/view.jsp");
@@ -37,7 +37,7 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 		value = names.get(names.size() - 1);
 	}
 
-	if (AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.VIEW_KB_TEMPLATES)) {
+	if (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_KB_TEMPLATES)) {
 		PortletURL kbTemplatesURL = renderResponse.createRenderURL();
 
 		kbTemplatesURL.setParameter("mvcPath", "/admin/view_templates.jsp");
@@ -47,7 +47,7 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 		value = mvcPath.contains("template") ? names.get(names.size() - 1) : value;
 	}
 
-	if (AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.VIEW_SUGGESTIONS)) {
+	if (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_SUGGESTIONS)) {
 		PortletURL kbSuggestionsURL = renderResponse.createRenderURL();
 
 		kbSuggestionsURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");

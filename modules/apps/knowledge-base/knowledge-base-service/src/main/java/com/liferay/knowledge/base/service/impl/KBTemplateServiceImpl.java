@@ -16,8 +16,8 @@ package com.liferay.knowledge.base.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
 import com.liferay.knowledge.base.model.impl.KBTemplateSearchDisplayImpl;
@@ -48,15 +48,15 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 			AdminPermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				ActionKeys.ADD_KB_TEMPLATE);
+				KBActionKeys.ADD_KB_TEMPLATE);
 		}
-		else if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+		else if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
 			DisplayPermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				ActionKeys.ADD_KB_TEMPLATE);
+				KBActionKeys.ADD_KB_TEMPLATE);
 		}
 
 		return kbTemplateLocalService.addKBTemplate(
@@ -68,7 +68,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 		throws PortalException {
 
 		KBTemplatePermission.check(
-			getPermissionChecker(), kbTemplateId, ActionKeys.DELETE);
+			getPermissionChecker(), kbTemplateId, KBActionKeys.DELETE);
 
 		return kbTemplateLocalService.deleteKBTemplate(kbTemplateId);
 	}
@@ -78,7 +78,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 		throws PortalException {
 
 		AdminPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.DELETE_KB_TEMPLATES);
+			getPermissionChecker(), groupId, KBActionKeys.DELETE_KB_TEMPLATES);
 
 		kbTemplateLocalService.deleteKBTemplates(kbTemplateIds);
 	}
@@ -100,7 +100,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 	@Override
 	public KBTemplate getKBTemplate(long kbTemplateId) throws PortalException {
 		KBTemplatePermission.check(
-			getPermissionChecker(), kbTemplateId, ActionKeys.VIEW);
+			getPermissionChecker(), kbTemplateId, KBActionKeys.VIEW);
 
 		return kbTemplateLocalService.getKBTemplate(kbTemplateId);
 	}
@@ -148,7 +148,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 
 				if (!KBTemplatePermission.contains(
 						getPermissionChecker(), curKBTemplate,
-						ActionKeys.VIEW)) {
+						KBActionKeys.VIEW)) {
 
 					continue;
 				}
@@ -185,7 +185,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 		throws PortalException {
 
 		KBTemplatePermission.check(
-			getPermissionChecker(), kbTemplateId, ActionKeys.UPDATE);
+			getPermissionChecker(), kbTemplateId, KBActionKeys.UPDATE);
 
 		return kbTemplateLocalService.updateKBTemplate(
 			kbTemplateId, title, content, serviceContext);

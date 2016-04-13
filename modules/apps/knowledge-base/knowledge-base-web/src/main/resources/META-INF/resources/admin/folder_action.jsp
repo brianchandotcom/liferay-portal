@@ -17,13 +17,13 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 KBFolder kbFolder = (KBFolder)row.getObject();
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, ActionKeys.UPDATE) %>">
+	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "common/edit_folder.jsp" %>' />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -37,7 +37,7 @@ KBFolder kbFolder = (KBFolder)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, ActionKeys.MOVE_KB_FOLDER) %>">
+	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER) %>">
 		<liferay-portlet:renderURL var="moveKBFolderURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "move_object.jsp" %>' />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -55,7 +55,7 @@ KBFolder kbFolder = (KBFolder)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, ActionKeys.DELETE) %>">
+	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.DELETE) %>">
 		<liferay-portlet:actionURL name="deleteKBFolder" var="deleteURL">
 			<portlet:param name="mvcPath" value='<%= ParamUtil.getString(request, "mvcPath") %>' />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -67,7 +67,7 @@ KBFolder kbFolder = (KBFolder)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= KBFolder.class.getName() %>"
 			modelResourceDescription="<%= kbFolder.getName() %>"

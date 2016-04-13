@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.base.KBCommentServiceBaseImpl;
 import com.liferay.knowledge.base.service.permission.AdminPermission;
@@ -39,7 +39,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 		throws PortalException {
 
 		KBCommentPermission.check(
-			getPermissionChecker(), kbComment, ActionKeys.DELETE);
+			getPermissionChecker(), kbComment, KBActionKeys.DELETE);
 
 		return kbCommentLocalService.deleteKBComment(kbComment);
 	}
@@ -55,7 +55,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 	@Override
 	public KBComment getKBComment(long kbCommentId) throws PortalException {
 		KBCommentPermission.check(
-			getPermissionChecker(), kbCommentId, ActionKeys.VIEW);
+			getPermissionChecker(), kbCommentId, KBActionKeys.VIEW);
 
 		return kbCommentLocalService.getKBComment(kbCommentId);
 	}
@@ -65,7 +65,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 		throws PortalException {
 
 		if (AdminPermission.contains(
-				getPermissionChecker(), groupId, ActionKeys.VIEW_SUGGESTIONS)) {
+				getPermissionChecker(), groupId, KBActionKeys.VIEW_SUGGESTIONS)) {
 
 			return kbCommentPersistence.findByG_S(groupId, status, start, end);
 		}
@@ -81,7 +81,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
 		if (SuggestionPermission.contains(
 				getPermissionChecker(), groupId, className, classPK,
-				ActionKeys.VIEW_SUGGESTIONS)) {
+				KBActionKeys.VIEW_SUGGESTIONS)) {
 
 			return kbCommentLocalService.getKBComments(
 				className, classPK, status, start, end);
@@ -94,7 +94,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 		throws PortalException {
 
 		if (AdminPermission.contains(
-				getPermissionChecker(), groupId, ActionKeys.VIEW_SUGGESTIONS)) {
+				getPermissionChecker(), groupId, KBActionKeys.VIEW_SUGGESTIONS)) {
 
 			return kbCommentPersistence.countByG_S(groupId, status);
 		}
@@ -109,7 +109,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
 		if (SuggestionPermission.contains(
 				getPermissionChecker(), groupId, className, classPK,
-				ActionKeys.VIEW_SUGGESTIONS)) {
+				KBActionKeys.VIEW_SUGGESTIONS)) {
 
 			return kbCommentLocalService.getKBCommentsCount(
 				className, classPK, status);
@@ -124,7 +124,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 		throws PortalException {
 
 		KBCommentPermission.check(
-			getPermissionChecker(), kbCommentId, ActionKeys.UPDATE);
+			getPermissionChecker(), kbCommentId, KBActionKeys.UPDATE);
 
 		return kbCommentLocalService.updateKBComment(
 			kbCommentId, classNameId, classPK, content, status, serviceContext);
@@ -148,7 +148,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 		throws PortalException {
 
 		KBCommentPermission.check(
-			getPermissionChecker(), kbCommentId, ActionKeys.UPDATE);
+			getPermissionChecker(), kbCommentId, KBActionKeys.UPDATE);
 
 		return kbCommentLocalService.updateStatus(
 			getUserId(), kbCommentId, status, serviceContext);

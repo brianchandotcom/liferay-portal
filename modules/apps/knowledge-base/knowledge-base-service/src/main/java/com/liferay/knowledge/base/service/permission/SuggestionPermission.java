@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.service.permission;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
@@ -33,16 +33,16 @@ public class SuggestionPermission {
 			KBArticle kbArticle, String actionId)
 		throws PrincipalException {
 
-		if (!actionId.equals(ActionKeys.VIEW_SUGGESTIONS)) {
+		if (!actionId.equals(KBActionKeys.VIEW_SUGGESTIONS)) {
 			throw new IllegalArgumentException(
-				"Suggestions only support the " + ActionKeys.VIEW_SUGGESTIONS +
+				"Suggestions only support the " + KBActionKeys.VIEW_SUGGESTIONS +
 					" permission");
 		}
 
 		if (AdminPermission.contains(
-				permissionChecker, groupId, ActionKeys.VIEW_SUGGESTIONS) ||
+				permissionChecker, groupId, KBActionKeys.VIEW_SUGGESTIONS) ||
 			KBArticlePermission.contains(
-				permissionChecker, kbArticle, ActionKeys.UPDATE)) {
+				permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
 
 			return true;
 		}

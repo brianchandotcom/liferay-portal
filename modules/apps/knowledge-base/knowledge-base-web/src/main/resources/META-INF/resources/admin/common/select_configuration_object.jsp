@@ -36,7 +36,7 @@ String eventName = PortalUtil.getPortletNamespace(portletId) + "selectConfigurat
 	<c:if test="<%= resourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 		<aui:button-row cssClass="input-append">
 			<c:choose>
-				<c:when test="<%= !rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE) && (resourceClassNameId == kbFolderClassNameId) %>">
+				<c:when test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) && (resourceClassNameId == kbFolderClassNameId) %>">
 					<liferay-ui:input-resource url='<%= BeanPropertiesUtil.getString(KBFolderLocalServiceUtil.fetchKBFolder(resourcePrimKey), "name") %>' />
 				</c:when>
 				<c:otherwise>
@@ -47,7 +47,7 @@ String eventName = PortalUtil.getPortletNamespace(portletId) + "selectConfigurat
 			<%
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			if (!rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+			if (!rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 				data.put("resourceClassNameId", kbFolderClassNameId);
 			}
 
@@ -120,7 +120,7 @@ String eventName = PortalUtil.getPortletNamespace(portletId) + "selectConfigurat
 					property="modifiedDate"
 				/>
 
-				<c:if test="<%= !rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
+				<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">
 					<liferay-ui:search-container-column-text
 						align="right"
 					>
@@ -239,7 +239,7 @@ String eventName = PortalUtil.getPortletNamespace(portletId) + "selectConfigurat
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				if (!rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+				if (!rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 					data.put("resourceClassNameId", kbArticle.getClassNameId());
 				}
 

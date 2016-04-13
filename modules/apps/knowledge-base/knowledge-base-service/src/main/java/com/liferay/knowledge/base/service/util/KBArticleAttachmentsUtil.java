@@ -15,7 +15,7 @@
 package com.liferay.knowledge.base.service.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -37,7 +37,7 @@ public class KBArticleAttachmentsUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, PortletKeys.KNOWLEDGE_BASE_ARTICLE, serviceContext);
+			groupId, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE, serviceContext);
 
 		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
 			userId, repository.getRepositoryId(),

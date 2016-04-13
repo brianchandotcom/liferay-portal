@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBFolderServiceBaseImpl;
 import com.liferay.knowledge.base.service.permission.KBFolderPermission;
@@ -40,7 +40,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 		KBFolderPermission.check(
 			getPermissionChecker(), groupId, parentResourcePrimKey,
-			ActionKeys.ADD_KB_FOLDER);
+			KBActionKeys.ADD_KB_FOLDER);
 
 		return kbFolderLocalService.addKBFolder(
 			getUserId(), groupId, parentResourceClassNameId,
@@ -49,7 +49,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException {
 		KBFolderPermission.check(
-			getPermissionChecker(), kbFolderId, ActionKeys.DELETE);
+			getPermissionChecker(), kbFolderId, KBActionKeys.DELETE);
 
 		return kbFolderLocalService.deleteKBFolder(kbFolderId);
 	}
@@ -66,7 +66,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 		}
 
 		KBFolderPermission.check(
-			getPermissionChecker(), kbFolder, ActionKeys.VIEW);
+			getPermissionChecker(), kbFolder, KBActionKeys.VIEW);
 
 		return kbFolder;
 	}
@@ -74,7 +74,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 	@Override
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException {
 		KBFolderPermission.check(
-			getPermissionChecker(), kbFolderId, ActionKeys.VIEW);
+			getPermissionChecker(), kbFolderId, KBActionKeys.VIEW);
 
 		return kbFolderLocalService.getKBFolder(kbFolderId);
 	}
@@ -87,7 +87,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 			groupId, parentKbFolderId, urlTitle);
 
 		KBFolderPermission.check(
-			getPermissionChecker(), kbFolder, ActionKeys.VIEW);
+			getPermissionChecker(), kbFolder, KBActionKeys.VIEW);
 
 		return kbFolder;
 	}
@@ -113,7 +113,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 		throws PortalException {
 
 		KBFolderPermission.check(
-			getPermissionChecker(), kbFolderId, ActionKeys.MOVE_KB_FOLDER);
+			getPermissionChecker(), kbFolderId, KBActionKeys.MOVE_KB_FOLDER);
 
 		kbFolderLocalService.moveKBFolder(kbFolderId, parentKBFolderId);
 	}
@@ -125,7 +125,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 		throws PortalException {
 
 		KBFolderPermission.check(
-			getPermissionChecker(), kbFolderId, ActionKeys.UPDATE);
+			getPermissionChecker(), kbFolderId, KBActionKeys.UPDATE);
 
 		return kbFolderLocalService.updateKBFolder(
 			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,

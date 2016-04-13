@@ -38,7 +38,7 @@ String navItem = ParamUtil.getString(request, "navItem", "viewNewSuggestions");
 
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(request, templatePath, scopeGroupId, navItem);
 
-request.setAttribute(WebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
+request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
 %>
 
 <liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />

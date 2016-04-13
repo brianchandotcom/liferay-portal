@@ -17,13 +17,13 @@ package com.liferay.knowledge.base.web.display.context;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBCommentServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
-import com.liferay.knowledge.base.web.constants.WebKeys;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -112,7 +112,7 @@ public class KBSuggestionListDisplayContext {
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			KBWebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -125,9 +125,9 @@ public class KBSuggestionListDisplayContext {
 			portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
 		}
 		else if (Validator.isNull(_kbArticle.getUrlTitle()) ||
-				 portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+				 portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 
-			if (portletId.equals(PortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
 				portletURL.setParameter(
 					"mvcPath", _templatePath + "/view_article.jsp");
 			}

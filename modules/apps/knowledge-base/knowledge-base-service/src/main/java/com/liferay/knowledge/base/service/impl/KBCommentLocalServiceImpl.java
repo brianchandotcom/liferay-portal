@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBCommentContentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
@@ -350,8 +350,8 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		PortletPreferences preferences =
 			portletPreferencesLocalService.getPreferences(
 				kbComment.getCompanyId(), kbComment.getGroupId(),
-				PortletKeys.PREFS_OWNER_TYPE_GROUP,
-				PortletKeys.PREFS_PLID_SHARED, PortletKeys.KNOWLEDGE_BASE_ADMIN,
+				KBPortletKeys.PREFS_OWNER_TYPE_GROUP,
+				KBPortletKeys.PREFS_PLID_SHARED, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				null);
 
 		if (!AdminUtil.isSuggestionStatusChangeNotificationEnabled(

@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.events;
 
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -75,7 +75,7 @@ public class KBServicePreAction extends Action {
 		}
 
 		if (!portletId.equals(
-				PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
+				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
 
 			return;
 		}

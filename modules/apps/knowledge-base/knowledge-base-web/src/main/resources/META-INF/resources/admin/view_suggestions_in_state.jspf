@@ -15,7 +15,7 @@
 --%>
 
 <%
-KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(WebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
+KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
 %>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
@@ -46,7 +46,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
 
 			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
 
-			request.setAttribute(WebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 			%>
 
 			<liferay-util:include page="/admin/article_comment.jsp" servletContext="<%= application %>" />

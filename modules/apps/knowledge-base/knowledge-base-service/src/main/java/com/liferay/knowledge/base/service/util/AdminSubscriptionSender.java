@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.service.util;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
@@ -112,7 +112,7 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 			return KBArticlePermission.contains(
-				permissionChecker, _kbArticle, ActionKeys.VIEW);
+				permissionChecker, _kbArticle, KBActionKeys.VIEW);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);

@@ -17,7 +17,7 @@ package com.liferay.knowledge.base.web.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,12 +38,12 @@ public class AdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.KNOWLEDGE_BASE_ADMIN;
+		return KBPortletKeys.KNOWLEDGE_BASE_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_ADMIN + ")",
+		target = "(javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

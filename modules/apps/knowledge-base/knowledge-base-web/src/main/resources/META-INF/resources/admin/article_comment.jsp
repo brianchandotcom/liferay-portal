@@ -17,11 +17,11 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-KBArticle kbArticle = (KBArticle)request.getAttribute(WebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 KBComment kbComment = (KBComment)request.getAttribute("article_comment.jsp-kb_comment");
 
-KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(WebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
+KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
@@ -87,7 +87,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				int nextStatus = KnowledgeBaseUtil.getNextStatus(suggestionStatus);
 				%>
 
-				<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, ActionKeys.UPDATE) %>">
+				<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
 					<div class="kb-suggestion-actions">
 						<c:if test="<%= previousStatus != KBCommentConstants.STATUS_NONE %>">
 							<liferay-portlet:actionURL name="updateKBCommentStatus" varImpl="previousStatusURL">
@@ -107,7 +107,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 							<aui:button href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL, kbSuggestionListDisplayContext.getSelectedNavItem()) %>" value="<%= KnowledgeBaseUtil.getStatusTransitionLabel(nextStatus) %>" />
 						</c:if>
 
-						<c:if test="<%= (suggestionStatus == KBCommentConstants.STATUS_COMPLETED) && KBCommentPermission.contains(permissionChecker, kbComment, ActionKeys.DELETE) %>">
+						<c:if test="<%= (suggestionStatus == KBCommentConstants.STATUS_COMPLETED) && KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
 							<liferay-portlet:actionURL name="deleteKBComment" varImpl="deleteURL">
 								<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 							</liferay-portlet:actionURL>

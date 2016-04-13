@@ -17,13 +17,13 @@
 <%@ include file="/display/init.jsp" %>
 
 <%
-boolean exactMatch = GetterUtil.getBoolean(renderRequest.getAttribute(WebKeys.KNOWLEDGE_BASE_EXACT_MATCH), true);
-String[] searchKeywords = (String[])renderRequest.getAttribute(WebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS);
+boolean exactMatch = GetterUtil.getBoolean(renderRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH), true);
+String[] searchKeywords = (String[])renderRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS);
 %>
 
 <div id="<portlet:namespace/>message-container"></div>
 
-<c:if test="<%= Validator.equals(portletDisplay.getId(), PortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.CONFIGURATION) %>">
+<c:if test="<%= Validator.equals(portletDisplay.getId(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), KBActionKeys.CONFIGURATION) %>">
 	<div class="alert alert-info portlet-configuration">
 		<aui:a href="<%= portletDisplay.getURLConfiguration() %>" label='<%= LanguageUtil.format(request, "portlet-configuration-page-x-instance-id-x", new String[] {layout.getName(locale), portletDisplay.getInstanceId()}, false) %>' onClick="<%= portletDisplay.getURLConfigurationJS() %>" />
 	</div>

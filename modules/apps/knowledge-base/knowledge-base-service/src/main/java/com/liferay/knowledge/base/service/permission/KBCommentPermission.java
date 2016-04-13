@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.service.permission;
 
-import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
@@ -60,14 +60,14 @@ public class KBCommentPermission {
 			return true;
 		}
 
-		if (actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(KBActionKeys.VIEW)) {
 			return AdminPermission.contains(
 				permissionChecker, kbComment.getGroupId(),
-				ActionKeys.VIEW_SUGGESTIONS);
+				KBActionKeys.VIEW_SUGGESTIONS);
 		}
 
-		if (!actionId.equals(ActionKeys.DELETE) &&
-			!actionId.equals(ActionKeys.UPDATE)) {
+		if (!actionId.equals(KBActionKeys.DELETE) &&
+			!actionId.equals(KBActionKeys.UPDATE)) {
 
 			return false;
 		}
@@ -80,7 +80,7 @@ public class KBCommentPermission {
 
 			return permissionChecker.hasPermission(
 				kbArticle.getGroupId(), KBArticle.class.getName(),
-				kbArticle.getResourcePrimKey(), ActionKeys.UPDATE);
+				kbArticle.getResourcePrimKey(), KBActionKeys.UPDATE);
 		}
 		else if (className.equals(KBTemplate.class.getName())) {
 			KBTemplate kbTemplate = KBTemplateLocalServiceUtil.getKBTemplate(
@@ -88,7 +88,7 @@ public class KBCommentPermission {
 
 			return permissionChecker.hasPermission(
 				kbTemplate.getGroupId(), KBTemplate.class.getName(),
-				kbTemplate.getPrimaryKey(), ActionKeys.UPDATE);
+				kbTemplate.getPrimaryKey(), KBActionKeys.UPDATE);
 		}
 
 		return false;

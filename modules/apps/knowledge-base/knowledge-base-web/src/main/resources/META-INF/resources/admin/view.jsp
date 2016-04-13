@@ -69,8 +69,8 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	</liferay-portlet:renderURL>
 
 	<%
-	boolean hasDeleteKBArticlesPermission = AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_KB_ARTICLES);
-	boolean hasUpdateKBArticlesPrioritiesPermission = AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.UPDATE_KB_ARTICLES_PRIORITIES);
+	boolean hasDeleteKBArticlesPermission = AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_ARTICLES);
+	boolean hasUpdateKBArticlesPrioritiesPermission = AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.UPDATE_KB_ARTICLES_PRIORITIES);
 	%>
 
 	<aui:fieldset>
@@ -93,11 +93,11 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				boolean hasAddKBFolderPermission = false;
 
 				if (parentResourceClassNameId == kbFolderClassNameId) {
-					hasAddKBArticlePermission = KBFolderPermission.contains(permissionChecker, scopeGroupId, parentResourcePrimKey, ActionKeys.ADD_KB_ARTICLE);
-					hasAddKBFolderPermission = KBFolderPermission.contains(permissionChecker, scopeGroupId, parentResourcePrimKey, ActionKeys.ADD_KB_FOLDER);
+					hasAddKBArticlePermission = KBFolderPermission.contains(permissionChecker, scopeGroupId, parentResourcePrimKey, KBActionKeys.ADD_KB_ARTICLE);
+					hasAddKBFolderPermission = KBFolderPermission.contains(permissionChecker, scopeGroupId, parentResourcePrimKey, KBActionKeys.ADD_KB_FOLDER);
 				}
 				else {
-					hasAddKBArticlePermission = AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_KB_ARTICLE);
+					hasAddKBArticlePermission = AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE);
 				}
 				%>
 
@@ -117,7 +117,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 					</aui:nav-item>
 				</c:if>
 
-				<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
+				<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) %>">
 					<liferay-security:permissionsURL
 						modelResource="com.liferay.knowledge.base.admin"
 						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
@@ -156,7 +156,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			showParentGroups="<%= false %>"
 		/>
 
-		<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
+		<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.SUBSCRIBE) %>">
 			<div class="kb-admin-tools">
 				<c:choose>
 					<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), KBArticle.class.getName(), scopeGroupId) %>">

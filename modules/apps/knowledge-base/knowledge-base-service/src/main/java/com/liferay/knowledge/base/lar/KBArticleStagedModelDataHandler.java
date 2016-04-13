@@ -24,7 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.constants.PortletKeys;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
@@ -400,7 +400,7 @@ public class KBArticleStagedModelDataHandler
 					portletDataContext.getUserId(
 						importedKBArticle.getUserUuid()),
 					KBArticle.class.getName(), importedKBArticle.getClassPK(),
-					PortletKeys.KNOWLEDGE_BASE_ADMIN,
+					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 					importedKBArticle.getAttachmentsFolderId(), inputStream,
 					fileName, mimeType, true);
 			}

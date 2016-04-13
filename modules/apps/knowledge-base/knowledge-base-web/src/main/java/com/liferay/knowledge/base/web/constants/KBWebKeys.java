@@ -18,7 +18,7 @@ package com.liferay.knowledge.base.web.constants;
  * @author Brian Wing Shun Chan
  * @author Peter Shin
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class KBWebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String KNOWLEDGE_BASE_EXACT_MATCH =
 		"KNOWLEDGE_BASE_EXACT_MATCH";

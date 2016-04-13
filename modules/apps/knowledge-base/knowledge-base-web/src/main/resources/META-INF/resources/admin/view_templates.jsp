@@ -33,7 +33,7 @@
 
 		<liferay-ui:search-container
 			id="kbTemplateAdminSearchContainer"
-			rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
+			rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
 			searchContainer="<%= new KBTemplateSearch(renderRequest, iteratorURL) %>"
 		>
 
@@ -84,11 +84,11 @@
 
 			<aui:nav-bar>
 				<aui:nav cssClass="navbar-nav">
-					<c:if test="<%= (total > 0) && AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.DELETE_KB_TEMPLATES) %>">
+					<c:if test="<%= (total > 0) && AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) %>">
 						<aui:nav-item cssClass="hide" id="deleteKBTemplates" label="delete" />
 					</c:if>
 
-					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_KB_TEMPLATE) %>">
+					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
 						<liferay-portlet:renderURL var="addKBTemplateURL">
 							<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
 							<portlet:param name="redirect" value="<%= redirect %>" />
@@ -97,7 +97,7 @@
 						<aui:nav-item href="<%= addKBTemplateURL %>" label="add-template" />
 					</c:if>
 
-					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
+					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, KBActionKeys.PERMISSIONS) %>">
 						<liferay-security:permissionsURL
 							modelResource="com.liferay.knowledge.base.admin"
 							modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"

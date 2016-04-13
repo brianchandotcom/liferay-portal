@@ -2303,9 +2303,9 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<var name="key_portletName" value="Web Content Display" />
-
-		<execute function="AssertTextNotEquals" locator1="BasePortlet#TITLE" value1="Web Content Display" />
+		<execute function="AssertElementNotPresent" locator1="BasePortlet#TITLE">
+			<var name="key_portletName" value="Web Content Display" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />

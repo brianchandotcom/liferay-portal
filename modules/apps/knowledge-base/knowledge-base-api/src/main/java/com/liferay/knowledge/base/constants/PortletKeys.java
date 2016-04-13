@@ -23,22 +23,22 @@ import com.liferay.portal.kernel.model.PortletConstants;
 public class PortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String KNOWLEDGE_BASE_ADMIN =
-		"1_WAR_knowledgebaseportlet";
+		"com_liferay_knowledge_base_web_portlet_AdminPortlet";
 
 	public static final String KNOWLEDGE_BASE_ARTICLE =
-		"3_WAR_knowledgebaseportlet";
+		"com_liferay_knowledge_base_web_portlet_ArticlePortlet";
 
 	public static final String KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE =
 		PortletKeys.KNOWLEDGE_BASE_ARTICLE +
 			PortletConstants.INSTANCE_SEPARATOR + "0000";
 
 	public static final String KNOWLEDGE_BASE_DISPLAY =
-		"2_WAR_knowledgebaseportlet";
+		"com_liferay_knowledge_base_web_portlet_DisplayPortlet";
 
 	public static final String KNOWLEDGE_BASE_SEARCH =
-		"5_WAR_knowledgebaseportlet";
+		"com_liferay_knowledge_base_web_portlet_SearchPortlet";
 
 	public static final String KNOWLEDGE_BASE_SECTION =
-		"4_WAR_knowledgebaseportlet";
+		"com_liferay_knowledge_base_web_portlet_SectionPortlet";
 
 }

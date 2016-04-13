@@ -157,17 +157,17 @@ public class ModifiedFacetTest {
 	protected static JSONObject createDataJSONObject(String... ranges)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String range : ranges) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("range", range);
 
 			jsonArray.put(jsonObject);
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("ranges", jsonArray);
 

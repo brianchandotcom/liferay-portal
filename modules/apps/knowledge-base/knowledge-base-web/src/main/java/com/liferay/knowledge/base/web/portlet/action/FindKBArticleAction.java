@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -235,7 +235,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
 					PortletPreferences portletPreferences =
-						_portletPreferencesFactory.getPortletSetup(
+						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
 
 					long kbFolderClassNameId = PortalUtil.getClassNameId(
@@ -275,7 +275,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
 					PortletPreferences portletPreferences =
-						_portletPreferencesFactory.getPortletSetup(
+						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
 
 					String[] kbArticlesSections = portletPreferences.getValues(
@@ -306,7 +306,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 					PortletPreferences portletPreferences =
-						_portletPreferencesFactory.getPortletSetup(
+						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
 
 					long resourcePrimKey = GetterUtil.getLong(
@@ -466,13 +466,6 @@ public class FindKBArticleAction extends BaseStrutsAction {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesFactory(
-		PortletPreferencesFactory portletPreferencesFactory) {
-
-		_portletPreferencesFactory = portletPreferencesFactory;
-	}
-
 	private static final boolean _PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(
@@ -482,6 +475,5 @@ public class FindKBArticleAction extends BaseStrutsAction {
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBFolderLocalService _kbFolderLocalService;
 	private LayoutLocalService _layoutLocalService;
-	private PortletPreferencesFactory _portletPreferencesFactory;
 
 }

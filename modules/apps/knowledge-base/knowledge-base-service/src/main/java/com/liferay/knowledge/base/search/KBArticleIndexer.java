@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactory;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -132,7 +134,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		Document document = getBaseModelDocument(CLASS_NAME, kbArticle);
 
 		document.addText(
-			Field.CONTENT, _html.extractText(kbArticle.getContent()));
+			Field.CONTENT, HtmlUtil.extractText(kbArticle.getContent()));
 		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
 		document.addText(Field.TITLE, kbArticle.getTitle());
 
@@ -233,7 +235,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = _propertyFactory.forName("status");
+					Property property = PropertyFactoryUtil.forName("status");
 
 					dynamicQuery.add(
 						property.eq(WorkflowConstants.STATUS_APPROVED));
@@ -268,11 +270,6 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	@Reference(unbind = "-")
-	protected void setHtml(Html html) {
-		_html = html;
-	}
-
-	@Reference(unbind = "-")
 	protected void setKbArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
@@ -286,17 +283,10 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		_kbFolderLocalService = kbFolderLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPropertyFactory(PropertyFactory propertyFactory) {
-		_propertyFactory = propertyFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleIndexer.class);
 
-	private Html _html;
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBFolderLocalService _kbFolderLocalService;
-	private PropertyFactory _propertyFactory;
 
 }

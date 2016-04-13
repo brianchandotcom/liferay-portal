@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -461,19 +461,18 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		String editURL = portal.getLayoutFullURL(themeDisplay);
 
-		Http http = getHttp();
-
-		editURL = http.setParameter(editURL, "p_p_id", portletDisplay.getId());
-		editURL = getHttp().setParameter(
+		editURL = HttpUtil.setParameter(
+			editURL, "p_p_id", portletDisplay.getId());
+		editURL = HttpUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "mvcPath",
 			templatePath + "edit_article.jsp");
-		editURL = http.setParameter(
+		editURL = HttpUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "redirect",
 			getRedirect(actionRequest, actionResponse));
-		editURL = http.setParameter(
+		editURL = HttpUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "resourcePrimKey",
 			kbArticle.getResourcePrimKey());
-		editURL = http.setParameter(
+		editURL = HttpUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "status",
 			WorkflowConstants.STATUS_ANY);
 
@@ -505,8 +504,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			throw new PortalException(cause);
 		}
 	}
-
-	protected abstract Http getHttp();
 
 	protected abstract JSONFactory getJSONFactory();
 

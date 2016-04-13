@@ -51,7 +51,7 @@ copyFavicon {
 }
 
 dependencies {
-	frontendThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.2"
+	frontendThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.3"
 	frontendThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.3"
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

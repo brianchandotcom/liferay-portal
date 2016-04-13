@@ -500,27 +500,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {
-			String replaceCall = matcher.group();
-
-			int x = replaceCall.length();
-
-			while (true) {
-				x = replaceCall.lastIndexOf(
-					StringPool.CLOSE_PARENTHESIS, x - 1);
-
-				replaceCall = replaceCall.substring(0, x + 1);
-
-				if (getLevel(replaceCall) == 0) {
-					break;
-				}
-			}
-
-			x = replaceCall.indexOf(StringPool.OPEN_PARENTHESIS);
-
-			String parameters = replaceCall.substring(
-				x + 1, replaceCall.length() - 1);
-
-			List<String> parametersList = splitParameters(parameters);
+			List<String> parametersList = getParameterList(matcher);
 
 			if (parametersList.size() != 3) {
 				return;
@@ -2054,6 +2034,30 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return null;
+	}
+
+	protected List<String> getParameterList(Matcher methodCallMatcher) {
+		String replaceCall = methodCallMatcher.group();
+
+		int x = replaceCall.length();
+
+		while (true) {
+			x = replaceCall.lastIndexOf(
+				StringPool.CLOSE_PARENTHESIS, x - 1);
+
+			replaceCall = replaceCall.substring(0, x + 1);
+
+			if (getLevel(replaceCall) == 0) {
+				break;
+			}
+		}
+
+		x = replaceCall.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		String parameters = replaceCall.substring(
+			x + 1, replaceCall.length() - 1);
+
+		return splitParameters(parameters);
 	}
 
 	protected String getProperty(String key) {

@@ -108,9 +108,9 @@ public abstract class BaseBuild implements Build {
 			throw new IllegalArgumentException("Invalid build URL " + buildURL);
 		}
 
-		master = matcher.group("master");
-		jobName = matcher.group("jobName");
 		buildNumber = Integer.parseInt(matcher.group("buildNumber"));
+		jobName = matcher.group("jobName");
+		master = matcher.group("master");
 
 		update();
 	}

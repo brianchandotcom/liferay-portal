@@ -149,24 +149,6 @@
 	value='<%= LanguageUtil.get(request, (curGroup.isActive() ? "yes" : "no")) %>'
 />
 
-<c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">
-	<liferay-ui:search-container-column-text
-		cssClass="pending-requests-column text-column"
-		name="pending-requests"
-		value="<%= (curGroup.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(curGroup.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
-	/>
-</c:if>
-
-<liferay-ui:search-container-column-text
-	cssClass="tags-column text-column"
-	name="tags"
->
-	<liferay-ui:asset-tags-summary
-		className="<%= Group.class.getName() %>"
-		classPK="<%= curGroup.getGroupId() %>"
-	/>
-</liferay-ui:search-container-column-text>
-
 <liferay-ui:search-container-column-jsp
 	cssClass="entry-action-column"
 	path="/site_action.jsp"

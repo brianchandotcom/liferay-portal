@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>wiki-social-ftl</template-key>
+		<name>portlet-display-template-name-social</name>
+		<description>portlet-display-template-description-social</description>
+		<language>ftl</language>
+		<script-file>com/liferay/wiki/web/portlet/template/dependencies/portlet_display_template_social.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

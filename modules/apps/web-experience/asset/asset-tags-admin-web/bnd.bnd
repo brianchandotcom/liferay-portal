@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Asset Tag Admin Web
-Bundle-SymbolicName: com.liferay.asset.tag.admin.web
-Bundle-Version: 1.0.5
+Bundle-Name: Liferay Asset Tags Admin Web
+Bundle-SymbolicName: com.liferay.asset.tags.admin.web
+Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset

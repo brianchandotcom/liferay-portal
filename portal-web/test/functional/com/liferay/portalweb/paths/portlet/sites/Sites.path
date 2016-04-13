@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_NAME</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[2]//a</td>
+	<td>//*[@data-qa-id='row']//div/span[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

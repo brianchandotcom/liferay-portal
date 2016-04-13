@@ -1038,8 +1038,6 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_PENDING_REQUESTS" value1="" />
-		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TAGS" value1="" />
 		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_ACTIONS" />
 	</command>
 

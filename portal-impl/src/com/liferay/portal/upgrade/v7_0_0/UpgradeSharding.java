@@ -65,20 +65,22 @@ public class UpgradeSharding extends UpgradeProcess {
 	}
 
 	protected void copyControlTables(List<String> shardNames) throws Exception {
-		boolean defaultPartitioningEnabled = false;
-
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<String> uniqueShardNames = ListUtil.unique(shardNames);
 
-			if (uniqueShardNames.size() < shardNames.size()) {
-				defaultPartitioningEnabled = true;
+			if (uniqueShardNames.size() == 1) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"All companies are located in the default shard, so " +
+							"it's not necessary to copy the control tables.");
+				}
+
+				return;
 			}
 
 			String defaultShardName = PropsUtil.get("shard.default.name");
 
-			if (!defaultPartitioningEnabled &&
-				Validator.isNull(defaultShardName)) {
-
+			if (Validator.isNull(defaultShardName)) {
 				String shardNamesString = StringUtil.merge(shardNames, ", ");
 
 				throw new RuntimeException(

@@ -50,10 +50,15 @@ PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= groupSearch.getOrderByCol() %>"
 			orderByType="<%= groupSearch.getOrderByType() %>"
-			orderColumns='<%= new String[] {"all", "name"} %>'
+			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

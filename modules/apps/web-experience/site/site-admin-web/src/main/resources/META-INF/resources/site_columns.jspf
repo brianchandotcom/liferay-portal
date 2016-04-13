@@ -20,7 +20,7 @@
 	orderable="<%= true %>"
 	truncate="<%= true %>"
 >
-	<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
+	<aui:a href="<%= viewSiteURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
 	<c:if test="<%= curGroup.isOrganization() %>">
 
@@ -70,18 +70,20 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="content-column child-sites-column"
 	name="child-sites"
+	truncate="<%= true %>"
 >
-	<div class="subsites-count">
-		<c:choose>
-			<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
-				<%= childSites.size() %>
-			</c:when>
-			<c:otherwise>
-				<%= StringPool.DASH %>
-			</c:otherwise>
-		</c:choose>
-	</div>
+	<c:choose>
+		<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
+			<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
+				<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
+			</aui:a>
+		</c:when>
+		<c:otherwise>
+			<%= StringPool.DASH %>
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
@@ -145,24 +147,6 @@
 	name="active"
 	value='<%= LanguageUtil.get(request, (curGroup.isActive() ? "yes" : "no")) %>'
 />
-
-<c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">
-	<liferay-ui:search-container-column-text
-		cssClass="pending-requests-column text-column"
-		name="pending-requests"
-		value="<%= (curGroup.getType() == GroupConstants.TYPE_SITE_RESTRICTED) ? String.valueOf(MembershipRequestLocalServiceUtil.searchCount(curGroup.getGroupId(), MembershipRequestConstants.STATUS_PENDING)) : StringPool.BLANK %>"
-	/>
-</c:if>
-
-<liferay-ui:search-container-column-text
-	cssClass="tags-column text-column"
-	name="tags"
->
-	<liferay-ui:asset-tags-summary
-		className="<%= Group.class.getName() %>"
-		classPK="<%= curGroup.getGroupId() %>"
-	/>
-</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-jsp
 	cssClass="entry-action-column"

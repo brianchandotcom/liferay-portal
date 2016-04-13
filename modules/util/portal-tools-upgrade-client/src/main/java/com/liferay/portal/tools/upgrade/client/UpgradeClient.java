@@ -344,7 +344,7 @@ public class UpgradeClient {
 
 		String liferayClassPath = System.getenv("LIFERAY_CLASSPATH");
 
-		if ((liferayClassPath != null) && !liferayClassPath.equals("")) {
+		if ((liferayClassPath != null) && !liferayClassPath.isEmpty()) {
 			classPath.append(liferayClassPath);
 
 			classPath.append(File.pathSeparator);
@@ -425,7 +425,7 @@ public class UpgradeClient {
 		String value = _dataSourceProperties.getProperty(
 			"jdbc.default.driverClassName");
 
-		if ((value == null) || value.equals("")) {
+		if ((value == null) || value.isEmpty()) {
 			String response;
 
 			DataSource dataSource = null;
@@ -443,7 +443,7 @@ public class UpgradeClient {
 
 				response = _consoleReader.readLine();
 
-				if (response.equals("")) {
+				if (response.isEmpty()) {
 					response = "mysql";
 				}
 
@@ -461,7 +461,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				dataSource.setProtocol(response);
 			}
 
@@ -471,7 +471,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				dataSource.setClassName(response);
 			}
 
@@ -481,7 +481,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				dataSource.setHost(response);
 			}
 
@@ -492,7 +492,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				if (response.equals("none")) {
 					dataSource.setPort(0);
 				}
@@ -507,7 +507,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				dataSource.setDatabaseName(response);
 			}
 
@@ -533,7 +533,7 @@ public class UpgradeClient {
 	private void _verifyServerProperties() throws IOException {
 		String value = _serverProperties.getProperty("dir");
 
-		if ((value == null) || value.equals("")) {
+		if ((value == null) || value.isEmpty()) {
 			String response;
 
 			while (_appServer == null) {
@@ -549,7 +549,7 @@ public class UpgradeClient {
 
 				response = _consoleReader.readLine();
 
-				if (response.equals("")) {
+				if (response.isEmpty()) {
 					response = "tomcat";
 				}
 
@@ -570,7 +570,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				_appServer.setDir(response);
 			}
 
@@ -579,7 +579,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				_appServer.setGlobalLibDir(response);
 			}
 
@@ -588,7 +588,7 @@ public class UpgradeClient {
 
 			response = _consoleReader.readLine();
 
-			if (!response.equals("")) {
+			if (!response.isEmpty()) {
 				_appServer.setPortalDir(response);
 			}
 
@@ -608,12 +608,12 @@ public class UpgradeClient {
 	private void _verifyUpgradeProperties() throws IOException {
 		String value = _upgradeProperties.getProperty("liferay.home");
 
-		if ((value == null) || value.equals("")) {
+		if ((value == null) || value.isEmpty()) {
 			System.out.println("Please enter your Liferay home (../): ");
 
 			String response = _consoleReader.readLine();
 
-			if (response.equals("")) {
+			if (response.isEmpty()) {
 				response = "../";
 			}
 

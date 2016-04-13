@@ -70,8 +70,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			if (uniqueShardNames.size() == 1) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"All companies are located in the default shard, so " +
-							"it's not necessary to copy the control tables.");
+						"All companies are located in the same shard. " +
+							"It's not necessary to copy the control tables.");
 				}
 
 				return;

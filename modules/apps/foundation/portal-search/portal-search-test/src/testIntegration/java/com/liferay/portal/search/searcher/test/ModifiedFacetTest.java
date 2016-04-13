@@ -157,8 +157,6 @@ public class ModifiedFacetTest {
 	protected static JSONObject createDataJSONObject(String... ranges)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String range : ranges) {
@@ -168,6 +166,8 @@ public class ModifiedFacetTest {
 
 			jsonArray.put(jsonObject);
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("ranges", jsonArray);
 

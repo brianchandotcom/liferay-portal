@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Kevin Yen
@@ -49,9 +48,15 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public void update() throws Exception {
-		if (_downstreamBuilds == null) {
+		String status = getStatus();
+
+		if (status == null) {
 			setStatus("running");
 
+			return;
+		}
+
+		if (status.equals("completed")) {
 			return;
 		}
 
@@ -65,70 +70,19 @@ public class TopLevelBuild extends BaseBuild {
 			return;
 		}
 
-		setStatus("running");
-	}
+		if (getDownstreamBuildCount("missing") > 0) {
+			setStatus("missing");
 
-	public void waitForDownstreamBuilds(
-			long sleepTime, long maxStartTime, long maxWaitTime)
-		throws Exception {
-
-		long startTime = System.currentTimeMillis();
-
-		while (true) {
-			update();
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(getDownstreamBuildCount("completed"));
-			sb.append(" Completed / ");
-			sb.append(getDownstreamBuildCount("running"));
-			sb.append(" Running / ");
-			sb.append(getDownstreamBuildCount("queued"));
-			sb.append(" Queued / ");
-			sb.append(getDownstreamBuildCount("starting"));
-			sb.append(" Starting / ");
-			sb.append(_downstreamBuilds.size());
-			sb.append(" Total");
-
-			System.out.println(sb.toString());
-
-			List<DownstreamBuild> missingDownstreamBuilds = getDownstreamBuilds(
-				"missing");
-
-			for (DownstreamBuild missingDownstreamBuild :
-					missingDownstreamBuilds) {
-
-				long time = System.currentTimeMillis();
-
-				if ((time - missingDownstreamBuild.statusModifiedTime) >
-						maxStartTime) {
-
-					throw new TimeoutException("Missing downstream build");
-				}
-			}
-
-			long elapsedTime = System.currentTimeMillis() - startTime;
-
-			if ((elapsedTime > maxStartTime) &&
-				(getDownstreamBuildCount("starting") > 0)) {
-
-				throw new TimeoutException("Unable to find downstream build");
-			}
-			else if ((elapsedTime > maxWaitTime) &&
-					 (getDownstreamBuildCount("completed") <
-						 _downstreamBuilds.size())) {
-
-				throw new TimeoutException("Timed out downstream build");
-			}
-			else if (getDownstreamBuildCount("completed") ==
-						_downstreamBuilds.size()) {
-
-				break;
-			}
-			else {
-				Thread.sleep(sleepTime);
-			}
+			return;
 		}
+
+		if (getDownstreamBuildCount("starting") > 0) {
+			setStatus("starting");
+
+			return;
+		}
+
+		setStatus("running");
 	}
 
 	protected int getDownstreamBuildCount(String status) {

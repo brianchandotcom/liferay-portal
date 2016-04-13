@@ -99,6 +99,16 @@
 						<liferay-ui:message arguments="<%= userEmailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />
 					</div>
 				</c:when>
+				<c:when test='<%= SessionMessages.contains(request, "passwordSentTo") %>'>
+
+					<%
+					String userEmailAddress = (String)SessionMessages.get(request, "passwordSentTo");
+					%>
+
+					<div class="alert alert-success">
+						<liferay-ui:message arguments="<%= userEmailAddress %>" key="your-password-has-been-sent-to-x" translateArguments="<%= false %>" />
+					</div>
+				</c:when>
 			</c:choose>
 
 			<liferay-ui:error exception="<%= AuthException.class %>" message="authentication-failed" />

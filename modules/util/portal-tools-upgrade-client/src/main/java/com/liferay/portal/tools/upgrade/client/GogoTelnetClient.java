@@ -24,10 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * java client for telnet handshake
- *
- * reference: http://www.laynetworks.com/telnet.htm
- *
  * @author Gregory Amerson
  */
 public class GogoTelnetClient implements AutoCloseable {

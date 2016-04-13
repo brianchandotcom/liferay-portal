@@ -19,11 +19,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
- * Inspired by code written by Carlos Heuberger at
- * http://stackoverflow.com/questions/1994255/how-to-write-console-output-to-a-txt-file
- *
  * @author David Truong
- *
  */
 public class TeePrintStream extends PrintStream {
 

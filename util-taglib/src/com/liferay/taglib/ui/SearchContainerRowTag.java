@@ -55,7 +55,7 @@ public class SearchContainerRowTag<R>
 			_resultRow.setClassHoverName(value);
 		}
 		else if (name.equals("restricted")) {
-			_resultRow.setRestricted(GetterUtil.getBoolean(value, false));
+			_resultRow.setRestricted(GetterUtil.getBoolean(value));
 		}
 		else {
 			Object obj = pageContext.getAttribute(value);

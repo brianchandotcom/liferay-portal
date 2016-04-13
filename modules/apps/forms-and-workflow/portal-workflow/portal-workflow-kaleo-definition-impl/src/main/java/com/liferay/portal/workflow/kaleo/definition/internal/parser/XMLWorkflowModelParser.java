@@ -560,7 +560,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		String name = stateElement.elementText("name");
 		String description = stateElement.elementText("description");
 		boolean initial = GetterUtil.getBoolean(
-			stateElement.elementText("initial"), false);
+			stateElement.elementText("initial"));
 
 		State state = new State(name, description, initial);
 

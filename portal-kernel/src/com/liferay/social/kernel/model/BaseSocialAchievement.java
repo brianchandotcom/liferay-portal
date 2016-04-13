@@ -172,7 +172,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 			name.equals("counterThreshold")) {
 
 			BeanPropertiesUtil.setProperty(
-				this, name, GetterUtil.getInteger(value, 0));
+				this, name, GetterUtil.getInteger(value));
 		}
 		else {
 			BeanPropertiesUtil.setProperty(this, name, value);

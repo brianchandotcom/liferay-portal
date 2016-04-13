@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -451,8 +450,7 @@ public class InvokerFilterHelper {
 			List<String> dispatchers = StringPlus.asList(
 				serviceReference.getProperty("dispatcher"));
 			String servletContextName = GetterUtil.getString(
-				serviceReference.getProperty("servlet-context-name"),
-				StringPool.BLANK);
+				serviceReference.getProperty("servlet-context-name"));
 			String servletFilterName = GetterUtil.getString(
 				serviceReference.getProperty("servlet-filter-name"));
 			List<String> urlPatterns = StringPlus.asList(

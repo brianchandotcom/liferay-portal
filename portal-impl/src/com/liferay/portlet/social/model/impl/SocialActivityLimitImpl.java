@@ -56,12 +56,12 @@ public class SocialActivityLimitImpl extends SocialActivityLimitBaseImpl {
 			return 0;
 		}
 
-		int count = GetterUtil.getInteger(valueParts[valueParts.length-1], 0);
+		int count = GetterUtil.getInteger(valueParts[valueParts.length-1]);
 
 		if (limitPeriod == SocialActivityCounterDefinition.LIMIT_PERIOD_DAY) {
 			int activityDay = SocialCounterPeriodUtil.getActivityDay();
 
-			if (activityDay == GetterUtil.getInteger(valueParts[0], 0)) {
+			if (activityDay == GetterUtil.getInteger(valueParts[0])) {
 				return count;
 			}
 		}

@@ -371,7 +371,7 @@ public class LanguageResources {
 				serviceReference);
 
 			String languageId = GetterUtil.getString(
-				serviceReference.getProperty("language.id"), StringPool.BLANK);
+				serviceReference.getProperty("language.id"));
 			Map<String, String> languageMap = new HashMap<>();
 			Locale locale = null;
 
@@ -417,7 +417,7 @@ public class LanguageResources {
 			registry.ungetService(serviceReference);
 
 			String languageId = GetterUtil.getString(
-				serviceReference.getProperty("language.id"), StringPool.BLANK);
+				serviceReference.getProperty("language.id"));
 			Locale locale = null;
 
 			if (Validator.isNotNull(languageId)) {

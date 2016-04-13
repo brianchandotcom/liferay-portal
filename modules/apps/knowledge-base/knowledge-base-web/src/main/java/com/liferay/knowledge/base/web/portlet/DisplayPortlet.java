@@ -22,8 +22,8 @@ import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
@@ -34,10 +34,10 @@ import com.liferay.knowledge.base.web.selector.KBArticleSelectorFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,6 +53,7 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -62,11 +63,39 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=knowledge-base-portlet knowledge-base-portlet-display",
+		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.header-portlet-css=/admin/css/common.css,/display/css/main.css",
+		"com.liferay.portlet.icon=/icons/display.png",
+		"com.liferay.portlet.scopeable=true",
+		"javax.portlet.display-name=Knowledge Base Display",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-send-redirect=true",
+		"javax.portlet.init-param.config-template=/display/configuration.jsp",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/display/",
+		"javax.portlet.init-param.view-template=/display/view.jsp",
+		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
+		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-display-portlet-preferences.xml",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=categoryId",
+		"javax.portlet.supported-public-render-parameter=tag",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class DisplayPortlet extends BaseKBPortlet {
 
 	@Override
@@ -84,7 +113,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			renderRequest.setAttribute(WebKeys.KNOWLEDGE_BASE_STATUS, status);
 
 			if ((kbArticle != null) && (kbArticle.getStatus() != status)) {
-				kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(
+				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 					kbArticle.getResourcePrimKey(), status);
 			}
 
@@ -133,10 +162,10 @@ public class DisplayPortlet extends BaseKBPortlet {
 			return;
 		}
 
-		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(kbFolderId);
+		KBFolder kbFolder = _kbFolderService.getKBFolder(kbFolderId);
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
+			_portletPreferencesFactory.getPortalPreferences(
 				PortalUtil.getLiferayPortletRequest(actionRequest));
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -156,7 +185,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		KBArticle kbArticle = null;
 
 		if (Validator.isNotNull(urlTitle)) {
-			kbArticle = KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
+			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
 				kbFolder.getGroupId(), kbFolder.getUrlTitle(), urlTitle);
 
 			if ((kbArticle == null) &&
@@ -179,7 +208,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			kbArticle = null;
 		}
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
+		PortletURL redirectURL = _portletURLFactory.create(
 			actionRequest, PortletKeys.KNOWLEDGE_BASE_DISPLAY,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
@@ -236,13 +265,13 @@ public class DisplayPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		KBArticle oldKBArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
+			_kbArticleLocalService.fetchKBArticleByUrlTitle(
 				groupId, oldKBFolderURLTitle, urlTitle);
 
 		KBArticle kbArticle = null;
 
 		while ((kbArticle == null) && (oldKBArticle != null)) {
-			kbArticle = KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
+			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
 				groupId, newKBFolderId, oldKBArticle.getUrlTitle());
 
 			if (kbArticle == null) {
@@ -251,10 +280,9 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 
 		if (kbArticle == null) {
-			List<KBArticle> kbArticles =
-				KBArticleLocalServiceUtil.getKBArticles(
-					groupId, newKBFolderId, WorkflowConstants.STATUS_APPROVED,
-					0, 1, new KBArticlePriorityComparator(true));
+			List<KBArticle> kbArticles = _kbArticleLocalService.getKBArticles(
+				groupId, newKBFolderId, WorkflowConstants.STATUS_APPROVED, 0, 1,
+				new KBArticlePriorityComparator(true));
 
 			if (!kbArticles.isEmpty()) {
 				kbArticle = kbArticles.get(0);
@@ -281,7 +309,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			}
 
 			KBArticle latestKBArticle =
-				KBArticleLocalServiceUtil.getLatestKBArticle(
+				_kbArticleLocalService.getLatestKBArticle(
 					resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 			return new KBArticleSelection(latestKBArticle, true);
@@ -289,7 +317,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		long kbFolderClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+		long kbFolderClassNameId = _classNameLocalService.getClassNameId(
 			KBFolderConstants.getClassName());
 
 		long parentResourcePrimKey = GetterUtil.getLong(
@@ -331,7 +359,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(renderRequest);
+			_portletPreferencesFactory.getPortalPreferences(renderRequest);
 
 		String contentRootPrefix = GetterUtil.getString(
 			portletPreferences.getValue("contentRootPrefix", null));
@@ -360,5 +388,42 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 		return WorkflowConstants.STATUS_APPROVED;
 	}
+
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBFolderService(KBFolderService kbFolderService) {
+		_kbFolderService = kbFolderService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesFactory(
+		PortletPreferencesFactory portletPreferencesFactory) {
+
+		_portletPreferencesFactory = portletPreferencesFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletURLFactory(PortletURLFactory portletURLFactory) {
+		_portletURLFactory = portletURLFactory;
+	}
+
+	private ClassNameLocalService _classNameLocalService;
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBFolderService _kbFolderService;
+	private PortletPreferencesFactory _portletPreferencesFactory;
+	private PortletURLFactory _portletURLFactory;
 
 }

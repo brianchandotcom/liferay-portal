@@ -26,9 +26,9 @@ import com.liferay.knowledge.base.exception.NoSuchTemplateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderServiceUtil;
-import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.web.constants.WebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,6 +59,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -66,11 +67,42 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  * @author Eric Min
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=knowledge-base-portlet knowledge-base-portlet-admin",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/admin/css/common.css,/admin/css/main.css",
+		"com.liferay.portlet.icon=/icons/admin.png",
+		"com.liferay.portlet.preferences-unique-per-layout=false",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.show-portlet-access-denied=false",
+		"javax.portlet.display-name=Knowledge Base",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-send-redirect=true",
+		"javax.portlet.init-param.config-template=/admin/configuration.jsp",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/admin/",
+		"javax.portlet.init-param.view-template=/admin/view.jsp",
+		"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_ADMIN,
+		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-admin-portlet-preferences.xml",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=categoryId",
+		"javax.portlet.supported-public-render-parameter=tag",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class AdminPortlet extends BaseKBPortlet {
 
 	public void deleteKBArticles(
@@ -83,7 +115,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		long[] resourcePrimKeys = StringUtil.split(
 			ParamUtil.getString(actionRequest, "resourcePrimKeys"), 0L);
 
-		KBArticleServiceUtil.deleteKBArticles(
+		_kbArticleService.deleteKBArticles(
 			themeDisplay.getScopeGroupId(), resourcePrimKeys);
 	}
 
@@ -93,7 +125,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
 
-		KBFolderServiceUtil.deleteKBFolder(kbFolderId);
+		_kbFolderService.deleteKBFolder(kbFolderId);
 	}
 
 	public void deleteKBTemplate(
@@ -102,7 +134,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		long kbTemplateId = ParamUtil.getLong(actionRequest, "kbTemplateId");
 
-		KBTemplateServiceUtil.deleteKBTemplate(kbTemplateId);
+		_kbTemplateService.deleteKBTemplate(kbTemplateId);
 	}
 
 	public void deleteKBTemplates(
@@ -115,7 +147,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		long[] kbTemplateIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "kbTemplateIds"), 0L);
 
-		KBTemplateServiceUtil.deleteKBTemplates(
+		_kbTemplateService.deleteKBTemplates(
 			themeDisplay.getScopeGroupId(), kbTemplateIds);
 	}
 
@@ -155,7 +187,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
 			int importedKBArticlesCount =
-				KBArticleServiceUtil.addKBArticlesMarkdown(
+				_kbArticleService.addKBArticlesMarkdown(
 					themeDisplay.getScopeGroupId(), parentKBFolderId, fileName,
 					prioritizeByNumericalPrefix, inputStream, serviceContext);
 
@@ -194,7 +226,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			if ((resourcePrimKey > 0) &&
 				(resourceClassNameId == kbArticleClassNameId)) {
 
-				kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+				kbArticle = _kbArticleService.getLatestKBArticle(
 					resourcePrimKey, status);
 			}
 
@@ -207,7 +239,7 @@ public class AdminPortlet extends BaseKBPortlet {
 				renderRequest, "kbTemplateId");
 
 			if (kbTemplateId > 0) {
-				kbTemplate = KBTemplateServiceUtil.getKBTemplate(kbTemplateId);
+				kbTemplate = _kbTemplateService.getKBTemplate(kbTemplateId);
 			}
 
 			renderRequest.setAttribute(
@@ -237,7 +269,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		String portletId = PortalUtil.getPortletId(actionRequest);
 
-		KBArticleServiceUtil.subscribeGroupKBArticles(
+		_kbArticleService.subscribeGroupKBArticles(
 			themeDisplay.getScopeGroupId(), portletId);
 	}
 
@@ -250,7 +282,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		String portletId = PortalUtil.getPortletId(actionRequest);
 
-		KBArticleServiceUtil.unsubscribeGroupKBArticles(
+		_kbArticleService.unsubscribeGroupKBArticles(
 			themeDisplay.getScopeGroupId(), portletId);
 	}
 
@@ -279,7 +311,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			resourcePrimKeyToPriorityMap.put(resourcePrimKey, priority);
 		}
 
-		KBArticleServiceUtil.updateKBArticlesPriorities(
+		_kbArticleService.updateKBArticlesPriorities(
 			themeDisplay.getScopeGroupId(), resourcePrimKeyToPriorityMap);
 	}
 
@@ -305,12 +337,12 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBFolder.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			KBFolderServiceUtil.addKBFolder(
+			_kbFolderService.addKBFolder(
 				themeDisplay.getScopeGroupId(), parentResourceClassNameId,
 				parentResourcePrimKey, name, description, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			KBFolderServiceUtil.updateKBFolder(
+			_kbFolderService.updateKBFolder(
 				parentResourceClassNameId, parentResourcePrimKey, kbFolderId,
 				name, description);
 		}
@@ -333,11 +365,11 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBTemplate.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			KBTemplateServiceUtil.addKBTemplate(
+			_kbTemplateService.addKBTemplate(
 				portletId, title, content, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			KBTemplateServiceUtil.updateKBTemplate(
+			_kbTemplateService.updateKBTemplate(
 				kbTemplateId, title, content, serviceContext);
 		}
 	}
@@ -408,5 +440,24 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleService(KBArticleService kbArticleService) {
+		_kbArticleService = kbArticleService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBFolderService(KBFolderService kbFolderService) {
+		_kbFolderService = kbFolderService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBTemplateService(KBTemplateService kbTemplateService) {
+		_kbTemplateService = kbTemplateService;
+	}
+
+	private KBArticleService _kbArticleService;
+	private KBFolderService _kbFolderService;
+	private KBTemplateService _kbTemplateService;
 
 }

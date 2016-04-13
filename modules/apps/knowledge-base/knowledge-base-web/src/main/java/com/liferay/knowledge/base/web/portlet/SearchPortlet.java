@@ -15,10 +15,11 @@
 package com.liferay.knowledge.base.web.portlet;
 
 import com.liferay.knowledge.base.constants.ActionKeys;
+import com.liferay.knowledge.base.constants.PortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.WebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
@@ -33,14 +34,43 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=knowledge-base-portlet knowledge-base-portlet-search",
+		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.header-portlet-css=/admin/css/common.css",
+		"com.liferay.portlet.icon=/icons/search.png",
+		"com.liferay.portlet.scopeable=true",
+		"javax.portlet.display-name=Knowledge Base Search",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-send-redirect=true",
+		"javax.portlet.init-param.config-template=/search/configuration.jsp",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/search/",
+		"javax.portlet.init-param.view-template=/search/view.jsp",
+		"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_SEARCH,
+		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-search-portlet-preferences.xml",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=categoryId",
+		"javax.portlet.supported-public-render-parameter=tag",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class SearchPortlet extends BaseKBPortlet {
 
 	@Override
@@ -59,7 +89,7 @@ public class SearchPortlet extends BaseKBPortlet {
 				renderRequest, "resourcePrimKey");
 
 			if (resourcePrimKey > 0) {
-				kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+				kbArticle = _kbArticleService.getLatestKBArticle(
 					resourcePrimKey, status);
 			}
 
@@ -150,5 +180,12 @@ public class SearchPortlet extends BaseKBPortlet {
 
 		return WorkflowConstants.STATUS_APPROVED;
 	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleService(KBArticleService kbArticleService) {
+		_kbArticleService = kbArticleService;
+	}
+
+	private KBArticleService _kbArticleService;
 
 }

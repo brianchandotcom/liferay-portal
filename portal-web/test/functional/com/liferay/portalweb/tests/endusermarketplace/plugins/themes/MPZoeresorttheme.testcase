@@ -7,7 +7,6 @@
 
 	<command name="ZoeResortThemeSmoke" priority="4">
 		<property name="theme.plugins.includes" value="zoe-resort-theme" />
-		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Resort" />
 

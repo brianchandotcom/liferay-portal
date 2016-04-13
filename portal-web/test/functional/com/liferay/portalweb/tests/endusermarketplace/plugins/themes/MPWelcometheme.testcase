@@ -7,7 +7,6 @@
 
 	<command name="WelcomeThemeSmoke" priority="4">
 		<property name="theme.plugins.includes" value="welcome-theme" />
-		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Welcome" />
 

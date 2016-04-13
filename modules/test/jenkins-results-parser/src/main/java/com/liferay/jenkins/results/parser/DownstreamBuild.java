@@ -153,8 +153,6 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected Set<String> getParameterNames() throws Exception {
-		Set<String> parameterNames = new HashSet<>();
-
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
 				"[name,type,value]]");
@@ -165,6 +163,9 @@ public class DownstreamBuild extends BaseBuild {
 
 		JSONArray parameterDefinitionsJSONArray =
 			firstActionJSONObject.getJSONArray("parameterDefinitions");
+
+		Set<String> parameterNames = new HashSet<>(
+			parameterDefinitionsJSONArray.length());
 
 		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
 			JSONObject parameterDefinitionJSONObject =
@@ -184,7 +185,7 @@ public class DownstreamBuild extends BaseBuild {
 	protected Map<String, String> getParameters(JSONArray jsonArray)
 		throws Exception {
 
-		Map<String, String> parameters = new HashMap<>();
+		Map<String, String> parameters = new HashMap<>(jsonArray.length());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);

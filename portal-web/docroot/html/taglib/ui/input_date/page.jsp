@@ -167,7 +167,6 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 								event.newSelection[0] = new Date();
 							}
 							else if (invalidNumber && !date && nullable) {
-
 								var selection = new Date();
 
 								if (!newSelection) {

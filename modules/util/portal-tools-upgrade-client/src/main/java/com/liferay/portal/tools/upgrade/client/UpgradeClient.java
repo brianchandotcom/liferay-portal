@@ -120,18 +120,7 @@ public class UpgradeClient {
 		_dataSourcePropertiesFile = new File(
 			"portal-upgrade-datasource.properties");
 
-		_dataSourceProperties = new Properties();
-
-		if (_dataSourcePropertiesFile.exists()) {
-			try (InputStream inputStream =
-					new FileInputStream(_dataSourcePropertiesFile)) {
-
-				_dataSourceProperties.load(inputStream);
-			}
-			catch (IOException ioe) {
-				System.err.println("Could not load server.properties");
-			}
-		}
+		_dataSourceProperties = _readProperties(_dataSourcePropertiesFile);
 
 		_jvmOpts = jvmOpts;
 
@@ -139,34 +128,11 @@ public class UpgradeClient {
 
 		_serverPropertiesFile = new File("server.properties");
 
-		_serverProperties = new Properties();
-
-		if (_serverPropertiesFile.exists()) {
-			try (InputStream inputStream =
-					new FileInputStream(_serverPropertiesFile)) {
-
-				_serverProperties.load(inputStream);
-			}
-			catch (IOException ioe) {
-				System.err.println("Could not load server.properties");
-			}
-		}
+		_serverProperties = _readProperties(_serverPropertiesFile);
 
 		_upgradePropertiesFile = new File("portal-upgrade-ext.properties");
 
-		_upgradeProperties = new Properties();
-
-		if (_upgradePropertiesFile.exists()) {
-			try (InputStream inputStream =
-					new FileInputStream(_upgradePropertiesFile)) {
-
-				_upgradeProperties.load(inputStream);
-			}
-			catch (IOException ioe) {
-				System.err.println(
-					"Could not load portal-upgrade-ext.properties");
-			}
-		}
+		_upgradeProperties = _readProperties(_upgradePropertiesFile);
 	}
 
 	public void upgrade() throws Exception {
@@ -393,6 +359,21 @@ public class UpgradeClient {
 				"List upgrades in progress");
 		System.out.println("verify:execute {module_name} - execute a verifier");
 		System.out.println("verify:list - List all registered verifiers");
+	}
+
+	private Properties _readProperties(File file) {
+		Properties properties = new Properties();
+
+		if (file.exists()) {
+			try (InputStream inputStream = new FileInputStream(file)) {
+				properties.load(inputStream);
+			}
+			catch (IOException ioe) {
+				System.err.println("Unable to load " + file);
+			}
+		}
+
+		return properties;
 	}
 
 	private void _saveProperties() throws IOException {

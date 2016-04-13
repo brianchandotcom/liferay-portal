@@ -17,9 +17,10 @@ package com.liferay.knowledge.base.lar;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.knowledge.base.model.KBComment;
-import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,9 +30,13 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class KBCommentStagedModelDataHandler
 	extends BaseStagedModelDataHandler<KBComment> {
 
@@ -39,7 +44,7 @@ public class KBCommentStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(KBComment kbComment) throws PortalException {
-		KBCommentLocalServiceUtil.deleteKBComment(kbComment);
+		_kbCommentLocalService.deleteKBComment(kbComment);
 	}
 
 	@Override
@@ -58,7 +63,7 @@ public class KBCommentStagedModelDataHandler
 	public KBComment fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return KBCommentLocalServiceUtil.fetchKBCommentByUuidAndGroupId(
+		return _kbCommentLocalService.fetchKBCommentByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -66,7 +71,7 @@ public class KBCommentStagedModelDataHandler
 	public List<KBComment> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return KBCommentLocalServiceUtil.getKBCommentsByUuidAndCompanyId(
+		return _kbCommentLocalService.getKBCommentsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<KBComment>());
 	}
@@ -79,6 +84,13 @@ public class KBCommentStagedModelDataHandler
 	@Override
 	public String getDisplayName(KBComment kbComment) {
 		return kbComment.getUuid();
+	}
+
+	@Reference(unbind = "-")
+	public void setKbCommentLocalService(
+		KBCommentLocalService kbCommentLocalService) {
+
+		_kbCommentLocalService = kbCommentLocalService;
 	}
 
 	@Override
@@ -120,13 +132,13 @@ public class KBCommentStagedModelDataHandler
 			if (existingKBComment == null) {
 				serviceContext.setUuid(kbComment.getUuid());
 
-				importedKBComment = KBCommentLocalServiceUtil.addKBComment(
+				importedKBComment = _kbCommentLocalService.addKBComment(
 					userId, kbComment.getClassNameId(), newClassPK,
 					kbComment.getContent(), kbComment.getUserRating(),
 					serviceContext);
 			}
 			else {
-				importedKBComment = KBCommentLocalServiceUtil.updateKBComment(
+				importedKBComment = _kbCommentLocalService.updateKBComment(
 					existingKBComment.getKbCommentId(),
 					kbComment.getClassNameId(), newClassPK,
 					kbComment.getContent(), kbComment.getUserRating(),
@@ -134,7 +146,7 @@ public class KBCommentStagedModelDataHandler
 			}
 		}
 		else {
-			importedKBComment = KBCommentLocalServiceUtil.addKBComment(
+			importedKBComment = _kbCommentLocalService.addKBComment(
 				userId, kbComment.getClassNameId(), newClassPK,
 				kbComment.getContent(), kbComment.getUserRating(),
 				serviceContext);
@@ -142,5 +154,7 @@ public class KBCommentStagedModelDataHandler
 
 		portletDataContext.importClassedModel(kbComment, importedKBComment);
 	}
+
+	private KBCommentLocalService _kbCommentLocalService;
 
 }

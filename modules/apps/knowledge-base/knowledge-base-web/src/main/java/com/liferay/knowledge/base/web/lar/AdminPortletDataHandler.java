@@ -17,35 +17,44 @@ package com.liferay.knowledge.base.web.lar;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
+import com.liferay.knowledge.base.constants.PortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.impl.KBArticleImpl;
 import com.liferay.knowledge.base.model.impl.KBCommentImpl;
 import com.liferay.knowledge.base.model.impl.KBTemplateImpl;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
+import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.KNOWLEDGE_BASE_ADMIN},
+	service = PortletDataHandler.class
+)
 public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "knowledge_base";
@@ -84,10 +93,10 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		KBArticleLocalServiceUtil.deleteGroupKBArticles(
+		_kbArticleLocalService.deleteGroupKBArticles(
 			portletDataContext.getScopeGroupId());
 
-		KBTemplateLocalServiceUtil.deleteGroupKBTemplates(
+		_kbTemplateLocalService.deleteGroupKBTemplates(
 			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
@@ -112,7 +121,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		kbArticleActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery kbTemplateActionableDynamicQuery =
-			KBTemplateLocalServiceUtil.getExportActionableDynamicQuery(
+			_kbTemplateLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		kbTemplateActionableDynamicQuery.performActions();
@@ -173,13 +182,13 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery kbArticleActionableDynamicQuery =
-			KBArticleLocalServiceUtil.getExportActionableDynamicQuery(
+			_kbArticleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		kbArticleActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery kbTemplateActionableDynamicQuery =
-			KBTemplateLocalServiceUtil.getExportActionableDynamicQuery(
+			_kbTemplateLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		kbTemplateActionableDynamicQuery.performCount();
@@ -195,7 +204,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			KBArticleLocalServiceUtil.getExportActionableDynamicQuery(
+			_kbArticleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddOrderCriteriaMethod
@@ -225,18 +234,49 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			KBCommentLocalServiceUtil.getExportActionableDynamicQuery(
+			_kbCommentLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(
-				PortalUtil.getClassNameId(KBComment.class),
+				_portal.getClassNameId(KBComment.class),
 				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
 
 		return exportActionableDynamicQuery;
 	}
 
+	@Reference(unbind = "-")
+	protected void setKbArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbCommentLocalService(
+		KBCommentLocalService kbCommentLocalService) {
+
+		_kbCommentLocalService = kbCommentLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbTemplateLocalService(
+		KBTemplateLocalService kbTemplateLocalService) {
+
+		_kbTemplateLocalService = kbTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
 	protected static final String RESOURCE_NAME =
 		"com.liferay.knowledgebase.admin";
+
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBCommentLocalService _kbCommentLocalService;
+	private KBTemplateLocalService _kbTemplateLocalService;
+	private Portal _portal;
 
 }

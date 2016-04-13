@@ -17,12 +17,13 @@ package com.liferay.knowledge.base.lar;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
-import com.liferay.knowledge.base.service.persistence.KBFolderUtil;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
+import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
@@ -30,9 +31,13 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class KBFolderStagedModelDataHandler
 	extends BaseStagedModelDataHandler<KBFolder> {
 
@@ -40,16 +45,15 @@ public class KBFolderStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(KBFolder kbFolder) {
-		KBFolderLocalServiceUtil.deleteKBFolder(kbFolder);
+		_kbFolderLocalService.deleteKBFolder(kbFolder);
 	}
 
 	@Override
 	public void deleteStagedModel(
 		String uuid, long groupId, String className, String extraData) {
 
-		KBFolder kbFolder =
-			KBFolderLocalServiceUtil.fetchKBFolderByUuidAndGroupId(
-				uuid, groupId);
+		KBFolder kbFolder = _kbFolderLocalService.fetchKBFolderByUuidAndGroupId(
+			uuid, groupId);
 
 		if (kbFolder != null) {
 			deleteStagedModel(kbFolder);
@@ -60,7 +64,7 @@ public class KBFolderStagedModelDataHandler
 	public List<KBFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return KBFolderLocalServiceUtil.getKBFoldersByUuidAndCompanyId(
+		return _kbFolderLocalService.getKBFoldersByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<KBFolder>());
 	}
@@ -78,7 +82,7 @@ public class KBFolderStagedModelDataHandler
 		if (kbFolder.getParentKBFolderId() !=
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			KBFolder parentKBFolder = KBFolderLocalServiceUtil.getKBFolder(
+			KBFolder parentKBFolder = _kbFolderLocalService.getKBFolder(
 				kbFolder.getParentKBFolderId());
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -114,25 +118,25 @@ public class KBFolderStagedModelDataHandler
 		KBFolder importedKBFolder = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			KBFolder existingKBFolder = KBFolderUtil.fetchByUUID_G(
+			KBFolder existingKBFolder = _kbFolderPersistence.fetchByUUID_G(
 				kbFolder.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingKBFolder == null) {
-				importedKBFolder = KBFolderLocalServiceUtil.addKBFolder(
+				importedKBFolder = _kbFolderLocalService.addKBFolder(
 					userId, portletDataContext.getScopeGroupId(),
 					kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
 					kbFolder.getName(), kbFolder.getDescription(),
 					serviceContext);
 			}
 			else {
-				importedKBFolder = KBFolderLocalServiceUtil.updateKBFolder(
+				importedKBFolder = _kbFolderLocalService.updateKBFolder(
 					kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
 					kbFolder.getKbFolderId(), kbFolder.getName(),
 					kbFolder.getDescription());
 			}
 		}
 		else {
-			importedKBFolder = KBFolderLocalServiceUtil.addKBFolder(
+			importedKBFolder = _kbFolderLocalService.addKBFolder(
 				userId, portletDataContext.getScopeGroupId(),
 				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
 				kbFolder.getName(), kbFolder.getDescription(), serviceContext);
@@ -147,5 +151,22 @@ public class KBFolderStagedModelDataHandler
 		kbFolderIds.put(
 			kbFolder.getKbFolderId(), importedKBFolder.getKbFolderId());
 	}
+
+	@Reference(unbind = "-")
+	protected void setKbFolderLocalService(
+		KBFolderLocalService kbFolderLocalService) {
+
+		_kbFolderLocalService = kbFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbFolderPersistence(
+		KBFolderPersistence kbFolderPersistence) {
+
+		_kbFolderPersistence = kbFolderPersistence;
+	}
+
+	private KBFolderLocalService _kbFolderLocalService;
+	private KBFolderPersistence _kbFolderPersistence;
 
 }

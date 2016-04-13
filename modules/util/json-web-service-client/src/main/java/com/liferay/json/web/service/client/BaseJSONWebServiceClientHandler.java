@@ -55,7 +55,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 	protected String doDelete(String url, String... parametersArray) {
 		JSONWebServiceClient jsonWebServiceClient = getJSONWebServiceClient();
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		for (int i = 0; i < parametersArray.length; i += 2) {
 			parameters.put(parametersArray[i], parametersArray[i + 1]);
@@ -111,8 +111,8 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 			return objectMapper.readValue(json, javaType);
 		}
-		catch (IOException ie) {
-			throw new JSONWebServiceInvocationException(ie);
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
 		}
 	}
 
@@ -148,8 +148,8 @@ public abstract class BaseJSONWebServiceClientHandler {
 		try {
 			return objectMapper.readValue(json, clazz);
 		}
-		catch (IOException ie) {
-			throw new JSONWebServiceInvocationException(ie);
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
 		}
 	}
 
@@ -185,8 +185,8 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 			return jsonWebServiceClient.doPostAsJSON(url, json);
 		}
-		catch (IOException ie) {
-			throw new JSONWebServiceInvocationException(ie);
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
 		}
 	}
 
@@ -208,8 +208,8 @@ public abstract class BaseJSONWebServiceClientHandler {
 		try {
 			return objectMapper.readValue(json, clazz);
 		}
-		catch (IOException ie) {
-			throw new JSONWebServiceInvocationException(ie);
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
 		}
 	}
 
@@ -225,7 +225,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 	protected String doPut(String url, String... parametersArray) {
 		JSONWebServiceClient jsonWebServiceClient = getJSONWebServiceClient();
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		for (int i = 0; i < parametersArray.length; i += 2) {
 			parameters.put(parametersArray[i], parametersArray[i + 1]);
@@ -254,6 +254,6 @@ public abstract class BaseJSONWebServiceClientHandler {
 
 	protected ObjectMapper objectMapper = new ObjectMapper();
 
-	private Pattern _statusPattern = Pattern.compile("status\":(\\d+)");
+	private final Pattern _statusPattern = Pattern.compile("status\":(\\d+)");
 
 }

@@ -156,8 +156,8 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		try {
 			_closeableHttpClient.close();
 		}
-		catch (IOException e) {
-			_logger.error("Unable to close client", e);
+		catch (IOException ioe) {
+			_logger.error("Unable to close client", ioe);
 		}
 
 		_closeableHttpClient = null;
@@ -617,7 +617,7 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		return nameValuePairs;
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(
+	private static final Logger _logger = LoggerFactory.getLogger(
 		JSONWebServiceClientImpl.class);
 
 	private CloseableHttpClient _closeableHttpClient;
@@ -770,7 +770,7 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 			return _x509TrustManager.getAcceptedIssuers();
 		}
 
-		private X509TrustManager _x509TrustManager;
+		private final X509TrustManager _x509TrustManager;
 
 	}
 

@@ -78,6 +78,6 @@ public class JSONWebServiceTransportException extends RuntimeException {
 
 	}
 
-	private int _status;
+	private final int _status;
 
 }

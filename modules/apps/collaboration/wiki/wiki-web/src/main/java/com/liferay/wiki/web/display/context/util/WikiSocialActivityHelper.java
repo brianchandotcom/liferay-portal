@@ -132,11 +132,19 @@ public class WikiSocialActivityHelper {
 				false);
 		}
 		else if (type == SocialActivityConstants.TYPE_ADD_COMMENT) {
-			String url = getPageURL(page) + "#wikiCommentsPanel";
+			LiferayPortletResponse liferayPortletResponse =
+				_wikiRequestHelper.getLiferayPortletResponse();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(getPageURL(page));
+			sb.append("#");
+			sb.append(liferayPortletResponse.getNamespace());
+			sb.append("wikiCommentsPanel");
 
 			return LanguageUtil.format(
 				resourceBundle, "x-added-a-comment",
-				new Object[] {userName, url}, false);
+				new Object[] {userName, sb.toString()}, false);
 		}
 		else if ((type == SocialActivityConstants.TYPE_MOVE_TO_TRASH) ||
 				 (type == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) ||

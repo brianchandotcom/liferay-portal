@@ -53,6 +53,8 @@
 
 		<var name="key_structureName" value="${structureName}" />
 
+		<execute function="AssertVisible" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
+
 		<execute function="AssertClick" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
 
 		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />

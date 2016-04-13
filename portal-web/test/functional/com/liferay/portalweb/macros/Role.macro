@@ -220,7 +220,17 @@
 			</then>
 		</if>
 
-		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
+		<if>
+			<isset var="permissionsList" />
+			<then>
+				<for list="${permissionsList}" param="permissionDefinitionKey">
+					<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
+				</for>
+			</then>
+			<else>
+				<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
+			</else>
+		</if>
 
 		<execute macro="Button#clickSave" />
 

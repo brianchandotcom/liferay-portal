@@ -126,6 +126,10 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 								var notificationContainer = currentTarget.ancestor('li.list-group-item');
 
 								if (notificationContainer) {
+									var markAsReadURL = notificationContainer.one('a').attr('href');
+
+									A.io.request(markAsReadURL);
+
 									notificationContainer.remove();
 								}
 							}

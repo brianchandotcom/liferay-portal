@@ -81,29 +81,31 @@ public class DownstreamBuild extends BaseBuild {
 	public void update() throws Exception {
 		String status = getStatus();
 
-		if (status.equals("completed") || status.equals("invalid")) {
+		if (status.equals("completed")) {
 			return;
 		}
 
 		if (status.equals("queued") || status.equals("starting") ||
 			status.equals("missing")) {
 
-			JSONObject build = getRunningBuildJSONObject();
+			JSONObject buildJSONObject = getRunningBuildJSONObject();
 
-			if (build != null) {
-				buildNumber = build.getInt("number");
+			if (buildJSONObject != null) {
+				buildNumber = buildJSONObject.getInt("number");
 
 				setStatus("running");
 
 				System.out.println(_getBuildMessage());
 			}
 			else {
-				JSONObject queueItem = getQueueItemJSONObject();
+				JSONObject queueItemJSONObject = getQueueItemJSONObject();
 
-				if (status.equals("started") && (queueItem != null)) {
+				if (status.equals("started") && (queueItemJSONObject != null)) {
 					setStatus("queued");
 				}
-				else if (status.equals("queued") && (queueItem == null)) {
+				else if (status.equals("queued") &&
+						 (queueItemJSONObject == null)) {
+
 					setStatus("missing");
 
 					System.out.println(_getBuildMessage());
@@ -114,10 +116,10 @@ public class DownstreamBuild extends BaseBuild {
 		status = getStatus();
 
 		if (status.equals("running")) {
-			JSONObject build = getCompletedBuildJSONObject();
+			JSONObject completedBuildJSONObject = getCompletedBuildJSONObject();
 
-			if (build != null) {
-				result = build.getString("result");
+			if (completedBuildJSONObject != null) {
+				result = completedBuildJSONObject.getString("result");
 
 				setStatus("completed");
 			}
@@ -323,13 +325,6 @@ public class DownstreamBuild extends BaseBuild {
 
 		if (status.equals("starting")) {
 			sb.append(" invoked at ");
-			sb.append(getJobURL());
-			sb.append(".");
-			return sb.toString();
-		}
-
-		if (status.equals("invalid")) {
-			sb.append(" is invalid ");
 			sb.append(getJobURL());
 			sb.append(".");
 			return sb.toString();

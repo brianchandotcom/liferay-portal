@@ -31,13 +31,13 @@ import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
-import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBCommentServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
+import com.liferay.knowledge.base.service.KBCommentService;
+import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -54,9 +54,9 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,8 +82,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		Portal portal = getPortal();
+
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
+			portal.getUploadPortletRequest(actionRequest);
 
 		checkExceededSizeLimit(actionRequest);
 
@@ -97,11 +99,13 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		InputStream inputStream = null;
 
 		try {
+			KBArticleService kbArticleService = getKBArticleService();
+
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 
-			KBArticleServiceUtil.addTempAttachment(
+			kbArticleService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, sourceFileName,
 				KnowledgeBaseConstants.TEMP_FOLDER_NAME, inputStream, mimeType);
 		}
@@ -114,10 +118,12 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		KBArticleService kbArticleService = getKBArticleService();
+
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		KBArticleServiceUtil.deleteKBArticle(resourcePrimKey);
+		kbArticleService.deleteKBArticle(resourcePrimKey);
 	}
 
 	public void deleteKBComment(
@@ -131,9 +137,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			return;
 		}
 
+		KBCommentService kbCommentService = getKBCommentService();
+
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
 
-		KBCommentServiceUtil.deleteKBComment(kbCommentId);
+		kbCommentService.deleteKBComment(kbCommentId);
 
 		SessionMessages.add(actionRequest, "suggestionDeleted");
 	}
@@ -149,10 +157,14 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONFactory jsonFactory = getJSONFactory();
+
+		JSONObject jsonObject = jsonFactory.createJSONObject();
 
 		try {
-			KBArticleServiceUtil.deleteTempAttachment(
+			KBArticleService kbArticleService = getKBArticleService();
+
+			kbArticleService.deleteTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, fileName,
 				KnowledgeBaseConstants.TEMP_FOLDER_NAME);
 
@@ -173,28 +185,34 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		Portal portal = getPortal();
+
 		long resourceClassNameId = ParamUtil.getLong(
 			actionRequest, "resourceClassNameId");
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 		long parentResourceClassNameId = ParamUtil.getLong(
 			actionRequest, "parentResourceClassNameId",
-			PortalUtil.getClassNameId(KBFolderConstants.getClassName()));
+			portal.getClassNameId(KBFolderConstants.getClassName()));
 		long parentResourcePrimKey = ParamUtil.getLong(
 			actionRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
-		long kbArticleClassNameId = PortalUtil.getClassNameId(
+		long kbArticleClassNameId = portal.getClassNameId(
 			KBArticleConstants.getClassName());
 
 		if (resourceClassNameId == kbArticleClassNameId) {
-			KBArticleServiceUtil.moveKBArticle(
+			KBArticleService kbArticleService = getKBArticleService();
+
+			kbArticleService.moveKBArticle(
 				resourcePrimKey, parentResourceClassNameId,
 				parentResourcePrimKey, priority);
 		}
 		else {
-			KBFolderServiceUtil.moveKBFolder(
+			KBFolderService kbFolderService = getKBFolderService();
+
+			kbFolderService.moveKBFolder(
 				resourcePrimKey, parentResourcePrimKey);
 		}
 	}
@@ -203,18 +221,21 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		Portal portal = getPortal();
+
 		PortletPreferences portletPreferences =
 			resourceRequest.getPreferences();
 
 		boolean enableRss = GetterUtil.getBoolean(
 			portletPreferences.getValue("enableRss", null), true);
 
-		if (!PortalUtil.isRSSFeedsEnabled() || !enableRss) {
-			PortalUtil.sendRSSFeedsDisabledError(
-				resourceRequest, resourceResponse);
+		if (!portal.isRSSFeedsEnabled() || !enableRss) {
+			portal.sendRSSFeedsDisabledError(resourceRequest, resourceResponse);
 
 			return;
 		}
+
+		KBArticleService kbArticleService = getKBArticleService();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -227,7 +248,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			resourceRequest, "rssDisplayStyle");
 		String rssFormat = ParamUtil.getString(resourceRequest, "rssFormat");
 
-		String rss = KBArticleServiceUtil.getKBArticleRSS(
+		String rss = kbArticleService.getKBArticleRSS(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED, rssDelta,
 			rssDisplayStyle, rssFormat, themeDisplay);
 
@@ -263,13 +284,15 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		KBArticleService kbArticleService = getKBArticleService();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		KBArticleServiceUtil.subscribeKBArticle(
+		kbArticleService.subscribeKBArticle(
 			themeDisplay.getScopeGroupId(), resourcePrimKey);
 	}
 
@@ -277,17 +300,21 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		KBArticleService kbArticleService = getKBArticleService();
+
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		KBArticleServiceUtil.unsubscribeKBArticle(resourcePrimKey);
+		kbArticleService.unsubscribeKBArticle(resourcePrimKey);
 	}
 
 	public void updateKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String portletId = PortalUtil.getPortletId(actionRequest);
+		Portal portal = getPortal();
+
+		String portletId = portal.getPortletId(actionRequest);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -295,7 +322,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 		long parentResourceClassNameId = ParamUtil.getLong(
 			actionRequest, "parentResourceClassNameId",
-			PortalUtil.getClassNameId(KBFolderConstants.getClassName()));
+			portal.getClassNameId(KBFolderConstants.getClassName()));
 		long parentResourcePrimKey = ParamUtil.getLong(
 			actionRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -318,8 +345,10 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KBArticle.class.getName(), actionRequest);
 
+		KBArticleService kbArticleService = getKBArticleService();
+
 		if (cmd.equals(Constants.ADD)) {
-			kbArticle = KBArticleServiceUtil.addKBArticle(
+			kbArticle = kbArticleService.addKBArticle(
 				portletId, parentResourceClassNameId, parentResourcePrimKey,
 				title, urlTitle, content, description, sourceURL, sections,
 				selectedFileNames, serviceContext);
@@ -328,11 +357,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			int version = ParamUtil.getInteger(
 				actionRequest, "version", KBArticleConstants.DEFAULT_VERSION);
 
-			kbArticle = KBArticleServiceUtil.revertKBArticle(
+			kbArticle = kbArticleService.revertKBArticle(
 				resourcePrimKey, version, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			kbArticle = KBArticleServiceUtil.updateKBArticle(
+			kbArticle = kbArticleService.updateKBArticle(
 				resourcePrimKey, title, content, description, sourceURL,
 				sections, selectedFileNames, removeFileEntryIds,
 				serviceContext);
@@ -363,6 +392,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		KBCommentLocalService kbCommentLocalService =
+			getKBCommentLocalService();
+
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
@@ -375,19 +407,21 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			KBComment.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			KBCommentLocalServiceUtil.addKBComment(
+			kbCommentLocalService.addKBComment(
 				themeDisplay.getUserId(), classNameId, classPK, content,
 				serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			if (status == KBCommentConstants.STATUS_ANY) {
-				KBComment kbComment = KBCommentServiceUtil.getKBComment(
+				KBCommentService kbCommentService = getKBCommentService();
+
+				KBComment kbComment = kbCommentService.getKBComment(
 					kbCommentId);
 
 				status = kbComment.getStatus();
 			}
 
-			KBCommentServiceUtil.updateKBComment(
+			kbCommentLocalService.updateKBComment(
 				kbCommentId, classNameId, classPK, content, status,
 				serviceContext);
 		}
@@ -399,6 +433,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
+		KBCommentService kbCommentService = getKBCommentService();
+
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
 
 		int status = ParamUtil.getInteger(actionRequest, "kbCommentStatus");
@@ -406,7 +442,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KBComment.class.getName(), actionRequest);
 
-		KBCommentServiceUtil.updateStatus(kbCommentId, status, serviceContext);
+		kbCommentService.updateStatus(kbCommentId, status, serviceContext);
 
 		SessionMessages.add(actionRequest, "suggestionStatusUpdated");
 	}
@@ -416,25 +452,28 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			KBArticle kbArticle)
 		throws PortalException {
 
+		Portal portal = getPortal();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String editURL = PortalUtil.getLayoutFullURL(themeDisplay);
+		String editURL = portal.getLayoutFullURL(themeDisplay);
 
-		editURL = HttpUtil.setParameter(
-			editURL, "p_p_id", portletDisplay.getId());
-		editURL = HttpUtil.setParameter(
+		Http http = getHttp();
+
+		editURL = http.setParameter(editURL, "p_p_id", portletDisplay.getId());
+		editURL = getHttp().setParameter(
 			editURL, actionResponse.getNamespace() + "mvcPath",
 			templatePath + "edit_article.jsp");
-		editURL = HttpUtil.setParameter(
+		editURL = http.setParameter(
 			editURL, actionResponse.getNamespace() + "redirect",
 			getRedirect(actionRequest, actionResponse));
-		editURL = HttpUtil.setParameter(
+		editURL = http.setParameter(
 			editURL, actionResponse.getNamespace() + "resourcePrimKey",
 			kbArticle.getResourcePrimKey());
-		editURL = HttpUtil.setParameter(
+		editURL = http.setParameter(
 			editURL, actionResponse.getNamespace() + "status",
 			WorkflowConstants.STATUS_ANY);
 
@@ -466,6 +505,20 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			throw new PortalException(cause);
 		}
 	}
+
+	protected abstract Http getHttp();
+
+	protected abstract JSONFactory getJSONFactory();
+
+	protected abstract KBArticleService getKBArticleService();
+
+	protected abstract KBCommentLocalService getKBCommentLocalService();
+
+	protected abstract KBCommentService getKBCommentService();
+
+	protected abstract KBFolderService getKBFolderService();
+
+	protected abstract Portal getPortal();
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {

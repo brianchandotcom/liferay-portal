@@ -27,11 +27,14 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBCommentLocalService;
+import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.web.constants.WebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -43,7 +46,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -428,6 +433,41 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	@Override
+	protected Http getHttp() {
+		return _http;
+	}
+
+	@Override
+	protected JSONFactory getJSONFactory() {
+		return _jsonFactory;
+	}
+
+	@Override
+	protected KBArticleService getKBArticleService() {
+		return _kbArticleService;
+	}
+
+	@Override
+	protected KBCommentLocalService getKBCommentLocalService() {
+		return _kbCommentLocalService;
+	}
+
+	@Override
+	protected KBCommentService getKBCommentService() {
+		return _kbCommentService;
+	}
+
+	@Override
+	protected KBFolderService getKBFolderService() {
+		return _kbFolderService;
+	}
+
+	@Override
+	protected Portal getPortal() {
+		return _portal;
+	}
+
+	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof KBArticleImportException ||
 			cause instanceof KBTemplateContentException ||
@@ -442,8 +482,30 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setHttp(Http http) {
+		_http = http;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setKBArticleService(KBArticleService kbArticleService) {
 		_kbArticleService = kbArticleService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBCommentLocalService(
+		KBCommentLocalService kbCommentLocalService) {
+
+		_kbCommentLocalService = kbCommentLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBCommentService(KBCommentService kbCommentService) {
+		_kbCommentService = kbCommentService;
 	}
 
 	@Reference(unbind = "-")
@@ -456,8 +518,18 @@ public class AdminPortlet extends BaseKBPortlet {
 		_kbTemplateService = kbTemplateService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	private Http _http;
+	private JSONFactory _jsonFactory;
 	private KBArticleService _kbArticleService;
+	private KBCommentLocalService _kbCommentLocalService;
+	private KBCommentService _kbCommentService;
 	private KBFolderService _kbFolderService;
 	private KBTemplateService _kbTemplateService;
+	private Portal _portal;
 
 }

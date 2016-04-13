@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -114,7 +113,7 @@ public class UpgradeClient {
 		}
 	}
 
-	public UpgradeClient(String jvmOpts, File logFile) throws Exception {
+	public UpgradeClient(String jvmOpts, File logFile) throws IOException {
 		_consoleReader = new ConsoleReader();
 
 		_dataSourcePropertiesFile = new File(
@@ -135,7 +134,7 @@ public class UpgradeClient {
 		_upgradeProperties = _readProperties(_upgradePropertiesFile);
 	}
 
-	public void upgrade() throws Exception {
+	public void upgrade() throws IOException {
 		verifyProperties();
 
 		System.setOut(
@@ -160,15 +159,15 @@ public class UpgradeClient {
 
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
-		processBuilder.redirectErrorStream(true);
-
 		processBuilder.command(commands);
+		processBuilder.redirectErrorStream(true);
 
 		Process process = processBuilder.start();
 
-		try (InputStreamReader isr = new InputStreamReader(
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
 				process.getInputStream());
-			BufferedReader bufferedReader = new BufferedReader(isr)) {
+			BufferedReader bufferedReader = new BufferedReader(
+				inputStreamReader)) {
 
 			String line;
 
@@ -281,7 +280,7 @@ public class UpgradeClient {
 	}
 
 	private void _appendLibs(StringBuilder classPath, File dir)
-		throws Exception {
+		throws IOException {
 
 		if (dir.exists() && dir.isDirectory()) {
 			for (File file : dir.listFiles()) {
@@ -302,7 +301,7 @@ public class UpgradeClient {
 		closeable.close();
 	}
 
-	private String _getClassPath() throws Exception {
+	private String _getClassPath() throws IOException {
 		StringBuilder classPath = new StringBuilder();
 
 		String liferayClassPath = System.getenv("LIFERAY_CLASSPATH");
@@ -314,11 +313,8 @@ public class UpgradeClient {
 		}
 
 		_appendLibs(classPath, new File("lib"));
-
 		_appendLibs(classPath, new File("."));
-
 		_appendLibs(classPath, new File(_appServer.getDir(), "bin"));
-
 		_appendLibs(classPath, _appServer.getGlobalLibDir());
 
 		File portalClassesDir = _appServer.getPortalClassesDir();
@@ -378,16 +374,12 @@ public class UpgradeClient {
 
 	private void _saveProperties() throws IOException {
 		_store(_dataSourceProperties, _dataSourcePropertiesFile);
-
 		_store(_serverProperties, _serverPropertiesFile);
-
 		_store(_upgradeProperties, _upgradePropertiesFile);
 	}
 
-	private void _store(Properties properties, File propertiesFile)
-		throws FileNotFoundException {
-
-		try (PrintWriter printWriter = new PrintWriter(propertiesFile)) {
+	private void _store(Properties properties, File file) throws IOException {
+		try (PrintWriter printWriter = new PrintWriter(file)) {
 			Enumeration<?> enumeration = properties.propertyNames();
 
 			while (enumeration.hasMoreElements()) {

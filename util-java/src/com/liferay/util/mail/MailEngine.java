@@ -535,7 +535,7 @@ public class MailEngine {
 
 		try {
 			boolean smtpAuth = GetterUtil.getBoolean(
-				_getSMTPProperty(session, "auth"), false);
+				_getSMTPProperty(session, "auth"));
 			String smtpHost = _getSMTPProperty(session, "host");
 			int smtpPort = GetterUtil.getInteger(
 				_getSMTPProperty(session, "port"), Account.PORT_SMTP);

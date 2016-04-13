@@ -469,6 +469,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		checkStringUtilReplace(fileName, newContent);
 
+		checkGetterUtilGet(fileName, newContent);
+
 		Matcher matcher = _javaClassPattern.matcher(newContent);
 
 		if (matcher.find()) {

@@ -194,6 +194,41 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected void checkGetterUtilGet(String fileName, String content)
+		throws Exception {
+
+		Matcher matcher = getterUtilGetPattern.matcher(content);
+
+		while (matcher.find()) {
+			List<String> parametersList = getParameterList(matcher);
+
+			if (parametersList.size() != 2) {
+				continue;
+			}
+
+			String defaultVariableName =
+				"DEFAULT_" + StringUtil.toUpperCase(matcher.group(1));
+
+			Field defaultValuefield = GetterUtil.class.getDeclaredField(
+				defaultVariableName);
+
+			String defaultValue = String.valueOf(defaultValuefield.get(null));
+
+			String value = parametersList.get(1);
+
+			if (value.equals("StringPool.BLANK")) {
+				value = StringPool.BLANK;
+			}
+
+			if (Validator.equals(value, defaultValue)) {
+				processErrorMessage(
+					fileName,
+					"No need to pass default value: " + fileName + " " +
+						getLineCount(content, matcher.start()));
+			}
+		}
+	}
+
 	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 
@@ -500,27 +535,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {
-			String replaceCall = matcher.group();
-
-			int x = replaceCall.length();
-
-			while (true) {
-				x = replaceCall.lastIndexOf(
-					StringPool.CLOSE_PARENTHESIS, x - 1);
-
-				replaceCall = replaceCall.substring(0, x + 1);
-
-				if (getLevel(replaceCall) == 0) {
-					break;
-				}
-			}
-
-			x = replaceCall.indexOf(StringPool.OPEN_PARENTHESIS);
-
-			String parameters = replaceCall.substring(
-				x + 1, replaceCall.length() - 1);
-
-			List<String> parametersList = splitParameters(parameters);
+			List<String> parametersList = getParameterList(matcher);
 
 			if (parametersList.size() != 3) {
 				return;
@@ -2056,6 +2071,30 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
+	protected List<String> getParameterList(Matcher methodCallMatcher) {
+		String replaceCall = methodCallMatcher.group();
+
+		int x = replaceCall.length();
+
+		while (true) {
+			x = replaceCall.lastIndexOf(
+				StringPool.CLOSE_PARENTHESIS, x - 1);
+
+			replaceCall = replaceCall.substring(0, x + 1);
+
+			if (getLevel(replaceCall) == 0) {
+				break;
+			}
+		}
+
+		x = replaceCall.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		String parameters = replaceCall.substring(
+			x + 1, replaceCall.length() - 1);
+
+		return splitParameters(parameters);
+	}
+
 	protected String getProperty(String key) {
 		return _properties.getProperty(key);
 	}
@@ -2493,6 +2532,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"\\scontent=(.*?)(,\\\\|\n|$)");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
+	protected static Pattern getterUtilGetPattern = Pattern.compile(
+		"GetterUtil\\.get(Boolean|Double|Float|Integer|Number|Object|Short|" +
+			"String)\\((.*?)\\);\n",
+		Pattern.DOTALL);
 	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(
 		"<%=(.+?)%>");
 	protected static Pattern jsonObjectPutBlockPattern = Pattern.compile(

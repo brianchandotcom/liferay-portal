@@ -86,7 +86,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 		addStatus(contextBooleanFilter, searchContext);
 
 		boolean discussion = GetterUtil.getBoolean(
-			searchContext.getAttribute("discussion"), false);
+			searchContext.getAttribute("discussion"));
 
 		contextBooleanFilter.addRequiredTerm("discussion", discussion);
 

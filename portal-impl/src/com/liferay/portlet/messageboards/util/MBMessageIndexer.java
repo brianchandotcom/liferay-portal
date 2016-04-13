@@ -170,7 +170,7 @@ public class MBMessageIndexer
 		addStatus(contextBooleanFilter, searchContext);
 
 		boolean discussion = GetterUtil.getBoolean(
-			searchContext.getAttribute("discussion"), false);
+			searchContext.getAttribute("discussion"));
 
 		contextBooleanFilter.addRequiredTerm("discussion", discussion);
 

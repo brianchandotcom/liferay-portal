@@ -989,6 +989,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkStringUtilReplace(fileName, newContent);
 		}
 
+		if (!fileName.endsWith("GetterUtilTest.java")) {
+			checkGetterUtilGet(fileName, newContent);
+		}
+
 		newContent = formatAssertEquals(fileName, newContent);
 
 		newContent = fixMissingEmptyLineAfterSettingVariable(newContent);

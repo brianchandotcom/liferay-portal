@@ -19,8 +19,8 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.PortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.service.util.AdminUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,13 +31,13 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -52,18 +52,27 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
  */
+@Component(
+	immediate = true, property = "path=/knowledge_base/find_kb_article",
+	service = StrutsAction.class
+)
 public class FindKBArticleAction extends BaseStrutsAction {
 
 	@Override
@@ -125,23 +134,22 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		List<Layout> candidateLayouts = new ArrayList<>();
 
-		Group group = GroupLocalServiceUtil.getGroup(kbArticle.getGroupId());
+		Group group = _groupLocalService.getGroup(kbArticle.getGroupId());
 
 		if (group.isLayout()) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				group.getClassPK());
+			Layout layout = _layoutLocalService.getLayout(group.getClassPK());
 
 			candidateLayouts.add(layout);
 
 			group = layout.getGroup();
 		}
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), privateLayout, LayoutConstants.TYPE_PORTLET);
 
 		candidateLayouts.addAll(layouts);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		if ((layout.getGroupId() == kbArticle.getGroupId()) &&
 			layout.isTypePortlet()) {
@@ -186,7 +194,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 	protected KBArticle getKBArticle(long resourcePrimKey, int status)
 		throws Exception {
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 			resourcePrimKey, status);
 
 		if (kbArticle == null) {
@@ -227,7 +235,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
 					PortletPreferences portletPreferences =
-						PortletPreferencesFactoryUtil.getPortletSetup(
+						_portletPreferencesFactory.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
 
 					long kbFolderClassNameId = PortalUtil.getClassNameId(
@@ -267,14 +275,14 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_SECTION)) {
 					PortletPreferences portletPreferences =
-						PortletPreferencesFactoryUtil.getPortletSetup(
+						_portletPreferencesFactory.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
 
 					String[] kbArticlesSections = portletPreferences.getValues(
 						"kbArticlesSections", new String[0]);
 
 					KBArticle rootKBArticle =
-						KBArticleLocalServiceUtil.fetchLatestKBArticle(
+						_kbArticleLocalService.fetchLatestKBArticle(
 							kbArticle.getRootResourcePrimKey(),
 							WorkflowConstants.STATUS_APPROVED);
 
@@ -298,14 +306,14 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 				if (rootPortletId.equals(PortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 					PortletPreferences portletPreferences =
-						PortletPreferencesFactoryUtil.getPortletSetup(
+						_portletPreferencesFactory.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
 
 					long resourcePrimKey = GetterUtil.getLong(
 						portletPreferences.getValue("resourcePrimKey", null));
 
 					KBArticle selKBArticle =
-						KBArticleLocalServiceUtil.fetchLatestKBArticle(
+						_kbArticleLocalService.fetchLatestKBArticle(
 							resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 					if (selKBArticle == null) {
@@ -370,7 +378,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 			if (kbArticle.getKbFolderId() !=
 					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+				KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
 					kbArticle.getKbFolderId());
 
 				portletURL.setParameter(
@@ -390,7 +398,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 	}
 
 	protected String getPortletId(long plid) throws Exception {
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		long selPlid = PortalUtil.getPlidFromPortletId(
 			layout.getGroupId(), PortletKeys.KNOWLEDGE_BASE_DISPLAY);
@@ -414,8 +422,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 				return true;
 			}
 
-			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
-				kbFolderId);
+			KBFolder kbFolder = _kbFolderLocalService.getKBFolder(kbFolderId);
 
 			kbFolderId = kbFolder.getParentKBFolderId();
 		}
@@ -424,7 +431,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 	}
 
 	protected boolean isValidPlid(long plid) throws Exception {
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if (layout == null) {
 			return false;
@@ -433,9 +440,48 @@ public class FindKBArticleAction extends BaseStrutsAction {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBFolderLocalService(
+		KBFolderLocalService kbFolderLocalService) {
+
+		_kbFolderLocalService = kbFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesFactory(
+		PortletPreferencesFactory portletPreferencesFactory) {
+
+		_portletPreferencesFactory = portletPreferencesFactory;
+	}
+
 	private static final boolean _PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(
 				PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED));
+
+	private GroupLocalService _groupLocalService;
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBFolderLocalService _kbFolderLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 }

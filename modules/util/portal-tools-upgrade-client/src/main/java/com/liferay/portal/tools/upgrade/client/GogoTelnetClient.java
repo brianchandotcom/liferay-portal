@@ -32,17 +32,6 @@ import java.util.List;
  */
 public class GogoTelnetClient implements AutoCloseable {
 
-	public static int[] toIntArray(List<Integer> list) {
-		int[] ret = new int[list.size()];
-		int i = 0;
-
-		for (Integer e : list) {
-			ret[i++] = e.intValue();
-		}
-
-		return ret;
-	}
-
 	public GogoTelnetClient() throws IOException {
 		this("localhost", 11311);
 	}
@@ -162,7 +151,7 @@ public class GogoTelnetClient implements AutoCloseable {
 			bytes.add(_inputStream.read());
 		}
 
-		return toIntArray(bytes);
+		return _toIntArray(bytes);
 	}
 
 	private String _readUntilNextGogoPrompt() throws IOException {
@@ -191,6 +180,17 @@ public class GogoTelnetClient implements AutoCloseable {
 		for (int code : codes) {
 			_outputStream.write(code);
 		}
+	}
+
+	private int[] _toIntArray(List<Integer> list) {
+		int[] ret = new int[list.size()];
+		int i = 0;
+
+		for (Integer e : list) {
+			ret[i++] = e.intValue();
+		}
+
+		return ret;
 	}
 
 	private final DataInputStream _inputStream;

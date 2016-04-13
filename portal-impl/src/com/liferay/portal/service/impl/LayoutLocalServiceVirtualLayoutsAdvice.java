@@ -71,8 +71,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 		Object[] arguments = methodInvocation.getArguments();
 
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
 		if (methodName.equals("getLayout") &&
 			(Arrays.equals(parameterTypes, _TYPES_L) ||
 			 Arrays.equals(parameterTypes, _TYPES_L_B_L))) {
@@ -92,6 +90,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			}
 
 			LayoutSet layoutSet = layout.getLayoutSet();
+
+			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 			try {
 				WorkflowThreadLocal.setEnabled(false);
@@ -131,7 +131,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 				mergeLayoutSetPrototypeLayouts(
 					method, arguments, group, layoutSet, privateLayout,
-					workflowEnabled);
+					WorkflowThreadLocal.isEnabled());
 
 				List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 

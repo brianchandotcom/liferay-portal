@@ -89,24 +89,26 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 						<aui:a href="<%= viewSiteURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 					</h5>
 
-					<c:if test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
-						<h6 class="text-default">
-							<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
-								<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
-							</aui:a>
-						</h6>
-					</c:if>
+					<ul class="list-inline">
+						<li class="h6 text-default">
+							<c:choose>
+								<c:when test="<%= curGroup.isActive() %>">
+									<liferay-ui:message key="active" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message key="not-active" />
+								</c:otherwise>
+							</c:choose>
+						</li>
 
-					<h6 class="text-default">
-						<c:choose>
-							<c:when test="<%= curGroup.isActive() %>">
-								<liferay-ui:message key="active" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="not-active" />
-							</c:otherwise>
-						</c:choose>
-					</h6>
+						<c:if test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">
+							<li class="h6">
+								<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
+									<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
+								</aui:a>
+							</li>
+						</c:if>
+					</ul>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp

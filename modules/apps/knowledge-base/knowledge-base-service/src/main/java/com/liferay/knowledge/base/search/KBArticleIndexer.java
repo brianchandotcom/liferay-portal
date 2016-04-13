@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.knowledgebase.admin.util;
+package com.liferay.knowledge.base.search;
 
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -43,7 +44,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -56,10 +57,14 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = Indexer.class)
 public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 	public static final String CLASS_NAME = KBArticle.class.getName();
@@ -127,7 +132,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		Document document = getBaseModelDocument(CLASS_NAME, kbArticle);
 
 		document.addText(
-			Field.CONTENT, HtmlUtil.extractText(kbArticle.getContent()));
+			Field.CONTENT, _html.extractText(kbArticle.getContent()));
 		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
 		document.addText(Field.TITLE, kbArticle.getTitle());
 
@@ -168,7 +173,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
+		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
 
 		reindexKBArticles(kbArticle);
@@ -189,8 +194,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		Collection<String> kbFolderNames = new ArrayList<>();
 
 		while (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
-				kbFolderId);
+			KBFolder kbFolder = _kbFolderLocalService.getKBFolder(kbFolderId);
 
 			kbFolderNames.add(kbFolder.getName());
 
@@ -205,7 +209,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		// See KBArticlePermission#contains
 
 		List<KBArticle> kbArticles =
-			KBArticleLocalServiceUtil.getKBArticleAndAllDescendantKBArticles(
+			_kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
 				kbArticle.getResourcePrimKey(),
 				WorkflowConstants.STATUS_APPROVED, null);
 
@@ -222,14 +226,14 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 	protected void reindexKBArticles(long companyId) throws Exception {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			KBArticleLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_kbArticleLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("status");
+					Property property = _propertyFactory.forName("status");
 
 					dynamicQuery.add(
 						property.eq(WorkflowConstants.STATUS_APPROVED));
@@ -263,7 +267,36 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setHtml(Html html) {
+		_html = html;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKbFolderLocalService(
+		KBFolderLocalService kbFolderLocalService) {
+
+		_kbFolderLocalService = kbFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPropertyFactory(PropertyFactory propertyFactory) {
+		_propertyFactory = propertyFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleIndexer.class);
+
+	private Html _html;
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBFolderLocalService _kbFolderLocalService;
+	private PropertyFactory _propertyFactory;
 
 }

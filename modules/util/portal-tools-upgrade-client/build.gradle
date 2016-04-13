@@ -4,8 +4,8 @@ dependencies {
 }
 
 deploy {
-	from ('properties') {
-		include '*.properties'
+	from ("properties") {
+		include "*.properties"
 	}
 }
 

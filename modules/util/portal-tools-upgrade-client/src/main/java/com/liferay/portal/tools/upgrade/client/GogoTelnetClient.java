@@ -34,8 +34,9 @@ public class GogoTelnetClient implements AutoCloseable {
 
 	public GogoTelnetClient(String host, int port) throws IOException {
 		_socket = new Socket(host, port);
-		_inputStream = new DataInputStream(_socket.getInputStream());
-		_outputStream = new DataOutputStream(_socket.getOutputStream());
+
+		_dataInputStream = new DataInputStream(_socket.getInputStream());
+		_dataOutputStream = new DataOutputStream(_socket.getOutputStream());
 
 		_doHandshake();
 	}
@@ -44,8 +45,9 @@ public class GogoTelnetClient implements AutoCloseable {
 	public void close() {
 		try {
 			_socket.close();
-			_inputStream.close();
-			_outputStream.close();
+
+			_dataInputStream.close();
+			_dataOutputStream.close();
 		}
 		catch (IOException ioe) {
 		}
@@ -68,7 +70,7 @@ public class GogoTelnetClient implements AutoCloseable {
 		return _readUntilNextGogoPrompt();
 	}
 
-	private static void _assertCond(boolean condition) {
+	private static void _assertCondition(boolean condition) {
 		if (!condition) {
 			throw new AssertionError();
 		}
@@ -76,29 +78,30 @@ public class GogoTelnetClient implements AutoCloseable {
 
 	private void _doHandshake() throws IOException {
 
-		// gogo server first sends 4 commands
+		// Gogo server first sends 4 commands
 
 		_readOneCommand();
 		_readOneCommand();
 		_readOneCommand();
 		_readOneCommand();
 
-		// first we negotiate terminal type
+		// First we negotiate the terminal type:
 		// 255(IAC),251(WILL),24(terminal type)
 
 		_sendCommand(255, 251, 24);
 
-		// server should respond
+		// Server should respond:
 		// 255(IAC),250(SB),24,1,255(IAC),240(SE)
 
 		_readOneCommand();
 
-		// send the terminal type
+		// Send the terminal type:
 
 		//255(IAC),250(SB),24,0,'V','T','2','2','0',255(IAC),240(SE)
+
 		_sendCommand(255, 250, 24, 0, 'V', 'T', '2', '2', '0', 255, 240);
 
-		// read gogo shell prompt
+		// Read Gogo Shell prompt
 
 		_readUntilNextGogoPrompt();
 	}
@@ -106,24 +109,24 @@ public class GogoTelnetClient implements AutoCloseable {
 	private int[] _readOneCommand() throws IOException {
 		List<Integer> bytes = new ArrayList<>();
 
-		int iac = _inputStream.read();
+		int iac = _dataInputStream.read();
 
-		_assertCond(iac == 255);
+		_assertCondition(iac == 255);
 
 		bytes.add(iac);
 
-		int second = _inputStream.read();
+		int second = _dataInputStream.read();
 
 		bytes.add(second);
 
 		if (second == 250) {
-			int option = _inputStream.read();
+			int option = _dataInputStream.read();
 
 			bytes.add(option);
 
-			int code = _inputStream.read(); // 1 or 0
+			int code = _dataInputStream.read(); // 1 or 0
 
-			_assertCond(code == 0 || code == 1);
+			_assertCondition(code == 0 || code == 1);
 
 			bytes.add(code);
 
@@ -131,21 +134,21 @@ public class GogoTelnetClient implements AutoCloseable {
 				throw new IllegalStateException();
 			}
 			else if (code == 1) {
-				iac = _inputStream.read();
+				iac = _dataInputStream.read();
 
-				_assertCond(iac == 255);
+				_assertCondition(iac == 255);
 
 				bytes.add(iac);
 
-				int se = _inputStream.read(); // SE
+				int se = _dataInputStream.read(); // SE
 
-				_assertCond(se == 240);
+				_assertCondition(se == 240);
 
 				bytes.add(se);
 			}
 		}
 		else {
-			bytes.add(_inputStream.read());
+			bytes.add(_dataInputStream.read());
 		}
 
 		return _toIntArray(bytes);
@@ -154,7 +157,7 @@ public class GogoTelnetClient implements AutoCloseable {
 	private String _readUntilNextGogoPrompt() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
-		int c = _inputStream.read();
+		int c = _dataInputStream.read();
 
 		while (c != -1) {
 			sb.append((char)c);
@@ -165,7 +168,7 @@ public class GogoTelnetClient implements AutoCloseable {
 				break;
 			}
 
-			c = _inputStream.read();
+			c = _dataInputStream.read();
 		}
 
 		String output = sb.substring(0, sb.length() - 3);
@@ -175,23 +178,24 @@ public class GogoTelnetClient implements AutoCloseable {
 
 	private void _sendCommand(int... codes) throws IOException {
 		for (int code : codes) {
-			_outputStream.write(code);
+			_dataOutputStream.write(code);
 		}
 	}
 
 	private int[] _toIntArray(List<Integer> list) {
-		int[] ret = new int[list.size()];
+		int[] array = new int[list.size()];
+
 		int i = 0;
 
-		for (Integer e : list) {
-			ret[i++] = e.intValue();
+		for (Integer integer : list) {
+			array[i++] = integer.intValue();
 		}
 
-		return ret;
+		return array;
 	}
 
-	private final DataInputStream _inputStream;
-	private final DataOutputStream _outputStream;
+	private final DataInputStream _dataInputStream;
+	private final DataOutputStream _dataOutputStream;
 	private final Socket _socket;
 
 }

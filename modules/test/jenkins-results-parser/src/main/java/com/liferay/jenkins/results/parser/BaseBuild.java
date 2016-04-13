@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Kevin Yen
  */
@@ -29,13 +31,15 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBuildURL() {
-		if ((master == null) || (master.length() == 0)) {
+		String jobURL = getJobURL();
+
+		if ((jobURL == null) || (buildNumber == -1)) {
 			return null;
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getJobURL());
+		sb.append(jobURL);
 		sb.append(buildNumber);
 		sb.append("/");
 
@@ -49,6 +53,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getJobURL() {
+		if ((master == null) || (jobName == null)) {
+			return null;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("http://");
@@ -94,9 +102,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected BaseBuild() {
-		master = "";
-		jobName = "";
-
 		setStatus("starting");
 	}
 
@@ -130,7 +135,7 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected int buildNumber;
+	protected int buildNumber = -1;
 	protected String jobName;
 	protected String master;
 	protected String result;

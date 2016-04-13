@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public class AdminPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
-		"com.liferay.knowledgebase.admin";
+		"com.liferay.knowledge.base.admin";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

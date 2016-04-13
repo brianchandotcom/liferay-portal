@@ -119,7 +119,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 				<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 					<liferay-security:permissionsURL
-						modelResource="com.liferay.knowledgebase.admin"
+						modelResource="com.liferay.knowledge.base.admin"
 						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
 						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 						var="permissionsURL"
@@ -199,7 +199,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				%>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.knowledgebase.model.KBFolder"
+					className="com.liferay.knowledge.base.model.KBFolder"
 					escapedModel="<%= true %>"
 					keyProperty="kbFolderId"
 					modelVar="kbFolder"
@@ -260,7 +260,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			<%@ include file="/admin/article_search_results.jspf" %>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.knowledgebase.model.KBArticle"
+				className="com.liferay.knowledge.base.model.KBArticle"
 				escapedModel="<%= true %>"
 				keyProperty="resourcePrimKey"
 				modelVar="kbArticle"

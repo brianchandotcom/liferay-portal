@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public class DisplayPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
-		"com.liferay.knowledgebase.display";
+		"com.liferay.knowledge.base.display";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

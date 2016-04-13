@@ -272,7 +272,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected static final String RESOURCE_NAME =
-		"com.liferay.knowledgebase.admin";
+		"com.liferay.knowledge.base.admin";
 
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBCommentLocalService _kbCommentLocalService;

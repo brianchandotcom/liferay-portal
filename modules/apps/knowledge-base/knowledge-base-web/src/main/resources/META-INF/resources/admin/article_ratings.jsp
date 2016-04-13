@@ -182,7 +182,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 							/>
 
 							<liferay-ui:search-container-row
-								className="com.liferay.knowledgebase.model.KBComment"
+								className="com.liferay.knowledge.base.model.KBComment"
 								escapedModel="<%= true %>"
 								modelVar="kbComment"
 							>

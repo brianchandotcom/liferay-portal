@@ -71,7 +71,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.knowledgebase.model.KBArticle"
+				className="com.liferay.knowledge.base.model.KBArticle"
 				escapedModel="<%= true %>"
 				keyProperty="version"
 				modelVar="curKBArticle"

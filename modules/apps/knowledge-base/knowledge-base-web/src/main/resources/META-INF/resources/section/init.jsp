@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.knowledgebase.section.search.KBArticleSearch" %>
+<%@ page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %>
 
 <%
 boolean showKBArticlesSectionsTitle = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticlesSectionsTitle", null));

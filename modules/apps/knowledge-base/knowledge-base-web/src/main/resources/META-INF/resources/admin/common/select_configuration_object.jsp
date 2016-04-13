@@ -83,7 +83,7 @@ String eventName = PortalUtil.getPortletNamespace(portletId) + "selectConfigurat
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.knowledgebase.model.KBFolder"
+				className="com.liferay.knowledge.base.model.KBFolder"
 				escapedModel="<%= true %>"
 				keyProperty="kbFolderId"
 				modelVar="kbFolder"
@@ -168,7 +168,7 @@ String eventName = PortalUtil.getPortletNamespace(portletId) + "selectConfigurat
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.knowledgebase.model.KBArticle"
+			className="com.liferay.knowledge.base.model.KBArticle"
 			escapedModel="<%= true %>"
 			keyProperty="resourcePrimKey"
 			modelVar="kbArticle"

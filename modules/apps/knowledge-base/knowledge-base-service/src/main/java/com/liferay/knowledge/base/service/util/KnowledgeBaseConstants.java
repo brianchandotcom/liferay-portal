@@ -20,6 +20,6 @@ package com.liferay.knowledge.base.service.util;
 public class KnowledgeBaseConstants {
 
 	public static final String TEMP_FOLDER_NAME =
-		"com.liferay.knowledgebase.admin.portlet.AdminPortlet";
+		"com.liferay.knowledge.base.admin";
 
 }

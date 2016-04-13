@@ -44,7 +44,7 @@
 			<%@ include file="/admin/template_search_results.jspf" %>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.knowledgebase.model.KBTemplate"
+				className="com.liferay.knowledge.base.model.KBTemplate"
 				escapedModel="<%= true %>"
 				keyProperty="kbTemplateId"
 				modelVar="kbTemplate"
@@ -99,7 +99,7 @@
 
 					<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 						<liferay-security:permissionsURL
-							modelResource="com.liferay.knowledgebase.admin"
+							modelResource="com.liferay.knowledge.base.admin"
 							modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
 							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 							var="permissionsURL"

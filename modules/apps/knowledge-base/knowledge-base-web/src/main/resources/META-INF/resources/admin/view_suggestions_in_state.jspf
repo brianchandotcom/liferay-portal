@@ -37,7 +37,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(iteratorURL, navItem);
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.knowledgebase.model.KBComment"
+			className="com.liferay.knowledge.base.model.KBComment"
 			modelVar="kbComment"
 		>
 

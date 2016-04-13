@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -29,10 +30,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = OpenSearch.class)
 public class KBArticleOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String SEARCH_PATH = "/c/knowledge_base/open_search";

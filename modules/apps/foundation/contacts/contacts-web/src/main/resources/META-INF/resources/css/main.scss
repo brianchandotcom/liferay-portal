@@ -154,13 +154,13 @@ $section-header-bg: #CCE6F7;
 
 	.contacts-result {
 		border-right: 1px solid #C9C9C9;
-		width: 100%;
 		bottom: 0;
 		overflow-x: hidden;
 		overflow-y: scroll;
 		padding-right: 0;
 		position: absolute;
 		top: 40px;
+		width: 100%;
 
 		.more-results a {
 			border: 1px solid #CCC;
@@ -525,8 +525,8 @@ $section-header-bg: #CCE6F7;
 		}
 
 		.icon-edit {
-			position: absolute;
 			left: 100%;
+			position: absolute;
 			top: 5px;
 		}
 

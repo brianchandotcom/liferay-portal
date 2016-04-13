@@ -14,15 +14,20 @@
 
 package com.liferay.knowledge.base.listener;
 
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
@@ -36,9 +41,26 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	}
 
 	protected void doOnBeforeRemove(Group group) throws Exception {
-		KBArticleLocalServiceUtil.deleteGroupKBArticles(group.getGroupId());
+		_kbArticleLocalService.deleteGroupKBArticles(group.getGroupId());
 
-		KBTemplateLocalServiceUtil.deleteGroupKBTemplates(group.getGroupId());
+		_kbTemplateLocalService.deleteGroupKBTemplates(group.getGroupId());
 	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBTemplateLocalService(
+		KBTemplateLocalService kbTemplateLocalService) {
+
+		_kbTemplateLocalService = kbTemplateLocalService;
+	}
+
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBTemplateLocalService _kbTemplateLocalService;
 
 }

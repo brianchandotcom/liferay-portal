@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jsonwebserviceclient;
+package com.liferay.json.web.service.client;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;

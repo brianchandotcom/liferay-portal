@@ -79,6 +79,25 @@ public abstract class BaseBuild implements Build {
 			throw new IllegalStateException("Build not completed");
 		}
 
+		String buildURL = getBuildURL();
+
+		if ((result == null) && (buildURL != null)) {
+			try {
+				JSONObject resultJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						buildURL + "api/json?tree=result");
+
+				result = resultJSONObject.optString("result");
+
+				if (result.equals("")) {
+					result = null;
+				}
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
 		return result;
 	}
 

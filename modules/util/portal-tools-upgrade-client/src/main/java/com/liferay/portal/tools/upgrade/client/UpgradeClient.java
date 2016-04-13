@@ -103,7 +103,7 @@ public class UpgradeClient {
 			upgradeClient.upgrade();
 		}
 		catch (ParseException pe) {
-			System.err.println("Failed to parse command line properties");
+			System.err.println("Unable to parse command line properties");
 
 			pe.printStackTrace();
 		}

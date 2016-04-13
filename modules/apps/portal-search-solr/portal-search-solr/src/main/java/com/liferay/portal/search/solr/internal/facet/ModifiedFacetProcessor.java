@@ -20,6 +20,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author Tibor Lipusz
  */
 @Component(
 	immediate = true,

@@ -65,6 +65,10 @@ public class DefaultRangeBuilder extends AbstractRangeBuilder<RangeBuilder> {
 		return this;
 	}
 
+	public boolean hasRanges() {
+		return !ranges.isEmpty();
+	}
+
 	@Override
 	protected XContentBuilder doInternalXContent(
 			XContentBuilder builder, Params params)

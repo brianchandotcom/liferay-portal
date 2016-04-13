@@ -16,9 +16,12 @@ package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -28,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  * @author Milen Dyankov
+ * @author Tibor Lipusz
  */
 @Component(
 	immediate = true,
@@ -42,6 +46,24 @@ public class RangeFacetProcessor
 
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
+		DefaultRangeBuilder defaultRangeBuilder = new DefaultRangeBuilder(
+			facetConfiguration.getFieldName());
+
+		defaultRangeBuilder.field(facetConfiguration.getFieldName());
+
+		addConfigurationRanges(facetConfiguration, defaultRangeBuilder);
+
+		addCustomRange(facet, defaultRangeBuilder);
+
+		if (defaultRangeBuilder.hasRanges()) {
+			searchRequestBuilder.addAggregation(defaultRangeBuilder);
+		}
+	}
+
+	protected void addConfigurationRanges(
+		FacetConfiguration facetConfiguration,
+		DefaultRangeBuilder defaultRangeBuilder) {
+
 		JSONObject jsonObject = facetConfiguration.getData();
 
 		JSONArray jsonArray = jsonObject.getJSONArray("ranges");
@@ -50,25 +72,32 @@ public class RangeFacetProcessor
 			return;
 		}
 
-		DefaultRangeBuilder defaultRangeBuilder = new DefaultRangeBuilder(
-			facetConfiguration.getFieldName());
-
-		defaultRangeBuilder.field(facetConfiguration.getFieldName());
-
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
-			String range = rangeJSONObject.getString("range");
+			String rangeString = rangeJSONObject.getString("range");
 
-			range = range.replace(StringPool.OPEN_BRACKET, StringPool.BLANK);
-			range = range.replace(StringPool.CLOSE_BRACKET, StringPool.BLANK);
+			String[] range = RangeParserUtil.parserRange(rangeString);
 
-			String[] rangeParts = range.split(StringPool.SPACE);
+			defaultRangeBuilder.addRange(range[0], range[1]);
+		}
+	}
 
-			defaultRangeBuilder.addRange(rangeParts[0], rangeParts[2]);
+	protected void addCustomRange(
+		Facet facet, DefaultRangeBuilder defaultRangeBuilder) {
+
+		SearchContext searchContext = facet.getSearchContext();
+
+		String rangeParam = GetterUtil.getString(
+			searchContext.getAttribute(facet.getFieldId()));
+
+		if (Validator.isNull(rangeParam)) {
+			return;
 		}
 
-		searchRequestBuilder.addAggregation(defaultRangeBuilder);
+		String[] range = RangeParserUtil.parserRange(rangeParam);
+
+		defaultRangeBuilder.addRange(range[0], range[1]);
 	}
 
 }

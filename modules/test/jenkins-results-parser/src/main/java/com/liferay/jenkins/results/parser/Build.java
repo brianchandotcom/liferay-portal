@@ -33,6 +33,8 @@ public interface Build {
 
 	public String getStatus();
 
+	public long getStatusAge();
+
 	public void update() throws Exception;
 
 }

@@ -79,6 +79,11 @@ public abstract class BaseBuild implements Build {
 		return _status;
 	}
 
+	@Override
+	public long getStatusAge() {
+		return System.currentTimeMillis() - statusModifiedTime;
+	}
+
 	protected static String decodeURL(String url) {
 		url = url.replace("%28", "(");
 		url = url.replace("%29", ")");

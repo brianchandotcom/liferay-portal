@@ -121,7 +121,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setStatus(String status) {
-		if (!status.equals(_status)) {
+		if (((status == null) && (_status != null)) ||
+			!status.equals(_status)) {
+
 			_status = status;
 
 			statusModifiedTime = System.currentTimeMillis();

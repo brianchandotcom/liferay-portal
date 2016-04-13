@@ -26,8 +26,18 @@ public class TopLevelBuild extends BaseBuild {
 		super(buildURL);
 	}
 
-	public void addDownstreamBuild(String invocationURL) throws Exception {
-		_downstreamBuilds.add(new DownstreamBuild(invocationURL, this));
+	public void addDownstreamBuilds(String... invocationURLs) throws Exception {
+		for (String invocationURL : invocationURLs) {
+			_downstreamBuilds.add(new DownstreamBuild(invocationURL, this));
+		}
+
+		String status = getStatus();
+
+		if (status.equals("completed")) {
+			setStatus(null);
+		}
+
+		update();
 	}
 
 	public List<DownstreamBuild> getDownstreamBuilds(String status) {
@@ -52,8 +62,6 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (status == null) {
 			setStatus("running");
-
-			return;
 		}
 
 		if (status.equals("completed")) {

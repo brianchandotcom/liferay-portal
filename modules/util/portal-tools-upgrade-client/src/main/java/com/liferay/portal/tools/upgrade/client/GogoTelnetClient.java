@@ -40,6 +40,7 @@ public class GogoTelnetClient implements AutoCloseable {
 		_doHandshake();
 	}
 
+	@Override
 	public void close() {
 		try {
 			_socket.close();

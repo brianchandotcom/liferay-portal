@@ -97,10 +97,10 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 					String[] allowedServiceSignatureArray = StringUtil.split(allowedServiceSignaturesArray[i], CharPool.POUND);
 
 					if (allowedServiceSignatureArray.length > 0) {
-						serviceClassName = GetterUtil.getString(allowedServiceSignatureArray[0], StringPool.BLANK);
+						serviceClassName = GetterUtil.getString(allowedServiceSignatureArray[0]);
 
 						if (allowedServiceSignatureArray.length > 1) {
-							actionMethodName = GetterUtil.getString(allowedServiceSignatureArray[1], StringPool.BLANK);
+							actionMethodName = GetterUtil.getString(allowedServiceSignatureArray[1]);
 						}
 					}
 				%>

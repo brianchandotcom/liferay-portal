@@ -137,7 +137,7 @@ String defaultView = portletPreferences.getValue("defaultView", "week");
 String timeFormat = GetterUtil.getString(portletPreferences.getValue("timeFormat", "locale"));
 String timeZoneId = portletPreferences.getValue("timeZoneId", user.getTimeZoneId());
 boolean usePortalTimeZone = GetterUtil.getBoolean(portletPreferences.getValue("usePortalTimeZone", Boolean.TRUE.toString()));
-int weekStartsOn = GetterUtil.getInteger(portletPreferences.getValue("weekStartsOn", null), 0);
+int weekStartsOn = GetterUtil.getInteger(portletPreferences.getValue("weekStartsOn", null));
 
 String sessionClicksDefaultView = SessionClicks.get(request, "com.liferay.calendar.web_defaultView", defaultView);
 
@@ -145,7 +145,7 @@ if (usePortalTimeZone) {
 	timeZoneId = user.getTimeZoneId();
 }
 
-boolean displaySchedulerOnly = GetterUtil.getBoolean(portletPreferences.getValue("displaySchedulerOnly", null), false);
+boolean displaySchedulerOnly = GetterUtil.getBoolean(portletPreferences.getValue("displaySchedulerOnly", null));
 boolean showUserEvents = GetterUtil.getBoolean(portletPreferences.getValue("showUserEvents", null), true);
 
 boolean showAgendaView = GetterUtil.getBoolean(portletPreferences.getValue("showAgendaView", null), true);

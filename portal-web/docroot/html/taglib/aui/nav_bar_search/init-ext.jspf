@@ -15,5 +15,5 @@
 --%>
 
 <%
-boolean searchResults = GetterUtil.getBoolean((String)request.getAttribute("aui:nav-bar-search:searchResults"), false);
+boolean searchResults = GetterUtil.getBoolean((String)request.getAttribute("aui:nav-bar-search:searchResults"));
 %>

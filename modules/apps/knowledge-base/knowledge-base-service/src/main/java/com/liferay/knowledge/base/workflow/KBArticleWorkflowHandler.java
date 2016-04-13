@@ -15,22 +15,30 @@
 package com.liferay.knowledge.base.workflow;
 
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Peter Shin
  */
+@Component(
+	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"},
+	service = WorkflowHandler.class
+)
 public class KBArticleWorkflowHandler extends BaseWorkflowHandler<KBArticle> {
 
 	@Override
@@ -40,7 +48,14 @@ public class KBArticleWorkflowHandler extends BaseWorkflowHandler<KBArticle> {
 
 	@Override
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, getClassName());
+		return _resourceActions.getModelResource(locale, getClassName());
+	}
+
+	@Reference(unbind = "-")
+	public void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
 	}
 
 	@Override
@@ -57,8 +72,16 @@ public class KBArticleWorkflowHandler extends BaseWorkflowHandler<KBArticle> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return KBArticleLocalServiceUtil.updateStatus(
+		return _kbArticleLocalService.updateStatus(
 			userId, resourcePrimKey, status, serviceContext);
 	}
+
+	@Reference(unbind = "-")
+	protected void setResourceActions(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
+	}
+
+	private KBArticleLocalService _kbArticleLocalService;
+	private ResourceActions _resourceActions;
 
 }

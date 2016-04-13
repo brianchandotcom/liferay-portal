@@ -246,17 +246,16 @@ public class DownstreamBuild extends BaseBuild {
 			JSONObject queueItemJSONObject = queueItemsJSONArray.getJSONObject(
 				i);
 
-			Map<String, String> buildParameters = getParameters(
-				queueItemJSONObject);
-
 			JSONObject taskJSONObject = queueItemJSONObject.getJSONObject(
 				"task");
 
 			String queueItemName = taskJSONObject.getString("name");
 
-			if (queueItemName.equals(jobName) &&
-				buildParameters.equals(parameters)) {
+			if (!queueItemName.equals(jobName)) {
+				continue;
+			}
 
+			if (parameters.equals(getParameters(queueItemJSONObject))) {
 				return queueItemJSONObject;
 			}
 		}

@@ -39,6 +39,12 @@
 	<td>//div[contains(@class,'portlet-asset-publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
+<!--ASSET_EDIT-->
+<tr>
+	<td>ASSET_EDIT</td>
+	<td>//a[contains(@data-id,'editAsset')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -986,6 +986,7 @@
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="Click" locator1="AP#ASSET_ABSTRACT_EDIT" />
+		<execute function="Click" locator1="AP#ASSET_EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

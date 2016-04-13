@@ -9,7 +9,6 @@
 	<command name="ZoeHealthcareThemeSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="web-form-portlet" />
 		<property name="theme.plugins.includes" value="zoe-healthcare-theme" />
-		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Zoe Healthcare" />
 		<var name="portletName" value="resources-importer-web" />

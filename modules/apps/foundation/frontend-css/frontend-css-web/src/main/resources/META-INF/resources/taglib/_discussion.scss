@@ -75,10 +75,10 @@
 @include sm {
 	.lfr-discussion-body {
 		.lfr-discussion-controls {
-			width: 100%;
 			position: absolute;
-			top: 0;
 			right: 0;
+			top: 0;
+			width: 100%;
 
 			& > div {
 				float: right;

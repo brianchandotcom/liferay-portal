@@ -238,13 +238,14 @@ public class VerifyPermission extends VerifyProcess {
 				Role userRole = RoleLocalServiceUtil.getRole(
 					companyId, RoleConstants.USER);
 
-				StringBundler sb = new StringBundler(19);
+				StringBundler sb = new StringBundler(20);
 
 				sb.append("update ResourcePermission set roleId = ");
 				sb.append(userRole.getRoleId());
 				sb.append(" where resourcePermissionId in (select ");
 				sb.append("resourcePermissionId from ResourcePermission ");
-				sb.append("inner join Layout on ResourcePermission.primKey ");
+				sb.append("inner join Layout on ResourcePermission.companyId ");
+				sb.append("= Layout.companyId and ResourcePermission.primKey ");
 				sb.append("like replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
 				sb.append("cast_text(Layout.plid)) inner join Group_ on ");
 				sb.append("Layout.groupId = Group_.groupId where ");
@@ -279,9 +280,10 @@ public class VerifyPermission extends VerifyProcess {
 			Role userRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.USER);
 
-			StringBundler sb = new StringBundler(18);
+			StringBundler sb = new StringBundler(19);
 
 			sb.append("update ResourcePermission inner join Layout on ");
+			sb.append("ResourcePermission.companyId = Layout.companyId and ");
 			sb.append("ResourcePermission.primKey like ");
 			sb.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
 			sb.append("cast_text(Layout.plid)) inner join Group_ on ");

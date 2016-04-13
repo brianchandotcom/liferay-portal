@@ -103,11 +103,12 @@ AUI.add(
 				var options = instance.array[i];
 
 				var select = A.one('#' + options.select);
-				var selectId = options.selectId;
 				var selectDesc = options.selectDesc;
-				var selectSort = options.selectSort;
-				var selectVal = options.selectVal;
+				var selectId = options.selectId;
 				var selectNullable = options.selectNullable || true;
+				var selectSort = options.selectSort;
+
+				var selectVal = A.Array(options.selectVal);
 
 				var selectOptions = [];
 
@@ -120,7 +121,13 @@ AUI.add(
 						var key = item[selectId];
 						var value = item[selectDesc];
 
-						selectOptions.push('<option value="' + key + '">' + value + '</option>');
+						var selected = '';
+
+						if (selectVal.indexOf(value) > -1) {
+							selected = 'selected="selected"';
+						}
+
+						selectOptions.push('<option ' + selected + ' value="' + key + '">' + value + '</option>');
 					}
 				);
 
@@ -131,7 +138,7 @@ AUI.add(
 				selectOptions = selectOptions.join('');
 
 				if (select) {
-					select.empty().append(selectOptions).val(selectVal);
+					select.empty().append(selectOptions);
 				}
 			}
 		};

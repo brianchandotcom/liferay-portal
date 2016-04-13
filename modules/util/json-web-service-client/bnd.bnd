@@ -1,0 +1,3 @@
+Bundle-Name: Liferay JSON Web Service Client
+Bundle-SymbolicName: com.liferay.json.web.service.client
+Bundle-Version: 1.0.0

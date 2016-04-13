@@ -46,4 +46,31 @@ public class URLUtil {
 		}
 	}
 
+	/**
+	 * Checks if the provided URL is either root relative or fully qualified.
+	 * Non-root relative URLs have little meaning in a portal context.
+	 *
+	 * @param uRL
+	 * @return
+	 */
+	public static boolean isValidURL(String uRL) {
+		if (uRL.charAt(0) == '/') {
+			return true;
+		}
+
+		int queryStringStart = uRL.indexOf('?');
+
+		if (queryStringStart == -1) {
+			queryStringStart = uRL.length();
+		}
+
+		int protocolEnd = uRL.lastIndexOf("://", queryStringStart);
+
+		if (protocolEnd == -1) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

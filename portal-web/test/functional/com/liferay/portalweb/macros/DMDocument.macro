@@ -1112,17 +1112,15 @@
 	</command>
 
 	<command name="linkImage">
-		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="${dmDocumentURL}" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
-
 		<execute function="AssertElementPresent" locator1="CKEditor#CONTENT_IMAGE_LINK_IMAGE" />
-
-		<execute macro="IFrame#selectTopFrame" />
 	</command>
 
 	<command name="moveToFolderCP">

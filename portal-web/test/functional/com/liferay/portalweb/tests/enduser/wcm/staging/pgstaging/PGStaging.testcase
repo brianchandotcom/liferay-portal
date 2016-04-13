@@ -1253,8 +1253,6 @@
 			<var name="dmDocumentURL" value="${dmDocumentURL}" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
-
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

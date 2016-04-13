@@ -2927,37 +2927,78 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				</then>
 			</if>
 
-			<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
-				<arg line="${app.server.stop.executable.arg.line}" />
-			</exec>
+			<parallel>
+				<daemons>
+					<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+						<arg line="${app.server.stop.executable.arg.line}" />
+					</exec>
+				</daemons>
+				<sequential>
+					<if>
+						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+						<then>
+							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
+								<not>
+									<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
+								</not>
+							</waitfor>
+						</then>
+						<elseif>
+							<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+							<then>
+								<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
+									<not>
+										<http url="http://localhost:${test.app.server.leading.port.number}080" />
+									</not>
+								</waitfor>
+							</then>
+						</elseif>
+						<else>
+							<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.stopping.timeout">
+								<not>
+									<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+								</not>
+							</waitfor>
+						</else>
+					</if>
 
-			<if>
-				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-				<then>
-					<waitfor maxwait="1" maxwaitunit="minute">
-						<not>
-							<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
-						</not>
-					</waitfor>
-				</then>
-				<elseif>
-					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-					<then>
-						<waitfor maxwait="1" maxwaitunit="minute">
-							<not>
-								<http url="http://localhost:${test.app.server.leading.port.number}080" />
-							</not>
-						</waitfor>
-					</then>
-				</elseif>
-				<else>
-					<waitfor maxwait="1" maxwaitunit="minute">
-						<not>
-							<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-						</not>
-					</waitfor>
-				</else>
-			</if>
+					<if>
+						<isset property="app.server.stopping.timeout" />
+						<then>
+							<execute>
+								jps > jps_output
+							</execute>
+
+							<var name="jps.output" unset="true" />
+
+							<loadfile property="jps.output" srcfile="jps_output" />
+
+							<if>
+								<contains string="${jps.output}" substring="Bootstrap" />
+								<then>
+									<propertyregex
+										input="${jps.output}"
+										override="true"
+										property="bootstrap.pid"
+										regexp="(|[\S\s]*\n)([0-9]+) Bootstrap[\S\s]*"
+										replace="\2"
+									/>
+
+									<execute>
+										jstack ${bootstrap.pid}
+									</execute>
+
+									<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
+								</then>
+							</if>
+
+							<delete file="jps_output" />
+
+							<fail if="app.server.stopping.timeout" message="Server is still available at ${app.server.waiting.url}" />
+						</then>
+					</if>
+				</sequential>
+			</parallel>
 
 			<if>
 				<and>

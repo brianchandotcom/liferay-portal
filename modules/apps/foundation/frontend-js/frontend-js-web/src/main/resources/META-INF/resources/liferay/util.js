@@ -239,7 +239,7 @@
 					}
 				);
 			}
-			else if (UA.safari) {
+			else if (A.UA.safari) {
 				A.use(
 					'node-event-html5',
 					function(A) {

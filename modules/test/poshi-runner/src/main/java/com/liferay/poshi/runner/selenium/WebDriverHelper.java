@@ -775,6 +775,25 @@ public class WebDriverHelper {
 		FileUtil.write(fileName, htmlSource.replace("<\\html>", sb.toString()));
 	}
 
+	public static void scrollBy(WebDriver webDriver, String coordString) {
+		WebElement webElement = getWebElement(webDriver, "//html");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("window.scrollBy(");
+		sb.append(coordString);
+		sb.append(");");
+
+		javascriptExecutor.executeScript(sb.toString());
+	}
+
 	public static void select(
 		WebDriver webDriver, String selectLocator, String optionLocator) {
 

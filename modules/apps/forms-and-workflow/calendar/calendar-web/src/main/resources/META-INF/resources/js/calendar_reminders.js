@@ -127,6 +127,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-template-deprecated']
+		requires: ['aui-base', 'aui-template-deprecated', 'liferay-calendar-util']
 	}
 );

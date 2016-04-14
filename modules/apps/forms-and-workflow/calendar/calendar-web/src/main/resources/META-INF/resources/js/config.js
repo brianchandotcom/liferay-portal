@@ -86,21 +86,30 @@
 								'widget-stdmod'
 							]
 						},
-						'liferay-scheduler': {
-							path: 'scheduler.js',
+						'liferay-calendar-util': {
+							path: 'calendar_util.js',
 							requires: [
-								'async-queue',
 								'aui-datatype',
 								'aui-io',
 								'aui-scheduler',
 								'aui-toolbar',
 								'autocomplete',
 								'autocomplete-highlighters',
+								'liferay-portlet-url'
+							]
+						},
+						'liferay-scheduler': {
+							path: 'scheduler.js',
+							requires: [
+								'async-queue',
+								'aui-datatype',
+								'aui-scheduler',
 								'dd-plugin',
 								'liferay-calendar-message-util',
+								'liferay-calendar-recurrence-converter',
 								'liferay-calendar-recurrence-util',
+								'liferay-calendar-util',
 								'liferay-node',
-								'liferay-portlet-url',
 								'liferay-store',
 								'promise',
 								'resize-plugin'

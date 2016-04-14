@@ -106,27 +106,9 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 						selectionChange: function(event) {
 							var instance = this;
 
-							var container = instance.get('container');
-
 							var date = event.newSelection[0];
 
-							var hours = date.getHours();
-
-							var amPm = 0;
-
-							<c:if test="<%= amPm %>">
-								if (hours > 11) {
-									amPm = 1;
-									hours -= 12;
-								}
-							</c:if>
-
-							if (date) {
-								container.one('#<%= hourParamId %>').val(hours);
-								container.one('#<%= minuteParamId %>').val(date.getMinutes());
-								container.one('#<%= amPmParamId %>').val(amPm);
-								container.one('#<%= dateParamId %>').val(date);
-							}
+							instance.updateTime(date);
 						}
 					},
 					popover: {
@@ -153,6 +135,30 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 				var time = A.Date.parse(A.Date.aggregates.T, hours + ':' + minutes + ':0');
 
 				return time;
+			};
+
+			timePicker.updateTime = function(date) {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				var hours = date.getHours();
+
+				var amPm = 0;
+
+				<c:if test="<%= amPm %>">
+					if (hours > 11) {
+						amPm = 1;
+						hours -= 12;
+					}
+				</c:if>
+
+				if (date) {
+					container.one('#<%= hourParamId %>').val(hours);
+					container.one('#<%= minuteParamId %>').val(date.getMinutes());
+					container.one('#<%= amPmParamId %>').val(amPm);
+					container.one('#<%= dateParamId %>').val(date);
+				}
 			};
 
 			return timePicker;

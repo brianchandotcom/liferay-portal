@@ -159,6 +159,7 @@ int userNotificationEventsCount = UserNotificationEventLocalServiceUtil.getDeliv
 				}
 			);
 		}
+
 		return notice;
 	}
 </aui:script>

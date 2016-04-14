@@ -7,8 +7,8 @@ AUI.add(
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
-		var RecurrenceUtil = Liferay.RecurrenceUtil;
 		var CalendarWorkflow = Liferay.CalendarWorkflow;
+		var RecurrenceUtil = Liferay.RecurrenceUtil;
 
 		var isBoolean = Lang.isBoolean;
 		var isFunction = Lang.isFunction;
@@ -40,8 +40,6 @@ AUI.add(
 					Liferay.Language.get('add-calendar-booking') +
 				'</button>' +
 			'</div>';
-
-		var USER_ID = toInt(themeDisplay.getUserId());
 
 		var WEEKLY = 'WEEKLY';
 

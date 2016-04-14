@@ -82,6 +82,12 @@ public class InviteMembersUserNotificationHandler
 		MemberRequest memberRequest =
 			_memberRequestLocalService.fetchMemberRequest(memberRequestId);
 
+		if (memberRequest.getStatus() !=
+				MembershipRequestConstants.STATUS_PENDING) {
+
+			return StringPool.BLANK;
+		}
+
 		Group group = null;
 
 		if (memberRequest != null) {
@@ -95,24 +101,18 @@ public class InviteMembersUserNotificationHandler
 			return null;
 		}
 
-		String title = StringPool.BLANK;
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(serviceContext.getLocale()));
 
-		if (memberRequest.getStatus() ==
-				MembershipRequestConstants.STATUS_PENDING) {
-
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					LocaleUtil.toLanguageId(serviceContext.getLocale()));
-
-			title = ResourceBundleUtil.getString(
-				resourceBundle, serviceContext.getLocale(),
-				"x-invited-you-to-join-x",
-				new Object[] {
-					getUserNameLink(memberRequest.getUserId(), serviceContext),
-					getSiteDescriptiveName(
-						memberRequest.getGroupId(), serviceContext)
-				});
-		}
+		String title = ResourceBundleUtil.getString(
+			resourceBundle, serviceContext.getLocale(),
+			"x-invited-you-to-join-x",
+			new Object[] {
+				getUserNameLink(memberRequest.getUserId(), serviceContext),
+				getSiteDescriptiveName(
+					memberRequest.getGroupId(), serviceContext)
+			});
 
 		LiferayPortletResponse liferayPortletResponse =
 			serviceContext.getLiferayPortletResponse();

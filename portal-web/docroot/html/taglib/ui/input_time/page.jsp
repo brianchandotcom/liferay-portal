@@ -109,6 +109,15 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							var date = event.newSelection[0];
 
 							instance.updateTime(date);
+						},
+						enterKey: function(event) {
+							var instance = this;
+
+							var inputVal = instance.get('activeInput').val();
+
+							var date = instance.getParsedDatesFromInputValue(inputVal).pop();
+
+							instance.updateTime(date);
 						}
 					},
 					popover: {

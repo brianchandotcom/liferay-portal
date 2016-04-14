@@ -61,6 +61,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_STATUS</td>
+	<td>xpath=(//h6[contains(text(),'Successful')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_STATUS_PORTLET</td>
+	<td>//h5[contains(text(),'Successful')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_PUBLISH_TO_LIVE_BUTTON</td>
 	<td>//button[contains(.,'Publish to Live')]</td>
 	<td></td>

@@ -371,7 +371,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			public ActionableDynamicQuery getActionableDynamicQuery() {
 				ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-				actionableDynamicQuery.setBaseLocalService(${apiPackagePath}.service.${entity.name}LocalServiceUtil.getService());
+				actionableDynamicQuery.setBaseLocalService(${entity.varName}LocalService);
 				actionableDynamicQuery.setClassLoader(getClassLoader());
 				actionableDynamicQuery.setModelClass(${entity.name}.class);
 
@@ -398,7 +398,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 				IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-				indexableActionableDynamicQuery.setBaseLocalService(${apiPackagePath}.service.${entity.name}LocalServiceUtil.getService());
+				indexableActionableDynamicQuery.setBaseLocalService(${entity.varName}LocalService);
 				indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 				indexableActionableDynamicQuery.setModelClass(${entity.name}.class);
 
@@ -422,7 +422,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			}
 
 			protected void initActionableDynamicQuery(ActionableDynamicQuery actionableDynamicQuery) {
-				actionableDynamicQuery.setBaseLocalService(${apiPackagePath}.service.${entity.name}LocalServiceUtil.getService());
+				actionableDynamicQuery.setBaseLocalService(${entity.varName}LocalService);
 				actionableDynamicQuery.setClassLoader(getClassLoader());
 				actionableDynamicQuery.setModelClass(${entity.name}.class);
 

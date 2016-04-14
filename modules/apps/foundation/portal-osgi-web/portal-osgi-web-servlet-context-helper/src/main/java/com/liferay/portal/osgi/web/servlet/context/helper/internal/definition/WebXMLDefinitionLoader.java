@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebResourceCollectionDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.JspServletWrapper;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderImpl;
@@ -189,6 +190,21 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				_filterDefinition.setName(filterName.trim());
 			}
 		}
+		else if (qName.equals("http-method")) {
+			if (_webResourceCollection != null) {
+				String httpMethod = String.valueOf(_stack.pop());
+
+				_webResourceCollection.httpMethods.add(httpMethod.trim());
+			}
+		}
+		else if (qName.equals("http-method-exception")) {
+			if (_webResourceCollection != null) {
+				String httpMethodException = String.valueOf(_stack.pop());
+
+				_webResourceCollection.httpMethodExceptions.add(
+					httpMethodException.trim());
+			}
+		}
 		else if (qName.equals("init-param")) {
 			if (_filterDefinition != null) {
 				_filterDefinition.setInitParameter(
@@ -307,6 +323,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_parameterValue = String.valueOf(_stack.pop());
 			_parameterValue = _parameterValue.trim();
 		}
+		else if (qName.equals("role-name") ||
+				 qName.equals("transport-guarantee")) {
+
+			_logger.log(
+				Logger.LOG_WARNING,
+				qName + " from web.xml in Bundle " + _bundle +
+					" is not supported. This value will be ignored");
+		}
 		else if (qName.equals("servlet")) {
 			_webXMLDefinition.setServletDefinition(
 				_servletDefinition.getName(), _servletDefinition);
@@ -373,6 +397,43 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				_servletMapping.urlPatterns.add(urlPattern.trim());
 			}
+			else if (_webResourceCollection != null) {
+				String urlPattern = String.valueOf(_stack.pop());
+
+				_webResourceCollection.urlPatterns.add(urlPattern.trim());
+			}
+		}
+		else if (qName.equals("web-resource-collection")) {
+			List<WebResourceCollectionDefinition>
+				webResourceCollectionDefinitions =
+					_webXMLDefinition.getWebResourceCollectionDefinitions();
+
+			WebResourceCollectionDefinition definition =
+				new WebResourceCollectionDefinition(
+					_webResourceCollection.webResourceName);
+
+			for (String httpMethod : _webResourceCollection.httpMethods) {
+				definition.addHttpMethod(httpMethod);
+			}
+
+			for (String httpMethodException :
+					_webResourceCollection.httpMethodExceptions) {
+
+				definition.addHttpMethodException(httpMethodException);
+			}
+
+			for (String urlPattern : _webResourceCollection.urlPatterns) {
+				definition.addURLPattern(urlPattern);
+			}
+
+			webResourceCollectionDefinitions.add(definition);
+
+			_webResourceCollection = null;
+		}
+		else if (qName.equals("web-resource-name")) {
+			String name = String.valueOf(_stack.pop());
+
+			_webResourceCollection.webResourceName = name.trim();
 		}
 	}
 
@@ -485,6 +546,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				attributes.getValue("metadata-complete"));
 
 			_webXMLDefinition.setMetadataComplete(metadataComplete);
+		}
+		else if (qName.equals("web-resource-collection")) {
+			_webResourceCollection = new WebResourceCollection();
 		}
 		else if (Arrays.binarySearch(_LEAVES, qName) > -1) {
 			_stack.push(new StringBuilder());
@@ -835,9 +899,10 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	private static final String[] _LEAVES = new String[] {
 		"async-supported", "dispatcher", "error-code", "exception-type",
-		"filter-class", "filter-name", "jsp-file", "listener-class", "location",
-		"name", "param-name", "param-value", "servlet-class", "servlet-name",
-		"taglib-location", "taglib-uri", "url-pattern"
+		"filter-class", "filter-name", "http-method", "http-method-exception",
+		"jsp-file", "listener-class", "location", "name", "param-name",
+		"param-value", "servlet-class", "servlet-name", "taglib-location",
+		"taglib-uri", "url-pattern", "web-resource-name"
 	};
 
 	private List<String> _absoluteOrderingNames;
@@ -864,6 +929,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private final Stack<StringBuilder> _stack = new Stack<>();
 	private String _taglibLocation;
 	private String _taglibUri;
+	private WebResourceCollection _webResourceCollection;
 	private final WebXMLDefinition _webXMLDefinition;
 
 	private static class FilterMapping {
@@ -885,6 +951,15 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 		protected String servletName;
 		protected List<String> urlPatterns = new ArrayList<>();
+
+	}
+
+	private static class WebResourceCollection {
+
+		protected List<String> httpMethodExceptions = new ArrayList<>();
+		protected List<String> httpMethods = new ArrayList<>();
+		protected List<String> urlPatterns = new ArrayList<>();
+		protected String webResourceName;
 
 	}
 

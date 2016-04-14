@@ -46,6 +46,8 @@ public class WebXMLDefinition {
 		webXMLDefinition.setMetadataComplete(_metadataComplete);
 		webXMLDefinition.setOrder(_order);
 		webXMLDefinition.setServletDefinitions(_servletDefinitions);
+		webXMLDefinition.setWebResourceCollectionDefinitions(
+			_webResourceCollectionDefinitions);
 
 		return webXMLDefinition;
 	}
@@ -84,6 +86,12 @@ public class WebXMLDefinition {
 
 	public Map<String, ServletDefinition> getServletDefinitions() {
 		return _servletDefinitions;
+	}
+
+	public List<WebResourceCollectionDefinition>
+		getWebResourceCollectionDefinitions() {
+
+		return _webResourceCollectionDefinitions;
 	}
 
 	public boolean isMetadataComplete() {
@@ -156,6 +164,13 @@ public class WebXMLDefinition {
 		_servletDefinitions = servletDefinitions;
 	}
 
+	public void setWebResourceCollectionDefinitions(
+		List<WebResourceCollectionDefinition>
+			webResourceCollectionDefinitions) {
+
+		_webResourceCollectionDefinitions = webResourceCollectionDefinitions;
+	}
+
 	private List<String> _absoluteOrderingNames = new ArrayList<>();
 	private Map<String, String> _contextParameters = new HashMap<>();
 	private Exception _exception;
@@ -167,5 +182,7 @@ public class WebXMLDefinition {
 	private Order _order = new OrderImpl();
 	private Map<String, ServletDefinition> _servletDefinitions =
 		new HashMap<>();
+	private List<WebResourceCollectionDefinition>
+		_webResourceCollectionDefinitions = new ArrayList<>();
 
 }

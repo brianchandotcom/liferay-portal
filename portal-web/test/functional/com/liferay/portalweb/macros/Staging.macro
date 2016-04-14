@@ -484,7 +484,7 @@
 			<then>
 				<var name="key_contentName" value="${isNotEditable}" />
 
-				<execute function="AssertNotEditable" locator1="Checkbox#STAGED_CONTENT" />
+				<execute function="AssertNotVisible" locator1="Checkbox#STAGED_CONTENT" />
 			</then>
 		</if>
 

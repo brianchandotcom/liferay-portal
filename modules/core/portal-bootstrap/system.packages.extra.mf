@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1460067617603
+Bnd-LastModified: 1460594125083
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.8.0_60 (Oracle Corporation)
+Created-By: 1.8.0_77 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2568,7 +2568,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  kernel.util",com.liferay.portal.kernel.backgroundtask.display;version
  ="1.0.0";uses:="com.liferay.portal.kernel.backgroundtask,com.liferay.
  portal.kernel.json,com.liferay.portal.kernel.template",com.liferay.po
- rtal.kernel.bean;version="7.0.0";uses:="javax.portlet,javax.servlet.h
+ rtal.kernel.bean;version="7.1.0";uses:="javax.portlet,javax.servlet.h
  ttp",com.liferay.portal.kernel.cache;version="7.0.0";uses:="com.lifer
  ay.portal.kernel.nio.intraband.proxy.annotation,com.liferay.portal.ke
  rnel.spring.osgi",com.liferay.portal.kernel.cache.configurator;versio
@@ -3494,7 +3494,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ortal.systemevent;version="1.0.2";uses:="com.liferay.portal.kernel.mo
  del,com.liferay.portal.kernel.systemevent,com.liferay.portal.spring.a
  op,org.aopalliance.intercept",com.liferay.portal.template;version="1.
- 2.0";uses:="com.liferay.portal.kernel.cache,com.liferay.portal.kernel
+ 2.1";uses:="com.liferay.portal.kernel.cache,com.liferay.portal.kernel
  .security.pacl,com.liferay.portal.kernel.spring.osgi,com.liferay.port
  al.kernel.template,javax.portlet,javax.servlet,javax.servlet.http",co
  m.liferay.portal.templateparser;uses:="com.liferay.portal.kernel.io.u

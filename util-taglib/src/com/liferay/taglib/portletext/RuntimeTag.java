@@ -16,6 +16,7 @@ package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -99,12 +101,15 @@ public class RuntimeTag extends TagSupport {
 				return;
 			}
 
+			String errorMessage = LanguageUtil.format(
+				request, "an-app-that-can-x-x-belongs-here",
+				new Object[] {
+					portletProviderAction.name(), portletProviderClassName
+				},
+				false);
+
 			request.setAttribute(
-				"liferay-portlet:runtime:portletProviderClassName",
-				portletProviderClassName);
-			request.setAttribute(
-				"liferay-portlet:runtime:portletProviderAction",
-				portletProviderAction);
+				"liferay-portlet:runtime:errorMessage", errorMessage);
 
 			PortalIncludeUtil.include(pageContext, _ERROR_PAGE);
 		}
@@ -186,6 +191,23 @@ public class RuntimeTag extends TagSupport {
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			if (Validator.equals(
+					portletDisplay.getId(),
+					portletInstance.getPortletInstanceKey())) {
+
+				String errorMessage = LanguageUtil.get(
+					request, "the-application-cannot-include-itself");
+
+				request.setAttribute(
+					"liferay-portlet:runtime:errorMessage", errorMessage);
+
+				PortalIncludeUtil.include(pageContext, _ERROR_PAGE);
+
+				return;
+			}
 
 			if (themeDisplay.isStateMaximized()) {
 				LayoutTypePortlet layoutTypePortlet =

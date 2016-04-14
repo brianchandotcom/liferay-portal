@@ -17,10 +17,9 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String portletProviderClassName = (String)request.getAttribute("liferay-portlet:runtime:portletProviderClassName");
-PortletProvider.Action portletProviderAction = (PortletProvider.Action)request.getAttribute("liferay-portlet:runtime:portletProviderAction");
+String errorMessage = (String)request.getAttribute("liferay-portlet:runtime:errorMessage");
 %>
 
 <div class="alert alert-warning lfr-configurator-visibility lfr-meta-actions">
-	<liferay-ui:message arguments="<%= new Object[] {portletProviderAction.name(), portletProviderClassName} %>" key="an-app-that-can-x-x-belongs-here" translateArguments="<%= false %>" />
+	<%= errorMessage %>
 </div>

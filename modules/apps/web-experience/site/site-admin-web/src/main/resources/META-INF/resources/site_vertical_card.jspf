@@ -14,12 +14,8 @@
  */
 --%>
 
-<%
-List<Group> childGroups = curGroup.getChildren(true);
-%>
-
 <liferay-frontend:vertical-card-footer>
-	<label class="<%= (childGroups.size() != 0) ? "text-default" : "disabled" %>">
-		<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
-	</label>
+	<aui:a href="<%= (viewSubsitesURL != null) ? viewSubsitesURL.toString() : StringPool.BLANK %>">
+		<span class="text-primary"><liferay-ui:message arguments="<%= String.valueOf(childSites.size()) %>" key="x-child-sites" /></span>
+	</aui:a>
 </liferay-frontend:vertical-card-footer>

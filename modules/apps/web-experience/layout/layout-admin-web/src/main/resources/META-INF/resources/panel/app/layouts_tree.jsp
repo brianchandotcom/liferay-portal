@@ -325,7 +325,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 								container.plug(A.Plugin.ParseContent);
 
-								container.setContent(response);
+								container.replace(response);
 							}
 						}
 					}

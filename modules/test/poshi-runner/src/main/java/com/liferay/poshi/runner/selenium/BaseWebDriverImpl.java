@@ -1876,7 +1876,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void scrollBy(String coordString) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.scrollBy(this, coordString);
 	}
 
 	@Override

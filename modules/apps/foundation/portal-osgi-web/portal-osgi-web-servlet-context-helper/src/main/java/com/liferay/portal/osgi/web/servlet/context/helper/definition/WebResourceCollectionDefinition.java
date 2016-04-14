@@ -23,6 +23,10 @@ import java.util.List;
  */
 public class WebResourceCollectionDefinition {
 
+	public WebResourceCollectionDefinition(String name) {
+		_name = name;
+	}
+
 	public void addHttpMethod(String httpMethod) {
 		_httpMethods.add(httpMethod);
 	}
@@ -51,13 +55,9 @@ public class WebResourceCollectionDefinition {
 		return _urlPatterns;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
 	private final List<String> _httpMethodExceptions = new ArrayList<>();
 	private final List<String> _httpMethods = new ArrayList<>();
-	private String _name;
+	private final String _name;
 	private final List<String> _urlPatterns = new ArrayList<>();
 
 }

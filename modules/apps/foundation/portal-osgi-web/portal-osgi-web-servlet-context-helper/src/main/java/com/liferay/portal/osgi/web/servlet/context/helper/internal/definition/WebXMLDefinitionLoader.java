@@ -409,9 +409,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 					_webXMLDefinition.getWebResourceCollectionDefinitions();
 
 			WebResourceCollectionDefinition definition =
-				new WebResourceCollectionDefinition();
-
-			definition.setName(_webResourceCollection.webResourceName);
+				new WebResourceCollectionDefinition(
+					_webResourceCollection.webResourceName);
 
 			for (String httpMethod : _webResourceCollection.httpMethods) {
 				definition.addHttpMethod(httpMethod);

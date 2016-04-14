@@ -105,7 +105,7 @@ else if (metadataField.equals("view-count")) {
 			</div>
 
 			<div class="asset-user-info">
-				<span class="user-info"><%= assetRendererUser.getFullName() %></span>
+				<span class="user-info"><%= HtmlUtil.escape(assetRendererUser.getFullName()) %></span>
 
 				<span class="date-info"><%= displayDate %></span>
 			</div>

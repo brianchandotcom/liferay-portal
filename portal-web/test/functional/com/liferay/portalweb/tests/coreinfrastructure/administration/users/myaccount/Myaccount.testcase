@@ -74,6 +74,10 @@
 	</command>
 
 	<command name="ViewMyAccountViaSignInPortlet" priority="4">
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sign In" />
+		</execute>
+
 		<execute function="AssertClick" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="Test Test" />
 
 		<execute macro="MyAccount#view" />

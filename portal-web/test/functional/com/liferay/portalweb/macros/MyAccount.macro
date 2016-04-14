@@ -39,12 +39,8 @@
 	</command>
 
 	<command name="view">
-		<execute function="AssertTextEquals" locator1="NavListItem#DETAILS" value1="Details" />
-		<execute function="AssertTextEquals" locator1="NavListItem#PASSWORD" value1="Password" />
-		<execute function="AssertTextEquals" locator1="NavListItem#ORGANIZATIONS" value1="Organizations" />
-		<execute function="AssertTextEquals" locator1="NavListItem#SITES" value1="Sites" />
-		<execute function="AssertTextEquals" locator1="NavListItem#USER_GROUPS" value1="User Groups" />
-		<execute function="AssertTextEquals" locator1="NavListItem#ROLES" value1="Roles" />
-		<execute function="AssertTextEquals" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<for list="Password,Organization,Sites,User Groups,Roles,Categorization" param="key_panelHeading">
+			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
+		</for>
 	</command>
 </definition>

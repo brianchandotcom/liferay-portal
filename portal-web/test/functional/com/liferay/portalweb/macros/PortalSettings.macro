@@ -547,7 +547,7 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER" value1="Service Account" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD" value1="LIFERAY$@EXAMPLE.COM" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER" value1="Service Password" />
-		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD" value1="test" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD" value1="TEMP_OBFUSCATION_VALUE" />
 	</command>
 
 	<command name="viewAuthenticationOpenIDCP">

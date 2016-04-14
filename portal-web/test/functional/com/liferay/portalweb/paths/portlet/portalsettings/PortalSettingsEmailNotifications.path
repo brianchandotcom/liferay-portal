@@ -93,7 +93,7 @@
 <!--EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION-->
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER</td>
-	<td>//div[contains(@id,'emailNotifications')]/div[4]//span[contains(.,'Subject')]</td>
+	<td>//input[contains(@id,'adminEmailPasswordSentSubject')]/ancestor::span/preceding-sibling::span[contains(.,'Subject')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER</td>
-	<td>//div[contains(@id,'emailNotifications')]/div[4]//span[contains(.,'Body')]</td>
+	<td>//iframe[contains(@title,'adminEmailPasswordSentBody')]/ancestor::span/preceding-sibling::span[contains(.,'Body')]</td>
 	<td></td>
 </tr>
 <tr>

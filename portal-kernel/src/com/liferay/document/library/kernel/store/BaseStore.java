@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +29,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
 
 /**
  * The abstract base class for all file store implementations. Most, if not all
@@ -67,18 +68,14 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException {
 
-		File file = null;
+		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(bytes)) {
 
-		try {
-			file = FileUtil.createTempFile(bytes);
-
-			addFile(companyId, repositoryId, fileName, file);
+			addFile(
+				companyId, repositoryId, fileName, unsyncByteArrayInputStream);
 		}
 		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			FileUtil.delete(file);
+			throw new SystemException("Unable to read bytes", ioe);
 		}
 	}
 
@@ -96,25 +93,14 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException {
 
-		InputStream is = null;
-
-		try {
-			is = new FileInputStream(file);
-
+		try (InputStream is = new FileInputStream(file)) {
 			addFile(companyId, repositoryId, fileName, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new SystemException(fnfe);
 		}
-		finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-			}
-			catch (IOException ioe) {
-				_log.error(ioe);
-			}
+		catch (IOException ioe) {
+			_log.error(ioe);
 		}
 	}
 
@@ -283,18 +269,14 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		byte[] bytes = null;
-
 		try {
-			InputStream is = getFileAsStream(companyId, repositoryId, fileName);
+			File file = getFile(companyId, repositoryId, fileName);
 
-			bytes = FileUtil.getBytes(is);
+			return Files.readAllBytes(file.toPath());
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-
-		return bytes;
 	}
 
 	/**
@@ -313,19 +295,15 @@ public abstract class BaseStore implements Store {
 			String versionLabel)
 		throws PortalException {
 
-		byte[] bytes = null;
-
 		try {
-			InputStream is = getFileAsStream(
+			File file = getFile(
 				companyId, repositoryId, fileName, versionLabel);
 
-			bytes = FileUtil.getBytes(is);
+			return Files.readAllBytes(file.toPath());
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-
-		return bytes;
 	}
 
 	/**
@@ -475,18 +453,15 @@ public abstract class BaseStore implements Store {
 			String versionLabel, byte[] bytes)
 		throws PortalException {
 
-		File file = null;
+		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(bytes)) {
 
-		try {
-			file = FileUtil.createTempFile(bytes);
-
-			updateFile(companyId, repositoryId, fileName, versionLabel, file);
+			updateFile(
+				companyId, repositoryId, fileName, versionLabel,
+				unsyncByteArrayInputStream);
 		}
 		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
-		}
-		finally {
-			FileUtil.delete(file);
+			throw new SystemException("Unable to read bytes", ioe);
 		}
 	}
 
@@ -506,26 +481,15 @@ public abstract class BaseStore implements Store {
 			String versionLabel, File file)
 		throws PortalException {
 
-		InputStream is = null;
-
-		try {
-			is = new FileInputStream(file);
-
+		try (InputStream is = new FileInputStream(file)) {
 			updateFile(companyId, repositoryId, fileName, versionLabel, is);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new NoSuchFileException(
 				companyId, repositoryId, fileName, versionLabel, fnfe);
 		}
-		finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-			}
-			catch (IOException ioe) {
-				_log.error(ioe);
-			}
+		catch (IOException ioe) {
+			_log.error(ioe);
 		}
 	}
 

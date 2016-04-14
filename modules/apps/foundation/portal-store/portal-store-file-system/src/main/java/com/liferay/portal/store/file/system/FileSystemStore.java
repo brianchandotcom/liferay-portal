@@ -474,27 +474,23 @@ public class FileSystemStore extends BaseStore {
 	protected void deleteEmptyAncestors(
 		long companyId, long repositoryId, File file) {
 
-		String[] fileNames = file.list();
+		while (file != null) {
+			if (!file.delete()) {
+				return;
+			}
 
-		if ((fileNames == null) || (fileNames.length > 0)) {
-			return;
-		}
+			String fileName = file.getName();
 
-		String fileName = file.getName();
+			if ((repositoryId > 0) &&
+				fileName.equals(String.valueOf(repositoryId))) {
 
-		if ((repositoryId > 0) &&
-			fileName.equals(String.valueOf(repositoryId))) {
+				RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
+					companyId, repositoryId);
 
-			RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
-				companyId, repositoryId);
+				_repositoryDirs.remove(repositoryDirKey);
+			}
 
-			_repositoryDirs.remove(repositoryDirKey);
-		}
-
-		File parentFile = file.getParentFile();
-
-		if (file.delete() && (parentFile != null)) {
-			deleteEmptyAncestors(companyId, repositoryId, parentFile);
+			file = file.getParentFile();
 		}
 	}
 

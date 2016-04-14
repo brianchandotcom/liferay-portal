@@ -524,6 +524,23 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				StringUtil.capitalize(installCacheTask.getName()),
 			MavenPlugin.INSTALL_TASK_NAME);
 
+		installCacheTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					String result = getGitResult(
+						task.getProject(), "status", "--porcelain", ".");
+
+					if (Validator.isNotNull(result)) {
+						throw new GradleException(
+							"Unable to install project to the local Gradle " +
+								"cache, commit changes first");
+					}
+				}
+
+			});
+
 		installCacheTask.setArtifactGroup(
 			new Callable<Object>() {
 

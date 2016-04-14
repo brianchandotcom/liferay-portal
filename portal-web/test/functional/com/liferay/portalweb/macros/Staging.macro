@@ -626,6 +626,7 @@
 
 	<command name="publishToLiveNowViaPortletCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#STAGING" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
@@ -883,6 +884,7 @@
 
 	<command name="viewNoPublishContentCountViaPortletStagingCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#STAGING" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />

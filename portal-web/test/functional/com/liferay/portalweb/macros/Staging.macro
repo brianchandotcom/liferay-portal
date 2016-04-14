@@ -625,14 +625,22 @@
 	</command>
 
 	<command name="publishToLiveNowViaPortletCP">
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#STAGING" />
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-		<execute function="AssertClick" locator1="Staging#STAGING_NAVIGATION" value1="Staging" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+
 		<execute function="AssertClickNoError" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
+
 		<execute function="Confirm" value1="Are you sure you want to publish to live and update the existing portlet data?" />
-		<execute function="SelectFrameTop" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#STAGING_STATUS_PORTLET" value1="Successful" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="publishToLivePublishTemplate">
@@ -874,16 +882,17 @@
 	</command>
 
 	<command name="viewNoPublishContentCountViaPortletStagingCP">
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#STAGING" />
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-		<execute function="AssertClick" locator1="Staging#STAGING_NAVIGATION" value1="Staging" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+
 		<execute function="AssertElementNotPresent" locator1="BasePortletStaging#STAGING_CONTENT_COUNT" />
 		<execute function="AssertElementNotPresent" locator1="BasePortletStaging#STAGING_CONTENT_INFO" />
-		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_DATE_RANGE" value1="${stagingDateRange}" />
 
 		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="viewPageVariationPG">
@@ -900,8 +909,10 @@
 
 		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_CONTENT_COUNT" value1="${contentCount}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortletStaging#STAGING_CONTENT_INFO" value1="${contentInformation}" />
-		<execute function="AssertTextEquals" locator1="BasePortletStaging#STAGING_DATE_RANGE" value1="${stagingDateRange}" />
+
 		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="viewPublishTemplate">

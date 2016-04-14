@@ -14,15 +14,20 @@
 
 package com.liferay.portal.template;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class ServiceLocator {
 
 	public static ServiceLocator getInstance() {
@@ -30,13 +35,13 @@ public class ServiceLocator {
 	}
 
 	public Object findService(String serviceName) {
-		Object bean = null;
+		Object bean = PortalBeanLocatorUtil.locate(
+			_getServiceName(serviceName), true);
 
-		try {
-			bean = PortalBeanLocatorUtil.locate(_getServiceName(serviceName));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if (bean == null) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			bean = registry.getService(serviceName);
 		}
 
 		return bean;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.bean;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -25,6 +27,7 @@ import java.util.Map;
  * @author Miguel Pastor
  * @author Raymond Augé
  */
+@ProviderType
 public class PortalBeanLocatorUtil {
 
 	public static BeanLocator getBeanLocator() {
@@ -35,12 +38,18 @@ public class PortalBeanLocatorUtil {
 	}
 
 	public static <T> Map<String, T> locate(Class<T> clazz) {
+		return locate(clazz, false);
+	}
+
+	public static <T> Map<String, T> locate(Class<T> clazz, boolean silent) {
 		BeanLocator beanLocator = getBeanLocator();
 
 		if (beanLocator == null) {
 			_log.error("BeanLocator is null");
 
-			throw new BeanLocatorException("BeanLocator is not set");
+			if (!silent) {
+				throw new BeanLocatorException("BeanLocator is not set");
+			}
 		}
 
 		Thread currentThread = Thread.currentThread();
@@ -66,12 +75,18 @@ public class PortalBeanLocatorUtil {
 	}
 
 	public static Object locate(String name) {
+		return locate(name, false);
+	}
+
+	public static Object locate(String name, boolean silent) {
 		BeanLocator beanLocator = getBeanLocator();
 
 		if (beanLocator == null) {
 			_log.error("BeanLocator is null");
 
-			throw new BeanLocatorException("BeanLocator is not set");
+			if (!silent) {
+				throw new BeanLocatorException("BeanLocator is not set");
+			}
 		}
 
 		Thread currentThread = Thread.currentThread();

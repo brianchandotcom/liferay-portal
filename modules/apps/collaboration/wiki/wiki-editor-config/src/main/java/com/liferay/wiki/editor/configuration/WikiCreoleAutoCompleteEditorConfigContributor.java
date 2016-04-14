@@ -90,7 +90,8 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 
 		triggerJSONObject.put("term", "[");
 		triggerJSONObject.put("tplReplace", "<a href=\"{title}\">{title}</a>");
-		triggerJSONObject.put("tplResults", "{title}");
+		triggerJSONObject.put("tplResults",
+			"<span class=\"h5 truncate-text\">{title}</span>");
 
 		triggerJSONArray.put(triggerJSONObject);
 

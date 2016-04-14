@@ -130,6 +130,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.StopActionException;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
@@ -165,6 +166,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
 
 	public static final String BASELINE_TASK_NAME = "baseline";
+
+	public static final String COMMIT_CACHE_TASK_NAME = "commitCache";
 
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
@@ -371,6 +374,118 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return task;
 	}
 
+	protected Task addTaskCommitCache(
+		Project project, final InstallCacheTask installCacheTask) {
+
+		Task task = project.task(COMMIT_CACHE_TASK_NAME);
+
+		task.dependsOn(installCacheTask);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					File cachedVersionDir =
+						installCacheTask.getCacheDestinationDir();
+
+					File cachedArtifactDir = cachedVersionDir.getParentFile();
+
+					File[] cachedVersionDirs = FileUtil.getDirectories(
+						cachedArtifactDir);
+
+					if (cachedVersionDirs.length != 2) {
+						throw new StopActionException(
+							"Skipping old cached version deletion");
+					}
+
+					File oldCachedVersionDir = cachedVersionDirs[0];
+
+					if (cachedVersionDir.equals(oldCachedVersionDir)) {
+						oldCachedVersionDir = cachedVersionDirs[1];
+					}
+
+					Project project = task.getProject();
+
+					boolean deleted = project.delete(oldCachedVersionDir);
+
+					if (!deleted && _logger.isWarnEnabled()) {
+						_logger.warn(
+							"Unable to delete old cached version in " +
+								oldCachedVersionDir);
+					}
+				}
+
+			});
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					project.exec(
+						new Action<ExecSpec>() {
+
+							@Override
+							public void execute(ExecSpec execSpec) {
+								execSpec.setCommandLine("git", "add", ".");
+
+								File cachedVersionDir =
+									installCacheTask.getCacheDestinationDir();
+
+								execSpec.setWorkingDir(
+									cachedVersionDir.getParentFile());
+							}
+
+						});
+				}
+
+			});
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					final String commitSubject = getGitResult(
+						project, "log", "-1", "--pretty=%s");
+
+					project.exec(
+						new Action<ExecSpec>() {
+
+							@Override
+							public void execute(ExecSpec execSpec) {
+								String message = _CACHE_COMMIT_MESSAGE;
+
+								int index = commitSubject.indexOf(' ');
+
+								if (index != -1) {
+									message =
+										commitSubject.substring(0, index + 1) +
+											_CACHE_COMMIT_MESSAGE;
+								}
+
+								execSpec.setCommandLine(
+									"git", "commit", "-m", message);
+							}
+
+						});
+				}
+
+			});
+
+		task.setDescription(
+			"Installs and commits the project to the local Gradle cache for " +
+				"testing.");
+		task.setGroup(BasePlugin.UPLOAD_GROUP);
+
+		return task;
+	}
+
 	protected Copy addTaskCopyLibs(Project project) {
 		Copy copy = GradleUtil.addTask(
 			project, COPY_LIBS_TASK_NAME, Copy.class);
@@ -408,6 +523,23 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			BasePlugin.CLEAN_TASK_NAME +
 				StringUtil.capitalize(installCacheTask.getName()),
 			MavenPlugin.INSTALL_TASK_NAME);
+
+		installCacheTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					String result = getGitResult(
+						task.getProject(), "status", "--porcelain", ".");
+
+					if (Validator.isNotNull(result)) {
+						throw new GradleException(
+							"Unable to install project to the local Gradle " +
+								"cache, commit changes first");
+					}
+				}
+
+			});
 
 		installCacheTask.setArtifactGroup(
 			new Callable<Object>() {
@@ -812,7 +944,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public String call() throws Exception {
-					return getGitHead(writePropertiesTask.getProject());
+					return getGitResult(
+						writePropertiesTask.getProject(), "rev-parse", "HEAD");
 				}
 
 			});
@@ -1476,7 +1609,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				project, portalConfiguration, portalTestConfiguration);
 		}
 
-		addTaskInstallCache(project);
+		InstallCacheTask installCacheTask = addTaskInstallCache(project);
+
+		addTaskCommitCache(project, installCacheTask);
 
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
@@ -2484,7 +2619,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
-	protected String getGitHead(Project project) {
+	protected String getGitResult(Project project, final Object ... args) {
 		final ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -2493,15 +2628,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
-					execSpec.commandLine("git", "rev-parse", "HEAD");
+					execSpec.args(args);
+					execSpec.setExecutable("git");
 					execSpec.setStandardOutput(byteArrayOutputStream);
 				}
 
 			});
 
-		String gitHead = byteArrayOutputStream.toString();
+		String result = byteArrayOutputStream.toString();
 
-		return gitHead.trim();
+		return result.trim();
 	}
 
 	protected File getLibDir(Project project) {
@@ -2738,6 +2874,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	}
 
 	private static final String _APP_BND_FILE_NAME = "app.bnd";
+
+	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
 	private static final String _GROUP = "com.liferay";
 

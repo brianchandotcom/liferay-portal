@@ -19,6 +19,7 @@ import com.liferay.gradle.util.ArrayUtil;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.FileFilter;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +39,22 @@ import org.gradle.api.tasks.TaskInputs;
  * @author Andrea Di Giorgi
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
+
+	public static File[] getDirectories(File dir) {
+		return dir.listFiles(
+			new FileFilter() {
+
+				@Override
+				public boolean accept(File file) {
+					if (file.isDirectory()) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+	}
 
 	public static FileTree getJarsFileTree(
 		Project project, File dir, String ... excludes) {

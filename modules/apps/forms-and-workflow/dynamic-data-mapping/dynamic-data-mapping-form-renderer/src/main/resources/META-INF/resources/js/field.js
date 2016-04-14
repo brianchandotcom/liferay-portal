@@ -11,7 +11,7 @@ AUI.add(
 
 		var TPL_DIV = '<div></div>';
 
-		var TPL_FORM_FIELD_CONTAINER = '<div class="{hide} lfr-ddm-form-field-container"></div>';
+		var TPL_FORM_FIELD_CONTAINER = '<div class="{hide} lfr-ddm-form-field-container clearfix"></div>';
 
 		var Field = A.Component.create(
 			{

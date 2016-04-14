@@ -148,7 +148,7 @@
 			<then>
 				<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
+				<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
@@ -157,7 +157,7 @@
 
 						<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-						<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
+						<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 					</then>
 				</if>
 			</then>
@@ -180,7 +180,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Button#PERMISSIONS" />
+		<execute function="AssertElementPresent" locator1="MenuItem#PERMISSIONS" />
 	</command>
 
 	<command name="viewScopeCP">

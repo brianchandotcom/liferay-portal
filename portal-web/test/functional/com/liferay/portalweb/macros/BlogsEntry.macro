@@ -894,7 +894,7 @@
 	<command name="viewPermissionsNoPermissionPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="viewPermissionsPG">

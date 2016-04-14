@@ -314,12 +314,16 @@
 		/>
 	</target>
 
-	<target name="install-portal-release" depends="jar">
-		<install-portal-artifact />
+	<target name="install-portal-release" depends="jar,jar-sources">
+		<install-portal-artifact>
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</install-portal-artifact>
 	</target>
 
-	<target name="install-portal-snapshot" depends="jar">
-		<install-portal-artifact snapshot="true" />
+	<target name="install-portal-snapshot" depends="jar,jar-sources">
+		<install-portal-artifact snapshot="true">
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</install-portal-artifact>
 	</target>
 
 	<target name="jar">

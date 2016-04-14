@@ -261,7 +261,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(calendarNotificationTemplateLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CalendarNotificationTemplate.class);
 
@@ -275,7 +275,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(calendarNotificationTemplateLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(CalendarNotificationTemplate.class);
 
@@ -287,7 +287,7 @@ public abstract class CalendarNotificationTemplateLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(calendarNotificationTemplateLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CalendarNotificationTemplate.class);
 

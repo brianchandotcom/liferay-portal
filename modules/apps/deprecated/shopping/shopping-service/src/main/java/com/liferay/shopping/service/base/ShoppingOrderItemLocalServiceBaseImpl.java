@@ -229,7 +229,7 @@ public abstract class ShoppingOrderItemLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(shoppingOrderItemLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ShoppingOrderItem.class);
 
@@ -242,7 +242,7 @@ public abstract class ShoppingOrderItemLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(shoppingOrderItemLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ShoppingOrderItem.class);
 
@@ -253,7 +253,7 @@ public abstract class ShoppingOrderItemLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(shoppingOrderItemLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ShoppingOrderItem.class);
 

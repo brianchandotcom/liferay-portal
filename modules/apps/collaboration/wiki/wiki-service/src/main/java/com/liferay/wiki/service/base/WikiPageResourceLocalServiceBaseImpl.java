@@ -242,7 +242,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiPageResourceLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(wikiPageResourceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WikiPageResource.class);
 
@@ -255,7 +255,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiPageResourceLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(wikiPageResourceLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(WikiPageResource.class);
 
@@ -267,7 +267,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiPageResourceLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(wikiPageResourceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WikiPageResource.class);
 

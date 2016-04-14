@@ -231,7 +231,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(resourceTypePermissionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ResourceTypePermission.class);
 
@@ -245,7 +245,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(resourceTypePermissionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ResourceTypePermission.class);
 
@@ -257,7 +257,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(resourceTypePermissionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ResourceTypePermission.class);
 

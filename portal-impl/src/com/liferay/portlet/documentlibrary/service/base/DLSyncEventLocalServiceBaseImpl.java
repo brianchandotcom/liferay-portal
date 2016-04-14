@@ -226,7 +226,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(dlSyncEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLSyncEvent.class);
 
@@ -239,7 +239,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(dlSyncEventLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DLSyncEvent.class);
 
@@ -250,7 +250,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(dlSyncEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLSyncEvent.class);
 

@@ -237,7 +237,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(membershipRequestLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MembershipRequest.class);
 
@@ -250,7 +250,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(membershipRequestLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(MembershipRequest.class);
 
@@ -262,7 +262,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(membershipRequestLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MembershipRequest.class);
 

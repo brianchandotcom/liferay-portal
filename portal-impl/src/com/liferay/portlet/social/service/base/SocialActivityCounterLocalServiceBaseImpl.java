@@ -241,7 +241,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(socialActivityCounterLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityCounter.class);
 
@@ -254,7 +254,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(socialActivityCounterLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SocialActivityCounter.class);
 
@@ -266,7 +266,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(socialActivityCounterLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityCounter.class);
 

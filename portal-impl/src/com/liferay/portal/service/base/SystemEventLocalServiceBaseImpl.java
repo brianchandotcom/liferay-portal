@@ -230,7 +230,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.SystemEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(systemEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SystemEvent.class);
 
@@ -243,7 +243,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.SystemEventLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(systemEventLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SystemEvent.class);
 
@@ -255,7 +255,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.SystemEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(systemEventLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SystemEvent.class);
 

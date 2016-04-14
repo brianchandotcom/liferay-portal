@@ -236,7 +236,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(socialActivityAchievementLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityAchievement.class);
 
@@ -250,7 +250,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(socialActivityAchievementLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SocialActivityAchievement.class);
 
@@ -262,7 +262,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(socialActivityAchievementLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivityAchievement.class);
 

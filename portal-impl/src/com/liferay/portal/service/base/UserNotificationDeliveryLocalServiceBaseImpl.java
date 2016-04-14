@@ -231,7 +231,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userNotificationDeliveryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserNotificationDelivery.class);
 
@@ -245,7 +245,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(userNotificationDeliveryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(UserNotificationDelivery.class);
 
@@ -257,7 +257,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userNotificationDeliveryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserNotificationDelivery.class);
 

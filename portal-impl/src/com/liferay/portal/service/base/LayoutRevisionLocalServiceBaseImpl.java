@@ -239,7 +239,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(layoutRevisionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutRevision.class);
 
@@ -252,7 +252,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(layoutRevisionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(LayoutRevision.class);
 
@@ -264,7 +264,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(layoutRevisionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutRevision.class);
 

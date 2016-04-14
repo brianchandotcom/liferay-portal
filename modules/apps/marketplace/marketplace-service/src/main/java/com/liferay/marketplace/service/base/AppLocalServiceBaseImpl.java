@@ -244,7 +244,7 @@ public abstract class AppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.marketplace.service.AppLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(appLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(App.class);
 
@@ -257,7 +257,7 @@ public abstract class AppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.marketplace.service.AppLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(appLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(App.class);
 
@@ -268,7 +268,7 @@ public abstract class AppLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.marketplace.service.AppLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(appLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(App.class);
 

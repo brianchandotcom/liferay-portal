@@ -229,7 +229,7 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.RecentLayoutBranchLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(recentLayoutBranchLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RecentLayoutBranch.class);
 
@@ -242,7 +242,7 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.RecentLayoutBranchLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(recentLayoutBranchLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(RecentLayoutBranch.class);
 
@@ -254,7 +254,7 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.RecentLayoutBranchLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(recentLayoutBranchLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RecentLayoutBranch.class);
 

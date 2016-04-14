@@ -251,7 +251,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(emailAddressLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(EmailAddress.class);
 
@@ -264,7 +264,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(emailAddressLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(EmailAddress.class);
 
@@ -276,7 +276,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(emailAddressLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(EmailAddress.class);
 

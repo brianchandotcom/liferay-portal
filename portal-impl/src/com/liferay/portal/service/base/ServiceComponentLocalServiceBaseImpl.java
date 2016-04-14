@@ -228,7 +228,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(serviceComponentLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -241,7 +241,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(serviceComponentLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ServiceComponent.class);
 
@@ -253,7 +253,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(serviceComponentLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ServiceComponent.class);
 

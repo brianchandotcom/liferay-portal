@@ -230,7 +230,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(trashVersionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TrashVersion.class);
 
@@ -243,7 +243,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(trashVersionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(TrashVersion.class);
 
@@ -254,7 +254,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(trashVersionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(TrashVersion.class);
 

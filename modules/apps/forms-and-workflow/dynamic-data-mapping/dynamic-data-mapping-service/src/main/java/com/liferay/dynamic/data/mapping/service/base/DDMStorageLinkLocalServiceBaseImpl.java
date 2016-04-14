@@ -241,7 +241,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddmStorageLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMStorageLink.class);
 
@@ -254,7 +254,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(ddmStorageLinkLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DDMStorageLink.class);
 
@@ -266,7 +266,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddmStorageLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMStorageLink.class);
 

@@ -274,7 +274,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.journal.service.JournalFolderLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(journalFolderLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(JournalFolder.class);
 
@@ -287,7 +287,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.journal.service.JournalFolderLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(journalFolderLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(JournalFolder.class);
 
@@ -298,7 +298,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.journal.service.JournalFolderLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(journalFolderLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(JournalFolder.class);
 

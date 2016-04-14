@@ -253,7 +253,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(passwordPolicyLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PasswordPolicy.class);
 
@@ -266,7 +266,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(passwordPolicyLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(PasswordPolicy.class);
 
@@ -278,7 +278,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(passwordPolicyLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(PasswordPolicy.class);
 

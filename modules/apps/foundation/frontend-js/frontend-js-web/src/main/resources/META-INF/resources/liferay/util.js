@@ -1640,7 +1640,7 @@
 			if (!urlPreview) {
 				urlPreview = new Liferay.UrlPreview(
 					{
-						title: event.title,
+						title: Util.escapeHTML(event.title),
 						url: event.uri
 					}
 				);
@@ -1648,7 +1648,7 @@
 				instance._urlPreview = urlPreview;
 			}
 			else {
-				urlPreview.set('title', event.title);
+				urlPreview.set('title', Util.escapeHTML(event.title));
 				urlPreview.set('url', event.uri);
 			}
 

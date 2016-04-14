@@ -1875,6 +1875,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void scrollBy(String coordString) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void scrollWebElementIntoView(String locator) throws Exception {
 		WebElement webElement = getWebElement(locator);
 

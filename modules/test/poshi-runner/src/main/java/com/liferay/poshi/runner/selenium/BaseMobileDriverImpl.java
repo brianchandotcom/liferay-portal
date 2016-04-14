@@ -1300,6 +1300,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void scrollBy(String coordString) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void scrollWebElementIntoView(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}

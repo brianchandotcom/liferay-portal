@@ -24,8 +24,11 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.taglib.servlet.PipingServletResponse}
  * @author Carlos Sierra Andrés
  */
+@Deprecated
 public class JspWriterHttpServletResponse extends HttpServletResponseWrapper {
 
 	public JspWriterHttpServletResponse(PageContext pageContext) {

@@ -55,7 +55,7 @@ tabsNames = ArrayUtil.append(tabsNames, (String)request.getAttribute(PortalSetti
 		<liferay-ui:section>
 
 			<%
-			dynamicInclude.include(request, new JspWriterHttpServletResponse(pageContext), null);
+			dynamicInclude.include(request, new PipingServletResponse(response, pageContext.getOut()), null);
 			%>
 
 		</liferay-ui:section>

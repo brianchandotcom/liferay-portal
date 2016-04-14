@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.FileAvailabilityUtil;
-import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
@@ -307,7 +306,7 @@ public class IncludeTag extends AttributesTagSupport {
 	}
 
 	protected void include(String page, boolean doStartTag) throws Exception {
-		JspWriterHttpServletResponse jspWriterHttpServletResponse = null;
+		HttpServletResponse httpServletResponse = null;
 
 		Class<?> clazz = getClass();
 
@@ -328,15 +327,16 @@ public class IncludeTag extends AttributesTagSupport {
 			TagDynamicIdFactoryRegistry.getTagDynamicIdFactory(tagClassName);
 
 		if (tagDynamicIdFactory != null) {
-			jspWriterHttpServletResponse = new JspWriterHttpServletResponse(
-				pageContext);
+			httpServletResponse = new PipingServletResponse(
+				(HttpServletResponse)pageContext.getResponse(),
+				pageContext.getOut());
 
 			tagDynamicId = tagDynamicIdFactory.getTagDynamicId(
-				request, jspWriterHttpServletResponse, this);
+				request, httpServletResponse, this);
 
 			TagDynamicIncludeUtil.include(
-				request, jspWriterHttpServletResponse, tagClassName,
-				tagDynamicId, tagPointPrefix + "before", doStartTag);
+				request, httpServletResponse, tagClassName, tagDynamicId,
+				tagPointPrefix + "before", doStartTag);
 		}
 
 		if (_useCustomPage) {
@@ -358,8 +358,8 @@ public class IncludeTag extends AttributesTagSupport {
 
 		if (tagDynamicIdFactory != null) {
 			TagDynamicIncludeUtil.include(
-				request, jspWriterHttpServletResponse, tagClassName,
-				tagDynamicId, tagPointPrefix + "after", doStartTag);
+				request, httpServletResponse, tagClassName, tagDynamicId,
+				tagPointPrefix + "after", doStartTag);
 		}
 	}
 

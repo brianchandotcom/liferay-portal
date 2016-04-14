@@ -78,7 +78,7 @@ page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
-page import="com.liferay.taglib.servlet.JspWriterHttpServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collection" %><%@

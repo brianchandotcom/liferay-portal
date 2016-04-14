@@ -42,12 +42,12 @@ AUI.add(
 						instance._signInURL = host.attr('href');
 
 						if (signInPortlet) {
-							var formNode = signInPortlet.one('form');
+							var formNode = signInPortlet.one('#_com_liferay_login_web_portlet_LoginPortlet_loginForm');
 
 							if (formNode) {
 								var form = Liferay.Form.get(formNode.attr('id'));
 
-								instance._formValidator = form.formValidator;
+									instance._formValidator = form.formValidator;
 
 								instance._hasSignInForm = formNode.hasClass('sign-in-form');
 							}

@@ -812,7 +812,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public String call() throws Exception {
-					return getGitHead(writePropertiesTask.getProject());
+					return getGitResult(
+						writePropertiesTask.getProject(), "rev-parse", "HEAD");
 				}
 
 			});
@@ -2484,7 +2485,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
-	protected String getGitHead(Project project) {
+	protected String getGitResult(Project project, final Object ... args) {
 		final ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -2493,15 +2494,16 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
-					execSpec.commandLine("git", "rev-parse", "HEAD");
+					execSpec.args(args);
+					execSpec.setExecutable("git");
 					execSpec.setStandardOutput(byteArrayOutputStream);
 				}
 
 			});
 
-		String gitHead = byteArrayOutputStream.toString();
+		String result = byteArrayOutputStream.toString();
 
-		return gitHead.trim();
+		return result.trim();
 	}
 
 	protected File getLibDir(Project project) {

@@ -113,6 +113,12 @@ $horizontal-spacing: 35px;
 	margin-left: 19px;
 }
 
+.lfr-ddl-field-settings-confirmation-message {
+	margin: 0;
+	padding: $horizontal-spacing;
+	text-align: center;
+}
+
 .lfr-ddl-field-settings-modal.form-builder-field-settings {
 	height: 100%;
 	margin: 0;
@@ -359,11 +365,6 @@ $horizontal-spacing: 35px;
 		.btn {
 			width: auto;
 		}
-
-		.lfr-ddl-field-settings-confirmation-message {
-			float: left;
-			margin: 13px 20px 0 0;
-		}
 	}
 
 	.modal-header {
@@ -411,6 +412,11 @@ $horizontal-spacing: 35px;
 			margin-left: 0;
 		}
 	}
+}
+
+.lfr-ddl-field-settings-yes {
+	padding-left: 21px;
+	padding-right: 21px;
 }
 
 .lfr-ddl-form-builder-field-types-modal {

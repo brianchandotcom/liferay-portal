@@ -25,7 +25,7 @@ AUI.add(
 
 		var CSS_MODAL_TITLE = A.getClassName('modal', 'title');
 
-		var TPL_CONFIRMATION_MESSAGE = '<div class="' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE + '">' + Liferay.Language.get('cancel-without-saving') + '</div>';
+		var TPL_CONFIRMATION_MESSAGE = '<p class="' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE + ' text-muted">' + Liferay.Language.get('cancel-without-saving') + '</p>';
 
 		var FormBuilderFieldSettingsModal = A.Component.create(
 			{
@@ -60,7 +60,7 @@ AUI.add(
 
 						FormBuilderFieldSettingsModal.superclass.show.apply(instance, arguments);
 
-						instance._showDefaultToolbar();
+						instance._getBodyNode().append(A.Node.create(TPL_CONFIRMATION_MESSAGE).toggle(false));
 
 						var field = instance._fieldBeingEdited;
 
@@ -69,6 +69,8 @@ AUI.add(
 						var container = settingsForm.get('container');
 
 						container.appendTo(instance._getBodyNode());
+
+						instance._showDefaultToolbar();
 
 						settingsForm.render();
 
@@ -113,16 +115,16 @@ AUI.add(
 										},
 										{
 											cssClass: [CSS_BTN_LG, CSS_BTN_PRIMARY, CSS_FIELD_SETTINGS_YES].join(' '),
-											labelHTML: Liferay.Language.get('yes'),
+											labelHTML: Liferay.Language.get('yes-cancel'),
 											on: {
 												click: A.bind('hide', instance)
 											}
 										},
 										{
 											cssClass: [CSS_BTN_LG, CSS_BTN_LINK, CSS_FIELD_SETTINGS_NO].join(' '),
-											labelHTML: Liferay.Language.get('no'),
+											labelHTML: Liferay.Language.get('dismiss'),
 											on: {
-												click: A.bind('_showDefaultToolbar', instance)
+												click: A.bind('_showFormContainer', instance)
 											}
 										}
 									],
@@ -142,8 +144,6 @@ AUI.add(
 						instance._modal = modal;
 
 						modal.get('boundingBox').addClass(CSS_FIELD_SETTINGS_MODAL);
-
-						instance._getFooterNode().prepend(A.Node.create(TPL_CONFIRMATION_MESSAGE));
 					},
 
 					_getBodyNode: function() {
@@ -180,7 +180,8 @@ AUI.add(
 							var settings = JSON.stringify(field.getSettings());
 
 							if (instance._previousSettings !== settings) {
-								instance._showConfirmationToolbar();
+
+								instance._showConfirmationMessage();
 
 								event.preventDefault();
 							}
@@ -191,6 +192,15 @@ AUI.add(
 						var instance = this;
 
 						instance._previousSettings = JSON.stringify(event.field.getSettings());
+					},
+
+					_showConfirmationMessage: function() {
+						var instance = this;
+
+						instance._showConfirmationToolbar();
+						instance._toggleConfirmationMessage(true);
+						instance._toggleFormContainer(false);
+						instance._modal.align();
 					},
 
 					_showConfirmationToolbar: function() {
@@ -219,12 +229,28 @@ AUI.add(
 						instance._toggleDefaultToolbar(true);
 					},
 
+					_showFormContainer: function() {
+						var instance = this;
+
+						instance._toggleFormContainer(true);
+						instance._toggleConfirmationMessage(false);
+						instance._showDefaultToolbar();
+						instance._modal.align();
+					},
+
+					_toggleConfirmationMessage: function(display) {
+						var instance = this;
+
+						var bodyNode = instance._getBodyNode();
+
+						bodyNode.one('.' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE).toggle(display);
+					},
+
 					_toggleConfirmationToolbar: function(display) {
 						var instance = this;
 
 						var footerNode = instance._getFooterNode();
 
-						footerNode.one('.' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE).toggle(display);
 						footerNode.one('.' + CSS_FIELD_SETTINGS_YES).toggle(display);
 						footerNode.one('.' + CSS_FIELD_SETTINGS_NO).toggle(display);
 
@@ -238,6 +264,16 @@ AUI.add(
 
 						footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE).toggle(display);
 						footerNode.one('.' + CSS_FIELD_SETTINGS_CANCEL).toggle(display);
+					},
+
+					_toggleFormContainer: function(display) {
+						var instance = this;
+
+						var field = instance._fieldBeingEdited;
+
+						var container = field.get('settingsForm').get('container');
+
+						container.toggle(display);
 					}
 				}
 			}

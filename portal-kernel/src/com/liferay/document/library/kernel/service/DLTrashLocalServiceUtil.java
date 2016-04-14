@@ -40,16 +40,6 @@ public class DLTrashLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId, long repositoryId, long fileEntryId, long newFolderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -64,6 +54,15 @@ public class DLTrashLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .moveFileEntryToTrash(userId, repositoryId, fileEntryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void restoreFileEntryFromTrash(long userId,

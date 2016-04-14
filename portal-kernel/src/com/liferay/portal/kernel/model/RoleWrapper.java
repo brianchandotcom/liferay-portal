@@ -171,8 +171,48 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new RoleWrapper((Role)_role.clone());
+	public CacheModel<com.liferay.portal.kernel.model.Role> toCacheModel() {
+		return _role.toCacheModel();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _role.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _role.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _role.isNew();
+	}
+
+	@Override
+	public boolean isSystem() {
+		return _role.isSystem();
+	}
+
+	@Override
+	public boolean isTeam() {
+		return _role.isTeam();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _role.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Role toEscapedModel() {
+		return new RoleWrapper(_role.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Role toUnescapedModel() {
+		return new RoleWrapper(_role.toUnescapedModel());
 	}
 
 	@Override
@@ -180,9 +220,29 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		return _role.compareTo(role);
 	}
 
+	/**
+	* Returns the type of this role.
+	*
+	* @return the type of this role
+	*/
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _role.getAvailableLanguageIds();
+	public int getType() {
+		return _role.getType();
+	}
+
+	@Override
+	public int hashCode() {
+		return _role.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _role.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new RoleWrapper((Role)_role.clone());
 	}
 
 	/**
@@ -193,46 +253,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public java.lang.String getClassName() {
 		return _role.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this role.
-	*
-	* @return the class name ID of this role
-	*/
-	@Override
-	public long getClassNameId() {
-		return _role.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this role.
-	*
-	* @return the class p k of this role
-	*/
-	@Override
-	public long getClassPK() {
-		return _role.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this role.
-	*
-	* @return the company ID of this role
-	*/
-	@Override
-	public long getCompanyId() {
-		return _role.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this role.
-	*
-	* @return the create date of this role
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _role.getCreateDate();
 	}
 
 	@Override
@@ -308,45 +328,10 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		return _role.getDescriptionCurrentValue();
 	}
 
-	/**
-	* Returns a map of the locales and localized descriptions of this role.
-	*
-	* @return the locales and localized descriptions of this role
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _role.getDescriptionMap();
-	}
-
 	@Override
 	public java.lang.String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _role.getDescriptiveName();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _role.getExpandoBridge();
-	}
-
-	/**
-	* Returns the modified date of this role.
-	*
-	* @return the modified date of this role
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _role.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this role.
-	*
-	* @return the mvcc version of this role
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _role.getMvccVersion();
 	}
 
 	/**
@@ -357,31 +342,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public java.lang.String getName() {
 		return _role.getName();
-	}
-
-	/**
-	* Returns the primary key of this role.
-	*
-	* @return the primary key of this role
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _role.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _role.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the role ID of this role.
-	*
-	* @return the role ID of this role
-	*/
-	@Override
-	public long getRoleId() {
-		return _role.getRoleId();
 	}
 
 	/**
@@ -461,39 +421,9 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		return _role.getTitleCurrentValue();
 	}
 
-	/**
-	* Returns a map of the locales and localized titles of this role.
-	*
-	* @return the locales and localized titles of this role
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _role.getTitleMap();
-	}
-
-	/**
-	* Returns the type of this role.
-	*
-	* @return the type of this role
-	*/
-	@Override
-	public int getType() {
-		return _role.getType();
-	}
-
 	@Override
 	public java.lang.String getTypeLabel() {
 		return _role.getTypeLabel();
-	}
-
-	/**
-	* Returns the user ID of this role.
-	*
-	* @return the user ID of this role
-	*/
-	@Override
-	public long getUserId() {
-		return _role.getUserId();
 	}
 
 	/**
@@ -527,33 +457,128 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _role.hashCode();
+	public java.lang.String toString() {
+		return _role.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _role.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _role.toXmlString();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _role.isEscapedModel();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _role.getAvailableLanguageIds();
 	}
 
+	/**
+	* Returns the create date of this role.
+	*
+	* @return the create date of this role
+	*/
 	@Override
-	public boolean isNew() {
-		return _role.isNew();
+	public Date getCreateDate() {
+		return _role.getCreateDate();
 	}
 
+	/**
+	* Returns the modified date of this role.
+	*
+	* @return the modified date of this role
+	*/
 	@Override
-	public boolean isSystem() {
-		return _role.isSystem();
+	public Date getModifiedDate() {
+		return _role.getModifiedDate();
 	}
 
+	/**
+	* Returns a map of the locales and localized descriptions of this role.
+	*
+	* @return the locales and localized descriptions of this role
+	*/
 	@Override
-	public boolean isTeam() {
-		return _role.isTeam();
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _role.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this role.
+	*
+	* @return the locales and localized titles of this role
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _role.getTitleMap();
+	}
+
+	/**
+	* Returns the class name ID of this role.
+	*
+	* @return the class name ID of this role
+	*/
+	@Override
+	public long getClassNameId() {
+		return _role.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this role.
+	*
+	* @return the class p k of this role
+	*/
+	@Override
+	public long getClassPK() {
+		return _role.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this role.
+	*
+	* @return the company ID of this role
+	*/
+	@Override
+	public long getCompanyId() {
+		return _role.getCompanyId();
+	}
+
+	/**
+	* Returns the mvcc version of this role.
+	*
+	* @return the mvcc version of this role
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _role.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this role.
+	*
+	* @return the primary key of this role
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _role.getPrimaryKey();
+	}
+
+	/**
+	* Returns the role ID of this role.
+	*
+	* @return the role ID of this role
+	*/
+	@Override
+	public long getRoleId() {
+		return _role.getRoleId();
+	}
+
+	/**
+	* Returns the user ID of this role.
+	*
+	* @return the user ID of this role
+	*/
+	@Override
+	public long getUserId() {
+		return _role.getUserId();
 	}
 
 	@Override
@@ -882,31 +907,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_role.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Role> toCacheModel() {
-		return _role.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Role toEscapedModel() {
-		return new RoleWrapper(_role.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _role.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Role toUnescapedModel() {
-		return new RoleWrapper(_role.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _role.toXmlString();
 	}
 
 	@Override

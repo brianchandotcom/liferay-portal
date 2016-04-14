@@ -38,11 +38,12 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.addAction(ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+			descriptionMap, type, typeSettingsProperties, serviceContext);
 	}
 
 	@Override
@@ -50,12 +51,11 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		long ruleGroupInstanceId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrActionLocalService.addAction(ruleGroupInstanceId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
+			descriptionMap, type, typeSettings, serviceContext);
 	}
 
 	/**
@@ -82,20 +82,16 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		return _mdrActionLocalService.createMDRAction(actionId);
 	}
 
+	/**
+	* Deletes the m d r action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrAction the m d r action
+	* @return the m d r action that was removed
+	*/
 	@Override
-	public void deleteAction(
-		com.liferay.mobile.device.rules.model.MDRAction action) {
-		_mdrActionLocalService.deleteAction(action);
-	}
-
-	@Override
-	public void deleteAction(long actionId) {
-		_mdrActionLocalService.deleteAction(actionId);
-	}
-
-	@Override
-	public void deleteActions(long ruleGroupInstanceId) {
-		_mdrActionLocalService.deleteActions(ruleGroupInstanceId);
+	public com.liferay.mobile.device.rules.model.MDRAction deleteMDRAction(
+		com.liferay.mobile.device.rules.model.MDRAction mdrAction) {
+		return _mdrActionLocalService.deleteMDRAction(mdrAction);
 	}
 
 	/**
@@ -112,16 +108,124 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		return _mdrActionLocalService.deleteMDRAction(actionId);
 	}
 
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction fetchAction(
+		long actionId) {
+		return _mdrActionLocalService.fetchAction(actionId);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction fetchMDRAction(
+		long actionId) {
+		return _mdrActionLocalService.fetchMDRAction(actionId);
+	}
+
 	/**
-	* Deletes the m d r action from the database. Also notifies the appropriate model listeners.
+	* Returns the m d r action matching the UUID and group.
 	*
-	* @param mdrAction the m d r action
-	* @return the m d r action that was removed
+	* @param uuid the m d r action's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
 	*/
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction deleteMDRAction(
+	public com.liferay.mobile.device.rules.model.MDRAction fetchMDRActionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _mdrActionLocalService.fetchMDRActionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction getAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrActionLocalService.getAction(actionId);
+	}
+
+	/**
+	* Returns the m d r action with the primary key.
+	*
+	* @param actionId the primary key of the m d r action
+	* @return the m d r action
+	* @throws PortalException if a m d r action with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction getMDRAction(
+		long actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrActionLocalService.getMDRAction(actionId);
+	}
+
+	/**
+	* Returns the m d r action matching the UUID and group.
+	*
+	* @param uuid the m d r action's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r action
+	* @throws PortalException if a matching m d r action could not be found
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction getMDRActionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrActionLocalService.getMDRActionByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction updateAction(
+		long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrActionLocalService.updateAction(actionId, nameMap,
+			descriptionMap, type, typeSettingsProperties, serviceContext);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction updateAction(
+		long actionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrActionLocalService.updateAction(actionId, nameMap,
+			descriptionMap, type, typeSettings, serviceContext);
+	}
+
+	/**
+	* Updates the m d r action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mdrAction the m d r action
+	* @return the m d r action that was updated
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction updateMDRAction(
 		com.liferay.mobile.device.rules.model.MDRAction mdrAction) {
-		return _mdrActionLocalService.deleteMDRAction(mdrAction);
+		return _mdrActionLocalService.updateMDRAction(mdrAction);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _mdrActionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _mdrActionLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _mdrActionLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mdrActionLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -135,8 +239,35 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _mdrActionLocalService.dynamicQuery();
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrActionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public int getActionsCount(long ruleGroupInstanceId) {
+		return _mdrActionLocalService.getActionsCount(ruleGroupInstanceId);
+	}
+
+	/**
+	* Returns the number of m d r actions.
+	*
+	* @return the number of m d r actions
+	*/
+	@Override
+	public int getMDRActionsCount() {
+		return _mdrActionLocalService.getMDRActionsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mdrActionLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -192,70 +323,6 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 			orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _mdrActionLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _mdrActionLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction fetchAction(
-		long actionId) {
-		return _mdrActionLocalService.fetchAction(actionId);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction fetchMDRAction(
-		long actionId) {
-		return _mdrActionLocalService.fetchMDRAction(actionId);
-	}
-
-	/**
-	* Returns the m d r action matching the UUID and group.
-	*
-	* @param uuid the m d r action's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction fetchMDRActionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _mdrActionLocalService.fetchMDRActionByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction getAction(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrActionLocalService.getAction(actionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _mdrActionLocalService.getActionableDynamicQuery();
-	}
-
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions(
 		long ruleGroupInstanceId) {
@@ -274,51 +341,6 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRAction> obc) {
 		return _mdrActionLocalService.getActions(ruleGroupInstanceId, start,
 			end, obc);
-	}
-
-	@Override
-	public int getActionsCount(long ruleGroupInstanceId) {
-		return _mdrActionLocalService.getActionsCount(ruleGroupInstanceId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _mdrActionLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _mdrActionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the m d r action with the primary key.
-	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action
-	* @throws PortalException if a m d r action with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction getMDRAction(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrActionLocalService.getMDRAction(actionId);
-	}
-
-	/**
-	* Returns the m d r action matching the UUID and group.
-	*
-	* @param uuid the m d r action's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r action
-	* @throws PortalException if a matching m d r action could not be found
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction getMDRActionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrActionLocalService.getMDRActionByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -371,67 +393,45 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 	}
 
 	/**
-	* Returns the number of m d r actions.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of m d r actions
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getMDRActionsCount() {
-		return _mdrActionLocalService.getMDRActionsCount();
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _mdrActionLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _mdrActionLocalService.getOSGiServiceIdentifier();
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _mdrActionLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrActionLocalService.getPersistedModel(primaryKeyObj);
+	public void deleteAction(
+		com.liferay.mobile.device.rules.model.MDRAction action) {
+		_mdrActionLocalService.deleteAction(action);
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction updateAction(
-		long actionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrActionLocalService.updateAction(actionId, nameMap,
-			descriptionMap, type, typeSettings, serviceContext);
+	public void deleteAction(long actionId) {
+		_mdrActionLocalService.deleteAction(actionId);
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction updateAction(
-		long actionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrActionLocalService.updateAction(actionId, nameMap,
-			descriptionMap, type, typeSettingsProperties, serviceContext);
-	}
-
-	/**
-	* Updates the m d r action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mdrAction the m d r action
-	* @return the m d r action that was updated
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction updateMDRAction(
-		com.liferay.mobile.device.rules.model.MDRAction mdrAction) {
-		return _mdrActionLocalService.updateMDRAction(mdrAction);
+	public void deleteActions(long ruleGroupInstanceId) {
+		_mdrActionLocalService.deleteActions(ruleGroupInstanceId);
 	}
 
 	@Override

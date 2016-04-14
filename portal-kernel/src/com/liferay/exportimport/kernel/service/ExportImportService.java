@@ -52,22 +52,27 @@ public interface ExportImportService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExportImportServiceUtil} to access the export import remote service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MissingReferences validateImportLayoutsFile(
+		ExportImportConfiguration exportImportConfiguration, File file)
+		throws PortalException;
+
+	public MissingReferences validateImportLayoutsFile(
+		ExportImportConfiguration exportImportConfiguration,
+		InputStream inputStream) throws PortalException;
+
+	public MissingReferences validateImportPortletInfo(
+		ExportImportConfiguration exportImportConfiguration, File file)
+		throws PortalException;
+
+	public MissingReferences validateImportPortletInfo(
+		ExportImportConfiguration exportImportConfiguration,
+		InputStream inputStream) throws PortalException;
+
 	public File exportLayoutsAsFile(
 		ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
-	public long exportLayoutsAsFileInBackground(
-		ExportImportConfiguration exportImportConfiguration)
-		throws PortalException;
-
-	public long exportLayoutsAsFileInBackground(
-		long exportImportConfigurationId) throws PortalException;
-
 	public File exportPortletInfoAsFile(
-		ExportImportConfiguration exportImportConfiguration)
-		throws PortalException;
-
-	public long exportPortletInfoAsFileInBackground(
 		ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
@@ -78,27 +83,22 @@ public interface ExportImportService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void importLayouts(
-		ExportImportConfiguration exportImportConfiguration, File file)
+	public long exportLayoutsAsFileInBackground(
+		ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
-	public void importLayouts(
-		ExportImportConfiguration exportImportConfiguration,
-		InputStream inputStream) throws PortalException;
+	public long exportLayoutsAsFileInBackground(
+		long exportImportConfigurationId) throws PortalException;
+
+	public long exportPortletInfoAsFileInBackground(
+		ExportImportConfiguration exportImportConfiguration)
+		throws PortalException;
 
 	public long importLayoutsInBackground(
 		ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
 	public long importLayoutsInBackground(
-		ExportImportConfiguration exportImportConfiguration,
-		InputStream inputStream) throws PortalException;
-
-	public void importPortletInfo(
-		ExportImportConfiguration exportImportConfiguration, File file)
-		throws PortalException;
-
-	public void importPortletInfo(
 		ExportImportConfiguration exportImportConfiguration,
 		InputStream inputStream) throws PortalException;
 
@@ -110,19 +110,19 @@ public interface ExportImportService extends BaseService {
 		ExportImportConfiguration exportImportConfiguration,
 		InputStream inputStream) throws PortalException;
 
-	public MissingReferences validateImportLayoutsFile(
+	public void importLayouts(
 		ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
-	public MissingReferences validateImportLayoutsFile(
+	public void importLayouts(
 		ExportImportConfiguration exportImportConfiguration,
 		InputStream inputStream) throws PortalException;
 
-	public MissingReferences validateImportPortletInfo(
+	public void importPortletInfo(
 		ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
-	public MissingReferences validateImportPortletInfo(
+	public void importPortletInfo(
 		ExportImportConfiguration exportImportConfiguration,
 		InputStream inputStream) throws PortalException;
 }

@@ -35,6 +35,38 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _wikiPageResourceLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _wikiPageResourceLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _wikiPageResourceLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public com.liferay.wiki.model.WikiPageResource addPageResource(
 		long groupId, long nodeId, java.lang.String title) {
 		return _wikiPageResourceLocalService.addPageResource(groupId, nodeId,
@@ -76,20 +108,16 @@ public class WikiPageResourceLocalServiceWrapper
 		return _wikiPageResourceLocalService.createWikiPageResource(resourcePrimKey);
 	}
 
-	@Override
-	public void deletePageResource(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageResourceLocalService.deletePageResource(nodeId, title);
-	}
-
 	/**
-	* @throws PortalException
+	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPageResource the wiki page resource
+	* @return the wiki page resource that was removed
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageResourceLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
+		return _wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
 	}
 
 	/**
@@ -106,21 +134,112 @@ public class WikiPageResourceLocalServiceWrapper
 		return _wikiPageResourceLocalService.deleteWikiPageResource(resourcePrimKey);
 	}
 
-	/**
-	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPageResource the wiki page resource
-	* @return the wiki page resource that was removed
-	*/
 	@Override
-	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
-		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
-		return _wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
+	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
+		java.lang.String uuid) {
+		return _wikiPageResourceLocalService.fetchPageResource(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _wikiPageResourceLocalService.dynamicQuery();
+	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
+		long nodeId, java.lang.String title) {
+		return _wikiPageResourceLocalService.fetchPageResource(nodeId, title);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResource(
+		long resourcePrimKey) {
+		return _wikiPageResourceLocalService.fetchWikiPageResource(resourcePrimKey);
+	}
+
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _wikiPageResourceLocalService.fetchWikiPageResourceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPageResource getPageResource(
+		long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.getPageResource(nodeId, title);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPageResource getPageResource(
+		long pageResourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.getPageResource(pageResourcePrimKey);
+	}
+
+	/**
+	* Returns the wiki page resource with the primary key.
+	*
+	* @param resourcePrimKey the primary key of the wiki page resource
+	* @return the wiki page resource
+	* @throws PortalException if a wiki page resource with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource getWikiPageResource(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.getWikiPageResource(resourcePrimKey);
+	}
+
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource
+	* @throws PortalException if a matching wiki page resource could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.getWikiPageResourceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
+	* Updates the wiki page resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPageResource the wiki page resource
+	* @return the wiki page resource that was updated
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource updateWikiPageResource(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
+		return _wikiPageResourceLocalService.updateWikiPageResource(wikiPageResource);
+	}
+
+	/**
+	* Returns the number of wiki page resources.
+	*
+	* @return the number of wiki page resources
+	*/
+	@Override
+	public int getWikiPageResourcesCount() {
+		return _wikiPageResourceLocalService.getWikiPageResourcesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiPageResourceLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -178,154 +297,6 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _wikiPageResourceLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _wikiPageResourceLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		long nodeId, java.lang.String title) {
-		return _wikiPageResourceLocalService.fetchPageResource(nodeId, title);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		java.lang.String uuid) {
-		return _wikiPageResourceLocalService.fetchPageResource(uuid);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResource(
-		long resourcePrimKey) {
-		return _wikiPageResourceLocalService.fetchWikiPageResource(resourcePrimKey);
-	}
-
-	/**
-	* Returns the wiki page resource matching the UUID and group.
-	*
-	* @param uuid the wiki page resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _wikiPageResourceLocalService.fetchWikiPageResourceByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _wikiPageResourceLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _wikiPageResourceLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _wikiPageResourceLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageResourceLocalService.getPageResource(nodeId, title);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long pageResourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageResourceLocalService.getPageResource(pageResourcePrimKey);
-	}
-
-	@Override
-	public long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title) {
-		return _wikiPageResourceLocalService.getPageResourcePrimKey(groupId,
-			nodeId, title);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getPageResourcePrimKey(long,
-	long, String)}
-	*/
-	@Deprecated
-	@Override
-	public long getPageResourcePrimKey(long nodeId, java.lang.String title) {
-		return _wikiPageResourceLocalService.getPageResourcePrimKey(nodeId,
-			title);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageResourceLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the wiki page resource with the primary key.
-	*
-	* @param resourcePrimKey the primary key of the wiki page resource
-	* @return the wiki page resource
-	* @throws PortalException if a wiki page resource with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiPageResource getWikiPageResource(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageResourceLocalService.getWikiPageResource(resourcePrimKey);
-	}
-
-	/**
-	* Returns the wiki page resource matching the UUID and group.
-	*
-	* @param uuid the wiki page resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki page resource
-	* @throws PortalException if a matching wiki page resource could not be found
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageResourceLocalService.getWikiPageResourceByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
 	* Returns a range of all the wiki page resources.
 	*
 	* <p>
@@ -375,25 +346,54 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of wiki page resources.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of wiki page resources
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getWikiPageResourcesCount() {
-		return _wikiPageResourceLocalService.getWikiPageResourcesCount();
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _wikiPageResourceLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the wiki page resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param wikiPageResource the wiki page resource
-	* @return the wiki page resource that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public com.liferay.wiki.model.WikiPageResource updateWikiPageResource(
-		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
-		return _wikiPageResourceLocalService.updateWikiPageResource(wikiPageResource);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _wikiPageResourceLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public long getPageResourcePrimKey(long groupId, long nodeId,
+		java.lang.String title) {
+		return _wikiPageResourceLocalService.getPageResourcePrimKey(groupId,
+			nodeId, title);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getPageResourcePrimKey(long,
+	long, String)}
+	*/
+	@Deprecated
+	@Override
+	public long getPageResourcePrimKey(long nodeId, java.lang.String title) {
+		return _wikiPageResourceLocalService.getPageResourcePrimKey(nodeId,
+			title);
+	}
+
+	@Override
+	public void deletePageResource(long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiPageResourceLocalService.deletePageResource(nodeId, title);
 	}
 
 	@Override

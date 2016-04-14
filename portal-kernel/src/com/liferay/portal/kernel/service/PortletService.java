@@ -48,6 +48,11 @@ public interface PortletService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletServiceUtil} to access the portlet remote service. Add custom service methods to {@link com.liferay.portal.service.impl.PortletServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray getWARPortlets();
+
+	public Portlet updatePortlet(long companyId, java.lang.String portletId,
+		java.lang.String roles, boolean active) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -55,10 +60,4 @@ public interface PortletService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray getWARPortlets();
-
-	public Portlet updatePortlet(long companyId, java.lang.String portletId,
-		java.lang.String roles, boolean active) throws PortalException;
 }

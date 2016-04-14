@@ -60,34 +60,6 @@ public class JournalFeedLocalServiceUtil {
 			feedVersion, serviceContext);
 	}
 
-	public static void addFeedResources(
-		com.liferay.journal.model.JournalFeed feed,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addFeedResources(feed, addGroupPermissions, addGuestPermissions);
-	}
-
-	public static void addFeedResources(
-		com.liferay.journal.model.JournalFeed feed,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addFeedResources(feed, groupPermissions, guestPermissions);
-	}
-
-	public static void addFeedResources(long feedId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addFeedResources(feedId, addGroupPermissions, addGuestPermissions);
-	}
-
-	public static void addFeedResources(long feedId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addFeedResources(feedId, groupPermissions, guestPermissions);
-	}
-
 	/**
 	* Adds the journal feed to the database. Also notifies the appropriate model listeners.
 	*
@@ -110,19 +82,15 @@ public class JournalFeedLocalServiceUtil {
 		return getService().createJournalFeed(id);
 	}
 
-	public static void deleteFeed(com.liferay.journal.model.JournalFeed feed)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFeed(feed);
-	}
-
-	public static void deleteFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFeed(feedId);
-	}
-
-	public static void deleteFeed(long groupId, java.lang.String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFeed(groupId, feedId);
+	/**
+	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalFeed the journal feed
+	* @return the journal feed that was removed
+	*/
+	public static com.liferay.journal.model.JournalFeed deleteJournalFeed(
+		com.liferay.journal.model.JournalFeed journalFeed) {
+		return getService().deleteJournalFeed(journalFeed);
 	}
 
 	/**
@@ -137,15 +105,109 @@ public class JournalFeedLocalServiceUtil {
 		return getService().deleteJournalFeed(id);
 	}
 
+	public static com.liferay.journal.model.JournalFeed fetchFeed(
+		long groupId, java.lang.String feedId) {
+		return getService().fetchFeed(groupId, feedId);
+	}
+
+	public static com.liferay.journal.model.JournalFeed fetchJournalFeed(
+		long id) {
+		return getService().fetchJournalFeed(id);
+	}
+
 	/**
-	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
+	* Returns the journal feed matching the UUID and group.
+	*
+	* @param uuid the journal feed's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
+	*/
+	public static com.liferay.journal.model.JournalFeed fetchJournalFeedByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchJournalFeedByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.journal.model.JournalFeed getFeed(long feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFeed(feedId);
+	}
+
+	public static com.liferay.journal.model.JournalFeed getFeed(long groupId,
+		java.lang.String feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFeed(groupId, feedId);
+	}
+
+	/**
+	* Returns the journal feed with the primary key.
+	*
+	* @param id the primary key of the journal feed
+	* @return the journal feed
+	* @throws PortalException if a journal feed with the primary key could not be found
+	*/
+	public static com.liferay.journal.model.JournalFeed getJournalFeed(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalFeed(id);
+	}
+
+	/**
+	* Returns the journal feed matching the UUID and group.
+	*
+	* @param uuid the journal feed's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal feed
+	* @throws PortalException if a matching journal feed could not be found
+	*/
+	public static com.liferay.journal.model.JournalFeed getJournalFeedByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalFeedByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.journal.model.JournalFeed updateFeed(
+		long groupId, java.lang.String feedId, java.lang.String name,
+		java.lang.String description, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
+		java.lang.String ddmRendererTemplateKey, int delta,
+		java.lang.String orderByCol, java.lang.String orderByType,
+		java.lang.String targetLayoutFriendlyUrl,
+		java.lang.String targetPortletId, java.lang.String contentField,
+		java.lang.String feedFormat, double feedVersion,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFeed(groupId, feedId, name, description,
+			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
+			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
+			contentField, feedFormat, feedVersion, serviceContext);
+	}
+
+	/**
+	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalFeed the journal feed
-	* @return the journal feed that was removed
+	* @return the journal feed that was updated
 	*/
-	public static com.liferay.journal.model.JournalFeed deleteJournalFeed(
+	public static com.liferay.journal.model.JournalFeed updateJournalFeed(
 		com.liferay.journal.model.JournalFeed journalFeed) {
-		return getService().deleteJournalFeed(journalFeed);
+		return getService().updateJournalFeed(journalFeed);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -157,8 +219,45 @@ public class JournalFeedLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static int getFeedsCount(long groupId) {
+		return getService().getFeedsCount(groupId);
+	}
+
+	/**
+	* Returns the number of journal feeds.
+	*
+	* @return the number of journal feeds
+	*/
+	public static int getJournalFeedsCount() {
+		return getService().getJournalFeedsCount();
+	}
+
+	public static int searchCount(long companyId, long groupId,
+		java.lang.String feedId, java.lang.String name,
+		java.lang.String description, boolean andOperator) {
+		return getService()
+				   .searchCount(companyId, groupId, feedId, name, description,
+			andOperator);
+	}
+
+	public static int searchCount(long companyId, long groupId,
+		java.lang.String keywords) {
+		return getService().searchCount(companyId, groupId, keywords);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -211,72 +310,6 @@ public class JournalFeedLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.journal.model.JournalFeed fetchFeed(
-		long groupId, java.lang.String feedId) {
-		return getService().fetchFeed(groupId, feedId);
-	}
-
-	public static com.liferay.journal.model.JournalFeed fetchJournalFeed(
-		long id) {
-		return getService().fetchJournalFeed(id);
-	}
-
-	/**
-	* Returns the journal feed matching the UUID and group.
-	*
-	* @param uuid the journal feed's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	*/
-	public static com.liferay.journal.model.JournalFeed fetchJournalFeedByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchJournalFeedByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.journal.model.JournalFeed getFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFeed(feedId);
-	}
-
-	public static com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		java.lang.String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFeed(groupId, feedId);
-	}
-
 	public static java.util.List<com.liferay.journal.model.JournalFeed> getFeeds() {
 		return getService().getFeeds();
 	}
@@ -289,40 +322,6 @@ public class JournalFeedLocalServiceUtil {
 	public static java.util.List<com.liferay.journal.model.JournalFeed> getFeeds(
 		long groupId, int start, int end) {
 		return getService().getFeeds(groupId, start, end);
-	}
-
-	public static int getFeedsCount(long groupId) {
-		return getService().getFeedsCount(groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the journal feed with the primary key.
-	*
-	* @param id the primary key of the journal feed
-	* @return the journal feed
-	* @throws PortalException if a journal feed with the primary key could not be found
-	*/
-	public static com.liferay.journal.model.JournalFeed getJournalFeed(long id)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalFeed(id);
-	}
-
-	/**
-	* Returns the journal feed matching the UUID and group.
-	*
-	* @param uuid the journal feed's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal feed
-	* @throws PortalException if a matching journal feed could not be found
-	*/
-	public static com.liferay.journal.model.JournalFeed getJournalFeedByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalFeedByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -371,30 +370,6 @@ public class JournalFeedLocalServiceUtil {
 			end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of journal feeds.
-	*
-	* @return the number of journal feeds
-	*/
-	public static int getJournalFeedsCount() {
-		return getService().getJournalFeedsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
 	public static java.util.List<com.liferay.journal.model.JournalFeed> search(
 		long companyId, long groupId, java.lang.String feedId,
 		java.lang.String name, java.lang.String description,
@@ -412,46 +387,71 @@ public class JournalFeedLocalServiceUtil {
 		return getService().search(companyId, groupId, keywords, start, end, obc);
 	}
 
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String feedId, java.lang.String name,
-		java.lang.String description, boolean andOperator) {
-		return getService()
-				   .searchCount(companyId, groupId, feedId, name, description,
-			andOperator);
-	}
-
-	public static int searchCount(long companyId, long groupId,
-		java.lang.String keywords) {
-		return getService().searchCount(companyId, groupId, keywords);
-	}
-
-	public static com.liferay.journal.model.JournalFeed updateFeed(
-		long groupId, java.lang.String feedId, java.lang.String name,
-		java.lang.String description, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
-		java.lang.String ddmRendererTemplateKey, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
-		java.lang.String targetLayoutFriendlyUrl,
-		java.lang.String targetPortletId, java.lang.String contentField,
-		java.lang.String feedFormat, double feedVersion,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFeed(groupId, feedId, name, description,
-			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
-			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
-			contentField, feedFormat, feedVersion, serviceContext);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param journalFeed the journal feed
-	* @return the journal feed that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static com.liferay.journal.model.JournalFeed updateJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed) {
-		return getService().updateJournalFeed(journalFeed);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void addFeedResources(
+		com.liferay.journal.model.JournalFeed feed,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addFeedResources(feed, addGroupPermissions, addGuestPermissions);
+	}
+
+	public static void addFeedResources(
+		com.liferay.journal.model.JournalFeed feed,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addFeedResources(feed, groupPermissions, guestPermissions);
+	}
+
+	public static void addFeedResources(long feedId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addFeedResources(feedId, addGroupPermissions, addGuestPermissions);
+	}
+
+	public static void addFeedResources(long feedId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addFeedResources(feedId, groupPermissions, guestPermissions);
+	}
+
+	public static void deleteFeed(com.liferay.journal.model.JournalFeed feed)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFeed(feed);
+	}
+
+	public static void deleteFeed(long feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFeed(feedId);
+	}
+
+	public static void deleteFeed(long groupId, java.lang.String feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFeed(groupId, feedId);
 	}
 
 	public static JournalFeedLocalService getService() {

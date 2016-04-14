@@ -59,6 +59,14 @@ public interface DDMStructureVersionService extends BaseService {
 	public DDMStructureVersion getLatestStructureVersion(long structureId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructureVersion getStructureVersion(long structureVersionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStructureVersionsCount(long structureId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -67,16 +75,8 @@ public interface DDMStructureVersionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMStructureVersion getStructureVersion(long structureVersionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureVersion> getStructureVersions(long structureId,
 		int start, int end,
 		OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStructureVersionsCount(long structureId)
 		throws PortalException;
 }

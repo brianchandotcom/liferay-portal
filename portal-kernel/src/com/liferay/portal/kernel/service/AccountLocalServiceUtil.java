@@ -40,6 +40,17 @@ public class AccountLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.AccountLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* Adds the account to the database. Also notifies the appropriate model listeners.
@@ -87,6 +98,41 @@ public class AccountLocalServiceUtil {
 		return getService().deleteAccount(accountId);
 	}
 
+	public static com.liferay.portal.kernel.model.Account fetchAccount(
+		long accountId) {
+		return getService().fetchAccount(accountId);
+	}
+
+	/**
+	* Returns the account with the primary key.
+	*
+	* @param accountId the primary key of the account
+	* @return the account
+	* @throws PortalException if a account with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Account getAccount(
+		long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAccount(accountId);
+	}
+
+	public static com.liferay.portal.kernel.model.Account getAccount(
+		long companyId, long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAccount(companyId, accountId);
+	}
+
+	/**
+	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param account the account
+	* @return the account that was updated
+	*/
+	public static com.liferay.portal.kernel.model.Account updateAccount(
+		com.liferay.portal.kernel.model.Account account) {
+		return getService().updateAccount(account);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -96,8 +142,28 @@ public class AccountLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of accounts.
+	*
+	* @return the number of accounts
+	*/
+	public static int getAccountsCount() {
+		return getService().getAccountsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -151,6 +217,22 @@ public class AccountLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the accounts.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.AccountModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of accounts
+	* @param end the upper bound of the range of accounts (not inclusive)
+	* @return the range of accounts
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Account> getAccounts(
+		int start, int end) {
+		return getService().getAccounts(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -172,89 +254,6 @@ public class AccountLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.kernel.model.Account fetchAccount(
-		long accountId) {
-		return getService().fetchAccount(accountId);
-	}
-
-	/**
-	* Returns the account with the primary key.
-	*
-	* @param accountId the primary key of the account
-	* @return the account
-	* @throws PortalException if a account with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Account getAccount(
-		long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAccount(accountId);
-	}
-
-	public static com.liferay.portal.kernel.model.Account getAccount(
-		long companyId, long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAccount(companyId, accountId);
-	}
-
-	/**
-	* Returns a range of all the accounts.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.AccountModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of accounts
-	* @param end the upper bound of the range of accounts (not inclusive)
-	* @return the range of accounts
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.Account> getAccounts(
-		int start, int end) {
-		return getService().getAccounts(start, end);
-	}
-
-	/**
-	* Returns the number of accounts.
-	*
-	* @return the number of accounts
-	*/
-	public static int getAccountsCount() {
-		return getService().getAccountsCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param account the account
-	* @return the account that was updated
-	*/
-	public static com.liferay.portal.kernel.model.Account updateAccount(
-		com.liferay.portal.kernel.model.Account account) {
-		return getService().updateAccount(account);
 	}
 
 	public static AccountLocalService getService() {

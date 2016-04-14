@@ -52,15 +52,46 @@ public interface StagingLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link StagingLocalServiceUtil} to access the staging local service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	public MissingReferences publishStagingRequest(long userId,
+		long stagingRequestId, boolean privateLayout,
+		Map<java.lang.String, java.lang.String[]> parameterMap)
+		throws PortalException;
+
+	public MissingReferences publishStagingRequest(long userId,
+		long stagingRequestId,
+		ExportImportConfiguration exportImportConfiguration)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
+	long, boolean, Map)}
+	*/
+	@java.lang.Deprecated
+	public MissingReferences validateStagingRequest(long userId,
+		long stagingRequestId, boolean privateLayout,
+		Map<java.lang.String, java.lang.String[]> parameterMap);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public long createStagingRequest(long userId, long groupId,
+		java.lang.String checksum) throws PortalException;
+
 	public void checkDefaultLayoutSetBranches(long userId, Group liveGroup,
 		boolean branchingPublic, boolean branchingPrivate, boolean remote,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws PortalException;
-
-	public long createStagingRequest(long userId, long groupId,
-		java.lang.String checksum) throws PortalException;
 
 	public void disableStaging(Group liveGroup, ServiceContext serviceContext)
 		throws PortalException;
@@ -79,36 +110,6 @@ public interface StagingLocalService extends BaseLocalService {
 		long remoteGroupId, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public MissingReferences publishStagingRequest(long userId,
-		long stagingRequestId,
-		ExportImportConfiguration exportImportConfiguration)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@java.lang.Deprecated
-	public MissingReferences publishStagingRequest(long userId,
-		long stagingRequestId, boolean privateLayout,
-		Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws PortalException;
-
 	public void updateStagingRequest(long userId, long stagingRequestId,
 		java.lang.String fileName, byte[] bytes) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	long, boolean, Map)}
-	*/
-	@java.lang.Deprecated
-	public MissingReferences validateStagingRequest(long userId,
-		long stagingRequestId, boolean privateLayout,
-		Map<java.lang.String, java.lang.String[]> parameterMap);
 }

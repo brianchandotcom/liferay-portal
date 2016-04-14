@@ -30,16 +30,6 @@ public class PortletServiceWrapper implements PortletService,
 		_portletService = portletService;
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _portletService.getOSGiServiceIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.json.JSONArray getWARPortlets() {
 		return _portletService.getWARPortlets();
@@ -51,6 +41,16 @@ public class PortletServiceWrapper implements PortletService,
 		boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletService.updatePortlet(companyId, portletId, roles, active);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _portletService.getOSGiServiceIdentifier();
 	}
 
 	@Override

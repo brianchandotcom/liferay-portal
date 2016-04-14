@@ -37,16 +37,6 @@ public class MDRRuleGroupInstanceServiceWrapper
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId, int priority,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
-			className, classPK, ruleGroupId, priority, serviceContext);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -55,9 +45,28 @@ public class MDRRuleGroupInstanceServiceWrapper
 	}
 
 	@Override
-	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId, int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(ruleGroupInstanceId);
+		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
+			className, classPK, ruleGroupId, priority, serviceContext);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupInstanceService.updateRuleGroupInstance(ruleGroupInstanceId,
+			priority);
+	}
+
+	@Override
+	public int getRuleGroupInstancesCount(java.lang.String className,
+		long classPK) {
+		return _mdrRuleGroupInstanceService.getRuleGroupInstancesCount(className,
+			classPK);
 	}
 
 	/**
@@ -79,18 +88,9 @@ public class MDRRuleGroupInstanceServiceWrapper
 	}
 
 	@Override
-	public int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK) {
-		return _mdrRuleGroupInstanceService.getRuleGroupInstancesCount(className,
-			classPK);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance updateRuleGroupInstance(
-		long ruleGroupInstanceId, int priority)
+	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstanceService.updateRuleGroupInstance(ruleGroupInstanceId,
-			priority);
+		_mdrRuleGroupInstanceService.deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
 
 	@Override

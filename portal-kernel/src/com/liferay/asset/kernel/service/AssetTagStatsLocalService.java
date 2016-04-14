@@ -107,6 +107,59 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	public AssetTagStats deleteAssetTagStats(long tagStatsId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetTagStats fetchAssetTagStats(long tagStatsId);
+
+	/**
+	* Returns the asset tag stats with the primary key.
+	*
+	* @param tagStatsId the primary key of the asset tag stats
+	* @return the asset tag stats
+	* @throws PortalException if a asset tag stats with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetTagStats getAssetTagStats(long tagStatsId)
+		throws PortalException;
+
+	/**
+	* Returns the asset tag statistics instance with the tag and asset entry
+	* matching the class name ID
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return Returns the asset tag statistics instance with the tag and asset
+	entry  matching the class name ID
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetTagStats getTagStats(long tagId, long classNameId);
+
+	/**
+	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetTagStats the asset tag stats
+	* @return the asset tag stats that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public AssetTagStats updateAssetTagStats(AssetTagStats assetTagStats);
+
+	/**
+	* Updates the asset tag statistics instance.
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return the updated asset tag statistics instance
+	*/
+	public AssetTagStats updateTagStats(long tagId, long classNameId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -114,36 +167,25 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Deletes the asset tag statistics instance.
-	*
-	* @param tagStats the asset tag statistics instance
-	*/
-	public void deleteTagStats(AssetTagStats tagStats);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
-	* Deletes the asset tag statistics instance matching the tag statistics ID.
+	* Returns the number of asset tag statses.
 	*
-	* @param tagStatsId the primary key of the asset tag statistics instance
+	* @return the number of asset tag statses
 	*/
-	public void deleteTagStats(long tagStatsId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetTagStatsesCount();
 
 	/**
-	* Deletes all asset tag statistics instances associated with the asset
-	* entry matching the class name ID.
+	* Returns the OSGi service identifier.
 	*
-	* @param classNameId the asset entry's class name ID
+	* @return the OSGi service identifier
 	*/
-	public void deleteTagStatsByClassNameId(long classNameId);
-
-	/**
-	* Deletes all asset tag statistics instances associated with the tag.
-	*
-	* @param tagId the primary key of the tag
-	*/
-	public void deleteTagStatsByTagId(long tagId);
-
-	public DynamicQuery dynamicQuery();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -185,41 +227,6 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetTagStats fetchAssetTagStats(long tagStatsId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the asset tag stats with the primary key.
-	*
-	* @param tagStatsId the primary key of the asset tag stats
-	* @return the asset tag stats
-	* @throws PortalException if a asset tag stats with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetTagStats getAssetTagStats(long tagStatsId)
-		throws PortalException;
-
-	/**
 	* Returns a range of all the asset tag statses.
 	*
 	* <p>
@@ -232,29 +239,6 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTagStats> getAssetTagStatses(int start, int end);
-
-	/**
-	* Returns the number of asset tag statses.
-	*
-	* @return the number of asset tag statses
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetTagStatsesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Returns a range of all the asset tag statistics instances associated with
@@ -280,33 +264,49 @@ public interface AssetTagStatsLocalService extends BaseLocalService,
 	public List<AssetTagStats> getTagStats(long classNameId, int start, int end);
 
 	/**
-	* Returns the asset tag statistics instance with the tag and asset entry
-	* matching the class name ID
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param tagId the primary key of the tag
-	* @param classNameId the asset entry's class name ID
-	* @return Returns the asset tag statistics instance with the tag and asset
-	entry  matching the class name ID
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetTagStats getTagStats(long tagId, long classNameId);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param assetTagStats the asset tag stats
-	* @return the asset tag stats that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public AssetTagStats updateAssetTagStats(AssetTagStats assetTagStats);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	/**
-	* Updates the asset tag statistics instance.
+	* Deletes the asset tag statistics instance.
+	*
+	* @param tagStats the asset tag statistics instance
+	*/
+	public void deleteTagStats(AssetTagStats tagStats);
+
+	/**
+	* Deletes the asset tag statistics instance matching the tag statistics ID.
+	*
+	* @param tagStatsId the primary key of the asset tag statistics instance
+	*/
+	public void deleteTagStats(long tagStatsId) throws PortalException;
+
+	/**
+	* Deletes all asset tag statistics instances associated with the asset
+	* entry matching the class name ID.
+	*
+	* @param classNameId the asset entry's class name ID
+	*/
+	public void deleteTagStatsByClassNameId(long classNameId);
+
+	/**
+	* Deletes all asset tag statistics instances associated with the tag.
 	*
 	* @param tagId the primary key of the tag
-	* @param classNameId the asset entry's class name ID
-	* @return the updated asset tag statistics instance
 	*/
-	public AssetTagStats updateTagStats(long tagId, long classNameId)
-		throws PortalException;
+	public void deleteTagStatsByTagId(long tagId);
 }

@@ -39,44 +39,9 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getCompanyEntries(
-		long companyId, int start, int end) {
-		return _assetEntryService.getCompanyEntries(companyId, start, end);
-	}
-
-	@Override
-	public int getCompanyEntriesCount(long companyId) {
-		return _assetEntryService.getCompanyEntriesCount(companyId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryService.getEntries(entryQuery);
-	}
-
-	@Override
-	public int getEntriesCount(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetEntryService.getEntriesCount(entryQuery);
-	}
-
-	@Override
 	public com.liferay.asset.kernel.model.AssetEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.getEntry(entryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _assetEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -129,6 +94,41 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
 			mimeType, title, description, summary, url, layoutUuid, height,
 			width, priority, sync);
+	}
+
+	@Override
+	public int getCompanyEntriesCount(long companyId) {
+		return _assetEntryService.getCompanyEntriesCount(companyId);
+	}
+
+	@Override
+	public int getEntriesCount(
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryService.getEntriesCount(entryQuery);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _assetEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getCompanyEntries(
+		long companyId, int start, int end) {
+		return _assetEntryService.getCompanyEntries(companyId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryService.getEntries(entryQuery);
 	}
 
 	@Override

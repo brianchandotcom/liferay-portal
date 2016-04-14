@@ -111,12 +111,6 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	public BookmarksEntry deleteBookmarksEntry(long entryId)
 		throws PortalException;
 
-	public void deleteEntries(long groupId, long folderId)
-		throws PortalException;
-
-	public void deleteEntries(long groupId, long folderId,
-		boolean includeTrashedEntries) throws PortalException;
-
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public BookmarksEntry deleteEntry(BookmarksEntry entry)
@@ -125,6 +119,100 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public BookmarksEntry deleteEntry(long entryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksEntry fetchBookmarksEntry(long entryId);
+
+	/**
+	* Returns the bookmarks entry matching the UUID and group.
+	*
+	* @param uuid the bookmarks entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the bookmarks entry with the primary key.
+	*
+	* @param entryId the primary key of the bookmarks entry
+	* @return the bookmarks entry
+	* @throws PortalException if a bookmarks entry with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksEntry getBookmarksEntry(long entryId)
+		throws PortalException;
+
+	/**
+	* Returns the bookmarks entry matching the UUID and group.
+	*
+	* @param uuid the bookmarks entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching bookmarks entry
+	* @throws PortalException if a matching bookmarks entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksEntry getBookmarksEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksEntry getEntry(long entryId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
+		throws PortalException;
+
+	public BookmarksEntry moveEntryFromTrash(long userId, long entryId,
+		long parentFolderId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksEntry moveEntryToTrash(long userId, BookmarksEntry entry)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksEntry moveEntryToTrash(long userId, long entryId)
+		throws PortalException;
+
+	public BookmarksEntry openEntry(long userId, BookmarksEntry entry);
+
+	public BookmarksEntry openEntry(long userId, long entryId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksEntry restoreEntryFromTrash(long userId, long entryId)
+		throws PortalException;
+
+	/**
+	* Updates the bookmarks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param bookmarksEntry the bookmarks entry
+	* @return the bookmarks entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksEntry updateBookmarksEntry(BookmarksEntry bookmarksEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksEntry updateEntry(long userId, long entryId, long groupId,
+		long folderId, java.lang.String name, java.lang.String url,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
+
+	public BookmarksEntry updateStatus(long userId, BookmarksEntry entry,
+		int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -132,7 +220,45 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long groupId, long userId, long creatorUserId,
+		int status, int start, int end) throws PortalException;
+
+	/**
+	* Returns the number of bookmarks entries.
+	*
+	* @return the number of bookmarks entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBookmarksEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long groupId, long folderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long groupId, long folderId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersEntriesCount(long groupId,
+		List<java.lang.Long> folderIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId, long userId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -174,41 +300,6 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksEntry fetchBookmarksEntry(long entryId);
-
-	/**
-	* Returns the bookmarks entry matching the UUID and group.
-	*
-	* @param uuid the bookmarks entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
 	* Returns a range of all the bookmarks entries.
 	*
 	* <p>
@@ -248,37 +339,6 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<BookmarksEntry> orderByComparator);
 
-	/**
-	* Returns the number of bookmarks entries.
-	*
-	* @return the number of bookmarks entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBookmarksEntriesCount();
-
-	/**
-	* Returns the bookmarks entry with the primary key.
-	*
-	* @param entryId the primary key of the bookmarks entry
-	* @return the bookmarks entry
-	* @throws PortalException if a bookmarks entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksEntry getBookmarksEntry(long entryId)
-		throws PortalException;
-
-	/**
-	* Returns the bookmarks entry matching the UUID and group.
-	*
-	* @param uuid the bookmarks entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching bookmarks entry
-	* @throws PortalException if a matching bookmarks entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksEntry getBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksEntry> getEntries(long groupId, long folderId,
 		int start, int end);
@@ -297,23 +357,6 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		OrderByComparator<BookmarksEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long groupId, long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(long groupId, long folderId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksEntry getEntry(long entryId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersEntriesCount(long groupId,
-		List<java.lang.Long> folderIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksEntry> getGroupEntries(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -321,58 +364,33 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksEntry> getNoAssetEntries();
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void deleteEntries(long groupId, long folderId)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
-		throws PortalException;
-
-	public BookmarksEntry moveEntryFromTrash(long userId, long entryId,
-		long parentFolderId) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry moveEntryToTrash(long userId, BookmarksEntry entry)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry moveEntryToTrash(long userId, long entryId)
-		throws PortalException;
-
-	public BookmarksEntry openEntry(long userId, BookmarksEntry entry);
-
-	public BookmarksEntry openEntry(long userId, long entryId)
-		throws PortalException;
+	public void deleteEntries(long groupId, long folderId,
+		boolean includeTrashedEntries) throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry restoreEntryFromTrash(long userId, long entryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long groupId, long userId, long creatorUserId,
-		int status, int start, int end) throws PortalException;
 
 	public void setTreePaths(long folderId, java.lang.String treePath,
 		boolean reindex) throws PortalException;
@@ -387,22 +405,4 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
-
-	/**
-	* Updates the bookmarks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param bookmarksEntry the bookmarks entry
-	* @return the bookmarks entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry updateBookmarksEntry(BookmarksEntry bookmarksEntry);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksEntry updateEntry(long userId, long entryId, long groupId,
-		long folderId, java.lang.String name, java.lang.String url,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
-
-	public BookmarksEntry updateStatus(long userId, BookmarksEntry entry,
-		int status) throws PortalException;
 }

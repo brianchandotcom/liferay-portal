@@ -192,29 +192,89 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		}
 	}
 
+	/**
+	* Returns the default calendar of this calendar.
+	*
+	* @return the default calendar of this calendar
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new CalendarWrapper((Calendar)_calendar.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.calendar.model.Calendar calendar) {
-		return _calendar.compareTo(calendar);
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _calendar.getAvailableLanguageIds();
+	public boolean getDefaultCalendar() {
+		return _calendar.getDefaultCalendar();
 	}
 
 	/**
-	* Returns the calendar ID of this calendar.
+	* Returns the enable comments of this calendar.
 	*
-	* @return the calendar ID of this calendar
+	* @return the enable comments of this calendar
 	*/
 	@Override
-	public long getCalendarId() {
-		return _calendar.getCalendarId();
+	public boolean getEnableComments() {
+		return _calendar.getEnableComments();
+	}
+
+	/**
+	* Returns the enable ratings of this calendar.
+	*
+	* @return the enable ratings of this calendar
+	*/
+	@Override
+	public boolean getEnableRatings() {
+		return _calendar.getEnableRatings();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _calendar.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this calendar is default calendar.
+	*
+	* @return <code>true</code> if this calendar is default calendar; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDefaultCalendar() {
+		return _calendar.isDefaultCalendar();
+	}
+
+	/**
+	* Returns <code>true</code> if this calendar is enable comments.
+	*
+	* @return <code>true</code> if this calendar is enable comments; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isEnableComments() {
+		return _calendar.isEnableComments();
+	}
+
+	/**
+	* Returns <code>true</code> if this calendar is enable ratings.
+	*
+	* @return <code>true</code> if this calendar is enable ratings; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isEnableRatings() {
+		return _calendar.isEnableRatings();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _calendar.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _calendar.isNew();
+	}
+
+	@Override
+	public com.liferay.calendar.model.Calendar toEscapedModel() {
+		return new CalendarWrapper(_calendar.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.calendar.model.Calendar toUnescapedModel() {
+		return new CalendarWrapper(_calendar.toUnescapedModel());
 	}
 
 	@Override
@@ -223,14 +283,19 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		return _calendar.getCalendarResource();
 	}
 
-	/**
-	* Returns the calendar resource ID of this calendar.
-	*
-	* @return the calendar resource ID of this calendar
-	*/
 	@Override
-	public long getCalendarResourceId() {
-		return _calendar.getCalendarResourceId();
+	public ExpandoBridge getExpandoBridge() {
+		return _calendar.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.Calendar> toCacheModel() {
+		return _calendar.toCacheModel();
+	}
+
+	@Override
+	public int compareTo(com.liferay.calendar.model.Calendar calendar) {
+		return _calendar.compareTo(calendar);
 	}
 
 	/**
@@ -243,34 +308,19 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		return _calendar.getColor();
 	}
 
-	/**
-	* Returns the company ID of this calendar.
-	*
-	* @return the company ID of this calendar
-	*/
 	@Override
-	public long getCompanyId() {
-		return _calendar.getCompanyId();
+	public int hashCode() {
+		return _calendar.hashCode();
 	}
 
-	/**
-	* Returns the create date of this calendar.
-	*
-	* @return the create date of this calendar
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _calendar.getCreateDate();
+	public Serializable getPrimaryKeyObj() {
+		return _calendar.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the default calendar of this calendar.
-	*
-	* @return the default calendar of this calendar
-	*/
 	@Override
-	public boolean getDefaultCalendar() {
-		return _calendar.getDefaultCalendar();
+	public java.lang.Object clone() {
+		return new CalendarWrapper((Calendar)_calendar.clone());
 	}
 
 	@Override
@@ -347,71 +397,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this calendar.
-	*
-	* @return the locales and localized descriptions of this calendar
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _calendar.getDescriptionMap();
-	}
-
-	/**
-	* Returns the enable comments of this calendar.
-	*
-	* @return the enable comments of this calendar
-	*/
-	@Override
-	public boolean getEnableComments() {
-		return _calendar.getEnableComments();
-	}
-
-	/**
-	* Returns the enable ratings of this calendar.
-	*
-	* @return the enable ratings of this calendar
-	*/
-	@Override
-	public boolean getEnableRatings() {
-		return _calendar.getEnableRatings();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _calendar.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this calendar.
-	*
-	* @return the group ID of this calendar
-	*/
-	@Override
-	public long getGroupId() {
-		return _calendar.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this calendar.
-	*
-	* @return the last publish date of this calendar
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _calendar.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this calendar.
-	*
-	* @return the modified date of this calendar
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _calendar.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this calendar.
 	*
 	* @return the name of this calendar
@@ -479,46 +464,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this calendar.
-	*
-	* @return the locales and localized names of this calendar
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _calendar.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this calendar.
-	*
-	* @return the primary key of this calendar
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _calendar.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _calendar.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the resource block ID of this calendar.
-	*
-	* @return the resource block ID of this calendar
-	*/
-	@Override
-	public long getResourceBlockId() {
-		return _calendar.getResourceBlockId();
-	}
-
-	@Override
-	public java.util.TimeZone getTimeZone() {
-		return _calendar.getTimeZone();
-	}
-
-	/**
 	* Returns the time zone ID of this calendar.
 	*
 	* @return the time zone ID of this calendar
@@ -526,16 +471,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public java.lang.String getTimeZoneId() {
 		return _calendar.getTimeZoneId();
-	}
-
-	/**
-	* Returns the user ID of this calendar.
-	*
-	* @return the user ID of this calendar
-	*/
-	@Override
-	public long getUserId() {
-		return _calendar.getUserId();
 	}
 
 	/**
@@ -569,53 +504,143 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _calendar.hashCode();
+	public java.lang.String toString() {
+		return _calendar.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _calendar.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _calendar.toXmlString();
 	}
 
-	/**
-	* Returns <code>true</code> if this calendar is default calendar.
-	*
-	* @return <code>true</code> if this calendar is default calendar; <code>false</code> otherwise
-	*/
 	@Override
-	public boolean isDefaultCalendar() {
-		return _calendar.isDefaultCalendar();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _calendar.getAvailableLanguageIds();
 	}
 
 	/**
-	* Returns <code>true</code> if this calendar is enable comments.
+	* Returns the create date of this calendar.
 	*
-	* @return <code>true</code> if this calendar is enable comments; <code>false</code> otherwise
+	* @return the create date of this calendar
 	*/
 	@Override
-	public boolean isEnableComments() {
-		return _calendar.isEnableComments();
+	public Date getCreateDate() {
+		return _calendar.getCreateDate();
 	}
 
 	/**
-	* Returns <code>true</code> if this calendar is enable ratings.
+	* Returns the last publish date of this calendar.
 	*
-	* @return <code>true</code> if this calendar is enable ratings; <code>false</code> otherwise
+	* @return the last publish date of this calendar
 	*/
 	@Override
-	public boolean isEnableRatings() {
-		return _calendar.isEnableRatings();
+	public Date getLastPublishDate() {
+		return _calendar.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this calendar.
+	*
+	* @return the modified date of this calendar
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _calendar.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this calendar.
+	*
+	* @return the locales and localized descriptions of this calendar
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _calendar.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this calendar.
+	*
+	* @return the locales and localized names of this calendar
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _calendar.getNameMap();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _calendar.isEscapedModel();
+	public java.util.TimeZone getTimeZone() {
+		return _calendar.getTimeZone();
 	}
 
+	/**
+	* Returns the calendar ID of this calendar.
+	*
+	* @return the calendar ID of this calendar
+	*/
 	@Override
-	public boolean isNew() {
-		return _calendar.isNew();
+	public long getCalendarId() {
+		return _calendar.getCalendarId();
+	}
+
+	/**
+	* Returns the calendar resource ID of this calendar.
+	*
+	* @return the calendar resource ID of this calendar
+	*/
+	@Override
+	public long getCalendarResourceId() {
+		return _calendar.getCalendarResourceId();
+	}
+
+	/**
+	* Returns the company ID of this calendar.
+	*
+	* @return the company ID of this calendar
+	*/
+	@Override
+	public long getCompanyId() {
+		return _calendar.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this calendar.
+	*
+	* @return the group ID of this calendar
+	*/
+	@Override
+	public long getGroupId() {
+		return _calendar.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this calendar.
+	*
+	* @return the primary key of this calendar
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _calendar.getPrimaryKey();
+	}
+
+	/**
+	* Returns the resource block ID of this calendar.
+	*
+	* @return the resource block ID of this calendar
+	*/
+	@Override
+	public long getResourceBlockId() {
+		return _calendar.getResourceBlockId();
+	}
+
+	/**
+	* Returns the user ID of this calendar.
+	*
+	* @return the user ID of this calendar
+	*/
+	@Override
+	public long getUserId() {
+		return _calendar.getUserId();
 	}
 
 	@Override
@@ -786,14 +811,14 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_calendar.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_calendar.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendar.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_calendar.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -970,31 +995,6 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_calendar.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.Calendar> toCacheModel() {
-		return _calendar.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.calendar.model.Calendar toEscapedModel() {
-		return new CalendarWrapper(_calendar.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _calendar.toString();
-	}
-
-	@Override
-	public com.liferay.calendar.model.Calendar toUnescapedModel() {
-		return new CalendarWrapper(_calendar.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _calendar.toXmlString();
 	}
 
 	@Override

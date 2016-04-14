@@ -56,6 +56,38 @@ public interface RoleService extends BaseService {
 	 */
 
 	/**
+	* Returns <code>true</code> if the user is associated with the named
+	* regular role.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param name the name of the role
+	* @param inherited whether to include the user's inherited roles in the
+	search
+	* @return <code>true</code> if the user is associated with the regular
+	role; <code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserRole(long userId, long companyId,
+		java.lang.String name, boolean inherited) throws PortalException;
+
+	/**
+	* Returns <code>true</code> if the user has any one of the named regular
+	* roles.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the company
+	* @param names the names of the roles
+	* @param inherited whether to include the user's inherited roles in the
+	search
+	* @return <code>true</code> if the user has any one of the regular roles;
+	<code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserRoles(long userId, long companyId,
+		java.lang.String[] names, boolean inherited) throws PortalException;
+
+	/**
 	* Adds a role. The user is reindexed after role is added.
 	*
 	* @param className the name of the class for which the role is created
@@ -80,41 +112,8 @@ public interface RoleService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	* Adds the roles to the user. The user is reindexed after the roles are
-	* added.
-	*
-	* @param userId the primary key of the user
-	* @param roleIds the primary keys of the roles
-	*/
-	public void addUserRoles(long userId, long[] roleIds)
-		throws PortalException;
-
-	/**
-	* Deletes the role with the primary key and its associated permissions.
-	*
-	* @param roleId the primary key of the role
-	*/
-	public void deleteRole(long roleId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role fetchRole(long roleId) throws PortalException;
-
-	/**
-	* Returns all the roles associated with the group.
-	*
-	* @param groupId the primary key of the group
-	* @return the roles associated with the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getGroupRoles(long groupId) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the role with the name in the company.
@@ -141,12 +140,54 @@ public interface RoleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role getRole(long roleId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(long companyId, int[] types)
+	/**
+	* Updates the role with the primary key.
+	*
+	* @param roleId the primary key of the role
+	* @param name the role's new name
+	* @param titleMap the new localized titles (optionally <code>null</code>)
+	to replace those existing for the role
+	* @param descriptionMap the new localized descriptions (optionally
+	<code>null</code>) to replace those existing for the role
+	* @param subtype the role's new subtype (optionally <code>null</code>)
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set the expando bridge attributes for the
+	role.
+	* @return the role with the primary key
+	*/
+	public Role updateRole(long roleId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, java.lang.String keywords,
+		java.lang.Integer[] types,
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Returns all the roles associated with the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the roles associated with the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getGroupRoles(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getRoles(int type, java.lang.String subtype)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getRoles(long companyId, int[] types)
 		throws PortalException;
 
 	/**
@@ -191,48 +232,28 @@ public interface RoleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRoles(long userId) throws PortalException;
 
-	/**
-	* Returns <code>true</code> if the user is associated with the named
-	* regular role.
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the company
-	* @param name the name of the role
-	* @param inherited whether to include the user's inherited roles in the
-	search
-	* @return <code>true</code> if the user is associated with the regular
-	role; <code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRole(long userId, long companyId,
-		java.lang.String name, boolean inherited) throws PortalException;
-
-	/**
-	* Returns <code>true</code> if the user has any one of the named regular
-	* roles.
-	*
-	* @param userId the primary key of the user
-	* @param companyId the primary key of the company
-	* @param names the names of the roles
-	* @param inherited whether to include the user's inherited roles in the
-	search
-	* @return <code>true</code> if the user has any one of the regular roles;
-	<code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserRoles(long userId, long companyId,
-		java.lang.String[] names, boolean inherited) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> search(long companyId, java.lang.String keywords,
 		java.lang.Integer[] types,
 		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
 		int end, OrderByComparator<Role> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, java.lang.String keywords,
-		java.lang.Integer[] types,
-		LinkedHashMap<java.lang.String, java.lang.Object> params);
+	/**
+	* Adds the roles to the user. The user is reindexed after the roles are
+	* added.
+	*
+	* @param userId the primary key of the user
+	* @param roleIds the primary keys of the roles
+	*/
+	public void addUserRoles(long userId, long[] roleIds)
+		throws PortalException;
+
+	/**
+	* Deletes the role with the primary key and its associated permissions.
+	*
+	* @param roleId the primary key of the role
+	*/
+	public void deleteRole(long roleId) throws PortalException;
 
 	/**
 	* Removes the matching roles associated with the user. The user is
@@ -242,26 +263,5 @@ public interface RoleService extends BaseService {
 	* @param roleIds the primary keys of the roles
 	*/
 	public void unsetUserRoles(long userId, long[] roleIds)
-		throws PortalException;
-
-	/**
-	* Updates the role with the primary key.
-	*
-	* @param roleId the primary key of the role
-	* @param name the role's new name
-	* @param titleMap the new localized titles (optionally <code>null</code>)
-	to replace those existing for the role
-	* @param descriptionMap the new localized descriptions (optionally
-	<code>null</code>) to replace those existing for the role
-	* @param subtype the role's new subtype (optionally <code>null</code>)
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set the expando bridge attributes for the
-	role.
-	* @return the role with the primary key
-	*/
-	public Role updateRole(long roleId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 }

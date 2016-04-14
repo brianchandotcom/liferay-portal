@@ -56,20 +56,6 @@ public interface LayoutSetBranchService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteLayoutSetBranch(long layoutSetBranchId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
-		boolean privateLayout);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
 	public LayoutSetBranch mergeLayoutSetBranch(long layoutSetBranchId,
 		long mergeLayoutSetBranchId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -79,5 +65,19 @@ public interface LayoutSetBranchService extends BaseService {
 		long layoutSetBranchId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
+		boolean privateLayout);
+
+	public void deleteLayoutSetBranch(long layoutSetBranchId)
 		throws PortalException;
 }

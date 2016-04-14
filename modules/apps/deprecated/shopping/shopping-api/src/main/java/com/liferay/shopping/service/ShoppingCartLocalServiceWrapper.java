@@ -33,6 +33,38 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		_shoppingCartLocalService = shoppingCartLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingCartLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _shoppingCartLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingCartLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the shopping cart to the database. Also notifies the appropriate model listeners.
 	*
@@ -57,19 +89,16 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.createShoppingCart(cartId);
 	}
 
-	@Override
-	public void deleteGroupCarts(long groupId) {
-		_shoppingCartLocalService.deleteGroupCarts(groupId);
-	}
-
 	/**
-	* @throws PortalException
+	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was removed
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
+		com.liferay.shopping.model.ShoppingCart shoppingCart) {
+		return _shoppingCartLocalService.deleteShoppingCart(shoppingCart);
 	}
 
 	/**
@@ -85,26 +114,71 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.deleteShoppingCart(cartId);
 	}
 
+	@Override
+	public com.liferay.shopping.model.ShoppingCart fetchShoppingCart(
+		long cartId) {
+		return _shoppingCartLocalService.fetchShoppingCart(cartId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingCart getCart(long userId,
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.getCart(userId, groupId);
+	}
+
 	/**
-	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
+	* Returns the shopping cart with the primary key.
 	*
-	* @param shoppingCart the shopping cart
-	* @return the shopping cart that was removed
+	* @param cartId the primary key of the shopping cart
+	* @return the shopping cart
+	* @throws PortalException if a shopping cart with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
+	public com.liferay.shopping.model.ShoppingCart getShoppingCart(long cartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.getShoppingCart(cartId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingCart updateCart(long userId,
+		long groupId, java.lang.String itemIds, java.lang.String couponCodes,
+		int altShipping, boolean insure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCartLocalService.updateCart(userId, groupId, itemIds,
+			couponCodes, altShipping, insure);
+	}
+
+	/**
+	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCart the shopping cart
+	* @return the shopping cart that was updated
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingCart updateShoppingCart(
 		com.liferay.shopping.model.ShoppingCart shoppingCart) {
-		return _shoppingCartLocalService.deleteShoppingCart(shoppingCart);
+		return _shoppingCartLocalService.updateShoppingCart(shoppingCart);
 	}
 
+	/**
+	* Returns the number of shopping carts.
+	*
+	* @return the number of shopping carts
+	*/
 	@Override
-	public void deleteUserCarts(long userId) {
-		_shoppingCartLocalService.deleteUserCarts(userId);
+	public int getShoppingCartsCount() {
+		return _shoppingCartLocalService.getShoppingCartsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _shoppingCartLocalService.dynamicQuery();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingCartLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -161,6 +235,29 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	/**
+	* Returns a range of all the shopping carts.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping carts
+	* @param end the upper bound of the range of shopping carts (not inclusive)
+	* @return the range of shopping carts
+	*/
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingCart> getShoppingCarts(
+		int start, int end) {
+		return _shoppingCartLocalService.getShoppingCarts(start, end);
+	}
+
+	@Override
+	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
+		long groupId, java.lang.String itemIds) {
+		return _shoppingCartLocalService.getItems(groupId, itemIds);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -188,110 +285,13 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingCart fetchShoppingCart(
-		long cartId) {
-		return _shoppingCartLocalService.fetchShoppingCart(cartId);
+	public void deleteGroupCarts(long groupId) {
+		_shoppingCartLocalService.deleteGroupCarts(groupId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingCartLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingCart getCart(long userId,
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.getCart(userId, groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _shoppingCartLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
-		long groupId, java.lang.String itemIds) {
-		return _shoppingCartLocalService.getItems(groupId, itemIds);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingCartLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the shopping cart with the primary key.
-	*
-	* @param cartId the primary key of the shopping cart
-	* @return the shopping cart
-	* @throws PortalException if a shopping cart with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingCart getShoppingCart(long cartId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.getShoppingCart(cartId);
-	}
-
-	/**
-	* Returns a range of all the shopping carts.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping carts
-	* @param end the upper bound of the range of shopping carts (not inclusive)
-	* @return the range of shopping carts
-	*/
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingCart> getShoppingCarts(
-		int start, int end) {
-		return _shoppingCartLocalService.getShoppingCarts(start, end);
-	}
-
-	/**
-	* Returns the number of shopping carts.
-	*
-	* @return the number of shopping carts
-	*/
-	@Override
-	public int getShoppingCartsCount() {
-		return _shoppingCartLocalService.getShoppingCartsCount();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingCart updateCart(long userId,
-		long groupId, java.lang.String itemIds, java.lang.String couponCodes,
-		int altShipping, boolean insure)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCartLocalService.updateCart(userId, groupId, itemIds,
-			couponCodes, altShipping, insure);
-	}
-
-	/**
-	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCart the shopping cart
-	* @return the shopping cart that was updated
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingCart updateShoppingCart(
-		com.liferay.shopping.model.ShoppingCart shoppingCart) {
-		return _shoppingCartLocalService.updateShoppingCart(shoppingCart);
+	public void deleteUserCarts(long userId) {
+		_shoppingCartLocalService.deleteUserCarts(userId);
 	}
 
 	@Override

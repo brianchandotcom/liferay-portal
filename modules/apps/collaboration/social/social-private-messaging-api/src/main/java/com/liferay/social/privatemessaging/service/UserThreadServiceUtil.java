@@ -47,6 +47,11 @@ public class UserThreadServiceUtil {
 		return getService().getLastThreadMessage(mbThreadId);
 	}
 
+	public static int getThreadMessagesCount(long mbThreadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThreadMessagesCount(mbThreadId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -60,11 +65,6 @@ public class UserThreadServiceUtil {
 		long mbThreadId, int start, int end, boolean ascending)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getThreadMessages(mbThreadId, start, end, ascending);
-	}
-
-	public static int getThreadMessagesCount(long mbThreadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getThreadMessagesCount(mbThreadId);
 	}
 
 	public static java.util.List<com.liferay.social.privatemessaging.model.UserThread> getUserUserThreads(

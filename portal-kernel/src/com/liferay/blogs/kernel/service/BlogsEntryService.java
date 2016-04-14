@@ -85,19 +85,6 @@ public interface BlogsEntryService extends BaseService {
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteEntry(long entryId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
-		int status, int max) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getCompanyEntriesRSS(long companyId,
-		Date displayDate, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		ThemeDisplay themeDisplay) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long entryId) throws PortalException;
 
@@ -105,82 +92,7 @@ public interface BlogsEntryService extends BaseService {
 	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
-		int status, int max);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
-		int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, int status,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, int status,
-		int start, int end, OrderByComparator<BlogsEntry> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, Date displayDate, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupEntriesRSS(long groupId, Date displayDate,
-		int status, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
-		int status, int start, int end, OrderByComparator<BlogsEntry> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
-		int[] statuses, int start, int end, OrderByComparator<BlogsEntry> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupUserEntriesCount(long groupId, long userId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupUserEntriesCount(long groupId, long userId,
-		int[] statuses);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
-		Date displayDate, int status, int max) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getOrganizationEntries(long organizationId,
-		Date displayDate, int status, int max) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getOrganizationEntriesRSS(long organizationId,
-		Date displayDate, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		ThemeDisplay themeDisplay) throws PortalException;
-
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException;
-
-	public void restoreEntryFromTrash(long entryId) throws PortalException;
-
-	public void subscribe(long groupId) throws PortalException;
-
-	public void unsubscribe(long groupId) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
@@ -207,4 +119,92 @@ public interface BlogsEntryService extends BaseService {
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId, Date displayDate, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupUserEntriesCount(long groupId, long userId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		int[] statuses);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getCompanyEntriesRSS(long companyId,
+		Date displayDate, int status, int max, java.lang.String type,
+		double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		ThemeDisplay themeDisplay) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getGroupEntriesRSS(long groupId, Date displayDate,
+		int status, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getOrganizationEntriesRSS(long organizationId,
+		Date displayDate, int status, int max, java.lang.String type,
+		double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		ThemeDisplay themeDisplay) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
+		int status, int max) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, int status,
+		int start, int end, OrderByComparator<BlogsEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int max);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		int status, int start, int end, OrderByComparator<BlogsEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		int[] statuses, int start, int end, OrderByComparator<BlogsEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
+		Date displayDate, int status, int max) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BlogsEntry> getOrganizationEntries(long organizationId,
+		Date displayDate, int status, int max) throws PortalException;
+
+	public void deleteEntry(long entryId) throws PortalException;
+
+	public void restoreEntryFromTrash(long entryId) throws PortalException;
+
+	public void subscribe(long groupId) throws PortalException;
+
+	public void unsubscribe(long groupId) throws PortalException;
 }

@@ -34,13 +34,6 @@ public class ScreensDDLRecordServiceWrapper implements ScreensDDLRecordService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONObject getDDLRecord(
-		long ddlRecordId, java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensDDLRecordService.getDDLRecord(ddlRecordId, locale);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.json.JSONArray getDDLRecords(
 		long ddlRecordSetId, java.util.Locale locale, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -54,6 +47,13 @@ public class ScreensDDLRecordServiceWrapper implements ScreensDDLRecordService,
 		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return _screensDDLRecordService.getDDLRecords(ddlRecordSetId, userId,
 			locale, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getDDLRecord(
+		long ddlRecordId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensDDLRecordService.getDDLRecord(ddlRecordId, locale);
 	}
 
 	@Override

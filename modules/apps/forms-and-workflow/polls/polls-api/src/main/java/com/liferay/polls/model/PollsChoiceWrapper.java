@@ -152,8 +152,38 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new PollsChoiceWrapper((PollsChoice)_pollsChoice.clone());
+	public boolean isCachedModel() {
+		return _pollsChoice.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _pollsChoice.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _pollsChoice.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _pollsChoice.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsChoice toEscapedModel() {
+		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsChoice toUnescapedModel() {
+		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.polls.model.PollsChoice> toCacheModel() {
+		return _pollsChoice.toCacheModel();
 	}
 
 	@Override
@@ -162,38 +192,23 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _pollsChoice.getAvailableLanguageIds();
+	public int getVotesCount() {
+		return _pollsChoice.getVotesCount();
 	}
 
-	/**
-	* Returns the choice ID of this polls choice.
-	*
-	* @return the choice ID of this polls choice
-	*/
 	@Override
-	public long getChoiceId() {
-		return _pollsChoice.getChoiceId();
+	public int hashCode() {
+		return _pollsChoice.hashCode();
 	}
 
-	/**
-	* Returns the company ID of this polls choice.
-	*
-	* @return the company ID of this polls choice
-	*/
 	@Override
-	public long getCompanyId() {
-		return _pollsChoice.getCompanyId();
+	public Serializable getPrimaryKeyObj() {
+		return _pollsChoice.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the create date of this polls choice.
-	*
-	* @return the create date of this polls choice
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _pollsChoice.getCreateDate();
+	public java.lang.Object clone() {
+		return new PollsChoiceWrapper((PollsChoice)_pollsChoice.clone());
 	}
 
 	@Override
@@ -270,51 +285,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this polls choice.
-	*
-	* @return the locales and localized descriptions of this polls choice
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _pollsChoice.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _pollsChoice.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this polls choice.
-	*
-	* @return the group ID of this polls choice
-	*/
-	@Override
-	public long getGroupId() {
-		return _pollsChoice.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this polls choice.
-	*
-	* @return the last publish date of this polls choice
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _pollsChoice.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this polls choice.
-	*
-	* @return the modified date of this polls choice
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _pollsChoice.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this polls choice.
 	*
 	* @return the name of this polls choice
@@ -322,41 +292,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public java.lang.String getName() {
 		return _pollsChoice.getName();
-	}
-
-	/**
-	* Returns the primary key of this polls choice.
-	*
-	* @return the primary key of this polls choice
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _pollsChoice.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _pollsChoice.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the question ID of this polls choice.
-	*
-	* @return the question ID of this polls choice
-	*/
-	@Override
-	public long getQuestionId() {
-		return _pollsChoice.getQuestionId();
-	}
-
-	/**
-	* Returns the user ID of this polls choice.
-	*
-	* @return the user ID of this polls choice
-	*/
-	@Override
-	public long getUserId() {
-		return _pollsChoice.getUserId();
 	}
 
 	/**
@@ -390,28 +325,118 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public int getVotesCount() {
-		return _pollsChoice.getVotesCount();
+	public java.lang.String toString() {
+		return _pollsChoice.toString();
 	}
 
 	@Override
-	public int hashCode() {
-		return _pollsChoice.hashCode();
+	public java.lang.String toXmlString() {
+		return _pollsChoice.toXmlString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _pollsChoice.isCachedModel();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _pollsChoice.getAvailableLanguageIds();
 	}
 
+	/**
+	* Returns the create date of this polls choice.
+	*
+	* @return the create date of this polls choice
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _pollsChoice.isEscapedModel();
+	public Date getCreateDate() {
+		return _pollsChoice.getCreateDate();
 	}
 
+	/**
+	* Returns the last publish date of this polls choice.
+	*
+	* @return the last publish date of this polls choice
+	*/
 	@Override
-	public boolean isNew() {
-		return _pollsChoice.isNew();
+	public Date getLastPublishDate() {
+		return _pollsChoice.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this polls choice.
+	*
+	* @return the modified date of this polls choice
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _pollsChoice.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this polls choice.
+	*
+	* @return the locales and localized descriptions of this polls choice
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _pollsChoice.getDescriptionMap();
+	}
+
+	/**
+	* Returns the choice ID of this polls choice.
+	*
+	* @return the choice ID of this polls choice
+	*/
+	@Override
+	public long getChoiceId() {
+		return _pollsChoice.getChoiceId();
+	}
+
+	/**
+	* Returns the company ID of this polls choice.
+	*
+	* @return the company ID of this polls choice
+	*/
+	@Override
+	public long getCompanyId() {
+		return _pollsChoice.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this polls choice.
+	*
+	* @return the group ID of this polls choice
+	*/
+	@Override
+	public long getGroupId() {
+		return _pollsChoice.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this polls choice.
+	*
+	* @return the primary key of this polls choice
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _pollsChoice.getPrimaryKey();
+	}
+
+	/**
+	* Returns the question ID of this polls choice.
+	*
+	* @return the question ID of this polls choice
+	*/
+	@Override
+	public long getQuestionId() {
+		return _pollsChoice.getQuestionId();
+	}
+
+	/**
+	* Returns the user ID of this polls choice.
+	*
+	* @return the user ID of this polls choice
+	*/
+	@Override
+	public long getUserId() {
+		return _pollsChoice.getUserId();
 	}
 
 	@Override
@@ -532,14 +557,14 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_pollsChoice.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_pollsChoice.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pollsChoice.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_pollsChoice.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -655,31 +680,6 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_pollsChoice.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.polls.model.PollsChoice> toCacheModel() {
-		return _pollsChoice.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice toEscapedModel() {
-		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _pollsChoice.toString();
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice toUnescapedModel() {
-		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _pollsChoice.toXmlString();
 	}
 
 	@Override

@@ -96,6 +96,30 @@ public interface CounterLocalService extends BaseLocalService,
 	public Counter deleteCounter(java.lang.String name)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Counter fetchCounter(java.lang.String name);
+
+	/**
+	* Returns the counter with the primary key.
+	*
+	* @param name the primary key of the counter
+	* @return the counter
+	* @throws PortalException if a counter with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Counter getCounter(java.lang.String name) throws PortalException;
+
+	/**
+	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param counter the counter
+	* @return the counter that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Counter updateCounter(Counter counter);
+
+	public DynamicQuery dynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -103,7 +127,25 @@ public interface CounterLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of counters.
+	*
+	* @return the number of counters
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCountersCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -145,6 +187,23 @@ public interface CounterLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the counters.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.counter.model.impl.CounterModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of counters
+	* @param end the upper bound of the range of counters (not inclusive)
+	* @return the range of counters
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Counter> getCounters(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getNames();
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -161,56 +220,6 @@ public interface CounterLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Counter fetchCounter(java.lang.String name);
-
-	/**
-	* Returns the counter with the primary key.
-	*
-	* @param name the primary key of the counter
-	* @return the counter
-	* @throws PortalException if a counter with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Counter getCounter(java.lang.String name) throws PortalException;
-
-	/**
-	* Returns a range of all the counters.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.counter.model.impl.CounterModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of counters
-	* @param end the upper bound of the range of counters (not inclusive)
-	* @return the range of counters
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Counter> getCounters(int start, int end);
-
-	/**
-	* Returns the number of counters.
-	*
-	* @return the number of counters
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCountersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getNames();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment();
@@ -229,13 +238,4 @@ public interface CounterLocalService extends BaseLocalService,
 
 	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(java.lang.String name, long size);
-
-	/**
-	* Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param counter the counter
-	* @return the counter that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Counter updateCounter(Counter counter);
 }

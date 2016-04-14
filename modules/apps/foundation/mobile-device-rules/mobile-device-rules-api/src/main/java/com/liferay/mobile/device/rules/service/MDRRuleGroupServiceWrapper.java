@@ -53,16 +53,33 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	}
 
 	@Override
-	public void deleteRuleGroup(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mdrRuleGroupService.deleteRuleGroup(ruleGroupId);
-	}
-
-	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup fetchRuleGroup(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupService.fetchRuleGroup(ruleGroupId);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
+		long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupService.getRuleGroup(ruleGroupId);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
+		long ruleGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupService.updateRuleGroup(ruleGroupId, nameMap,
+			descriptionMap, serviceContext);
+	}
+
+	@Override
+	public int getRuleGroupsCount(long[] groupIds) {
+		return _mdrRuleGroupService.getRuleGroupsCount(groupIds);
 	}
 
 	/**
@@ -76,32 +93,15 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
-		long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupService.getRuleGroup(ruleGroupId);
-	}
-
-	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
 		long[] groupIds, int start, int end) {
 		return _mdrRuleGroupService.getRuleGroups(groupIds, start, end);
 	}
 
 	@Override
-	public int getRuleGroupsCount(long[] groupIds) {
-		return _mdrRuleGroupService.getRuleGroupsCount(groupIds);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteRuleGroup(long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupService.updateRuleGroup(ruleGroupId, nameMap,
-			descriptionMap, serviceContext);
+		_mdrRuleGroupService.deleteRuleGroup(ruleGroupId);
 	}
 
 	@Override

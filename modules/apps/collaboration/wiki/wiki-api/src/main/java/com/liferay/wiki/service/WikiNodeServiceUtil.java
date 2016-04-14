@@ -48,11 +48,6 @@ public class WikiNodeServiceUtil {
 		return getService().addNode(name, description, serviceContext);
 	}
 
-	public static void deleteNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteNode(nodeId);
-	}
-
 	public static com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -62,6 +57,35 @@ public class WikiNodeServiceUtil {
 	public static com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(nodeId);
+	}
+
+	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveNodeToTrash(nodeId);
+	}
+
+	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateNode(nodeId, name, description, serviceContext);
+	}
+
+	public static int getNodesCount(long groupId) {
+		return getService().getNodesCount(groupId);
+	}
+
+	public static int getNodesCount(long groupId, int status) {
+		return getService().getNodesCount(groupId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
@@ -92,21 +116,9 @@ public class WikiNodeServiceUtil {
 		return getService().getNodes(groupId, status, start, end, obc);
 	}
 
-	public static int getNodesCount(long groupId) {
-		return getService().getNodesCount(groupId);
-	}
-
-	public static int getNodesCount(long groupId, int status) {
-		return getService().getNodesCount(groupId, status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static void deleteNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteNode(nodeId);
 	}
 
 	public static void importPages(long nodeId, java.lang.String importer,
@@ -114,11 +126,6 @@ public class WikiNodeServiceUtil {
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().importPages(nodeId, importer, inputStreams, options);
-	}
-
-	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveNodeToTrash(nodeId);
 	}
 
 	public static void restoreNodeFromTrash(long nodeId)
@@ -134,13 +141,6 @@ public class WikiNodeServiceUtil {
 	public static void unsubscribeNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribeNode(nodeId);
-	}
-
-	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateNode(nodeId, name, description, serviceContext);
 	}
 
 	public static WikiNodeService getService() {

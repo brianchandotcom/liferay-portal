@@ -92,6 +92,165 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
+	public com.liferay.message.boards.kernel.model.MBMessage getMessage(
+		long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getMessage(messageId);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
+		java.lang.String className, long classPK, long messageId,
+		java.lang.String subject, java.lang.String body,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.updateDiscussionMessage(className, classPK,
+			messageId, subject, body, serviceContext);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMessage updateMessage(
+		long messageId, java.lang.String subject, java.lang.String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		java.util.List<java.lang.String> existingFiles, double priority,
+		boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.updateMessage(messageId, subject, body,
+			inputStreamOVPs, existingFiles, priority, allowPingbacks,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+		long messageId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getMessageDisplay(messageId, status);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	int)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
+		long messageId, int status, java.lang.String threadView,
+		boolean includePrevAndNext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getMessageDisplay(messageId, status,
+			threadView, includePrevAndNext);
+	}
+
+	@Override
+	public int getCategoryMessagesCount(long groupId, long categoryId,
+		int status) {
+		return _mbMessageService.getCategoryMessagesCount(groupId, categoryId,
+			status);
+	}
+
+	@Override
+	public int getGroupMessagesCount(long groupId, int status) {
+		return _mbMessageService.getGroupMessagesCount(groupId, status);
+	}
+
+	@Override
+	public int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId) {
+		return _mbMessageService.getThreadAnswersCount(groupId, categoryId,
+			threadId);
+	}
+
+	@Override
+	public int getThreadMessagesCount(long groupId, long categoryId,
+		long threadId, int status) {
+		return _mbMessageService.getThreadMessagesCount(groupId, categoryId,
+			threadId, status);
+	}
+
+	@Override
+	public java.lang.String getCategoryMessagesRSS(long groupId,
+		long categoryId, int status, int max, java.lang.String type,
+		double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getCategoryMessagesRSS(groupId, categoryId,
+			status, max, type, version, displayStyle, feedURL, entryURL,
+			themeDisplay);
+	}
+
+	@Override
+	public java.lang.String getCompanyMessagesRSS(long companyId, int status,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getCompanyMessagesRSS(companyId, status, max,
+			type, version, displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	@Override
+	public java.lang.String getGroupMessagesRSS(long groupId, int status,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getGroupMessagesRSS(groupId, status, max,
+			type, version, displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	@Override
+	public java.lang.String getGroupMessagesRSS(long groupId, long userId,
+		int status, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getGroupMessagesRSS(groupId, userId, status,
+			max, type, version, displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbMessageService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.lang.String getThreadMessagesRSS(long threadId, int status,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getThreadMessagesRSS(threadId, status, max,
+			type, version, displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getCategoryMessages(
+		long groupId, long categoryId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getCategoryMessages(groupId, categoryId,
+			status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
+		long groupId, long categoryId, long threadId, int status, int start,
+		int end) {
+		return _mbMessageService.getThreadMessages(groupId, categoryId,
+			threadId, status, start, end);
+	}
+
+	@Override
 	public void addMessageAttachment(long messageId, java.lang.String fileName,
 		java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -146,142 +305,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getCategoryMessages(
-		long groupId, long categoryId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getCategoryMessages(groupId, categoryId,
-			status, start, end);
-	}
-
-	@Override
-	public int getCategoryMessagesCount(long groupId, long categoryId,
-		int status) {
-		return _mbMessageService.getCategoryMessagesCount(groupId, categoryId,
-			status);
-	}
-
-	@Override
-	public java.lang.String getCategoryMessagesRSS(long groupId,
-		long categoryId, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getCategoryMessagesRSS(groupId, categoryId,
-			status, max, type, version, displayStyle, feedURL, entryURL,
-			themeDisplay);
-	}
-
-	@Override
-	public java.lang.String getCompanyMessagesRSS(long companyId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getCompanyMessagesRSS(companyId, status, max,
-			type, version, displayStyle, feedURL, entryURL, themeDisplay);
-	}
-
-	@Override
-	public int getGroupMessagesCount(long groupId, int status) {
-		return _mbMessageService.getGroupMessagesCount(groupId, status);
-	}
-
-	@Override
-	public java.lang.String getGroupMessagesRSS(long groupId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getGroupMessagesRSS(groupId, status, max,
-			type, version, displayStyle, feedURL, entryURL, themeDisplay);
-	}
-
-	@Override
-	public java.lang.String getGroupMessagesRSS(long groupId, long userId,
-		int status, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getGroupMessagesRSS(groupId, userId, status,
-			max, type, version, displayStyle, feedURL, entryURL, themeDisplay);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage getMessage(
-		long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getMessage(messageId);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long messageId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getMessageDisplay(messageId, status);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
-		long messageId, int status, java.lang.String threadView,
-		boolean includePrevAndNext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getMessageDisplay(messageId, status,
-			threadView, includePrevAndNext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _mbMessageService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public int getThreadAnswersCount(long groupId, long categoryId,
-		long threadId) {
-		return _mbMessageService.getThreadAnswersCount(groupId, categoryId,
-			threadId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
-		long groupId, long categoryId, long threadId, int status, int start,
-		int end) {
-		return _mbMessageService.getThreadMessages(groupId, categoryId,
-			threadId, status, start, end);
-	}
-
-	@Override
-	public int getThreadMessagesCount(long groupId, long categoryId,
-		long threadId, int status) {
-		return _mbMessageService.getThreadMessagesCount(groupId, categoryId,
-			threadId, status);
-	}
-
-	@Override
-	public java.lang.String getThreadMessagesRSS(long threadId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.getThreadMessagesRSS(threadId, status, max,
-			type, version, displayStyle, feedURL, entryURL, themeDisplay);
-	}
-
-	@Override
 	public void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -304,29 +327,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	public void updateAnswer(long messageId, boolean answer, boolean cascade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageService.updateAnswer(messageId, answer, cascade);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage updateDiscussionMessage(
-		java.lang.String className, long classPK, long messageId,
-		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.updateDiscussionMessage(className, classPK,
-			messageId, subject, body, serviceContext);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage updateMessage(
-		long messageId, java.lang.String subject, java.lang.String body,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
-		java.util.List<java.lang.String> existingFiles, double priority,
-		boolean allowPingbacks,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.updateMessage(messageId, subject, body,
-			inputStreamOVPs, existingFiles, priority, allowPingbacks,
-			serviceContext);
 	}
 
 	@Override

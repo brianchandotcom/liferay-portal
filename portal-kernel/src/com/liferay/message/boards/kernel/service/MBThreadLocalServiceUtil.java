@@ -40,6 +40,9 @@ public class MBThreadLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasAnswerMessage(long threadId) {
+		return getService().hasAnswerMessage(threadId);
+	}
 
 	/**
 	* Adds the message boards thread to the database. Also notifies the appropriate model listeners.
@@ -95,6 +98,132 @@ public class MBThreadLocalServiceUtil {
 		return getService().deleteMBThread(threadId);
 	}
 
+	public static com.liferay.message.boards.kernel.model.MBThread fetchMBThread(
+		long threadId) {
+		return getService().fetchMBThread(threadId);
+	}
+
+	/**
+	* Returns the message boards thread matching the UUID and group.
+	*
+	* @param uuid the message boards thread's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	*/
+	public static com.liferay.message.boards.kernel.model.MBThread fetchMBThreadByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchMBThreadByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread fetchThread(
+		long threadId) {
+		return getService().fetchThread(threadId);
+	}
+
+	/**
+	* Returns the message boards thread with the primary key.
+	*
+	* @param threadId the primary key of the message boards thread
+	* @return the message boards thread
+	* @throws PortalException if a message boards thread with the primary key could not be found
+	*/
+	public static com.liferay.message.boards.kernel.model.MBThread getMBThread(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMBThread(threadId);
+	}
+
+	/**
+	* Returns the message boards thread matching the UUID and group.
+	*
+	* @param uuid the message boards thread's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread
+	* @throws PortalException if a matching message boards thread could not be found
+	*/
+	public static com.liferay.message.boards.kernel.model.MBThread getMBThreadByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMBThreadByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread getThread(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThread(threadId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread moveThread(
+		long groupId, long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveThread(groupId, categoryId, threadId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread moveThreadFromTrash(
+		long userId, long categoryId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveThreadFromTrash(userId, categoryId, threadId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread moveThreadToTrash(
+		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveThreadToTrash(userId, thread);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread moveThreadToTrash(
+		long userId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveThreadToTrash(userId, threadId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread splitThread(
+		long userId, long messageId, java.lang.String subject,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .splitThread(userId, messageId, subject, serviceContext);
+	}
+
+	/**
+	* Updates the message boards thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbThread the message boards thread
+	* @return the message boards thread that was updated
+	*/
+	public static com.liferay.message.boards.kernel.model.MBThread updateMBThread(
+		com.liferay.message.boards.kernel.model.MBThread mbThread) {
+		return getService().updateMBThread(mbThread);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread updateMessageCount(
+		long threadId) {
+		return getService().updateMessageCount(threadId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBThread updateStatus(
+		long userId, long threadId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateStatus(userId, threadId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -104,30 +233,80 @@ public class MBThreadLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteThread(
-		com.liferay.message.boards.kernel.model.MBThread thread)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteThread(thread);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteThread(long threadId)
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteThread(threadId);
+		return getService()
+				   .search(groupId, userId, creatorUserId, status, start, end);
 	}
 
-	public static void deleteThreads(long groupId, long categoryId)
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, long startDate, long endDate,
+		int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteThreads(groupId, categoryId);
+		return getService()
+				   .search(groupId, userId, creatorUserId, startDate, endDate,
+			status, start, end);
 	}
 
-	public static void deleteThreads(long groupId, long categoryId,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteThreads(groupId, categoryId, includeTrashedEntries);
+	public static int getCategoryThreadsCount(long groupId, long categoryId,
+		int status) {
+		return getService().getCategoryThreadsCount(groupId, categoryId, status);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static int getGroupThreadsCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
+		return getService().getGroupThreadsCount(groupId, queryDefinition);
+	}
+
+	public static int getGroupThreadsCount(long groupId, long userId,
+		boolean subscribed, boolean includeAnonymous,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
+		return getService()
+				   .getGroupThreadsCount(groupId, userId, subscribed,
+			includeAnonymous, queryDefinition);
+	}
+
+	public static int getGroupThreadsCount(long groupId, long userId,
+		boolean subscribed,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
+		return getService()
+				   .getGroupThreadsCount(groupId, userId, subscribed,
+			queryDefinition);
+	}
+
+	public static int getGroupThreadsCount(long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
+		return getService()
+				   .getGroupThreadsCount(groupId, userId, queryDefinition);
+	}
+
+	/**
+	* Returns the number of message boards threads.
+	*
+	* @return the number of message boards threads
+	*/
+	public static int getMBThreadsCount() {
+		return getService().getMBThreadsCount();
+	}
+
+	public static int getThreadsCount(long groupId, long categoryId, int status) {
+		return getService().getThreadsCount(groupId, categoryId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -180,76 +359,10 @@ public class MBThreadLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread fetchMBThread(
-		long threadId) {
-		return getService().fetchMBThread(threadId);
-	}
-
-	/**
-	* Returns the message boards thread matching the UUID and group.
-	*
-	* @param uuid the message boards thread's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	*/
-	public static com.liferay.message.boards.kernel.model.MBThread fetchMBThreadByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchMBThreadByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread fetchThread(
-		long threadId) {
-		return getService().fetchThread(threadId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static int getCategoryThreadsCount(long groupId, long categoryId,
-		int status) {
-		return getService().getCategoryThreadsCount(groupId, categoryId, status);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
 		long groupId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
 		return getService().getGroupThreads(groupId, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
-		long groupId, long userId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
-		return getService().getGroupThreads(groupId, userId, queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
@@ -268,62 +381,10 @@ public class MBThreadLocalServiceUtil {
 				   .getGroupThreads(groupId, userId, subscribed, queryDefinition);
 	}
 
-	public static int getGroupThreadsCount(long groupId,
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getGroupThreads(
+		long groupId, long userId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
-		return getService().getGroupThreadsCount(groupId, queryDefinition);
-	}
-
-	public static int getGroupThreadsCount(long groupId, long userId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
-		return getService()
-				   .getGroupThreadsCount(groupId, userId, queryDefinition);
-	}
-
-	public static int getGroupThreadsCount(long groupId, long userId,
-		boolean subscribed, boolean includeAnonymous,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
-		return getService()
-				   .getGroupThreadsCount(groupId, userId, subscribed,
-			includeAnonymous, queryDefinition);
-	}
-
-	public static int getGroupThreadsCount(long groupId, long userId,
-		boolean subscribed,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBThread> queryDefinition) {
-		return getService()
-				   .getGroupThreadsCount(groupId, userId, subscribed,
-			queryDefinition);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the message boards thread with the primary key.
-	*
-	* @param threadId the primary key of the message boards thread
-	* @return the message boards thread
-	* @throws PortalException if a message boards thread with the primary key could not be found
-	*/
-	public static com.liferay.message.boards.kernel.model.MBThread getMBThread(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMBThread(threadId);
-	}
-
-	/**
-	* Returns the message boards thread matching the UUID and group.
-	*
-	* @param uuid the message boards thread's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards thread
-	* @throws PortalException if a matching message boards thread could not be found
-	*/
-	public static com.liferay.message.boards.kernel.model.MBThread getMBThreadByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMBThreadByUuidAndGroupId(uuid, groupId);
+		return getService().getGroupThreads(groupId, userId, queryDefinition);
 	}
 
 	/**
@@ -372,32 +433,8 @@ public class MBThreadLocalServiceUtil {
 			orderByComparator);
 	}
 
-	/**
-	* Returns the number of message boards threads.
-	*
-	* @return the number of message boards threads
-	*/
-	public static int getMBThreadsCount() {
-		return getService().getMBThreadsCount();
-	}
-
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getNoAssetThreads() {
 		return getService().getNoAssetThreads();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getPriorityThreads(
@@ -412,23 +449,55 @@ public class MBThreadLocalServiceUtil {
 		return getService().getPriorityThreads(categoryId, priority, inherit);
 	}
 
-	public static com.liferay.message.boards.kernel.model.MBThread getThread(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getThread(threadId);
-	}
-
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBThread> getThreads(
 		long groupId, long categoryId, int status, int start, int end) {
 		return getService().getThreads(groupId, categoryId, status, start, end);
 	}
 
-	public static int getThreadsCount(long groupId, long categoryId, int status) {
-		return getService().getThreadsCount(groupId, categoryId, status);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static boolean hasAnswerMessage(long threadId) {
-		return getService().hasAnswerMessage(threadId);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteThread(
+		com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteThread(thread);
+	}
+
+	public static void deleteThread(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteThread(threadId);
+	}
+
+	public static void deleteThreads(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteThreads(groupId, categoryId);
+	}
+
+	public static void deleteThreads(long groupId, long categoryId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteThreads(groupId, categoryId, includeTrashedEntries);
 	}
 
 	public static void incrementViewCounter(long threadId, int increment)
@@ -440,30 +509,6 @@ public class MBThreadLocalServiceUtil {
 		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().moveDependentsToTrash(groupId, threadId, trashEntryId);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread moveThread(
-		long groupId, long categoryId, long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveThread(groupId, categoryId, threadId);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread moveThreadFromTrash(
-		long userId, long categoryId, long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveThreadFromTrash(userId, categoryId, threadId);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread moveThreadToTrash(
-		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveThreadToTrash(userId, thread);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread moveThreadToTrash(
-		long userId, long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveThreadToTrash(userId, threadId);
 	}
 
 	public static void moveThreadsToTrash(long groupId, long userId)
@@ -492,55 +537,9 @@ public class MBThreadLocalServiceUtil {
 		getService().restoreThreadFromTrash(userId, threadId);
 	}
 
-	public static com.liferay.portal.kernel.search.Hits search(long groupId,
-		long userId, long creatorUserId, long startDate, long endDate,
-		int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .search(groupId, userId, creatorUserId, startDate, endDate,
-			status, start, end);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(long groupId,
-		long userId, long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .search(groupId, userId, creatorUserId, status, start, end);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread splitThread(
-		long userId, long messageId, java.lang.String subject,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .splitThread(userId, messageId, subject, serviceContext);
-	}
-
-	/**
-	* Updates the message boards thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbThread the message boards thread
-	* @return the message boards thread that was updated
-	*/
-	public static com.liferay.message.boards.kernel.model.MBThread updateMBThread(
-		com.liferay.message.boards.kernel.model.MBThread mbThread) {
-		return getService().updateMBThread(mbThread);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread updateMessageCount(
-		long threadId) {
-		return getService().updateMessageCount(threadId);
-	}
-
 	public static void updateQuestion(long threadId, boolean question)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateQuestion(threadId, question);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBThread updateStatus(
-		long userId, long threadId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateStatus(userId, threadId, status);
 	}
 
 	public static MBThreadLocalService getService() {

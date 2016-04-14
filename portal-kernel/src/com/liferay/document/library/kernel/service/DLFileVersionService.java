@@ -56,14 +56,6 @@ public interface DLFileVersionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileVersionsCount(long fileEntryId, int status)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileVersion getLatestFileVersion(long fileEntryId)
 		throws PortalException;
 
@@ -71,10 +63,18 @@ public interface DLFileVersionService extends BaseService {
 	public DLFileVersion getLatestFileVersion(long fileEntryId,
 		boolean excludeWorkingCopy) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileVersionsCount(long fileEntryId, int status)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
+		throws PortalException;
 }

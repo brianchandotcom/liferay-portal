@@ -75,46 +75,15 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().createExpandoColumn(columnId);
 	}
 
-	public static void deleteColumn(
-		com.liferay.expando.kernel.model.ExpandoColumn column) {
-		getService().deleteColumn(column);
-	}
-
-	public static void deleteColumn(long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumn(columnId);
-	}
-
-	public static void deleteColumn(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumn(companyId, className, tableName, name);
-	}
-
-	public static void deleteColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumn(companyId, classNameId, tableName, name);
-	}
-
-	public static void deleteColumn(long tableId, java.lang.String name) {
-		getService().deleteColumn(tableId, name);
-	}
-
-	public static void deleteColumns(long companyId,
-		java.lang.String className, java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumns(companyId, className, tableName);
-	}
-
-	public static void deleteColumns(long companyId, long classNameId,
-		java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumns(companyId, classNameId, tableName);
-	}
-
-	public static void deleteColumns(long tableId) {
-		getService().deleteColumns(tableId);
+	/**
+	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	*
+	* @param expandoColumn the expando column
+	* @return the expando column that was removed
+	*/
+	public static com.liferay.expando.kernel.model.ExpandoColumn deleteExpandoColumn(
+		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
+		return getService().deleteExpandoColumn(expandoColumn);
 	}
 
 	/**
@@ -130,15 +99,97 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().deleteExpandoColumn(columnId);
 	}
 
+	public static com.liferay.expando.kernel.model.ExpandoColumn fetchExpandoColumn(
+		long columnId) {
+		return getService().fetchExpandoColumn(columnId);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
+		long columnId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getColumn(columnId);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String name) {
+		return getService().getColumn(companyId, className, tableName, name);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
+		long companyId, long classNameId, java.lang.String tableName,
+		java.lang.String name) {
+		return getService().getColumn(companyId, classNameId, tableName, name);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
+		long tableId, java.lang.String name) {
+		return getService().getColumn(tableId, name);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
+		long companyId, java.lang.String className, java.lang.String name) {
+		return getService().getDefaultTableColumn(companyId, className, name);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
+		long companyId, long classNameId, java.lang.String name) {
+		return getService().getDefaultTableColumn(companyId, classNameId, name);
+	}
+
 	/**
-	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	* Returns the expando column with the primary key.
+	*
+	* @param columnId the primary key of the expando column
+	* @return the expando column
+	* @throws PortalException if a expando column with the primary key could not be found
+	*/
+	public static com.liferay.expando.kernel.model.ExpandoColumn getExpandoColumn(
+		long columnId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getExpandoColumn(columnId);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
+		long columnId, java.lang.String name, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateColumn(columnId, name, type);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
+		long columnId, java.lang.String name, int type,
+		java.lang.Object defaultData)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateColumn(columnId, name, type, defaultData);
+	}
+
+	/**
+	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param expandoColumn the expando column
-	* @return the expando column that was removed
+	* @return the expando column that was updated
 	*/
-	public static com.liferay.expando.kernel.model.ExpandoColumn deleteExpandoColumn(
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateExpandoColumn(
 		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
-		return getService().deleteExpandoColumn(expandoColumn);
+		return getService().updateExpandoColumn(expandoColumn);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
+		long columnId, java.lang.String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateTypeSettings(columnId, typeSettings);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -150,8 +201,52 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static int getColumnsCount(long companyId,
+		java.lang.String className, java.lang.String tableName) {
+		return getService().getColumnsCount(companyId, className, tableName);
+	}
+
+	public static int getColumnsCount(long companyId, long classNameId,
+		java.lang.String tableName) {
+		return getService().getColumnsCount(companyId, classNameId, tableName);
+	}
+
+	public static int getColumnsCount(long tableId) {
+		return getService().getColumnsCount(tableId);
+	}
+
+	public static int getDefaultTableColumnsCount(long companyId,
+		java.lang.String className) {
+		return getService().getDefaultTableColumnsCount(companyId, className);
+	}
+
+	public static int getDefaultTableColumnsCount(long companyId,
+		long classNameId) {
+		return getService().getDefaultTableColumnsCount(companyId, classNameId);
+	}
+
+	/**
+	* Returns the number of expando columns.
+	*
+	* @return the number of expando columns
+	*/
+	public static int getExpandoColumnsCount() {
+		return getService().getExpandoColumnsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -204,62 +299,6 @@ public class ExpandoColumnLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn fetchExpandoColumn(
-		long columnId) {
-		return getService().fetchExpandoColumn(columnId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getColumn(columnId);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String name) {
-		return getService().getColumn(companyId, className, tableName, name);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String name) {
-		return getService().getColumn(companyId, classNameId, tableName, name);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn getColumn(
-		long tableId, java.lang.String name) {
-		return getService().getColumn(tableId, name);
-	}
-
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getColumns(
 		long companyId, java.lang.String className, java.lang.String tableName) {
 		return getService().getColumns(companyId, className, tableName);
@@ -293,30 +332,6 @@ public class ExpandoColumnLocalServiceUtil {
 		return getService().getColumns(tableId, names);
 	}
 
-	public static int getColumnsCount(long companyId,
-		java.lang.String className, java.lang.String tableName) {
-		return getService().getColumnsCount(companyId, className, tableName);
-	}
-
-	public static int getColumnsCount(long companyId, long classNameId,
-		java.lang.String tableName) {
-		return getService().getColumnsCount(companyId, classNameId, tableName);
-	}
-
-	public static int getColumnsCount(long tableId) {
-		return getService().getColumnsCount(tableId);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, java.lang.String className, java.lang.String name) {
-		return getService().getDefaultTableColumn(companyId, className, name);
-	}
-
-	public static com.liferay.expando.kernel.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, long classNameId, java.lang.String name) {
-		return getService().getDefaultTableColumn(companyId, classNameId, name);
-	}
-
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
 		long companyId, java.lang.String className) {
 		return getService().getDefaultTableColumns(companyId, className);
@@ -325,29 +340,6 @@ public class ExpandoColumnLocalServiceUtil {
 	public static java.util.List<com.liferay.expando.kernel.model.ExpandoColumn> getDefaultTableColumns(
 		long companyId, long classNameId) {
 		return getService().getDefaultTableColumns(companyId, classNameId);
-	}
-
-	public static int getDefaultTableColumnsCount(long companyId,
-		java.lang.String className) {
-		return getService().getDefaultTableColumnsCount(companyId, className);
-	}
-
-	public static int getDefaultTableColumnsCount(long companyId,
-		long classNameId) {
-		return getService().getDefaultTableColumnsCount(companyId, classNameId);
-	}
-
-	/**
-	* Returns the expando column with the primary key.
-	*
-	* @param columnId the primary key of the expando column
-	* @return the expando column
-	* @throws PortalException if a expando column with the primary key could not be found
-	*/
-	public static com.liferay.expando.kernel.model.ExpandoColumn getExpandoColumn(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getExpandoColumn(columnId);
 	}
 
 	/**
@@ -367,61 +359,69 @@ public class ExpandoColumnLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of expando columns.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of expando columns
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static int getExpandoColumnsCount() {
-		return getService().getExpandoColumnsCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void deleteColumn(
+		com.liferay.expando.kernel.model.ExpandoColumn column) {
+		getService().deleteColumn(column);
+	}
+
+	public static void deleteColumn(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService().deleteColumn(columnId);
 	}
 
-	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type)
+	public static void deleteColumn(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateColumn(columnId, name, type);
+		getService().deleteColumn(companyId, className, tableName, name);
 	}
 
-	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData)
+	public static void deleteColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateColumn(columnId, name, type, defaultData);
+		getService().deleteColumn(companyId, classNameId, tableName, name);
 	}
 
-	/**
-	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was updated
-	*/
-	public static com.liferay.expando.kernel.model.ExpandoColumn updateExpandoColumn(
-		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
-		return getService().updateExpandoColumn(expandoColumn);
+	public static void deleteColumn(long tableId, java.lang.String name) {
+		getService().deleteColumn(tableId, name);
 	}
 
-	public static com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings)
+	public static void deleteColumns(long companyId,
+		java.lang.String className, java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateTypeSettings(columnId, typeSettings);
+		getService().deleteColumns(companyId, className, tableName);
+	}
+
+	public static void deleteColumns(long companyId, long classNameId,
+		java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteColumns(companyId, classNameId, tableName);
+	}
+
+	public static void deleteColumns(long tableId) {
+		getService().deleteColumns(tableId);
 	}
 
 	public static ExpandoColumnLocalService getService() {

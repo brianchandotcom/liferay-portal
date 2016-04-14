@@ -34,6 +34,38 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingItemLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _shoppingItemLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingItemLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
 	public com.liferay.shopping.model.ShoppingItem addItem(long userId,
 		long groupId, long categoryId, java.lang.String sku,
 		java.lang.String name, java.lang.String description,
@@ -54,36 +86,6 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 			smallImageURL, smallImageFile, mediumImage, mediumImageURL,
 			mediumImageFile, largeImage, largeImageURL, largeImageFile,
 			itemFields, itemPrices, serviceContext);
-	}
-
-	@Override
-	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(item, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(item, modelPermissions);
-	}
-
-	@Override
-	public void addItemResources(long itemId, boolean addGroupPermissions,
-		boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(itemId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addItemResources(long itemId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(itemId, modelPermissions);
 	}
 
 	/**
@@ -110,32 +112,16 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		return _shoppingItemLocalService.createShoppingItem(itemId);
 	}
 
-	@Override
-	public void deleteItem(com.liferay.shopping.model.ShoppingItem item)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.deleteItem(item);
-	}
-
-	@Override
-	public void deleteItem(long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.deleteItem(itemId);
-	}
-
-	@Override
-	public void deleteItems(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.deleteItems(groupId, categoryId);
-	}
-
 	/**
-	* @throws PortalException
+	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItem the shopping item
+	* @return the shopping item that was removed
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
+		com.liferay.shopping.model.ShoppingItem shoppingItem) {
+		return _shoppingItemLocalService.deleteShoppingItem(shoppingItem);
 	}
 
 	/**
@@ -151,21 +137,147 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		return _shoppingItemLocalService.deleteShoppingItem(itemId);
 	}
 
-	/**
-	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItem the shopping item
-	* @return the shopping item that was removed
-	*/
 	@Override
-	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem) {
-		return _shoppingItemLocalService.deleteShoppingItem(shoppingItem);
+	public com.liferay.shopping.model.ShoppingItem fetchShoppingItem(
+		long itemId) {
+		return _shoppingItemLocalService.fetchShoppingItem(itemId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _shoppingItemLocalService.dynamicQuery();
+	public com.liferay.shopping.model.ShoppingItem getItem(long companyId,
+		java.lang.String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getItem(companyId, sku);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem getItem(long itemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getItem(itemId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem getItemByLargeImageId(
+		long largeImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getItemByLargeImageId(largeImageId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem getItemByMediumImageId(
+		long mediumImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getItemByMediumImageId(mediumImageId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem getItemBySmallImageId(
+		long smallImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getItemBySmallImageId(smallImageId);
+	}
+
+	/**
+	* Returns the shopping item with the primary key.
+	*
+	* @param itemId the primary key of the shopping item
+	* @return the shopping item
+	* @throws PortalException if a shopping item with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingItem getShoppingItem(long itemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getShoppingItem(itemId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem updateItem(long userId,
+		long itemId, long groupId, long categoryId, java.lang.String sku,
+		java.lang.String name, java.lang.String description,
+		java.lang.String properties, java.lang.String fieldsQuantities,
+		boolean requiresShipping, int stockQuantity, boolean featured,
+		java.lang.Boolean sale, boolean smallImage,
+		java.lang.String smallImageURL, java.io.File smallImageFile,
+		boolean mediumImage, java.lang.String mediumImageURL,
+		java.io.File mediumImageFile, boolean largeImage,
+		java.lang.String largeImageURL, java.io.File largeImageFile,
+		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
+		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.updateItem(userId, itemId, groupId,
+			categoryId, sku, name, description, properties, fieldsQuantities,
+			requiresShipping, stockQuantity, featured, sale, smallImage,
+			smallImageURL, smallImageFile, mediumImage, mediumImageURL,
+			mediumImageFile, largeImage, largeImageURL, largeImageFile,
+			itemFields, itemPrices, serviceContext);
+	}
+
+	/**
+	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItem the shopping item
+	* @return the shopping item that was updated
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingItem updateShoppingItem(
+		com.liferay.shopping.model.ShoppingItem shoppingItem) {
+		return _shoppingItemLocalService.updateShoppingItem(shoppingItem);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem[] getItemsPrevAndNext(
+		long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemLocalService.getItemsPrevAndNext(itemId, obc);
+	}
+
+	@Override
+	public int getCategoriesItemsCount(long groupId,
+		java.util.List<java.lang.Long> categoryIds) {
+		return _shoppingItemLocalService.getCategoriesItemsCount(groupId,
+			categoryIds);
+	}
+
+	@Override
+	public int getItemsCount(long groupId, long categoryId) {
+		return _shoppingItemLocalService.getItemsCount(groupId, categoryId);
+	}
+
+	/**
+	* Returns the number of shopping items.
+	*
+	* @return the number of shopping items
+	*/
+	@Override
+	public int getShoppingItemsCount() {
+		return _shoppingItemLocalService.getShoppingItemsCount();
+	}
+
+	@Override
+	public int searchCount(long groupId, long[] categoryIds,
+		java.lang.String keywords) {
+		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
+			keywords);
+	}
+
+	@Override
+	public int searchCount(long groupId, long[] categoryIds,
+		java.lang.String keywords,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
+			keywords, obc);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingItemLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -221,6 +333,68 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getFeaturedItems(
+		long groupId, long categoryId, int numOfItems) {
+		return _shoppingItemLocalService.getFeaturedItems(groupId, categoryId,
+			numOfItems);
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
+		long groupId, long categoryId) {
+		return _shoppingItemLocalService.getItems(groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
+		long groupId, long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return _shoppingItemLocalService.getItems(groupId, categoryId, start,
+			end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getSaleItems(
+		long groupId, long categoryId, int numOfItems) {
+		return _shoppingItemLocalService.getSaleItems(groupId, categoryId,
+			numOfItems);
+	}
+
+	/**
+	* Returns a range of all the shopping items.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping items
+	* @param end the upper bound of the range of shopping items (not inclusive)
+	* @return the range of shopping items
+	*/
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getShoppingItems(
+		int start, int end) {
+		return _shoppingItemLocalService.getShoppingItems(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
+		long groupId, long[] categoryIds, java.lang.String keywords, int start,
+		int end) {
+		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
+		long groupId, long[] categoryIds, java.lang.String keywords, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
+			start, end, obc);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -249,225 +423,51 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem fetchShoppingItem(
-		long itemId) {
-		return _shoppingItemLocalService.fetchShoppingItem(itemId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingItemLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public int getCategoriesItemsCount(long groupId,
-		java.util.List<java.lang.Long> categoryIds) {
-		return _shoppingItemLocalService.getCategoriesItemsCount(groupId,
-			categoryIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getFeaturedItems(
-		long groupId, long categoryId, int numOfItems) {
-		return _shoppingItemLocalService.getFeaturedItems(groupId, categoryId,
-			numOfItems);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _shoppingItemLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItem getItem(long companyId,
-		java.lang.String sku)
+	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getItem(companyId, sku);
+		_shoppingItemLocalService.addItemResources(item, addGroupPermissions,
+			addGuestPermissions);
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem getItem(long itemId)
+	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getItem(itemId);
+		_shoppingItemLocalService.addItemResources(item, modelPermissions);
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem getItemByLargeImageId(
-		long largeImageId)
+	public void addItemResources(long itemId, boolean addGroupPermissions,
+		boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getItemByLargeImageId(largeImageId);
+		_shoppingItemLocalService.addItemResources(itemId, addGroupPermissions,
+			addGuestPermissions);
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem getItemByMediumImageId(
-		long mediumImageId)
+	public void addItemResources(long itemId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getItemByMediumImageId(mediumImageId);
+		_shoppingItemLocalService.addItemResources(itemId, modelPermissions);
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem getItemBySmallImageId(
-		long smallImageId)
+	public void deleteItem(com.liferay.shopping.model.ShoppingItem item)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getItemBySmallImageId(smallImageId);
+		_shoppingItemLocalService.deleteItem(item);
 	}
 
 	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId) {
-		return _shoppingItemLocalService.getItems(groupId, categoryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
-		return _shoppingItemLocalService.getItems(groupId, categoryId, start,
-			end, obc);
-	}
-
-	@Override
-	public int getItemsCount(long groupId, long categoryId) {
-		return _shoppingItemLocalService.getItemsCount(groupId, categoryId);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItem[] getItemsPrevAndNext(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc)
+	public void deleteItem(long itemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getItemsPrevAndNext(itemId, obc);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingItemLocalService.getOSGiServiceIdentifier();
+		_shoppingItemLocalService.deleteItem(itemId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public void deleteItems(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getSaleItems(
-		long groupId, long categoryId, int numOfItems) {
-		return _shoppingItemLocalService.getSaleItems(groupId, categoryId,
-			numOfItems);
-	}
-
-	/**
-	* Returns the shopping item with the primary key.
-	*
-	* @param itemId the primary key of the shopping item
-	* @return the shopping item
-	* @throws PortalException if a shopping item with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItem getShoppingItem(long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.getShoppingItem(itemId);
-	}
-
-	/**
-	* Returns a range of all the shopping items.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping items
-	* @param end the upper bound of the range of shopping items (not inclusive)
-	* @return the range of shopping items
-	*/
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getShoppingItems(
-		int start, int end) {
-		return _shoppingItemLocalService.getShoppingItems(start, end);
-	}
-
-	/**
-	* Returns the number of shopping items.
-	*
-	* @return the number of shopping items
-	*/
-	@Override
-	public int getShoppingItemsCount() {
-		return _shoppingItemLocalService.getShoppingItemsCount();
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end) {
-		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
-		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
-			start, end, obc);
-	}
-
-	@Override
-	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords) {
-		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
-			keywords);
-	}
-
-	@Override
-	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
-		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
-			keywords, obc);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItem updateItem(long userId,
-		long itemId, long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
-		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
-		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
-		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemLocalService.updateItem(userId, itemId, groupId,
-			categoryId, sku, name, description, properties, fieldsQuantities,
-			requiresShipping, stockQuantity, featured, sale, smallImage,
-			smallImageURL, smallImageFile, mediumImage, mediumImageURL,
-			mediumImageFile, largeImage, largeImageURL, largeImageFile,
-			itemFields, itemPrices, serviceContext);
-	}
-
-	/**
-	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItem the shopping item
-	* @return the shopping item that was updated
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItem updateShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem) {
-		return _shoppingItemLocalService.updateShoppingItem(shoppingItem);
+		_shoppingItemLocalService.deleteItems(groupId, categoryId);
 	}
 
 	@Override

@@ -40,10 +40,31 @@ public class PortalPreferencesLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.PortalPreferences addPortalPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences) {
-		return getService()
-				   .addPortalPreferences(ownerId, ownerType, defaultPreferences);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -57,6 +78,12 @@ public class PortalPreferencesLocalServiceUtil {
 		return getService().addPortalPreferences(portalPreferences);
 	}
 
+	public static com.liferay.portal.kernel.model.PortalPreferences addPortalPreferences(
+		long ownerId, int ownerType, java.lang.String defaultPreferences) {
+		return getService()
+				   .addPortalPreferences(ownerId, ownerType, defaultPreferences);
+	}
+
 	/**
 	* Creates a new portal preferences with the primary key. Does not add the portal preferences to the database.
 	*
@@ -66,15 +93,6 @@ public class PortalPreferencesLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.PortalPreferences createPortalPreferences(
 		long portalPreferencesId) {
 		return getService().createPortalPreferences(portalPreferencesId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -101,8 +119,63 @@ public class PortalPreferencesLocalServiceUtil {
 		return getService().deletePortalPreferences(portalPreferencesId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PortalPreferences fetchPortalPreferences(
+		long portalPreferencesId) {
+		return getService().fetchPortalPreferences(portalPreferencesId);
+	}
+
+	/**
+	* Returns the portal preferences with the primary key.
+	*
+	* @param portalPreferencesId the primary key of the portal preferences
+	* @return the portal preferences
+	* @throws PortalException if a portal preferences with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.PortalPreferences getPortalPreferences(
+		long portalPreferencesId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPortalPreferences(portalPreferencesId);
+	}
+
+	/**
+	* Updates the portal preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portalPreferences the portal preferences
+	* @return the portal preferences that was updated
+	*/
+	public static com.liferay.portal.kernel.model.PortalPreferences updatePortalPreferences(
+		com.liferay.portal.kernel.model.PortalPreferences portalPreferences) {
+		return getService().updatePortalPreferences(portalPreferences);
+	}
+
+	public static com.liferay.portal.kernel.model.PortalPreferences updatePreferences(
+		long ownerId, int ownerType,
+		com.liferay.portal.kernel.portlet.PortalPreferences portalPreferences) {
+		return getService()
+				   .updatePreferences(ownerId, ownerType, portalPreferences);
+	}
+
+	public static com.liferay.portal.kernel.model.PortalPreferences updatePreferences(
+		long ownerId, int ownerType, java.lang.String xml) {
+		return getService().updatePreferences(ownerId, ownerType, xml);
+	}
+
+	/**
+	* Returns the number of portal preferenceses.
+	*
+	* @return the number of portal preferenceses
+	*/
+	public static int getPortalPreferencesesCount() {
+		return getService().getPortalPreferencesesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -156,6 +229,33 @@ public class PortalPreferencesLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the portal preferenceses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of portal preferenceses
+	* @param end the upper bound of the range of portal preferenceses (not inclusive)
+	* @return the range of portal preferenceses
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.PortalPreferences> getPortalPreferenceses(
+		int start, int end) {
+		return getService().getPortalPreferenceses(start, end);
+	}
+
+	public static javax.portlet.PortletPreferences getPreferences(
+		long ownerId, int ownerType) {
+		return getService().getPreferences(ownerId, ownerType);
+	}
+
+	public static javax.portlet.PortletPreferences getPreferences(
+		long ownerId, int ownerType, java.lang.String defaultPreferences) {
+		return getService()
+				   .getPreferences(ownerId, ownerType, defaultPreferences);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -177,106 +277,6 @@ public class PortalPreferencesLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.kernel.model.PortalPreferences fetchPortalPreferences(
-		long portalPreferencesId) {
-		return getService().fetchPortalPreferences(portalPreferencesId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the portal preferences with the primary key.
-	*
-	* @param portalPreferencesId the primary key of the portal preferences
-	* @return the portal preferences
-	* @throws PortalException if a portal preferences with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.PortalPreferences getPortalPreferences(
-		long portalPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPortalPreferences(portalPreferencesId);
-	}
-
-	/**
-	* Returns a range of all the portal preferenceses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of portal preferenceses
-	* @param end the upper bound of the range of portal preferenceses (not inclusive)
-	* @return the range of portal preferenceses
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.PortalPreferences> getPortalPreferenceses(
-		int start, int end) {
-		return getService().getPortalPreferenceses(start, end);
-	}
-
-	/**
-	* Returns the number of portal preferenceses.
-	*
-	* @return the number of portal preferenceses
-	*/
-	public static int getPortalPreferencesesCount() {
-		return getService().getPortalPreferencesesCount();
-	}
-
-	public static javax.portlet.PortletPreferences getPreferences(
-		long ownerId, int ownerType) {
-		return getService().getPreferences(ownerId, ownerType);
-	}
-
-	public static javax.portlet.PortletPreferences getPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences) {
-		return getService()
-				   .getPreferences(ownerId, ownerType, defaultPreferences);
-	}
-
-	/**
-	* Updates the portal preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portalPreferences the portal preferences
-	* @return the portal preferences that was updated
-	*/
-	public static com.liferay.portal.kernel.model.PortalPreferences updatePortalPreferences(
-		com.liferay.portal.kernel.model.PortalPreferences portalPreferences) {
-		return getService().updatePortalPreferences(portalPreferences);
-	}
-
-	public static com.liferay.portal.kernel.model.PortalPreferences updatePreferences(
-		long ownerId, int ownerType,
-		com.liferay.portal.kernel.portlet.PortalPreferences portalPreferences) {
-		return getService()
-				   .updatePreferences(ownerId, ownerType, portalPreferences);
-	}
-
-	public static com.liferay.portal.kernel.model.PortalPreferences updatePreferences(
-		long ownerId, int ownerType, java.lang.String xml) {
-		return getService().updatePreferences(ownerId, ownerType, xml);
 	}
 
 	public static PortalPreferencesLocalService getService() {

@@ -32,12 +32,6 @@ public class PortletPreferencesServiceWrapper
 		_portletPreferencesService = portletPreferencesService;
 	}
 
-	@Override
-	public void deleteArchivedPreferences(long portletItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_portletPreferencesService.deleteArchivedPreferences(portletItemId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -46,6 +40,12 @@ public class PortletPreferencesServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _portletPreferencesService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void deleteArchivedPreferences(long portletItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_portletPreferencesService.deleteArchivedPreferences(portletItemId);
 	}
 
 	@Override

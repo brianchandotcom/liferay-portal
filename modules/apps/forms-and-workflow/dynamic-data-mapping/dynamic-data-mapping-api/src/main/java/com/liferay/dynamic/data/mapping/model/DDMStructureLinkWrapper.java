@@ -100,14 +100,65 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new DDMStructureLinkWrapper((DDMStructureLink)_ddmStructureLink.clone());
+	public boolean isCachedModel() {
+		return _ddmStructureLink.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _ddmStructureLink.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ddmStructureLink.isNew();
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLink.getStructure();
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toEscapedModel() {
+		return new DDMStructureLinkWrapper(_ddmStructureLink.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toUnescapedModel() {
+		return new DDMStructureLinkWrapper(_ddmStructureLink.toUnescapedModel());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ddmStructureLink.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureLink> toCacheModel() {
+		return _ddmStructureLink.toCacheModel();
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.dynamic.data.mapping.model.DDMStructureLink ddmStructureLink) {
 		return _ddmStructureLink.compareTo(ddmStructureLink);
+	}
+
+	@Override
+	public int hashCode() {
+		return _ddmStructureLink.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ddmStructureLink.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DDMStructureLinkWrapper((DDMStructureLink)_ddmStructureLink.clone());
 	}
 
 	/**
@@ -118,6 +169,16 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	@Override
 	public java.lang.String getClassName() {
 		return _ddmStructureLink.getClassName();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _ddmStructureLink.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _ddmStructureLink.toXmlString();
 	}
 
 	/**
@@ -150,11 +211,6 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 		return _ddmStructureLink.getCompanyId();
 	}
 
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmStructureLink.getExpandoBridge();
-	}
-
 	/**
 	* Returns the primary key of this d d m structure link.
 	*
@@ -163,17 +219,6 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	@Override
 	public long getPrimaryKey() {
 		return _ddmStructureLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmStructureLink.getPrimaryKeyObj();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLink.getStructure();
 	}
 
 	/**
@@ -194,26 +239,6 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	@Override
 	public long getStructureLinkId() {
 		return _ddmStructureLink.getStructureLinkId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmStructureLink.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmStructureLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmStructureLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmStructureLink.isNew();
 	}
 
 	@Override
@@ -262,14 +287,14 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmStructureLink.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_ddmStructureLink.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmStructureLink.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_ddmStructureLink.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -315,31 +340,6 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	@Override
 	public void setStructureLinkId(long structureLinkId) {
 		_ddmStructureLink.setStructureLinkId(structureLinkId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureLink> toCacheModel() {
-		return _ddmStructureLink.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toEscapedModel() {
-		return new DDMStructureLinkWrapper(_ddmStructureLink.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ddmStructureLink.toString();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toUnescapedModel() {
-		return new DDMStructureLinkWrapper(_ddmStructureLink.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ddmStructureLink.toXmlString();
 	}
 
 	@Override

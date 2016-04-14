@@ -263,388 +263,6 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		}
 	}
 
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.buildTreePath();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new DLFileVersionWrapper((DLFileVersion)_dlFileVersion.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileVersion dlFileVersion) {
-		return _dlFileVersion.compareTo(dlFileVersion);
-	}
-
-	/**
-	* Returns the change log of this document library file version.
-	*
-	* @return the change log of this document library file version
-	*/
-	@Override
-	public java.lang.String getChangeLog() {
-		return _dlFileVersion.getChangeLog();
-	}
-
-	/**
-	* Returns the checksum of this document library file version.
-	*
-	* @return the checksum of this document library file version
-	*/
-	@Override
-	public java.lang.String getChecksum() {
-		return _dlFileVersion.getChecksum();
-	}
-
-	/**
-	* Returns the company ID of this document library file version.
-	*
-	* @return the company ID of this document library file version
-	*/
-	@Override
-	public long getCompanyId() {
-		return _dlFileVersion.getCompanyId();
-	}
-
-	@Override
-	public java.io.InputStream getContentStream(boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getContentStream(incrementCounter);
-	}
-
-	/**
-	* Returns the create date of this document library file version.
-	*
-	* @return the create date of this document library file version
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _dlFileVersion.getCreateDate();
-	}
-
-	@Override
-	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getDDMStructures();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getDLFileEntryType();
-	}
-
-	/**
-	* Returns the description of this document library file version.
-	*
-	* @return the description of this document library file version
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _dlFileVersion.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileVersion.getExpandoBridge();
-	}
-
-	/**
-	* Returns the extension of this document library file version.
-	*
-	* @return the extension of this document library file version
-	*/
-	@Override
-	public java.lang.String getExtension() {
-		return _dlFileVersion.getExtension();
-	}
-
-	/**
-	* Returns the extra settings of this document library file version.
-	*
-	* @return the extra settings of this document library file version
-	*/
-	@Override
-	public java.lang.String getExtraSettings() {
-		return _dlFileVersion.getExtraSettings();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
-		return _dlFileVersion.getExtraSettingsProperties();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry getFileEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getFileEntry();
-	}
-
-	/**
-	* Returns the file entry ID of this document library file version.
-	*
-	* @return the file entry ID of this document library file version
-	*/
-	@Override
-	public long getFileEntryId() {
-		return _dlFileVersion.getFileEntryId();
-	}
-
-	/**
-	* Returns the file entry type ID of this document library file version.
-	*
-	* @return the file entry type ID of this document library file version
-	*/
-	@Override
-	public long getFileEntryTypeId() {
-		return _dlFileVersion.getFileEntryTypeId();
-	}
-
-	/**
-	* Returns the file name of this document library file version.
-	*
-	* @return the file name of this document library file version
-	*/
-	@Override
-	public java.lang.String getFileName() {
-		return _dlFileVersion.getFileName();
-	}
-
-	/**
-	* Returns the file version ID of this document library file version.
-	*
-	* @return the file version ID of this document library file version
-	*/
-	@Override
-	public long getFileVersionId() {
-		return _dlFileVersion.getFileVersionId();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFolder getFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getFolder();
-	}
-
-	/**
-	* Returns the folder ID of this document library file version.
-	*
-	* @return the folder ID of this document library file version
-	*/
-	@Override
-	public long getFolderId() {
-		return _dlFileVersion.getFolderId();
-	}
-
-	/**
-	* Returns the group ID of this document library file version.
-	*
-	* @return the group ID of this document library file version
-	*/
-	@Override
-	public long getGroupId() {
-		return _dlFileVersion.getGroupId();
-	}
-
-	@Override
-	public java.lang.String getIcon() {
-		return _dlFileVersion.getIcon();
-	}
-
-	/**
-	* Returns the last publish date of this document library file version.
-	*
-	* @return the last publish date of this document library file version
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _dlFileVersion.getLastPublishDate();
-	}
-
-	/**
-	* Returns the mime type of this document library file version.
-	*
-	* @return the mime type of this document library file version
-	*/
-	@Override
-	public java.lang.String getMimeType() {
-		return _dlFileVersion.getMimeType();
-	}
-
-	/**
-	* Returns the modified date of this document library file version.
-	*
-	* @return the modified date of this document library file version
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _dlFileVersion.getModifiedDate();
-	}
-
-	/**
-	* Returns the primary key of this document library file version.
-	*
-	* @return the primary key of this document library file version
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _dlFileVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileVersion.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the repository ID of this document library file version.
-	*
-	* @return the repository ID of this document library file version
-	*/
-	@Override
-	public long getRepositoryId() {
-		return _dlFileVersion.getRepositoryId();
-	}
-
-	/**
-	* Returns the size of this document library file version.
-	*
-	* @return the size of this document library file version
-	*/
-	@Override
-	public long getSize() {
-		return _dlFileVersion.getSize();
-	}
-
-	/**
-	* Returns the status of this document library file version.
-	*
-	* @return the status of this document library file version
-	*/
-	@Override
-	public int getStatus() {
-		return _dlFileVersion.getStatus();
-	}
-
-	/**
-	* Returns the status by user ID of this document library file version.
-	*
-	* @return the status by user ID of this document library file version
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _dlFileVersion.getStatusByUserId();
-	}
-
-	/**
-	* Returns the status by user name of this document library file version.
-	*
-	* @return the status by user name of this document library file version
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _dlFileVersion.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this document library file version.
-	*
-	* @return the status by user uuid of this document library file version
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _dlFileVersion.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the status date of this document library file version.
-	*
-	* @return the status date of this document library file version
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _dlFileVersion.getStatusDate();
-	}
-
-	/**
-	* Returns the title of this document library file version.
-	*
-	* @return the title of this document library file version
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _dlFileVersion.getTitle();
-	}
-
-	/**
-	* Returns the tree path of this document library file version.
-	*
-	* @return the tree path of this document library file version
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _dlFileVersion.getTreePath();
-	}
-
-	/**
-	* Returns the user ID of this document library file version.
-	*
-	* @return the user ID of this document library file version
-	*/
-	@Override
-	public long getUserId() {
-		return _dlFileVersion.getUserId();
-	}
-
-	/**
-	* Returns the user name of this document library file version.
-	*
-	* @return the user name of this document library file version
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _dlFileVersion.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this document library file version.
-	*
-	* @return the user uuid of this document library file version
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _dlFileVersion.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this document library file version.
-	*
-	* @return the uuid of this document library file version
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _dlFileVersion.getUuid();
-	}
-
-	/**
-	* Returns the version of this document library file version.
-	*
-	* @return the version of this document library file version
-	*/
-	@Override
-	public java.lang.String getVersion() {
-		return _dlFileVersion.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileVersion.hashCode();
-	}
-
 	/**
 	* Returns <code>true</code> if this document library file version is approved.
 	*
@@ -741,6 +359,413 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntry getFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getFileEntry();
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getDLFileEntryType();
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileVersion toEscapedModel() {
+		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileVersion toUnescapedModel() {
+		return new DLFileVersionWrapper(_dlFileVersion.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getFolder();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _dlFileVersion.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileVersion> toCacheModel() {
+		return _dlFileVersion.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
+		return _dlFileVersion.getExtraSettingsProperties();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.document.library.kernel.model.DLFileVersion dlFileVersion) {
+		return _dlFileVersion.compareTo(dlFileVersion);
+	}
+
+	/**
+	* Returns the status of this document library file version.
+	*
+	* @return the status of this document library file version
+	*/
+	@Override
+	public int getStatus() {
+		return _dlFileVersion.getStatus();
+	}
+
+	@Override
+	public int hashCode() {
+		return _dlFileVersion.hashCode();
+	}
+
+	@Override
+	public java.io.InputStream getContentStream(boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getContentStream(incrementCounter);
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _dlFileVersion.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DLFileVersionWrapper((DLFileVersion)_dlFileVersion.clone());
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.buildTreePath();
+	}
+
+	/**
+	* Returns the change log of this document library file version.
+	*
+	* @return the change log of this document library file version
+	*/
+	@Override
+	public java.lang.String getChangeLog() {
+		return _dlFileVersion.getChangeLog();
+	}
+
+	/**
+	* Returns the checksum of this document library file version.
+	*
+	* @return the checksum of this document library file version
+	*/
+	@Override
+	public java.lang.String getChecksum() {
+		return _dlFileVersion.getChecksum();
+	}
+
+	/**
+	* Returns the description of this document library file version.
+	*
+	* @return the description of this document library file version
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _dlFileVersion.getDescription();
+	}
+
+	/**
+	* Returns the extension of this document library file version.
+	*
+	* @return the extension of this document library file version
+	*/
+	@Override
+	public java.lang.String getExtension() {
+		return _dlFileVersion.getExtension();
+	}
+
+	/**
+	* Returns the extra settings of this document library file version.
+	*
+	* @return the extra settings of this document library file version
+	*/
+	@Override
+	public java.lang.String getExtraSettings() {
+		return _dlFileVersion.getExtraSettings();
+	}
+
+	/**
+	* Returns the file name of this document library file version.
+	*
+	* @return the file name of this document library file version
+	*/
+	@Override
+	public java.lang.String getFileName() {
+		return _dlFileVersion.getFileName();
+	}
+
+	@Override
+	public java.lang.String getIcon() {
+		return _dlFileVersion.getIcon();
+	}
+
+	/**
+	* Returns the mime type of this document library file version.
+	*
+	* @return the mime type of this document library file version
+	*/
+	@Override
+	public java.lang.String getMimeType() {
+		return _dlFileVersion.getMimeType();
+	}
+
+	/**
+	* Returns the status by user name of this document library file version.
+	*
+	* @return the status by user name of this document library file version
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _dlFileVersion.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this document library file version.
+	*
+	* @return the status by user uuid of this document library file version
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _dlFileVersion.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the title of this document library file version.
+	*
+	* @return the title of this document library file version
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _dlFileVersion.getTitle();
+	}
+
+	/**
+	* Returns the tree path of this document library file version.
+	*
+	* @return the tree path of this document library file version
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _dlFileVersion.getTreePath();
+	}
+
+	/**
+	* Returns the user name of this document library file version.
+	*
+	* @return the user name of this document library file version
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _dlFileVersion.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this document library file version.
+	*
+	* @return the user uuid of this document library file version
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _dlFileVersion.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this document library file version.
+	*
+	* @return the uuid of this document library file version
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _dlFileVersion.getUuid();
+	}
+
+	/**
+	* Returns the version of this document library file version.
+	*
+	* @return the version of this document library file version
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _dlFileVersion.getVersion();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _dlFileVersion.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _dlFileVersion.toXmlString();
+	}
+
+	/**
+	* Returns the create date of this document library file version.
+	*
+	* @return the create date of this document library file version
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _dlFileVersion.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this document library file version.
+	*
+	* @return the last publish date of this document library file version
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileVersion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this document library file version.
+	*
+	* @return the modified date of this document library file version
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _dlFileVersion.getModifiedDate();
+	}
+
+	/**
+	* Returns the status date of this document library file version.
+	*
+	* @return the status date of this document library file version
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _dlFileVersion.getStatusDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getDDMStructures();
+	}
+
+	/**
+	* Returns the company ID of this document library file version.
+	*
+	* @return the company ID of this document library file version
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFileVersion.getCompanyId();
+	}
+
+	/**
+	* Returns the file entry ID of this document library file version.
+	*
+	* @return the file entry ID of this document library file version
+	*/
+	@Override
+	public long getFileEntryId() {
+		return _dlFileVersion.getFileEntryId();
+	}
+
+	/**
+	* Returns the file entry type ID of this document library file version.
+	*
+	* @return the file entry type ID of this document library file version
+	*/
+	@Override
+	public long getFileEntryTypeId() {
+		return _dlFileVersion.getFileEntryTypeId();
+	}
+
+	/**
+	* Returns the file version ID of this document library file version.
+	*
+	* @return the file version ID of this document library file version
+	*/
+	@Override
+	public long getFileVersionId() {
+		return _dlFileVersion.getFileVersionId();
+	}
+
+	/**
+	* Returns the folder ID of this document library file version.
+	*
+	* @return the folder ID of this document library file version
+	*/
+	@Override
+	public long getFolderId() {
+		return _dlFileVersion.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this document library file version.
+	*
+	* @return the group ID of this document library file version
+	*/
+	@Override
+	public long getGroupId() {
+		return _dlFileVersion.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this document library file version.
+	*
+	* @return the primary key of this document library file version
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _dlFileVersion.getPrimaryKey();
+	}
+
+	/**
+	* Returns the repository ID of this document library file version.
+	*
+	* @return the repository ID of this document library file version
+	*/
+	@Override
+	public long getRepositoryId() {
+		return _dlFileVersion.getRepositoryId();
+	}
+
+	/**
+	* Returns the size of this document library file version.
+	*
+	* @return the size of this document library file version
+	*/
+	@Override
+	public long getSize() {
+		return _dlFileVersion.getSize();
+	}
+
+	/**
+	* Returns the status by user ID of this document library file version.
+	*
+	* @return the status by user ID of this document library file version
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _dlFileVersion.getStatusByUserId();
+	}
+
+	/**
+	* Returns the user ID of this document library file version.
+	*
+	* @return the user ID of this document library file version
+	*/
+	@Override
+	public long getUserId() {
+		return _dlFileVersion.getUserId();
+	}
+
+	@Override
 	public void persist() {
 		_dlFileVersion.persist();
 	}
@@ -801,14 +826,14 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileVersion.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFileVersion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileVersion.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_dlFileVersion.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -1090,31 +1115,6 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public void setVersion(java.lang.String version) {
 		_dlFileVersion.setVersion(version);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileVersion> toCacheModel() {
-		return _dlFileVersion.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion toEscapedModel() {
-		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _dlFileVersion.toString();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion toUnescapedModel() {
-		return new DLFileVersionWrapper(_dlFileVersion.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _dlFileVersion.toXmlString();
 	}
 
 	@Override

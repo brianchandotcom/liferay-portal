@@ -54,11 +54,6 @@ public interface ContactService extends BaseService {
 	public Contact getContact(long contactId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getContacts(long classNameId, long classPK, int start,
-		int end, OrderByComparator<Contact> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getContactsCount(long classNameId, long classPK)
 		throws PortalException;
 
@@ -68,4 +63,9 @@ public interface ContactService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Contact> getContacts(long classNameId, long classPK, int start,
+		int end, OrderByComparator<Contact> orderByComparator)
+		throws PortalException;
 }

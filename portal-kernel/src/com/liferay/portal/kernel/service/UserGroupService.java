@@ -51,24 +51,6 @@ public interface UserGroupService extends BaseService {
 	 */
 
 	/**
-	* Adds the user groups to the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws PortalException;
-
-	/**
-	* Adds the user groups to the team
-	*
-	* @param teamId the primary key of the team
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException;
-
-	/**
 	* Adds a user group.
 	*
 	* <p>
@@ -107,13 +89,6 @@ public interface UserGroupService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Deletes the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	*/
-	public void deleteUserGroup(long userGroupId) throws PortalException;
-
-	/**
 	* Fetches the user group with the primary key.
 	*
 	* @param userGroupId the primary key of the user group
@@ -121,13 +96,6 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup fetchUserGroup(long userGroupId) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the user group with the name.
@@ -147,38 +115,6 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup getUserGroup(long userGroupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> getUserGroups(long companyId)
-		throws PortalException;
-
-	/**
-	* Returns all the user groups to which the user belongs.
-	*
-	* @param userId the primary key of the user
-	* @return the user groups to which the user belongs
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserGroup> getUserUserGroups(long userId)
-		throws PortalException;
-
-	/**
-	* Removes the user groups from the group.
-	*
-	* @param groupId the primary key of the group
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws PortalException;
-
-	/**
-	* Removes the user groups from the team.
-	*
-	* @param teamId the primary key of the team
-	* @param userGroupIds the primary keys of the user groups
-	*/
-	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException;
 
 	/**
 	* Updates the user group.
@@ -208,5 +144,69 @@ public interface UserGroupService extends BaseService {
 	public UserGroup updateUserGroup(long userGroupId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> getUserGroups(long companyId)
+		throws PortalException;
+
+	/**
+	* Returns all the user groups to which the user belongs.
+	*
+	* @param userId the primary key of the user
+	* @return the user groups to which the user belongs
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> getUserUserGroups(long userId)
+		throws PortalException;
+
+	/**
+	* Adds the user groups to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public void addGroupUserGroups(long groupId, long[] userGroupIds)
+		throws PortalException;
+
+	/**
+	* Adds the user groups to the team
+	*
+	* @param teamId the primary key of the team
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public void addTeamUserGroups(long teamId, long[] userGroupIds)
+		throws PortalException;
+
+	/**
+	* Deletes the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	*/
+	public void deleteUserGroup(long userGroupId) throws PortalException;
+
+	/**
+	* Removes the user groups from the group.
+	*
+	* @param groupId the primary key of the group
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
+		throws PortalException;
+
+	/**
+	* Removes the user groups from the team.
+	*
+	* @param teamId the primary key of the team
+	* @param userGroupIds the primary keys of the user groups
+	*/
+	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
 		throws PortalException;
 }

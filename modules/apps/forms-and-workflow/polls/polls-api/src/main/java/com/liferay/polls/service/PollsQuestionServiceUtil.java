@@ -55,20 +55,6 @@ public class PollsQuestionServiceUtil {
 			expirationDateMinute, neverExpire, choices, serviceContext);
 	}
 
-	public static void deleteQuestion(long questionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteQuestion(questionId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static com.liferay.polls.model.PollsQuestion getQuestion(
 		long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -89,6 +75,20 @@ public class PollsQuestionServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, choices,
 			serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteQuestion(long questionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteQuestion(questionId);
 	}
 
 	public static PollsQuestionService getService() {

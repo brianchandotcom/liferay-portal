@@ -77,20 +77,6 @@ public interface JournalFeedLocalService extends BaseLocalService,
 		java.lang.String feedFormat, double feedVersion,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void addFeedResources(JournalFeed feed, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addFeedResources(JournalFeed feed,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
-	public void addFeedResources(long feedId, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addFeedResources(long feedId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
 	/**
 	* Adds the journal feed to the database. Also notifies the appropriate model listeners.
 	*
@@ -108,13 +94,14 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	*/
 	public JournalFeed createJournalFeed(long id);
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteFeed(JournalFeed feed) throws PortalException;
-
-	public void deleteFeed(long feedId) throws PortalException;
-
-	public void deleteFeed(long groupId, java.lang.String feedId)
-		throws PortalException;
+	/**
+	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalFeed the journal feed
+	* @return the journal feed that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFeed deleteJournalFeed(JournalFeed journalFeed);
 
 	/**
 	* Deletes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
@@ -126,14 +113,82 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public JournalFeed deleteJournalFeed(long id) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed fetchFeed(long groupId, java.lang.String feedId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed fetchJournalFeed(long id);
+
 	/**
-	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
+	* Returns the journal feed matching the UUID and group.
+	*
+	* @param uuid the journal feed's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed fetchJournalFeedByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed getFeed(long feedId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed getFeed(long groupId, java.lang.String feedId)
+		throws PortalException;
+
+	/**
+	* Returns the journal feed with the primary key.
+	*
+	* @param id the primary key of the journal feed
+	* @return the journal feed
+	* @throws PortalException if a journal feed with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed getJournalFeed(long id) throws PortalException;
+
+	/**
+	* Returns the journal feed matching the UUID and group.
+	*
+	* @param uuid the journal feed's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal feed
+	* @throws PortalException if a matching journal feed could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed getJournalFeedByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.lang.String ddmRendererTemplateKey, int delta,
+		java.lang.String orderByCol, java.lang.String orderByType,
+		java.lang.String targetLayoutFriendlyUrl,
+		java.lang.String targetPortletId, java.lang.String contentField,
+		java.lang.String feedFormat, double feedVersion,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalFeed the journal feed
-	* @return the journal feed that was removed
+	* @return the journal feed that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public JournalFeed deleteJournalFeed(JournalFeed journalFeed);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFeed updateJournalFeed(JournalFeed journalFeed);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -142,7 +197,37 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFeedsCount(long groupId);
+
+	/**
+	* Returns the number of journal feeds.
+	*
+	* @return the number of journal feeds
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getJournalFeedsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long groupId,
+		java.lang.String feedId, java.lang.String name,
+		java.lang.String description, boolean andOperator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long groupId,
+		java.lang.String keywords);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -183,55 +268,6 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed fetchFeed(long groupId, java.lang.String feedId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed fetchJournalFeed(long id);
-
-	/**
-	* Returns the journal feed matching the UUID and group.
-	*
-	* @param uuid the journal feed's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed fetchJournalFeedByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getFeed(long feedId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getFeed(long groupId, java.lang.String feedId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFeed> getFeeds();
 
@@ -240,34 +276,6 @@ public interface JournalFeedLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFeed> getFeeds(long groupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFeedsCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the journal feed with the primary key.
-	*
-	* @param id the primary key of the journal feed
-	* @return the journal feed
-	* @throws PortalException if a journal feed with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getJournalFeed(long id) throws PortalException;
-
-	/**
-	* Returns the journal feed matching the UUID and group.
-	*
-	* @param uuid the journal feed's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal feed
-	* @throws PortalException if a matching journal feed could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFeed getJournalFeedByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal feeds.
@@ -309,26 +317,6 @@ public interface JournalFeedLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<JournalFeed> orderByComparator);
 
-	/**
-	* Returns the number of journal feeds.
-	*
-	* @return the number of journal feeds
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalFeedsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFeed> search(long companyId, long groupId,
 		java.lang.String feedId, java.lang.String name,
@@ -340,31 +328,43 @@ public interface JournalFeedLocalService extends BaseLocalService,
 		java.lang.String keywords, int start, int end,
 		OrderByComparator<JournalFeed> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String feedId, java.lang.String name,
-		java.lang.String description, boolean andOperator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords);
-
-	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.lang.String ddmRendererTemplateKey, int delta,
-		java.lang.String orderByCol, java.lang.String orderByType,
-		java.lang.String targetLayoutFriendlyUrl,
-		java.lang.String targetPortletId, java.lang.String contentField,
-		java.lang.String feedFormat, double feedVersion,
-		ServiceContext serviceContext) throws PortalException;
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param journalFeed the journal feed
-	* @return the journal feed that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFeed updateJournalFeed(JournalFeed journalFeed);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void addFeedResources(JournalFeed feed, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addFeedResources(JournalFeed feed,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	public void addFeedResources(long feedId, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addFeedResources(long feedId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFeed(JournalFeed feed) throws PortalException;
+
+	public void deleteFeed(long feedId) throws PortalException;
+
+	public void deleteFeed(long groupId, java.lang.String feedId)
+		throws PortalException;
 }

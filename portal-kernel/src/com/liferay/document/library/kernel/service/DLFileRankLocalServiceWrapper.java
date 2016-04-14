@@ -53,11 +53,6 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 			fileEntryId, serviceContext);
 	}
 
-	@Override
-	public void checkFileRanks() {
-		_dlFileRankLocalService.checkFileRanks();
-	}
-
 	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
@@ -97,25 +92,58 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	@Override
-	public void deleteFileRank(
-		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
-		_dlFileRankLocalService.deleteFileRank(dlFileRank);
+	public com.liferay.document.library.kernel.model.DLFileRank fetchDLFileRank(
+		long fileRankId) {
+		return _dlFileRankLocalService.fetchDLFileRank(fileRankId);
 	}
 
+	/**
+	* Returns the document library file rank with the primary key.
+	*
+	* @param fileRankId the primary key of the document library file rank
+	* @return the document library file rank
+	* @throws PortalException if a document library file rank with the primary key could not be found
+	*/
 	@Override
-	public void deleteFileRank(long fileRankId)
+	public com.liferay.document.library.kernel.model.DLFileRank getDLFileRank(
+		long fileRankId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileRankLocalService.deleteFileRank(fileRankId);
+		return _dlFileRankLocalService.getDLFileRank(fileRankId);
+	}
+
+	/**
+	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileRank the document library file rank
+	* @return the document library file rank that was updated
+	*/
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileRank updateDLFileRank(
+		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
+		return _dlFileRankLocalService.updateDLFileRank(dlFileRank);
 	}
 
 	@Override
-	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-		_dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
+	public com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
+		long groupId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _dlFileRankLocalService.updateFileRank(groupId, companyId,
+			userId, fileEntryId, serviceContext);
 	}
 
 	@Override
-	public void deleteFileRanksByUserId(long userId) {
-		_dlFileRankLocalService.deleteFileRanksByUserId(userId);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _dlFileRankLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _dlFileRankLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _dlFileRankLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -129,19 +157,30 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	@Override
-	public void disableFileRanks(long fileEntryId) {
-		_dlFileRankLocalService.disableFileRanks(fileEntryId);
-	}
-
-	@Override
-	public void disableFileRanksByFolderId(long folderId)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileRankLocalService.disableFileRanksByFolderId(folderId);
+		return _dlFileRankLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* Returns the number of document library file ranks.
+	*
+	* @return the number of document library file ranks
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _dlFileRankLocalService.dynamicQuery();
+	public int getDLFileRanksCount() {
+		return _dlFileRankLocalService.getDLFileRanksCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _dlFileRankLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -198,6 +237,29 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	/**
+	* Returns a range of all the document library file ranks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of document library file ranks
+	* @param end the upper bound of the range of document library file ranks (not inclusive)
+	* @return the range of document library file ranks
+	*/
+	@Override
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getDLFileRanks(
+		int start, int end) {
+		return _dlFileRankLocalService.getDLFileRanks(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
+		long groupId, long userId) {
+		return _dlFileRankLocalService.getFileRanks(groupId, userId);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -225,6 +287,44 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	@Override
+	public void checkFileRanks() {
+		_dlFileRankLocalService.checkFileRanks();
+	}
+
+	@Override
+	public void deleteFileRank(
+		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
+		_dlFileRankLocalService.deleteFileRank(dlFileRank);
+	}
+
+	@Override
+	public void deleteFileRank(long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.deleteFileRank(fileRankId);
+	}
+
+	@Override
+	public void deleteFileRanksByFileEntryId(long fileEntryId) {
+		_dlFileRankLocalService.deleteFileRanksByFileEntryId(fileEntryId);
+	}
+
+	@Override
+	public void deleteFileRanksByUserId(long userId) {
+		_dlFileRankLocalService.deleteFileRanksByUserId(userId);
+	}
+
+	@Override
+	public void disableFileRanks(long fileEntryId) {
+		_dlFileRankLocalService.disableFileRanks(fileEntryId);
+	}
+
+	@Override
+	public void disableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileRankLocalService.disableFileRanksByFolderId(folderId);
+	}
+
+	@Override
 	public void enableFileRanks(long fileEntryId) {
 		_dlFileRankLocalService.enableFileRanks(fileEntryId);
 	}
@@ -233,106 +333,6 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	public void enableFileRanksByFolderId(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileRankLocalService.enableFileRanksByFolderId(folderId);
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank fetchDLFileRank(
-		long fileRankId) {
-		return _dlFileRankLocalService.fetchDLFileRank(fileRankId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _dlFileRankLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the document library file rank with the primary key.
-	*
-	* @param fileRankId the primary key of the document library file rank
-	* @return the document library file rank
-	* @throws PortalException if a document library file rank with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank getDLFileRank(
-		long fileRankId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileRankLocalService.getDLFileRank(fileRankId);
-	}
-
-	/**
-	* Returns a range of all the document library file ranks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library file ranks
-	* @param end the upper bound of the range of document library file ranks (not inclusive)
-	* @return the range of document library file ranks
-	*/
-	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getDLFileRanks(
-		int start, int end) {
-		return _dlFileRankLocalService.getDLFileRanks(start, end);
-	}
-
-	/**
-	* Returns the number of document library file ranks.
-	*
-	* @return the number of document library file ranks
-	*/
-	@Override
-	public int getDLFileRanksCount() {
-		return _dlFileRankLocalService.getDLFileRanksCount();
-	}
-
-	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
-		long groupId, long userId) {
-		return _dlFileRankLocalService.getFileRanks(groupId, userId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _dlFileRankLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _dlFileRankLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileRankLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileRank the document library file rank
-	* @return the document library file rank that was updated
-	*/
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank updateDLFileRank(
-		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
-		return _dlFileRankLocalService.updateDLFileRank(dlFileRank);
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
-		long groupId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _dlFileRankLocalService.updateFileRank(groupId, companyId,
-			userId, fileEntryId, serviceContext);
 	}
 
 	@Override

@@ -68,12 +68,12 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationLocalServiceUtil} to access the export import configuration local service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public ExportImportConfiguration addDraftExportImportConfiguration(
-		long userId, java.lang.String name, int type,
-		Map<java.lang.String, Serializable> settingsMap)
+		long userId, int type, Map<java.lang.String, Serializable> settingsMap)
 		throws PortalException;
 
 	public ExportImportConfiguration addDraftExportImportConfiguration(
-		long userId, int type, Map<java.lang.String, Serializable> settingsMap)
+		long userId, java.lang.String name, int type,
+		Map<java.lang.String, Serializable> settingsMap)
 		throws PortalException;
 
 	/**
@@ -128,7 +128,59 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public ExportImportConfiguration deleteExportImportConfiguration(
 		long exportImportConfigurationId) throws PortalException;
 
-	public void deleteExportImportConfigurations(long groupId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportImportConfiguration fetchExportImportConfiguration(
+		long exportImportConfigurationId);
+
+	/**
+	* Returns the export import configuration with the primary key.
+	*
+	* @param exportImportConfigurationId the primary key of the export import configuration
+	* @return the export import configuration
+	* @throws PortalException if a export import configuration with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportImportConfiguration getExportImportConfiguration(
+		long exportImportConfigurationId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ExportImportConfiguration moveExportImportConfigurationToTrash(
+		long userId, long exportImportConfigurationId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+		long userId, long exportImportConfigurationId)
+		throws PortalException;
+
+	/**
+	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param exportImportConfiguration the export import configuration
+	* @return the export import configuration that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public ExportImportConfiguration updateExportImportConfiguration(
+		ExportImportConfiguration exportImportConfiguration);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ExportImportConfiguration updateExportImportConfiguration(
+		long userId, long exportImportConfigurationId, java.lang.String name,
+		java.lang.String description,
+		Map<java.lang.String, Serializable> settingsMap,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ExportImportConfiguration updateStatus(long userId,
+		long exportImportConfigurationId, int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -137,7 +189,51 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<ExportImportConfiguration> searchExportImportConfigurations(
+		long companyId, long groupId, int type, java.lang.String keywords,
+		int start, int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<ExportImportConfiguration> searchExportImportConfigurations(
+		long companyId, long groupId, int type, java.lang.String name,
+		java.lang.String description, boolean andSearch, int start, int end,
+		Sort sort) throws PortalException;
+
+	/**
+	* Returns the number of export import configurations.
+	*
+	* @return the number of export import configurations
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportImportConfigurationsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportImportConfigurationsCount(long companyId, long groupId,
+		java.lang.String keywords, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportImportConfigurationsCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String description, int type,
+		boolean andSearch);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportImportConfigurationsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportImportConfigurationsCount(long groupId, int type);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -178,41 +274,24 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExportImportConfiguration> getExportImportConfigurations(
+		Hits hits) throws PortalException;
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns a range of all the export import configurations.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportImportConfiguration fetchExportImportConfiguration(
-		long exportImportConfigurationId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the export import configuration with the primary key.
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
-	* @param exportImportConfigurationId the primary key of the export import configuration
-	* @return the export import configuration
-	* @throws PortalException if a export import configuration with the primary key could not be found
+	* @param start the lower bound of the range of export import configurations
+	* @param end the upper bound of the range of export import configurations (not inclusive)
+	* @return the range of export import configurations
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportImportConfiguration getExportImportConfiguration(
-		long exportImportConfigurationId) throws PortalException;
+	public List<ExportImportConfiguration> getExportImportConfigurations(
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExportImportConfiguration> getExportImportConfigurations(
@@ -235,102 +314,23 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 		long groupId, int type, int start, int end,
 		OrderByComparator<ExportImportConfiguration> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExportImportConfiguration> getExportImportConfigurations(
-		Hits hits) throws PortalException;
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns a range of all the export import configurations.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of export import configurations
-	* @param end the upper bound of the range of export import configurations (not inclusive)
-	* @return the range of export import configurations
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExportImportConfiguration> getExportImportConfigurations(
-		int start, int end);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	/**
-	* Returns the number of export import configurations.
-	*
-	* @return the number of export import configurations
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExportImportConfigurationsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String keywords, int type);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExportImportConfigurationsCount(long companyId, long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		boolean andSearch);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExportImportConfigurationsCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExportImportConfigurationsCount(long groupId, int type);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public ExportImportConfiguration moveExportImportConfigurationToTrash(
-		long userId, long exportImportConfigurationId)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
-		long userId, long exportImportConfigurationId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String keywords,
-		int start, int end, Sort sort) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<ExportImportConfiguration> searchExportImportConfigurations(
-		long companyId, long groupId, int type, java.lang.String name,
-		java.lang.String description, boolean andSearch, int start, int end,
-		Sort sort) throws PortalException;
-
-	/**
-	* Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param exportImportConfiguration the export import configuration
-	* @return the export import configuration that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ExportImportConfiguration updateExportImportConfiguration(
-		ExportImportConfiguration exportImportConfiguration);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public ExportImportConfiguration updateExportImportConfiguration(
-		long userId, long exportImportConfigurationId, java.lang.String name,
-		java.lang.String description,
-		Map<java.lang.String, Serializable> settingsMap,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public ExportImportConfiguration updateStatus(long userId,
-		long exportImportConfigurationId, int status) throws PortalException;
+	public void deleteExportImportConfigurations(long groupId);
 }

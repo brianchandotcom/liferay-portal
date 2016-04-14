@@ -53,16 +53,28 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 	}
 
 	@Override
-	public void deleteCoupon(long groupId, long couponId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCouponService.deleteCoupon(groupId, couponId);
-	}
-
-	@Override
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long groupId,
 		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.getCoupon(groupId, couponId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingCoupon updateCoupon(
+		long couponId, java.lang.String name, java.lang.String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		boolean neverExpire, boolean active, java.lang.String limitCategories,
+		java.lang.String limitSkus, double minOrder, double discount,
+		java.lang.String discountType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCouponService.updateCoupon(couponId, name, description,
+			startDateMonth, startDateDay, startDateYear, startDateHour,
+			startDateMinute, endDateMonth, endDateDay, endDateYear,
+			endDateHour, endDateMinute, neverExpire, active, limitCategories,
+			limitSkus, minOrder, discount, discountType, serviceContext);
 	}
 
 	/**
@@ -85,21 +97,9 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 	}
 
 	@Override
-	public com.liferay.shopping.model.ShoppingCoupon updateCoupon(
-		long couponId, java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteCoupon(long groupId, long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCouponService.updateCoupon(couponId, name, description,
-			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute, endDateMonth, endDateDay, endDateYear,
-			endDateHour, endDateMinute, neverExpire, active, limitCategories,
-			limitSkus, minOrder, discount, discountType, serviceContext);
+		_shoppingCouponService.deleteCoupon(groupId, couponId);
 	}
 
 	@Override

@@ -43,16 +43,20 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 	}
 
 	@Override
-	public void deleteFileShortcut(long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileShortcutService.deleteFileShortcut(fileShortcutId);
-	}
-
-	@Override
 	public com.liferay.document.library.kernel.model.DLFileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutService.getFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
+		long fileShortcutId, long repositoryId, long folderId,
+		long toFileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcutService.updateFileShortcut(fileShortcutId,
+			repositoryId, folderId, toFileEntryId, serviceContext);
 	}
 
 	/**
@@ -66,13 +70,9 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
-		long fileShortcutId, long repositoryId, long folderId,
-		long toFileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcutService.updateFileShortcut(fileShortcutId,
-			repositoryId, folderId, toFileEntryId, serviceContext);
+		_dlFileShortcutService.deleteFileShortcut(fileShortcutId);
 	}
 
 	@Override

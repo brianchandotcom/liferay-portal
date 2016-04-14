@@ -59,8 +59,25 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalPreferencesLocalServiceUtil} to access the portal preferences local service. Add custom service methods to {@link com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public PortalPreferences addPortalPreferences(long ownerId, int ownerType,
-		java.lang.String defaultPreferences);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the portal preferences to the database. Also notifies the appropriate model listeners.
@@ -72,6 +89,9 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	public PortalPreferences addPortalPreferences(
 		PortalPreferences portalPreferences);
 
+	public PortalPreferences addPortalPreferences(long ownerId, int ownerType,
+		java.lang.String defaultPreferences);
+
 	/**
 	* Creates a new portal preferences with the primary key. Does not add the portal preferences to the database.
 	*
@@ -79,13 +99,6 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	* @return the new portal preferences
 	*/
 	public PortalPreferences createPortalPreferences(long portalPreferencesId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
 
 	/**
 	* Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
@@ -108,7 +121,50 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	public PortalPreferences deletePortalPreferences(long portalPreferencesId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PortalPreferences fetchPortalPreferences(long portalPreferencesId);
+
+	/**
+	* Returns the portal preferences with the primary key.
+	*
+	* @param portalPreferencesId the primary key of the portal preferences
+	* @return the portal preferences
+	* @throws PortalException if a portal preferences with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PortalPreferences getPortalPreferences(long portalPreferencesId)
+		throws PortalException;
+
+	/**
+	* Updates the portal preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portalPreferences the portal preferences
+	* @return the portal preferences that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public PortalPreferences updatePortalPreferences(
+		PortalPreferences portalPreferences);
+
+	public PortalPreferences updatePreferences(long ownerId, int ownerType,
+		com.liferay.portal.kernel.portlet.PortalPreferences portalPreferences);
+
+	public PortalPreferences updatePreferences(long ownerId, int ownerType,
+		java.lang.String xml);
+
+	/**
+	* Returns the number of portal preferenceses.
+	*
+	* @return the number of portal preferenceses
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPortalPreferencesesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -150,6 +206,27 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the portal preferenceses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of portal preferenceses
+	* @param end the upper bound of the range of portal preferenceses (not inclusive)
+	* @return the range of portal preferenceses
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PortalPreferences> getPortalPreferenceses(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PortletPreferences getPreferences(long ownerId, int ownerType);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PortletPreferences getPreferences(long ownerId, int ownerType,
+		java.lang.String defaultPreferences);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -166,81 +243,4 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortalPreferences fetchPortalPreferences(long portalPreferencesId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the portal preferences with the primary key.
-	*
-	* @param portalPreferencesId the primary key of the portal preferences
-	* @return the portal preferences
-	* @throws PortalException if a portal preferences with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortalPreferences getPortalPreferences(long portalPreferencesId)
-		throws PortalException;
-
-	/**
-	* Returns a range of all the portal preferenceses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortalPreferencesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of portal preferenceses
-	* @param end the upper bound of the range of portal preferenceses (not inclusive)
-	* @return the range of portal preferenceses
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PortalPreferences> getPortalPreferenceses(int start, int end);
-
-	/**
-	* Returns the number of portal preferenceses.
-	*
-	* @return the number of portal preferenceses
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPortalPreferencesesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletPreferences getPreferences(long ownerId, int ownerType);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PortletPreferences getPreferences(long ownerId, int ownerType,
-		java.lang.String defaultPreferences);
-
-	/**
-	* Updates the portal preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portalPreferences the portal preferences
-	* @return the portal preferences that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public PortalPreferences updatePortalPreferences(
-		PortalPreferences portalPreferences);
-
-	public PortalPreferences updatePreferences(long ownerId, int ownerType,
-		com.liferay.portal.kernel.portlet.PortalPreferences portalPreferences);
-
-	public PortalPreferences updatePreferences(long ownerId, int ownerType,
-		java.lang.String xml);
 }

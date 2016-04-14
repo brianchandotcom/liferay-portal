@@ -32,6 +32,14 @@ public class EntryServiceWrapper implements EntryService,
 		_entryService = entryService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray searchUsersAndContacts(
+		long companyId, java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _entryService.searchUsersAndContacts(companyId, keywords, start,
+			end);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -40,14 +48,6 @@ public class EntryServiceWrapper implements EntryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _entryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray searchUsersAndContacts(
-		long companyId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _entryService.searchUsersAndContacts(companyId, keywords, start,
-			end);
 	}
 
 	@Override

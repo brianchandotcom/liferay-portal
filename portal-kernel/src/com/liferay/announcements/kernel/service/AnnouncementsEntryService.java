@@ -58,17 +58,8 @@ public interface AnnouncementsEntryService extends BaseService {
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws PortalException;
 
-	public void deleteEntry(long entryId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AnnouncementsEntry getEntry(long entryId) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,
@@ -77,4 +68,13 @@ public interface AnnouncementsEntryService extends BaseService {
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public void deleteEntry(long entryId) throws PortalException;
 }

@@ -33,24 +33,53 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Grants the role permission at the scope to perform the action on
-	* resources of the type. Existing actions are retained.
+	* Returns <code>true</code> if the resource permission grants permission to
+	* perform the resource action. Note that this method does not ensure that
+	* the resource permission refers to the same type of resource as the
+	* resource action.
+	*
+	* @param resourcePermission the resource permission
+	* @param resourceAction the resource action
+	* @return <code>true</code> if the resource permission grants permission to
+	perform the resource action
+	*/
+	@Override
+	public boolean hasActionId(
+		com.liferay.portal.kernel.model.ResourcePermission resourcePermission,
+		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
+		return _resourcePermissionLocalService.hasActionId(resourcePermission,
+			resourceAction);
+	}
+
+	/**
+	* Returns <code>true</code> if the roles have permission at the scope to
+	* perform the action on the resources.
 	*
 	* <p>
-	* This method cannot be used to grant individual scope permissions, but is
-	* only intended for adding permissions at the company, group, and
-	* group-template scopes. For example, this method could be used to grant a
-	* company scope permission to edit message board posts.
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	* </p>
 	*
-	* <p>
-	* If a company scope permission is granted to resources that the role
-	* already had group scope permissions to, the group scope permissions are
-	* deleted. Likewise, if a group scope permission is granted to resources
-	* that the role already had company scope permissions to, the company scope
-	* permissions are deleted. Be aware that this latter behavior can result in
-	* an overall reduction in permissions for the role.
-	* </p>
+	* @param resources the resources
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if any one of the roles has permission to
+	perform the action on any one of the resources;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasResourcePermission(
+		java.util.List<com.liferay.portal.kernel.model.Resource> resources,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.hasResourcePermission(resources,
+			roleIds, actionId);
+	}
+
+	/**
+	* Returns <code>true</code> if the role has permission at the scope to
+	* perform the action on resources of the type.
 	*
 	* <p>
 	* Depending on the scope, the value of <code>primKey</code> will have
@@ -61,19 +90,122 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
-	* @param scope the scope. This method only supports company, group, and
-	group-template scope.
+	* @param scope the scope
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
 	*/
 	@Override
-	public void addResourcePermission(long companyId, java.lang.String name,
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
 		java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourcePermissionLocalService.addResourcePermission(companyId, name,
-			scope, primKey, roleId, actionId);
+		return _resourcePermissionLocalService.hasResourcePermission(companyId,
+			name, scope, primKey, roleId, actionId);
+	}
+
+	/**
+	* Returns <code>true</code> if the roles have permission at the scope to
+	* perform the action on resources of the type.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if any one of the roles has permission to
+	perform the action on the resource; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.hasResourcePermission(companyId,
+			name, scope, primKey, roleIds, actionId);
+	}
+
+	/**
+	* Returns <code>true</code> if the role has permission at the scope to
+	* perform the action on the resource.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	* @return <code>true</code> if the role has permission to perform the
+	action on the resource; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasScopeResourcePermission(long companyId,
+		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.hasScopeResourcePermission(companyId,
+			name, scope, roleId, actionId);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
+	String, String}
+	*/
+	@Deprecated
+	@Override
+	public boolean[] hasResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.hasResourcePermissions(companyId,
+			name, scope, primKey, roleIds, actionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _resourcePermissionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _resourcePermissionLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _resourcePermissionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -89,30 +221,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Grants the role permissions at the scope to perform the actions on all
-	* resources of the type. Existing actions are retained.
-	*
-	* <p>
-	* This method should only be used to add default permissions to existing
-	* resources en masse during upgrades or while verifying permissions. For
-	* example, this method could be used to grant site members individual scope
-	* permissions to view all blog posts.
-	* </p>
-	*
-	* @param resourceName the resource's name, which can be either a class name
-	or a portlet ID
-	* @param roleName the role's name
-	* @param scope the scope
-	* @param resourceActionBitwiseValue the bitwise IDs of the actions
-	*/
-	@Override
-	public void addResourcePermissions(java.lang.String resourceName,
-		java.lang.String roleName, int scope, long resourceActionBitwiseValue) {
-		_resourcePermissionLocalService.addResourcePermissions(resourceName,
-			roleName, scope, resourceActionBitwiseValue);
-	}
-
-	/**
 	* Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	*
 	* @param resourcePermissionId the primary key for the new resource permission
@@ -122,16 +230,6 @@ public class ResourcePermissionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ResourcePermission createResourcePermission(
 		long resourcePermissionId) {
 		return _resourcePermissionLocalService.createResourcePermission(resourcePermissionId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -160,67 +258,103 @@ public class ResourcePermissionLocalServiceWrapper
 		return _resourcePermissionLocalService.deleteResourcePermission(resourcePermissionId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.ResourcePermission fetchResourcePermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId) {
+		return _resourcePermissionLocalService.fetchResourcePermission(companyId,
+			name, scope, primKey, roleId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ResourcePermission fetchResourcePermission(
+		long resourcePermissionId) {
+		return _resourcePermissionLocalService.fetchResourcePermission(resourcePermissionId);
+	}
+
 	/**
-	* Deletes all resource permissions at the scope to resources of the type.
-	* This method should not be confused with any of the
-	* <code>removeResourcePermission</code> methods, as its purpose is very
-	* different. This method should only be used for deleting resource
-	* permissions that refer to a resource when that resource is deleted. For
-	* example this method could be used to delete all individual scope
-	* permissions to a blog post when it is deleted.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
+	* Returns the resource permission for the role at the scope to perform the
+	* actions on resources of the type.
 	*
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @return the resource permission for the role at the scope to perform the
+	actions on resources of the type
 	*/
 	@Override
-	public void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, long primKey)
+	public com.liferay.portal.kernel.model.ResourcePermission getResourcePermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourcePermissionLocalService.deleteResourcePermissions(companyId,
-			name, scope, primKey);
+		return _resourcePermissionLocalService.getResourcePermission(companyId,
+			name, scope, primKey, roleId);
 	}
 
 	/**
-	* Deletes all resource permissions at the scope to resources of the type.
-	* This method should not be confused with any of the
-	* <code>removeResourcePermission</code> methods, as its purpose is very
-	* different. This method should only be used for deleting resource
-	* permissions that refer to a resource when that resource is deleted. For
-	* example this method could be used to delete all individual scope
-	* permissions to a blog post when it is deleted.
+	* Returns the resource permission with the primary key.
 	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
+	* @param resourcePermissionId the primary key of the resource permission
+	* @return the resource permission
+	* @throws PortalException if a resource permission with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourcePermission getResourcePermission(
+		long resourcePermissionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.getResourcePermission(resourcePermissionId);
+	}
+
+	/**
+	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourcePermission updateResourcePermission(
+		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
+		return _resourcePermissionLocalService.updateResourcePermission(resourcePermission);
+	}
+
+	/**
+	* Returns the number of resource permissions.
+	*
+	* @return the number of resource permissions
+	*/
+	@Override
+	public int getResourcePermissionsCount() {
+		return _resourcePermissionLocalService.getResourcePermissionsCount();
+	}
+
+	/**
+	* Returns the number of resource permissions at the scope of the type.
 	*
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
+	* @return the number of resource permissions at the scope of the type
 	*/
 	@Override
-	public void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourcePermissionLocalService.deleteResourcePermissions(companyId,
+	public int getResourcePermissionsCount(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey) {
+		return _resourcePermissionLocalService.getResourcePermissionsCount(companyId,
 			name, scope, primKey);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _resourcePermissionLocalService.dynamicQuery();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourcePermissionLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -278,61 +412,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission fetchResourcePermission(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId) {
-		return _resourcePermissionLocalService.fetchResourcePermission(companyId,
-			name, scope, primKey, roleId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission fetchResourcePermission(
-		long resourcePermissionId) {
-		return _resourcePermissionLocalService.fetchResourcePermission(resourcePermissionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _resourcePermissionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey,
-		java.util.Collection<java.lang.String> actionIds) {
-		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
-			name, scope, primKey, actionIds);
-	}
-
-	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.
 	*
@@ -357,97 +436,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(long, String, int,
-	String, Collection)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds,
-		java.util.Collection<java.lang.String> actionIds) {
-		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
-			name, scope, primKey, roleIds, actionIds);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _resourcePermissionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _resourcePermissionLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the resource permission for the role at the scope to perform the
-	* actions on resources of the type.
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @return the resource permission for the role at the scope to perform the
-	actions on resources of the type
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission getResourcePermission(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.getResourcePermission(companyId,
-			name, scope, primKey, roleId);
-	}
-
-	/**
-	* Returns the resource permission with the primary key.
-	*
-	* @param resourcePermissionId the primary key of the resource permission
-	* @return the resource permission
-	* @throws PortalException if a resource permission with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission getResourcePermission(
-		long resourcePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.getResourcePermission(resourcePermissionId);
-	}
-
-	/**
-	* Returns all the resource permissions at the scope of the type.
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @return the resource permissions at the scope of the type
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ResourcePermission> getResourcePermissions(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey) {
-		return _resourcePermissionLocalService.getResourcePermissions(companyId,
-			name, scope, primKey);
-	}
-
-	/**
 	* Returns a range of all the resource permissions.
 	*
 	* <p>
@@ -465,29 +453,20 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of resource permissions.
-	*
-	* @return the number of resource permissions
-	*/
-	@Override
-	public int getResourcePermissionsCount() {
-		return _resourcePermissionLocalService.getResourcePermissionsCount();
-	}
-
-	/**
-	* Returns the number of resource permissions at the scope of the type.
+	* Returns all the resource permissions at the scope of the type.
 	*
 	* @param companyId the primary key of the company
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @return the number of resource permissions at the scope of the type
+	* @return the resource permissions at the scope of the type
 	*/
 	@Override
-	public int getResourcePermissionsCount(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey) {
-		return _resourcePermissionLocalService.getResourcePermissionsCount(companyId,
+	public java.util.List<com.liferay.portal.kernel.model.ResourcePermission> getResourcePermissions(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey) {
+		return _resourcePermissionLocalService.getResourcePermissions(companyId,
 			name, scope, primKey);
 	}
 
@@ -579,126 +558,133 @@ public class ResourcePermissionLocalServiceWrapper
 		return _resourcePermissionLocalService.getScopeResourcePermissions(scopes);
 	}
 
-	/**
-	* Returns <code>true</code> if the resource permission grants permission to
-	* perform the resource action. Note that this method does not ensure that
-	* the resource permission refers to the same type of resource as the
-	* resource action.
-	*
-	* @param resourcePermission the resource permission
-	* @param resourceAction the resource action
-	* @return <code>true</code> if the resource permission grants permission to
-	perform the resource action
-	*/
 	@Override
-	public boolean hasActionId(
-		com.liferay.portal.kernel.model.ResourcePermission resourcePermission,
-		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
-		return _resourcePermissionLocalService.hasActionId(resourcePermission,
-			resourceAction);
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey,
+		java.util.Collection<java.lang.String> actionIds) {
+		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
+			name, scope, primKey, actionIds);
 	}
 
 	/**
-	* Returns <code>true</code> if the role has permission at the scope to
-	* perform the action on resources of the type.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @param actionId the action ID
-	* @return <code>true</code> if the role has permission to perform the
-	action on the resource; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasResourcePermission(companyId,
-			name, scope, primKey, roleId, actionId);
-	}
-
-	/**
-	* Returns <code>true</code> if the roles have permission at the scope to
-	* perform the action on resources of the type.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @param roleIds the primary keys of the roles
-	* @param actionId the action ID
-	* @return <code>true</code> if any one of the roles has permission to
-	perform the action on the resource; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasResourcePermission(companyId,
-			name, scope, primKey, roleIds, actionId);
-	}
-
-	/**
-	* Returns <code>true</code> if the roles have permission at the scope to
-	* perform the action on the resources.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param resources the resources
-	* @param roleIds the primary keys of the roles
-	* @param actionId the action ID
-	* @return <code>true</code> if any one of the roles has permission to
-	perform the action on any one of the resources;
-	<code>false</code> otherwise
-	*/
-	@Override
-	public boolean hasResourcePermission(
-		java.util.List<com.liferay.portal.kernel.model.Resource> resources,
-		long[] roleIds, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasResourcePermission(resources,
-			roleIds, actionId);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
-	String, String}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourcePermissionActionIds(long, String, int,
+	String, Collection)}
 	*/
 	@Deprecated
 	@Override
-	public boolean[] hasResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey,
-		long[] roleIds, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasResourcePermissions(companyId,
-			name, scope, primKey, roleIds, actionId);
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long[] roleIds,
+		java.util.Collection<java.lang.String> actionIds) {
+		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
+			name, scope, primKey, roleIds, actionIds);
 	}
 
 	/**
-	* Returns <code>true</code> if the role has permission at the scope to
-	* perform the action on the resource.
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	/**
+	* Grants the role permission at the scope to perform the action on
+	* resources of the type. Existing actions are retained.
+	*
+	* <p>
+	* This method cannot be used to grant individual scope permissions, but is
+	* only intended for adding permissions at the company, group, and
+	* group-template scopes. For example, this method could be used to grant a
+	* company scope permission to edit message board posts.
+	* </p>
+	*
+	* <p>
+	* If a company scope permission is granted to resources that the role
+	* already had group scope permissions to, the group scope permissions are
+	* deleted. Likewise, if a group scope permission is granted to resources
+	* that the role already had company scope permissions to, the company scope
+	* permissions are deleted. Be aware that this latter behavior can result in
+	* an overall reduction in permissions for the role.
+	* </p>
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope. This method only supports company, group, and
+	group-template scope.
+	* @param primKey the primary key
+	* @param roleId the primary key of the role
+	* @param actionId the action ID
+	*/
+	@Override
+	public void addResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long roleId,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.addResourcePermission(companyId, name,
+			scope, primKey, roleId, actionId);
+	}
+
+	/**
+	* Grants the role permissions at the scope to perform the actions on all
+	* resources of the type. Existing actions are retained.
+	*
+	* <p>
+	* This method should only be used to add default permissions to existing
+	* resources en masse during upgrades or while verifying permissions. For
+	* example, this method could be used to grant site members individual scope
+	* permissions to view all blog posts.
+	* </p>
+	*
+	* @param resourceName the resource's name, which can be either a class name
+	or a portlet ID
+	* @param roleName the role's name
+	* @param scope the scope
+	* @param resourceActionBitwiseValue the bitwise IDs of the actions
+	*/
+	@Override
+	public void addResourcePermissions(java.lang.String resourceName,
+		java.lang.String roleName, int scope, long resourceActionBitwiseValue) {
+		_resourcePermissionLocalService.addResourcePermissions(resourceName,
+			roleName, scope, resourceActionBitwiseValue);
+	}
+
+	/**
+	* Deletes all resource permissions at the scope to resources of the type.
+	* This method should not be confused with any of the
+	* <code>removeResourcePermission</code> methods, as its purpose is very
+	* different. This method should only be used for deleting resource
+	* permissions that refer to a resource when that resource is deleted. For
+	* example this method could be used to delete all individual scope
+	* permissions to a blog post when it is deleted.
 	*
 	* <p>
 	* Depending on the scope, the value of <code>primKey</code> will have
@@ -710,17 +696,43 @@ public class ResourcePermissionLocalServiceWrapper
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param scope the scope
-	* @param roleId the primary key of the role
-	* @param actionId the action ID
-	* @return <code>true</code> if the role has permission to perform the
-	action on the resource; <code>false</code> otherwise
+	* @param primKey the primary key
 	*/
 	@Override
-	public boolean hasScopeResourcePermission(long companyId,
-		java.lang.String name, int scope, long roleId, java.lang.String actionId)
+	public void deleteResourcePermissions(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasScopeResourcePermission(companyId,
-			name, scope, roleId, actionId);
+		_resourcePermissionLocalService.deleteResourcePermissions(companyId,
+			name, scope, primKey);
+	}
+
+	/**
+	* Deletes all resource permissions at the scope to resources of the type.
+	* This method should not be confused with any of the
+	* <code>removeResourcePermission</code> methods, as its purpose is very
+	* different. This method should only be used for deleting resource
+	* permissions that refer to a resource when that resource is deleted. For
+	* example this method could be used to delete all individual scope
+	* permissions to a blog post when it is deleted.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	*/
+	@Override
+	public void deleteResourcePermissions(long companyId,
+		java.lang.String name, int scope, long primKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermissionLocalService.deleteResourcePermissions(companyId,
+			name, scope, primKey);
 	}
 
 	/**
@@ -858,16 +870,15 @@ public class ResourcePermissionLocalServiceWrapper
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @param actionIds the action IDs of the actions
+	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	@Override
 	public void setResourcePermissions(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long roleId,
-		java.lang.String[] actionIds)
+		int scope, java.lang.String primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.setResourcePermissions(companyId, name,
-			scope, primKey, roleId, actionIds);
+			scope, primKey, roleIdsToActionIds);
 	}
 
 	/**
@@ -891,27 +902,16 @@ public class ResourcePermissionLocalServiceWrapper
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
+	* @param roleId the primary key of the role
+	* @param actionIds the action IDs of the actions
 	*/
 	@Override
 	public void setResourcePermissions(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		int scope, java.lang.String primKey, long roleId,
+		java.lang.String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.setResourcePermissions(companyId, name,
-			scope, primKey, roleIdsToActionIds);
-	}
-
-	/**
-	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission updateResourcePermission(
-		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
-		return _resourcePermissionLocalService.updateResourcePermission(resourcePermission);
+			scope, primKey, roleId, actionIds);
 	}
 
 	@Override

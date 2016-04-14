@@ -40,6 +40,37 @@ public class PluginSettingLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PluginSettingLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasPermission(long userId, java.lang.String pluginId,
+		java.lang.String pluginType) {
+		return getService().hasPermission(userId, pluginId, pluginType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Adds the plugin setting to the database. Also notifies the appropriate model listeners.
@@ -52,12 +83,6 @@ public class PluginSettingLocalServiceUtil {
 		return getService().addPluginSetting(pluginSetting);
 	}
 
-	public static void checkPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkPermission(userId, pluginId, pluginType);
-	}
-
 	/**
 	* Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
 	*
@@ -67,15 +92,6 @@ public class PluginSettingLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.PluginSetting createPluginSetting(
 		long pluginSettingId) {
 		return getService().createPluginSetting(pluginSettingId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -102,8 +118,68 @@ public class PluginSettingLocalServiceUtil {
 		return getService().deletePluginSetting(pluginSettingId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PluginSetting fetchPluginSetting(
+		long pluginSettingId) {
+		return getService().fetchPluginSetting(pluginSettingId);
+	}
+
+	public static com.liferay.portal.kernel.model.PluginSetting getDefaultPluginSetting() {
+		return getService().getDefaultPluginSetting();
+	}
+
+	public static com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
+		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
+		return getService().getPluginSetting(companyId, pluginId, pluginType);
+	}
+
+	/**
+	* Returns the plugin setting with the primary key.
+	*
+	* @param pluginSettingId the primary key of the plugin setting
+	* @return the plugin setting
+	* @throws PortalException if a plugin setting with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
+		long pluginSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPluginSetting(pluginSettingId);
+	}
+
+	/**
+	* Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pluginSetting the plugin setting
+	* @return the plugin setting that was updated
+	*/
+	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
+		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
+		return getService().updatePluginSetting(pluginSetting);
+	}
+
+	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
+		long companyId, java.lang.String pluginId, java.lang.String pluginType,
+		java.lang.String roles, boolean active) {
+		return getService()
+				   .updatePluginSetting(companyId, pluginId, pluginType, roles,
+			active);
+	}
+
+	/**
+	* Returns the number of plugin settings.
+	*
+	* @return the number of plugin settings
+	*/
+	public static int getPluginSettingsCount() {
+		return getService().getPluginSettingsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -157,6 +233,22 @@ public class PluginSettingLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the plugin settings.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PluginSettingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of plugin settings
+	* @param end the upper bound of the range of plugin settings (not inclusive)
+	* @return the range of plugin settings
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.PluginSetting> getPluginSettings(
+		int start, int end) {
+		return getService().getPluginSettings(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -180,103 +272,10 @@ public class PluginSettingLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PluginSetting fetchPluginSetting(
-		long pluginSettingId) {
-		return getService().fetchPluginSetting(pluginSettingId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.model.PluginSetting getDefaultPluginSetting() {
-		return getService().getDefaultPluginSetting();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void checkPermission(long userId, java.lang.String pluginId,
+		java.lang.String pluginType)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
-		return getService().getPluginSetting(companyId, pluginId, pluginType);
-	}
-
-	/**
-	* Returns the plugin setting with the primary key.
-	*
-	* @param pluginSettingId the primary key of the plugin setting
-	* @return the plugin setting
-	* @throws PortalException if a plugin setting with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
-		long pluginSettingId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPluginSetting(pluginSettingId);
-	}
-
-	/**
-	* Returns a range of all the plugin settings.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PluginSettingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of plugin settings
-	* @param end the upper bound of the range of plugin settings (not inclusive)
-	* @return the range of plugin settings
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.PluginSetting> getPluginSettings(
-		int start, int end) {
-		return getService().getPluginSettings(start, end);
-	}
-
-	/**
-	* Returns the number of plugin settings.
-	*
-	* @return the number of plugin settings
-	*/
-	public static int getPluginSettingsCount() {
-		return getService().getPluginSettingsCount();
-	}
-
-	public static boolean hasPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType) {
-		return getService().hasPermission(userId, pluginId, pluginType);
-	}
-
-	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active) {
-		return getService()
-				   .updatePluginSetting(companyId, pluginId, pluginType, roles,
-			active);
-	}
-
-	/**
-	* Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pluginSetting the plugin setting
-	* @return the plugin setting that was updated
-	*/
-	public static com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
-		return getService().updatePluginSetting(pluginSetting);
+		getService().checkPermission(userId, pluginId, pluginType);
 	}
 
 	public static PluginSettingLocalService getService() {

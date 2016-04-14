@@ -141,8 +141,58 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new LayoutBranchWrapper((LayoutBranch)_layoutBranch.clone());
+	public CacheModel<com.liferay.portal.kernel.model.LayoutBranch> toCacheModel() {
+		return _layoutBranch.toCacheModel();
+	}
+
+	/**
+	* Returns the master of this layout branch.
+	*
+	* @return the master of this layout branch
+	*/
+	@Override
+	public boolean getMaster() {
+		return _layoutBranch.getMaster();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _layoutBranch.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _layoutBranch.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout branch is master.
+	*
+	* @return <code>true</code> if this layout branch is master; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isMaster() {
+		return _layoutBranch.isMaster();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _layoutBranch.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _layoutBranch.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutBranch toEscapedModel() {
+		return new LayoutBranchWrapper(_layoutBranch.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutBranch toUnescapedModel() {
+		return new LayoutBranchWrapper(_layoutBranch.toUnescapedModel());
 	}
 
 	@Override
@@ -151,14 +201,19 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		return _layoutBranch.compareTo(layoutBranch);
 	}
 
-	/**
-	* Returns the company ID of this layout branch.
-	*
-	* @return the company ID of this layout branch
-	*/
 	@Override
-	public long getCompanyId() {
-		return _layoutBranch.getCompanyId();
+	public int hashCode() {
+		return _layoutBranch.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _layoutBranch.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new LayoutBranchWrapper((LayoutBranch)_layoutBranch.clone());
 	}
 
 	/**
@@ -171,9 +226,54 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		return _layoutBranch.getDescription();
 	}
 
+	/**
+	* Returns the name of this layout branch.
+	*
+	* @return the name of this layout branch
+	*/
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layoutBranch.getExpandoBridge();
+	public java.lang.String getName() {
+		return _layoutBranch.getName();
+	}
+
+	/**
+	* Returns the user name of this layout branch.
+	*
+	* @return the user name of this layout branch
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _layoutBranch.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this layout branch.
+	*
+	* @return the user uuid of this layout branch
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _layoutBranch.getUserUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _layoutBranch.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _layoutBranch.toXmlString();
+	}
+
+	/**
+	* Returns the company ID of this layout branch.
+	*
+	* @return the company ID of this layout branch
+	*/
+	@Override
+	public long getCompanyId() {
+		return _layoutBranch.getCompanyId();
 	}
 
 	/**
@@ -207,16 +307,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	/**
-	* Returns the master of this layout branch.
-	*
-	* @return the master of this layout branch
-	*/
-	@Override
-	public boolean getMaster() {
-		return _layoutBranch.getMaster();
-	}
-
-	/**
 	* Returns the mvcc version of this layout branch.
 	*
 	* @return the mvcc version of this layout branch
@@ -224,16 +314,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	@Override
 	public long getMvccVersion() {
 		return _layoutBranch.getMvccVersion();
-	}
-
-	/**
-	* Returns the name of this layout branch.
-	*
-	* @return the name of this layout branch
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _layoutBranch.getName();
 	}
 
 	/**
@@ -256,11 +336,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		return _layoutBranch.getPrimaryKey();
 	}
 
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutBranch.getPrimaryKeyObj();
-	}
-
 	/**
 	* Returns the user ID of this layout branch.
 	*
@@ -269,56 +344,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	@Override
 	public long getUserId() {
 		return _layoutBranch.getUserId();
-	}
-
-	/**
-	* Returns the user name of this layout branch.
-	*
-	* @return the user name of this layout branch
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _layoutBranch.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this layout branch.
-	*
-	* @return the user uuid of this layout branch
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _layoutBranch.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layoutBranch.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutBranch.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _layoutBranch.isEscapedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this layout branch is master.
-	*
-	* @return <code>true</code> if this layout branch is master; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isMaster() {
-		return _layoutBranch.isMaster();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _layoutBranch.isNew();
 	}
 
 	@Override
@@ -484,31 +509,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_layoutBranch.setUserUuid(userUuid);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutBranch> toCacheModel() {
-		return _layoutBranch.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutBranch toEscapedModel() {
-		return new LayoutBranchWrapper(_layoutBranch.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _layoutBranch.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutBranch toUnescapedModel() {
-		return new LayoutBranchWrapper(_layoutBranch.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _layoutBranch.toXmlString();
 	}
 
 	@Override

@@ -44,29 +44,6 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 	}
 
 	@Override
-	public void deleteLayoutSetBranch(long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout) {
-		return _layoutSetBranchService.getLayoutSetBranches(groupId,
-			privateLayout);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _layoutSetBranchService.getOSGiServiceIdentifier();
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.LayoutSetBranch mergeLayoutSetBranch(
 		long layoutSetBranchId, long mergeLayoutSetBranchId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -83,6 +60,29 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetBranchService.updateLayoutSetBranch(groupId,
 			layoutSetBranchId, name, description, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutSetBranchService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
+		long groupId, boolean privateLayout) {
+		return _layoutSetBranchService.getLayoutSetBranches(groupId,
+			privateLayout);
+	}
+
+	@Override
+	public void deleteLayoutSetBranch(long layoutSetBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
 	@Override

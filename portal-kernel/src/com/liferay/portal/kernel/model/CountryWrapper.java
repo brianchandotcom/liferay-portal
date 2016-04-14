@@ -126,13 +126,98 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new CountryWrapper((Country)_country.clone());
+	public CacheModel<com.liferay.portal.kernel.model.Country> toCacheModel() {
+		return _country.toCacheModel();
+	}
+
+	/**
+	* Returns the active of this country.
+	*
+	* @return the active of this country
+	*/
+	@Override
+	public boolean getActive() {
+		return _country.getActive();
+	}
+
+	/**
+	* Returns the zip required of this country.
+	*
+	* @return the zip required of this country
+	*/
+	@Override
+	public boolean getZipRequired() {
+		return _country.getZipRequired();
+	}
+
+	/**
+	* Returns <code>true</code> if this country is active.
+	*
+	* @return <code>true</code> if this country is active; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActive() {
+		return _country.isActive();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _country.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _country.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _country.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this country is zip required.
+	*
+	* @return <code>true</code> if this country is zip required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isZipRequired() {
+		return _country.isZipRequired();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _country.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country toEscapedModel() {
+		return new CountryWrapper(_country.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country toUnescapedModel() {
+		return new CountryWrapper(_country.toUnescapedModel());
 	}
 
 	@Override
 	public int compareTo(com.liferay.portal.kernel.model.Country country) {
 		return _country.compareTo(country);
+	}
+
+	@Override
+	public int hashCode() {
+		return _country.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _country.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new CountryWrapper((Country)_country.clone());
 	}
 
 	/**
@@ -156,31 +241,6 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	/**
-	* Returns the active of this country.
-	*
-	* @return the active of this country
-	*/
-	@Override
-	public boolean getActive() {
-		return _country.getActive();
-	}
-
-	/**
-	* Returns the country ID of this country.
-	*
-	* @return the country ID of this country
-	*/
-	@Override
-	public long getCountryId() {
-		return _country.getCountryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _country.getExpandoBridge();
-	}
-
-	/**
 	* Returns the idd of this country.
 	*
 	* @return the idd of this country
@@ -188,16 +248,6 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	@Override
 	public java.lang.String getIdd() {
 		return _country.getIdd();
-	}
-
-	/**
-	* Returns the mvcc version of this country.
-	*
-	* @return the mvcc version of this country
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _country.getMvccVersion();
 	}
 
 	/**
@@ -235,6 +285,36 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		return _country.getNumber();
 	}
 
+	@Override
+	public java.lang.String toString() {
+		return _country.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _country.toXmlString();
+	}
+
+	/**
+	* Returns the country ID of this country.
+	*
+	* @return the country ID of this country
+	*/
+	@Override
+	public long getCountryId() {
+		return _country.getCountryId();
+	}
+
+	/**
+	* Returns the mvcc version of this country.
+	*
+	* @return the mvcc version of this country
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _country.getMvccVersion();
+	}
+
 	/**
 	* Returns the primary key of this country.
 	*
@@ -243,61 +323,6 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	@Override
 	public long getPrimaryKey() {
 		return _country.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _country.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the zip required of this country.
-	*
-	* @return the zip required of this country
-	*/
-	@Override
-	public boolean getZipRequired() {
-		return _country.getZipRequired();
-	}
-
-	@Override
-	public int hashCode() {
-		return _country.hashCode();
-	}
-
-	/**
-	* Returns <code>true</code> if this country is active.
-	*
-	* @return <code>true</code> if this country is active; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isActive() {
-		return _country.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _country.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _country.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _country.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this country is zip required.
-	*
-	* @return <code>true</code> if this country is zip required; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isZipRequired() {
-		return _country.isZipRequired();
 	}
 
 	/**
@@ -433,31 +458,6 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	@Override
 	public void setZipRequired(boolean zipRequired) {
 		_country.setZipRequired(zipRequired);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Country> toCacheModel() {
-		return _country.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Country toEscapedModel() {
-		return new CountryWrapper(_country.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _country.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Country toUnescapedModel() {
-		return new CountryWrapper(_country.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _country.toXmlString();
 	}
 
 	@Override

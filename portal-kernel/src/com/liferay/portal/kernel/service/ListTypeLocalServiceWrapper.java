@@ -31,6 +31,21 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		_listTypeLocalService = listTypeLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _listTypeLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _listTypeLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _listTypeLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Adds the list type to the database. Also notifies the appropriate model listeners.
 	*
@@ -87,6 +102,37 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		return _listTypeLocalService.deleteListType(listTypeId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.ListType fetchListType(
+		long listTypeId) {
+		return _listTypeLocalService.fetchListType(listTypeId);
+	}
+
+	/**
+	* Returns the list type with the primary key.
+	*
+	* @param listTypeId the primary key of the list type
+	* @return the list type
+	* @throws PortalException if a list type with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ListType getListType(long listTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _listTypeLocalService.getListType(listTypeId);
+	}
+
+	/**
+	* Updates the list type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param listType the list type
+	* @return the list type that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ListType updateListType(
+		com.liferay.portal.kernel.model.ListType listType) {
+		return _listTypeLocalService.updateListType(listType);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -98,8 +144,30 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _listTypeLocalService.dynamicQuery();
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _listTypeLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of list types.
+	*
+	* @return the number of list types
+	*/
+	@Override
+	public int getListTypesCount() {
+		return _listTypeLocalService.getListTypesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _listTypeLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -156,6 +224,29 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 	}
 
 	/**
+	* Returns a range of all the list types.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ListTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of list types
+	* @param end the upper bound of the range of list types (not inclusive)
+	* @return the range of list types
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
+		int start, int end) {
+		return _listTypeLocalService.getListTypes(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
+		java.lang.String type) {
+		return _listTypeLocalService.getListTypes(type);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -182,94 +273,9 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ListType fetchListType(
-		long listTypeId) {
-		return _listTypeLocalService.fetchListType(listTypeId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _listTypeLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _listTypeLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the list type with the primary key.
-	*
-	* @param listTypeId the primary key of the list type
-	* @return the list type
-	* @throws PortalException if a list type with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ListType getListType(long listTypeId)
+	public void validate(long listTypeId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _listTypeLocalService.getListType(listTypeId);
-	}
-
-	/**
-	* Returns a range of all the list types.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ListTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of list types
-	* @param end the upper bound of the range of list types (not inclusive)
-	* @return the range of list types
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
-		int start, int end) {
-		return _listTypeLocalService.getListTypes(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ListType> getListTypes(
-		java.lang.String type) {
-		return _listTypeLocalService.getListTypes(type);
-	}
-
-	/**
-	* Returns the number of list types.
-	*
-	* @return the number of list types
-	*/
-	@Override
-	public int getListTypesCount() {
-		return _listTypeLocalService.getListTypesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _listTypeLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _listTypeLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the list type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param listType the list type
-	* @return the list type that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ListType updateListType(
-		com.liferay.portal.kernel.model.ListType listType) {
-		return _listTypeLocalService.updateListType(listType);
+		_listTypeLocalService.validate(listTypeId, type);
 	}
 
 	@Override
@@ -277,12 +283,6 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_listTypeLocalService.validate(listTypeId, classNameId, type);
-	}
-
-	@Override
-	public void validate(long listTypeId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_listTypeLocalService.validate(listTypeId, type);
 	}
 
 	@Override

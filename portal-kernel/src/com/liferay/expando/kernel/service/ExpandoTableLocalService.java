@@ -109,6 +109,69 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	public ExpandoTable deleteExpandoTable(long tableId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchDefaultTable(long companyId,
+		java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchDefaultTable(long companyId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchExpandoTable(long tableId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable fetchTable(long companyId, long classNameId,
+		java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getDefaultTable(long companyId,
+		java.lang.String className) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getDefaultTable(long companyId, long classNameId)
+		throws PortalException;
+
+	/**
+	* Returns the expando table with the primary key.
+	*
+	* @param tableId the primary key of the expando table
+	* @return the expando table
+	* @throws PortalException if a expando table with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getExpandoTable(long tableId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getTable(long companyId, java.lang.String className,
+		java.lang.String name) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getTable(long companyId, long classNameId,
+		java.lang.String name) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoTable getTable(long tableId) throws PortalException;
+
+	/**
+	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param expandoTable the expando table
+	* @return the expando table that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public ExpandoTable updateExpandoTable(ExpandoTable expandoTable);
+
+	public ExpandoTable updateTable(long tableId, java.lang.String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -116,21 +179,25 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name) throws PortalException;
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteTable(long companyId, long classNameId,
-		java.lang.String name) throws PortalException;
+	/**
+	* Returns the number of expando tables.
+	*
+	* @return the number of expando tables
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExpandoTablesCount();
 
-	public void deleteTable(ExpandoTable table);
-
-	public void deleteTable(long tableId) throws PortalException;
-
-	public void deleteTables(long companyId, java.lang.String className);
-
-	public void deleteTables(long companyId, long classNameId);
-
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -172,6 +239,27 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the expando tables.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of expando tables
+	* @param end the upper bound of the range of expando tables (not inclusive)
+	* @return the range of expando tables
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoTable> getExpandoTables(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoTable> getTables(long companyId,
+		java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoTable> getTables(long companyId, long classNameId);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -189,105 +277,17 @@ public interface ExpandoTableLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable fetchDefaultTable(long companyId,
-		java.lang.String className);
+	public void deleteTable(ExpandoTable table);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable fetchDefaultTable(long companyId, long classNameId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable fetchExpandoTable(long tableId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable fetchTable(long companyId, long classNameId,
-		java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable getDefaultTable(long companyId,
-		java.lang.String className) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable getDefaultTable(long companyId, long classNameId)
-		throws PortalException;
-
-	/**
-	* Returns the expando table with the primary key.
-	*
-	* @param tableId the primary key of the expando table
-	* @return the expando table
-	* @throws PortalException if a expando table with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable getExpandoTable(long tableId) throws PortalException;
-
-	/**
-	* Returns a range of all the expando tables.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of expando tables
-	* @param end the upper bound of the range of expando tables (not inclusive)
-	* @return the range of expando tables
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoTable> getExpandoTables(int start, int end);
-
-	/**
-	* Returns the number of expando tables.
-	*
-	* @return the number of expando tables
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExpandoTablesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable getTable(long companyId, java.lang.String className,
+	public void deleteTable(long companyId, java.lang.String className,
 		java.lang.String name) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable getTable(long companyId, long classNameId,
+	public void deleteTable(long companyId, long classNameId,
 		java.lang.String name) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoTable getTable(long tableId) throws PortalException;
+	public void deleteTable(long tableId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoTable> getTables(long companyId,
-		java.lang.String className);
+	public void deleteTables(long companyId, java.lang.String className);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoTable> getTables(long companyId, long classNameId);
-
-	/**
-	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoTable the expando table
-	* @return the expando table that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ExpandoTable updateExpandoTable(ExpandoTable expandoTable);
-
-	public ExpandoTable updateTable(long tableId, java.lang.String name)
-		throws PortalException;
+	public void deleteTables(long companyId, long classNameId);
 }

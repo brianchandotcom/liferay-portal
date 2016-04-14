@@ -125,14 +125,6 @@ public interface DDLRecordService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Deletes the record and its resources.
-	*
-	* @param recordId the primary key of the record to be deleted
-	* @throws PortalException
-	*/
-	public void deleteRecord(long recordId) throws PortalException;
-
-	/**
 	* Disassociates the locale from the record.
 	*
 	* @param recordId the primary key of the record
@@ -149,13 +141,6 @@ public interface DDLRecordService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns the record with the ID.
 	*
 	* @param recordId the primary key of the record
@@ -164,48 +149,6 @@ public interface DDLRecordService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecord getRecord(long recordId) throws PortalException;
-
-	/**
-	* Reverts the record to a given version.
-	*
-	* @param recordId the primary key of the record
-	* @param version the version to be reverted
-	* @param serviceContext the service context to be applied. This can set
-	the record modified date.
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void revertRecord(long recordId, java.lang.String version,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
-	ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void revertRecordVersion(long recordId, java.lang.String version,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates a record, replacing its display index and values.
-	*
-	* @param recordId the primary key of the record
-	* @param displayIndex the index position in which the record is
-	displayed in the spreadsheet view
-	* @param fieldsMap the record values. The fieldsMap is a map of field
-	names and its Serializable values.
-	* @param mergeFields whether to merge the new fields with the existing
-	ones; otherwise replace the existing fields
-	* @param serviceContext the service context to be applied. This can
-	set the record modified date.
-	* @return the record
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
-	int, DDMFormValues, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public DDLRecord updateRecord(long recordId, int displayIndex,
-		Map<java.lang.String, Serializable> fieldsMap, boolean mergeFields,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates a record, replacing its display index and values.
@@ -248,5 +191,62 @@ public interface DDLRecordService extends BaseService {
 	@java.lang.Deprecated
 	public DDLRecord updateRecord(long recordId, boolean majorVersion,
 		int displayIndex, Fields fields, boolean mergeFields,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	int, DDMFormValues, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public DDLRecord updateRecord(long recordId, int displayIndex,
+		Map<java.lang.String, Serializable> fieldsMap, boolean mergeFields,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Deletes the record and its resources.
+	*
+	* @param recordId the primary key of the record to be deleted
+	* @throws PortalException
+	*/
+	public void deleteRecord(long recordId) throws PortalException;
+
+	/**
+	* Reverts the record to a given version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the version to be reverted
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void revertRecord(long recordId, java.lang.String version,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
+	ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public void revertRecordVersion(long recordId, java.lang.String version,
 		ServiceContext serviceContext) throws PortalException;
 }

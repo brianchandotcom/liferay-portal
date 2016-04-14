@@ -52,18 +52,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	}
 
 	@Override
-	public void deleteFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_journalFeedService.deleteFeed(feedId);
-	}
-
-	@Override
-	public void deleteFeed(long groupId, java.lang.String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_journalFeedService.deleteFeed(groupId, feedId);
-	}
-
-	@Override
 	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedService.getFeed(feedId);
@@ -74,16 +62,6 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 		java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedService.getFeed(groupId, feedId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _journalFeedService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -103,6 +81,28 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 			ddmRendererTemplateKey, delta, orderByCol, orderByType,
 			targetLayoutFriendlyUrl, targetPortletId, contentField, feedType,
 			feedVersion, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _journalFeedService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void deleteFeed(long feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_journalFeedService.deleteFeed(feedId);
+	}
+
+	@Override
+	public void deleteFeed(long groupId, java.lang.String feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_journalFeedService.deleteFeed(groupId, feedId);
 	}
 
 	@Override

@@ -61,6 +61,25 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoActionLocalServiceUtil} to access the kaleo action local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoActionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the kaleo action to the database. Also notifies the appropriate model listeners.
@@ -84,8 +103,6 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	*/
 	public KaleoAction createKaleoAction(long kaleoActionId);
 
-	public void deleteCompanyKaleoActions(long companyId);
-
 	/**
 	* Deletes the kaleo action from the database. Also notifies the appropriate model listeners.
 	*
@@ -106,16 +123,43 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	public KaleoAction deleteKaleoAction(long kaleoActionId)
 		throws PortalException;
 
-	public void deleteKaleoDefinitionKaleoActions(long kaleoDefinitionId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoAction fetchKaleoAction(long kaleoActionId);
 
 	/**
-	* @throws PortalException
+	* Returns the kaleo action with the primary key.
+	*
+	* @param kaleoActionId the primary key of the kaleo action
+	* @return the kaleo action
+	* @throws PortalException if a kaleo action with the primary key could not be found
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoAction getKaleoAction(long kaleoActionId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Updates the kaleo action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoAction the kaleo action
+	* @return the kaleo action that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoAction updateKaleoAction(KaleoAction kaleoAction);
+
+	/**
+	* Returns the number of kaleo actions.
+	*
+	* @return the number of kaleo actions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoActionsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -157,6 +201,28 @@ public interface KaleoActionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the kaleo actions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo actions
+	* @param end the upper bound of the range of kaleo actions (not inclusive)
+	* @return the range of kaleo actions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoAction> getKaleoActions(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
+		long kaleoClassPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
+		long kaleoClassPK, java.lang.String executionType);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -174,74 +240,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoAction fetchKaleoAction(long kaleoActionId);
+	public void deleteCompanyKaleoActions(long companyId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the kaleo action with the primary key.
-	*
-	* @param kaleoActionId the primary key of the kaleo action
-	* @return the kaleo action
-	* @throws PortalException if a kaleo action with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoAction getKaleoAction(long kaleoActionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
-		long kaleoClassPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
-		long kaleoClassPK, java.lang.String executionType);
-
-	/**
-	* Returns a range of all the kaleo actions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo actions
-	* @param end the upper bound of the range of kaleo actions (not inclusive)
-	* @return the range of kaleo actions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoAction> getKaleoActions(int start, int end);
-
-	/**
-	* Returns the number of kaleo actions.
-	*
-	* @return the number of kaleo actions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoActionsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the kaleo action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoAction the kaleo action
-	* @return the kaleo action that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoAction updateKaleoAction(KaleoAction kaleoAction);
+	public void deleteKaleoDefinitionKaleoActions(long kaleoDefinitionId);
 }

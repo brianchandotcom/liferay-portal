@@ -88,6 +88,100 @@ public interface MBMessageService extends BaseService {
 		boolean anonymous, double priority, boolean allowPingbacks,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage getMessage(long messageId) throws PortalException;
+
+	public MBMessage updateDiscussionMessage(java.lang.String className,
+		long classPK, long messageId, java.lang.String subject,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MBMessage updateMessage(long messageId, java.lang.String subject,
+		java.lang.String body,
+		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
+		List<java.lang.String> existingFiles, double priority,
+		boolean allowPingbacks, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long messageId, int status)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	int)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessageDisplay getMessageDisplay(long messageId, int status,
+		java.lang.String threadView, boolean includePrevAndNext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoryMessagesCount(long groupId, long categoryId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupMessagesCount(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadAnswersCount(long groupId, long categoryId,
+		long threadId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadMessagesCount(long groupId, long categoryId,
+		long threadId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getCategoryMessagesRSS(long groupId,
+		long categoryId, int status, int max, java.lang.String type,
+		double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		ThemeDisplay themeDisplay) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getCompanyMessagesRSS(long companyId, int status,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getGroupMessagesRSS(long groupId, int status,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getGroupMessagesRSS(long groupId, long userId,
+		int status, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getThreadMessagesRSS(long threadId, int status,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
+		int status, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long groupId, long categoryId,
+		long threadId, int status, int start, int end);
+
 	public void addMessageAttachment(long messageId, java.lang.String fileName,
 		File file, java.lang.String mimeType) throws PortalException;
 
@@ -115,88 +209,6 @@ public interface MBMessageService extends BaseService {
 	public void emptyMessageAttachments(long messageId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getCategoryMessages(long groupId, long categoryId,
-		int status, int start, int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoryMessagesCount(long groupId, long categoryId,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getCategoryMessagesRSS(long groupId,
-		long categoryId, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		ThemeDisplay themeDisplay) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getCompanyMessagesRSS(long companyId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupMessagesCount(long groupId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupMessagesRSS(long groupId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupMessagesRSS(long groupId, long userId,
-		int status, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessage getMessage(long messageId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long messageId, int status)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBMessageDisplay getMessageDisplay(long messageId, int status,
-		java.lang.String threadView, boolean includePrevAndNext)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getThreadAnswersCount(long groupId, long categoryId,
-		long threadId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBMessage> getThreadMessages(long groupId, long categoryId,
-		long threadId, int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getThreadMessagesCount(long groupId, long categoryId,
-		long threadId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getThreadMessagesRSS(long threadId, int status,
-		int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, ThemeDisplay themeDisplay)
-		throws PortalException;
-
 	public void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName) throws PortalException;
 
@@ -205,17 +217,5 @@ public interface MBMessageService extends BaseService {
 	public void unsubscribeMessage(long messageId) throws PortalException;
 
 	public void updateAnswer(long messageId, boolean answer, boolean cascade)
-		throws PortalException;
-
-	public MBMessage updateDiscussionMessage(java.lang.String className,
-		long classPK, long messageId, java.lang.String subject,
-		java.lang.String body, ServiceContext serviceContext)
-		throws PortalException;
-
-	public MBMessage updateMessage(long messageId, java.lang.String subject,
-		java.lang.String body,
-		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs,
-		List<java.lang.String> existingFiles, double priority,
-		boolean allowPingbacks, ServiceContext serviceContext)
 		throws PortalException;
 }

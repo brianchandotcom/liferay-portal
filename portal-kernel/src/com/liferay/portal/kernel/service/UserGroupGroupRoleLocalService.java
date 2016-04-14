@@ -58,6 +58,33 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupGroupRoleLocalServiceUtil} to access the user group group role local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
+		java.lang.String roleName) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
+		long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the user group group role to the database. Also notifies the appropriate model listeners.
@@ -69,12 +96,6 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public UserGroupGroupRole addUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole);
 
-	public void addUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds);
-
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId);
-
 	/**
 	* Creates a new user group group role with the primary key. Does not add the user group group role to the database.
 	*
@@ -83,13 +104,6 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	*/
 	public UserGroupGroupRole createUserGroupGroupRole(
 		UserGroupGroupRolePK userGroupGroupRolePK);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
 
 	/**
 	* Deletes the user group group role from the database. Also notifies the appropriate model listeners.
@@ -112,25 +126,45 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public UserGroupGroupRole deleteUserGroupGroupRole(
 		UserGroupGroupRolePK userGroupGroupRolePK) throws PortalException;
 
-	public void deleteUserGroupGroupRoles(long groupId, int roleType);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroupGroupRole fetchUserGroupGroupRole(
+		UserGroupGroupRolePK userGroupGroupRolePK);
 
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds);
+	/**
+	* Returns the user group group role with the primary key.
+	*
+	* @param userGroupGroupRolePK the primary key of the user group group role
+	* @return the user group group role
+	* @throws PortalException if a user group group role with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroupGroupRole getUserGroupGroupRole(
+		UserGroupGroupRolePK userGroupGroupRolePK) throws PortalException;
 
-	public void deleteUserGroupGroupRoles(long userGroupId, long[] groupIds);
+	/**
+	* Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userGroupGroupRole the user group group role
+	* @return the user group group role that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public UserGroupGroupRole updateUserGroupGroupRole(
+		UserGroupGroupRole userGroupGroupRole);
 
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
+	/**
+	* Returns the number of user group group roles.
+	*
+	* @return the number of user group group roles
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupGroupRolesCount();
 
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId);
-
-	public void deleteUserGroupGroupRolesByGroupId(long groupId);
-
-	public void deleteUserGroupGroupRolesByRoleId(long roleId);
-
-	public void deleteUserGroupGroupRolesByUserGroupId(long userGroupId);
-
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -172,57 +206,6 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroupGroupRole fetchUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the user group group role with the primary key.
-	*
-	* @param userGroupGroupRolePK the primary key of the user group group role
-	* @return the user group group role
-	* @throws PortalException if a user group group role with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroupGroupRole getUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK) throws PortalException;
-
-	/**
 	* Returns a range of all the user group group roles.
 	*
 	* <p>
@@ -251,28 +234,44 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public List<UserGroupGroupRole> getUserGroupGroupRolesByUser(long userId);
 
 	/**
-	* Returns the number of user group group roles.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of user group group roles
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserGroupGroupRolesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName) throws PortalException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userGroupGroupRole the user group group role
-	* @return the user group group role that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public UserGroupGroupRole updateUserGroupGroupRole(
-		UserGroupGroupRole userGroupGroupRole);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void addUserGroupGroupRoles(long userGroupId, long groupId,
+		long[] roleIds);
+
+	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId);
+
+	public void deleteUserGroupGroupRoles(long groupId, int roleType);
+
+	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
+		long[] roleIds);
+
+	public void deleteUserGroupGroupRoles(long userGroupId, long[] groupIds);
+
+	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
+
+	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId);
+
+	public void deleteUserGroupGroupRolesByGroupId(long groupId);
+
+	public void deleteUserGroupGroupRolesByRoleId(long roleId);
+
+	public void deleteUserGroupGroupRolesByUserGroupId(long userGroupId);
 }

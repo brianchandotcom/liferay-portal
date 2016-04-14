@@ -68,16 +68,6 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	* Deletes the company's logo.
-	*
-	* @param companyId the primary key of the company
-	*/
-	public static void deleteLogo(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLogo(companyId);
-	}
-
-	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -137,27 +127,22 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Removes the values that match the keys of the company's preferences.
-	*
-	* This method is called by {@link
-	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	* through {@link com.liferay.portal.kernel.service.CompanyService}.
+	* Updates the company
 	*
 	* @param companyId the primary key of the company
-	* @param keys the company's preferences keys to be remove
+	* @param virtualHost the company's virtual host name
+	* @param mx the company's mail domain
+	* @param maxUsers the max number of company users (optionally
+	<code>0</code>)
+	* @param active whether the company is active
+	* @return the company with the primary key
 	*/
-	public static void removePreferences(long companyId, java.lang.String[] keys)
+	public static com.liferay.portal.kernel.model.Company updateCompany(
+		long companyId, java.lang.String virtualHost, java.lang.String mx,
+		int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().removePreferences(companyId, keys);
+		return getService()
+				   .updateCompany(companyId, virtualHost, mx, maxUsers, active);
 	}
 
 	/**
@@ -361,38 +346,6 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	* Updates the company
-	*
-	* @param companyId the primary key of the company
-	* @param virtualHost the company's virtual host name
-	* @param mx the company's mail domain
-	* @param maxUsers the max number of company users (optionally
-	<code>0</code>)
-	* @param active whether the company is active
-	* @return the company with the primary key
-	*/
-	public static com.liferay.portal.kernel.model.Company updateCompany(
-		long companyId, java.lang.String virtualHost, java.lang.String mx,
-		int maxUsers, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCompany(companyId, virtualHost, mx, maxUsers, active);
-	}
-
-	/**
-	* Update the company's display.
-	*
-	* @param companyId the primary key of the company
-	* @param languageId the ID of the company's default user's language
-	* @param timeZoneId the ID of the company's default user's time zone
-	*/
-	public static void updateDisplay(long companyId,
-		java.lang.String languageId, java.lang.String timeZoneId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateDisplay(companyId, languageId, timeZoneId);
-	}
-
-	/**
 	* Updates the company's logo.
 	*
 	* @param companyId the primary key of the company
@@ -416,6 +369,53 @@ public class CompanyServiceUtil {
 		long companyId, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateLogo(companyId, inputStream);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Deletes the company's logo.
+	*
+	* @param companyId the primary key of the company
+	*/
+	public static void deleteLogo(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLogo(companyId);
+	}
+
+	/**
+	* Removes the values that match the keys of the company's preferences.
+	*
+	* This method is called by {@link
+	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
+	* through {@link com.liferay.portal.kernel.service.CompanyService}.
+	*
+	* @param companyId the primary key of the company
+	* @param keys the company's preferences keys to be remove
+	*/
+	public static void removePreferences(long companyId, java.lang.String[] keys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().removePreferences(companyId, keys);
+	}
+
+	/**
+	* Update the company's display.
+	*
+	* @param companyId the primary key of the company
+	* @param languageId the ID of the company's default user's language
+	* @param timeZoneId the ID of the company's default user's time zone
+	*/
+	public static void updateDisplay(long companyId,
+		java.lang.String languageId, java.lang.String timeZoneId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateDisplay(companyId, languageId, timeZoneId);
 	}
 
 	/**

@@ -84,40 +84,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Adds the resources to the record set.
-	*
-	* @param recordSet the record set
-	* @param addGroupPermissions whether to add group permissions
-	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public void addRecordSetResources(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	/**
-	* Adds the model resources with the permissions to the record set.
-	*
-	* @param recordSet the record set
-	* @param groupPermissions whether to add group permissions
-	* @param guestPermissions whether to add guest permissions
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public void addRecordSetResources(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
-			groupPermissions, guestPermissions);
-	}
-
-	/**
 	* Creates a new d d l record set with the primary key. Does not add the d d l record set to the database.
 	*
 	* @param recordSetId the primary key for the new d d l record set
@@ -155,6 +121,275 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.deleteDDLRecordSet(recordSetId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchDDLRecordSet(
+		long recordSetId) {
+		return _ddlRecordSetLocalService.fetchDDLRecordSet(recordSetId);
+	}
+
+	/**
+	* Returns the d d l record set matching the UUID and group.
+	*
+	* @param uuid the d d l record set's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
+	* Returns the record set matching the group and record set key.
+	*
+	* @param groupId the primary key of the record set's group
+	* @param recordSetKey the record set's mnemonic primary key
+	* @return the record set matching the group and record set key, or
+	<code>null</code> if a matching record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchRecordSet(
+		long groupId, java.lang.String recordSetKey) {
+		return _ddlRecordSetLocalService.fetchRecordSet(groupId, recordSetKey);
+	}
+
+	/**
+	* Returns the record set with the ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @return the record set with the ID, or <code>null</code> if a matching
+	record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchRecordSet(
+		long recordSetId) {
+		return _ddlRecordSetLocalService.fetchRecordSet(recordSetId);
+	}
+
+	/**
+	* Returns the d d l record set with the primary key.
+	*
+	* @param recordSetId the primary key of the d d l record set
+	* @return the d d l record set
+	* @throws PortalException if a d d l record set with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getDDLRecordSet(recordSetId);
+	}
+
+	/**
+	* Returns the d d l record set matching the UUID and group.
+	*
+	* @param uuid the d d l record set's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d l record set
+	* @throws PortalException if a matching d d l record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSetByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getDDLRecordSetByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
+	* Returns the record set matching the group and record set key.
+	*
+	* @param groupId the primary key of the record set's group
+	* @param recordSetKey the record set's mnemonic primary key
+	* @return the record set matching the group and record set key
+	* @throws PortalException if the the matching record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
+		long groupId, java.lang.String recordSetKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSet(groupId, recordSetKey);
+	}
+
+	/**
+	* Returns the record set with the ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @return the record set with the ID
+	* @throws PortalException if the the matching record set could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSet(recordSetId);
+	}
+
+	/**
+	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordSet the d d l record set
+	* @return the d d l record set that was updated
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateDDLRecordSet(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
+		return _ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
+	}
+
+	/**
+	* Updates the number of minimum rows to display for the record set. Useful
+	* when the record set is being displayed in spreadsheet.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view
+	* @param serviceContext the service context to be applied. This can set
+	the record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
+		long recordSetId, int minDisplayRows,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.updateMinDisplayRows(recordSetId,
+			minDisplayRows, serviceContext);
+	}
+
+	/**
+	* Updates the DDM strucutre, name, description, and minimum number of
+	* display rows for the record set matching the record set key and group ID.
+	*
+	* @param groupId the primary key of the record set's group
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param recordSetKey the record set's mnemonic primary key
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view
+	* @param serviceContext the service context to be applied. This can set
+	the record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		long groupId, long ddmStructureId, java.lang.String recordSetKey,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int minDisplayRows,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.updateRecordSet(groupId,
+			ddmStructureId, recordSetKey, nameMap, descriptionMap,
+			minDisplayRows, serviceContext);
+	}
+
+	/**
+	* Updates the the record set's settings.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param settingsDDMFormValues the record set's settings. For more
+	information see <code>DDMFormValues</code> in the
+	<code>dynamic.data.mapping.api</code> the module.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		long recordSetId,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
+			settingsDDMFormValues);
+	}
+
+	/**
+	* Updates the DDM structure, name, description, and minimum number of
+	* display rows for the record set matching the record set ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view
+	* @param serviceContext the service context to be applied. This can set
+	the record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		long recordSetId, long ddmStructureId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int minDisplayRows,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
+			ddmStructureId, nameMap, descriptionMap, minDisplayRows,
+			serviceContext);
+	}
+
+	/**
+	* Returns the record set's settings.
+	*
+	* @param recordSet the record set
+	* @return the record set settings
+	* @throws PortalException if a portal exception occurred
+	* @see #getRecordSetSettingsDDMFormValues(DDLRecordSet)
+	*/
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getRecordSetSettingsModel(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSetSettingsModel(recordSet);
+	}
+
+	/**
+	* Returns the record set's settings as a DDMFormValues object. For more
+	* information see <code>DDMFormValues</code> in the
+	* <code>dynamic.data.mapping.api</code> module.
+	*
+	* @param recordSet the record set
+	* @return the record set settings as a DDMFormValues object
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getRecordSetSettingsDDMFormValues(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSetSettingsDDMFormValues(recordSet);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _ddlRecordSetLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _ddlRecordSetLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _ddlRecordSetLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _ddlRecordSetLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -165,64 +400,98 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
-	* Deletes the record set and its resources.
+	* Returns the number of d d l record sets.
 	*
-	* <p>
-	* This operation updates the record set matching the group and
-	* recordSetKey.
-	* </p>
+	* @return the number of d d l record sets
+	*/
+	@Override
+	public int getDDLRecordSetsCount() {
+		return _ddlRecordSetLocalService.getDDLRecordSetsCount();
+	}
+
+	/**
+	* Returns the number of all the record sets belonging the group.
 	*
 	* @param groupId the primary key of the record set's group
-	* @param recordSetKey the record set's mnemonic primary key
-	* @throws PortalException if a portal exception occurred
+	* @return the number of record sets belonging to the group
 	*/
 	@Override
-	public void deleteRecordSet(long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSet(groupId, recordSetKey);
+	public int getRecordSetsCount(long groupId) {
+		return _ddlRecordSetLocalService.getRecordSetsCount(groupId);
 	}
 
 	/**
-	* Deletes the record set and its resources.
+	* Returns the number of record sets matching the parameters. The keywords
+	* parameter is used for matching the record set's name or description
 	*
-	* @param recordSet the record set to be deleted
-	* @throws PortalException if a portal exception occurred
+	* @param companyId the primary key of the record set's company
+	* @param groupId the primary key of the record set's group.
+	* @param keywords the keywords (space separated) to look for and match in
+	the record set name or description (optionally
+	<code>null</code>). If the keywords value is not
+	<code>null</code>, the OR operator is used in connecting query
+	criteria; otherwise it uses the AND operator.
+	* @param scope the record set's scope. A constant used to scope the record
+	set's data. For more information search the
+	<code>dynamic.data.lists.api</code> module's
+	<code>DDLRecordSetConstants</code> class for constants prefixed
+	with "SCOPE_".
+	* @return the number of matching record sets
 	*/
 	@Override
-	public void deleteRecordSet(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSet(recordSet);
+	public int searchCount(long companyId, long groupId,
+		java.lang.String keywords, int scope) {
+		return _ddlRecordSetLocalService.searchCount(companyId, groupId,
+			keywords, scope);
 	}
 
 	/**
-	* Deletes the record set and its resources.
+	* Returns the number of all record sets matching the parameters. name and
+	* description keywords. Company ID and group ID must be matched. If the and
+	* operator is set to <code>true</code>, only record sets with a matching
+	* name, description, and scope are counted. If the and operator is set to
+	* <code>false</code>, only one parameter of name, description, and scope is
+	* needed to count matching record sets.
 	*
-	* @param recordSetId the primary key of the record set to be deleted
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public void deleteRecordSet(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSet(recordSetId);
-	}
-
-	/**
-	* Deletes all the record sets matching the group.
-	*
+	* @param companyId the primary key of the record set's company
 	* @param groupId the primary key of the record set's group
-	* @throws PortalException if a portal exception occurred
+	* @param name the name keywords (space separated). This can be
+	<code>null</code>.
+	* @param description the description keywords (space separated). This can
+	be <code>null</code>.
+	* @param scope the record set's scope. A constant used to scope the record
+	set's data. For more information search the
+	<code>dynamic.data.lists.api</code> module's
+	<code>DDLRecordSetConstants</code> class for constants prefixed
+	with "SCOPE_".
+	* @param andOperator whether every field must match its value or keywords,
+	or just one field must match. Company and group must match their
+	values.
+	* @return the number of matching record sets
 	*/
 	@Override
-	public void deleteRecordSets(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddlRecordSetLocalService.deleteRecordSets(groupId);
+	public int searchCount(long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int scope, boolean andOperator) {
+		return _ddlRecordSetLocalService.searchCount(companyId, groupId, name,
+			description, scope, andOperator);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _ddlRecordSetLocalService.dynamicQuery();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordSetLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -279,115 +548,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _ddlRecordSetLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _ddlRecordSetLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchDDLRecordSet(
-		long recordSetId) {
-		return _ddlRecordSetLocalService.fetchDDLRecordSet(recordSetId);
-	}
-
-	/**
-	* Returns the d d l record set matching the UUID and group.
-	*
-	* @param uuid the d d l record set's UUID
-	* @param groupId the primary key of the group
-	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the record set matching the group and record set key.
-	*
-	* @param groupId the primary key of the record set's group
-	* @param recordSetKey the record set's mnemonic primary key
-	* @return the record set matching the group and record set key, or
-	<code>null</code> if a matching record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchRecordSet(
-		long groupId, java.lang.String recordSetKey) {
-		return _ddlRecordSetLocalService.fetchRecordSet(groupId, recordSetKey);
-	}
-
-	/**
-	* Returns the record set with the ID.
-	*
-	* @param recordSetId the primary key of the record set
-	* @return the record set with the ID, or <code>null</code> if a matching
-	record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet fetchRecordSet(
-		long recordSetId) {
-		return _ddlRecordSetLocalService.fetchRecordSet(recordSetId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _ddlRecordSetLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the d d l record set with the primary key.
-	*
-	* @param recordSetId the primary key of the d d l record set
-	* @return the d d l record set
-	* @throws PortalException if a d d l record set with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getDDLRecordSet(recordSetId);
-	}
-
-	/**
-	* Returns the d d l record set matching the UUID and group.
-	*
-	* @param uuid the d d l record set's UUID
-	* @param groupId the primary key of the group
-	* @return the matching d d l record set
-	* @throws PortalException if a matching d d l record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSetByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getDDLRecordSetByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
 	* Returns a range of all the d d l record sets.
 	*
 	* <p>
@@ -437,104 +597,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Returns the number of d d l record sets.
-	*
-	* @return the number of d d l record sets
-	*/
-	@Override
-	public int getDDLRecordSetsCount() {
-		return _ddlRecordSetLocalService.getDDLRecordSetsCount();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _ddlRecordSetLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _ddlRecordSetLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _ddlRecordSetLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the record set matching the group and record set key.
-	*
-	* @param groupId the primary key of the record set's group
-	* @param recordSetKey the record set's mnemonic primary key
-	* @return the record set matching the group and record set key
-	* @throws PortalException if the the matching record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
-		long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getRecordSet(groupId, recordSetKey);
-	}
-
-	/**
-	* Returns the record set with the ID.
-	*
-	* @param recordSetId the primary key of the record set
-	* @return the record set with the ID
-	* @throws PortalException if the the matching record set could not be found
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getRecordSet(recordSetId);
-	}
-
-	/**
-	* Returns the record set's settings as a DDMFormValues object. For more
-	* information see <code>DDMFormValues</code> in the
-	* <code>dynamic.data.mapping.api</code> module.
-	*
-	* @param recordSet the record set
-	* @return the record set settings as a DDMFormValues object
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getRecordSetSettingsDDMFormValues(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getRecordSetSettingsDDMFormValues(recordSet);
-	}
-
-	/**
-	* Returns the record set's settings.
-	*
-	* @param recordSet the record set
-	* @return the record set settings
-	* @throws PortalException if a portal exception occurred
-	* @see #getRecordSetSettingsDDMFormValues(DDLRecordSet)
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getRecordSetSettingsModel(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.getRecordSetSettingsModel(recordSet);
-	}
-
-	/**
 	* Returns all the record sets belonging the group.
 	*
 	* @return the record sets belonging to the group
@@ -543,17 +605,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
 		long groupId) {
 		return _ddlRecordSetLocalService.getRecordSets(groupId);
-	}
-
-	/**
-	* Returns the number of all the record sets belonging the group.
-	*
-	* @param groupId the primary key of the record set's group
-	* @return the number of record sets belonging to the group
-	*/
-	@Override
-	public int getRecordSetsCount(long groupId) {
-		return _ddlRecordSetLocalService.getRecordSetsCount(groupId);
 	}
 
 	/**
@@ -644,170 +695,119 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Returns the number of record sets matching the parameters. The keywords
-	* parameter is used for matching the record set's name or description
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param companyId the primary key of the record set's company
-	* @param groupId the primary key of the record set's group.
-	* @param keywords the keywords (space separated) to look for and match in
-	the record set name or description (optionally
-	<code>null</code>). If the keywords value is not
-	<code>null</code>, the OR operator is used in connecting query
-	criteria; otherwise it uses the AND operator.
-	* @param scope the record set's scope. A constant used to scope the record
-	set's data. For more information search the
-	<code>dynamic.data.lists.api</code> module's
-	<code>DDLRecordSetConstants</code> class for constants prefixed
-	with "SCOPE_".
-	* @return the number of matching record sets
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords, int scope) {
-		return _ddlRecordSetLocalService.searchCount(companyId, groupId,
-			keywords, scope);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _ddlRecordSetLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of all record sets matching the parameters. name and
-	* description keywords. Company ID and group ID must be matched. If the and
-	* operator is set to <code>true</code>, only record sets with a matching
-	* name, description, and scope are counted. If the and operator is set to
-	* <code>false</code>, only one parameter of name, description, and scope is
-	* needed to count matching record sets.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param companyId the primary key of the record set's company
-	* @param groupId the primary key of the record set's group
-	* @param name the name keywords (space separated). This can be
-	<code>null</code>.
-	* @param description the description keywords (space separated). This can
-	be <code>null</code>.
-	* @param scope the record set's scope. A constant used to scope the record
-	set's data. For more information search the
-	<code>dynamic.data.lists.api</code> module's
-	<code>DDLRecordSetConstants</code> class for constants prefixed
-	with "SCOPE_".
-	* @param andOperator whether every field must match its value or keywords,
-	or just one field must match. Company and group must match their
-	values.
-	* @return the number of matching record sets
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int searchCount(long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int scope, boolean andOperator) {
-		return _ddlRecordSetLocalService.searchCount(companyId, groupId, name,
-			description, scope, andOperator);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _ddlRecordSetLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	/**
-	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Adds the resources to the record set.
 	*
-	* @param ddlRecordSet the d d l record set
-	* @return the d d l record set that was updated
-	*/
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateDDLRecordSet(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
-		return _ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
-	}
-
-	/**
-	* Updates the number of minimum rows to display for the record set. Useful
-	* when the record set is being displayed in spreadsheet.
-	*
-	* @param recordSetId the primary key of the record set
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view
-	* @param serviceContext the service context to be applied. This can set
-	the record set modified date.
-	* @return the record set
+	* @param recordSet the record set
+	* @param addGroupPermissions whether to add group permissions
+	* @param addGuestPermissions whether to add guest permissions
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
-		long recordSetId, int minDisplayRows,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void addRecordSetResources(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.updateMinDisplayRows(recordSetId,
-			minDisplayRows, serviceContext);
+		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
+			addGroupPermissions, addGuestPermissions);
 	}
 
 	/**
-	* Updates the DDM strucutre, name, description, and minimum number of
-	* display rows for the record set matching the record set key and group ID.
+	* Adds the model resources with the permissions to the record set.
+	*
+	* @param recordSet the record set
+	* @param groupPermissions whether to add group permissions
+	* @param guestPermissions whether to add guest permissions
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void addRecordSetResources(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
+			groupPermissions, guestPermissions);
+	}
+
+	/**
+	* Deletes the record set and its resources.
+	*
+	* @param recordSet the record set to be deleted
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void deleteRecordSet(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.deleteRecordSet(recordSet);
+	}
+
+	/**
+	* Deletes the record set and its resources.
+	*
+	* <p>
+	* This operation updates the record set matching the group and
+	* recordSetKey.
+	* </p>
 	*
 	* @param groupId the primary key of the record set's group
-	* @param ddmStructureId the primary key of the record set's DDM structure
 	* @param recordSetKey the record set's mnemonic primary key
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view
-	* @param serviceContext the service context to be applied. This can set
-	the record set modified date.
-	* @return the record set
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long groupId, long ddmStructureId, java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteRecordSet(long groupId, java.lang.String recordSetKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.updateRecordSet(groupId,
-			ddmStructureId, recordSetKey, nameMap, descriptionMap,
-			minDisplayRows, serviceContext);
+		_ddlRecordSetLocalService.deleteRecordSet(groupId, recordSetKey);
 	}
 
 	/**
-	* Updates the DDM structure, name, description, and minimum number of
-	* display rows for the record set matching the record set ID.
+	* Deletes the record set and its resources.
 	*
-	* @param recordSetId the primary key of the record set
-	* @param ddmStructureId the primary key of the record set's DDM structure
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view
-	* @param serviceContext the service context to be applied. This can set
-	the record set modified date.
-	* @return the record set
+	* @param recordSetId the primary key of the record set to be deleted
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteRecordSet(long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
-			ddmStructureId, nameMap, descriptionMap, minDisplayRows,
-			serviceContext);
+		_ddlRecordSetLocalService.deleteRecordSet(recordSetId);
 	}
 
 	/**
-	* Updates the the record set's settings.
+	* Deletes all the record sets matching the group.
 	*
-	* @param recordSetId the primary key of the record set
-	* @param settingsDDMFormValues the record set's settings. For more
-	information see <code>DDMFormValues</code> in the
-	<code>dynamic.data.mapping.api</code> the module.
-	* @return the record set
+	* @param groupId the primary key of the record set's group
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId,
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues)
+	public void deleteRecordSets(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
-			settingsDDMFormValues);
+		_ddlRecordSetLocalService.deleteRecordSets(groupId);
 	}
 
 	@Override

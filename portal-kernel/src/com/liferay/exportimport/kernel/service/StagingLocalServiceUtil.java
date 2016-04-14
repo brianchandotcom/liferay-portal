@@ -40,6 +40,57 @@ public class StagingLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
+		long userId, long stagingRequestId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .publishStagingRequest(userId, stagingRequestId,
+			privateLayout, parameterMap);
+	}
+
+	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
+		long userId, long stagingRequestId,
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .publishStagingRequest(userId, stagingRequestId,
+			exportImportConfiguration);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
+	long, boolean, Map)}
+	*/
+	@Deprecated
+	public static com.liferay.exportimport.kernel.lar.MissingReferences validateStagingRequest(
+		long userId, long stagingRequestId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap) {
+		return getService()
+				   .validateStagingRequest(userId, stagingRequestId,
+			privateLayout, parameterMap);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static long createStagingRequest(long userId, long groupId,
+		java.lang.String checksum)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().createStagingRequest(userId, groupId, checksum);
+	}
+
 	public static void checkDefaultLayoutSetBranches(long userId,
 		com.liferay.portal.kernel.model.Group liveGroup,
 		boolean branchingPublic, boolean branchingPrivate, boolean remote,
@@ -53,12 +104,6 @@ public class StagingLocalServiceUtil {
 	public static void cleanUpStagingRequest(long stagingRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().cleanUpStagingRequest(stagingRequestId);
-	}
-
-	public static long createStagingRequest(long userId, long groupId,
-		java.lang.String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().createStagingRequest(userId, groupId, checksum);
 	}
 
 	public static void disableStaging(
@@ -100,55 +145,11 @@ public class StagingLocalServiceUtil {
 			secureConnection, remoteGroupId, serviceContext);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long userId, long stagingRequestId,
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .publishStagingRequest(userId, stagingRequestId,
-			exportImportConfiguration);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .publishStagingRequest(userId, stagingRequestId,
-			privateLayout, parameterMap);
-	}
-
 	public static void updateStagingRequest(long userId, long stagingRequestId,
 		java.lang.String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateStagingRequest(userId, stagingRequestId, fileName, bytes);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	long, boolean, Map)}
-	*/
-	@Deprecated
-	public static com.liferay.exportimport.kernel.lar.MissingReferences validateStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap) {
-		return getService()
-				   .validateStagingRequest(userId, stagingRequestId,
-			privateLayout, parameterMap);
 	}
 
 	public static StagingLocalService getService() {

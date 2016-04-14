@@ -55,58 +55,9 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 	}
 
 	@Override
-	public void deleteItem(long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemService.deleteItem(itemId);
-	}
-
-	@Override
-	public int getCategoriesItemsCount(long groupId,
-		java.util.List<java.lang.Long> categoryIds) {
-		return _shoppingItemService.getCategoriesItemsCount(groupId, categoryIds);
-	}
-
-	@Override
 	public com.liferay.shopping.model.ShoppingItem getItem(long itemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemService.getItem(itemId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId) {
-		return _shoppingItemService.getItems(groupId, categoryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
-		return _shoppingItemService.getItems(groupId, categoryId, start, end,
-			obc);
-	}
-
-	@Override
-	public int getItemsCount(long groupId, long categoryId) {
-		return _shoppingItemService.getItemsCount(groupId, categoryId);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItem[] getItemsPrevAndNext(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemService.getItemsPrevAndNext(itemId, obc);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingItemService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -130,6 +81,55 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 			smallImageURL, smallFile, mediumImage, mediumImageURL, mediumFile,
 			largeImage, largeImageURL, largeFile, itemFields, itemPrices,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItem[] getItemsPrevAndNext(
+		long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemService.getItemsPrevAndNext(itemId, obc);
+	}
+
+	@Override
+	public int getCategoriesItemsCount(long groupId,
+		java.util.List<java.lang.Long> categoryIds) {
+		return _shoppingItemService.getCategoriesItemsCount(groupId, categoryIds);
+	}
+
+	@Override
+	public int getItemsCount(long groupId, long categoryId) {
+		return _shoppingItemService.getItemsCount(groupId, categoryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
+		long groupId, long categoryId) {
+		return _shoppingItemService.getItems(groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
+		long groupId, long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return _shoppingItemService.getItems(groupId, categoryId, start, end,
+			obc);
+	}
+
+	@Override
+	public void deleteItem(long itemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingItemService.deleteItem(itemId);
 	}
 
 	@Override

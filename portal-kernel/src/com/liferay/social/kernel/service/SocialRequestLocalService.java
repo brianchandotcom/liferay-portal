@@ -63,6 +63,63 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	 */
 
 	/**
+	* Returns <code>true</code> if a matching social requests exists in the
+	* database.
+	*
+	* @param userId the primary key of the requesting user
+	* @param className the class name of the asset that is the subject of the
+	request
+	* @param classPK the primary key of the asset that is the subject of the
+	request
+	* @param type the request's type
+	* @param status the social request's status
+	* @return <code>true</code> if the request exists; <code>false</code>
+	otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRequest(long userId, java.lang.String className,
+		long classPK, int type, int status);
+
+	/**
+	* Returns <code>true</code> if a matching social request exists in the
+	* database.
+	*
+	* @param userId the primary key of the requesting user
+	* @param className the class name of the asset that is the subject of the
+	request
+	* @param classPK the primary key of the asset that is the subject of the
+	request
+	* @param type the request's type
+	* @param receiverUserId the primary key of the receiving user
+	* @param status the social request's status
+	* @return <code>true</code> if the social request exists;
+	<code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRequest(long userId, java.lang.String className,
+		long classPK, int type, long receiverUserId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	* Adds a social request to the database.
 	*
 	* <p>
@@ -105,35 +162,13 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	public SocialRequest createSocialRequest(long requestId);
 
 	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	/**
-	* Removes all the social requests for the receiving user.
+	* Deletes the social request from the database. Also notifies the appropriate model listeners.
 	*
-	* @param receiverUserId the primary key of the receiving user
+	* @param socialRequest the social request
+	* @return the social request that was removed
 	*/
-	public void deleteReceiverUserRequests(long receiverUserId);
-
-	/**
-	* Removes the social request from the database.
-	*
-	* @param request the social request to be removed
-	*/
-	public void deleteRequest(SocialRequest request);
-
-	/**
-	* Removes the social request identified by its primary key from the
-	* database.
-	*
-	* @param requestId the primary key of the social request
-	*/
-	public void deleteRequest(long requestId) throws PortalException;
-
-	public void deleteRequests(long className, long classPK);
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRequest deleteSocialRequest(SocialRequest socialRequest);
 
 	/**
 	* Deletes the social request with the primary key from the database. Also notifies the appropriate model listeners.
@@ -146,23 +181,127 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	public SocialRequest deleteSocialRequest(long requestId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRequest fetchSocialRequest(long requestId);
+
 	/**
-	* Deletes the social request from the database. Also notifies the appropriate model listeners.
+	* Returns the social request matching the UUID and group.
+	*
+	* @param uuid the social request's UUID
+	* @param groupId the primary key of the group
+	* @return the matching social request, or <code>null</code> if a matching social request could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRequest fetchSocialRequestByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the social request with the primary key.
+	*
+	* @param requestId the primary key of the social request
+	* @return the social request
+	* @throws PortalException if a social request with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRequest getSocialRequest(long requestId)
+		throws PortalException;
+
+	/**
+	* Returns the social request matching the UUID and group.
+	*
+	* @param uuid the social request's UUID
+	* @param groupId the primary key of the group
+	* @return the matching social request
+	* @throws PortalException if a matching social request could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRequest getSocialRequestByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	/**
+	* Updates the social request replacing its status.
+	*
+	* <p>
+	* If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
+	* then {@link
+	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
+	* SocialRequest, ThemeDisplay)} is called. If the status is updated to
+	* {@link SocialRequestConstants#STATUS_IGNORE} then {@link
+	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
+	* SocialRequest, ThemeDisplay)} is called.
+	* </p>
+	*
+	* @param requestId the primary key of the social request
+	* @param status the new status
+	* @param themeDisplay the theme display
+	* @return the updated social request
+	*/
+	public SocialRequest updateRequest(long requestId, int status,
+		ThemeDisplay themeDisplay) throws PortalException;
+
+	/**
+	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param socialRequest the social request
-	* @return the social request that was removed
+	* @return the social request that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialRequest deleteSocialRequest(SocialRequest socialRequest);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialRequest updateSocialRequest(SocialRequest socialRequest);
 
 	/**
-	* Removes all the social requests for the requesting user.
+	* Returns the number of social requests for the receiving user.
+	*
+	* @param receiverUserId the primary key of the receiving user
+	* @return the number of matching social requests
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getReceiverUserRequestsCount(long receiverUserId);
+
+	/**
+	* Returns the number of social requests with the given status for the
+	* receiving user.
+	*
+	* @param receiverUserId the primary key of the receiving user
+	* @param status the social request's status
+	* @return the number of matching social requests
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getReceiverUserRequestsCount(long receiverUserId, int status);
+
+	/**
+	* Returns the number of social requests.
+	*
+	* @return the number of social requests
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSocialRequestsCount();
+
+	/**
+	* Returns the number of social requests for the requesting user.
 	*
 	* @param userId the primary key of the requesting user
+	* @return the number of matching social requests
 	*/
-	public void deleteUserRequests(long userId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserRequestsCount(long userId);
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the number of social requests with the given status for the
+	* requesting user.
+	*
+	* @param userId the primary key of the requesting user
+	* @param status the social request's status
+	* @return the number of matching social request
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserRequestsCount(long userId, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -202,56 +341,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRequest fetchSocialRequest(long requestId);
-
-	/**
-	* Returns the social request matching the UUID and group.
-	*
-	* @param uuid the social request's UUID
-	* @param groupId the primary key of the group
-	* @return the matching social request, or <code>null</code> if a matching social request could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRequest fetchSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Returns a range of all the social requests for the receiving user.
@@ -300,49 +389,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 		int status, int start, int end);
 
 	/**
-	* Returns the number of social requests for the receiving user.
-	*
-	* @param receiverUserId the primary key of the receiving user
-	* @return the number of matching social requests
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getReceiverUserRequestsCount(long receiverUserId);
-
-	/**
-	* Returns the number of social requests with the given status for the
-	* receiving user.
-	*
-	* @param receiverUserId the primary key of the receiving user
-	* @param status the social request's status
-	* @return the number of matching social requests
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getReceiverUserRequestsCount(long receiverUserId, int status);
-
-	/**
-	* Returns the social request with the primary key.
-	*
-	* @param requestId the primary key of the social request
-	* @return the social request
-	* @throws PortalException if a social request with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRequest getSocialRequest(long requestId)
-		throws PortalException;
-
-	/**
-	* Returns the social request matching the UUID and group.
-	*
-	* @param uuid the social request's UUID
-	* @param groupId the primary key of the group
-	* @return the matching social request
-	* @throws PortalException if a matching social request could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRequest getSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
 	* Returns a range of all the social requests.
 	*
 	* <p>
@@ -381,14 +427,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<SocialRequest> orderByComparator);
-
-	/**
-	* Returns the number of social requests.
-	*
-	* @return the number of social requests
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSocialRequestsCount();
 
 	/**
 	* Returns a range of all the social requests for the requesting user.
@@ -436,89 +474,51 @@ public interface SocialRequestLocalService extends BaseLocalService,
 		int start, int end);
 
 	/**
-	* Returns the number of social requests for the requesting user.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userId the primary key of the requesting user
-	* @return the number of matching social requests
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserRequestsCount(long userId);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of social requests with the given status for the
-	* requesting user.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userId the primary key of the requesting user
-	* @param status the social request's status
-	* @return the number of matching social request
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserRequestsCount(long userId, int status);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	/**
-	* Returns <code>true</code> if a matching social request exists in the
-	* database.
+	* Removes all the social requests for the receiving user.
 	*
-	* @param userId the primary key of the requesting user
-	* @param className the class name of the asset that is the subject of the
-	request
-	* @param classPK the primary key of the asset that is the subject of the
-	request
-	* @param type the request's type
 	* @param receiverUserId the primary key of the receiving user
-	* @param status the social request's status
-	* @return <code>true</code> if the social request exists;
-	<code>false</code> otherwise
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, long receiverUserId, int status);
+	public void deleteReceiverUserRequests(long receiverUserId);
 
 	/**
-	* Returns <code>true</code> if a matching social requests exists in the
+	* Removes the social request from the database.
+	*
+	* @param request the social request to be removed
+	*/
+	public void deleteRequest(SocialRequest request);
+
+	/**
+	* Removes the social request identified by its primary key from the
 	* database.
-	*
-	* @param userId the primary key of the requesting user
-	* @param className the class name of the asset that is the subject of the
-	request
-	* @param classPK the primary key of the asset that is the subject of the
-	request
-	* @param type the request's type
-	* @param status the social request's status
-	* @return <code>true</code> if the request exists; <code>false</code>
-	otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, int status);
-
-	/**
-	* Updates the social request replacing its status.
-	*
-	* <p>
-	* If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
-	* then {@link
-	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
-	* SocialRequest, ThemeDisplay)} is called. If the status is updated to
-	* {@link SocialRequestConstants#STATUS_IGNORE} then {@link
-	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
-	* SocialRequest, ThemeDisplay)} is called.
-	* </p>
 	*
 	* @param requestId the primary key of the social request
-	* @param status the new status
-	* @param themeDisplay the theme display
-	* @return the updated social request
 	*/
-	public SocialRequest updateRequest(long requestId, int status,
-		ThemeDisplay themeDisplay) throws PortalException;
+	public void deleteRequest(long requestId) throws PortalException;
+
+	public void deleteRequests(long className, long classPK);
 
 	/**
-	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Removes all the social requests for the requesting user.
 	*
-	* @param socialRequest the social request
-	* @return the social request that was updated
+	* @param userId the primary key of the requesting user
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SocialRequest updateSocialRequest(SocialRequest socialRequest);
+	public void deleteUserRequests(long userId);
 }

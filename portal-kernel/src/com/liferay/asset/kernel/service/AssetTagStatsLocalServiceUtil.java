@@ -99,6 +99,74 @@ public class AssetTagStatsLocalServiceUtil {
 		return getService().deleteAssetTagStats(tagStatsId);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetTagStats fetchAssetTagStats(
+		long tagStatsId) {
+		return getService().fetchAssetTagStats(tagStatsId);
+	}
+
+	/**
+	* Returns the asset tag stats with the primary key.
+	*
+	* @param tagStatsId the primary key of the asset tag stats
+	* @return the asset tag stats
+	* @throws PortalException if a asset tag stats with the primary key could not be found
+	*/
+	public static com.liferay.asset.kernel.model.AssetTagStats getAssetTagStats(
+		long tagStatsId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetTagStats(tagStatsId);
+	}
+
+	/**
+	* Returns the asset tag statistics instance with the tag and asset entry
+	* matching the class name ID
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return Returns the asset tag statistics instance with the tag and asset
+	entry  matching the class name ID
+	*/
+	public static com.liferay.asset.kernel.model.AssetTagStats getTagStats(
+		long tagId, long classNameId) {
+		return getService().getTagStats(tagId, classNameId);
+	}
+
+	/**
+	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetTagStats the asset tag stats
+	* @return the asset tag stats that was updated
+	*/
+	public static com.liferay.asset.kernel.model.AssetTagStats updateAssetTagStats(
+		com.liferay.asset.kernel.model.AssetTagStats assetTagStats) {
+		return getService().updateAssetTagStats(assetTagStats);
+	}
+
+	/**
+	* Updates the asset tag statistics instance.
+	*
+	* @param tagId the primary key of the tag
+	* @param classNameId the asset entry's class name ID
+	* @return the updated asset tag statistics instance
+	*/
+	public static com.liferay.asset.kernel.model.AssetTagStats updateTagStats(
+		long tagId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateTagStats(tagId, classNameId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -108,47 +176,28 @@ public class AssetTagStatsLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Deletes the asset tag statistics instance.
-	*
-	* @param tagStats the asset tag statistics instance
-	*/
-	public static void deleteTagStats(
-		com.liferay.asset.kernel.model.AssetTagStats tagStats) {
-		getService().deleteTagStats(tagStats);
-	}
-
-	/**
-	* Deletes the asset tag statistics instance matching the tag statistics ID.
-	*
-	* @param tagStatsId the primary key of the asset tag statistics instance
-	*/
-	public static void deleteTagStats(long tagStatsId)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTagStats(tagStatsId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	* Deletes all asset tag statistics instances associated with the asset
-	* entry matching the class name ID.
+	* Returns the number of asset tag statses.
 	*
-	* @param classNameId the asset entry's class name ID
+	* @return the number of asset tag statses
 	*/
-	public static void deleteTagStatsByClassNameId(long classNameId) {
-		getService().deleteTagStatsByClassNameId(classNameId);
+	public static int getAssetTagStatsesCount() {
+		return getService().getAssetTagStatsesCount();
 	}
 
 	/**
-	* Deletes all asset tag statistics instances associated with the tag.
+	* Returns the OSGi service identifier.
 	*
-	* @param tagId the primary key of the tag
+	* @return the OSGi service identifier
 	*/
-	public static void deleteTagStatsByTagId(long tagId) {
-		getService().deleteTagStatsByTagId(tagId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -202,52 +251,6 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetTagStats fetchAssetTagStats(
-		long tagStatsId) {
-		return getService().fetchAssetTagStats(tagStatsId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the asset tag stats with the primary key.
-	*
-	* @param tagStatsId the primary key of the asset tag stats
-	* @return the asset tag stats
-	* @throws PortalException if a asset tag stats with the primary key could not be found
-	*/
-	public static com.liferay.asset.kernel.model.AssetTagStats getAssetTagStats(
-		long tagStatsId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAssetTagStats(tagStatsId);
-	}
-
-	/**
 	* Returns a range of all the asset tag statses.
 	*
 	* <p>
@@ -261,34 +264,6 @@ public class AssetTagStatsLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTagStats> getAssetTagStatses(
 		int start, int end) {
 		return getService().getAssetTagStatses(start, end);
-	}
-
-	/**
-	* Returns the number of asset tag statses.
-	*
-	* @return the number of asset tag statses
-	*/
-	public static int getAssetTagStatsesCount() {
-		return getService().getAssetTagStatsesCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -317,41 +292,66 @@ public class AssetTagStatsLocalServiceUtil {
 	}
 
 	/**
-	* Returns the asset tag statistics instance with the tag and asset entry
-	* matching the class name ID
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param tagId the primary key of the tag
-	* @param classNameId the asset entry's class name ID
-	* @return Returns the asset tag statistics instance with the tag and asset
-	entry  matching the class name ID
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static com.liferay.asset.kernel.model.AssetTagStats getTagStats(
-		long tagId, long classNameId) {
-		return getService().getTagStats(tagId, classNameId);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param assetTagStats the asset tag stats
-	* @return the asset tag stats that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static com.liferay.asset.kernel.model.AssetTagStats updateAssetTagStats(
-		com.liferay.asset.kernel.model.AssetTagStats assetTagStats) {
-		return getService().updateAssetTagStats(assetTagStats);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	/**
-	* Updates the asset tag statistics instance.
+	* Deletes the asset tag statistics instance.
 	*
-	* @param tagId the primary key of the tag
-	* @param classNameId the asset entry's class name ID
-	* @return the updated asset tag statistics instance
+	* @param tagStats the asset tag statistics instance
 	*/
-	public static com.liferay.asset.kernel.model.AssetTagStats updateTagStats(
-		long tagId, long classNameId)
+	public static void deleteTagStats(
+		com.liferay.asset.kernel.model.AssetTagStats tagStats) {
+		getService().deleteTagStats(tagStats);
+	}
+
+	/**
+	* Deletes the asset tag statistics instance matching the tag statistics ID.
+	*
+	* @param tagStatsId the primary key of the asset tag statistics instance
+	*/
+	public static void deleteTagStats(long tagStatsId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateTagStats(tagId, classNameId);
+		getService().deleteTagStats(tagStatsId);
+	}
+
+	/**
+	* Deletes all asset tag statistics instances associated with the asset
+	* entry matching the class name ID.
+	*
+	* @param classNameId the asset entry's class name ID
+	*/
+	public static void deleteTagStatsByClassNameId(long classNameId) {
+		getService().deleteTagStatsByClassNameId(classNameId);
+	}
+
+	/**
+	* Deletes all asset tag statistics instances associated with the tag.
+	*
+	* @param tagId the primary key of the tag
+	*/
+	public static void deleteTagStatsByTagId(long tagId) {
+		getService().deleteTagStatsByTagId(tagId);
 	}
 
 	public static AssetTagStatsLocalService getService() {

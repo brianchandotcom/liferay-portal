@@ -35,6 +35,81 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
+	* Returns <code>true</code> if a matching social requests exists in the
+	* database.
+	*
+	* @param userId the primary key of the requesting user
+	* @param className the class name of the asset that is the subject of the
+	request
+	* @param classPK the primary key of the asset that is the subject of the
+	request
+	* @param type the request's type
+	* @param status the social request's status
+	* @return <code>true</code> if the request exists; <code>false</code>
+	otherwise
+	*/
+	@Override
+	public boolean hasRequest(long userId, java.lang.String className,
+		long classPK, int type, int status) {
+		return _socialRequestLocalService.hasRequest(userId, className,
+			classPK, type, status);
+	}
+
+	/**
+	* Returns <code>true</code> if a matching social request exists in the
+	* database.
+	*
+	* @param userId the primary key of the requesting user
+	* @param className the class name of the asset that is the subject of the
+	request
+	* @param classPK the primary key of the asset that is the subject of the
+	request
+	* @param type the request's type
+	* @param receiverUserId the primary key of the receiving user
+	* @param status the social request's status
+	* @return <code>true</code> if the social request exists;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasRequest(long userId, java.lang.String className,
+		long classPK, int type, long receiverUserId, int status) {
+		return _socialRequestLocalService.hasRequest(userId, className,
+			classPK, type, receiverUserId, status);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _socialRequestLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _socialRequestLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _socialRequestLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialRequestLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialRequestLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	* Adds a social request to the database.
 	*
 	* <p>
@@ -88,51 +163,15 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Removes all the social requests for the receiving user.
+	* Deletes the social request from the database. Also notifies the appropriate model listeners.
 	*
-	* @param receiverUserId the primary key of the receiving user
+	* @param socialRequest the social request
+	* @return the social request that was removed
 	*/
 	@Override
-	public void deleteReceiverUserRequests(long receiverUserId) {
-		_socialRequestLocalService.deleteReceiverUserRequests(receiverUserId);
-	}
-
-	/**
-	* Removes the social request from the database.
-	*
-	* @param request the social request to be removed
-	*/
-	@Override
-	public void deleteRequest(
-		com.liferay.social.kernel.model.SocialRequest request) {
-		_socialRequestLocalService.deleteRequest(request);
-	}
-
-	/**
-	* Removes the social request identified by its primary key from the
-	* database.
-	*
-	* @param requestId the primary key of the social request
-	*/
-	@Override
-	public void deleteRequest(long requestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialRequestLocalService.deleteRequest(requestId);
-	}
-
-	@Override
-	public void deleteRequests(long className, long classPK) {
-		_socialRequestLocalService.deleteRequests(className, classPK);
+	public com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
+		com.liferay.social.kernel.model.SocialRequest socialRequest) {
+		return _socialRequestLocalService.deleteSocialRequest(socialRequest);
 	}
 
 	/**
@@ -149,31 +188,162 @@ public class SocialRequestLocalServiceWrapper
 		return _socialRequestLocalService.deleteSocialRequest(requestId);
 	}
 
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest fetchSocialRequest(
+		long requestId) {
+		return _socialRequestLocalService.fetchSocialRequest(requestId);
+	}
+
 	/**
-	* Deletes the social request from the database. Also notifies the appropriate model listeners.
+	* Returns the social request matching the UUID and group.
+	*
+	* @param uuid the social request's UUID
+	* @param groupId the primary key of the group
+	* @return the matching social request, or <code>null</code> if a matching social request could not be found
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest fetchSocialRequestByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _socialRequestLocalService.fetchSocialRequestByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
+	* Returns the social request with the primary key.
+	*
+	* @param requestId the primary key of the social request
+	* @return the social request
+	* @throws PortalException if a social request with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest getSocialRequest(
+		long requestId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialRequestLocalService.getSocialRequest(requestId);
+	}
+
+	/**
+	* Returns the social request matching the UUID and group.
+	*
+	* @param uuid the social request's UUID
+	* @param groupId the primary key of the group
+	* @return the matching social request
+	* @throws PortalException if a matching social request could not be found
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest getSocialRequestByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialRequestLocalService.getSocialRequestByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
+	* Updates the social request replacing its status.
+	*
+	* <p>
+	* If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
+	* then {@link
+	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
+	* SocialRequest, ThemeDisplay)} is called. If the status is updated to
+	* {@link SocialRequestConstants#STATUS_IGNORE} then {@link
+	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
+	* SocialRequest, ThemeDisplay)} is called.
+	* </p>
+	*
+	* @param requestId the primary key of the social request
+	* @param status the new status
+	* @param themeDisplay the theme display
+	* @return the updated social request
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest updateRequest(
+		long requestId, int status,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialRequestLocalService.updateRequest(requestId, status,
+			themeDisplay);
+	}
+
+	/**
+	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param socialRequest the social request
-	* @return the social request that was removed
+	* @return the social request that was updated
 	*/
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
+	public com.liferay.social.kernel.model.SocialRequest updateSocialRequest(
 		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-		return _socialRequestLocalService.deleteSocialRequest(socialRequest);
+		return _socialRequestLocalService.updateSocialRequest(socialRequest);
 	}
 
 	/**
-	* Removes all the social requests for the requesting user.
+	* Returns the number of social requests for the receiving user.
 	*
-	* @param userId the primary key of the requesting user
+	* @param receiverUserId the primary key of the receiving user
+	* @return the number of matching social requests
 	*/
 	@Override
-	public void deleteUserRequests(long userId) {
-		_socialRequestLocalService.deleteUserRequests(userId);
+	public int getReceiverUserRequestsCount(long receiverUserId) {
+		return _socialRequestLocalService.getReceiverUserRequestsCount(receiverUserId);
 	}
 
+	/**
+	* Returns the number of social requests with the given status for the
+	* receiving user.
+	*
+	* @param receiverUserId the primary key of the receiving user
+	* @param status the social request's status
+	* @return the number of matching social requests
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _socialRequestLocalService.dynamicQuery();
+	public int getReceiverUserRequestsCount(long receiverUserId, int status) {
+		return _socialRequestLocalService.getReceiverUserRequestsCount(receiverUserId,
+			status);
+	}
+
+	/**
+	* Returns the number of social requests.
+	*
+	* @return the number of social requests
+	*/
+	@Override
+	public int getSocialRequestsCount() {
+		return _socialRequestLocalService.getSocialRequestsCount();
+	}
+
+	/**
+	* Returns the number of social requests for the requesting user.
+	*
+	* @param userId the primary key of the requesting user
+	* @return the number of matching social requests
+	*/
+	@Override
+	public int getUserRequestsCount(long userId) {
+		return _socialRequestLocalService.getUserRequestsCount(userId);
+	}
+
+	/**
+	* Returns the number of social requests with the given status for the
+	* requesting user.
+	*
+	* @param userId the primary key of the requesting user
+	* @param status the social request's status
+	* @return the number of matching social request
+	*/
+	@Override
+	public int getUserRequestsCount(long userId, int status) {
+		return _socialRequestLocalService.getUserRequestsCount(userId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialRequestLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -230,80 +400,6 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _socialRequestLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _socialRequestLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.social.kernel.model.SocialRequest fetchSocialRequest(
-		long requestId) {
-		return _socialRequestLocalService.fetchSocialRequest(requestId);
-	}
-
-	/**
-	* Returns the social request matching the UUID and group.
-	*
-	* @param uuid the social request's UUID
-	* @param groupId the primary key of the group
-	* @return the matching social request, or <code>null</code> if a matching social request could not be found
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRequest fetchSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _socialRequestLocalService.fetchSocialRequestByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _socialRequestLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _socialRequestLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialRequestLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
 	* Returns a range of all the social requests for the receiving user.
 	*
 	* <p>
@@ -356,61 +452,6 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of social requests for the receiving user.
-	*
-	* @param receiverUserId the primary key of the receiving user
-	* @return the number of matching social requests
-	*/
-	@Override
-	public int getReceiverUserRequestsCount(long receiverUserId) {
-		return _socialRequestLocalService.getReceiverUserRequestsCount(receiverUserId);
-	}
-
-	/**
-	* Returns the number of social requests with the given status for the
-	* receiving user.
-	*
-	* @param receiverUserId the primary key of the receiving user
-	* @param status the social request's status
-	* @return the number of matching social requests
-	*/
-	@Override
-	public int getReceiverUserRequestsCount(long receiverUserId, int status) {
-		return _socialRequestLocalService.getReceiverUserRequestsCount(receiverUserId,
-			status);
-	}
-
-	/**
-	* Returns the social request with the primary key.
-	*
-	* @param requestId the primary key of the social request
-	* @return the social request
-	* @throws PortalException if a social request with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRequest getSocialRequest(
-		long requestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestLocalService.getSocialRequest(requestId);
-	}
-
-	/**
-	* Returns the social request matching the UUID and group.
-	*
-	* @param uuid the social request's UUID
-	* @param groupId the primary key of the group
-	* @return the matching social request
-	* @throws PortalException if a matching social request could not be found
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialRequest getSocialRequestByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestLocalService.getSocialRequestByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
 	* Returns a range of all the social requests.
 	*
 	* <p>
@@ -457,16 +498,6 @@ public class SocialRequestLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.kernel.model.SocialRequest> orderByComparator) {
 		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of social requests.
-	*
-	* @return the number of social requests
-	*/
-	@Override
-	public int getSocialRequestsCount() {
-		return _socialRequestLocalService.getSocialRequestsCount();
 	}
 
 	/**
@@ -521,109 +552,78 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of social requests for the requesting user.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userId the primary key of the requesting user
-	* @return the number of matching social requests
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getUserRequestsCount(long userId) {
-		return _socialRequestLocalService.getUserRequestsCount(userId);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _socialRequestLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of social requests with the given status for the
-	* requesting user.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userId the primary key of the requesting user
-	* @param status the social request's status
-	* @return the number of matching social request
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getUserRequestsCount(long userId, int status) {
-		return _socialRequestLocalService.getUserRequestsCount(userId, status);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _socialRequestLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	/**
-	* Returns <code>true</code> if a matching social request exists in the
-	* database.
+	* Removes all the social requests for the receiving user.
 	*
-	* @param userId the primary key of the requesting user
-	* @param className the class name of the asset that is the subject of the
-	request
-	* @param classPK the primary key of the asset that is the subject of the
-	request
-	* @param type the request's type
 	* @param receiverUserId the primary key of the receiving user
-	* @param status the social request's status
-	* @return <code>true</code> if the social request exists;
-	<code>false</code> otherwise
 	*/
 	@Override
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, long receiverUserId, int status) {
-		return _socialRequestLocalService.hasRequest(userId, className,
-			classPK, type, receiverUserId, status);
+	public void deleteReceiverUserRequests(long receiverUserId) {
+		_socialRequestLocalService.deleteReceiverUserRequests(receiverUserId);
 	}
 
 	/**
-	* Returns <code>true</code> if a matching social requests exists in the
+	* Removes the social request from the database.
+	*
+	* @param request the social request to be removed
+	*/
+	@Override
+	public void deleteRequest(
+		com.liferay.social.kernel.model.SocialRequest request) {
+		_socialRequestLocalService.deleteRequest(request);
+	}
+
+	/**
+	* Removes the social request identified by its primary key from the
 	* database.
-	*
-	* @param userId the primary key of the requesting user
-	* @param className the class name of the asset that is the subject of the
-	request
-	* @param classPK the primary key of the asset that is the subject of the
-	request
-	* @param type the request's type
-	* @param status the social request's status
-	* @return <code>true</code> if the request exists; <code>false</code>
-	otherwise
-	*/
-	@Override
-	public boolean hasRequest(long userId, java.lang.String className,
-		long classPK, int type, int status) {
-		return _socialRequestLocalService.hasRequest(userId, className,
-			classPK, type, status);
-	}
-
-	/**
-	* Updates the social request replacing its status.
-	*
-	* <p>
-	* If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
-	* then {@link
-	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
-	* SocialRequest, ThemeDisplay)} is called. If the status is updated to
-	* {@link SocialRequestConstants#STATUS_IGNORE} then {@link
-	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
-	* SocialRequest, ThemeDisplay)} is called.
-	* </p>
 	*
 	* @param requestId the primary key of the social request
-	* @param status the new status
-	* @param themeDisplay the theme display
-	* @return the updated social request
 	*/
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest updateRequest(
-		long requestId, int status,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+	public void deleteRequest(long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestLocalService.updateRequest(requestId, status,
-			themeDisplay);
+		_socialRequestLocalService.deleteRequest(requestId);
+	}
+
+	@Override
+	public void deleteRequests(long className, long classPK) {
+		_socialRequestLocalService.deleteRequests(className, classPK);
 	}
 
 	/**
-	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Removes all the social requests for the requesting user.
 	*
-	* @param socialRequest the social request
-	* @return the social request that was updated
+	* @param userId the primary key of the requesting user
 	*/
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest updateSocialRequest(
-		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-		return _socialRequestLocalService.updateSocialRequest(socialRequest);
+	public void deleteUserRequests(long userId) {
+		_socialRequestLocalService.deleteUserRequests(userId);
 	}
 
 	@Override

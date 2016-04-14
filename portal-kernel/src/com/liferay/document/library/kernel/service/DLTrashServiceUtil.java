@@ -42,15 +42,6 @@ public class DLTrashServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Moves the file entry from a trashed folder to the new folder.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -135,6 +126,15 @@ public class DLTrashServiceUtil {
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveFolderToTrash(folderId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**

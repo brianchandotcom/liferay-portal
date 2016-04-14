@@ -152,8 +152,43 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new DLFileEntryTypeWrapper((DLFileEntryType)_dlFileEntryType.clone());
+	public boolean isCachedModel() {
+		return _dlFileEntryType.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _dlFileEntryType.isEscapedModel();
+	}
+
+	@Override
+	public boolean isExportable() {
+		return _dlFileEntryType.isExportable();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _dlFileEntryType.isNew();
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntryType toEscapedModel() {
+		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntryType toUnescapedModel() {
+		return new DLFileEntryTypeWrapper(_dlFileEntryType.toUnescapedModel());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _dlFileEntryType.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileEntryType> toCacheModel() {
+		return _dlFileEntryType.toCacheModel();
 	}
 
 	@Override
@@ -163,33 +198,18 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _dlFileEntryType.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the company ID of this document library file entry type.
-	*
-	* @return the company ID of this document library file entry type
-	*/
-	@Override
-	public long getCompanyId() {
-		return _dlFileEntryType.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this document library file entry type.
-	*
-	* @return the create date of this document library file entry type
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _dlFileEntryType.getCreateDate();
+	public int hashCode() {
+		return _dlFileEntryType.hashCode();
 	}
 
 	@Override
-	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures() {
-		return _dlFileEntryType.getDDMStructures();
+	public Serializable getPrimaryKeyObj() {
+		return _dlFileEntryType.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DLFileEntryTypeWrapper((DLFileEntryType)_dlFileEntryType.clone());
 	}
 
 	@Override
@@ -266,31 +286,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this document library file entry type.
-	*
-	* @return the locales and localized descriptions of this document library file entry type
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _dlFileEntryType.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileEntryType.getExpandoBridge();
-	}
-
-	/**
-	* Returns the file entry type ID of this document library file entry type.
-	*
-	* @return the file entry type ID of this document library file entry type
-	*/
-	@Override
-	public long getFileEntryTypeId() {
-		return _dlFileEntryType.getFileEntryTypeId();
-	}
-
-	/**
 	* Returns the file entry type key of this document library file entry type.
 	*
 	* @return the file entry type key of this document library file entry type
@@ -298,36 +293,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	@Override
 	public java.lang.String getFileEntryTypeKey() {
 		return _dlFileEntryType.getFileEntryTypeKey();
-	}
-
-	/**
-	* Returns the group ID of this document library file entry type.
-	*
-	* @return the group ID of this document library file entry type
-	*/
-	@Override
-	public long getGroupId() {
-		return _dlFileEntryType.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this document library file entry type.
-	*
-	* @return the last publish date of this document library file entry type
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _dlFileEntryType.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this document library file entry type.
-	*
-	* @return the modified date of this document library file entry type
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _dlFileEntryType.getModifiedDate();
 	}
 
 	/**
@@ -397,31 +362,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 		return _dlFileEntryType.getNameCurrentValue();
 	}
 
-	/**
-	* Returns a map of the locales and localized names of this document library file entry type.
-	*
-	* @return the locales and localized names of this document library file entry type
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _dlFileEntryType.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this document library file entry type.
-	*
-	* @return the primary key of this document library file entry type
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _dlFileEntryType.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileEntryType.getPrimaryKeyObj();
-	}
-
 	@Override
 	public java.lang.String getUnambiguousName(
 		java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> dlFileEntryTypes,
@@ -429,16 +369,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryType.getUnambiguousName(dlFileEntryTypes, groupId,
 			locale);
-	}
-
-	/**
-	* Returns the user ID of this document library file entry type.
-	*
-	* @return the user ID of this document library file entry type
-	*/
-	@Override
-	public long getUserId() {
-		return _dlFileEntryType.getUserId();
 	}
 
 	/**
@@ -472,28 +402,123 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public int hashCode() {
-		return _dlFileEntryType.hashCode();
+	public java.lang.String toString() {
+		return _dlFileEntryType.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _dlFileEntryType.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _dlFileEntryType.toXmlString();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _dlFileEntryType.isEscapedModel();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _dlFileEntryType.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the create date of this document library file entry type.
+	*
+	* @return the create date of this document library file entry type
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _dlFileEntryType.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this document library file entry type.
+	*
+	* @return the last publish date of this document library file entry type
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileEntryType.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this document library file entry type.
+	*
+	* @return the modified date of this document library file entry type
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _dlFileEntryType.getModifiedDate();
 	}
 
 	@Override
-	public boolean isExportable() {
-		return _dlFileEntryType.isExportable();
+	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures() {
+		return _dlFileEntryType.getDDMStructures();
 	}
 
+	/**
+	* Returns a map of the locales and localized descriptions of this document library file entry type.
+	*
+	* @return the locales and localized descriptions of this document library file entry type
+	*/
 	@Override
-	public boolean isNew() {
-		return _dlFileEntryType.isNew();
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _dlFileEntryType.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this document library file entry type.
+	*
+	* @return the locales and localized names of this document library file entry type
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _dlFileEntryType.getNameMap();
+	}
+
+	/**
+	* Returns the company ID of this document library file entry type.
+	*
+	* @return the company ID of this document library file entry type
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFileEntryType.getCompanyId();
+	}
+
+	/**
+	* Returns the file entry type ID of this document library file entry type.
+	*
+	* @return the file entry type ID of this document library file entry type
+	*/
+	@Override
+	public long getFileEntryTypeId() {
+		return _dlFileEntryType.getFileEntryTypeId();
+	}
+
+	/**
+	* Returns the group ID of this document library file entry type.
+	*
+	* @return the group ID of this document library file entry type
+	*/
+	@Override
+	public long getGroupId() {
+		return _dlFileEntryType.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this document library file entry type.
+	*
+	* @return the primary key of this document library file entry type
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _dlFileEntryType.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this document library file entry type.
+	*
+	* @return the user ID of this document library file entry type
+	*/
+	@Override
+	public long getUserId() {
+		return _dlFileEntryType.getUserId();
 	}
 
 	@Override
@@ -604,14 +629,14 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileEntryType.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFileEntryType.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileEntryType.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_dlFileEntryType.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -788,31 +813,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_dlFileEntryType.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileEntryType> toCacheModel() {
-		return _dlFileEntryType.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType toEscapedModel() {
-		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _dlFileEntryType.toString();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType toUnescapedModel() {
-		return new DLFileEntryTypeWrapper(_dlFileEntryType.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _dlFileEntryType.toXmlString();
 	}
 
 	@Override

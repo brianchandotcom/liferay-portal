@@ -79,11 +79,11 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		ServiceContext serviceContext) throws PortalException;
+		int priority, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new m d r rule group instance with the primary key. Does not add the m d r rule group instance to the database.
@@ -93,8 +93,6 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*/
 	public MDRRuleGroupInstance createMDRRuleGroupInstance(
 		long ruleGroupInstanceId);
-
-	public void deleteGroupRuleGroupInstances(long groupId);
 
 	/**
 	* Deletes the m d r rule group instance from the database. Also notifies the appropriate model listeners.
@@ -117,6 +115,85 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	public MDRRuleGroupInstance deleteMDRRuleGroupInstance(
 		long ruleGroupInstanceId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance fetchMDRRuleGroupInstance(
+		long ruleGroupInstanceId);
+
+	/**
+	* Returns the m d r rule group instance matching the UUID and group.
+	*
+	* @param uuid the m d r rule group instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule group instance, or <code>null</code> if a matching m d r rule group instance could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance fetchMDRRuleGroupInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance fetchRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId);
+
+	/**
+	* Returns the m d r rule group instance with the primary key.
+	*
+	* @param ruleGroupInstanceId the primary key of the m d r rule group instance
+	* @return the m d r rule group instance
+	* @throws PortalException if a m d r rule group instance with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance getMDRRuleGroupInstance(
+		long ruleGroupInstanceId) throws PortalException;
+
+	/**
+	* Returns the m d r rule group instance matching the UUID and group.
+	*
+	* @param uuid the m d r rule group instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule group instance
+	* @throws PortalException if a matching m d r rule group instance could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance getMDRRuleGroupInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance getRuleGroupInstance(
+		java.lang.String className, long classPK, long ruleGroupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRuleGroupInstance getRuleGroupInstance(long ruleGroupInstanceId)
+		throws PortalException;
+
+	/**
+	* Updates the m d r rule group instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroupInstance the m d r rule group instance
+	* @return the m d r rule group instance that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MDRRuleGroupInstance updateMDRRuleGroupInstance(
+		MDRRuleGroupInstance mdrRuleGroupInstance);
+
+	public MDRRuleGroupInstance updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -124,14 +201,32 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteRuleGroupInstance(long ruleGroupInstanceId);
+	/**
+	* Returns the number of m d r rule group instances.
+	*
+	* @return the number of m d r rule group instances
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMDRRuleGroupInstancesCount();
 
-	public void deleteRuleGroupInstances(long ruleGroupId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRuleGroupInstancesCount(java.lang.String className,
+		long classPK);
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRuleGroupInstancesCount(long ruleGroupId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -171,79 +266,6 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchMDRRuleGroupInstance(
-		long ruleGroupInstanceId);
-
-	/**
-	* Returns the m d r rule group instance matching the UUID and group.
-	*
-	* @param uuid the m d r rule group instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r rule group instance, or <code>null</code> if a matching m d r rule group instance could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchMDRRuleGroupInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchRuleGroupInstance(
-		java.lang.String className, long classPK, long ruleGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the m d r rule group instance with the primary key.
-	*
-	* @param ruleGroupInstanceId the primary key of the m d r rule group instance
-	* @return the m d r rule group instance
-	* @throws PortalException if a m d r rule group instance with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance getMDRRuleGroupInstance(
-		long ruleGroupInstanceId) throws PortalException;
-
-	/**
-	* Returns the m d r rule group instance matching the UUID and group.
-	*
-	* @param uuid the m d r rule group instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r rule group instance
-	* @throws PortalException if a matching m d r rule group instance could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance getMDRRuleGroupInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the m d r rule group instances.
@@ -286,35 +308,6 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
-	/**
-	* Returns the number of m d r rule group instances.
-	*
-	* @return the number of m d r rule group instances
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMDRRuleGroupInstancesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance getRuleGroupInstance(
-		java.lang.String className, long classPK, long ruleGroupId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRuleGroupInstance getRuleGroupInstance(long ruleGroupInstanceId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 		java.lang.String className, long classPK);
@@ -331,23 +324,30 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(long ruleGroupId,
 		int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupInstancesCount(long ruleGroupId);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the m d r rule group instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param mdrRuleGroupInstance the m d r rule group instance
-	* @return the m d r rule group instance that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MDRRuleGroupInstance updateMDRRuleGroupInstance(
-		MDRRuleGroupInstance mdrRuleGroupInstance);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	public MDRRuleGroupInstance updateRuleGroupInstance(
-		long ruleGroupInstanceId, int priority) throws PortalException;
+	public void deleteGroupRuleGroupInstances(long groupId);
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteRuleGroupInstance(MDRRuleGroupInstance ruleGroupInstance);
+
+	public void deleteRuleGroupInstance(long ruleGroupInstanceId);
+
+	public void deleteRuleGroupInstances(long ruleGroupId);
 }

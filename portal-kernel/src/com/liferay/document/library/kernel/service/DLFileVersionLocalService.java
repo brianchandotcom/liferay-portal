@@ -101,6 +101,88 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public DLFileVersion deleteDLFileVersion(long fileVersionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion fetchDLFileVersion(long fileVersionId);
+
+	/**
+	* Returns the document library file version matching the UUID and group.
+	*
+	* @param uuid the document library file version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion fetchLatestFileVersion(long fileEntryId,
+		boolean excludeWorkingCopy);
+
+	/**
+	* Returns the document library file version with the primary key.
+	*
+	* @param fileVersionId the primary key of the document library file version
+	* @return the document library file version
+	* @throws PortalException if a document library file version with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getDLFileVersion(long fileVersionId)
+		throws PortalException;
+
+	/**
+	* Returns the document library file version matching the UUID and group.
+	*
+	* @param uuid the document library file version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file version
+	* @throws PortalException if a matching document library file version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getDLFileVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getFileVersion(long fileEntryId,
+		java.lang.String version) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getFileVersion(long fileVersionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getFileVersionByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getLatestFileVersion(long fileEntryId,
+		boolean excludeWorkingCopy) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
+		throws PortalException;
+
+	/**
+	* Updates the document library file version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileVersion the document library file version
+	* @return the document library file version that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileVersion updateDLFileVersion(DLFileVersion dlFileVersion);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -108,7 +190,28 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of document library file versions.
+	*
+	* @return the number of document library file versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDLFileVersionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileVersionsCount(long fileEntryId, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -150,68 +253,6 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion fetchDLFileVersion(long fileVersionId);
-
-	/**
-	* Returns the document library file version matching the UUID and group.
-	*
-	* @param uuid the document library file version's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion fetchLatestFileVersion(long fileEntryId,
-		boolean excludeWorkingCopy);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the document library file version with the primary key.
-	*
-	* @param fileVersionId the primary key of the document library file version
-	* @return the document library file version
-	* @throws PortalException if a document library file version with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getDLFileVersion(long fileVersionId)
-		throws PortalException;
-
-	/**
-	* Returns the document library file version matching the UUID and group.
-	*
-	* @param uuid the document library file version's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file version
-	* @throws PortalException if a matching document library file version could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
 	* Returns a range of all the document library file versions.
 	*
 	* <p>
@@ -251,70 +292,29 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileVersion> orderByComparator);
 
-	/**
-	* Returns the number of document library file versions.
-	*
-	* @return the number of document library file versions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFileVersionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getFileVersion(long fileEntryId,
-		java.lang.String version) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getFileVersion(long fileVersionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getFileVersionByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileVersion> getFileVersions(long fileEntryId, int status);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileVersionsCount(long fileEntryId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getLatestFileVersion(long fileEntryId,
-		boolean excludeWorkingCopy) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
-		throws PortalException;
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	public void rebuildTree(long companyId) throws PortalException;
 
 	public void setTreePaths(long folderId, java.lang.String treePath)
 		throws PortalException;
-
-	/**
-	* Updates the document library file version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileVersion the document library file version
-	* @return the document library file version that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFileVersion updateDLFileVersion(DLFileVersion dlFileVersion);
 }

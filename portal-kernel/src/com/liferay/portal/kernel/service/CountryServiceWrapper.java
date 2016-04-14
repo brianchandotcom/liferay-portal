@@ -56,17 +56,6 @@ public class CountryServiceWrapper implements CountryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Country> getCountries() {
-		return _countryService.getCountries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Country> getCountries(
-		boolean active) {
-		return _countryService.getCountries(active);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.Country getCountry(long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _countryService.getCountry(countryId);
@@ -101,6 +90,17 @@ public class CountryServiceWrapper implements CountryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _countryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country> getCountries() {
+		return _countryService.getCountries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Country> getCountries(
+		boolean active) {
+		return _countryService.getCountries(active);
 	}
 
 	@Override

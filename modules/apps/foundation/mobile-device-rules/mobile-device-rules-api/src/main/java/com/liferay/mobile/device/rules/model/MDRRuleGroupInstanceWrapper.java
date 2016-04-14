@@ -160,69 +160,18 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new MDRRuleGroupInstanceWrapper((MDRRuleGroupInstance)_mdrRuleGroupInstance.clone());
+	public boolean isCachedModel() {
+		return _mdrRuleGroupInstance.isCachedModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
-		return _mdrRuleGroupInstance.compareTo(mdrRuleGroupInstance);
+	public boolean isEscapedModel() {
+		return _mdrRuleGroupInstance.isEscapedModel();
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions() {
-		return _mdrRuleGroupInstance.getActions();
-	}
-
-	/**
-	* Returns the fully qualified class name of this m d r rule group instance.
-	*
-	* @return the fully qualified class name of this m d r rule group instance
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _mdrRuleGroupInstance.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this m d r rule group instance.
-	*
-	* @return the class name ID of this m d r rule group instance
-	*/
-	@Override
-	public long getClassNameId() {
-		return _mdrRuleGroupInstance.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this m d r rule group instance.
-	*
-	* @return the class p k of this m d r rule group instance
-	*/
-	@Override
-	public long getClassPK() {
-		return _mdrRuleGroupInstance.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this m d r rule group instance.
-	*
-	* @return the company ID of this m d r rule group instance
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mdrRuleGroupInstance.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this m d r rule group instance.
-	*
-	* @return the create date of this m d r rule group instance
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mdrRuleGroupInstance.getCreateDate();
+	public boolean isNew() {
+		return _mdrRuleGroupInstance.isNew();
 	}
 
 	@Override
@@ -230,49 +179,31 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		return _mdrRuleGroupInstance.getExpandoBridge();
 	}
 
-	/**
-	* Returns the group ID of this m d r rule group instance.
-	*
-	* @return the group ID of this m d r rule group instance
-	*/
 	@Override
-	public long getGroupId() {
-		return _mdrRuleGroupInstance.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this m d r rule group instance.
-	*
-	* @return the last publish date of this m d r rule group instance
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mdrRuleGroupInstance.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this m d r rule group instance.
-	*
-	* @return the modified date of this m d r rule group instance
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mdrRuleGroupInstance.getModifiedDate();
-	}
-
-	/**
-	* Returns the primary key of this m d r rule group instance.
-	*
-	* @return the primary key of this m d r rule group instance
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mdrRuleGroupInstance.getPrimaryKey();
+	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupInstance.getRuleGroup();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mdrRuleGroupInstance.getPrimaryKeyObj();
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance toEscapedModel() {
+		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance toUnescapedModel() {
+		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> toCacheModel() {
+		return _mdrRuleGroupInstance.toCacheModel();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
+		return _mdrRuleGroupInstance.compareTo(mdrRuleGroupInstance);
 	}
 
 	/**
@@ -286,39 +217,28 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstance.getRuleGroup();
+	public int hashCode() {
+		return _mdrRuleGroupInstance.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _mdrRuleGroupInstance.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new MDRRuleGroupInstanceWrapper((MDRRuleGroupInstance)_mdrRuleGroupInstance.clone());
 	}
 
 	/**
-	* Returns the rule group ID of this m d r rule group instance.
+	* Returns the fully qualified class name of this m d r rule group instance.
 	*
-	* @return the rule group ID of this m d r rule group instance
+	* @return the fully qualified class name of this m d r rule group instance
 	*/
 	@Override
-	public long getRuleGroupId() {
-		return _mdrRuleGroupInstance.getRuleGroupId();
-	}
-
-	/**
-	* Returns the rule group instance ID of this m d r rule group instance.
-	*
-	* @return the rule group instance ID of this m d r rule group instance
-	*/
-	@Override
-	public long getRuleGroupInstanceId() {
-		return _mdrRuleGroupInstance.getRuleGroupInstanceId();
-	}
-
-	/**
-	* Returns the user ID of this m d r rule group instance.
-	*
-	* @return the user ID of this m d r rule group instance
-	*/
-	@Override
-	public long getUserId() {
-		return _mdrRuleGroupInstance.getUserId();
+	public java.lang.String getClassName() {
+		return _mdrRuleGroupInstance.getClassName();
 	}
 
 	/**
@@ -352,23 +272,128 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public int hashCode() {
-		return _mdrRuleGroupInstance.hashCode();
+	public java.lang.String toString() {
+		return _mdrRuleGroupInstance.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _mdrRuleGroupInstance.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _mdrRuleGroupInstance.toXmlString();
+	}
+
+	/**
+	* Returns the create date of this m d r rule group instance.
+	*
+	* @return the create date of this m d r rule group instance
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _mdrRuleGroupInstance.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this m d r rule group instance.
+	*
+	* @return the last publish date of this m d r rule group instance
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mdrRuleGroupInstance.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this m d r rule group instance.
+	*
+	* @return the modified date of this m d r rule group instance
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mdrRuleGroupInstance.getModifiedDate();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _mdrRuleGroupInstance.isEscapedModel();
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions() {
+		return _mdrRuleGroupInstance.getActions();
 	}
 
+	/**
+	* Returns the class name ID of this m d r rule group instance.
+	*
+	* @return the class name ID of this m d r rule group instance
+	*/
 	@Override
-	public boolean isNew() {
-		return _mdrRuleGroupInstance.isNew();
+	public long getClassNameId() {
+		return _mdrRuleGroupInstance.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this m d r rule group instance.
+	*
+	* @return the class p k of this m d r rule group instance
+	*/
+	@Override
+	public long getClassPK() {
+		return _mdrRuleGroupInstance.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this m d r rule group instance.
+	*
+	* @return the company ID of this m d r rule group instance
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mdrRuleGroupInstance.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this m d r rule group instance.
+	*
+	* @return the group ID of this m d r rule group instance
+	*/
+	@Override
+	public long getGroupId() {
+		return _mdrRuleGroupInstance.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this m d r rule group instance.
+	*
+	* @return the primary key of this m d r rule group instance
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mdrRuleGroupInstance.getPrimaryKey();
+	}
+
+	/**
+	* Returns the rule group ID of this m d r rule group instance.
+	*
+	* @return the rule group ID of this m d r rule group instance
+	*/
+	@Override
+	public long getRuleGroupId() {
+		return _mdrRuleGroupInstance.getRuleGroupId();
+	}
+
+	/**
+	* Returns the rule group instance ID of this m d r rule group instance.
+	*
+	* @return the rule group instance ID of this m d r rule group instance
+	*/
+	@Override
+	public long getRuleGroupInstanceId() {
+		return _mdrRuleGroupInstance.getRuleGroupInstanceId();
+	}
+
+	/**
+	* Returns the user ID of this m d r rule group instance.
+	*
+	* @return the user ID of this m d r rule group instance
+	*/
+	@Override
+	public long getUserId() {
+		return _mdrRuleGroupInstance.getUserId();
 	}
 
 	@Override
@@ -427,14 +452,14 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mdrRuleGroupInstance.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mdrRuleGroupInstance.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrRuleGroupInstance.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_mdrRuleGroupInstance.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -560,31 +585,6 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mdrRuleGroupInstance.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> toCacheModel() {
-		return _mdrRuleGroupInstance.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance toEscapedModel() {
-		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mdrRuleGroupInstance.toString();
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance toUnescapedModel() {
-		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mdrRuleGroupInstance.toXmlString();
 	}
 
 	@Override

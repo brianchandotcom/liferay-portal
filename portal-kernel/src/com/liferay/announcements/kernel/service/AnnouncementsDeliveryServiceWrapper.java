@@ -34,6 +34,15 @@ public class AnnouncementsDeliveryServiceWrapper
 		_announcementsDeliveryService = announcementsDeliveryService;
 	}
 
+	@Override
+	public com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
+		long userId, java.lang.String type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsDeliveryService.updateDelivery(userId, type,
+			email, sms, website);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,15 +51,6 @@ public class AnnouncementsDeliveryServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _announcementsDeliveryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
-		long userId, java.lang.String type, boolean email, boolean sms,
-		boolean website)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _announcementsDeliveryService.updateDelivery(userId, type,
-			email, sms, website);
 	}
 
 	@Override

@@ -63,6 +63,29 @@ public interface RepositoryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryLocalServiceUtil} to access the repository local service. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the repository to the database. Also notifies the appropriate model listeners.
@@ -80,8 +103,6 @@ public interface RepositoryLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void checkRepository(long repositoryId);
-
 	/**
 	* Creates a new repository with the primary key. Does not add the repository to the database.
 	*
@@ -89,15 +110,6 @@ public interface RepositoryLocalService extends BaseLocalService,
 	* @return the new repository
 	*/
 	public Repository createRepository(long repositoryId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	public void deleteRepositories(long groupId) throws PortalException;
 
 	/**
 	* Deletes the repository from the database. Also notifies the appropriate model listeners.
@@ -120,7 +132,85 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public Repository deleteRepository(long repositoryId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository fetchRepository(long groupId, java.lang.String name,
+		java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository fetchRepository(long groupId, java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository fetchRepository(long repositoryId);
+
+	/**
+	* Returns the repository matching the UUID and group.
+	*
+	* @param uuid the repository's UUID
+	* @param groupId the primary key of the group
+	* @return the matching repository, or <code>null</code> if a matching repository could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository fetchRepositoryByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository getRepository(long groupId, java.lang.String name,
+		java.lang.String portletId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository getRepository(long groupId, java.lang.String portletId)
+		throws PortalException;
+
+	/**
+	* Returns the repository with the primary key.
+	*
+	* @param repositoryId the primary key of the repository
+	* @return the repository
+	* @throws PortalException if a repository with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository getRepository(long repositoryId)
+		throws PortalException;
+
+	/**
+	* Returns the repository matching the UUID and group.
+	*
+	* @param uuid the repository's UUID
+	* @param groupId the primary key of the group
+	* @return the matching repository
+	* @throws PortalException if a matching repository could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Repository getRepositoryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	/**
+	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param repository the repository
+	* @return the repository that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Repository updateRepository(Repository repository);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
+		throws PortalException;
+
+	/**
+	* Returns the number of repositories.
+	*
+	* @return the number of repositories
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRepositoriesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -161,69 +251,8 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository fetchRepository(long groupId, java.lang.String name,
-		java.lang.String portletId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository fetchRepository(long groupId, java.lang.String portletId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository fetchRepository(long repositoryId);
-
-	/**
-	* Returns the repository matching the UUID and group.
-	*
-	* @param uuid the repository's UUID
-	* @param groupId the primary key of the group
-	* @return the matching repository, or <code>null</code> if a matching repository could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository fetchRepositoryByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Repository> getGroupRepositories(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Returns a range of all the repositories.
@@ -266,60 +295,30 @@ public interface RepositoryLocalService extends BaseLocalService,
 		OrderByComparator<Repository> orderByComparator);
 
 	/**
-	* Returns the number of repositories.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of repositories
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRepositoriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository getRepository(long groupId, java.lang.String name,
-		java.lang.String portletId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository getRepository(long groupId, java.lang.String portletId)
-		throws PortalException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the repository with the primary key.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param repositoryId the primary key of the repository
-	* @return the repository
-	* @throws PortalException if a repository with the primary key could not be found
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository getRepository(long repositoryId)
-		throws PortalException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	/**
-	* Returns the repository matching the UUID and group.
-	*
-	* @param uuid the repository's UUID
-	* @param groupId the primary key of the group
-	* @return the matching repository
-	* @throws PortalException if a matching repository could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Repository getRepositoryByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
+	public void checkRepository(long repositoryId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
-		throws PortalException;
-
-	/**
-	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param repository the repository
-	* @return the repository that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Repository updateRepository(Repository repository);
-
-	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description) throws PortalException;
+	public void deleteRepositories(long groupId) throws PortalException;
 
 	public void updateRepository(long repositoryId,
 		UnicodeProperties typeSettingsProperties) throws PortalException;
+
+	public void updateRepository(long repositoryId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

@@ -47,12 +47,6 @@ public class MBBanServiceUtil {
 		return getService().addBan(banUserId, serviceContext);
 	}
 
-	public static void deleteBan(long banUserId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteBan(banUserId, serviceContext);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -60,6 +54,12 @@ public class MBBanServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteBan(long banUserId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteBan(banUserId, serviceContext);
 	}
 
 	public static MBBanService getService() {

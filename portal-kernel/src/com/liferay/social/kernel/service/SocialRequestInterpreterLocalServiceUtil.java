@@ -42,37 +42,6 @@ public class SocialRequestInterpreterLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the social request interpreter to the list of available
-	* interpreters.
-	*
-	* @param requestInterpreter the social request interpreter
-	*/
-	public static void addRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
-		getService().addRequestInterpreter(requestInterpreter);
-	}
-
-	/**
-	* Removes the social request interpreter from the list of available
-	* interpreters.
-	*
-	* @param requestInterpreter the social request interpreter
-	*/
-	public static void deleteRequestInterpreter(
-		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
-		getService().deleteRequestInterpreter(requestInterpreter);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Creates a human readable request feed entry for the social request using
 	* an available compatible request interpreter.
 	*
@@ -92,6 +61,37 @@ public class SocialRequestInterpreterLocalServiceUtil {
 		com.liferay.social.kernel.model.SocialRequest request,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return getService().interpret(request, themeDisplay);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Adds the social request interpreter to the list of available
+	* interpreters.
+	*
+	* @param requestInterpreter the social request interpreter
+	*/
+	public static void addRequestInterpreter(
+		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
+		getService().addRequestInterpreter(requestInterpreter);
+	}
+
+	/**
+	* Removes the social request interpreter from the list of available
+	* interpreters.
+	*
+	* @param requestInterpreter the social request interpreter
+	*/
+	public static void deleteRequestInterpreter(
+		com.liferay.social.kernel.model.SocialRequestInterpreter requestInterpreter) {
+		getService().deleteRequestInterpreter(requestInterpreter);
 	}
 
 	/**

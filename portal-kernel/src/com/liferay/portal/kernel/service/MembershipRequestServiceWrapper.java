@@ -41,12 +41,6 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	}
 
 	@Override
-	public void deleteMembershipRequests(long groupId, long statusId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_membershipRequestService.deleteMembershipRequests(groupId, statusId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.MembershipRequest getMembershipRequest(
 		long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -61,6 +55,12 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _membershipRequestService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void deleteMembershipRequests(long groupId, long statusId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_membershipRequestService.deleteMembershipRequests(groupId, statusId);
 	}
 
 	@Override

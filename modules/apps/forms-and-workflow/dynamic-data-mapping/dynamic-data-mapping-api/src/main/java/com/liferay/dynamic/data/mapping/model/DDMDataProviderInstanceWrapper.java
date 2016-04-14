@@ -154,8 +154,38 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new DDMDataProviderInstanceWrapper((DDMDataProviderInstance)_ddmDataProviderInstance.clone());
+	public boolean isCachedModel() {
+		return _ddmDataProviderInstance.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _ddmDataProviderInstance.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _ddmDataProviderInstance.isNew();
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance toEscapedModel() {
+		return new DDMDataProviderInstanceWrapper(_ddmDataProviderInstance.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance toUnescapedModel() {
+		return new DDMDataProviderInstanceWrapper(_ddmDataProviderInstance.toUnescapedModel());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ddmDataProviderInstance.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> toCacheModel() {
+		return _ddmDataProviderInstance.toCacheModel();
 	}
 
 	@Override
@@ -165,38 +195,18 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _ddmDataProviderInstance.getAvailableLanguageIds();
+	public int hashCode() {
+		return _ddmDataProviderInstance.hashCode();
 	}
 
-	/**
-	* Returns the company ID of this d d m data provider instance.
-	*
-	* @return the company ID of this d d m data provider instance
-	*/
 	@Override
-	public long getCompanyId() {
-		return _ddmDataProviderInstance.getCompanyId();
+	public Serializable getPrimaryKeyObj() {
+		return _ddmDataProviderInstance.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the create date of this d d m data provider instance.
-	*
-	* @return the create date of this d d m data provider instance
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _ddmDataProviderInstance.getCreateDate();
-	}
-
-	/**
-	* Returns the data provider instance ID of this d d m data provider instance.
-	*
-	* @return the data provider instance ID of this d d m data provider instance
-	*/
-	@Override
-	public long getDataProviderInstanceId() {
-		return _ddmDataProviderInstance.getDataProviderInstanceId();
+	public java.lang.Object clone() {
+		return new DDMDataProviderInstanceWrapper((DDMDataProviderInstance)_ddmDataProviderInstance.clone());
 	}
 
 	@Override
@@ -283,41 +293,6 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this d d m data provider instance.
-	*
-	* @return the locales and localized descriptions of this d d m data provider instance
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _ddmDataProviderInstance.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmDataProviderInstance.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this d d m data provider instance.
-	*
-	* @return the group ID of this d d m data provider instance
-	*/
-	@Override
-	public long getGroupId() {
-		return _ddmDataProviderInstance.getGroupId();
-	}
-
-	/**
-	* Returns the modified date of this d d m data provider instance.
-	*
-	* @return the modified date of this d d m data provider instance
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _ddmDataProviderInstance.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this d d m data provider instance.
 	*
 	* @return the name of this d d m data provider instance
@@ -385,31 +360,6 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this d d m data provider instance.
-	*
-	* @return the locales and localized names of this d d m data provider instance
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _ddmDataProviderInstance.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this d d m data provider instance.
-	*
-	* @return the primary key of this d d m data provider instance
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _ddmDataProviderInstance.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmDataProviderInstance.getPrimaryKeyObj();
-	}
-
-	/**
 	* Returns the type of this d d m data provider instance.
 	*
 	* @return the type of this d d m data provider instance
@@ -417,16 +367,6 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	@Override
 	public java.lang.String getType() {
 		return _ddmDataProviderInstance.getType();
-	}
-
-	/**
-	* Returns the user ID of this d d m data provider instance.
-	*
-	* @return the user ID of this d d m data provider instance
-	*/
-	@Override
-	public long getUserId() {
-		return _ddmDataProviderInstance.getUserId();
 	}
 
 	/**
@@ -460,23 +400,108 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	@Override
-	public int hashCode() {
-		return _ddmDataProviderInstance.hashCode();
+	public java.lang.String toString() {
+		return _ddmDataProviderInstance.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _ddmDataProviderInstance.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _ddmDataProviderInstance.toXmlString();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _ddmDataProviderInstance.isEscapedModel();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _ddmDataProviderInstance.getAvailableLanguageIds();
 	}
 
+	/**
+	* Returns the create date of this d d m data provider instance.
+	*
+	* @return the create date of this d d m data provider instance
+	*/
 	@Override
-	public boolean isNew() {
-		return _ddmDataProviderInstance.isNew();
+	public Date getCreateDate() {
+		return _ddmDataProviderInstance.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this d d m data provider instance.
+	*
+	* @return the modified date of this d d m data provider instance
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ddmDataProviderInstance.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this d d m data provider instance.
+	*
+	* @return the locales and localized descriptions of this d d m data provider instance
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _ddmDataProviderInstance.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this d d m data provider instance.
+	*
+	* @return the locales and localized names of this d d m data provider instance
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _ddmDataProviderInstance.getNameMap();
+	}
+
+	/**
+	* Returns the company ID of this d d m data provider instance.
+	*
+	* @return the company ID of this d d m data provider instance
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddmDataProviderInstance.getCompanyId();
+	}
+
+	/**
+	* Returns the data provider instance ID of this d d m data provider instance.
+	*
+	* @return the data provider instance ID of this d d m data provider instance
+	*/
+	@Override
+	public long getDataProviderInstanceId() {
+		return _ddmDataProviderInstance.getDataProviderInstanceId();
+	}
+
+	/**
+	* Returns the group ID of this d d m data provider instance.
+	*
+	* @return the group ID of this d d m data provider instance
+	*/
+	@Override
+	public long getGroupId() {
+		return _ddmDataProviderInstance.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this d d m data provider instance.
+	*
+	* @return the primary key of this d d m data provider instance
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ddmDataProviderInstance.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this d d m data provider instance.
+	*
+	* @return the user ID of this d d m data provider instance
+	*/
+	@Override
+	public long getUserId() {
+		return _ddmDataProviderInstance.getUserId();
 	}
 
 	@Override
@@ -608,14 +633,14 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmDataProviderInstance.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_ddmDataProviderInstance.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmDataProviderInstance.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_ddmDataProviderInstance.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -772,31 +797,6 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_ddmDataProviderInstance.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> toCacheModel() {
-		return _ddmDataProviderInstance.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance toEscapedModel() {
-		return new DDMDataProviderInstanceWrapper(_ddmDataProviderInstance.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ddmDataProviderInstance.toString();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance toUnescapedModel() {
-		return new DDMDataProviderInstanceWrapper(_ddmDataProviderInstance.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ddmDataProviderInstance.toXmlString();
 	}
 
 	@Override

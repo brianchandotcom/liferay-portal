@@ -34,16 +34,6 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _ddlRecordVersionService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns a record version matching the record and version.
 	*
 	* @param recordId the primary key of the record
@@ -73,6 +63,29 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionService.getRecordVersion(recordVersionId);
+	}
+
+	/**
+	* Returns the number of record versions matching the record.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public int getRecordVersionsCount(long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionService.getRecordVersionsCount(recordId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordVersionService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -117,19 +130,6 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionService.getRecordVersions(recordId, start, end,
 			orderByComparator);
-	}
-
-	/**
-	* Returns the number of record versions matching the record.
-	*
-	* @param recordId the primary key of the record
-	* @return the number of matching record versions
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Override
-	public int getRecordVersionsCount(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersionService.getRecordVersionsCount(recordId);
 	}
 
 	@Override

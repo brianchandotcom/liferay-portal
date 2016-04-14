@@ -91,14 +91,64 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new ExpandoTableWrapper((ExpandoTable)_expandoTable.clone());
+	public ExpandoBridge getExpandoBridge() {
+		return _expandoTable.getExpandoBridge();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _expandoTable.isCachedModel();
+	}
+
+	@Override
+	public boolean isDefaultTable() {
+		return _expandoTable.isDefaultTable();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _expandoTable.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _expandoTable.isNew();
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable toEscapedModel() {
+		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable toUnescapedModel() {
+		return new ExpandoTableWrapper(_expandoTable.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.expando.kernel.model.ExpandoTable> toCacheModel() {
+		return _expandoTable.toCacheModel();
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.expando.kernel.model.ExpandoTable expandoTable) {
 		return _expandoTable.compareTo(expandoTable);
+	}
+
+	@Override
+	public int hashCode() {
+		return _expandoTable.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _expandoTable.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new ExpandoTableWrapper((ExpandoTable)_expandoTable.clone());
 	}
 
 	/**
@@ -109,6 +159,26 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	@Override
 	public java.lang.String getClassName() {
 		return _expandoTable.getClassName();
+	}
+
+	/**
+	* Returns the name of this expando table.
+	*
+	* @return the name of this expando table
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _expandoTable.getName();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _expandoTable.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _expandoTable.toXmlString();
 	}
 
 	/**
@@ -131,21 +201,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		return _expandoTable.getCompanyId();
 	}
 
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _expandoTable.getExpandoBridge();
-	}
-
-	/**
-	* Returns the name of this expando table.
-	*
-	* @return the name of this expando table
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _expandoTable.getName();
-	}
-
 	/**
 	* Returns the primary key of this expando table.
 	*
@@ -156,11 +211,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		return _expandoTable.getPrimaryKey();
 	}
 
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _expandoTable.getPrimaryKeyObj();
-	}
-
 	/**
 	* Returns the table ID of this expando table.
 	*
@@ -169,31 +219,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	@Override
 	public long getTableId() {
 		return _expandoTable.getTableId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _expandoTable.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _expandoTable.isCachedModel();
-	}
-
-	@Override
-	public boolean isDefaultTable() {
-		return _expandoTable.isDefaultTable();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _expandoTable.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _expandoTable.isNew();
 	}
 
 	@Override
@@ -232,14 +257,14 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_expandoTable.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_expandoTable.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_expandoTable.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_expandoTable.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -285,31 +310,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	@Override
 	public void setTableId(long tableId) {
 		_expandoTable.setTableId(tableId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.expando.kernel.model.ExpandoTable> toCacheModel() {
-		return _expandoTable.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable toEscapedModel() {
-		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _expandoTable.toString();
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable toUnescapedModel() {
-		return new ExpandoTableWrapper(_expandoTable.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _expandoTable.toXmlString();
 	}
 
 	@Override

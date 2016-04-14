@@ -127,7 +127,103 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public BookmarksFolder deleteFolder(long folderId,
 		boolean includeTrashedEntries) throws PortalException;
 
-	public void deleteFolders(long groupId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksFolder fetchBookmarksFolder(long folderId);
+
+	/**
+	* Returns the bookmarks folder matching the UUID and group.
+	*
+	* @param uuid the bookmarks folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the bookmarks folder with the primary key.
+	*
+	* @param folderId the primary key of the bookmarks folder
+	* @return the bookmarks folder
+	* @throws PortalException if a bookmarks folder with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksFolder getBookmarksFolder(long folderId)
+		throws PortalException;
+
+	/**
+	* Returns the bookmarks folder matching the UUID and group.
+	*
+	* @param uuid the bookmarks folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching bookmarks folder
+	* @throws PortalException if a matching bookmarks folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BookmarksFolder getFolder(long folderId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
+		throws PortalException;
+
+	public BookmarksFolder moveFolderFromTrash(long userId, long folderId,
+		long parentFolderId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksFolder moveFolderToTrash(long userId, long folderId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksFolder restoreFolderFromTrash(long userId, long folderId)
+		throws PortalException;
+
+	/**
+	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param bookmarksFolder the bookmarks folder
+	* @return the bookmarks folder that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksFolder updateBookmarksFolder(
+		BookmarksFolder bookmarksFolder);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	long, String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
+	*/
+	@java.lang.Deprecated
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksFolder updateFolder(long userId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BookmarksFolder updateFolder(long userId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
+
+	public BookmarksFolder updateStatus(long userId, BookmarksFolder folder,
+		int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -136,7 +232,37 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of bookmarks folders.
+	*
+	* @return the number of bookmarks folders
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBookmarksFoldersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyFoldersCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -178,64 +304,6 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder fetchBookmarksFolder(long folderId);
-
-	/**
-	* Returns the bookmarks folder matching the UUID and group.
-	*
-	* @param uuid the bookmarks folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the bookmarks folder with the primary key.
-	*
-	* @param folderId the primary key of the bookmarks folder
-	* @return the bookmarks folder
-	* @throws PortalException if a bookmarks folder with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder getBookmarksFolder(long folderId)
-		throws PortalException;
-
-	/**
-	* Returns the bookmarks folder matching the UUID and group.
-	*
-	* @param uuid the bookmarks folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching bookmarks folder
-	* @throws PortalException if a matching bookmarks folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
 	* Returns a range of all the bookmarks folders.
 	*
 	* <p>
@@ -275,27 +343,9 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator);
 
-	/**
-	* Returns the number of bookmarks folders.
-	*
-	* @return the number of bookmarks folders
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBookmarksFoldersCount();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksFolder> getCompanyFolders(long companyId, int start,
 		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyFoldersCount(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BookmarksFolder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksFolder> getFolders(long groupId);
@@ -328,31 +378,27 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		long folderId, int status, int start, int end, OrderByComparator obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BookmarksFolder> getNoAssetFolders();
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void deleteFolders(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
@@ -361,25 +407,10 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public void mergeFolders(long folderId, long parentFolderId)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
-		throws PortalException;
-
-	public BookmarksFolder moveFolderFromTrash(long userId, long folderId,
-		long parentFolderId) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder moveFolderToTrash(long userId, long folderId)
-		throws PortalException;
-
 	public void rebuildTree(long companyId) throws PortalException;
 
 	public void rebuildTree(long companyId, long parentFolderId,
 		java.lang.String parentTreePath, boolean reindex)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException;
 
 	public void subscribeFolder(long userId, long groupId, long folderId)
@@ -392,35 +423,4 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
-
-	/**
-	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param bookmarksFolder the bookmarks folder
-	* @return the bookmarks folder that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder updateBookmarksFolder(
-		BookmarksFolder bookmarksFolder);
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	long, String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
-	*/
-	@java.lang.Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder updateFolder(long userId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BookmarksFolder updateFolder(long userId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
-
-	public BookmarksFolder updateStatus(long userId, BookmarksFolder folder,
-		int status) throws PortalException;
 }

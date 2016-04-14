@@ -72,10 +72,6 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().createDDMStorageLink(storageLinkId);
 	}
 
-	public static void deleteClassStorageLink(long classPK) {
-		getService().deleteClassStorageLink(classPK);
-	}
-
 	/**
 	* Deletes the d d m storage link from the database. Also notifies the appropriate model listeners.
 	*
@@ -100,6 +96,93 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().deleteDDMStorageLink(storageLinkId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink fetchDDMStorageLink(
+		long storageLinkId) {
+		return getService().fetchDDMStorageLink(storageLinkId);
+	}
+
+	/**
+	* Returns the d d m storage link with the matching UUID and company.
+	*
+	* @param uuid the d d m storage link's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchDDMStorageLinkByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getClassStorageLink(
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getClassStorageLink(classPK);
+	}
+
+	/**
+	* Returns the d d m storage link with the primary key.
+	*
+	* @param storageLinkId the primary key of the d d m storage link
+	* @return the d d m storage link
+	* @throws PortalException if a d d m storage link with the primary key could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getDDMStorageLink(
+		long storageLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDMStorageLink(storageLinkId);
+	}
+
+	/**
+	* Returns the d d m storage link with the matching UUID and company.
+	*
+	* @param uuid the d d m storage link's UUID
+	* @param companyId the primary key of the company
+	* @return the matching d d m storage link
+	* @throws PortalException if a matching d d m storage link could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDMStorageLinkByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getStorageLink(
+		long storageLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStorageLink(storageLinkId);
+	}
+
+	/**
+	* Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddmStorageLink the d d m storage link
+	* @return the d d m storage link that was updated
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink updateDDMStorageLink(
+		com.liferay.dynamic.data.mapping.model.DDMStorageLink ddmStorageLink) {
+		return getService().updateDDMStorageLink(ddmStorageLink);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink updateStorageLink(
+		long storageLinkId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStorageLink(storageLinkId, classNameId, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -109,21 +192,32 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteStorageLink(
-		com.liferay.dynamic.data.mapping.model.DDMStorageLink storageLink) {
-		getService().deleteStorageLink(storageLink);
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteStorageLink(long storageLinkId) {
-		getService().deleteStorageLink(storageLinkId);
+	/**
+	* Returns the number of d d m storage links.
+	*
+	* @return the number of d d m storage links
+	*/
+	public static int getDDMStorageLinksCount() {
+		return getService().getDDMStorageLinksCount();
 	}
 
-	public static void deleteStructureStorageLinks(long structureId) {
-		getService().deleteStructureStorageLinks(structureId);
+	public static int getStructureStorageLinksCount(long structureId) {
+		return getService().getStructureStorageLinksCount(structureId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -177,6 +271,27 @@ public class DDMStorageLinkLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the d d m storage links.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of d d m storage links
+	* @param end the upper bound of the range of d d m storage links (not inclusive)
+	* @return the range of d d m storage links
+	*/
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStorageLink> getDDMStorageLinks(
+		int start, int end) {
+		return getService().getDDMStorageLinks(start, end);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStorageLink> getStructureStorageLinks(
+		long structureId) {
+		return getService().getStructureStorageLinks(structureId);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -200,136 +315,21 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink fetchDDMStorageLink(
-		long storageLinkId) {
-		return getService().fetchDDMStorageLink(storageLinkId);
+	public static void deleteClassStorageLink(long classPK) {
+		getService().deleteClassStorageLink(classPK);
 	}
 
-	/**
-	* Returns the d d m storage link with the matching UUID and company.
-	*
-	* @param uuid the d d m storage link's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchDDMStorageLinkByUuidAndCompanyId(uuid, companyId);
+	public static void deleteStorageLink(
+		com.liferay.dynamic.data.mapping.model.DDMStorageLink storageLink) {
+		getService().deleteStorageLink(storageLink);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static void deleteStorageLink(long storageLinkId) {
+		getService().deleteStorageLink(storageLinkId);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getClassStorageLink(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getClassStorageLink(classPK);
-	}
-
-	/**
-	* Returns the d d m storage link with the primary key.
-	*
-	* @param storageLinkId the primary key of the d d m storage link
-	* @return the d d m storage link
-	* @throws PortalException if a d d m storage link with the primary key could not be found
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getDDMStorageLink(
-		long storageLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDDMStorageLink(storageLinkId);
-	}
-
-	/**
-	* Returns the d d m storage link with the matching UUID and company.
-	*
-	* @param uuid the d d m storage link's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d m storage link
-	* @throws PortalException if a matching d d m storage link could not be found
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDDMStorageLinkByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of all the d d m storage links.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of d d m storage links
-	* @param end the upper bound of the range of d d m storage links (not inclusive)
-	* @return the range of d d m storage links
-	*/
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStorageLink> getDDMStorageLinks(
-		int start, int end) {
-		return getService().getDDMStorageLinks(start, end);
-	}
-
-	/**
-	* Returns the number of d d m storage links.
-	*
-	* @return the number of d d m storage links
-	*/
-	public static int getDDMStorageLinksCount() {
-		return getService().getDDMStorageLinksCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink getStorageLink(
-		long storageLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getStorageLink(storageLinkId);
-	}
-
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStorageLink> getStructureStorageLinks(
-		long structureId) {
-		return getService().getStructureStorageLinks(structureId);
-	}
-
-	public static int getStructureStorageLinksCount(long structureId) {
-		return getService().getStructureStorageLinksCount(structureId);
-	}
-
-	/**
-	* Updates the d d m storage link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmStorageLink the d d m storage link
-	* @return the d d m storage link that was updated
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink updateDDMStorageLink(
-		com.liferay.dynamic.data.mapping.model.DDMStorageLink ddmStorageLink) {
-		return getService().updateDDMStorageLink(ddmStorageLink);
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMStorageLink updateStorageLink(
-		long storageLinkId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateStorageLink(storageLinkId, classNameId, classPK);
+	public static void deleteStructureStorageLinks(long structureId) {
+		getService().deleteStructureStorageLinks(structureId);
 	}
 
 	public static DDMStorageLinkLocalService getService() {

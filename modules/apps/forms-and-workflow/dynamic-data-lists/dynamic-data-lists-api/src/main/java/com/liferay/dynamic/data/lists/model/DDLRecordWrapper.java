@@ -172,145 +172,28 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new DDLRecordWrapper((DDLRecord)_ddlRecord.clone());
+	public boolean isCachedModel() {
+		return _ddlRecord.isCachedModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.lists.model.DDLRecord ddlRecord) {
-		return _ddlRecord.compareTo(ddlRecord);
-	}
-
-	/**
-	* Returns the company ID of this d d l record.
-	*
-	* @return the company ID of this d d l record
-	*/
-	@Override
-	public long getCompanyId() {
-		return _ddlRecord.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this d d l record.
-	*
-	* @return the create date of this d d l record
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _ddlRecord.getCreateDate();
+	public boolean isEscapedModel() {
+		return _ddlRecord.isEscapedModel();
 	}
 
 	@Override
-	public java.util.List<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
-		java.lang.String fieldName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getDDMFormFieldValues(fieldName);
+	public boolean isNew() {
+		return _ddlRecord.isNew();
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getDDMFormValues();
-	}
-
-	/**
-	* Returns the d d m storage ID of this d d l record.
-	*
-	* @return the d d m storage ID of this d d l record
-	*/
-	@Override
-	public long getDDMStorageId() {
-		return _ddlRecord.getDDMStorageId();
-	}
-
-	/**
-	* Returns the display index of this d d l record.
-	*
-	* @return the display index of this d d l record
-	*/
-	@Override
-	public int getDisplayIndex() {
-		return _ddlRecord.getDisplayIndex();
+	public com.liferay.dynamic.data.lists.model.DDLRecord toEscapedModel() {
+		return new DDLRecordWrapper(_ddlRecord.toEscapedModel());
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddlRecord.getExpandoBridge();
-	}
-
-	@Override
-	public Serializable getFieldDataType(java.lang.String fieldName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getFieldDataType(fieldName);
-	}
-
-	@Override
-	public Serializable getFieldType(java.lang.String fieldName)
-		throws java.lang.Exception {
-		return _ddlRecord.getFieldType(fieldName);
-	}
-
-	/**
-	* Returns the group ID of this d d l record.
-	*
-	* @return the group ID of this d d l record
-	*/
-	@Override
-	public long getGroupId() {
-		return _ddlRecord.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this d d l record.
-	*
-	* @return the last publish date of this d d l record
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _ddlRecord.getLastPublishDate();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getLatestRecordVersion();
-	}
-
-	/**
-	* Returns the modified date of this d d l record.
-	*
-	* @return the modified date of this d d l record
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _ddlRecord.getModifiedDate();
-	}
-
-	/**
-	* Returns the primary key of this d d l record.
-	*
-	* @return the primary key of this d d l record
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _ddlRecord.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddlRecord.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the record ID of this d d l record.
-	*
-	* @return the record ID of this d d l record
-	*/
-	@Override
-	public long getRecordId() {
-		return _ddlRecord.getRecordId();
+	public com.liferay.dynamic.data.lists.model.DDLRecord toUnescapedModel() {
+		return new DDLRecordWrapper(_ddlRecord.toUnescapedModel());
 	}
 
 	@Override
@@ -319,14 +202,10 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		return _ddlRecord.getRecordSet();
 	}
 
-	/**
-	* Returns the record set ID of this d d l record.
-	*
-	* @return the record set ID of this d d l record
-	*/
 	@Override
-	public long getRecordSetId() {
-		return _ddlRecord.getRecordSetId();
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getLatestRecordVersion();
 	}
 
 	@Override
@@ -343,19 +222,68 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getDDMFormValues();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ddlRecord.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecord> toCacheModel() {
+		return _ddlRecord.toCacheModel();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.dynamic.data.lists.model.DDLRecord ddlRecord) {
+		return _ddlRecord.compareTo(ddlRecord);
+	}
+
+	/**
+	* Returns the display index of this d d l record.
+	*
+	* @return the display index of this d d l record
+	*/
+	@Override
+	public int getDisplayIndex() {
+		return _ddlRecord.getDisplayIndex();
+	}
+
+	@Override
 	public int getStatus()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getStatus();
 	}
 
-	/**
-	* Returns the user ID of this d d l record.
-	*
-	* @return the user ID of this d d l record
-	*/
 	@Override
-	public long getUserId() {
-		return _ddlRecord.getUserId();
+	public int hashCode() {
+		return _ddlRecord.hashCode();
+	}
+
+	@Override
+	public Serializable getFieldDataType(java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getFieldDataType(fieldName);
+	}
+
+	@Override
+	public Serializable getFieldType(java.lang.String fieldName)
+		throws java.lang.Exception {
+		return _ddlRecord.getFieldType(fieldName);
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ddlRecord.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DDLRecordWrapper((DDLRecord)_ddlRecord.clone());
 	}
 
 	/**
@@ -399,16 +327,6 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	/**
-	* Returns the version user ID of this d d l record.
-	*
-	* @return the version user ID of this d d l record
-	*/
-	@Override
-	public long getVersionUserId() {
-		return _ddlRecord.getVersionUserId();
-	}
-
-	/**
 	* Returns the version user name of this d d l record.
 	*
 	* @return the version user name of this d d l record
@@ -429,23 +347,130 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _ddlRecord.hashCode();
+	public java.lang.String toString() {
+		return _ddlRecord.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _ddlRecord.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _ddlRecord.toXmlString();
+	}
+
+	/**
+	* Returns the create date of this d d l record.
+	*
+	* @return the create date of this d d l record
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _ddlRecord.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this d d l record.
+	*
+	* @return the last publish date of this d d l record
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddlRecord.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this d d l record.
+	*
+	* @return the modified date of this d d l record
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ddlRecord.getModifiedDate();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _ddlRecord.isEscapedModel();
+	public java.util.List<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
+		java.lang.String fieldName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecord.getDDMFormFieldValues(fieldName);
 	}
 
+	/**
+	* Returns the company ID of this d d l record.
+	*
+	* @return the company ID of this d d l record
+	*/
 	@Override
-	public boolean isNew() {
-		return _ddlRecord.isNew();
+	public long getCompanyId() {
+		return _ddlRecord.getCompanyId();
+	}
+
+	/**
+	* Returns the d d m storage ID of this d d l record.
+	*
+	* @return the d d m storage ID of this d d l record
+	*/
+	@Override
+	public long getDDMStorageId() {
+		return _ddlRecord.getDDMStorageId();
+	}
+
+	/**
+	* Returns the group ID of this d d l record.
+	*
+	* @return the group ID of this d d l record
+	*/
+	@Override
+	public long getGroupId() {
+		return _ddlRecord.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this d d l record.
+	*
+	* @return the primary key of this d d l record
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ddlRecord.getPrimaryKey();
+	}
+
+	/**
+	* Returns the record ID of this d d l record.
+	*
+	* @return the record ID of this d d l record
+	*/
+	@Override
+	public long getRecordId() {
+		return _ddlRecord.getRecordId();
+	}
+
+	/**
+	* Returns the record set ID of this d d l record.
+	*
+	* @return the record set ID of this d d l record
+	*/
+	@Override
+	public long getRecordSetId() {
+		return _ddlRecord.getRecordSetId();
+	}
+
+	/**
+	* Returns the user ID of this d d l record.
+	*
+	* @return the user ID of this d d l record
+	*/
+	@Override
+	public long getUserId() {
+		return _ddlRecord.getUserId();
+	}
+
+	/**
+	* Returns the version user ID of this d d l record.
+	*
+	* @return the version user ID of this d d l record
+	*/
+	@Override
+	public long getVersionUserId() {
+		return _ddlRecord.getVersionUserId();
 	}
 
 	@Override
@@ -499,14 +524,14 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddlRecord.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_ddlRecord.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddlRecord.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_ddlRecord.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -662,31 +687,6 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	@Override
 	public void setVersionUserUuid(java.lang.String versionUserUuid) {
 		_ddlRecord.setVersionUserUuid(versionUserUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecord> toCacheModel() {
-		return _ddlRecord.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord toEscapedModel() {
-		return new DDLRecordWrapper(_ddlRecord.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ddlRecord.toString();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord toUnescapedModel() {
-		return new DDLRecordWrapper(_ddlRecord.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ddlRecord.toXmlString();
 	}
 
 	@Override

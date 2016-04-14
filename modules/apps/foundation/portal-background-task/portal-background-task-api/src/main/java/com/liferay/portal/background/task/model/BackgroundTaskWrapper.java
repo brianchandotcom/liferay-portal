@@ -180,81 +180,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		}
 	}
 
-	@Override
-	public void addAttachment(long userId, java.lang.String fileName,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_backgroundTask.addAttachment(userId, fileName, file);
-	}
-
-	@Override
-	public void addAttachment(long userId, java.lang.String fileName,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_backgroundTask.addAttachment(userId, fileName, inputStream);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.addAttachmentsFolder();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new BackgroundTaskWrapper((BackgroundTask)_backgroundTask.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask) {
-		return _backgroundTask.compareTo(backgroundTask);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.getAttachmentsFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.getAttachmentsFileEntries(start, end);
-	}
-
-	@Override
-	public int getAttachmentsFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.getAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public long getAttachmentsFolderId() {
-		return _backgroundTask.getAttachmentsFolderId();
-	}
-
-	/**
-	* Returns the background task ID of this background task.
-	*
-	* @return the background task ID of this background task
-	*/
-	@Override
-	public long getBackgroundTaskId() {
-		return _backgroundTask.getBackgroundTaskId();
-	}
-
-	/**
-	* Returns the company ID of this background task.
-	*
-	* @return the company ID of this background task
-	*/
-	@Override
-	public long getCompanyId() {
-		return _backgroundTask.getCompanyId();
-	}
-
 	/**
 	* Returns the completed of this background task.
 	*
@@ -263,176 +188,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public boolean getCompleted() {
 		return _backgroundTask.getCompleted();
-	}
-
-	/**
-	* Returns the completion date of this background task.
-	*
-	* @return the completion date of this background task
-	*/
-	@Override
-	public Date getCompletionDate() {
-		return _backgroundTask.getCompletionDate();
-	}
-
-	/**
-	* Returns the create date of this background task.
-	*
-	* @return the create date of this background task
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _backgroundTask.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _backgroundTask.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this background task.
-	*
-	* @return the group ID of this background task
-	*/
-	@Override
-	public long getGroupId() {
-		return _backgroundTask.getGroupId();
-	}
-
-	/**
-	* Returns the modified date of this background task.
-	*
-	* @return the modified date of this background task
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _backgroundTask.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this background task.
-	*
-	* @return the mvcc version of this background task
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _backgroundTask.getMvccVersion();
-	}
-
-	/**
-	* Returns the name of this background task.
-	*
-	* @return the name of this background task
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _backgroundTask.getName();
-	}
-
-	/**
-	* Returns the primary key of this background task.
-	*
-	* @return the primary key of this background task
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _backgroundTask.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _backgroundTask.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the servlet context names of this background task.
-	*
-	* @return the servlet context names of this background task
-	*/
-	@Override
-	public java.lang.String getServletContextNames() {
-		return _backgroundTask.getServletContextNames();
-	}
-
-	/**
-	* Returns the status of this background task.
-	*
-	* @return the status of this background task
-	*/
-	@Override
-	public int getStatus() {
-		return _backgroundTask.getStatus();
-	}
-
-	@Override
-	public java.lang.String getStatusLabel() {
-		return _backgroundTask.getStatusLabel();
-	}
-
-	/**
-	* Returns the status message of this background task.
-	*
-	* @return the status message of this background task
-	*/
-	@Override
-	public java.lang.String getStatusMessage() {
-		return _backgroundTask.getStatusMessage();
-	}
-
-	/**
-	* Returns the task context map of this background task.
-	*
-	* @return the task context map of this background task
-	*/
-	@Override
-	public Map<java.lang.String, Serializable> getTaskContextMap() {
-		return _backgroundTask.getTaskContextMap();
-	}
-
-	/**
-	* Returns the task executor class name of this background task.
-	*
-	* @return the task executor class name of this background task
-	*/
-	@Override
-	public java.lang.String getTaskExecutorClassName() {
-		return _backgroundTask.getTaskExecutorClassName();
-	}
-
-	/**
-	* Returns the user ID of this background task.
-	*
-	* @return the user ID of this background task
-	*/
-	@Override
-	public long getUserId() {
-		return _backgroundTask.getUserId();
-	}
-
-	/**
-	* Returns the user name of this background task.
-	*
-	* @return the user name of this background task
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _backgroundTask.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this background task.
-	*
-	* @return the user uuid of this background task
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _backgroundTask.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _backgroundTask.hashCode();
 	}
 
 	@Override
@@ -463,6 +218,276 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public boolean isNew() {
 		return _backgroundTask.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _backgroundTask.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.background.task.model.BackgroundTask toEscapedModel() {
+		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.background.task.model.BackgroundTask toUnescapedModel() {
+		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.background.task.model.BackgroundTask> toCacheModel() {
+		return _backgroundTask.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTask.addAttachmentsFolder();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portal.background.task.model.BackgroundTask backgroundTask) {
+		return _backgroundTask.compareTo(backgroundTask);
+	}
+
+	@Override
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTask.getAttachmentsFileEntriesCount();
+	}
+
+	/**
+	* Returns the status of this background task.
+	*
+	* @return the status of this background task
+	*/
+	@Override
+	public int getStatus() {
+		return _backgroundTask.getStatus();
+	}
+
+	@Override
+	public int hashCode() {
+		return _backgroundTask.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _backgroundTask.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new BackgroundTaskWrapper((BackgroundTask)_backgroundTask.clone());
+	}
+
+	/**
+	* Returns the name of this background task.
+	*
+	* @return the name of this background task
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _backgroundTask.getName();
+	}
+
+	/**
+	* Returns the servlet context names of this background task.
+	*
+	* @return the servlet context names of this background task
+	*/
+	@Override
+	public java.lang.String getServletContextNames() {
+		return _backgroundTask.getServletContextNames();
+	}
+
+	@Override
+	public java.lang.String getStatusLabel() {
+		return _backgroundTask.getStatusLabel();
+	}
+
+	/**
+	* Returns the status message of this background task.
+	*
+	* @return the status message of this background task
+	*/
+	@Override
+	public java.lang.String getStatusMessage() {
+		return _backgroundTask.getStatusMessage();
+	}
+
+	/**
+	* Returns the task executor class name of this background task.
+	*
+	* @return the task executor class name of this background task
+	*/
+	@Override
+	public java.lang.String getTaskExecutorClassName() {
+		return _backgroundTask.getTaskExecutorClassName();
+	}
+
+	/**
+	* Returns the user name of this background task.
+	*
+	* @return the user name of this background task
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _backgroundTask.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this background task.
+	*
+	* @return the user uuid of this background task
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _backgroundTask.getUserUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _backgroundTask.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _backgroundTask.toXmlString();
+	}
+
+	/**
+	* Returns the completion date of this background task.
+	*
+	* @return the completion date of this background task
+	*/
+	@Override
+	public Date getCompletionDate() {
+		return _backgroundTask.getCompletionDate();
+	}
+
+	/**
+	* Returns the create date of this background task.
+	*
+	* @return the create date of this background task
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _backgroundTask.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this background task.
+	*
+	* @return the modified date of this background task
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _backgroundTask.getModifiedDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTask.getAttachmentsFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTask.getAttachmentsFileEntries(start, end);
+	}
+
+	/**
+	* Returns the task context map of this background task.
+	*
+	* @return the task context map of this background task
+	*/
+	@Override
+	public Map<java.lang.String, Serializable> getTaskContextMap() {
+		return _backgroundTask.getTaskContextMap();
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _backgroundTask.getAttachmentsFolderId();
+	}
+
+	/**
+	* Returns the background task ID of this background task.
+	*
+	* @return the background task ID of this background task
+	*/
+	@Override
+	public long getBackgroundTaskId() {
+		return _backgroundTask.getBackgroundTaskId();
+	}
+
+	/**
+	* Returns the company ID of this background task.
+	*
+	* @return the company ID of this background task
+	*/
+	@Override
+	public long getCompanyId() {
+		return _backgroundTask.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this background task.
+	*
+	* @return the group ID of this background task
+	*/
+	@Override
+	public long getGroupId() {
+		return _backgroundTask.getGroupId();
+	}
+
+	/**
+	* Returns the mvcc version of this background task.
+	*
+	* @return the mvcc version of this background task
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _backgroundTask.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this background task.
+	*
+	* @return the primary key of this background task
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _backgroundTask.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this background task.
+	*
+	* @return the user ID of this background task
+	*/
+	@Override
+	public long getUserId() {
+		return _backgroundTask.getUserId();
+	}
+
+	@Override
+	public void addAttachment(long userId, java.lang.String fileName,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_backgroundTask.addAttachment(userId, fileName, file);
+	}
+
+	@Override
+	public void addAttachment(long userId, java.lang.String fileName,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_backgroundTask.addAttachment(userId, fileName, inputStream);
 	}
 
 	@Override
@@ -526,14 +551,14 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_backgroundTask.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_backgroundTask.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_backgroundTask.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_backgroundTask.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -680,31 +705,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_backgroundTask.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.background.task.model.BackgroundTask> toCacheModel() {
-		return _backgroundTask.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask toEscapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _backgroundTask.toString();
-	}
-
-	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask toUnescapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _backgroundTask.toXmlString();
 	}
 
 	@Override

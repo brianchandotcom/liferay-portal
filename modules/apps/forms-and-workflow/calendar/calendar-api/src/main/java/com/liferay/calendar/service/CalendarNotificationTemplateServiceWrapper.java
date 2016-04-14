@@ -48,16 +48,6 @@ public class CalendarNotificationTemplateServiceWrapper
 			notificationTemplateType, subject, body, serviceContext);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _calendarNotificationTemplateService.getOSGiServiceIdentifier();
-	}
-
 	@Override
 	public com.liferay.calendar.model.CalendarNotificationTemplate updateCalendarNotificationTemplate(
 		long calendarNotificationTemplateId,
@@ -67,6 +57,16 @@ public class CalendarNotificationTemplateServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateService.updateCalendarNotificationTemplate(calendarNotificationTemplateId,
 			notificationTypeSettings, subject, body, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _calendarNotificationTemplateService.getOSGiServiceIdentifier();
 	}
 
 	@Override

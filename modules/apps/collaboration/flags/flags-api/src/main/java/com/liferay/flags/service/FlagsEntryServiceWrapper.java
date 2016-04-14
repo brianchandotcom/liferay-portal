@@ -32,6 +32,16 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 		_flagsEntryService = flagsEntryService;
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _flagsEntryService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public void addEntry(java.lang.String className, long classPK,
 		java.lang.String reporterEmailAddress, long reportedUserId,
@@ -41,16 +51,6 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_flagsEntryService.addEntry(className, classPK, reporterEmailAddress,
 			reportedUserId, contentTitle, contentURL, reason, serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _flagsEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override

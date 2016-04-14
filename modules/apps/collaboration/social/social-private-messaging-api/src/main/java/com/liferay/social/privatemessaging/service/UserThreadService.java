@@ -61,6 +61,10 @@ public interface UserThreadService extends BaseService {
 	public MBMessage getLastThreadMessage(long mbThreadId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getThreadMessagesCount(long mbThreadId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -71,10 +75,6 @@ public interface UserThreadService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getThreadMessages(long mbThreadId, int start,
 		int end, boolean ascending) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getThreadMessagesCount(long mbThreadId)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserThread> getUserUserThreads(boolean deleted)

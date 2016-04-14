@@ -50,20 +50,81 @@ public class BookmarksFolderServiceUtil {
 				   .addFolder(parentFolderId, name, description, serviceContext);
 	}
 
-	public static void deleteFolder(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFolder(folderId);
-	}
-
-	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFolder(folderId, includeTrashedEntries);
-	}
-
 	public static com.liferay.bookmarks.model.BookmarksFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFolder(folderId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksFolder moveFolder(
+		long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveFolder(folderId, parentFolderId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksFolder moveFolderFromTrash(
+		long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveFolderFromTrash(folderId, parentFolderId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksFolder moveFolderToTrash(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveFolderToTrash(folderId);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
+	*/
+	@Deprecated
+	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolder(folderId, parentFolderId, name, description,
+			mergeWithParentFolder, serviceContext);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolder(folderId, parentFolderId, name, description,
+			serviceContext);
+	}
+
+	public static int getFoldersAndEntriesCount(long groupId, long folderId) {
+		return getService().getFoldersAndEntriesCount(groupId, folderId);
+	}
+
+	public static int getFoldersAndEntriesCount(long groupId, long folderId,
+		int status) {
+		return getService().getFoldersAndEntriesCount(groupId, folderId, status);
+	}
+
+	public static int getFoldersCount(long groupId, long parentFolderId) {
+		return getService().getFoldersCount(groupId, parentFolderId);
+	}
+
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		int status) {
+		return getService().getFoldersCount(groupId, parentFolderId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<java.lang.Long> getFolderIds(long groupId,
@@ -109,31 +170,19 @@ public class BookmarksFolderServiceUtil {
 				   .getFoldersAndEntries(groupId, folderId, status, start, end);
 	}
 
-	public static int getFoldersAndEntriesCount(long groupId, long folderId) {
-		return getService().getFoldersAndEntriesCount(groupId, folderId);
+	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
+		long folderId, boolean recurse) {
+		return getService().getSubfolderIds(groupId, folderId, recurse);
 	}
 
-	public static int getFoldersAndEntriesCount(long groupId, long folderId,
-		int status) {
-		return getService().getFoldersAndEntriesCount(groupId, folderId, status);
+	public static void deleteFolder(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFolder(folderId);
 	}
 
-	public static int getFoldersCount(long groupId, long parentFolderId) {
-		return getService().getFoldersCount(groupId, parentFolderId);
-	}
-
-	public static int getFoldersCount(long groupId, long parentFolderId,
-		int status) {
-		return getService().getFoldersCount(groupId, parentFolderId, status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
 	/**
@@ -152,32 +201,9 @@ public class BookmarksFolderServiceUtil {
 		getService().getSubfolderIds(folderIds, groupId, folderId, recurse);
 	}
 
-	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
-		long folderId, boolean recurse) {
-		return getService().getSubfolderIds(groupId, folderId, recurse);
-	}
-
 	public static void mergeFolders(long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().mergeFolders(folderId, parentFolderId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksFolder moveFolder(
-		long folderId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFolder(folderId, parentFolderId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksFolder moveFolderFromTrash(
-		long folderId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFolderFromTrash(folderId, parentFolderId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksFolder moveFolderToTrash(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFolderToTrash(folderId);
 	}
 
 	public static void restoreFolderFromTrash(long folderId)
@@ -193,32 +219,6 @@ public class BookmarksFolderServiceUtil {
 	public static void unsubscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribeFolder(groupId, folderId);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link
-	#mergeFolders(long, long)}
-	*/
-	@Deprecated
-	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
-			mergeWithParentFolder, serviceContext);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
-			serviceContext);
 	}
 
 	public static BookmarksFolderService getService() {

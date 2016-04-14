@@ -57,6 +57,25 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerPathLocalServiceUtil} to access the user tracker path local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserTrackerPathLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the user tracker path to the database. Also notifies the appropriate model listeners.
@@ -74,13 +93,6 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 	* @return the new user tracker path
 	*/
 	public UserTrackerPath createUserTrackerPath(long userTrackerPathId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
 
 	/**
 	* Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
@@ -103,7 +115,44 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 	public UserTrackerPath deleteUserTrackerPath(long userTrackerPathId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserTrackerPath fetchUserTrackerPath(long userTrackerPathId);
+
+	/**
+	* Returns the user tracker path with the primary key.
+	*
+	* @param userTrackerPathId the primary key of the user tracker path
+	* @return the user tracker path
+	* @throws PortalException if a user tracker path with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserTrackerPath getUserTrackerPath(long userTrackerPathId)
+		throws PortalException;
+
+	/**
+	* Updates the user tracker path in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userTrackerPath the user tracker path
+	* @return the user tracker path that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public UserTrackerPath updateUserTrackerPath(
+		UserTrackerPath userTrackerPath);
+
+	/**
+	* Returns the number of user tracker paths.
+	*
+	* @return the number of user tracker paths
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserTrackerPathsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -145,56 +194,6 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserTrackerPath fetchUserTrackerPath(long userTrackerPathId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the user tracker path with the primary key.
-	*
-	* @param userTrackerPathId the primary key of the user tracker path
-	* @return the user tracker path
-	* @throws PortalException if a user tracker path with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserTrackerPath getUserTrackerPath(long userTrackerPathId)
-		throws PortalException;
-
-	/**
 	* Returns a range of all the user tracker paths.
 	*
 	* <p>
@@ -213,20 +212,20 @@ public interface UserTrackerPathLocalService extends BaseLocalService,
 		int start, int end);
 
 	/**
-	* Returns the number of user tracker paths.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of user tracker paths
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserTrackerPathsCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the user tracker path in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userTrackerPath the user tracker path
-	* @return the user tracker path that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public UserTrackerPath updateUserTrackerPath(
-		UserTrackerPath userTrackerPath);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 }

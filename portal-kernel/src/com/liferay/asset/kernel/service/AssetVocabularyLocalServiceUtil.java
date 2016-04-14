@@ -77,22 +77,6 @@ public class AssetVocabularyLocalServiceUtil {
 			descriptionMap, settings, serviceContext);
 	}
 
-	public static void addVocabularyResources(
-		com.liferay.asset.kernel.model.AssetVocabulary vocabulary,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addVocabularyResources(vocabulary, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addVocabularyResources(
-		com.liferay.asset.kernel.model.AssetVocabulary vocabulary,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addVocabularyResources(vocabulary, modelPermissions);
-	}
-
 	/**
 	* Creates a new asset vocabulary with the primary key. Does not add the asset vocabulary to the database.
 	*
@@ -128,6 +112,108 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().deleteAssetVocabulary(vocabularyId);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetVocabulary deleteVocabulary(
+		com.liferay.asset.kernel.model.AssetVocabulary vocabulary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteVocabulary(vocabulary);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetVocabulary fetchAssetVocabulary(
+		long vocabularyId) {
+		return getService().fetchAssetVocabulary(vocabularyId);
+	}
+
+	/**
+	* Returns the asset vocabulary matching the UUID and group.
+	*
+	* @param uuid the asset vocabulary's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
+	*/
+	public static com.liferay.asset.kernel.model.AssetVocabulary fetchAssetVocabularyByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns the asset vocabulary with the primary key.
+	*
+	* @param vocabularyId the primary key of the asset vocabulary
+	* @return the asset vocabulary
+	* @throws PortalException if a asset vocabulary with the primary key could not be found
+	*/
+	public static com.liferay.asset.kernel.model.AssetVocabulary getAssetVocabulary(
+		long vocabularyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetVocabulary(vocabularyId);
+	}
+
+	/**
+	* Returns the asset vocabulary matching the UUID and group.
+	*
+	* @param uuid the asset vocabulary's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset vocabulary
+	* @throws PortalException if a matching asset vocabulary could not be found
+	*/
+	public static com.liferay.asset.kernel.model.AssetVocabulary getAssetVocabularyByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetVocabularyByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetVocabulary getGroupVocabulary(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGroupVocabulary(groupId, name);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetVocabulary getVocabulary(
+		long vocabularyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVocabulary(vocabularyId);
+	}
+
+	/**
+	* Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param assetVocabulary the asset vocabulary
+	* @return the asset vocabulary that was updated
+	*/
+	public static com.liferay.asset.kernel.model.AssetVocabulary updateAssetVocabulary(
+		com.liferay.asset.kernel.model.AssetVocabulary assetVocabulary) {
+		return getService().updateAssetVocabulary(assetVocabulary);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetVocabulary updateVocabulary(
+		long vocabularyId, java.lang.String title,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String settings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateVocabulary(vocabularyId, title, titleMap,
+			descriptionMap, settings, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -137,24 +223,48 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteVocabularies(long groupId)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteVocabularies(groupId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetVocabulary deleteVocabulary(
-		com.liferay.asset.kernel.model.AssetVocabulary vocabulary)
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.asset.kernel.model.AssetVocabulary> searchVocabularies(
+		long companyId, long groupId, java.lang.String title, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteVocabulary(vocabulary);
+		return getService()
+				   .searchVocabularies(companyId, groupId, title, start, end);
 	}
 
-	public static void deleteVocabulary(long vocabularyId)
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.asset.kernel.model.AssetVocabulary> searchVocabularies(
+		long companyId, long groupId, java.lang.String title, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteVocabulary(vocabularyId);
+		return getService()
+				   .searchVocabularies(companyId, groupId, title, start, end,
+			sort);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the number of asset vocabularies.
+	*
+	* @return the number of asset vocabularies
+	*/
+	public static int getAssetVocabulariesCount() {
+		return getService().getAssetVocabulariesCount();
+	}
+
+	public static int getGroupVocabulariesCount(long[] groupIds) {
+		return getService().getGroupVocabulariesCount(groupIds);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -208,51 +318,6 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetVocabulary fetchAssetVocabulary(
-		long vocabularyId) {
-		return getService().fetchAssetVocabulary(vocabularyId);
-	}
-
-	/**
-	* Returns the asset vocabulary matching the UUID and group.
-	*
-	* @param uuid the asset vocabulary's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	*/
-	public static com.liferay.asset.kernel.model.AssetVocabulary fetchAssetVocabularyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
 	* Returns a range of all the asset vocabularies.
 	*
 	* <p>
@@ -299,50 +364,9 @@ public class AssetVocabularyLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of asset vocabularies.
-	*
-	* @return the number of asset vocabularies
-	*/
-	public static int getAssetVocabulariesCount() {
-		return getService().getAssetVocabulariesCount();
-	}
-
-	/**
-	* Returns the asset vocabulary with the primary key.
-	*
-	* @param vocabularyId the primary key of the asset vocabulary
-	* @return the asset vocabulary
-	* @throws PortalException if a asset vocabulary with the primary key could not be found
-	*/
-	public static com.liferay.asset.kernel.model.AssetVocabulary getAssetVocabulary(
-		long vocabularyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAssetVocabulary(vocabularyId);
-	}
-
-	/**
-	* Returns the asset vocabulary matching the UUID and group.
-	*
-	* @param uuid the asset vocabulary's UUID
-	* @param groupId the primary key of the group
-	* @return the matching asset vocabulary
-	* @throws PortalException if a matching asset vocabulary could not be found
-	*/
-	public static com.liferay.asset.kernel.model.AssetVocabulary getAssetVocabularyByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAssetVocabularyByUuidAndGroupId(uuid, groupId);
-	}
-
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getCompanyVocabularies(
 		long companyId) {
 		return getService().getCompanyVocabularies(companyId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
@@ -368,16 +392,6 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getGroupVocabularies(groupIds);
 	}
 
-	public static int getGroupVocabulariesCount(long[] groupIds) {
-		return getService().getGroupVocabulariesCount(groupIds);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetVocabulary getGroupVocabulary(
-		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getGroupVocabulary(groupId, name);
-	}
-
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupsVocabularies(
 		long[] groupIds) {
 		return getService().getGroupsVocabularies(groupIds);
@@ -394,25 +408,6 @@ public class AssetVocabularyLocalServiceUtil {
 				   .getGroupsVocabularies(groupIds, className, classTypePK);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getVocabularies(
 		com.liferay.portal.kernel.search.Hits hits)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -425,49 +420,54 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getVocabularies(vocabularyIds);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetVocabulary getVocabulary(
-		long vocabularyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVocabulary(vocabularyId);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.asset.kernel.model.AssetVocabulary> searchVocabularies(
-		long companyId, long groupId, java.lang.String title, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchVocabularies(companyId, groupId, title, start, end);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.asset.kernel.model.AssetVocabulary> searchVocabularies(
-		long companyId, long groupId, java.lang.String title, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchVocabularies(companyId, groupId, title, start, end,
-			sort);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param assetVocabulary the asset vocabulary
-	* @return the asset vocabulary that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static com.liferay.asset.kernel.model.AssetVocabulary updateAssetVocabulary(
-		com.liferay.asset.kernel.model.AssetVocabulary assetVocabulary) {
-		return getService().updateAssetVocabulary(assetVocabulary);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetVocabulary updateVocabulary(
-		long vocabularyId, java.lang.String title,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String settings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void addVocabularyResources(
+		com.liferay.asset.kernel.model.AssetVocabulary vocabulary,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateVocabulary(vocabularyId, title, titleMap,
-			descriptionMap, settings, serviceContext);
+		getService()
+			.addVocabularyResources(vocabulary, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addVocabularyResources(
+		com.liferay.asset.kernel.model.AssetVocabulary vocabulary,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addVocabularyResources(vocabulary, modelPermissions);
+	}
+
+	public static void deleteVocabularies(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteVocabularies(groupId);
+	}
+
+	public static void deleteVocabulary(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteVocabulary(vocabularyId);
 	}
 
 	public static AssetVocabularyLocalService getService() {

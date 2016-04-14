@@ -44,15 +44,17 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	@Override
-	public void checkRepository(long repositoryId)
+	public com.liferay.portal.kernel.model.Repository getRepository(
+		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_repositoryService.checkRepository(repositoryId);
+		return _repositoryService.getRepository(repositoryId);
 	}
 
 	@Override
-	public void deleteRepository(long repositoryId)
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
+		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_repositoryService.deleteRepository(repositoryId);
+		return _repositoryService.getTypeSettingsProperties(repositoryId);
 	}
 
 	/**
@@ -63,13 +65,6 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _repositoryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Repository getRepository(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryService.getRepository(repositoryId);
 	}
 
 	/**
@@ -104,10 +99,15 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
-		long repositoryId)
+	public void checkRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryService.getTypeSettingsProperties(repositoryId);
+		_repositoryService.checkRepository(repositoryId);
+	}
+
+	@Override
+	public void deleteRepository(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryService.deleteRepository(repositoryId);
 	}
 
 	@Override

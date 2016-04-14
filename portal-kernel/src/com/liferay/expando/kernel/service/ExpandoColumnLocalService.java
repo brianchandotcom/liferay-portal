@@ -84,27 +84,14 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	*/
 	public ExpandoColumn createExpandoColumn(long columnId);
 
-	public void deleteColumn(ExpandoColumn column);
-
-	public void deleteColumn(long columnId) throws PortalException;
-
-	public void deleteColumn(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String name)
-		throws PortalException;
-
-	public void deleteColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name)
-		throws PortalException;
-
-	public void deleteColumn(long tableId, java.lang.String name);
-
-	public void deleteColumns(long companyId, java.lang.String className,
-		java.lang.String tableName) throws PortalException;
-
-	public void deleteColumns(long companyId, long classNameId,
-		java.lang.String tableName) throws PortalException;
-
-	public void deleteColumns(long tableId);
+	/**
+	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	*
+	* @param expandoColumn the expando column
+	* @return the expando column that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ExpandoColumn deleteExpandoColumn(ExpandoColumn expandoColumn);
 
 	/**
 	* Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
@@ -117,14 +104,67 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public ExpandoColumn deleteExpandoColumn(long columnId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn fetchExpandoColumn(long columnId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(long columnId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(long tableId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getDefaultTableColumn(long companyId,
+		java.lang.String className, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getDefaultTableColumn(long companyId,
+		long classNameId, java.lang.String name);
+
 	/**
-	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	* Returns the expando column with the primary key.
+	*
+	* @param columnId the primary key of the expando column
+	* @return the expando column
+	* @throws PortalException if a expando column with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getExpandoColumn(long columnId)
+		throws PortalException;
+
+	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
+		int type) throws PortalException;
+
+	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
+		int type, java.lang.Object defaultData) throws PortalException;
+
+	/**
+	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param expandoColumn the expando column
-	* @return the expando column that was removed
+	* @return the expando column that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ExpandoColumn deleteExpandoColumn(ExpandoColumn expandoColumn);
+	@Indexable(type = IndexableType.REINDEX)
+	public ExpandoColumn updateExpandoColumn(ExpandoColumn expandoColumn);
+
+	public ExpandoColumn updateTypeSettings(long columnId,
+		java.lang.String typeSettings) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -133,7 +173,43 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getColumnsCount(long companyId, java.lang.String className,
+		java.lang.String tableName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getColumnsCount(long companyId, long classNameId,
+		java.lang.String tableName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getColumnsCount(long tableId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefaultTableColumnsCount(long companyId,
+		java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefaultTableColumnsCount(long companyId, long classNameId);
+
+	/**
+	* Returns the number of expando columns.
+	*
+	* @return the number of expando columns
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExpandoColumnsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -174,44 +250,6 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn fetchExpandoColumn(long columnId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long columnId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long tableId, java.lang.String name);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getColumns(long companyId,
 		java.lang.String className, java.lang.String tableName);
@@ -237,49 +275,12 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 		Collection<java.lang.String> names);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long companyId, java.lang.String className,
-		java.lang.String tableName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long companyId, long classNameId,
-		java.lang.String tableName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long tableId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getDefaultTableColumn(long companyId,
-		java.lang.String className, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getDefaultTableColumn(long companyId,
-		long classNameId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
 		java.lang.String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
 		long classNameId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefaultTableColumnsCount(long companyId,
-		java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefaultTableColumnsCount(long companyId, long classNameId);
-
-	/**
-	* Returns the expando column with the primary key.
-	*
-	* @param columnId the primary key of the expando column
-	* @return the expando column
-	* @throws PortalException if a expando column with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getExpandoColumn(long columnId)
-		throws PortalException;
 
 	/**
 	* Returns a range of all the expando columns.
@@ -296,43 +297,42 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public List<ExpandoColumn> getExpandoColumns(int start, int end);
 
 	/**
-	* Returns the number of expando columns.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of expando columns
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getExpandoColumnsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public void deleteColumn(ExpandoColumn column);
+
+	public void deleteColumn(long columnId) throws PortalException;
+
+	public void deleteColumn(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String name)
 		throws PortalException;
 
-	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
-		int type) throws PortalException;
+	public void deleteColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name)
+		throws PortalException;
 
-	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
-		int type, java.lang.Object defaultData) throws PortalException;
+	public void deleteColumn(long tableId, java.lang.String name);
 
-	/**
-	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoColumn the expando column
-	* @return the expando column that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ExpandoColumn updateExpandoColumn(ExpandoColumn expandoColumn);
+	public void deleteColumns(long companyId, java.lang.String className,
+		java.lang.String tableName) throws PortalException;
 
-	public ExpandoColumn updateTypeSettings(long columnId,
-		java.lang.String typeSettings) throws PortalException;
+	public void deleteColumns(long companyId, long classNameId,
+		java.lang.String tableName) throws PortalException;
+
+	public void deleteColumns(long tableId);
 }

@@ -150,8 +150,44 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new TeamWrapper((Team)_team.clone());
+	public CacheModel<com.liferay.portal.kernel.model.Team> toCacheModel() {
+		return _team.toCacheModel();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _team.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _team.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _team.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _team.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Role getRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _team.getRole();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Team toEscapedModel() {
+		return new TeamWrapper(_team.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Team toUnescapedModel() {
+		return new TeamWrapper(_team.toUnescapedModel());
 	}
 
 	@Override
@@ -159,24 +195,19 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		return _team.compareTo(team);
 	}
 
-	/**
-	* Returns the company ID of this team.
-	*
-	* @return the company ID of this team
-	*/
 	@Override
-	public long getCompanyId() {
-		return _team.getCompanyId();
+	public int hashCode() {
+		return _team.hashCode();
 	}
 
-	/**
-	* Returns the create date of this team.
-	*
-	* @return the create date of this team
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _team.getCreateDate();
+	public Serializable getPrimaryKeyObj() {
+		return _team.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new TeamWrapper((Team)_team.clone());
 	}
 
 	/**
@@ -189,51 +220,6 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		return _team.getDescription();
 	}
 
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _team.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this team.
-	*
-	* @return the group ID of this team
-	*/
-	@Override
-	public long getGroupId() {
-		return _team.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this team.
-	*
-	* @return the last publish date of this team
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _team.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this team.
-	*
-	* @return the modified date of this team
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _team.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this team.
-	*
-	* @return the mvcc version of this team
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _team.getMvccVersion();
-	}
-
 	/**
 	* Returns the name of this team.
 	*
@@ -242,47 +228,6 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	@Override
 	public java.lang.String getName() {
 		return _team.getName();
-	}
-
-	/**
-	* Returns the primary key of this team.
-	*
-	* @return the primary key of this team
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _team.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _team.getPrimaryKeyObj();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Role getRole()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _team.getRole();
-	}
-
-	/**
-	* Returns the team ID of this team.
-	*
-	* @return the team ID of this team
-	*/
-	@Override
-	public long getTeamId() {
-		return _team.getTeamId();
-	}
-
-	/**
-	* Returns the user ID of this team.
-	*
-	* @return the user ID of this team
-	*/
-	@Override
-	public long getUserId() {
-		return _team.getUserId();
 	}
 
 	/**
@@ -316,23 +261,103 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _team.hashCode();
+	public java.lang.String toString() {
+		return _team.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _team.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _team.toXmlString();
 	}
 
+	/**
+	* Returns the create date of this team.
+	*
+	* @return the create date of this team
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _team.isEscapedModel();
+	public Date getCreateDate() {
+		return _team.getCreateDate();
 	}
 
+	/**
+	* Returns the last publish date of this team.
+	*
+	* @return the last publish date of this team
+	*/
 	@Override
-	public boolean isNew() {
-		return _team.isNew();
+	public Date getLastPublishDate() {
+		return _team.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this team.
+	*
+	* @return the modified date of this team
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _team.getModifiedDate();
+	}
+
+	/**
+	* Returns the company ID of this team.
+	*
+	* @return the company ID of this team
+	*/
+	@Override
+	public long getCompanyId() {
+		return _team.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this team.
+	*
+	* @return the group ID of this team
+	*/
+	@Override
+	public long getGroupId() {
+		return _team.getGroupId();
+	}
+
+	/**
+	* Returns the mvcc version of this team.
+	*
+	* @return the mvcc version of this team
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _team.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this team.
+	*
+	* @return the primary key of this team
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _team.getPrimaryKey();
+	}
+
+	/**
+	* Returns the team ID of this team.
+	*
+	* @return the team ID of this team
+	*/
+	@Override
+	public long getTeamId() {
+		return _team.getTeamId();
+	}
+
+	/**
+	* Returns the user ID of this team.
+	*
+	* @return the user ID of this team
+	*/
+	@Override
+	public long getUserId() {
+		return _team.getUserId();
 	}
 
 	@Override
@@ -508,31 +533,6 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_team.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Team> toCacheModel() {
-		return _team.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Team toEscapedModel() {
-		return new TeamWrapper(_team.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _team.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Team toUnescapedModel() {
-		return new TeamWrapper(_team.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _team.toXmlString();
 	}
 
 	@Override

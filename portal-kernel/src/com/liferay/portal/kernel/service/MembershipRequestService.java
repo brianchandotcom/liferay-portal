@@ -52,9 +52,6 @@ public interface MembershipRequestService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteMembershipRequests(long groupId, long statusId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MembershipRequest getMembershipRequest(long membershipRequestId)
 		throws PortalException;
@@ -65,6 +62,9 @@ public interface MembershipRequestService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public void deleteMembershipRequests(long groupId, long statusId)
+		throws PortalException;
 
 	public void updateStatus(long membershipRequestId,
 		java.lang.String reviewComments, long statusId,

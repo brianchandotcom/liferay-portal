@@ -62,6 +62,26 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingOrderLocalServiceUtil} to access the shopping order local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingOrderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	public ShoppingOrder addLatestOrder(long userId, long groupId)
 		throws PortalException;
 
@@ -74,12 +94,6 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder addShoppingOrder(ShoppingOrder shoppingOrder);
 
-	public void completeOrder(java.lang.String number,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, boolean updateInventory,
-		ServiceContext serviceContext) throws PortalException;
-
 	/**
 	* Creates a new shopping order with the primary key. Does not add the shopping order to the database.
 	*
@@ -88,18 +102,14 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	*/
 	public ShoppingOrder createShoppingOrder(long orderId);
 
-	public void deleteOrder(ShoppingOrder order) throws PortalException;
-
-	public void deleteOrder(long orderId) throws PortalException;
-
-	public void deleteOrders(long groupId) throws PortalException;
-
 	/**
-	* @throws PortalException
+	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrder the shopping order
+	* @return the shopping order that was removed
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrder deleteShoppingOrder(ShoppingOrder shoppingOrder);
 
 	/**
 	* Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
@@ -112,93 +122,12 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	public ShoppingOrder deleteShoppingOrder(long orderId)
 		throws PortalException;
 
-	/**
-	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrder the shopping order
-	* @return the shopping order that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingOrder deleteShoppingOrder(ShoppingOrder shoppingOrder);
-
-	public DynamicQuery dynamicQuery();
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingOrder fetchShoppingOrder(long orderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingOrder getLatestOrder(long userId, long groupId)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingOrder getOrder(java.lang.String number)
@@ -209,11 +138,6 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingOrder getPayPalTxnIdOrder(java.lang.String ppTxnId)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	/**
@@ -227,54 +151,8 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	public ShoppingOrder getShoppingOrder(long orderId)
 		throws PortalException;
 
-	/**
-	* Returns a range of all the shopping orders.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping orders
-	* @param end the upper bound of the range of shopping orders (not inclusive)
-	* @return the range of shopping orders
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingOrder> getShoppingOrders(int start, int end);
-
-	/**
-	* Returns the number of shopping orders.
-	*
-	* @return the number of shopping orders
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getShoppingOrdersCount();
-
 	public ShoppingOrder saveLatestOrder(ShoppingCart cart)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingOrder> search(long groupId, long companyId,
-		long userId, java.lang.String number,
-		java.lang.String billingFirstName, java.lang.String billingLastName,
-		java.lang.String billingEmailAddress,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String ppPaymentStatus, boolean andOperator, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, long companyId, long userId,
-		java.lang.String number, java.lang.String billingFirstName,
-		java.lang.String billingLastName, java.lang.String billingEmailAddress,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String ppPaymentStatus, boolean andOperator);
-
-	public void sendEmail(ShoppingOrder order, java.lang.String emailType,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void sendEmail(long orderId, java.lang.String emailType,
-		ServiceContext serviceContext) throws PortalException;
 
 	public ShoppingOrder updateLatestOrder(long userId, long groupId,
 		java.lang.String billingFirstName, java.lang.String billingLastName,
@@ -323,4 +201,126 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public ShoppingOrder updateShoppingOrder(ShoppingOrder shoppingOrder);
+
+	/**
+	* Returns the number of shopping orders.
+	*
+	* @return the number of shopping orders
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getShoppingOrdersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId, long companyId, long userId,
+		java.lang.String number, java.lang.String billingFirstName,
+		java.lang.String billingLastName, java.lang.String billingEmailAddress,
+		java.lang.String shippingFirstName, java.lang.String shippingLastName,
+		java.lang.String shippingEmailAddress,
+		java.lang.String ppPaymentStatus, boolean andOperator);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end);
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns a range of all the shopping orders.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping orders
+	* @param end the upper bound of the range of shopping orders (not inclusive)
+	* @return the range of shopping orders
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingOrder> getShoppingOrders(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingOrder> search(long groupId, long companyId,
+		long userId, java.lang.String number,
+		java.lang.String billingFirstName, java.lang.String billingLastName,
+		java.lang.String billingEmailAddress,
+		java.lang.String shippingFirstName, java.lang.String shippingLastName,
+		java.lang.String shippingEmailAddress,
+		java.lang.String ppPaymentStatus, boolean andOperator, int start,
+		int end);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void completeOrder(java.lang.String number,
+		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
+		double ppPaymentGross, java.lang.String ppReceiverEmail,
+		java.lang.String ppPayerEmail, boolean updateInventory,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void deleteOrder(ShoppingOrder order) throws PortalException;
+
+	public void deleteOrder(long orderId) throws PortalException;
+
+	public void deleteOrders(long groupId) throws PortalException;
+
+	public void sendEmail(ShoppingOrder order, java.lang.String emailType,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void sendEmail(long orderId, java.lang.String emailType,
+		ServiceContext serviceContext) throws PortalException;
 }

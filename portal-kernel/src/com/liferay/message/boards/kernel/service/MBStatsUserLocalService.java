@@ -101,6 +101,48 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	public MBStatsUser deleteMBStatsUser(long statsUserId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBStatsUser fetchMBStatsUser(long statsUserId);
+
+	/**
+	* Returns the message boards stats user with the primary key.
+	*
+	* @param statsUserId the primary key of the message boards stats user
+	* @return the message boards stats user
+	* @throws PortalException if a message boards stats user with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBStatsUser getMBStatsUser(long statsUserId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBStatsUser getStatsUser(long groupId, long userId);
+
+	/**
+	* Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MBStatsUser updateMBStatsUser(MBStatsUser mbStatsUser);
+
+	public MBStatsUser updateStatsUser(long groupId, long userId);
+
+	public MBStatsUser updateStatsUser(long groupId, long userId,
+		int messageCount, Date lastPostDate);
+
+	public MBStatsUser updateStatsUser(long groupId, long userId,
+		Date lastPostDate);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -108,15 +150,32 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteStatsUser(MBStatsUser statsUser);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteStatsUser(long statsUserId) throws PortalException;
+	/**
+	* Returns the number of message boards stats users.
+	*
+	* @return the number of message boards stats users
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMBStatsUsersCount();
 
-	public void deleteStatsUsersByGroupId(long groupId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStatsUsersByGroupIdCount(long groupId)
+		throws PortalException;
 
-	public void deleteStatsUsersByUserId(long userId);
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Date getLastPostDateByUserId(long groupId, long userId);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -158,6 +217,27 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the message boards stats users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of message boards stats users
+	* @param end the upper bound of the range of message boards stats users (not inclusive)
+	* @return the range of message boards stats users
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBStatsUser> getMBStatsUsers(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBStatsUser> getStatsUsersByGroupId(long groupId, int start,
+		int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBStatsUser> getStatsUsersByUserId(long userId);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -176,96 +256,16 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBStatsUser fetchMBStatsUser(long statsUserId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Date getLastPostDateByUserId(long groupId, long userId);
-
-	/**
-	* Returns the message boards stats user with the primary key.
-	*
-	* @param statsUserId the primary key of the message boards stats user
-	* @return the message boards stats user
-	* @throws PortalException if a message boards stats user with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBStatsUser getMBStatsUser(long statsUserId)
-		throws PortalException;
-
-	/**
-	* Returns a range of all the message boards stats users.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of message boards stats users
-	* @param end the upper bound of the range of message boards stats users (not inclusive)
-	* @return the range of message boards stats users
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBStatsUser> getMBStatsUsers(int start, int end);
-
-	/**
-	* Returns the number of message boards stats users.
-	*
-	* @return the number of message boards stats users
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMBStatsUsersCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getMessageCountByGroupId(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getMessageCountByUserId(long userId);
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public void deleteStatsUser(MBStatsUser statsUser);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public void deleteStatsUser(long statsUserId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBStatsUser getStatsUser(long groupId, long userId);
+	public void deleteStatsUsersByGroupId(long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBStatsUser> getStatsUsersByGroupId(long groupId, int start,
-		int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getStatsUsersByGroupIdCount(long groupId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBStatsUser> getStatsUsersByUserId(long userId);
-
-	/**
-	* Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbStatsUser the message boards stats user
-	* @return the message boards stats user that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MBStatsUser updateMBStatsUser(MBStatsUser mbStatsUser);
-
-	public MBStatsUser updateStatsUser(long groupId, long userId);
-
-	public MBStatsUser updateStatsUser(long groupId, long userId,
-		Date lastPostDate);
-
-	public MBStatsUser updateStatsUser(long groupId, long userId,
-		int messageCount, Date lastPostDate);
+	public void deleteStatsUsersByUserId(long userId);
 }

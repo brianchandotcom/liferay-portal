@@ -40,34 +40,6 @@ public class StagingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.StagingServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().cleanUpStagingRequest(stagingRequestId);
-	}
-
-	public static long createStagingRequest(long groupId,
-		java.lang.String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().createStagingRequest(groupId, checksum);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long stagingRequestId,
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .publishStagingRequest(stagingRequestId,
-			exportImportConfiguration);
-	}
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
@@ -82,10 +54,13 @@ public class StagingServiceUtil {
 			parameterMap);
 	}
 
-	public static void updateStagingRequest(long stagingRequestId,
-		java.lang.String fileName, byte[] bytes)
+	public static com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
+		long stagingRequestId,
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateStagingRequest(stagingRequestId, fileName, bytes);
+		return getService()
+				   .publishStagingRequest(stagingRequestId,
+			exportImportConfiguration);
 	}
 
 	/**
@@ -100,6 +75,32 @@ public class StagingServiceUtil {
 		return getService()
 				   .validateStagingRequest(stagingRequestId, privateLayout,
 			parameterMap);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static long createStagingRequest(long groupId,
+		java.lang.String checksum)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().createStagingRequest(groupId, checksum);
+	}
+
+	public static void cleanUpStagingRequest(long stagingRequestId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().cleanUpStagingRequest(stagingRequestId);
+	}
+
+	public static void updateStagingRequest(long stagingRequestId,
+		java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateStagingRequest(stagingRequestId, fileName, bytes);
 	}
 
 	public static StagingService getService() {

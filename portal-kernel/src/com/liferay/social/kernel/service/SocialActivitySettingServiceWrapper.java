@@ -35,11 +35,29 @@ public class SocialActivitySettingServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialActivitySettingService.getJSONActivityDefinitions(groupId,
+			className);
+	}
+
+	@Override
 	public com.liferay.social.kernel.model.SocialActivityDefinition getActivityDefinition(
 		long groupId, java.lang.String className, int activityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivitySettingService.getActivityDefinition(groupId,
 			className, activityType);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivitySettingService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -58,21 +76,11 @@ public class SocialActivitySettingServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getJSONActivityDefinitions(
-		long groupId, java.lang.String className)
+	public void updateActivitySetting(long groupId, java.lang.String className,
+		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialActivitySettingService.getJSONActivityDefinitions(groupId,
-			className);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialActivitySettingService.getOSGiServiceIdentifier();
+		_socialActivitySettingService.updateActivitySetting(groupId, className,
+			enabled);
 	}
 
 	@Override
@@ -82,14 +90,6 @@ public class SocialActivitySettingServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySettingService.updateActivitySetting(groupId, className,
 			activityType, activityCounterDefinition);
-	}
-
-	@Override
-	public void updateActivitySetting(long groupId, java.lang.String className,
-		boolean enabled)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivitySettingService.updateActivitySetting(groupId, className,
-			enabled);
 	}
 
 	@Override

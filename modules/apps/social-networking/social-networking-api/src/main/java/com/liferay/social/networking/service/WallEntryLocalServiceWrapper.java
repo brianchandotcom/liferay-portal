@@ -34,12 +34,35 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _wallEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _wallEntryLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _wallEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.addWallEntry(groupId, userId, comments,
-			themeDisplay);
+		return _wallEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -54,6 +77,15 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 		return _wallEntryLocalService.addWallEntry(wallEntry);
 	}
 
+	@Override
+	public com.liferay.social.networking.model.WallEntry addWallEntry(
+		long groupId, long userId, java.lang.String comments,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.addWallEntry(groupId, userId, comments,
+			themeDisplay);
+	}
+
 	/**
 	* Creates a new wall entry with the primary key. Does not add the wall entry to the database.
 	*
@@ -64,22 +96,6 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	public com.liferay.social.networking.model.WallEntry createWallEntry(
 		long wallEntryId) {
 		return _wallEntryLocalService.createWallEntry(wallEntryId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public void deleteWallEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wallEntryLocalService.deleteWallEntries(groupId);
 	}
 
 	/**
@@ -111,8 +127,74 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _wallEntryLocalService.dynamicQuery();
+	public com.liferay.social.networking.model.WallEntry fetchWallEntry(
+		long wallEntryId) {
+		return _wallEntryLocalService.fetchWallEntry(wallEntryId);
+	}
+
+	/**
+	* Returns the wall entry with the primary key.
+	*
+	* @param wallEntryId the primary key of the wall entry
+	* @return the wall entry
+	* @throws PortalException if a wall entry with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.social.networking.model.WallEntry getWallEntry(
+		long wallEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.getWallEntry(wallEntryId);
+	}
+
+	/**
+	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wallEntry the wall entry
+	* @return the wall entry that was updated
+	*/
+	@Override
+	public com.liferay.social.networking.model.WallEntry updateWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry) {
+		return _wallEntryLocalService.updateWallEntry(wallEntry);
+	}
+
+	@Override
+	public com.liferay.social.networking.model.WallEntry updateWallEntry(
+		long wallEntryId, java.lang.String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wallEntryLocalService.updateWallEntry(wallEntryId, comments);
+	}
+
+	/**
+	* Returns the number of wall entries.
+	*
+	* @return the number of wall entries
+	*/
+	@Override
+	public int getWallEntriesCount() {
+		return _wallEntryLocalService.getWallEntriesCount();
+	}
+
+	@Override
+	public int getWallEntriesCount(long groupId) {
+		return _wallEntryLocalService.getWallEntriesCount(groupId);
+	}
+
+	@Override
+	public int getWallToWallEntriesCount(long groupId1, long groupId2,
+		long userId1, long userId2) {
+		return _wallEntryLocalService.getWallToWallEntriesCount(groupId1,
+			groupId2, userId1, userId2);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wallEntryLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -169,6 +251,37 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	}
 
 	/**
+	* Returns a range of all the wall entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of wall entries
+	* @param end the upper bound of the range of wall entries (not inclusive)
+	* @return the range of wall entries
+	*/
+	@Override
+	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
+		int start, int end) {
+		return _wallEntryLocalService.getWallEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
+		long groupId, int start, int end) {
+		return _wallEntryLocalService.getWallEntries(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallToWallEntries(
+		long groupId1, long groupId2, long userId1, long userId2, int start,
+		int end) {
+		return _wallEntryLocalService.getWallToWallEntries(groupId1, groupId2,
+			userId1, userId2, start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -195,122 +308,9 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.social.networking.model.WallEntry fetchWallEntry(
-		long wallEntryId) {
-		return _wallEntryLocalService.fetchWallEntry(wallEntryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _wallEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _wallEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _wallEntryLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public void deleteWallEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
-		long groupId, int start, int end) {
-		return _wallEntryLocalService.getWallEntries(groupId, start, end);
-	}
-
-	/**
-	* Returns a range of all the wall entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of wall entries
-	* @param end the upper bound of the range of wall entries (not inclusive)
-	* @return the range of wall entries
-	*/
-	@Override
-	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
-		int start, int end) {
-		return _wallEntryLocalService.getWallEntries(start, end);
-	}
-
-	/**
-	* Returns the number of wall entries.
-	*
-	* @return the number of wall entries
-	*/
-	@Override
-	public int getWallEntriesCount() {
-		return _wallEntryLocalService.getWallEntriesCount();
-	}
-
-	@Override
-	public int getWallEntriesCount(long groupId) {
-		return _wallEntryLocalService.getWallEntriesCount(groupId);
-	}
-
-	/**
-	* Returns the wall entry with the primary key.
-	*
-	* @param wallEntryId the primary key of the wall entry
-	* @return the wall entry
-	* @throws PortalException if a wall entry with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.social.networking.model.WallEntry getWallEntry(
-		long wallEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.getWallEntry(wallEntryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallToWallEntries(
-		long groupId1, long groupId2, long userId1, long userId2, int start,
-		int end) {
-		return _wallEntryLocalService.getWallToWallEntries(groupId1, groupId2,
-			userId1, userId2, start, end);
-	}
-
-	@Override
-	public int getWallToWallEntriesCount(long groupId1, long groupId2,
-		long userId1, long userId2) {
-		return _wallEntryLocalService.getWallToWallEntriesCount(groupId1,
-			groupId2, userId1, userId2);
-	}
-
-	/**
-	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wallEntry the wall entry
-	* @return the wall entry that was updated
-	*/
-	@Override
-	public com.liferay.social.networking.model.WallEntry updateWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry) {
-		return _wallEntryLocalService.updateWallEntry(wallEntry);
-	}
-
-	@Override
-	public com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wallEntryLocalService.updateWallEntry(wallEntryId, comments);
+		_wallEntryLocalService.deleteWallEntries(groupId);
 	}
 
 	@Override

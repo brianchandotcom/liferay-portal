@@ -32,16 +32,6 @@ public class DLTrashLocalServiceWrapper implements DLTrashLocalService,
 		_dlTrashLocalService = dlTrashLocalService;
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _dlTrashLocalService.getOSGiServiceIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId, long repositoryId, long fileEntryId, long newFolderId,
@@ -57,6 +47,16 @@ public class DLTrashLocalServiceWrapper implements DLTrashLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlTrashLocalService.moveFileEntryToTrash(userId, repositoryId,
 			fileEntryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _dlTrashLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override

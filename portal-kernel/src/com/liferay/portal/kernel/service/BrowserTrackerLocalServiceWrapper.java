@@ -32,6 +32,21 @@ public class BrowserTrackerLocalServiceWrapper
 		_browserTrackerLocalService = browserTrackerLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _browserTrackerLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _browserTrackerLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _browserTrackerLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Adds the browser tracker to the database. Also notifies the appropriate model listeners.
 	*
@@ -82,6 +97,51 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.deleteBrowserTracker(browserTrackerId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.BrowserTracker fetchBrowserTracker(
+		long browserTrackerId) {
+		return _browserTrackerLocalService.fetchBrowserTracker(browserTrackerId);
+	}
+
+	/**
+	* Returns the browser tracker with the primary key.
+	*
+	* @param browserTrackerId the primary key of the browser tracker
+	* @return the browser tracker
+	* @throws PortalException if a browser tracker with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.BrowserTracker getBrowserTracker(
+		long browserTrackerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _browserTrackerLocalService.getBrowserTracker(browserTrackerId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.BrowserTracker getBrowserTracker(
+		long userId, long browserKey) {
+		return _browserTrackerLocalService.getBrowserTracker(userId, browserKey);
+	}
+
+	/**
+	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param browserTracker the browser tracker
+	* @return the browser tracker that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.BrowserTracker updateBrowserTracker(
+		com.liferay.portal.kernel.model.BrowserTracker browserTracker) {
+		return _browserTrackerLocalService.updateBrowserTracker(browserTracker);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.BrowserTracker updateBrowserTracker(
+		long userId, long browserKey) {
+		return _browserTrackerLocalService.updateBrowserTracker(userId,
+			browserKey);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -93,13 +153,30 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserBrowserTracker(long userId) {
-		_browserTrackerLocalService.deleteUserBrowserTracker(userId);
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _browserTrackerLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* Returns the number of browser trackers.
+	*
+	* @return the number of browser trackers
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _browserTrackerLocalService.dynamicQuery();
+	public int getBrowserTrackersCount() {
+		return _browserTrackerLocalService.getBrowserTrackersCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _browserTrackerLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -156,6 +233,23 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	/**
+	* Returns a range of all the browser trackers.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BrowserTrackerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of browser trackers
+	* @param end the upper bound of the range of browser trackers (not inclusive)
+	* @return the range of browser trackers
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.BrowserTracker> getBrowserTrackers(
+		int start, int end) {
+		return _browserTrackerLocalService.getBrowserTrackers(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -183,102 +277,8 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker fetchBrowserTracker(
-		long browserTrackerId) {
-		return _browserTrackerLocalService.fetchBrowserTracker(browserTrackerId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _browserTrackerLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the browser tracker with the primary key.
-	*
-	* @param browserTrackerId the primary key of the browser tracker
-	* @return the browser tracker
-	* @throws PortalException if a browser tracker with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker getBrowserTracker(
-		long browserTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _browserTrackerLocalService.getBrowserTracker(browserTrackerId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey) {
-		return _browserTrackerLocalService.getBrowserTracker(userId, browserKey);
-	}
-
-	/**
-	* Returns a range of all the browser trackers.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BrowserTrackerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of browser trackers
-	* @param end the upper bound of the range of browser trackers (not inclusive)
-	* @return the range of browser trackers
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.BrowserTracker> getBrowserTrackers(
-		int start, int end) {
-		return _browserTrackerLocalService.getBrowserTrackers(start, end);
-	}
-
-	/**
-	* Returns the number of browser trackers.
-	*
-	* @return the number of browser trackers
-	*/
-	@Override
-	public int getBrowserTrackersCount() {
-		return _browserTrackerLocalService.getBrowserTrackersCount();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _browserTrackerLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _browserTrackerLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _browserTrackerLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param browserTracker the browser tracker
-	* @return the browser tracker that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker updateBrowserTracker(
-		com.liferay.portal.kernel.model.BrowserTracker browserTracker) {
-		return _browserTrackerLocalService.updateBrowserTracker(browserTracker);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker updateBrowserTracker(
-		long userId, long browserKey) {
-		return _browserTrackerLocalService.updateBrowserTracker(userId,
-			browserKey);
+	public void deleteUserBrowserTracker(long userId) {
+		_browserTrackerLocalService.deleteUserBrowserTracker(userId);
 	}
 
 	@Override

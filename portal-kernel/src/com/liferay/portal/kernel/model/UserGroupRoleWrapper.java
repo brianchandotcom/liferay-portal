@@ -99,24 +99,23 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new UserGroupRoleWrapper((UserGroupRole)_userGroupRole.clone());
+	public CacheModel<com.liferay.portal.kernel.model.UserGroupRole> toCacheModel() {
+		return _userGroupRole.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.UserGroupRole userGroupRole) {
-		return _userGroupRole.compareTo(userGroupRole);
+	public boolean isCachedModel() {
+		return _userGroupRole.isCachedModel();
 	}
 
-	/**
-	* Returns the company ID of this user group role.
-	*
-	* @return the company ID of this user group role
-	*/
 	@Override
-	public long getCompanyId() {
-		return _userGroupRole.getCompanyId();
+	public boolean isEscapedModel() {
+		return _userGroupRole.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _userGroupRole.isNew();
 	}
 
 	@Override
@@ -128,6 +127,89 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	public com.liferay.portal.kernel.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupRole.getGroup();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Role getRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupRole.getRole();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.User getUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupRole.getUser();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserGroupRole toEscapedModel() {
+		return new UserGroupRoleWrapper(_userGroupRole.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserGroupRole toUnescapedModel() {
+		return new UserGroupRoleWrapper(_userGroupRole.toUnescapedModel());
+	}
+
+	/**
+	* Returns the primary key of this user group role.
+	*
+	* @return the primary key of this user group role
+	*/
+	@Override
+	public com.liferay.portal.kernel.service.persistence.UserGroupRolePK getPrimaryKey() {
+		return _userGroupRole.getPrimaryKey();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portal.kernel.model.UserGroupRole userGroupRole) {
+		return _userGroupRole.compareTo(userGroupRole);
+	}
+
+	@Override
+	public int hashCode() {
+		return _userGroupRole.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _userGroupRole.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new UserGroupRoleWrapper((UserGroupRole)_userGroupRole.clone());
+	}
+
+	/**
+	* Returns the user uuid of this user group role.
+	*
+	* @return the user uuid of this user group role
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _userGroupRole.getUserUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _userGroupRole.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _userGroupRole.toXmlString();
+	}
+
+	/**
+	* Returns the company ID of this user group role.
+	*
+	* @return the company ID of this user group role
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userGroupRole.getCompanyId();
 	}
 
 	/**
@@ -151,27 +233,6 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	}
 
 	/**
-	* Returns the primary key of this user group role.
-	*
-	* @return the primary key of this user group role
-	*/
-	@Override
-	public com.liferay.portal.kernel.service.persistence.UserGroupRolePK getPrimaryKey() {
-		return _userGroupRole.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userGroupRole.getPrimaryKeyObj();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Role getRole()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroupRole.getRole();
-	}
-
-	/**
 	* Returns the role ID of this user group role.
 	*
 	* @return the role ID of this user group role
@@ -179,12 +240,6 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	@Override
 	public long getRoleId() {
 		return _userGroupRole.getRoleId();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.User getUser()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroupRole.getUser();
 	}
 
 	/**
@@ -195,36 +250,6 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	@Override
 	public long getUserId() {
 		return _userGroupRole.getUserId();
-	}
-
-	/**
-	* Returns the user uuid of this user group role.
-	*
-	* @return the user uuid of this user group role
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _userGroupRole.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userGroupRole.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userGroupRole.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userGroupRole.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userGroupRole.isNew();
 	}
 
 	@Override
@@ -331,31 +356,6 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_userGroupRole.setUserUuid(userUuid);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.UserGroupRole> toCacheModel() {
-		return _userGroupRole.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserGroupRole toEscapedModel() {
-		return new UserGroupRoleWrapper(_userGroupRole.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _userGroupRole.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserGroupRole toUnescapedModel() {
-		return new UserGroupRoleWrapper(_userGroupRole.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _userGroupRole.toXmlString();
 	}
 
 	@Override

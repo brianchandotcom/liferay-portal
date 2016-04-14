@@ -67,11 +67,6 @@ public class LayoutPrototypeServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteLayoutPrototype(long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLayoutPrototype(layoutPrototypeId);
-	}
-
 	public static com.liferay.portal.kernel.model.LayoutPrototype fetchLayoutPrototype(
 		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -82,22 +77,6 @@ public class LayoutPrototypeServiceUtil {
 		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutPrototype(layoutPrototypeId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutPrototype> search(
-		long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutPrototype> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().search(companyId, active, obc);
 	}
 
 	/**
@@ -126,6 +105,27 @@ public class LayoutPrototypeServiceUtil {
 		return getService()
 				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
 			descriptionMap, active, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutPrototype> search(
+		long companyId, java.lang.Boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.LayoutPrototype> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().search(companyId, active, obc);
+	}
+
+	public static void deleteLayoutPrototype(long layoutPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLayoutPrototype(layoutPrototypeId);
 	}
 
 	public static LayoutPrototypeService getService() {

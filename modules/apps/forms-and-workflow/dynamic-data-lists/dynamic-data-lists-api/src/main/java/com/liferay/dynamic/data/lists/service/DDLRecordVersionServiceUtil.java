@@ -43,15 +43,6 @@ public class DDLRecordVersionServiceUtil {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns a record version matching the record and version.
 	*
 	* @param recordId the primary key of the record
@@ -79,6 +70,27 @@ public class DDLRecordVersionServiceUtil {
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersion(recordVersionId);
+	}
+
+	/**
+	* Returns the number of record versions matching the record.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static int getRecordVersionsCount(long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordVersionsCount(recordId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -121,18 +133,6 @@ public class DDLRecordVersionServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getRecordVersions(recordId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of record versions matching the record.
-	*
-	* @param recordId the primary key of the record
-	* @return the number of matching record versions
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static int getRecordVersionsCount(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecordVersionsCount(recordId);
 	}
 
 	public static DDLRecordVersionService getService() {

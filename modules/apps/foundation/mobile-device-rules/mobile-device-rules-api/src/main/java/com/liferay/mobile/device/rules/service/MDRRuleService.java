@@ -71,10 +71,23 @@ public interface MDRRuleService extends BaseService {
 		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteRule(long ruleId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRRule fetchRule(long ruleId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRRule getRule(long ruleId) throws PortalException;
+
+	public MDRRule updateRule(long ruleId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MDRRule updateRule(long ruleId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -83,18 +96,5 @@ public interface MDRRuleService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRRule getRule(long ruleId) throws PortalException;
-
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
-	public MDRRule updateRule(long ruleId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
-		throws PortalException;
+	public void deleteRule(long ruleId) throws PortalException;
 }

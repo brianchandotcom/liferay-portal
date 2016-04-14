@@ -42,44 +42,6 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the activity interpreter to the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
-	public static void addActivityInterpreter(
-		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
-		getService().addActivityInterpreter(activityInterpreter);
-	}
-
-	/**
-	* Removes the activity interpreter from the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
-	public static void deleteActivityInterpreter(
-		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
-		getService().deleteActivityInterpreter(activityInterpreter);
-	}
-
-	public static java.util.Map<java.lang.String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
-		return getService().getActivityInterpreters();
-	}
-
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getActivityInterpreters(
-		java.lang.String selector) {
-		return getService().getActivityInterpreters(selector);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Creates a human readable activity feed entry for the activity using an
 	* available compatible activity interpreter.
 	*
@@ -108,6 +70,44 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		com.liferay.social.kernel.model.SocialActivitySet activitySet,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService().interpret(selector, activitySet, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getActivityInterpreters(
+		java.lang.String selector) {
+		return getService().getActivityInterpreters(selector);
+	}
+
+	public static java.util.Map<java.lang.String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
+		return getService().getActivityInterpreters();
+	}
+
+	/**
+	* Adds the activity interpreter to the list of available interpreters.
+	*
+	* @param activityInterpreter the activity interpreter
+	*/
+	public static void addActivityInterpreter(
+		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
+		getService().addActivityInterpreter(activityInterpreter);
+	}
+
+	/**
+	* Removes the activity interpreter from the list of available interpreters.
+	*
+	* @param activityInterpreter the activity interpreter
+	*/
+	public static void deleteActivityInterpreter(
+		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
+		getService().deleteActivityInterpreter(activityInterpreter);
 	}
 
 	public static void updateActivitySet(long activityId)

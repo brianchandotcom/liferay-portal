@@ -55,16 +55,16 @@ public interface ScreensDDLRecordService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ScreensDDLRecordServiceUtil} to access the screens d d l record remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getDDLRecord(long ddlRecordId, Locale locale)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray getDDLRecords(long ddlRecordSetId, Locale locale,
 		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray getDDLRecords(long ddlRecordSetId, long userId,
 		Locale locale, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getDDLRecord(long ddlRecordId, Locale locale)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDLRecordsCount(long ddlRecordSetId)

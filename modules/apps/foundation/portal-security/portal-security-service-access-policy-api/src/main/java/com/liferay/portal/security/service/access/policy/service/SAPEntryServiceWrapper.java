@@ -65,34 +65,6 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end) {
-		return _sapEntryService.getCompanySAPEntries(companyId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.security.service.access.policy.model.SAPEntry> obc) {
-		return _sapEntryService.getCompanySAPEntries(companyId, start, end, obc);
-	}
-
-	@Override
-	public int getCompanySAPEntriesCount(long companyId) {
-		return _sapEntryService.getCompanySAPEntriesCount(companyId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _sapEntryService.getOSGiServiceIdentifier();
-	}
-
-	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry getSAPEntry(
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -116,6 +88,34 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		return _sapEntryService.updateSAPEntry(sapEntryId,
 			allowedServiceSignatures, defaultSAPEntry, enabled, name, titleMap,
 			serviceContext);
+	}
+
+	@Override
+	public int getCompanySAPEntriesCount(long companyId) {
+		return _sapEntryService.getCompanySAPEntriesCount(companyId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _sapEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
+		long companyId, int start, int end) {
+		return _sapEntryService.getCompanySAPEntries(companyId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.security.service.access.policy.model.SAPEntry> getCompanySAPEntries(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.security.service.access.policy.model.SAPEntry> obc) {
+		return _sapEntryService.getCompanySAPEntries(companyId, start, end, obc);
 	}
 
 	@Override

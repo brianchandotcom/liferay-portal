@@ -68,25 +68,35 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiNodeLocalServiceUtil} to access the wiki node local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public WikiNode addNode(long userId, java.lang.String name,
 		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addNodeResources(WikiNode node,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
-	public void addNodeResources(long nodeId, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addNodeResources(long nodeId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
 	/**
@@ -106,19 +116,14 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	public WikiNode createWikiNode(long nodeId);
 
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteNode(WikiNode node) throws PortalException;
-
-	public void deleteNode(long nodeId) throws PortalException;
-
-	public void deleteNodes(long groupId) throws PortalException;
-
 	/**
-	* @throws PortalException
+	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiNode the wiki node
+	* @return the wiki node that was removed
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public WikiNode deleteWikiNode(WikiNode wikiNode);
 
 	/**
 	* Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
@@ -130,16 +135,104 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public WikiNode deleteWikiNode(long nodeId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode fetchNode(long groupId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode fetchNodeByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode fetchWikiNode(long nodeId);
+
 	/**
-	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
+	* Returns the wiki node matching the UUID and group.
+	*
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode fetchWikiNodeByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode getNode(long groupId, java.lang.String nodeName)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode getNode(long nodeId) throws PortalException;
+
+	/**
+	* Returns the wiki node with the primary key.
+	*
+	* @param nodeId the primary key of the wiki node
+	* @return the wiki node
+	* @throws PortalException if a wiki node with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode getWikiNode(long nodeId) throws PortalException;
+
+	/**
+	* Returns the wiki node matching the UUID and group.
+	*
+	* @param uuid the wiki node's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki node
+	* @throws PortalException if a matching wiki node could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode getWikiNodeByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	public WikiNode moveNodeToTrash(long userId, WikiNode node)
+		throws PortalException;
+
+	public WikiNode moveNodeToTrash(long userId, long nodeId)
+		throws PortalException;
+
+	public WikiNode updateNode(long nodeId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
+
+	public WikiNode updateStatus(long userId, WikiNode node, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param wikiNode the wiki node
-	* @return the wiki node that was removed
+	* @return the wiki node that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WikiNode deleteWikiNode(WikiNode wikiNode);
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiNode updateWikiNode(WikiNode wikiNode);
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyNodesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyNodesCount(long companyId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getNodesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getNodesCount(long groupId, int status);
+
+	/**
+	* Returns the number of wiki nodes.
+	*
+	* @return the number of wiki nodes
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWikiNodesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -180,74 +273,12 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode fetchNode(long groupId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode fetchNodeByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode fetchWikiNode(long nodeId);
-
-	/**
-	* Returns the wiki node matching the UUID and group.
-	*
-	* @param uuid the wiki node's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode fetchWikiNodeByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiNode> getCompanyNodes(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiNode> getCompanyNodes(long companyId, int status,
 		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyNodesCount(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyNodesCount(long companyId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getNode(long groupId, java.lang.String nodeName)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getNode(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiNode> getNodes(long groupId) throws PortalException;
@@ -263,46 +294,6 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiNode> getNodes(long groupId, int status, int start, int end)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNodesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNodesCount(long groupId, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the wiki node with the primary key.
-	*
-	* @param nodeId the primary key of the wiki node
-	* @return the wiki node
-	* @throws PortalException if a wiki node with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getWikiNode(long nodeId) throws PortalException;
-
-	/**
-	* Returns the wiki node matching the UUID and group.
-	*
-	* @param uuid the wiki node's UUID
-	* @param groupId the primary key of the group
-	* @return the matching wiki node
-	* @throws PortalException if a matching wiki node could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode getWikiNodeByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki nodes.
@@ -345,22 +336,47 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
-	* Returns the number of wiki nodes.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of wiki nodes
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWikiNodesCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addNodeResources(WikiNode node,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	public void addNodeResources(long nodeId, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addNodeResources(long nodeId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteNode(WikiNode node) throws PortalException;
+
+	public void deleteNode(long nodeId) throws PortalException;
+
+	public void deleteNodes(long groupId) throws PortalException;
 
 	public void importPages(long userId, long nodeId,
 		java.lang.String importer, InputStream[] inputStreams,
 		Map<java.lang.String, java.lang.String[]> options)
-		throws PortalException;
-
-	public WikiNode moveNodeToTrash(long userId, WikiNode node)
-		throws PortalException;
-
-	public WikiNode moveNodeToTrash(long userId, long nodeId)
 		throws PortalException;
 
 	public void restoreNodeFromTrash(long userId, WikiNode node)
@@ -371,20 +387,4 @@ public interface WikiNodeLocalService extends BaseLocalService,
 
 	public void unsubscribeNode(long userId, long nodeId)
 		throws PortalException;
-
-	public WikiNode updateNode(long nodeId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
-
-	public WikiNode updateStatus(long userId, WikiNode node, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wikiNode the wiki node
-	* @return the wiki node that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public WikiNode updateWikiNode(WikiNode wikiNode);
 }

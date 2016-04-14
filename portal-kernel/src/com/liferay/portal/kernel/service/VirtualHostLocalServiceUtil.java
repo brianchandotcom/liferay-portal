@@ -40,6 +40,32 @@ public class VirtualHostLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.VirtualHostLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Adds the virtual host to the database. Also notifies the appropriate model listeners.
@@ -61,15 +87,6 @@ public class VirtualHostLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.VirtualHost createVirtualHost(
 		long virtualHostId) {
 		return getService().createVirtualHost(virtualHostId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -96,8 +113,78 @@ public class VirtualHostLocalServiceUtil {
 		return getService().deleteVirtualHost(virtualHostId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
+		java.lang.String hostname) {
+		return getService().fetchVirtualHost(hostname);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
+		long companyId, long layoutSetId) {
+		return getService().fetchVirtualHost(companyId, layoutSetId);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
+		long virtualHostId) {
+		return getService().fetchVirtualHost(virtualHostId);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
+		java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVirtualHost(hostname);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
+		long companyId, long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVirtualHost(companyId, layoutSetId);
+	}
+
+	/**
+	* Returns the virtual host with the primary key.
+	*
+	* @param virtualHostId the primary key of the virtual host
+	* @return the virtual host
+	* @throws PortalException if a virtual host with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
+		long virtualHostId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVirtualHost(virtualHostId);
+	}
+
+	/**
+	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHost the virtual host
+	* @return the virtual host that was updated
+	*/
+	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
+		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
+		return getService().updateVirtualHost(virtualHost);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
+		long companyId, long layoutSetId, java.lang.String hostname) {
+		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
+	}
+
+	/**
+	* Returns the number of virtual hosts.
+	*
+	* @return the number of virtual hosts
+	*/
+	public static int getVirtualHostsCount() {
+		return getService().getVirtualHostsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -151,6 +238,22 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the virtual hosts.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.VirtualHostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of virtual hosts
+	* @param end the upper bound of the range of virtual hosts (not inclusive)
+	* @return the range of virtual hosts
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost> getVirtualHosts(
+		int start, int end) {
+		return getService().getVirtualHosts(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -172,110 +275,6 @@ public class VirtualHostLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId) {
-		return getService().fetchVirtualHost(companyId, layoutSetId);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname) {
-		return getService().fetchVirtualHost(hostname);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		long virtualHostId) {
-		return getService().fetchVirtualHost(virtualHostId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVirtualHost(companyId, layoutSetId);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVirtualHost(hostname);
-	}
-
-	/**
-	* Returns the virtual host with the primary key.
-	*
-	* @param virtualHostId the primary key of the virtual host
-	* @return the virtual host
-	* @throws PortalException if a virtual host with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-		long virtualHostId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVirtualHost(virtualHostId);
-	}
-
-	/**
-	* Returns a range of all the virtual hosts.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.VirtualHostModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of virtual hosts
-	* @param end the upper bound of the range of virtual hosts (not inclusive)
-	* @return the range of virtual hosts
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost> getVirtualHosts(
-		int start, int end) {
-		return getService().getVirtualHosts(start, end);
-	}
-
-	/**
-	* Returns the number of virtual hosts.
-	*
-	* @return the number of virtual hosts
-	*/
-	public static int getVirtualHostsCount() {
-		return getService().getVirtualHostsCount();
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname) {
-		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
-	}
-
-	/**
-	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHost the virtual host
-	* @return the virtual host that was updated
-	*/
-	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
-		return getService().updateVirtualHost(virtualHost);
 	}
 
 	public static VirtualHostLocalService getService() {

@@ -54,9 +54,6 @@ public interface EmailAddressService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteEmailAddress(long emailAddressId)
-		throws PortalException;
-
 	/**
 	* Returns the email address with the primary key.
 	*
@@ -73,9 +70,9 @@ public interface EmailAddressService extends BaseService {
 	public EmailAddress getEmailAddress(long emailAddressId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<EmailAddress> getEmailAddresses(java.lang.String className,
-		long classPK) throws PortalException;
+	public EmailAddress updateEmailAddress(long emailAddressId,
+		java.lang.String address, long typeId, boolean primary)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -84,7 +81,10 @@ public interface EmailAddressService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public EmailAddress updateEmailAddress(long emailAddressId,
-		java.lang.String address, long typeId, boolean primary)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<EmailAddress> getEmailAddresses(java.lang.String className,
+		long classPK) throws PortalException;
+
+	public void deleteEmailAddress(long emailAddressId)
 		throws PortalException;
 }

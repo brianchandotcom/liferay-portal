@@ -34,47 +34,10 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 	}
 
 	@Override
-	public void completeOrder(long groupId, java.lang.String number,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingOrderService.completeOrder(groupId, number, ppTxnId,
-			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
-			serviceContext);
-	}
-
-	@Override
-	public void deleteOrder(long groupId, long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingOrderService.deleteOrder(groupId, orderId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingOrderService.getOSGiServiceIdentifier();
-	}
-
-	@Override
 	public com.liferay.shopping.model.ShoppingOrder getOrder(long groupId,
 		long orderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderService.getOrder(groupId, orderId);
-	}
-
-	@Override
-	public void sendEmail(long groupId, long orderId,
-		java.lang.String emailType,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingOrderService.sendEmail(groupId, orderId, emailType,
-			serviceContext);
 	}
 
 	@Override
@@ -112,6 +75,43 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderService.updateOrder(groupId, orderId, ppTxnId,
 			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingOrderService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void completeOrder(long groupId, java.lang.String number,
+		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
+		double ppPaymentGross, java.lang.String ppReceiverEmail,
+		java.lang.String ppPayerEmail,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingOrderService.completeOrder(groupId, number, ppTxnId,
+			ppPaymentStatus, ppPaymentGross, ppReceiverEmail, ppPayerEmail,
+			serviceContext);
+	}
+
+	@Override
+	public void deleteOrder(long groupId, long orderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingOrderService.deleteOrder(groupId, orderId);
+	}
+
+	@Override
+	public void sendEmail(long groupId, long orderId,
+		java.lang.String emailType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingOrderService.sendEmail(groupId, orderId, emailType,
+			serviceContext);
 	}
 
 	@Override

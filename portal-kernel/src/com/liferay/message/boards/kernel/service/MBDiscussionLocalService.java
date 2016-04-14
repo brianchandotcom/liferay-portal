@@ -96,6 +96,15 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public MBDiscussion createMBDiscussion(long discussionId);
 
 	/**
+	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbDiscussion the message boards discussion
+	* @return the message boards discussion that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion);
+
+	/**
 	* Deletes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
@@ -106,14 +115,84 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public MBDiscussion deleteMBDiscussion(long discussionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchDiscussion(long discussionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchMBDiscussion(long discussionId);
+
 	/**
-	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	* Returns the message boards discussion matching the UUID and group.
+	*
+	* @param uuid the message boards discussion's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchMBDiscussionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchThreadDiscussion(long threadId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getDiscussion(long discussionId)
+		throws PortalException;
+
+	/**
+	* Returns the message boards discussion with the primary key.
+	*
+	* @param discussionId the primary key of the message boards discussion
+	* @return the message boards discussion
+	* @throws PortalException if a message boards discussion with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getMBDiscussion(long discussionId)
+		throws PortalException;
+
+	/**
+	* Returns the message boards discussion matching the UUID and group.
+	*
+	* @param uuid the message boards discussion's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards discussion
+	* @throws PortalException if a matching message boards discussion could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getMBDiscussionByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getThreadDiscussion(long threadId)
+		throws PortalException;
+
+	/**
+	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was removed
+	* @return the message boards discussion that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -122,7 +201,25 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of message boards discussions.
+	*
+	* @return the number of message boards discussions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMBDiscussionsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -162,88 +259,6 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchDiscussion(long discussionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchMBDiscussion(long discussionId);
-
-	/**
-	* Returns the message boards discussion matching the UUID and group.
-	*
-	* @param uuid the message boards discussion's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchMBDiscussionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchThreadDiscussion(long threadId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getDiscussion(long discussionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the message boards discussion with the primary key.
-	*
-	* @param discussionId the primary key of the message boards discussion
-	* @return the message boards discussion
-	* @throws PortalException if a message boards discussion with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getMBDiscussion(long discussionId)
-		throws PortalException;
-
-	/**
-	* Returns the message boards discussion matching the UUID and group.
-	*
-	* @param uuid the message boards discussion's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards discussion
-	* @throws PortalException if a matching message boards discussion could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getMBDiscussionByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the message boards discussions.
@@ -286,41 +301,26 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		OrderByComparator<MBDiscussion> orderByComparator);
 
 	/**
-	* Returns the number of message boards discussions.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of message boards discussions
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMBDiscussionsCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getThreadDiscussion(long threadId)
-		throws PortalException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	public void subscribeDiscussion(long userId, long groupId,
 		java.lang.String className, long classPK) throws PortalException;
 
 	public void unsubscribeDiscussion(long userId, java.lang.String className,
 		long classPK) throws PortalException;
-
-	/**
-	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion);
 }

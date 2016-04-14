@@ -159,8 +159,49 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new PollsQuestionWrapper((PollsQuestion)_pollsQuestion.clone());
+	public boolean isCachedModel() {
+		return _pollsQuestion.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _pollsQuestion.isEscapedModel();
+	}
+
+	@Override
+	public boolean isExpired() {
+		return _pollsQuestion.isExpired();
+	}
+
+	@Override
+	public boolean isExpired(ServiceContext serviceContext,
+		Date defaultCreateDate) {
+		return _pollsQuestion.isExpired(serviceContext, defaultCreateDate);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _pollsQuestion.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _pollsQuestion.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsQuestion toEscapedModel() {
+		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsQuestion toUnescapedModel() {
+		return new PollsQuestionWrapper(_pollsQuestion.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.polls.model.PollsQuestion> toCacheModel() {
+		return _pollsQuestion.toCacheModel();
 	}
 
 	@Override
@@ -169,33 +210,23 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _pollsQuestion.getAvailableLanguageIds();
+	public int getVotesCount() {
+		return _pollsQuestion.getVotesCount();
 	}
 
 	@Override
-	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices() {
-		return _pollsQuestion.getChoices();
+	public int hashCode() {
+		return _pollsQuestion.hashCode();
 	}
 
-	/**
-	* Returns the company ID of this polls question.
-	*
-	* @return the company ID of this polls question
-	*/
 	@Override
-	public long getCompanyId() {
-		return _pollsQuestion.getCompanyId();
+	public Serializable getPrimaryKeyObj() {
+		return _pollsQuestion.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the create date of this polls question.
-	*
-	* @return the create date of this polls question
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _pollsQuestion.getCreateDate();
+	public java.lang.Object clone() {
+		return new PollsQuestionWrapper((PollsQuestion)_pollsQuestion.clone());
 	}
 
 	@Override
@@ -272,96 +303,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this polls question.
-	*
-	* @return the locales and localized descriptions of this polls question
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _pollsQuestion.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _pollsQuestion.getExpandoBridge();
-	}
-
-	/**
-	* Returns the expiration date of this polls question.
-	*
-	* @return the expiration date of this polls question
-	*/
-	@Override
-	public Date getExpirationDate() {
-		return _pollsQuestion.getExpirationDate();
-	}
-
-	/**
-	* Returns the group ID of this polls question.
-	*
-	* @return the group ID of this polls question
-	*/
-	@Override
-	public long getGroupId() {
-		return _pollsQuestion.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this polls question.
-	*
-	* @return the last publish date of this polls question
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _pollsQuestion.getLastPublishDate();
-	}
-
-	/**
-	* Returns the last vote date of this polls question.
-	*
-	* @return the last vote date of this polls question
-	*/
-	@Override
-	public Date getLastVoteDate() {
-		return _pollsQuestion.getLastVoteDate();
-	}
-
-	/**
-	* Returns the modified date of this polls question.
-	*
-	* @return the modified date of this polls question
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _pollsQuestion.getModifiedDate();
-	}
-
-	/**
-	* Returns the primary key of this polls question.
-	*
-	* @return the primary key of this polls question
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _pollsQuestion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _pollsQuestion.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the question ID of this polls question.
-	*
-	* @return the question ID of this polls question
-	*/
-	@Override
-	public long getQuestionId() {
-		return _pollsQuestion.getQuestionId();
-	}
-
-	/**
 	* Returns the title of this polls question.
 	*
 	* @return the title of this polls question
@@ -429,26 +370,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	/**
-	* Returns a map of the locales and localized titles of this polls question.
-	*
-	* @return the locales and localized titles of this polls question
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _pollsQuestion.getTitleMap();
-	}
-
-	/**
-	* Returns the user ID of this polls question.
-	*
-	* @return the user ID of this polls question
-	*/
-	@Override
-	public long getUserId() {
-		return _pollsQuestion.getUserId();
-	}
-
-	/**
 	* Returns the user name of this polls question.
 	*
 	* @return the user name of this polls question
@@ -479,6 +400,76 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _pollsQuestion.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _pollsQuestion.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _pollsQuestion.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the create date of this polls question.
+	*
+	* @return the create date of this polls question
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _pollsQuestion.getCreateDate();
+	}
+
+	/**
+	* Returns the expiration date of this polls question.
+	*
+	* @return the expiration date of this polls question
+	*/
+	@Override
+	public Date getExpirationDate() {
+		return _pollsQuestion.getExpirationDate();
+	}
+
+	/**
+	* Returns the last publish date of this polls question.
+	*
+	* @return the last publish date of this polls question
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _pollsQuestion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the last vote date of this polls question.
+	*
+	* @return the last vote date of this polls question
+	*/
+	@Override
+	public Date getLastVoteDate() {
+		return _pollsQuestion.getLastVoteDate();
+	}
+
+	/**
+	* Returns the modified date of this polls question.
+	*
+	* @return the modified date of this polls question
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _pollsQuestion.getModifiedDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices() {
+		return _pollsQuestion.getChoices();
+	}
+
+	@Override
 	public java.util.List<com.liferay.polls.model.PollsVote> getVotes() {
 		return _pollsQuestion.getVotes();
 	}
@@ -489,40 +480,74 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		return _pollsQuestion.getVotes(start, end);
 	}
 
+	/**
+	* Returns a map of the locales and localized descriptions of this polls question.
+	*
+	* @return the locales and localized descriptions of this polls question
+	*/
 	@Override
-	public int getVotesCount() {
-		return _pollsQuestion.getVotesCount();
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _pollsQuestion.getDescriptionMap();
 	}
 
+	/**
+	* Returns a map of the locales and localized titles of this polls question.
+	*
+	* @return the locales and localized titles of this polls question
+	*/
 	@Override
-	public int hashCode() {
-		return _pollsQuestion.hashCode();
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _pollsQuestion.getTitleMap();
 	}
 
+	/**
+	* Returns the company ID of this polls question.
+	*
+	* @return the company ID of this polls question
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _pollsQuestion.isCachedModel();
+	public long getCompanyId() {
+		return _pollsQuestion.getCompanyId();
 	}
 
+	/**
+	* Returns the group ID of this polls question.
+	*
+	* @return the group ID of this polls question
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _pollsQuestion.isEscapedModel();
+	public long getGroupId() {
+		return _pollsQuestion.getGroupId();
 	}
 
+	/**
+	* Returns the primary key of this polls question.
+	*
+	* @return the primary key of this polls question
+	*/
 	@Override
-	public boolean isExpired() {
-		return _pollsQuestion.isExpired();
+	public long getPrimaryKey() {
+		return _pollsQuestion.getPrimaryKey();
 	}
 
+	/**
+	* Returns the question ID of this polls question.
+	*
+	* @return the question ID of this polls question
+	*/
 	@Override
-	public boolean isExpired(ServiceContext serviceContext,
-		Date defaultCreateDate) {
-		return _pollsQuestion.isExpired(serviceContext, defaultCreateDate);
+	public long getQuestionId() {
+		return _pollsQuestion.getQuestionId();
 	}
 
+	/**
+	* Returns the user ID of this polls question.
+	*
+	* @return the user ID of this polls question
+	*/
 	@Override
-	public boolean isNew() {
-		return _pollsQuestion.isNew();
+	public long getUserId() {
+		return _pollsQuestion.getUserId();
 	}
 
 	@Override
@@ -633,14 +658,14 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_pollsQuestion.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_pollsQuestion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pollsQuestion.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_pollsQuestion.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -827,31 +852,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_pollsQuestion.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.polls.model.PollsQuestion> toCacheModel() {
-		return _pollsQuestion.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsQuestion toEscapedModel() {
-		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _pollsQuestion.toString();
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsQuestion toUnescapedModel() {
-		return new PollsQuestionWrapper(_pollsQuestion.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _pollsQuestion.toXmlString();
 	}
 
 	@Override

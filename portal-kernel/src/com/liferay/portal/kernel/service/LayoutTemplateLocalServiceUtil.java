@@ -40,12 +40,6 @@ public class LayoutTemplateLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String getContent(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId) {
-		return getService().getContent(layoutTemplateId, standard, themeId);
-	}
-
 	public static com.liferay.portal.kernel.model.LayoutTemplate getLayoutTemplate(
 		java.lang.String layoutTemplateId, boolean standard,
 		java.lang.String themeId) {
@@ -53,13 +47,10 @@ public class LayoutTemplateLocalServiceUtil {
 				   .getLayoutTemplate(layoutTemplateId, standard, themeId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates() {
-		return getService().getLayoutTemplates();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates(
+	public static java.lang.String getContent(
+		java.lang.String layoutTemplateId, boolean standard,
 		java.lang.String themeId) {
-		return getService().getLayoutTemplates(themeId);
+		return getService().getContent(layoutTemplateId, standard, themeId);
 	}
 
 	/**
@@ -71,10 +62,13 @@ public class LayoutTemplateLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		return getService().init(servletContext, xmls, pluginPackage);
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates() {
+		return getService().getLayoutTemplates();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> getLayoutTemplates(
+		java.lang.String themeId) {
+		return getService().getLayoutTemplates(themeId);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
@@ -83,6 +77,12 @@ public class LayoutTemplateLocalServiceUtil {
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService()
 				   .init(servletContextName, servletContext, xmls, pluginPackage);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
+		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+		return getService().init(servletContext, xmls, pluginPackage);
 	}
 
 	public static void readLayoutTemplate(java.lang.String servletContextName,

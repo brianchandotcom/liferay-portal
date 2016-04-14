@@ -40,6 +40,17 @@ public class ImageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ImageLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* Adds the image to the database. Also notifies the appropriate model listeners.
@@ -87,6 +98,81 @@ public class ImageLocalServiceUtil {
 		return getService().deleteImage(imageId);
 	}
 
+	public static com.liferay.portal.kernel.model.Image fetchImage(long imageId) {
+		return getService().fetchImage(imageId);
+	}
+
+	public static com.liferay.portal.kernel.model.Image getCompanyLogo(
+		long imageId) {
+		return getService().getCompanyLogo(imageId);
+	}
+
+	/**
+	* Returns the image with the primary key.
+	*
+	* @param imageId the primary key of the image
+	* @return the image
+	* @throws PortalException if a image with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Image getImage(long imageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getImage(imageId);
+	}
+
+	public static com.liferay.portal.kernel.model.Image getImageOrDefault(
+		long imageId) {
+		return getService().getImageOrDefault(imageId);
+	}
+
+	public static com.liferay.portal.kernel.model.Image moveImage(
+		long imageId, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveImage(imageId, bytes);
+	}
+
+	/**
+	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param image the image
+	* @return the image that was updated
+	*/
+	public static com.liferay.portal.kernel.model.Image updateImage(
+		com.liferay.portal.kernel.model.Image image) {
+		return getService().updateImage(image);
+	}
+
+	public static com.liferay.portal.kernel.model.Image updateImage(
+		long imageId, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateImage(imageId, bytes);
+	}
+
+	public static com.liferay.portal.kernel.model.Image updateImage(
+		long imageId, byte[] bytes, java.lang.String type, int height,
+		int width, int size)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateImage(imageId, bytes, type, height, width, size);
+	}
+
+	public static com.liferay.portal.kernel.model.Image updateImage(
+		long imageId, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateImage(imageId, file);
+	}
+
+	public static com.liferay.portal.kernel.model.Image updateImage(
+		long imageId, java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateImage(imageId, is);
+	}
+
+	public static com.liferay.portal.kernel.model.Image updateImage(
+		long imageId, java.io.InputStream is, boolean cleanUpStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateImage(imageId, is, cleanUpStream);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -96,8 +182,28 @@ public class ImageLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of images.
+	*
+	* @return the number of images
+	*/
+	public static int getImagesCount() {
+		return getService().getImagesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -150,60 +256,6 @@ public class ImageLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.kernel.model.Image fetchImage(long imageId) {
-		return getService().fetchImage(imageId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.model.Image getCompanyLogo(
-		long imageId) {
-		return getService().getCompanyLogo(imageId);
-	}
-
-	/**
-	* Returns the image with the primary key.
-	*
-	* @param imageId the primary key of the image
-	* @return the image
-	* @throws PortalException if a image with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getImage(imageId);
-	}
-
-	public static com.liferay.portal.kernel.model.Image getImageOrDefault(
-		long imageId) {
-		return getService().getImageOrDefault(imageId);
-	}
-
 	public static java.util.List<com.liferay.portal.kernel.model.Image> getImages() {
 		return getService().getImages();
 	}
@@ -230,80 +282,27 @@ public class ImageLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of images.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of images
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static int getImagesCount() {
-		return getService().getImagesCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.model.Image moveImage(
-		long imageId, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveImage(imageId, bytes);
-	}
-
-	/**
-	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param image the image
-	* @return the image that was updated
-	*/
-	public static com.liferay.portal.kernel.model.Image updateImage(
-		com.liferay.portal.kernel.model.Image image) {
-		return getService().updateImage(image);
-	}
-
-	public static com.liferay.portal.kernel.model.Image updateImage(
-		long imageId, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateImage(imageId, bytes);
-	}
-
-	public static com.liferay.portal.kernel.model.Image updateImage(
-		long imageId, byte[] bytes, java.lang.String type, int height,
-		int width, int size)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateImage(imageId, bytes, type, height, width, size);
-	}
-
-	public static com.liferay.portal.kernel.model.Image updateImage(
-		long imageId, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateImage(imageId, file);
-	}
-
-	public static com.liferay.portal.kernel.model.Image updateImage(
-		long imageId, java.io.InputStream is)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateImage(imageId, is);
-	}
-
-	public static com.liferay.portal.kernel.model.Image updateImage(
-		long imageId, java.io.InputStream is, boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateImage(imageId, is, cleanUpStream);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static ImageLocalService getService() {

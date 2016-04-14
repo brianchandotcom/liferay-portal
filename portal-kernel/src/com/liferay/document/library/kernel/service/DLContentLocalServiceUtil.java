@@ -40,6 +40,11 @@ public class DLContentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version) {
+		return getService().hasContent(companyId, repositoryId, path, version);
+	}
+
 	public static com.liferay.document.library.kernel.model.DLContent addContent(
 		long companyId, long repositoryId, java.lang.String path,
 		java.lang.String version, byte[] bytes) {
@@ -77,20 +82,15 @@ public class DLContentLocalServiceUtil {
 		return getService().createDLContent(contentId);
 	}
 
-	public static void deleteContent(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteContent(companyId, repositoryId, path, version);
-	}
-
-	public static void deleteContents(long companyId, long repositoryId,
-		java.lang.String path) {
-		getService().deleteContents(companyId, repositoryId, path);
-	}
-
-	public static void deleteContentsByDirectory(long companyId,
-		long repositoryId, java.lang.String dirName) {
-		getService().deleteContentsByDirectory(companyId, repositoryId, dirName);
+	/**
+	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
+	*
+	* @param dlContent the document library content
+	* @return the document library content that was removed
+	*/
+	public static com.liferay.document.library.kernel.model.DLContent deleteDLContent(
+		com.liferay.document.library.kernel.model.DLContent dlContent) {
+		return getService().deleteDLContent(dlContent);
 	}
 
 	/**
@@ -106,15 +106,63 @@ public class DLContentLocalServiceUtil {
 		return getService().deleteDLContent(contentId);
 	}
 
+	public static com.liferay.document.library.kernel.model.DLContent fetchDLContent(
+		long contentId) {
+		return getService().fetchDLContent(contentId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLContent getContent(
+		long companyId, long repositoryId, java.lang.String path)
+		throws com.liferay.document.library.kernel.exception.NoSuchContentException {
+		return getService().getContent(companyId, repositoryId, path);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLContent getContent(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version)
+		throws com.liferay.document.library.kernel.exception.NoSuchContentException {
+		return getService().getContent(companyId, repositoryId, path, version);
+	}
+
 	/**
-	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
+	* Returns the document library content with the primary key.
+	*
+	* @param contentId the primary key of the document library content
+	* @return the document library content
+	* @throws PortalException if a document library content with the primary key could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLContent getDLContent(
+		long contentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDLContent(contentId);
+	}
+
+	/**
+	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
-	* @return the document library content that was removed
+	* @return the document library content that was updated
 	*/
-	public static com.liferay.document.library.kernel.model.DLContent deleteDLContent(
+	public static com.liferay.document.library.kernel.model.DLContent updateDLContent(
 		com.liferay.document.library.kernel.model.DLContent dlContent) {
-		return getService().deleteDLContent(dlContent);
+		return getService().updateDLContent(dlContent);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey) {
+		return getService().getDataBlobModel(primaryKey);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -126,8 +174,28 @@ public class DLContentLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of document library contents.
+	*
+	* @return the number of document library contents
+	*/
+	public static int getDLContentsCount() {
+		return getService().getDLContentsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -180,6 +248,38 @@ public class DLContentLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getContents(
+		long companyId, long repositoryId) {
+		return getService().getContents(companyId, repositoryId);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getContents(
+		long companyId, long repositoryId, java.lang.String path) {
+		return getService().getContents(companyId, repositoryId, path);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getContentsByDirectory(
+		long companyId, long repositoryId, java.lang.String dirName) {
+		return getService()
+				   .getContentsByDirectory(companyId, repositoryId, dirName);
+	}
+
+	/**
+	* Returns a range of all the document library contents.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @return the range of document library contents
+	*/
+	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getDLContents(
+		int start, int end) {
+		return getService().getDLContents(start, end);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -204,109 +304,20 @@ public class DLContentLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLContent fetchDLContent(
-		long contentId) {
-		return getService().fetchDLContent(contentId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.document.library.kernel.model.DLContent getContent(
-		long companyId, long repositoryId, java.lang.String path)
-		throws com.liferay.document.library.kernel.exception.NoSuchContentException {
-		return getService().getContent(companyId, repositoryId, path);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLContent getContent(
-		long companyId, long repositoryId, java.lang.String path,
-		java.lang.String version)
-		throws com.liferay.document.library.kernel.exception.NoSuchContentException {
-		return getService().getContent(companyId, repositoryId, path, version);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getContents(
-		long companyId, long repositoryId) {
-		return getService().getContents(companyId, repositoryId);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getContents(
-		long companyId, long repositoryId, java.lang.String path) {
-		return getService().getContents(companyId, repositoryId, path);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getContentsByDirectory(
-		long companyId, long repositoryId, java.lang.String dirName) {
-		return getService()
-				   .getContentsByDirectory(companyId, repositoryId, dirName);
-	}
-
-	/**
-	* Returns the document library content with the primary key.
-	*
-	* @param contentId the primary key of the document library content
-	* @return the document library content
-	* @throws PortalException if a document library content with the primary key could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLContent getDLContent(
-		long contentId)
+	public static void deleteContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLContent(contentId);
+		getService().deleteContent(companyId, repositoryId, path, version);
 	}
 
-	/**
-	* Returns a range of all the document library contents.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library contents
-	* @param end the upper bound of the range of document library contents (not inclusive)
-	* @return the range of document library contents
-	*/
-	public static java.util.List<com.liferay.document.library.kernel.model.DLContent> getDLContents(
-		int start, int end) {
-		return getService().getDLContents(start, end);
+	public static void deleteContents(long companyId, long repositoryId,
+		java.lang.String path) {
+		getService().deleteContents(companyId, repositoryId, path);
 	}
 
-	/**
-	* Returns the number of document library contents.
-	*
-	* @return the number of document library contents
-	*/
-	public static int getDLContentsCount() {
-		return getService().getDLContentsCount();
-	}
-
-	public static com.liferay.document.library.kernel.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey) {
-		return getService().getDataBlobModel(primaryKey);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static boolean hasContent(long companyId, long repositoryId,
-		java.lang.String path, java.lang.String version) {
-		return getService().hasContent(companyId, repositoryId, path, version);
+	public static void deleteContentsByDirectory(long companyId,
+		long repositoryId, java.lang.String dirName) {
+		getService().deleteContentsByDirectory(companyId, repositoryId, dirName);
 	}
 
 	public static void updateDLContent(long companyId, long oldRepositoryId,
@@ -314,17 +325,6 @@ public class DLContentLocalServiceUtil {
 		getService()
 			.updateDLContent(companyId, oldRepositoryId, newRepositoryId,
 			oldPath, newPath);
-	}
-
-	/**
-	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlContent the document library content
-	* @return the document library content that was updated
-	*/
-	public static com.liferay.document.library.kernel.model.DLContent updateDLContent(
-		com.liferay.document.library.kernel.model.DLContent dlContent) {
-		return getService().updateDLContent(dlContent);
 	}
 
 	public static DLContentLocalService getService() {

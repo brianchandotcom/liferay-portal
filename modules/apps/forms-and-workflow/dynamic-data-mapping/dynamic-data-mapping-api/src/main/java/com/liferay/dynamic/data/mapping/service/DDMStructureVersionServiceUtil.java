@@ -47,6 +47,17 @@ public class DDMStructureVersionServiceUtil {
 		return getService().getLatestStructureVersion(structureId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
+		long structureVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureVersion(structureVersionId);
+	}
+
+	public static int getStructureVersionsCount(long structureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getStructureVersionsCount(structureId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -56,12 +67,6 @@ public class DDMStructureVersionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
-		long structureVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getStructureVersion(structureVersionId);
-	}
-
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
 		long structureId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> orderByComparator)
@@ -69,11 +74,6 @@ public class DDMStructureVersionServiceUtil {
 		return getService()
 				   .getStructureVersions(structureId, start, end,
 			orderByComparator);
-	}
-
-	public static int getStructureVersionsCount(long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getStructureVersionsCount(structureId);
 	}
 
 	public static DDMStructureVersionService getService() {

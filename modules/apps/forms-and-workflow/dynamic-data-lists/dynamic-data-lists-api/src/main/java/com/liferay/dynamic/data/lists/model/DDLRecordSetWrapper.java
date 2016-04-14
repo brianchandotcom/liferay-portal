@@ -180,39 +180,34 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new DDLRecordSetWrapper((DDLRecordSet)_ddlRecordSet.clone());
+	public boolean isCachedModel() {
+		return _ddlRecordSet.isCachedModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
-		return _ddlRecordSet.compareTo(ddlRecordSet);
+	public boolean isEscapedModel() {
+		return _ddlRecordSet.isEscapedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _ddlRecordSet.getAvailableLanguageIds();
+	public boolean isNew() {
+		return _ddlRecordSet.isNew();
 	}
 
-	/**
-	* Returns the company ID of this d d l record set.
-	*
-	* @return the company ID of this d d l record set
-	*/
 	@Override
-	public long getCompanyId() {
-		return _ddlRecordSet.getCompanyId();
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet toEscapedModel() {
+		return new DDLRecordSetWrapper(_ddlRecordSet.toEscapedModel());
 	}
 
-	/**
-	* Returns the create date of this d d l record set.
-	*
-	* @return the create date of this d d l record set
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _ddlRecordSet.getCreateDate();
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet toUnescapedModel() {
+		return new DDLRecordSetWrapper(_ddlRecordSet.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsModel()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSet.getSettingsModel();
 	}
 
 	@Override
@@ -228,14 +223,61 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		return _ddlRecordSet.getDDMStructure(formDDMTemplateId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSet.getSettingsDDMFormValues();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _ddlRecordSet.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecordSet> toCacheModel() {
+		return _ddlRecordSet.toCacheModel();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
+		return _ddlRecordSet.compareTo(ddlRecordSet);
+	}
+
 	/**
-	* Returns the d d m structure ID of this d d l record set.
+	* Returns the min display rows of this d d l record set.
 	*
-	* @return the d d m structure ID of this d d l record set
+	* @return the min display rows of this d d l record set
 	*/
 	@Override
-	public long getDDMStructureId() {
-		return _ddlRecordSet.getDDMStructureId();
+	public int getMinDisplayRows() {
+		return _ddlRecordSet.getMinDisplayRows();
+	}
+
+	/**
+	* Returns the scope of this d d l record set.
+	*
+	* @return the scope of this d d l record set
+	*/
+	@Override
+	public int getScope() {
+		return _ddlRecordSet.getScope();
+	}
+
+	@Override
+	public int hashCode() {
+		return _ddlRecordSet.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _ddlRecordSet.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new DDLRecordSetWrapper((DDLRecordSet)_ddlRecordSet.clone());
 	}
 
 	@Override
@@ -312,61 +354,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this d d l record set.
-	*
-	* @return the locales and localized descriptions of this d d l record set
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _ddlRecordSet.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddlRecordSet.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this d d l record set.
-	*
-	* @return the group ID of this d d l record set
-	*/
-	@Override
-	public long getGroupId() {
-		return _ddlRecordSet.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this d d l record set.
-	*
-	* @return the last publish date of this d d l record set
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _ddlRecordSet.getLastPublishDate();
-	}
-
-	/**
-	* Returns the min display rows of this d d l record set.
-	*
-	* @return the min display rows of this d d l record set
-	*/
-	@Override
-	public int getMinDisplayRows() {
-		return _ddlRecordSet.getMinDisplayRows();
-	}
-
-	/**
-	* Returns the modified date of this d d l record set.
-	*
-	* @return the modified date of this d d l record set
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _ddlRecordSet.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this d d l record set.
 	*
 	* @return the name of this d d l record set
@@ -434,41 +421,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this d d l record set.
-	*
-	* @return the locales and localized names of this d d l record set
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _ddlRecordSet.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this d d l record set.
-	*
-	* @return the primary key of this d d l record set
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _ddlRecordSet.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddlRecordSet.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the record set ID of this d d l record set.
-	*
-	* @return the record set ID of this d d l record set
-	*/
-	@Override
-	public long getRecordSetId() {
-		return _ddlRecordSet.getRecordSetId();
-	}
-
-	/**
 	* Returns the record set key of this d d l record set.
 	*
 	* @return the record set key of this d d l record set
@@ -476,21 +428,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	@Override
 	public java.lang.String getRecordSetKey() {
 		return _ddlRecordSet.getRecordSetKey();
-	}
-
-	@Override
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords() {
-		return _ddlRecordSet.getRecords();
-	}
-
-	/**
-	* Returns the scope of this d d l record set.
-	*
-	* @return the scope of this d d l record set
-	*/
-	@Override
-	public int getScope() {
-		return _ddlRecordSet.getScope();
 	}
 
 	/**
@@ -501,28 +438,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	@Override
 	public java.lang.String getSettings() {
 		return _ddlRecordSet.getSettings();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getSettingsDDMFormValues();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsModel()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getSettingsModel();
-	}
-
-	/**
-	* Returns the user ID of this d d l record set.
-	*
-	* @return the user ID of this d d l record set
-	*/
-	@Override
-	public long getUserId() {
-		return _ddlRecordSet.getUserId();
 	}
 
 	/**
@@ -556,23 +471,133 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public int hashCode() {
-		return _ddlRecordSet.hashCode();
+	public java.lang.String toString() {
+		return _ddlRecordSet.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _ddlRecordSet.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _ddlRecordSet.toXmlString();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _ddlRecordSet.isEscapedModel();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _ddlRecordSet.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the create date of this d d l record set.
+	*
+	* @return the create date of this d d l record set
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _ddlRecordSet.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this d d l record set.
+	*
+	* @return the last publish date of this d d l record set
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddlRecordSet.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this d d l record set.
+	*
+	* @return the modified date of this d d l record set
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ddlRecordSet.getModifiedDate();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _ddlRecordSet.isNew();
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords() {
+		return _ddlRecordSet.getRecords();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this d d l record set.
+	*
+	* @return the locales and localized descriptions of this d d l record set
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _ddlRecordSet.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this d d l record set.
+	*
+	* @return the locales and localized names of this d d l record set
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _ddlRecordSet.getNameMap();
+	}
+
+	/**
+	* Returns the company ID of this d d l record set.
+	*
+	* @return the company ID of this d d l record set
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddlRecordSet.getCompanyId();
+	}
+
+	/**
+	* Returns the d d m structure ID of this d d l record set.
+	*
+	* @return the d d m structure ID of this d d l record set
+	*/
+	@Override
+	public long getDDMStructureId() {
+		return _ddlRecordSet.getDDMStructureId();
+	}
+
+	/**
+	* Returns the group ID of this d d l record set.
+	*
+	* @return the group ID of this d d l record set
+	*/
+	@Override
+	public long getGroupId() {
+		return _ddlRecordSet.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this d d l record set.
+	*
+	* @return the primary key of this d d l record set
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _ddlRecordSet.getPrimaryKey();
+	}
+
+	/**
+	* Returns the record set ID of this d d l record set.
+	*
+	* @return the record set ID of this d d l record set
+	*/
+	@Override
+	public long getRecordSetId() {
+		return _ddlRecordSet.getRecordSetId();
+	}
+
+	/**
+	* Returns the user ID of this d d l record set.
+	*
+	* @return the user ID of this d d l record set
+	*/
+	@Override
+	public long getUserId() {
+		return _ddlRecordSet.getUserId();
 	}
 
 	@Override
@@ -693,14 +718,14 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddlRecordSet.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_ddlRecordSet.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddlRecordSet.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_ddlRecordSet.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -907,31 +932,6 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_ddlRecordSet.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecordSet> toCacheModel() {
-		return _ddlRecordSet.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet toEscapedModel() {
-		return new DDLRecordSetWrapper(_ddlRecordSet.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _ddlRecordSet.toString();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet toUnescapedModel() {
-		return new DDLRecordSetWrapper(_ddlRecordSet.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _ddlRecordSet.toXmlString();
 	}
 
 	@Override

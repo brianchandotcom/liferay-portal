@@ -86,13 +86,6 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	public PollsVote createPollsVote(long voteId);
 
 	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	/**
 	* Deletes the polls vote from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pollsVote the polls vote
@@ -111,7 +104,98 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PollsVote deletePollsVote(long voteId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsVote fetchPollsVote(long voteId);
+
+	/**
+	* Returns the polls vote matching the UUID and group.
+	*
+	* @param uuid the polls vote's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsVote fetchPollsVoteByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsVote fetchQuestionUserVote(long questionId, long userId);
+
+	/**
+	* Returns the polls vote with the primary key.
+	*
+	* @param voteId the primary key of the polls vote
+	* @return the polls vote
+	* @throws PortalException if a polls vote with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsVote getPollsVote(long voteId) throws PortalException;
+
+	/**
+	* Returns the polls vote matching the UUID and group.
+	*
+	* @param uuid the polls vote's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls vote
+	* @throws PortalException if a matching polls vote could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsVote getPollsVoteByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	/**
+	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pollsVote the polls vote
+	* @return the polls vote that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public PollsVote updatePollsVote(PollsVote pollsVote);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getChoiceVotesCount(long choiceId);
+
+	/**
+	* Returns the number of polls votes.
+	*
+	* @return the number of polls votes
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPollsVotesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getQuestionVotesCount(long questionId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -152,90 +236,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote fetchPollsVote(long voteId);
-
-	/**
-	* Returns the polls vote matching the UUID and group.
-	*
-	* @param uuid the polls vote's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote fetchPollsVoteByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote fetchQuestionUserVote(long questionId, long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getChoiceVotesCount(long choiceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the polls vote with the primary key.
-	*
-	* @param voteId the primary key of the polls vote
-	* @return the polls vote
-	* @throws PortalException if a polls vote with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote getPollsVote(long voteId) throws PortalException;
-
-	/**
-	* Returns the polls vote matching the UUID and group.
-	*
-	* @param uuid the polls vote's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls vote
-	* @throws PortalException if a matching polls vote could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsVote getPollsVoteByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the polls votes.
@@ -277,26 +279,24 @@ public interface PollsVoteLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<PollsVote> orderByComparator);
 
-	/**
-	* Returns the number of polls votes.
-	*
-	* @return the number of polls votes
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPollsVotesCount();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsVote> getQuestionVotes(long questionId, int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getQuestionVotesCount(long questionId);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param pollsVote the polls vote
-	* @return the polls vote that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public PollsVote updatePollsVote(PollsVote pollsVote);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 }

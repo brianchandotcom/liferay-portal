@@ -60,22 +60,32 @@ public interface MDRActionService extends BaseService {
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
-
-	public void deleteAction(long actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRAction fetchAction(long actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MDRAction getAction(long actionId) throws PortalException;
+
+	public MDRAction updateAction(long actionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MDRAction updateAction(long actionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -84,15 +94,5 @@ public interface MDRActionService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
-
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
-		throws PortalException;
+	public void deleteAction(long actionId) throws PortalException;
 }

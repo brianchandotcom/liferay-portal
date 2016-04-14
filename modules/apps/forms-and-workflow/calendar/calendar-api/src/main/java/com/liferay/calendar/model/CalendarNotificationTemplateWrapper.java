@@ -179,14 +179,64 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new CalendarNotificationTemplateWrapper((CalendarNotificationTemplate)_calendarNotificationTemplate.clone());
+	public boolean isCachedModel() {
+		return _calendarNotificationTemplate.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _calendarNotificationTemplate.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _calendarNotificationTemplate.isNew();
+	}
+
+	@Override
+	public com.liferay.calendar.model.CalendarNotificationTemplate toEscapedModel() {
+		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.calendar.model.CalendarNotificationTemplate toUnescapedModel() {
+		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toUnescapedModel());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _calendarNotificationTemplate.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.CalendarNotificationTemplate> toCacheModel() {
+		return _calendarNotificationTemplate.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getNotificationTypeSettingsProperties() {
+		return _calendarNotificationTemplate.getNotificationTypeSettingsProperties();
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.calendar.model.CalendarNotificationTemplate calendarNotificationTemplate) {
 		return _calendarNotificationTemplate.compareTo(calendarNotificationTemplate);
+	}
+
+	@Override
+	public int hashCode() {
+		return _calendarNotificationTemplate.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _calendarNotificationTemplate.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new CalendarNotificationTemplateWrapper((CalendarNotificationTemplate)_calendarNotificationTemplate.clone());
 	}
 
 	/**
@@ -197,81 +247,6 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public java.lang.String getBody() {
 		return _calendarNotificationTemplate.getBody();
-	}
-
-	/**
-	* Returns the calendar ID of this calendar notification template.
-	*
-	* @return the calendar ID of this calendar notification template
-	*/
-	@Override
-	public long getCalendarId() {
-		return _calendarNotificationTemplate.getCalendarId();
-	}
-
-	/**
-	* Returns the calendar notification template ID of this calendar notification template.
-	*
-	* @return the calendar notification template ID of this calendar notification template
-	*/
-	@Override
-	public long getCalendarNotificationTemplateId() {
-		return _calendarNotificationTemplate.getCalendarNotificationTemplateId();
-	}
-
-	/**
-	* Returns the company ID of this calendar notification template.
-	*
-	* @return the company ID of this calendar notification template
-	*/
-	@Override
-	public long getCompanyId() {
-		return _calendarNotificationTemplate.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this calendar notification template.
-	*
-	* @return the create date of this calendar notification template
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _calendarNotificationTemplate.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _calendarNotificationTemplate.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this calendar notification template.
-	*
-	* @return the group ID of this calendar notification template
-	*/
-	@Override
-	public long getGroupId() {
-		return _calendarNotificationTemplate.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this calendar notification template.
-	*
-	* @return the last publish date of this calendar notification template
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _calendarNotificationTemplate.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this calendar notification template.
-	*
-	* @return the modified date of this calendar notification template
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _calendarNotificationTemplate.getModifiedDate();
 	}
 
 	/**
@@ -304,26 +279,6 @@ public class CalendarNotificationTemplateWrapper
 		return _calendarNotificationTemplate.getNotificationTypeSettings();
 	}
 
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getNotificationTypeSettingsProperties() {
-		return _calendarNotificationTemplate.getNotificationTypeSettingsProperties();
-	}
-
-	/**
-	* Returns the primary key of this calendar notification template.
-	*
-	* @return the primary key of this calendar notification template
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _calendarNotificationTemplate.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _calendarNotificationTemplate.getPrimaryKeyObj();
-	}
-
 	/**
 	* Returns the subject of this calendar notification template.
 	*
@@ -332,16 +287,6 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public java.lang.String getSubject() {
 		return _calendarNotificationTemplate.getSubject();
-	}
-
-	/**
-	* Returns the user ID of this calendar notification template.
-	*
-	* @return the user ID of this calendar notification template
-	*/
-	@Override
-	public long getUserId() {
-		return _calendarNotificationTemplate.getUserId();
 	}
 
 	/**
@@ -375,23 +320,103 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public int hashCode() {
-		return _calendarNotificationTemplate.hashCode();
+	public java.lang.String toString() {
+		return _calendarNotificationTemplate.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _calendarNotificationTemplate.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _calendarNotificationTemplate.toXmlString();
 	}
 
+	/**
+	* Returns the create date of this calendar notification template.
+	*
+	* @return the create date of this calendar notification template
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _calendarNotificationTemplate.isEscapedModel();
+	public Date getCreateDate() {
+		return _calendarNotificationTemplate.getCreateDate();
 	}
 
+	/**
+	* Returns the last publish date of this calendar notification template.
+	*
+	* @return the last publish date of this calendar notification template
+	*/
 	@Override
-	public boolean isNew() {
-		return _calendarNotificationTemplate.isNew();
+	public Date getLastPublishDate() {
+		return _calendarNotificationTemplate.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this calendar notification template.
+	*
+	* @return the modified date of this calendar notification template
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _calendarNotificationTemplate.getModifiedDate();
+	}
+
+	/**
+	* Returns the calendar ID of this calendar notification template.
+	*
+	* @return the calendar ID of this calendar notification template
+	*/
+	@Override
+	public long getCalendarId() {
+		return _calendarNotificationTemplate.getCalendarId();
+	}
+
+	/**
+	* Returns the calendar notification template ID of this calendar notification template.
+	*
+	* @return the calendar notification template ID of this calendar notification template
+	*/
+	@Override
+	public long getCalendarNotificationTemplateId() {
+		return _calendarNotificationTemplate.getCalendarNotificationTemplateId();
+	}
+
+	/**
+	* Returns the company ID of this calendar notification template.
+	*
+	* @return the company ID of this calendar notification template
+	*/
+	@Override
+	public long getCompanyId() {
+		return _calendarNotificationTemplate.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this calendar notification template.
+	*
+	* @return the group ID of this calendar notification template
+	*/
+	@Override
+	public long getGroupId() {
+		return _calendarNotificationTemplate.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this calendar notification template.
+	*
+	* @return the primary key of this calendar notification template
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _calendarNotificationTemplate.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this calendar notification template.
+	*
+	* @return the user ID of this calendar notification template
+	*/
+	@Override
+	public long getUserId() {
+		return _calendarNotificationTemplate.getUserId();
 	}
 
 	@Override
@@ -456,14 +481,14 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_calendarNotificationTemplate.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_calendarNotificationTemplate.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendarNotificationTemplate.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_calendarNotificationTemplate.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -607,31 +632,6 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_calendarNotificationTemplate.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.CalendarNotificationTemplate> toCacheModel() {
-		return _calendarNotificationTemplate.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarNotificationTemplate toEscapedModel() {
-		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _calendarNotificationTemplate.toString();
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarNotificationTemplate toUnescapedModel() {
-		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _calendarNotificationTemplate.toXmlString();
 	}
 
 	@Override

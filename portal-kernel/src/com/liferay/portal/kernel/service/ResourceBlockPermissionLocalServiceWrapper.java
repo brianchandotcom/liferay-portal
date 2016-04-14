@@ -32,6 +32,38 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		_resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _resourceBlockPermissionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _resourceBlockPermissionLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _resourceBlockPermissionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the resource block permission to the database. Also notifies the appropriate model listeners.
 	*
@@ -44,13 +76,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		return _resourceBlockPermissionLocalService.addResourceBlockPermission(resourceBlockPermission);
 	}
 
-	@Override
-	public void addResourceBlockPermissions(long resourceBlockId,
-		com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
-			resourceBlockPermissionsContainer);
-	}
-
 	/**
 	* Creates a new resource block permission with the primary key. Does not add the resource block permission to the database.
 	*
@@ -61,16 +86,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ResourceBlockPermission createResourceBlockPermission(
 		long resourceBlockPermissionId) {
 		return _resourceBlockPermissionLocalService.createResourceBlockPermission(resourceBlockPermissionId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -100,13 +115,68 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteResourceBlockPermissions(long resourceBlockId) {
-		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
+	public com.liferay.portal.kernel.model.ResourceBlockPermission fetchResourceBlockPermission(
+		long resourceBlockPermissionId) {
+		return _resourceBlockPermissionLocalService.fetchResourceBlockPermission(resourceBlockPermissionId);
+	}
+
+	/**
+	* Returns the resource block permission with the primary key.
+	*
+	* @param resourceBlockPermissionId the primary key of the resource block permission
+	* @return the resource block permission
+	* @throws PortalException if a resource block permission with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceBlockPermission getResourceBlockPermission(
+		long resourceBlockPermissionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermission(resourceBlockPermissionId);
+	}
+
+	/**
+	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceBlockPermission updateResourceBlockPermission(
+		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
+		return _resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockPermission);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _resourceBlockPermissionLocalService.dynamicQuery();
+	public com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long resourceBlockId) {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
+	}
+
+	/**
+	* Returns the number of resource block permissions.
+	*
+	* @return the number of resource block permissions
+	*/
+	@Override
+	public int getResourceBlockPermissionsCount() {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount();
+	}
+
+	@Override
+	public int getResourceBlockPermissionsCount(long resourceBlockId,
+		long roleId) {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
+			roleId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourceBlockPermissionLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -164,6 +234,48 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	/**
+	* Returns a range of all the resource block permissions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of resource block permissions
+	* @param end the upper bound of the range of resource block permissions (not inclusive)
+	* @return the range of resource block permissions
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ResourceBlockPermission> getResourceBlockPermissions(
+		int start, int end) {
+		return _resourceBlockPermissionLocalService.getResourceBlockPermissions(start,
+			end);
+	}
+
+	@Override
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(name,
+			primKey, actionIds);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourceBlockPermissionActionIds(String, long,
+	List)}
+	*/
+	@Deprecated
+	@Override
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		long[] roleIds, java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(roleIds,
+			name, primKey, actionIds);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -191,115 +303,15 @@ public class ResourceBlockPermissionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermission fetchResourceBlockPermission(
-		long resourceBlockPermissionId) {
-		return _resourceBlockPermissionLocalService.fetchResourceBlockPermission(resourceBlockPermissionId);
+	public void addResourceBlockPermissions(long resourceBlockId,
+		com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
+		_resourceBlockPermissionLocalService.addResourceBlockPermissions(resourceBlockId,
+			resourceBlockPermissionsContainer);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _resourceBlockPermissionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		java.lang.String name, long primKey,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(name,
-			primKey, actionIds);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourceBlockPermissionActionIds(String, long,
-	List)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		long[] roleIds, java.lang.String name, long primKey,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(roleIds,
-			name, primKey, actionIds);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _resourceBlockPermissionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _resourceBlockPermissionLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the resource block permission with the primary key.
-	*
-	* @param resourceBlockPermissionId the primary key of the resource block permission
-	* @return the resource block permission
-	* @throws PortalException if a resource block permission with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermission getResourceBlockPermission(
-		long resourceBlockPermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermission(resourceBlockPermissionId);
-	}
-
-	/**
-	* Returns a range of all the resource block permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource block permissions
-	* @param end the upper bound of the range of resource block permissions (not inclusive)
-	* @return the range of resource block permissions
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ResourceBlockPermission> getResourceBlockPermissions(
-		int start, int end) {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissions(start,
-			end);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long resourceBlockId) {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsContainer(resourceBlockId);
-	}
-
-	/**
-	* Returns the number of resource block permissions.
-	*
-	* @return the number of resource block permissions
-	*/
-	@Override
-	public int getResourceBlockPermissionsCount() {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount();
-	}
-
-	@Override
-	public int getResourceBlockPermissionsCount(long resourceBlockId,
-		long roleId) {
-		return _resourceBlockPermissionLocalService.getResourceBlockPermissionsCount(resourceBlockId,
-			roleId);
+	public void deleteResourceBlockPermissions(long resourceBlockId) {
+		_resourceBlockPermissionLocalService.deleteResourceBlockPermissions(resourceBlockId);
 	}
 
 	@Override
@@ -307,18 +319,6 @@ public class ResourceBlockPermissionLocalServiceWrapper
 		long roleId, long actionIdsLong, int operator) {
 		_resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockId,
 			roleId, actionIdsLong, operator);
-	}
-
-	/**
-	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermission updateResourceBlockPermission(
-		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
-		return _resourceBlockPermissionLocalService.updateResourceBlockPermission(resourceBlockPermission);
 	}
 
 	@Override

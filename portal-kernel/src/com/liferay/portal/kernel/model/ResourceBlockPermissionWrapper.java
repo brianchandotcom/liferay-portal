@@ -109,14 +109,69 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new ResourceBlockPermissionWrapper((ResourceBlockPermission)_resourceBlockPermission.clone());
+	public CacheModel<com.liferay.portal.kernel.model.ResourceBlockPermission> toCacheModel() {
+		return _resourceBlockPermission.toCacheModel();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _resourceBlockPermission.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _resourceBlockPermission.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _resourceBlockPermission.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _resourceBlockPermission.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ResourceBlockPermission toEscapedModel() {
+		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ResourceBlockPermission toUnescapedModel() {
+		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toUnescapedModel());
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.portal.kernel.model.ResourceBlockPermission resourceBlockPermission) {
 		return _resourceBlockPermission.compareTo(resourceBlockPermission);
+	}
+
+	@Override
+	public int hashCode() {
+		return _resourceBlockPermission.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _resourceBlockPermission.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new ResourceBlockPermissionWrapper((ResourceBlockPermission)_resourceBlockPermission.clone());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _resourceBlockPermission.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _resourceBlockPermission.toXmlString();
 	}
 
 	/**
@@ -139,11 +194,6 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 		return _resourceBlockPermission.getCompanyId();
 	}
 
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _resourceBlockPermission.getExpandoBridge();
-	}
-
 	/**
 	* Returns the mvcc version of this resource block permission.
 	*
@@ -162,11 +212,6 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public long getPrimaryKey() {
 		return _resourceBlockPermission.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _resourceBlockPermission.getPrimaryKeyObj();
 	}
 
 	/**
@@ -197,26 +242,6 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public long getRoleId() {
 		return _resourceBlockPermission.getRoleId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _resourceBlockPermission.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _resourceBlockPermission.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _resourceBlockPermission.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _resourceBlockPermission.isNew();
 	}
 
 	@Override
@@ -322,31 +347,6 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public void setRoleId(long roleId) {
 		_resourceBlockPermission.setRoleId(roleId);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourceBlockPermission> toCacheModel() {
-		return _resourceBlockPermission.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermission toEscapedModel() {
-		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _resourceBlockPermission.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermission toUnescapedModel() {
-		return new ResourceBlockPermissionWrapper(_resourceBlockPermission.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _resourceBlockPermission.toXmlString();
 	}
 
 	@Override

@@ -40,6 +40,32 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
@@ -72,15 +98,6 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	/**
 	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recentLayoutRevision the recent layout revision
@@ -104,16 +121,57 @@ public class RecentLayoutRevisionLocalServiceUtil {
 		return getService().deleteRecentLayoutRevision(recentLayoutRevisionId);
 	}
 
-	public static void deleteRecentLayoutRevisions(long layoutRevisionId) {
-		getService().deleteRecentLayoutRevisions(layoutRevisionId);
+	public static com.liferay.portal.kernel.model.RecentLayoutRevision fetchRecentLayoutRevision(
+		long recentLayoutRevisionId) {
+		return getService().fetchRecentLayoutRevision(recentLayoutRevisionId);
 	}
 
-	public static void deleteUserRecentLayoutRevisions(long userId) {
-		getService().deleteUserRecentLayoutRevisions(userId);
+	public static com.liferay.portal.kernel.model.RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid) {
+		return getService()
+				   .fetchRecentLayoutRevision(userId, layoutSetBranchId, plid);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the recent layout revision with the primary key.
+	*
+	* @param recentLayoutRevisionId the primary key of the recent layout revision
+	* @return the recent layout revision
+	* @throws PortalException if a recent layout revision with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.RecentLayoutRevision getRecentLayoutRevision(
+		long recentLayoutRevisionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	/**
+	* Updates the recent layout revision in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param recentLayoutRevision the recent layout revision
+	* @return the recent layout revision that was updated
+	*/
+	public static com.liferay.portal.kernel.model.RecentLayoutRevision updateRecentLayoutRevision(
+		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
+		return getService().updateRecentLayoutRevision(recentLayoutRevision);
+	}
+
+	/**
+	* Returns the number of recent layout revisions.
+	*
+	* @return the number of recent layout revisions
+	*/
+	public static int getRecentLayoutRevisionsCount() {
+		return getService().getRecentLayoutRevisionsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -167,6 +225,22 @@ public class RecentLayoutRevisionLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the recent layout revisions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RecentLayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of recent layout revisions
+	* @param end the upper bound of the range of recent layout revisions (not inclusive)
+	* @return the range of recent layout revisions
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.RecentLayoutRevision> getRecentLayoutRevisions(
+		int start, int end) {
+		return getService().getRecentLayoutRevisions(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -190,87 +264,12 @@ public class RecentLayoutRevisionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision fetchRecentLayoutRevision(
-		long recentLayoutRevisionId) {
-		return getService().fetchRecentLayoutRevision(recentLayoutRevisionId);
+	public static void deleteRecentLayoutRevisions(long layoutRevisionId) {
+		getService().deleteRecentLayoutRevisions(layoutRevisionId);
 	}
 
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision fetchRecentLayoutRevision(
-		long userId, long layoutSetBranchId, long plid) {
-		return getService()
-				   .fetchRecentLayoutRevision(userId, layoutSetBranchId, plid);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the recent layout revision with the primary key.
-	*
-	* @param recentLayoutRevisionId the primary key of the recent layout revision
-	* @return the recent layout revision
-	* @throws PortalException if a recent layout revision with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision getRecentLayoutRevision(
-		long recentLayoutRevisionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRecentLayoutRevision(recentLayoutRevisionId);
-	}
-
-	/**
-	* Returns a range of all the recent layout revisions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RecentLayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of recent layout revisions
-	* @param end the upper bound of the range of recent layout revisions (not inclusive)
-	* @return the range of recent layout revisions
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.RecentLayoutRevision> getRecentLayoutRevisions(
-		int start, int end) {
-		return getService().getRecentLayoutRevisions(start, end);
-	}
-
-	/**
-	* Returns the number of recent layout revisions.
-	*
-	* @return the number of recent layout revisions
-	*/
-	public static int getRecentLayoutRevisionsCount() {
-		return getService().getRecentLayoutRevisionsCount();
-	}
-
-	/**
-	* Updates the recent layout revision in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutRevision the recent layout revision
-	* @return the recent layout revision that was updated
-	*/
-	public static com.liferay.portal.kernel.model.RecentLayoutRevision updateRecentLayoutRevision(
-		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
-		return getService().updateRecentLayoutRevision(recentLayoutRevision);
+	public static void deleteUserRecentLayoutRevisions(long userId) {
+		getService().deleteUserRecentLayoutRevisions(userId);
 	}
 
 	public static RecentLayoutRevisionLocalService getService() {

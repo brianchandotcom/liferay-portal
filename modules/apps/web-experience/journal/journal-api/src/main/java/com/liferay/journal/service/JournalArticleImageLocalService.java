@@ -60,10 +60,6 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleImageLocalServiceUtil} to access the journal article image local service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalArticleImageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addArticleImageId(long articleImageId, long groupId,
-		java.lang.String articleId, double version,
-		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId) throws PortalException;
 
 	/**
 	* Adds the journal article image to the database. Also notifies the appropriate model listeners.
@@ -83,16 +79,15 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	*/
 	public JournalArticleImage createJournalArticleImage(long articleImageId);
 
-	public void deleteArticleImage(JournalArticleImage articleImage);
-
-	public void deleteArticleImage(long articleImageId);
-
-	public void deleteArticleImage(long groupId, java.lang.String articleId,
-		double version, java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId);
-
-	public void deleteImages(long groupId, java.lang.String articleId,
-		double version);
+	/**
+	* Deletes the journal article image from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticleImage the journal article image
+	* @return the journal article image that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleImage deleteJournalArticleImage(
+		JournalArticleImage journalArticleImage);
 
 	/**
 	* Deletes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
@@ -105,15 +100,41 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	public JournalArticleImage deleteJournalArticleImage(long articleImageId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleImage fetchJournalArticleImage(long articleImageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleImage getArticleImage(long articleImageId)
+		throws PortalException;
+
 	/**
-	* Deletes the journal article image from the database. Also notifies the appropriate model listeners.
+	* Returns the journal article image with the primary key.
+	*
+	* @param articleImageId the primary key of the journal article image
+	* @return the journal article image
+	* @throws PortalException if a journal article image with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleImage getJournalArticleImage(long articleImageId)
+		throws PortalException;
+
+	/**
+	* Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalArticleImage the journal article image
-	* @return the journal article image that was removed
+	* @return the journal article image that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public JournalArticleImage deleteJournalArticleImage(
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticleImage updateJournalArticleImage(
 		JournalArticleImage journalArticleImage);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -122,7 +143,28 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticleImagesCount(long groupId);
+
+	/**
+	* Returns the number of journal article images.
+	*
+	* @return the number of journal article images
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getJournalArticleImagesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -163,6 +205,27 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticleImage> getArticleImages(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticleImage> getArticleImages(long groupId,
+		java.lang.String articleId, double version);
+
+	/**
+	* Returns a range of all the journal article images.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.journal.model.impl.JournalArticleImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of journal article images
+	* @param end the upper bound of the range of journal article images (not inclusive)
+	* @return the range of journal article images
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticleImage> getJournalArticleImages(int start, int end);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -182,16 +245,6 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleImage fetchJournalArticleImage(long articleImageId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleImage getArticleImage(long articleImageId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getArticleImageId(long groupId, java.lang.String articleId,
 		double version, java.lang.String elInstanceId, java.lang.String elName,
 		java.lang.String languageId);
@@ -201,71 +254,19 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 		double version, java.lang.String elInstanceId, java.lang.String elName,
 		java.lang.String languageId, boolean tempImage);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticleImage> getArticleImages(long groupId);
+	public void addArticleImageId(long articleImageId, long groupId,
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticleImage> getArticleImages(long groupId,
-		java.lang.String articleId, double version);
+	public void deleteArticleImage(JournalArticleImage articleImage);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getArticleImagesCount(long groupId);
+	public void deleteArticleImage(long articleImageId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteArticleImage(long groupId, java.lang.String articleId,
+		double version, java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId);
 
-	/**
-	* Returns the journal article image with the primary key.
-	*
-	* @param articleImageId the primary key of the journal article image
-	* @return the journal article image
-	* @throws PortalException if a journal article image with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleImage getJournalArticleImage(long articleImageId)
-		throws PortalException;
-
-	/**
-	* Returns a range of all the journal article images.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.journal.model.impl.JournalArticleImageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of journal article images
-	* @param end the upper bound of the range of journal article images (not inclusive)
-	* @return the range of journal article images
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalArticleImage> getJournalArticleImages(int start, int end);
-
-	/**
-	* Returns the number of journal article images.
-	*
-	* @return the number of journal article images
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalArticleImagesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticleImage the journal article image
-	* @return the journal article image that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalArticleImage updateJournalArticleImage(
-		JournalArticleImage journalArticleImage);
+	public void deleteImages(long groupId, java.lang.String articleId,
+		double version);
 }

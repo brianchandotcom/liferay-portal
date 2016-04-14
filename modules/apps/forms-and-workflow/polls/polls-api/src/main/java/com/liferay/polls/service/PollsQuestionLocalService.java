@@ -87,22 +87,6 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addQuestionResources(PollsQuestion question,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addQuestionResources(PollsQuestion question,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
-	public void addQuestionResources(long questionId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addQuestionResources(long questionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
 	/**
 	* Creates a new polls question with the primary key. Does not add the polls question to the database.
 	*
@@ -110,13 +94,6 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the new polls question
 	*/
 	public PollsQuestion createPollsQuestion(long questionId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
 
 	/**
 	* Deletes the polls question from the database. Also notifies the appropriate model listeners.
@@ -138,15 +115,113 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public PollsQuestion deletePollsQuestion(long questionId)
 		throws PortalException;
 
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteQuestion(PollsQuestion question)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsQuestion fetchPollsQuestion(long questionId);
+
+	/**
+	* Returns the polls question matching the UUID and group.
+	*
+	* @param uuid the polls question's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsQuestion fetchPollsQuestionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the polls question with the primary key.
+	*
+	* @param questionId the primary key of the polls question
+	* @return the polls question
+	* @throws PortalException if a polls question with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsQuestion getPollsQuestion(long questionId)
 		throws PortalException;
 
-	public void deleteQuestion(long questionId) throws PortalException;
+	/**
+	* Returns the polls question matching the UUID and group.
+	*
+	* @param uuid the polls question's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls question
+	* @throws PortalException if a matching polls question could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsQuestion getPollsQuestionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
-	public void deleteQuestions(long groupId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PollsQuestion getQuestion(long questionId) throws PortalException;
+
+	/**
+	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pollsQuestion the polls question
+	* @return the polls question that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public PollsQuestion updatePollsQuestion(PollsQuestion pollsQuestion);
+
+	public PollsQuestion updateQuestion(long userId, long questionId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		List<PollsChoice> choices, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of polls questions.
+	*
+	* @return the number of polls questions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPollsQuestionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getQuestionsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String title, java.lang.String description,
+		boolean andOperator);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -188,83 +263,6 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion fetchPollsQuestion(long questionId);
-
-	/**
-	* Returns the polls question matching the UUID and group.
-	*
-	* @param uuid the polls question's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion fetchPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the polls question with the primary key.
-	*
-	* @param questionId the primary key of the polls question
-	* @return the polls question
-	* @throws PortalException if a polls question with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion getPollsQuestion(long questionId)
-		throws PortalException;
-
-	/**
-	* Returns the polls question matching the UUID and group.
-	*
-	* @param uuid the polls question's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls question
-	* @throws PortalException if a matching polls question could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion getPollsQuestionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
 	* Returns a range of all the polls questions.
 	*
 	* <p>
@@ -304,25 +302,11 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator);
 
-	/**
-	* Returns the number of polls questions.
-	*
-	* @return the number of polls questions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPollsQuestionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PollsQuestion getQuestion(long questionId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> getQuestions(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> getQuestions(long groupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getQuestionsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> search(long companyId, long[] groupIds,
@@ -335,29 +319,45 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		boolean andOperator, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String title, java.lang.String description,
-		boolean andOperator);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the polls question in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param pollsQuestion the polls question
-	* @return the polls question that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public PollsQuestion updatePollsQuestion(PollsQuestion pollsQuestion);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	public PollsQuestion updateQuestion(long userId, long questionId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		List<PollsChoice> choices, ServiceContext serviceContext)
+	public void addQuestionResources(PollsQuestion question,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
+
+	public void addQuestionResources(PollsQuestion question,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	public void addQuestionResources(long questionId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addQuestionResources(long questionId,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteQuestion(PollsQuestion question)
+		throws PortalException;
+
+	public void deleteQuestion(long questionId) throws PortalException;
+
+	public void deleteQuestions(long groupId) throws PortalException;
 }

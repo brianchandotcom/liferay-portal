@@ -40,14 +40,36 @@ public class WebsiteLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.model.Website addWebsite(
-		long userId, java.lang.String className, long classPK,
-		java.lang.String url, long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addWebsite(userId, className, classPK, url, typeId,
-			primary, serviceContext);
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -61,6 +83,16 @@ public class WebsiteLocalServiceUtil {
 		return getService().addWebsite(website);
 	}
 
+	public static com.liferay.portal.kernel.model.Website addWebsite(
+		long userId, java.lang.String className, long classPK,
+		java.lang.String url, long typeId, boolean primary,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addWebsite(userId, className, classPK, url, typeId,
+			primary, serviceContext);
+	}
+
 	/**
 	* Creates a new website with the primary key. Does not add the website to the database.
 	*
@@ -70,15 +102,6 @@ public class WebsiteLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Website createWebsite(
 		long websiteId) {
 		return getService().createWebsite(websiteId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -105,13 +128,83 @@ public class WebsiteLocalServiceUtil {
 		return getService().deleteWebsite(websiteId);
 	}
 
-	public static void deleteWebsites(long companyId,
-		java.lang.String className, long classPK) {
-		getService().deleteWebsites(companyId, className, classPK);
+	public static com.liferay.portal.kernel.model.Website fetchWebsite(
+		long websiteId) {
+		return getService().fetchWebsite(websiteId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the website with the matching UUID and company.
+	*
+	* @param uuid the website's UUID
+	* @param companyId the primary key of the company
+	* @return the matching website, or <code>null</code> if a matching website could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Website fetchWebsiteByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().fetchWebsiteByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the website with the primary key.
+	*
+	* @param websiteId the primary key of the website
+	* @return the website
+	* @throws PortalException if a website with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Website getWebsite(
+		long websiteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWebsite(websiteId);
+	}
+
+	/**
+	* Returns the website with the matching UUID and company.
+	*
+	* @param uuid the website's UUID
+	* @param companyId the primary key of the company
+	* @return the matching website
+	* @throws PortalException if a matching website could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Website getWebsiteByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWebsiteByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param website the website
+	* @return the website that was updated
+	*/
+	public static com.liferay.portal.kernel.model.Website updateWebsite(
+		com.liferay.portal.kernel.model.Website website) {
+		return getService().updateWebsite(website);
+	}
+
+	public static com.liferay.portal.kernel.model.Website updateWebsite(
+		long websiteId, java.lang.String url, long typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateWebsite(websiteId, url, typeId, primary);
+	}
+
+	/**
+	* Returns the number of websites.
+	*
+	* @return the number of websites
+	*/
+	public static int getWebsitesCount() {
+		return getService().getWebsitesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -164,6 +257,31 @@ public class WebsiteLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites() {
+		return getService().getWebsites();
+	}
+
+	/**
+	* Returns a range of all the websites.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.WebsiteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of websites
+	* @param end the upper bound of the range of websites (not inclusive)
+	* @return the range of websites
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
+		int start, int end) {
+		return getService().getWebsites(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
+		long companyId, java.lang.String className, long classPK) {
+		return getService().getWebsites(companyId, className, classPK);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -188,127 +306,9 @@ public class WebsiteLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.Website fetchWebsite(
-		long websiteId) {
-		return getService().fetchWebsite(websiteId);
-	}
-
-	/**
-	* Returns the website with the matching UUID and company.
-	*
-	* @param uuid the website's UUID
-	* @param companyId the primary key of the company
-	* @return the matching website, or <code>null</code> if a matching website could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Website fetchWebsiteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchWebsiteByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the website with the primary key.
-	*
-	* @param websiteId the primary key of the website
-	* @return the website
-	* @throws PortalException if a website with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Website getWebsite(
-		long websiteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWebsite(websiteId);
-	}
-
-	/**
-	* Returns the website with the matching UUID and company.
-	*
-	* @param uuid the website's UUID
-	* @param companyId the primary key of the company
-	* @return the matching website
-	* @throws PortalException if a matching website could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Website getWebsiteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWebsiteByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites() {
-		return getService().getWebsites();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
-		long companyId, java.lang.String className, long classPK) {
-		return getService().getWebsites(companyId, className, classPK);
-	}
-
-	/**
-	* Returns a range of all the websites.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.WebsiteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of websites
-	* @param end the upper bound of the range of websites (not inclusive)
-	* @return the range of websites
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
-		int start, int end) {
-		return getService().getWebsites(start, end);
-	}
-
-	/**
-	* Returns the number of websites.
-	*
-	* @return the number of websites
-	*/
-	public static int getWebsitesCount() {
-		return getService().getWebsitesCount();
-	}
-
-	/**
-	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param website the website
-	* @return the website that was updated
-	*/
-	public static com.liferay.portal.kernel.model.Website updateWebsite(
-		com.liferay.portal.kernel.model.Website website) {
-		return getService().updateWebsite(website);
-	}
-
-	public static com.liferay.portal.kernel.model.Website updateWebsite(
-		long websiteId, java.lang.String url, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateWebsite(websiteId, url, typeId, primary);
+	public static void deleteWebsites(long companyId,
+		java.lang.String className, long classPK) {
+		getService().deleteWebsites(companyId, className, classPK);
 	}
 
 	public static WebsiteLocalService getService() {

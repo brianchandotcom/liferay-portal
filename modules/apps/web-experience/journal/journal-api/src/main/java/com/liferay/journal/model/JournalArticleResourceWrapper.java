@@ -101,14 +101,59 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new JournalArticleResourceWrapper((JournalArticleResource)_journalArticleResource.clone());
+	public boolean isCachedModel() {
+		return _journalArticleResource.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _journalArticleResource.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _journalArticleResource.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _journalArticleResource.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalArticleResource toEscapedModel() {
+		return new JournalArticleResourceWrapper(_journalArticleResource.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalArticleResource toUnescapedModel() {
+		return new JournalArticleResourceWrapper(_journalArticleResource.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalArticleResource> toCacheModel() {
+		return _journalArticleResource.toCacheModel();
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.journal.model.JournalArticleResource journalArticleResource) {
 		return _journalArticleResource.compareTo(journalArticleResource);
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalArticleResource.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _journalArticleResource.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new JournalArticleResourceWrapper((JournalArticleResource)_journalArticleResource.clone());
 	}
 
 	/**
@@ -122,6 +167,26 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	/**
+	* Returns the uuid of this journal article resource.
+	*
+	* @return the uuid of this journal article resource
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _journalArticleResource.getUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _journalArticleResource.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _journalArticleResource.toXmlString();
+	}
+
+	/**
 	* Returns the company ID of this journal article resource.
 	*
 	* @return the company ID of this journal article resource
@@ -129,11 +194,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	@Override
 	public long getCompanyId() {
 		return _journalArticleResource.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalArticleResource.getExpandoBridge();
 	}
 
 	/**
@@ -156,11 +216,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		return _journalArticleResource.getPrimaryKey();
 	}
 
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalArticleResource.getPrimaryKeyObj();
-	}
-
 	/**
 	* Returns the resource prim key of this journal article resource.
 	*
@@ -169,36 +224,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	@Override
 	public long getResourcePrimKey() {
 		return _journalArticleResource.getResourcePrimKey();
-	}
-
-	/**
-	* Returns the uuid of this journal article resource.
-	*
-	* @return the uuid of this journal article resource
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _journalArticleResource.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalArticleResource.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalArticleResource.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalArticleResource.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _journalArticleResource.isNew();
 	}
 
 	@Override
@@ -232,14 +257,14 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalArticleResource.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_journalArticleResource.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalArticleResource.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_journalArticleResource.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -295,31 +320,6 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_journalArticleResource.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalArticleResource> toCacheModel() {
-		return _journalArticleResource.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalArticleResource toEscapedModel() {
-		return new JournalArticleResourceWrapper(_journalArticleResource.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _journalArticleResource.toString();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalArticleResource toUnescapedModel() {
-		return new JournalArticleResourceWrapper(_journalArticleResource.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _journalArticleResource.toXmlString();
 	}
 
 	@Override

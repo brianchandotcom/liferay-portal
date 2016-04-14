@@ -81,20 +81,6 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		long repositoryId, long folderId, long toFileEntryId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void addFileShortcutResources(DLFileShortcut fileShortcut,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addFileShortcutResources(DLFileShortcut fileShortcut,
-		ModelPermissions modelPermissions) throws PortalException;
-
-	public void addFileShortcutResources(long fileShortcutId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addFileShortcutResources(long fileShortcutId,
-		ModelPermissions modelPermissions) throws PortalException;
-
 	/**
 	* Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	*
@@ -123,21 +109,71 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public DLFileShortcut deleteDLFileShortcut(long fileShortcutId)
 		throws PortalException;
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteFileShortcut(DLFileShortcut fileShortcut)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileShortcut fetchDLFileShortcut(long fileShortcutId);
+
+	/**
+	* Returns the document library file shortcut matching the UUID and group.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the document library file shortcut with the primary key.
+	*
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut
+	* @throws PortalException if a document library file shortcut with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileShortcut getDLFileShortcut(long fileShortcutId)
 		throws PortalException;
 
-	public void deleteFileShortcut(long fileShortcutId)
+	/**
+	* Returns the document library file shortcut matching the UUID and group.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file shortcut
+	* @throws PortalException if a matching document library file shortcut could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileShortcut getDLFileShortcutByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
 
-	public void deleteFileShortcuts(long groupId, long folderId)
-		throws PortalException;
+	/**
+	* Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileShortcut the document library file shortcut
+	* @return the document library file shortcut that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut);
 
-	public void deleteFileShortcuts(long groupId, long folderId,
-		boolean includeTrashedEntries) throws PortalException;
+	public DLFileShortcut updateFileShortcut(long userId, long fileShortcutId,
+		long repositoryId, long folderId, long toFileEntryId,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void deleteFileShortcuts(long toFileEntryId)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -146,9 +182,29 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void disableFileShortcuts(long toFileEntryId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the number of document library file shortcuts.
+	*
+	* @return the number of document library file shortcuts
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDLFileShortcutsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -190,66 +246,6 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public void enableFileShortcuts(long toFileEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut fetchDLFileShortcut(long fileShortcutId);
-
-	/**
-	* Returns the document library file shortcut matching the UUID and group.
-	*
-	* @param uuid the document library file shortcut's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the document library file shortcut with the primary key.
-	*
-	* @param fileShortcutId the primary key of the document library file shortcut
-	* @return the document library file shortcut
-	* @throws PortalException if a document library file shortcut with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut getDLFileShortcut(long fileShortcutId)
-		throws PortalException;
-
-	/**
-	* Returns the document library file shortcut matching the UUID and group.
-	*
-	* @param uuid the document library file shortcut's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file shortcut
-	* @throws PortalException if a matching document library file shortcut could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut getDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
 	* Returns a range of all the document library file shortcuts.
 	*
 	* <p>
@@ -289,22 +285,6 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileShortcut> orderByComparator);
 
-	/**
-	* Returns the number of document library file shortcuts.
-	*
-	* @return the number of document library file shortcuts
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFileShortcutsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileShortcut getFileShortcut(long fileShortcutId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId,
 		boolean active, int status, int start, int end);
@@ -312,24 +292,57 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileShortcut> getFileShortcuts(long toFileEntryId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileShortcutsCount(long groupId, long folderId,
-		boolean active, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public void addFileShortcutResources(DLFileShortcut fileShortcut,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
+
+	public void addFileShortcutResources(DLFileShortcut fileShortcut,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void addFileShortcutResources(long fileShortcutId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addFileShortcutResources(long fileShortcutId,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFileShortcut(DLFileShortcut fileShortcut)
+		throws PortalException;
+
+	public void deleteFileShortcut(long fileShortcutId)
+		throws PortalException;
+
+	public void deleteFileShortcuts(long groupId, long folderId)
+		throws PortalException;
+
+	public void deleteFileShortcuts(long groupId, long folderId,
+		boolean includeTrashedEntries) throws PortalException;
+
+	public void deleteFileShortcuts(long toFileEntryId)
+		throws PortalException;
+
+	public void disableFileShortcuts(long toFileEntryId);
+
+	public void enableFileShortcuts(long toFileEntryId);
 
 	public void rebuildTree(long companyId) throws PortalException;
 
@@ -339,19 +352,6 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public void updateAsset(long userId, DLFileShortcut fileShortcut,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)
 		throws PortalException;
-
-	/**
-	* Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileShortcut the document library file shortcut
-	* @return the document library file shortcut that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut);
-
-	public DLFileShortcut updateFileShortcut(long userId, long fileShortcutId,
-		long repositoryId, long folderId, long toFileEntryId,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId);
 

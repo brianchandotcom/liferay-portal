@@ -72,6 +72,33 @@ public class CalendarResourceServiceUtil {
 		return getService().getCalendarResource(calendarResourceId);
 	}
 
+	public static com.liferay.calendar.model.CalendarResource updateCalendarResource(
+		long calendarResourceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCalendarResource(calendarResourceId, nameMap,
+			descriptionMap, active, serviceContext);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String code, java.lang.String name,
+		java.lang.String description, boolean active, boolean andOperator) {
+		return getService()
+				   .searchCount(companyId, groupIds, classNameIds, code, name,
+			description, active, andOperator);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords, boolean active) {
+		return getService()
+				   .searchCount(companyId, groupIds, classNameIds, keywords,
+			active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -100,33 +127,6 @@ public class CalendarResourceServiceUtil {
 		return getService()
 				   .search(companyId, groupIds, classNameIds, keywords, active,
 			andOperator, start, end, orderByComparator);
-	}
-
-	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator) {
-		return getService()
-				   .searchCount(companyId, groupIds, classNameIds, code, name,
-			description, active, andOperator);
-	}
-
-	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, boolean active) {
-		return getService()
-				   .searchCount(companyId, groupIds, classNameIds, keywords,
-			active);
-	}
-
-	public static com.liferay.calendar.model.CalendarResource updateCalendarResource(
-		long calendarResourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCalendarResource(calendarResourceId, nameMap,
-			descriptionMap, active, serviceContext);
 	}
 
 	public static CalendarResourceService getService() {

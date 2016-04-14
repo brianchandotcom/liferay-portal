@@ -41,12 +41,6 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
-	public void deleteNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiNodeService.deleteNode(nodeId);
-	}
-
-	@Override
 	public com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -57,6 +51,41 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.getNode(nodeId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeService.moveNodeToTrash(nodeId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiNodeService.updateNode(nodeId, name, description,
+			serviceContext);
+	}
+
+	@Override
+	public int getNodesCount(long groupId) {
+		return _wikiNodeService.getNodesCount(groupId);
+	}
+
+	@Override
+	public int getNodesCount(long groupId, int status) {
+		return _wikiNodeService.getNodesCount(groupId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiNodeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -93,23 +122,9 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
-	public int getNodesCount(long groupId) {
-		return _wikiNodeService.getNodesCount(groupId);
-	}
-
-	@Override
-	public int getNodesCount(long groupId, int status) {
-		return _wikiNodeService.getNodesCount(groupId, status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _wikiNodeService.getOSGiServiceIdentifier();
+	public void deleteNode(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_wikiNodeService.deleteNode(nodeId);
 	}
 
 	@Override
@@ -118,12 +133,6 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeService.importPages(nodeId, importer, inputStreams, options);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeService.moveNodeToTrash(nodeId);
 	}
 
 	@Override
@@ -142,15 +151,6 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	public void unsubscribeNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeService.unsubscribeNode(nodeId);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNodeService.updateNode(nodeId, name, description,
-			serviceContext);
 	}
 
 	@Override

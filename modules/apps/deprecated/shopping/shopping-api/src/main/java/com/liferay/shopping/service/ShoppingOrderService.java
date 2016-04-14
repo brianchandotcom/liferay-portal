@@ -53,28 +53,8 @@ public interface ShoppingOrderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingOrderServiceUtil} to access the shopping order remote service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingOrderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void completeOrder(long groupId, java.lang.String number,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void deleteOrder(long groupId, long orderId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingOrder getOrder(long groupId, long orderId)
-		throws PortalException;
-
-	public void sendEmail(long groupId, long orderId,
-		java.lang.String emailType, ServiceContext serviceContext)
 		throws PortalException;
 
 	public ShoppingOrder updateOrder(long groupId, long orderId,
@@ -98,4 +78,24 @@ public interface ShoppingOrderService extends BaseService {
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public void completeOrder(long groupId, java.lang.String number,
+		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
+		double ppPaymentGross, java.lang.String ppReceiverEmail,
+		java.lang.String ppPayerEmail, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteOrder(long groupId, long orderId)
+		throws PortalException;
+
+	public void sendEmail(long groupId, long orderId,
+		java.lang.String emailType, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -71,8 +71,15 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the document library file entry type local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addDDMStructureLinks(long fileEntryTypeId,
-		Set<java.lang.Long> ddmStructureIds);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDLFolderDLFileEntryType(long folderId,
+		long fileEntryTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDLFolderDLFileEntryTypes(long folderId);
+
+	public DLFileEntry updateFileEntryFileEntryType(DLFileEntry dlFileEntry,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
@@ -82,17 +89,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType addDLFileEntryType(DLFileEntryType dlFileEntryType);
-
-	public void addDLFolderDLFileEntryType(long folderId,
-		DLFileEntryType dlFileEntryType);
-
-	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
-
-	public void addDLFolderDLFileEntryTypes(long folderId,
-		List<DLFileEntryType> DLFileEntryTypes);
-
-	public void addDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds);
 
 	public DLFileEntryType addFileEntryType(long userId, long groupId,
 		java.lang.String fileEntryTypeKey,
@@ -104,11 +100,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException;
-
-	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
-		throws PortalException;
-
-	public void clearDLFolderDLFileEntryTypes(long folderId);
 
 	/**
 	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
@@ -139,26 +130,79 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
 		throws PortalException;
 
-	public void deleteDLFolderDLFileEntryType(long folderId,
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchDLFileEntryType(long fileEntryTypeId);
+
+	/**
+	* Returns the document library file entry type matching the UUID and group.
+	*
+	* @param uuid the document library file entry type's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchFileEntryType(long groupId,
+		java.lang.String fileEntryTypeKey);
+
+	/**
+	* Returns the document library file entry type with the primary key.
+	*
+	* @param fileEntryTypeId the primary key of the document library file entry type
+	* @return the document library file entry type
+	* @throws PortalException if a document library file entry type with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getDLFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	/**
+	* Returns the document library file entry type matching the UUID and group.
+	*
+	* @param uuid the document library file entry type's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file entry type
+	* @throws PortalException if a matching document library file entry type could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getFileEntryType(long groupId,
+		java.lang.String fileEntryTypeKey) throws PortalException;
+
+	/**
+	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileEntryType the document library file entry type
+	* @return the document library file entry type that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntryType updateDLFileEntryType(
 		DLFileEntryType dlFileEntryType);
 
-	public void deleteDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		List<DLFileEntryType> DLFileEntryTypes);
+	public DynamicQuery dynamicQuery();
 
-	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
-		throws PortalException;
-
-	public void deleteFileEntryType(long fileEntryTypeId)
-		throws PortalException;
-
-	public void deleteFileEntryTypes(long groupId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -167,7 +211,32 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of document library file entry types.
+	*
+	* @return the number of document library file entry types
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDLFileEntryTypesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDLFolderDLFileEntryTypesCount(long folderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords, boolean includeBasicFileEntryType);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -209,71 +278,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchDLFileEntryType(long fileEntryTypeId);
-
-	/**
-	* Returns the document library file entry type matching the UUID and group.
-	*
-	* @param uuid the document library file entry type's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType fetchFileEntryType(long groupId,
-		java.lang.String fileEntryTypeKey);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the document library file entry type with the primary key.
-	*
-	* @param fileEntryTypeId the primary key of the document library file entry type
-	* @return the document library file entry type
-	* @throws PortalException if a document library file entry type with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getDLFileEntryType(long fileEntryTypeId)
-		throws PortalException;
-
-	/**
-	* Returns the document library file entry type matching the UUID and group.
-	*
-	* @param uuid the document library file entry type's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file entry type
-	* @throws PortalException if a matching document library file entry type could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
 	* Returns a range of all the document library file entry types.
 	*
 	* <p>
@@ -313,14 +317,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator);
 
-	/**
-	* Returns the number of document library file entry types.
-	*
-	* @return the number of document library file entry types
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFileEntryTypesCount();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId);
 
@@ -331,34 +327,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId,
 		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFolderDLFileEntryTypesCount(long folderId);
-
-	/**
-	* Returns the folderIds of the document library folders associated with the document library file entry type.
-	*
-	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
-	* @return long[] the folderIds of document library folders associated with the document library file entry type
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultFileEntryTypeId(long folderId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getFileEntryType(long fileEntryTypeId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntryType getFileEntryType(long groupId,
-		java.lang.String fileEntryTypeKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
@@ -372,35 +340,80 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		long folderId, boolean inherited) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFolderDLFileEntryTypes(long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntryType> search(long companyId, long[] groupIds,
 		java.lang.String keywords, boolean includeBasicFileEntryType,
 		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords, boolean includeBasicFileEntryType);
+	public long getDefaultFileEntryTypeId(long folderId)
+		throws PortalException;
+
+	/**
+	* Returns the folderIds of the document library folders associated with the document library file entry type.
+	*
+	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
+	* @return long[] the folderIds of document library folders associated with the document library file entry type
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId);
+
+	public void addDDMStructureLinks(long fileEntryTypeId,
+		Set<java.lang.Long> ddmStructureIds);
+
+	public void addDLFolderDLFileEntryType(long folderId,
+		DLFileEntryType dlFileEntryType);
+
+	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
+
+	public void addDLFolderDLFileEntryTypes(long folderId,
+		List<DLFileEntryType> DLFileEntryTypes);
+
+	public void addDLFolderDLFileEntryTypes(long folderId,
+		long[] fileEntryTypeIds);
+
+	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
+		throws PortalException;
+
+	public void clearDLFolderDLFileEntryTypes(long folderId);
+
+	public void deleteDLFolderDLFileEntryType(long folderId,
+		DLFileEntryType dlFileEntryType);
+
+	public void deleteDLFolderDLFileEntryType(long folderId,
+		long fileEntryTypeId);
+
+	public void deleteDLFolderDLFileEntryTypes(long folderId,
+		List<DLFileEntryType> DLFileEntryTypes);
+
+	public void deleteDLFolderDLFileEntryTypes(long folderId,
+		long[] fileEntryTypeIds);
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
+		throws PortalException;
+
+	public void deleteFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	public void deleteFileEntryTypes(long groupId) throws PortalException;
 
 	public void setDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);
@@ -409,19 +422,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 
 	public void updateDDMStructureLinks(long fileEntryTypeId,
 		Set<java.lang.Long> ddmStructureIds) throws PortalException;
-
-	/**
-	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryType the document library file entry type
-	* @return the document library file entry type that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFileEntryType updateDLFileEntryType(
-		DLFileEntryType dlFileEntryType);
-
-	public DLFileEntry updateFileEntryFileEntryType(DLFileEntry dlFileEntry,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,

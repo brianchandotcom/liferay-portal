@@ -72,13 +72,13 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -98,12 +98,14 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*/
 	public MDRAction createMDRAction(long actionId);
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteAction(MDRAction action);
-
-	public void deleteAction(long actionId);
-
-	public void deleteActions(long ruleGroupInstanceId);
+	/**
+	* Deletes the m d r action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrAction the m d r action
+	* @return the m d r action that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MDRAction deleteMDRAction(MDRAction mdrAction);
 
 	/**
 	* Deletes the m d r action with the primary key from the database. Also notifies the appropriate model listeners.
@@ -115,14 +117,80 @@ public interface MDRActionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MDRAction deleteMDRAction(long actionId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRAction fetchAction(long actionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRAction fetchMDRAction(long actionId);
+
 	/**
-	* Deletes the m d r action from the database. Also notifies the appropriate model listeners.
+	* Returns the m d r action matching the UUID and group.
+	*
+	* @param uuid the m d r action's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRAction fetchMDRActionByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRAction getAction(long actionId) throws PortalException;
+
+	/**
+	* Returns the m d r action with the primary key.
+	*
+	* @param actionId the primary key of the m d r action
+	* @return the m d r action
+	* @throws PortalException if a m d r action with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRAction getMDRAction(long actionId) throws PortalException;
+
+	/**
+	* Returns the m d r action matching the UUID and group.
+	*
+	* @param uuid the m d r action's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r action
+	* @throws PortalException if a matching m d r action could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MDRAction getMDRActionByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	public MDRAction updateAction(long actionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		throws PortalException;
+
+	public MDRAction updateAction(long actionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* Updates the m d r action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param mdrAction the m d r action
-	* @return the m d r action that was removed
+	* @return the m d r action that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MDRAction deleteMDRAction(MDRAction mdrAction);
+	@Indexable(type = IndexableType.REINDEX)
+	public MDRAction updateMDRAction(MDRAction mdrAction);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -131,7 +199,28 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActionsCount(long ruleGroupInstanceId);
+
+	/**
+	* Returns the number of m d r actions.
+	*
+	* @return the number of m d r actions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMDRActionsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -172,47 +261,6 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction fetchAction(long actionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction fetchMDRAction(long actionId);
-
-	/**
-	* Returns the m d r action matching the UUID and group.
-	*
-	* @param uuid the m d r action's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction fetchMDRActionByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction getAction(long actionId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRAction> getActions(long ruleGroupInstanceId);
 
@@ -223,38 +271,6 @@ public interface MDRActionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRAction> getActions(long ruleGroupInstanceId, int start,
 		int end, OrderByComparator<MDRAction> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getActionsCount(long ruleGroupInstanceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the m d r action with the primary key.
-	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action
-	* @throws PortalException if a m d r action with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction getMDRAction(long actionId) throws PortalException;
-
-	/**
-	* Returns the m d r action matching the UUID and group.
-	*
-	* @param uuid the m d r action's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r action
-	* @throws PortalException if a matching m d r action could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MDRAction getMDRActionByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the m d r actions.
@@ -297,43 +313,27 @@ public interface MDRActionLocalService extends BaseLocalService,
 		OrderByComparator<MDRAction> orderByComparator);
 
 	/**
-	* Returns the number of m d r actions.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of m d r actions
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMDRActionsCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteAction(MDRAction action);
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+	public void deleteAction(long actionId);
 
-	public MDRAction updateAction(long actionId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Updates the m d r action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mdrAction the m d r action
-	* @return the m d r action that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MDRAction updateMDRAction(MDRAction mdrAction);
+	public void deleteActions(long ruleGroupInstanceId);
 }

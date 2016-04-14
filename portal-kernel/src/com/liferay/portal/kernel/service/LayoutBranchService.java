@@ -51,7 +51,9 @@ public interface LayoutBranchService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteLayoutBranch(long layoutBranchId)
+	public LayoutBranch updateLayoutBranch(long layoutBranchId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -61,8 +63,6 @@ public interface LayoutBranchService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public LayoutBranch updateLayoutBranch(long layoutBranchId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteLayoutBranch(long layoutBranchId)
 		throws PortalException;
 }

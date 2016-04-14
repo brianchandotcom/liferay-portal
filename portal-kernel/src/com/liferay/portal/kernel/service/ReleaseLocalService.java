@@ -60,6 +60,25 @@ public interface ReleaseLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ReleaseLocalServiceUtil} to access the release local service. Add custom service methods to {@link com.liferay.portal.service.impl.ReleaseLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the release to the database. Also notifies the appropriate model listeners.
@@ -84,15 +103,6 @@ public interface ReleaseLocalService extends BaseLocalService,
 	*/
 	public Release createRelease(long releaseId);
 
-	public void createTablesAndPopulate();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
 	/**
 	* Deletes the release from the database. Also notifies the appropriate model listeners.
 	*
@@ -112,7 +122,52 @@ public interface ReleaseLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Release deleteRelease(long releaseId) throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Release fetchRelease(java.lang.String servletContextName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Release fetchRelease(long releaseId);
+
+	/**
+	* Returns the release with the primary key.
+	*
+	* @param releaseId the primary key of the release
+	* @return the release
+	* @throws PortalException if a release with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Release getRelease(long releaseId) throws PortalException;
+
+	/**
+	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param release the release
+	* @return the release that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Release updateRelease(Release release);
+
+	public Release updateRelease(long releaseId,
+		java.lang.String schemaVersion, int buildNumber, Date buildDate,
+		boolean verified) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBuildNumberOrCreate() throws PortalException;
+
+	/**
+	* Returns the number of releases.
+	*
+	* @return the number of releases
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getReleasesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -154,6 +209,20 @@ public interface ReleaseLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the releases.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ReleaseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of releases
+	* @param end the upper bound of the range of releases (not inclusive)
+	* @return the range of releases
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Release> getReleases(int start, int end);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -171,77 +240,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Release fetchRelease(long releaseId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Release fetchRelease(java.lang.String servletContextName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBuildNumberOrCreate() throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the release with the primary key.
-	*
-	* @param releaseId the primary key of the release
-	* @return the release
-	* @throws PortalException if a release with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Release getRelease(long releaseId) throws PortalException;
-
-	/**
-	* Returns a range of all the releases.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ReleaseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of releases
-	* @param end the upper bound of the range of releases (not inclusive)
-	* @return the range of releases
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Release> getReleases(int start, int end);
-
-	/**
-	* Returns the number of releases.
-	*
-	* @return the number of releases
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getReleasesCount();
-
-	/**
-	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param release the release
-	* @return the release that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Release updateRelease(Release release);
-
-	public Release updateRelease(long releaseId,
-		java.lang.String schemaVersion, int buildNumber, Date buildDate,
-		boolean verified) throws PortalException;
+	public void createTablesAndPopulate();
 
 	public void updateRelease(java.lang.String servletContextName,
 		java.lang.String schemaVersion, java.lang.String previousSchemaVersion);

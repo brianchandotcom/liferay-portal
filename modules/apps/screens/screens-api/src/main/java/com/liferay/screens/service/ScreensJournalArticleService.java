@@ -53,12 +53,12 @@ public interface ScreensJournalArticleService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ScreensJournalArticleServiceUtil} to access the screens journal article remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensJournalArticleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getJournalArticleContent(long classPK,
-		long ddmTemplateId, Locale locale) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getJournalArticleContent(long classPK, Locale locale)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getJournalArticleContent(long classPK,
+		long ddmTemplateId, Locale locale) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getJournalArticleContent(long groupId,

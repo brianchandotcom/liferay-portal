@@ -31,24 +31,14 @@ import java.sql.Statement;
 public class UpgradeGroup extends UpgradeProcess {
 
 	protected void checkGlobalFriendlyURL(long companyId) throws Exception {
-		String friendlyURL = GroupConstants.GLOBAL_FRIENDLY_URL;
-
-		long globalGroupId = getGroupId(companyId, friendlyURL);
+		long globalGroupId = getGroupId(
+			companyId, GroupConstants.GLOBAL_FRIENDLY_URL);
 
 		if (globalGroupId == 0) {
 			return;
 		}
 
-		long groupId = globalGroupId;
-		int increment = 1;
-
-		while (groupId > 0) {
-			friendlyURL = friendlyURL + increment;
-
-			groupId = getGroupId(companyId, friendlyURL);
-
-			increment++;
-		}
+		String friendlyURL = getNewFriendlyURL(companyId, globalGroupId);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -118,6 +108,24 @@ public class UpgradeGroup extends UpgradeProcess {
 				return null;
 			}
 		}
+	}
+
+	protected String getNewFriendlyURL(long companyId, long groupId)
+		throws Exception {
+
+		String friendlyURL = null;
+
+		int i = 1;
+
+		while (groupId > 0) {
+			friendlyURL = GroupConstants.GLOBAL_FRIENDLY_URL + i;
+
+			groupId = getGroupId(companyId, friendlyURL);
+
+			i++;
+		}
+
+		return friendlyURL;
 	}
 
 	protected void updateParentGroupId() throws Exception {

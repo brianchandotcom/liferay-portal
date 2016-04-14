@@ -255,7 +255,7 @@ public class EmbeddedElasticsearchConnection
 					elasticsearchConfiguration.clusterName());
 		}
 
-		_node = new Node(settingsBuilder.build());
+		_node = createNode(settingsBuilder.build());
 
 		_node.start();
 
@@ -271,6 +271,23 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		return client;
+	}
+
+	protected Node createNode(Settings settings) {
+		Thread thread = Thread.currentThread();
+
+		ClassLoader classLoader = thread.getContextClassLoader();
+
+		Class<?> clazz = this.getClass();
+
+		thread.setContextClassLoader(clazz.getClassLoader());
+
+		try {
+			return new Node(settings);
+		}
+		finally {
+			thread.setContextClassLoader(classLoader);
+		}
 	}
 
 	@Deactivate

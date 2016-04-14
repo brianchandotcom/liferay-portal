@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -128,7 +129,7 @@ public class DDLFormAssetRendererFactory
 
 		DDLFormAssetRenderer ddlFormAssetRenderer = new DDLFormAssetRenderer(
 			formRecord, recordVersion, _ddlRecordLocalService, _ddmFormRenderer,
-			_ddmStructureLocalService);
+			_ddmFormValuesFactory, _ddmStructureLocalService);
 
 		ddlFormAssetRenderer.setAssetRendererType(type);
 		ddlFormAssetRenderer.setServletContext(_servletContext);
@@ -156,6 +157,13 @@ public class DDLFormAssetRendererFactory
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValuesFactory(
+		DDMFormValuesFactory ddmFormValuesFactory) {
+
+		_ddmFormValuesFactory = ddmFormValuesFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
@@ -165,6 +173,7 @@ public class DDLFormAssetRendererFactory
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 	private DDMFormRenderer _ddmFormRenderer;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private ServletContext _servletContext;
 

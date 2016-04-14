@@ -36,5 +36,5 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 		</div>
 	</c:if>
 
-	<%= ddlFormAdminDisplayContext.getDDMFormHTML() %>
+	<%= ddlFormAdminDisplayContext.getDDMFormHTML(renderRequest) %>
 </div>

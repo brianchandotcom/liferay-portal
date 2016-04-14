@@ -36,6 +36,7 @@ import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
@@ -96,6 +97,7 @@ public class DDLFormAdminDisplayContext {
 		DDMFormJSONSerializer ddmFormJSONSerializer,
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer,
 		DDMFormRenderer ddmFormRenderer,
+		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMStructureLocalService ddmStructureLocalService,
 		JSONFactory jsonFactory, StorageEngine storageEngine,
 		WorkflowEngineManager workflowEngineManager) {
@@ -113,6 +115,7 @@ public class DDLFormAdminDisplayContext {
 		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
 		_ddmFormRenderer = ddmFormRenderer;
+		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_jsonFactory = jsonFactory;
 		_storageEngine = storageEngine;
@@ -128,7 +131,7 @@ public class DDLFormAdminDisplayContext {
 		return new DDLFormViewRecordDisplayContext(
 			PortalUtil.getHttpServletRequest(_renderRequest),
 			PortalUtil.getHttpServletResponse(_renderResponse),
-			_ddlRecordLocalService, _ddmFormRenderer,
+			_ddlRecordLocalService, _ddmFormRenderer, _ddmFormValuesFactory,
 			_ddmStructureLocalService);
 	}
 
@@ -160,11 +163,13 @@ public class DDLFormAdminDisplayContext {
 		return _jsonFactory.createJSONArray(serializedDDMFormFieldTypes);
 	}
 
-	public String getDDMFormHTML() throws PortalException {
+	public String getDDMFormHTML(RenderRequest renderRequest)
+		throws PortalException {
+
 		DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext =
 			getDDLFormViewRecordDisplayContext();
 
-		return ddlFormViewRecordDisplayContext.getDDMFormHTML();
+		return ddlFormViewRecordDisplayContext.getDDMFormHTML(renderRequest);
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {
@@ -613,6 +618,7 @@ public class DDLFormAdminDisplayContext {
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;
